@@ -1,0 +1,308 @@
+'use client';
+
+import { LightSectionCard, ProofDonutChart, ActNavigation } from '@/components/demos/proofline';
+import {
+  BRAND_FAMILIES,
+  SUPPLIER_PORTFOLIO_SHARE,
+  SUPPLIER_COLORS,
+  BRAND_TOTAL_REVENUE,
+  BRAND_TOTAL_CASES,
+  TOTAL_ROUTES,
+  TOTAL_ACCOUNTS,
+  HOMETOWNS,
+  type SupplierGroup,
+} from '@/data/proofline';
+import { fmtM, fmt, pct } from '@/lib/utils';
+
+/* ── Supplier labels ─────────────────────────────────── */
+const SUPPLIER_LABELS: Record<SupplierGroup, string> = {
+  'molson-coors': 'Molson Coors',
+  constellation: 'Constellation',
+  heineken: 'Heineken',
+  craft: 'Craft & Regional',
+  sazerac: 'Sazerac',
+  'fmb-rtd': 'FMB / RTD',
+};
+
+/* ── Donut data ──────────────────────────────────────── */
+const donutData = (Object.keys(SUPPLIER_PORTFOLIO_SHARE) as SupplierGroup[]).map((key) => ({
+  name: SUPPLIER_LABELS[key],
+  value: SUPPLIER_PORTFOLIO_SHARE[key],
+  color: SUPPLIER_COLORS[key],
+}));
+
+/* ── YoY Comparison ──────────────────────────────────── */
+const YOY = [
+  { metric: 'Revenue', fy25: '$5.0B', fy26: '$5.2B', delta: '+4.0%', positive: true },
+  { metric: 'Cases', fy25: `${fmt(BRAND_TOTAL_CASES * 4)}`, fy26: `${fmt(Math.round(BRAND_TOTAL_CASES * 4 * 1.028))}`, delta: '+2.8%', positive: true },
+  { metric: 'Spirits Share', fy25: '2%', fy26: '8%', delta: '+6pp', positive: true },
+  { metric: 'Routes', fy25: '32', fy26: String(TOTAL_ROUTES), delta: `+${TOTAL_ROUTES - 32}`, positive: true },
+  { metric: 'Accounts', fy25: fmt(10500), fy26: fmt(TOTAL_ACCOUNTS), delta: `+${fmt(TOTAL_ACCOUNTS - 10500)}`, positive: true },
+  { metric: 'Display Compliance', fy25: '82%', fy26: '89%', delta: '+7pp', positive: true },
+];
+
+/* ── Strategic Priorities ────────────────────────────── */
+const PRIORITIES = [
+  {
+    title: 'Spirits Integration',
+    desc: 'Grow Sazerac from 5% to 8% portfolio share. Buffalo Trace, Fireball, Southern Comfort across all territories.',
+    stat: '5% → 8%',
+    icon: '🥃',
+  },
+  {
+    title: 'South Texas Expansion',
+    desc: 'Laredo (acquired 2024) and Corpus Christi: target 5.5M cases combined. Cross-border growth corridor.',
+    stat: '5.5M cases',
+    icon: '📍',
+  },
+  {
+    title: 'Revenue Per Case Growth',
+    desc: 'Shift from volume to revenue selling. Improve mix toward higher-margin imports and premium craft.',
+    stat: '+$2.40/case',
+    icon: '📈',
+  },
+  {
+    title: 'Display Compliance to 89%',
+    desc: 'Reinstate EMCO-style gate system. Enforce cooler planograms and shelf standards across all accounts.',
+    stat: '82% → 89%',
+    icon: '📊',
+  },
+];
+
+/* ── Computed values ─────────────────────────────────── */
+const southTXCases = HOMETOWNS.filter((h) => h.id === 'crp' || h.id === 'lar').reduce(
+  (s, h) => s + h.cases,
+  0
+);
+
+export default function CeoMandatePage() {
+  return (
+    <>
+    
+      <ActNavigation currentAct={1} />
+
+      {/* Hero Section */}
+      <div className="flex items-center gap-6 mt-6 mb-8">
+        {/* Icon circle */}
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center shrink-0"
+          style={{
+            background: 'linear-gradient(135deg, #C6A052 0%, #A0841E 100%)',
+            boxShadow: '0 4px 12px rgba(198,160,82,0.3)',
+          }}
+        >
+          <span
+            className="text-3xl"
+          >
+            &#9670;
+          </span>
+        </div>
+        <div>
+          <div
+            className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+            style={{ color: '#C6A052' }}
+          >
+            Corporate Strategy &middot; FY2026
+          </div>
+          <h1
+            className="text-2xl font-extrabold mb-1"
+            style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            FY2026 Corporate Strategy
+          </h1>
+          <p className="text-[13px]" style={{ color: '#718096' }}>
+            Andrews Distributing &middot; North &amp; South Texas
+          </p>
+        </div>
+      </div>
+
+      {/* ── 3 KPI Hero Cards ─────────────────────────── */}
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        {/* Revenue Target */}
+        <div
+          className="rounded-xl border bg-white p-5 text-center"
+          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+        >
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+            Revenue Target
+          </div>
+          <div
+            className="text-3xl font-extrabold mb-1"
+            style={{ color: '#C6A052', fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            $5.2B
+          </div>
+          <div className="text-[12px] font-semibold" style={{ color: '#C6A052' }}>
+            +4% YoY from ~$5.0B
+          </div>
+        </div>
+
+        {/* Sazerac Target */}
+        <div
+          className="rounded-xl border bg-white p-5 text-center"
+          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #F87171', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+        >
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+            Sazerac Portfolio Share
+          </div>
+          <div
+            className="text-3xl font-extrabold mb-1"
+            style={{ color: '#F87171', fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            8%
+          </div>
+          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
+            Currently 5% &mdash; 60% growth
+          </div>
+        </div>
+
+        {/* South TX Target */}
+        <div
+          className="rounded-xl border bg-white p-5 text-center"
+          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #2563EB', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+        >
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+            South TX Cases
+          </div>
+          <div
+            className="text-3xl font-extrabold mb-1"
+            style={{ color: '#2563EB', fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            5.5M
+          </div>
+          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
+            Currently {fmtM(southTXCases * 4)} annual
+          </div>
+        </div>
+      </div>
+
+      {/* ── Brand Portfolio Donut + Legend ────────────── */}
+      <LightSectionCard title="Supplier Portfolio Composition" className="mb-8">
+        <div className="flex items-center gap-8">
+          <ProofDonutChart
+            data={donutData}
+            size={200}
+            label={`${BRAND_FAMILIES.length} brands`}
+            labelColor="#1A1A2E"
+          />
+          <div className="flex-1 grid grid-cols-2 gap-3">
+            {donutData.map((d) => (
+              <div key={d.name} className="flex items-center gap-3">
+                <div
+                  className="w-3 h-3 rounded-full shrink-0"
+                  style={{ background: d.color }}
+                />
+                <div>
+                  <div className="text-[13px] font-semibold" style={{ color: '#1A1A2E' }}>
+                    {d.name}
+                  </div>
+                  <div className="text-[11px] font-mono" style={{ color: '#718096' }}>
+                    {pct(d.value)} share
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </LightSectionCard>
+
+      {/* ── Year-over-Year Comparison ────────────────── */}
+      <LightSectionCard title="FY2025 vs FY2026 Targets" className="mb-8">
+        <table className="w-full text-[13px]">
+          <thead>
+            <tr style={{ color: '#718096' }}>
+              <th className="text-left font-medium pb-3 pl-2">Metric</th>
+              <th className="text-right font-medium pb-3">FY2025</th>
+              <th className="text-right font-medium pb-3">FY2026 Target</th>
+              <th className="text-right font-medium pb-3 pr-2">Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            {YOY.map((row, i) => (
+              <tr
+                key={row.metric}
+                className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}
+              >
+                <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>
+                  {row.metric}
+                </td>
+                <td className="py-2.5 text-right font-mono" style={{ color: '#718096' }}>
+                  {row.fy25}
+                </td>
+                <td
+                  className="py-2.5 text-right font-mono font-bold"
+                  style={{ color: '#1A1A2E' }}
+                >
+                  {row.fy26}
+                </td>
+                <td
+                  className="py-2.5 text-right pr-2 font-mono font-bold"
+                  style={{ color: row.positive ? '#10B981' : '#F87171' }}
+                >
+                  {row.delta}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </LightSectionCard>
+
+      {/* ── Strategic Priorities ──────────────────────── */}
+      <div className="mb-4">
+        <div
+          className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4"
+          style={{ color: '#718096' }}
+        >
+          Strategic Priorities
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {PRIORITIES.map((p) => (
+            <div
+              key={p.title}
+              className="rounded-xl border bg-white p-5 hover:shadow-md transition-shadow"
+              style={{ borderColor: '#E2E8F0', borderLeft: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-2xl shrink-0">{p.icon}</span>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <span
+                      className="text-[14px] font-bold"
+                      style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+                    >
+                      {p.title}
+                    </span>
+                    <span
+                      className="text-[12px] font-bold font-mono px-2 py-0.5 rounded-full"
+                      style={{ background: 'rgba(198,160,82,0.10)', color: '#C6A052' }}
+                    >
+                      {p.stat}
+                    </span>
+                  </div>
+                  <p className="text-[12px] leading-relaxed" style={{ color: '#718096' }}>
+                    {p.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Strategic Vision */}
+      <div
+        className="rounded-lg px-6 py-4 mt-6"
+        style={{ background: 'rgba(198,160,82,0.06)', borderLeft: '3px solid #C6A052' }}
+      >
+        <p className="text-[14px] italic leading-relaxed" style={{ color: '#4A5568' }}>
+          &ldquo;We need to sell the right product, not just more product. If we hit 8% spirits
+          and get display compliance to 89%, we will blow past $5.2 billion.&rdquo;
+        </p>
+        <p className="text-[12px] font-semibold mt-2" style={{ color: '#C6A052' }}>
+          &mdash; Executive Leadership
+        </p>
+      </div>
+    
+    </>
+  );
+}
