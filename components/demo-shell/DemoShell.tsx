@@ -1,0 +1,293 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import * as LucideIcons from 'lucide-react';
+import { useState } from 'react';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { createThemeVars, resolveTheme } from '@/lib/theme';
+import type { DemoConfig, NavSection } from './types';
+
+function cn(...inputs: (string | boolean | undefined | null)[]) {
+  return twMerge(clsx(inputs));
+}
+
+function getIcon(name: string): LucideIcons.LucideIcon {
+  const icons = LucideIcons as unknown as Record<string, LucideIcons.LucideIcon>;
+  return icons[name] ?? LucideIcons.Circle;
+}
+
+interface DemoShellProps {
+  config: DemoConfig;
+  children: React.ReactNode;
+}
+
+export function DemoShell({ config, children }: DemoShellProps) {
+  const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const themeVars = createThemeVars(config.theme);
+  const resolved = resolveTheme(config.theme);
+  const primaryColor = resolved.colors.primary;
+
+  // Flatten nav items for active detection
+  const allItems = config.nav.flatMap((section) =>
+    section.items.map((item) => ({ ...item, section: section.section, color: section.color }))
+  );
+
+  const currentNav = allItems.find((n) =>
+    n.href === '/' ? pathname === '/' : pathname?.startsWith(n.href)
+  );
+  const sectionColor = currentNav?.color ?? primaryColor;
+
+  // Logo icon
+  const LogoIcon = config.client.logo ?? LucideIcons.Circle;
+
+  return (
+    <div className="h-screen flex overflow-hidden" style={themeVars as React.CSSProperties}>
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar — fixed, full height */}
+      <aside
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 flex w-[264px] flex-col shrink-0 transition-transform duration-300 lg:relative lg:translate-x-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+        style={{
+          background: `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
+        }}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex flex-col px-6 py-5 hover:bg-white/[0.02] transition-colors"
+          style={{ borderBottom: `1px solid var(--prizym-border-subtle)` }}
+        >
+          <div className="flex items-center gap-3.5">
+            <div
+              className="flex h-11 w-11 items-center justify-center rounded-full shadow-lg"
+              style={{
+                background: `linear-gradient(135deg, ${primaryColor} 0%, ${resolved.colors.accent} 100%)`,
+                boxShadow: `0 4px 12px ${primaryColor}40`,
+              }}
+            >
+              <LogoIcon className="h-5.5 w-5.5 text-white" />
+            </div>
+            <div>
+              <div
+                className="text-[19px] font-bold tracking-wide text-white"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {config.product.name.toUpperCase()}
+              </div>
+              <div
+                className="text-[10px] font-semibold tracking-[0.12em] uppercase"
+                style={{ color: `${primaryColor}AA` }}
+              >
+                {config.client.tagline}
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        {/* Navigation */}
+        <nav className="sidebar-scroll flex-1 overflow-y-auto px-3 py-5">
+          {config.nav.map((section, idx) => {
+            const sectionClr = section.color ?? primaryColor;
+
+            return (
+              <div key={`${idx}-${section.section}`}>
+                <div
+                  className="mb-2 mt-4 first:mt-0 px-3 text-[10px] font-semibold tracking-[0.15em] uppercase"
+                  style={{ color: `${sectionClr}CC` }}
+                >
+                  {section.section}
+                </div>
+                {section.items.map((item) => {
+                  const Icon = getIcon(item.icon);
+                  const isActive =
+                    item.href === '/' ? pathname === '/' : pathname === item.href;
+                  const itemColor = sectionClr;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all duration-150',
+                        isActive
+                          ? 'bg-white/[0.10] text-white shadow-sm'
+                          : 'text-white/65 hover:bg-white/[0.04] hover:text-white/80'
+                      )}
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      <Icon
+                        className={cn(
+                          'h-[18px] w-[18px] shrink-0 transition-colors',
+                          isActive ? '' : 'text-white/50 group-hover:text-white/60'
+                        )}
+                        style={isActive ? { color: itemColor } : undefined}
+                      />
+                      <span className="flex-1 truncate">{item.label}</span>
+                      {isActive && (
+                        <LucideIcons.ChevronRight
+                          className="h-3.5 w-3.5 shrink-0"
+                          style={{ color: `${itemColor}66` }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </nav>
+
+        {/* Client info */}
+        <div className="p-4" style={{ borderTop: `1px solid var(--prizym-border-subtle)` }}>
+          <div
+            className="rounded-xl p-3.5"
+            style={{ background: `${primaryColor}0F` }}
+          >
+            <div className="flex items-center gap-2.5">
+              <div
+                className="flex h-8 w-8 items-center justify-center rounded-lg"
+                style={{ background: `${primaryColor}1F` }}
+              >
+                <LogoIcon className="h-4 w-4" style={{ color: primaryColor }} />
+              </div>
+              <div>
+                <div
+                  className="text-[13px] font-semibold text-white/90"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  {config.client.name}
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div
+                    className="h-1.5 w-1.5 rounded-full animate-pulse"
+                    style={{ background: primaryColor }}
+                  />
+                  <span className="text-[11px]" style={{ color: `${primaryColor}99` }}>
+                    {config.product.badge ?? 'Live Demo'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      {/* Main content — fills remaining width, full height, internal scroll */}
+      <div className="flex min-w-0 flex-1 flex-col h-screen">
+        {/* Top bar — fixed at top */}
+        <header
+          className="shrink-0 z-30 flex h-14 items-center px-6 lg:px-8 backdrop-blur-xl"
+          style={{
+            background: `color-mix(in srgb, var(--prizym-bg-content) 95%, transparent)`,
+            borderBottom: `1px solid var(--prizym-border-default)`,
+          }}
+        >
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="rounded-lg p-1.5 transition-colors hover:bg-white/[0.06] lg:hidden"
+            >
+              {sidebarOpen ? (
+                <LucideIcons.X className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
+              ) : (
+                <LucideIcons.Menu className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
+              )}
+            </button>
+            <div className="flex items-center gap-2">
+              <span
+                className="text-lg font-bold"
+                style={{ color: sectionColor, fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {'\u25C6'}
+              </span>
+              <span
+                className="text-[13px] font-bold"
+                style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {config.client.name.toUpperCase()}
+              </span>
+              <span
+                className="text-[11px] font-mono"
+                style={{ color: 'var(--prizym-text-muted)' }}
+              >
+                {config.client.tagline}
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="ml-auto flex items-center gap-2.5 rounded-full px-4 py-1.5 text-[13px] font-medium shadow-sm shimmer"
+            style={{
+              border: `1px solid ${primaryColor}40`,
+              background: `${primaryColor}0F`,
+              color: primaryColor,
+            }}
+          >
+            <div
+              className="h-2 w-2 animate-pulse rounded-full"
+              style={{ background: primaryColor, boxShadow: `0 0 6px ${primaryColor}66` }}
+            />
+            {config.product.badge ?? 'Interactive Demo'}
+          </div>
+        </header>
+
+        {/* Page content — this is the ONLY thing that scrolls */}
+        <main
+          className="flex-1 overflow-y-auto min-h-0 p-6 lg:p-8"
+          style={{ background: 'var(--prizym-bg-content)' }}
+        >
+          <div className="mx-auto max-w-[1200px]">{children}</div>
+        </main>
+
+        {/* Footer — fixed at bottom */}
+        <footer
+          className="shrink-0"
+          style={{
+            background: 'var(--prizym-bg-content)',
+            borderTop: `1px solid var(--prizym-border-default)`,
+          }}
+        >
+          <div className="px-6 lg:px-8 py-3">
+            <div className="flex items-center justify-center gap-5">
+              {config.nav.map((section, idx) => (
+                <span
+                  key={`${idx}-${section.section}`}
+                  className="text-[11px] font-semibold font-mono"
+                  style={{ color: section.color ?? primaryColor }}
+                >
+                  {section.section}
+                </span>
+              ))}
+            </div>
+            <div
+              className="mt-2 flex items-center justify-center gap-3 text-[10px] tracking-[0.1em] uppercase"
+              style={{ color: 'var(--prizym-text-muted)', opacity: 0.5 }}
+            >
+              <span>{config.footer.copyright}</span>
+              <span style={{ opacity: 0.5 }}>&bull;</span>
+              <span>
+                Powered by{' '}
+                <span className="font-bold" style={{ color: 'var(--prizym-text-secondary)' }}>
+                  {config.footer.poweredBy.toUpperCase()}
+                </span>
+              </span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
