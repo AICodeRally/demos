@@ -1,0 +1,8 @@
+# Per-demo subdomain redirects
+# demo.<name>.aicoderally.com → demos.aicoderally.com/<name>
+https://demo.aegis.aicoderally.com/* https://demos.aicoderally.com/aegis/:splat 301
+https://demo.charter.aicoderally.com/* https://demos.aicoderally.com/charter/:splat 301
+https://demo.equipr.aicoderally.com/* https://demos.aicoderally.com/equipr/:splat 301
+https://demo.proofline.aicoderally.com/* https://demos.aicoderally.com/proofline/:splat 301
+https://demo.register.aicoderally.com/* https://demos.aicoderally.com/register/:splat 301
+https://demo.steeple.aicoderally.com/* https://demos.aicoderally.com/steeple/:splat 301
