@@ -34,6 +34,14 @@ const demos = [
     pages: 28,
   },
   {
+    name: 'ROUTEIQ',
+    slug: 'routeiq-royal',
+    industry: 'Royal Distributing',
+    tagline: 'ROUTEIQ configured for Royal Distributing — North & South Texas',
+    color: '#C6A052',
+    pages: 28,
+  },
+  {
     name: 'REGISTER',
     slug: 'register',
     industry: 'Retail Operations',
