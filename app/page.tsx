@@ -34,6 +34,14 @@ const demos = [
     pages: 28,
   },
   {
+    name: 'PROOFLINE',
+    slug: 'proofline-andrews',
+    industry: 'Andrews Distributing',
+    tagline: 'PROOFLINE configured for Andrews Distributing — North & South Texas',
+    color: '#C6A052',
+    pages: 28,
+  },
+  {
     name: 'REGISTER',
     slug: 'register',
     industry: 'Retail Operations',

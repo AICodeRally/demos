@@ -135,7 +135,7 @@ export default function QuotaWaterfallPage() {
       {/* Waterfall */}
       <LightSectionCard title="Revenue Cascade: Company → Region → Hometown" className="mb-6">
         <WaterfallLevel
-          label="Lone Star Beverage Co."
+          label="Andrews Distributing"
           value={COMPANY_ANNUAL_TARGET}
           maxValue={COMPANY_ANNUAL_TARGET}
           color="#C6A052"

@@ -5,25 +5,25 @@ import { ActNavigation, LightSectionCard } from '@/components/demos/proofline';
 import { HOMETOWNS } from '@/data/proofline';
 import { fmt, fmtM, pct } from '@/lib/utils';
 
-/* ── Market participants (Lone Star + competitors) ───── */
+/* ── Market participants (Andrews + competitors) ─────── */
 interface MarketPlayer {
   name: string;
   marketShare: number;   // 0–1
   growthRate: number;     // YoY growth (0–1)
   revenue: number;        // annual revenue estimate
   color: string;
-  isCompany?: boolean;
+  isAndrews?: boolean;
   categories: string;
 }
 
 const MARKET_PLAYERS: MarketPlayer[] = [
   {
-    name: 'Lone Star Beverage',
+    name: 'Andrews Distributing',
     marketShare: 0.22,
     growthRate: 0.12,
     revenue: 128000000,
     color: '#C6A052',
-    isCompany: true,
+    isAndrews: true,
     categories: 'Molson Coors + Constellation + Heineken + Sazerac',
   },
   {
@@ -94,7 +94,7 @@ function revToRadius(rev: number): number {
 
 /* ── Acquisition timeline ────────────────────────────── */
 const TIMELINE = [
-  { year: '1976', title: 'Founded in Corpus Christi', desc: 'Founded as a single-territory Coors distributorship in South Texas.', color: '#C6A052' },
+  { year: '1976', title: 'Founded in Corpus Christi', desc: 'Barry & Lana Andrews launch a single-territory Coors distributorship.', color: '#C6A052' },
   { year: '2014', title: 'Coors Fort Worth Acquisition', desc: 'Expanded into western DFW with a 532,000 sq ft distribution center.', color: '#7C3AED' },
   { year: '2022', title: 'Price Distributing (Ennis)', desc: 'Acquired rural/semi-urban coverage between Dallas and Waco.', color: '#2563EB' },
   { year: '2024', title: 'Southern Distributing (Laredo)', desc: 'Border market acquisition — unlocks cross-border growth corridor.', color: '#F87171' },
@@ -138,7 +138,7 @@ export default function MarketPositionPage() {
           Market Position &amp; Growth
         </h1>
         <p className="text-[13px]" style={{ color: '#718096' }}>
-          Texas beverage distribution competitive landscape &middot; Lone Star is the fastest-growing distributor at +12% YoY
+          Texas beverage distribution competitive landscape &middot; Andrews is the fastest-growing distributor at +12% YoY
         </p>
       </div>
 
@@ -153,7 +153,7 @@ export default function MarketPositionPage() {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <linearGradient id="companyGlow" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="andrewsGlow" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#C6A052" stopOpacity="0.3" />
               <stop offset="100%" stopColor="#C6A052" stopOpacity="0.05" />
             </linearGradient>
@@ -213,13 +213,13 @@ export default function MarketPositionPage() {
             HIGH SHARE / HIGH GROWTH
           </text>
 
-          {/* Company highlight zone */}
+          {/* Andrews highlight zone */}
           {(() => {
-            const company = MARKET_PLAYERS[0];
-            const ax = toPlotX(company.marketShare);
-            const ay = toPlotY(company.growthRate);
+            const andrews = MARKET_PLAYERS[0];
+            const ax = toPlotX(andrews.marketShare);
+            const ay = toPlotY(andrews.growthRate);
             return (
-              <circle cx={ax} cy={ay} r={60} fill="url(#companyGlow)" />
+              <circle cx={ax} cy={ay} r={60} fill="url(#andrewsGlow)" />
             );
           })()}
 
@@ -229,7 +229,7 @@ export default function MarketPositionPage() {
             const y = toPlotY(player.growthRate);
             const r = revToRadius(player.revenue);
             const isHovered = hoveredPlayer === player.name;
-            const isCompany = player.isCompany;
+            const isAndrews = player.isAndrews;
 
             return (
               <g
@@ -238,8 +238,8 @@ export default function MarketPositionPage() {
                 onMouseLeave={() => setHoveredPlayer(null)}
                 style={{ cursor: 'pointer' }}
               >
-                {/* Outer ring for company */}
-                {isCompany && (
+                {/* Outer ring for Andrews */}
+                {isAndrews && (
                   <circle cx={x} cy={y} r={r + 6} fill="none" stroke={player.color} strokeWidth="2" strokeDasharray="4 3" opacity="0.5" />
                 )}
 
@@ -249,37 +249,37 @@ export default function MarketPositionPage() {
                   cy={y}
                   r={r}
                   fill={player.color}
-                  fillOpacity={isHovered ? 0.35 : isCompany ? 0.25 : 0.15}
+                  fillOpacity={isHovered ? 0.35 : isAndrews ? 0.25 : 0.15}
                   stroke={player.color}
-                  strokeWidth={isCompany ? 2.5 : isHovered ? 2 : 1.5}
-                  filter={isCompany ? 'url(#scatterGlow)' : undefined}
+                  strokeWidth={isAndrews ? 2.5 : isHovered ? 2 : 1.5}
+                  filter={isAndrews ? 'url(#scatterGlow)' : undefined}
                 />
 
                 {/* Inner circle */}
-                <circle cx={x} cy={y} r={r * 0.5} fill={player.color} fillOpacity={isCompany ? 0.5 : 0.3} />
+                <circle cx={x} cy={y} r={r * 0.5} fill={player.color} fillOpacity={isAndrews ? 0.5 : 0.3} />
 
                 {/* Name label */}
                 <text
                   x={x}
                   y={y - r - 8}
                   textAnchor="middle"
-                  fill={isCompany ? player.color : '#4A5568'}
-                  fontSize={isCompany ? 12 : 10}
-                  fontWeight={isCompany ? 800 : 600}
+                  fill={isAndrews ? player.color : '#4A5568'}
+                  fontSize={isAndrews ? 12 : 10}
+                  fontWeight={isAndrews ? 800 : 600}
                   fontFamily="'Space Grotesk', sans-serif"
                 >
                   {player.name}
                 </text>
 
-                {/* Growth arrow for company */}
-                {isCompany && (
+                {/* Growth arrow for Andrews */}
+                {isAndrews && (
                   <text x={x} y={y + 2} textAnchor="middle" dominantBaseline="central" fill={player.color} fontSize="12" fontWeight="800">
                     +12%
                   </text>
                 )}
 
                 {/* Hover tooltip */}
-                {isHovered && !isCompany && (
+                {isHovered && !isAndrews && (
                   <g>
                     <rect x={x - 70} y={y - r - 44} width={140} height={30} rx={6} fill="white" stroke="#E2E8F0" />
                     <text x={x} y={y - r - 32} textAnchor="middle" fill="#718096" fontSize="9" fontFamily="monospace">
@@ -301,9 +301,9 @@ export default function MarketPositionPage() {
             <div key={p.name} className="flex items-center gap-1.5">
               <div
                 className="w-3 h-3 rounded-full"
-                style={{ background: p.color, border: p.isCompany ? '2px solid #C6A052' : undefined }}
+                style={{ background: p.color, border: p.isAndrews ? '2px solid #C6A052' : undefined }}
               />
-              <span className="text-[10px] font-mono" style={{ color: p.isCompany ? '#C6A052' : '#718096', fontWeight: p.isCompany ? 700 : 400 }}>
+              <span className="text-[10px] font-mono" style={{ color: p.isAndrews ? '#C6A052' : '#718096', fontWeight: p.isAndrews ? 700 : 400 }}>
                 {p.name}
               </span>
             </div>
@@ -390,12 +390,12 @@ export default function MarketPositionPage() {
         </div>
       </div>
 
-      {/* Lone Star Advantage */}
+      {/* Andrews Advantage */}
       <div className="rounded-lg px-4 py-3 text-[12px]" style={{ background: 'rgba(198,160,82,0.06)', color: '#718096' }}>
-        <strong style={{ color: '#C6A052' }}>Lone Star Advantage:</strong>{' '}
+        <strong style={{ color: '#C6A052' }}>Andrews Advantage:</strong>{' '}
         Molson Coors + Constellation + Heineken alignment covers 81% of portfolio.
         Sazerac spirits partnership creates a differentiated position against beer-only competitors in South Texas.
-        At 22% share with +12% YoY growth, Lone Star is on track to overtake Silver Eagle by FY2027.
+        At 22% share with +12% YoY growth, Andrews is on track to overtake Silver Eagle by FY2027.
       </div>
     
     </>

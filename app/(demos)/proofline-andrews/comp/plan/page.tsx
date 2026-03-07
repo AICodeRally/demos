@@ -337,7 +337,7 @@ export default function CompPlanPage() {
 
       {/* Methodology */}
       <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
-        Compensation plan designed by PROOFLINE for Lone Star Beverage Co. FY2026. Tier rates are inverse to attainment to protect floor earnings.
+        Compensation plan designed by PROOFLINE for Andrews Distributing FY2026. Tier rates are inverse to attainment to protect floor earnings.
         EMCO gates cascade from Core → Import → Emerging → Combined. Spirits adder stacks on top of EMCO-adjusted variable.
         Kickers are quarterly bonus opportunities tied to seasonal events and supplier priorities.
       </div>

@@ -242,7 +242,7 @@ export default function ThirteenWeekStoryPage() {
       {/* Methodology */}
       <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
         The 13-Week Story follows Marcus Reyes (DAL-03) as a representative example. &quot;Before PROOFLINE&quot; estimates are based on
-        industry benchmarks for spreadsheet-managed comp programs. 5 milestone check-ins align with Lone Star Beverage&apos;s management rhythm.
+        industry benchmarks for spreadsheet-managed comp programs. 5 milestone check-ins align with Andrews Distributing&apos;s management rhythm.
       </div>
     
     </>

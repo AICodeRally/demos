@@ -111,7 +111,7 @@ export default function CeoMandatePage() {
             FY2026 Corporate Strategy
           </h1>
           <p className="text-[13px]" style={{ color: '#718096' }}>
-            Lone Star Beverage Co. &middot; Texas &amp; Southwest
+            Andrews Distributing &middot; North &amp; South Texas
           </p>
         </div>
       </div>

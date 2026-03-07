@@ -104,7 +104,7 @@ export default function TerritoryDesignPage() {
           Territory Design &middot; 6 Hometowns
         </div>
         <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
-          Texas &amp; Southwest Coverage
+          North &amp; South Texas Coverage
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
           {TOTAL_ROUTES} routes across {HOMETOWNS.length} distribution hometowns &middot; {fmt(TOTAL_ACCOUNTS)} total accounts
@@ -172,7 +172,7 @@ export default function TerritoryDesignPage() {
             const grad = attainGradient(avgAttain);
 
             return (
-              <Link key={hex.id} href={`/proofline/strategy/territories/${hex.id}`}>
+              <Link key={hex.id} href={`/proofline-andrews/strategy/territories/${hex.id}`}>
                 <g style={{ cursor: 'pointer' }} className="group">
                   {/* Hex background */}
                   <polygon
@@ -355,7 +355,7 @@ export default function TerritoryDesignPage() {
           const avgSparkline = routes[0]?.weeklyAttainment ?? [];
 
           return (
-            <Link key={h.id} href={`/proofline/strategy/territories/${h.id}`} className="group">
+            <Link key={h.id} href={`/proofline-andrews/strategy/territories/${h.id}`} className="group">
               <div
                 className="rounded-xl border bg-white p-5 transition-shadow hover:shadow-lg"
                 style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}

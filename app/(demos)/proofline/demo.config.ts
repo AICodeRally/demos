@@ -3,9 +3,9 @@ import { Beer } from 'lucide-react';
 
 export default defineDemo({
   client: {
-    name: 'Andrews Distributing',
+    name: 'Lone Star Beverage Co.',
     tagline: 'Revenue Operating System',
-    region: 'North & South Texas',
+    region: 'Texas & Southwest',
     logo: Beer,
   },
   product: {
@@ -67,7 +67,7 @@ export default defineDemo({
     },
   ],
   footer: {
-    copyright: '\u00A9 2026 Andrews Distributing',
+    copyright: '\u00A9 2026 Lone Star Beverage Co.',
     poweredBy: 'AICR',
   },
 });
