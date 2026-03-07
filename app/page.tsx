@@ -49,6 +49,14 @@ const demos = [
     color: '#8b5cf6',
     pages: 15,
   },
+  {
+    name: 'WELLSPRING',
+    slug: 'wellspring',
+    industry: 'Oil & Gas',
+    tagline: 'Field operations intelligence for upstream oil and gas producers',
+    color: '#B45309',
+    pages: 24,
+  },
 ];
 
 export default function PortfolioPage() {
