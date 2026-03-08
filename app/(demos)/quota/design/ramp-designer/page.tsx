@@ -308,8 +308,8 @@ export default function RampDesignerPage() {
                   borderRadius: 8,
                   fontSize: 12,
                 }}
-                formatter={(value: number, name: string) => [
-                  `$${value.toLocaleString()}`,
+                formatter={(value: number | undefined, name: string) => [
+                  `$${(value ?? 0).toLocaleString()}`,
                   name === 'fullQuota' ? 'Full Quota' : name === 'rampedQuota' ? 'Ramped Quota' : 'Expected Attainment',
                 ]}
               />
