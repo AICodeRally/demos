@@ -65,6 +65,14 @@ const demos = [
     color: '#B45309',
     pages: 24,
   },
+  {
+    name: 'QUOTA',
+    slug: 'quota',
+    industry: 'Sales Quota Management',
+    tagline: 'Intelligent quota planning, attainment tracking, and commission management',
+    color: '#f59e0b',
+    pages: 22,
+  },
 ];
 
 export default function PortfolioPage() {
