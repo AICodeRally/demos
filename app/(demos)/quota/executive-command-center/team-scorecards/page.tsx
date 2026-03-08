@@ -78,19 +78,19 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend: string; trendUp: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5 flex flex-col gap-2">
+    <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/50">{label}</span>
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5">
         {trendUp
-          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
-          : <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />
+          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-600" />
+          : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />
         }
-        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>{trend}</span>
-        <span className="text-xs text-white/40">{sub}</span>
+        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>{trend}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{sub}</span>
       </div>
     </div>
   );
@@ -105,8 +105,8 @@ export default function TeamScorecardsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Team Scorecards</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Team Scorecards</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Performance breakdown by team with individual rep metrics and cross-team comparison.
           </p>
         </div>
@@ -134,21 +134,21 @@ export default function TeamScorecardsPage() {
 
       {/* Team Comparison Bar Chart + Radar */}
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-          <h2 className="text-sm font-semibold text-white mb-4">Team Attainment Comparison</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Team Attainment Comparison</h2>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={comparisonData} margin={{ top: 10, right: 20, bottom: 0, left: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-              <XAxis dataKey="name" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
-              <YAxis domain={[0, 120]} tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 11 }} tickFormatter={v => `${v}%`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="name" tick={{ fill: '#64748B', fontSize: 12 }} />
+              <YAxis domain={[0, 120]} tick={{ fill: '#64748B', fontSize: 11 }} tickFormatter={v => `${v}%`} />
               <Tooltip
                 content={({ active, payload, label }: any) => {
                   if (!active || !payload?.length) return null;
                   return (
-                    <div className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-2 shadow-xl text-xs text-white">
+                    <div className="rounded-lg px-3 py-2 text-xs" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}>
                       <p className="font-medium mb-1">{label}</p>
                       <p>Attainment: {payload[0].value}%</p>
-                      <p className="text-white/50">{payload[0].payload.reps} reps</p>
+                      <p style={{ color: 'var(--prizym-text-muted)' }}>{payload[0].payload.reps} reps</p>
                     </div>
                   );
                 }}
@@ -162,12 +162,12 @@ export default function TeamScorecardsPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-          <h2 className="text-sm font-semibold text-white mb-4">Team Capability Radar</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Team Capability Radar</h2>
           <ResponsiveContainer width="100%" height={280}>
             <RadarChart data={radarData}>
-              <PolarGrid stroke="rgba(255,255,255,0.1)" />
-              <PolarAngleAxis dataKey="metric" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
+              <PolarGrid stroke="#E5E7EB" />
+              <PolarAngleAxis dataKey="metric" tick={{ fill: '#64748B', fontSize: 10 }} />
               <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
               <Radar name="Enterprise" dataKey="Enterprise" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.15} strokeWidth={2} />
               <Radar name="Mid-Market" dataKey="Mid-Market" stroke="#6366f1" fill="#6366f1" fillOpacity={0.1} strokeWidth={2} />
@@ -178,7 +178,7 @@ export default function TeamScorecardsPage() {
             {teamData.map(t => (
               <div key={t.name} className="flex items-center gap-1.5">
                 <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: t.color }} />
-                <span className="text-xs text-white/50">{t.name}</span>
+                <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{t.name}</span>
               </div>
             ))}
           </div>
@@ -192,39 +192,39 @@ export default function TeamScorecardsPage() {
           const sortedReps = [...team.reps].sort((a, b) => (b.actual / b.quota) - (a.actual / a.quota));
 
           return (
-            <div key={team.name} className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+            <div key={team.name} className="rounded-xl overflow-hidden" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
               {/* Team Header */}
               <button
                 onClick={() => setExpandedTeam(isExpanded ? null : team.name)}
-                className="w-full px-5 py-4 flex items-center justify-between hover:bg-white/5 transition"
+                className="w-full px-5 py-4 flex items-center justify-between hover:opacity-90 transition"
               >
                 <div className="flex items-center gap-4">
                   <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: team.color + '20' }}>
                     <Users className="h-5 w-5" style={{ color: team.color }} />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-white">{team.name}</p>
-                    <p className="text-xs text-white/40">{team.reps.length} reps &middot; {team.repsAbove} above quota</p>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{team.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{team.reps.length} reps &middot; {team.repsAbove} above quota</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-8">
                   <div className="text-right">
-                    <p className="text-xs text-white/40">Revenue</p>
-                    <p className="text-sm font-bold text-white">{fmtDollar(team.totalActual)}</p>
+                    <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Revenue</p>
+                    <p className="text-sm font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{fmtDollar(team.totalActual)}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-white/40">Quota</p>
-                    <p className="text-sm font-medium text-white/60">{fmtDollar(team.totalQuota)}</p>
+                    <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Quota</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-secondary)' }}>{fmtDollar(team.totalQuota)}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-white/40">Attainment</p>
-                    <p className={`text-sm font-bold ${team.attainment >= 100 ? 'text-emerald-400' : team.attainment >= 90 ? 'text-amber-400' : 'text-red-400'}`}>
+                    <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</p>
+                    <p className={`text-sm font-bold ${team.attainment >= 100 ? 'text-emerald-600' : team.attainment >= 90 ? 'text-amber-400' : 'text-red-600'}`}>
                       {team.attainment}%
                     </p>
                   </div>
                   <div className="w-32 hidden lg:block">
-                    <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -234,13 +234,13 @@ export default function TeamScorecardsPage() {
                       />
                     </div>
                   </div>
-                  <ChevronRight className={`h-4 w-4 text-white/40 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                  <ChevronRight className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-90' : ''}`} style={{ color: 'var(--prizym-text-muted)' }} />
                 </div>
               </button>
 
               {/* Expanded Rep List */}
               {isExpanded && (
-                <div className="border-t border-white/10 px-5 py-4">
+                <div className="px-5 py-4" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
                   <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                     {sortedReps.map((rep, i) => {
                       const att = (rep.actual / rep.quota) * 100;
@@ -248,24 +248,25 @@ export default function TeamScorecardsPage() {
                       return (
                         <div
                           key={rep.id}
-                          className={`rounded-lg border p-4 transition ${
-                            isTop ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/10 bg-white/5'
+                          className={`rounded-lg p-4 transition ${
+                            isTop ? 'border border-amber-500/30 bg-amber-500/5' : ''
                           }`}
+                          style={isTop ? undefined : { background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}
                         >
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <p className="text-sm font-semibold text-white">{rep.name}</p>
+                                <p className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{rep.name}</p>
                                 {isTop && <Star className="h-3.5 w-3.5 text-amber-400" />}
                               </div>
-                              <p className="text-xs text-white/40 mt-0.5">{rep.territory}</p>
+                              <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{rep.territory}</p>
                             </div>
-                            <span className={`text-lg font-bold ${att >= 100 ? 'text-emerald-400' : att >= 85 ? 'text-amber-400' : 'text-red-400'}`}>
+                            <span className={`text-lg font-bold ${att >= 100 ? 'text-emerald-600' : att >= 85 ? 'text-amber-400' : 'text-red-600'}`}>
                               {fmtPct(att)}
                             </span>
                           </div>
 
-                          <div className="h-2 rounded-full bg-white/10 mb-3 overflow-hidden">
+                          <div className="h-2 rounded-full mb-3 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                             <div
                               className="h-full rounded-full"
                               style={{
@@ -277,19 +278,19 @@ export default function TeamScorecardsPage() {
 
                           <div className="flex justify-between text-xs">
                             <div>
-                              <span className="text-white/40">Actual</span>
-                              <p className="font-medium text-white">{fmtDollar(rep.actual)}</p>
+                              <span style={{ color: 'var(--prizym-text-muted)' }}>Actual</span>
+                              <p className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{fmtDollar(rep.actual)}</p>
                             </div>
                             <div className="text-right">
-                              <span className="text-white/40">Quota</span>
-                              <p className="font-medium text-white/60">{fmtDollar(rep.quota)}</p>
+                              <span style={{ color: 'var(--prizym-text-muted)' }}>Quota</span>
+                              <p className="font-medium" style={{ color: 'var(--prizym-text-secondary)' }}>{fmtDollar(rep.quota)}</p>
                             </div>
                           </div>
 
                           {att >= 100 && (
-                            <div className="mt-3 pt-3 border-t border-white/10 flex items-center gap-1.5">
-                              <Zap className="h-3 w-3 text-emerald-400" />
-                              <span className="text-[10px] font-medium text-emerald-400 uppercase">
+                            <div className="mt-3 pt-3 flex items-center gap-1.5" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
+                              <Zap className="h-3 w-3 text-emerald-600" />
+                              <span className="text-[10px] font-medium text-emerald-600 uppercase">
                                 Accelerator Eligible &middot; +{fmtDollar(rep.actual - rep.quota)} over
                               </span>
                             </div>
@@ -300,16 +301,16 @@ export default function TeamScorecardsPage() {
                   </div>
 
                   {/* Team Summary Bar */}
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-6 text-xs text-white/50">
+                  <div className="mt-4 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
+                    <div className="flex items-center gap-6 text-xs" style={{ color: 'var(--prizym-text-muted)' }}>
                       <span>Team Quota: {fmtDollar(team.totalQuota)}</span>
                       <span>Team Revenue: {fmtDollar(team.totalActual)}</span>
-                      <span className={team.totalActual >= team.totalQuota ? 'text-emerald-400 font-medium' : 'text-amber-400 font-medium'}>
+                      <span className={team.totalActual >= team.totalQuota ? 'text-emerald-600 font-medium' : 'text-amber-400 font-medium'}>
                         Gap: {fmtDollar(Math.abs(team.totalQuota - team.totalActual))}
                         {team.totalActual >= team.totalQuota ? ' surplus' : ' shortfall'}
                       </span>
                     </div>
-                    <span className="text-xs text-white/30">Updated 12 min ago</span>
+                    <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Updated 12 min ago</span>
                   </div>
                 </div>
               )}
@@ -319,32 +320,32 @@ export default function TeamScorecardsPage() {
       </div>
 
       {/* Cross-Team Insights */}
-      <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-5">
-        <h2 className="text-sm font-semibold text-white mb-4">Cross-Team Insights</h2>
+      <div className="mt-6 rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Cross-Team Insights</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <Trophy className="h-4 w-4 text-emerald-400" />
-              <span className="text-xs font-semibold text-emerald-400 uppercase">Top Team</span>
+              <Trophy className="h-4 w-4 text-emerald-600" />
+              <span className="text-xs font-semibold text-emerald-600 uppercase">Top Team</span>
             </div>
-            <p className="text-sm font-medium text-white">Mid-Market</p>
-            <p className="text-xs text-white/50 mt-1">105% attainment with highest consistency across reps</p>
+            <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>Mid-Market</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>105% attainment with highest consistency across reps</p>
           </div>
           <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4 text-amber-400" />
               <span className="text-xs font-semibold text-amber-400 uppercase">Fastest Growing</span>
             </div>
-            <p className="text-sm font-medium text-white">SMB</p>
-            <p className="text-xs text-white/50 mt-1">David Kim at 110% driving Pacific NW growth</p>
+            <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>SMB</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>David Kim at 110% driving Pacific NW growth</p>
           </div>
           <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <Target className="h-4 w-4 text-red-400" />
-              <span className="text-xs font-semibold text-red-400 uppercase">Needs Attention</span>
+              <Target className="h-4 w-4 text-red-600" />
+              <span className="text-xs font-semibold text-red-600 uppercase">Needs Attention</span>
             </div>
-            <p className="text-sm font-medium text-white">Enterprise</p>
-            <p className="text-xs text-white/50 mt-1">2 of 3 reps below quota; Northeast and West regions lagging</p>
+            <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>Enterprise</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>2 of 3 reps below quota; Northeast and West regions lagging</p>
           </div>
         </div>
       </div>

@@ -57,13 +57,13 @@ export default function PerformanceTrackingPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Performance Tracking</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Tracking</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Monitor individual and team performance against quota targets with real-time activity metrics.
           </p>
         </div>
         <div className="flex gap-2">
-          <select className="px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10">
+          <select className="px-3 py-1.5 text-xs rounded-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
             <option>This Quarter</option>
             <option>Last Quarter</option>
             <option>YTD</option>
@@ -77,15 +77,15 @@ export default function PerformanceTrackingPage() {
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         {kpis.map(k => (
-          <div key={k.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-muted-foreground uppercase tracking-wider">{k.label}</span>
+              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
-            <p className="text-2xl font-bold tracking-tight">{k.value}</p>
+            <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
             <div className="flex items-center gap-1 mt-1">
-              {k.up ? <ArrowUpRight className="h-3 w-3 text-emerald-400" /> : <ArrowDownRight className="h-3 w-3 text-red-400" />}
-              <span className={`text-xs ${k.up ? 'text-emerald-400' : 'text-red-400'}`}>{k.delta}</span>
+              {k.up ? <ArrowUpRight className="h-3 w-3 text-emerald-600" /> : <ArrowDownRight className="h-3 w-3 text-red-600" />}
+              <span className={`text-xs ${k.up ? 'text-emerald-600' : 'text-red-600'}`}>{k.delta}</span>
             </div>
           </div>
         ))}
@@ -93,16 +93,16 @@ export default function PerformanceTrackingPage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Rep Attainment Chart */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Attainment Ranking</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Attainment Ranking</h2>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={repChart} margin={{ left: 0, right: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <YAxis domain={[0, 130]} tickFormatter={v => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="name" tick={{ fill: '#64748B', fontSize: 11 }} />
+                <YAxis domain={[0, 130]} tickFormatter={v => `${v}%`} tick={{ fill: '#64748B', fontSize: 11 }} />
                 <Tooltip
-                  contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                   formatter={(v: any) => [`${v}%`, 'Attainment']}
                 />
                 <Bar dataKey="attainment" radius={[4, 4, 0, 0]} maxBarSize={36}>
@@ -116,8 +116,8 @@ export default function PerformanceTrackingPage() {
         </div>
 
         {/* Weekly Trend */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Weekly Performance Trend</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Weekly Performance Trend</h2>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={weeklyTrend} margin={{ left: 0, right: 10 }}>
@@ -127,11 +127,11 @@ export default function PerformanceTrackingPage() {
                     <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="week" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <YAxis domain={[70, 100]} tickFormatter={v => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="week" tick={{ fill: '#64748B', fontSize: 11 }} />
+                <YAxis domain={[70, 100]} tickFormatter={v => `${v}%`} tick={{ fill: '#64748B', fontSize: 11 }} />
                 <Tooltip
-                  contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                   formatter={(v: any, name: any) => [
                     name === 'attainment' ? `${v}%` : v,
                     name === 'attainment' ? 'Attainment' : name,
@@ -145,8 +145,8 @@ export default function PerformanceTrackingPage() {
       </div>
 
       {/* Revenue Trend */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 mb-6">
-        <h2 className="text-sm font-semibold mb-4">Monthly Revenue Trend</h2>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Monthly Revenue Trend</h2>
         <div className="h-56">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={MONTHLY_TREND} margin={{ left: 10, right: 10 }}>
@@ -156,11 +156,11 @@ export default function PerformanceTrackingPage() {
                   <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-              <XAxis dataKey="month" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="month" tick={{ fill: '#64748B', fontSize: 11 }} />
+              <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#64748B', fontSize: 11 }} />
               <Tooltip
-                contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                 formatter={(v: any) => [fmtDollar(v), 'Revenue']}
               />
               <Area type="monotone" dataKey="revenue" stroke="#f59e0b" fill="url(#revGrad)" strokeWidth={2} dot={{ fill: '#f59e0b', r: 3 }} />
@@ -170,12 +170,12 @@ export default function PerformanceTrackingPage() {
       </div>
 
       {/* Activity Metrics Table */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <h2 className="text-sm font-semibold mb-4">Activity Metrics (Last 30 Days)</h2>
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Activity Metrics (Last 30 Days)</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-muted-foreground text-xs uppercase tracking-wider">
+              <tr className="text-xs uppercase tracking-wider" style={{ borderBottom: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                 <th className="text-left py-3 pr-4">Rep</th>
                 <th className="text-center py-3 pr-4">
                   <div className="flex items-center justify-center gap-1"><Phone className="h-3 w-3" /> Calls</div>
@@ -194,15 +194,15 @@ export default function PerformanceTrackingPage() {
             </thead>
             <tbody>
               {activityData.map(a => (
-                <tr key={a.rep} className="border-b border-white/5 hover:bg-white/[0.02] transition">
-                  <td className="py-3 pr-4 font-medium">{a.rep}</td>
+                <tr key={a.rep} className="transition hover:opacity-80" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                  <td className="py-3 pr-4 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{a.rep}</td>
                   <td className="py-3 pr-4 text-center font-mono text-xs">{a.calls}</td>
                   <td className="py-3 pr-4 text-center font-mono text-xs">{a.meetings}</td>
                   <td className="py-3 pr-4 text-center font-mono text-xs">{a.proposals}</td>
                   <td className="py-3 pr-4 text-center font-mono text-xs">{a.emails}</td>
                   <td className="py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <div className="w-16 bg-white/10 rounded-full h-1.5 overflow-hidden">
+                      <div className="w-16 rounded-full h-1.5 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                         <div
                           className="h-full rounded-full"
                           style={{
@@ -211,7 +211,7 @@ export default function PerformanceTrackingPage() {
                           }}
                         />
                       </div>
-                      <span className={`text-xs font-semibold ${a.score >= 90 ? 'text-emerald-400' : a.score >= 70 ? 'text-amber-400' : 'text-red-400'}`}>
+                      <span className={`text-xs font-semibold ${a.score >= 90 ? 'text-emerald-600' : a.score >= 70 ? 'text-amber-400' : 'text-red-600'}`}>
                         {a.score}
                       </span>
                     </div>

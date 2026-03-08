@@ -9,18 +9,18 @@ import {
 function Toggle({ on }: { on: boolean }) {
   return on
     ? <ToggleRight className="h-5 w-5 text-amber-400" />
-    : <ToggleLeft className="h-5 w-5 text-white/30" />;
+    : <ToggleLeft className="h-5 w-5 text-slate-300" />;
 }
 
 /* ── Setting row ───────────────────────────────────────────────── */
 function SettingRow({ label, value, sub }: { label: string; value: React.ReactNode; sub?: string }) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
+    <div className="flex items-center justify-between py-3 last:border-0" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
       <div>
-        <p className="text-sm font-medium text-white">{label}</p>
-        {sub && <p className="text-xs text-white/40 mt-0.5">{sub}</p>}
+        <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{label}</p>
+        {sub && <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{sub}</p>}
       </div>
-      <div className="text-sm text-white/70 font-mono">{value}</div>
+      <div className="text-sm font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>{value}</div>
     </div>
   );
 }
@@ -28,13 +28,13 @@ function SettingRow({ label, value, sub }: { label: string; value: React.ReactNo
 /* ── Status pill ───────────────────────────────────────────────── */
 function StatusPill({ status }: { status: 'active' | 'disabled' | 'scheduled' }) {
   const colors = {
-    active: 'bg-emerald-500/20 text-emerald-400',
-    disabled: 'bg-white/10 text-white/40',
+    active: 'bg-emerald-500/20 text-emerald-600',
+    disabled: 'bg-slate-100 text-slate-400',
     scheduled: 'bg-amber-500/20 text-amber-400',
   };
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${colors[status]}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${status === 'active' ? 'bg-emerald-400' : status === 'scheduled' ? 'bg-amber-400' : 'bg-white/30'}`} />
+      <span className={`h-1.5 w-1.5 rounded-full ${status === 'active' ? 'bg-emerald-400' : status === 'scheduled' ? 'bg-amber-400' : 'bg-slate-300'}`} />
       {status}
     </span>
   );
@@ -45,13 +45,13 @@ function SectionCard({ title, icon: Icon, status, children }: {
   title: string; icon: React.ElementType; status: 'active' | 'disabled' | 'scheduled'; children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+    <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10">
             <Icon className="h-4 w-4 text-amber-400" />
           </div>
-          <h2 className="text-sm font-semibold text-white">{title}</h2>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{title}</h2>
         </div>
         <StatusPill status={status} />
       </div>
@@ -67,13 +67,13 @@ export default function SystemConfigurationPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">System Configuration</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>System Configuration</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Configure calculation methods, business rules, and global platform settings.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="flex items-center gap-1.5 text-xs text-white/40">
+          <span className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--prizym-text-muted)' }}>
             <Clock className="h-3 w-3" /> Last saved 12 min ago
           </span>
           <button className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-black hover:bg-amber-400 transition">
@@ -86,10 +86,10 @@ export default function SystemConfigurationPage() {
       <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Settings className="h-4 w-4 text-amber-400" />
-          <span className="text-xs text-white/70">Environment: <span className="font-semibold text-amber-400">Production</span></span>
-          <span className="text-xs text-white/30 ml-2">Tenant: Blue Horizons Group</span>
+          <span className="text-xs" style={{ color: 'var(--prizym-text-secondary)' }}>Environment: <span className="font-semibold text-amber-400">Production</span></span>
+          <span className="text-xs ml-2" style={{ color: 'var(--prizym-text-muted)' }}>Tenant: Blue Horizons Group</span>
         </div>
-        <button className="flex items-center gap-1 text-xs text-white/40 hover:text-white/70 transition">
+        <button className="flex items-center gap-1 text-xs transition" style={{ color: 'var(--prizym-text-muted)' }}>
           Switch <ChevronDown className="h-3 w-3" />
         </button>
       </div>
@@ -115,7 +115,7 @@ export default function SystemConfigurationPage() {
           <SettingRow label="Parallel Workers" value="8 threads" />
           <SettingRow label="Queue Depth" value="342" sub="Current pending calculations" />
           <SettingRow label="Avg Calc Time" value="1.2s" sub="P95: 3.4s" />
-          <SettingRow label="Error Rate" value={<span className="text-emerald-400">0.02%</span>} sub="Last 30 days" />
+          <SettingRow label="Error Rate" value={<span className="text-emerald-600">0.02%</span>} sub="Last 30 days" />
         </SectionCard>
 
         {/* Currency & Rounding */}
@@ -150,7 +150,7 @@ export default function SystemConfigurationPage() {
             <div className="grid gap-0 md:grid-cols-3 md:gap-6">
               {/* Email */}
               <div>
-                <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-3">Email</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-muted)' }}>Email</h3>
                 <SettingRow label="Quota Assigned" value={<Toggle on />} />
                 <SettingRow label="Deal Closed" value={<Toggle on />} />
                 <SettingRow label="Commission Paid" value={<Toggle on />} />
@@ -160,7 +160,7 @@ export default function SystemConfigurationPage() {
               </div>
               {/* Slack */}
               <div>
-                <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-3">Slack</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-muted)' }}>Slack</h3>
                 <SettingRow label="#sales-quota" value={<Toggle on />} />
                 <SettingRow label="#leadership" value={<Toggle on />} />
                 <SettingRow label="DM on Dispute" value={<Toggle on />} />
@@ -170,7 +170,7 @@ export default function SystemConfigurationPage() {
               </div>
               {/* In-App */}
               <div>
-                <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-3">In-App</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-muted)' }}>In-App</h3>
                 <SettingRow label="Toast Notifications" value={<Toggle on />} />
                 <SettingRow label="Badge Count" value={<Toggle on />} />
                 <SettingRow label="Sound Alerts" value={<Toggle on={false} />} />
@@ -184,11 +184,11 @@ export default function SystemConfigurationPage() {
       </div>
 
       {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-        <p className="text-xs text-white/30">Configuration v2.4.1 — 14 settings modified since last deploy</p>
+      <div className="mt-6 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
+        <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Configuration v2.4.1 — 14 settings modified since last deploy</p>
         <div className="flex items-center gap-4">
-          <button className="text-xs text-white/40 hover:text-white/70 transition">Reset to Defaults</button>
-          <button className="text-xs text-white/40 hover:text-white/70 transition">Export Config</button>
+          <button className="text-xs transition" style={{ color: 'var(--prizym-text-muted)' }}>Reset to Defaults</button>
+          <button className="text-xs transition" style={{ color: 'var(--prizym-text-muted)' }}>Export Config</button>
           <button className="text-xs text-amber-400 hover:text-amber-300 font-medium transition">View Change History</button>
         </div>
       </div>

@@ -18,20 +18,20 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-5 flex flex-col gap-1">
+    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</span>
+        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5 mt-0.5">
         {trend && (
-          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-500' : 'text-red-400'}`}>
+          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>
             {trendUp ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
             {trend}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{subtitle}</span>
       </div>
     </div>
   );
@@ -79,7 +79,7 @@ const SUCCESS_PATTERNS = [
     description: 'Top performers engage 3.2 stakeholders per deal vs. 1.8 for average reps. They identify economic buyers earlier and build broader consensus.',
     impact: '+24% win rate',
     icon: Users,
-    color: 'text-emerald-400',
+    color: 'text-emerald-600',
     bgColor: 'bg-emerald-500/10',
   },
   {
@@ -123,8 +123,8 @@ export default function QuotaAttainmentInsightsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Quota Attainment Insights</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Quota Attainment Insights</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Attainment distribution analysis with peer benchmarks and success patterns.
           </p>
         </div>
@@ -139,16 +139,16 @@ export default function QuotaAttainmentInsightsPage() {
       </div>
 
       {/* Attainment Distribution */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
-        <h2 className="font-semibold mb-1">Attainment Distribution</h2>
-        <p className="text-xs text-muted-foreground mb-4">Number of reps in each attainment bracket</p>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Attainment Distribution</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Number of reps in each attainment bracket</p>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={DISTRIBUTION_BUCKETS} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="bucket" tick={{ fill: '#888', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#888', fontSize: 12 }} allowDecimals={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="bucket" tick={{ fill: '#64748B', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#64748B', fontSize: 12 }} allowDecimals={false} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+              contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
               formatter={(v: any) => [`${v} reps`, 'Count']}
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>
@@ -158,7 +158,7 @@ export default function QuotaAttainmentInsightsPage() {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground justify-center">
+        <div className="flex items-center gap-4 mt-3 text-xs justify-center" style={{ color: 'var(--prizym-text-muted)' }}>
           <span>Target: bell curve centered at 100%</span>
           <span className="text-amber-400">|</span>
           <span>Current: {DISTRIBUTION_BUCKETS.filter(b => b.count > 0 && b.min >= 100).reduce((s, b) => s + b.count, 0)} of {REPS.length} reps at or above quota</span>
@@ -167,16 +167,16 @@ export default function QuotaAttainmentInsightsPage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Individual Rep Attainment */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Individual Rep Attainment</h2>
-          <p className="text-xs text-muted-foreground mb-4">Ranked by quota attainment percentage</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Individual Rep Attainment</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Ranked by quota attainment percentage</p>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={repAttainments} layout="vertical" margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" horizontal={false} />
-              <XAxis type="number" domain={[0, 130]} tick={{ fill: '#888', fontSize: 11 }} tickFormatter={(v: number) => `${v}%`} />
-              <YAxis type="category" dataKey="name" tick={{ fill: '#888', fontSize: 11 }} width={120} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
+              <XAxis type="number" domain={[0, 130]} tick={{ fill: '#64748B', fontSize: 11 }} tickFormatter={(v: number) => `${v}%`} />
+              <YAxis type="category" dataKey="name" tick={{ fill: '#64748B', fontSize: 11 }} width={120} />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+                contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                 formatter={(v: any) => [`${v}%`, 'Attainment']}
               />
               <Bar dataKey="attainment" radius={[0, 4, 4, 0]}>
@@ -189,31 +189,31 @@ export default function QuotaAttainmentInsightsPage() {
         </div>
 
         {/* Quartile Analysis */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Quartile Analysis</h2>
-          <p className="text-xs text-muted-foreground mb-4">Performance segmented by quartile rank</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Quartile Analysis</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Performance segmented by quartile rank</p>
           <div className="space-y-3">
             {QUARTILE_DATA.map((q, i) => (
-              <div key={q.quartile} className="flex items-center gap-4 p-3 rounded-lg bg-muted/30">
+              <div key={q.quartile} className="flex items-center gap-4 p-3 rounded-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold ${
-                  i === 0 ? 'bg-emerald-500/20 text-emerald-400'
+                  i === 0 ? 'bg-emerald-500/20 text-emerald-600'
                   : i === 1 ? 'bg-amber-500/20 text-amber-400'
                   : i === 2 ? 'bg-orange-500/20 text-orange-400'
-                  : 'bg-red-500/20 text-red-400'
+                  : 'bg-red-500/20 text-red-600'
                 }`}>
                   {q.quartile.charAt(0)}{q.quartile.charAt(1)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{q.label}</p>
-                  <p className="text-xs text-muted-foreground">{q.reps} reps</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{q.label}</p>
+                  <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{q.reps} reps</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-semibold">{q.avgAttainment}%</p>
-                  <p className="text-xs text-muted-foreground">avg attainment</p>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{q.avgAttainment}%</p>
+                  <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>avg attainment</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-semibold">{fmtDollar(q.avgRevenue)}</p>
-                  <p className="text-xs text-muted-foreground">avg revenue</p>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{fmtDollar(q.avgRevenue)}</p>
+                  <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>avg revenue</p>
                 </div>
               </div>
             ))}
@@ -222,20 +222,20 @@ export default function QuotaAttainmentInsightsPage() {
       </div>
 
       {/* Peer Benchmarks */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <BarChart3 className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">Peer Benchmark Comparison</h2>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Peer Benchmark Comparison</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Metric</th>
+              <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="text-left py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Metric</th>
                 <th className="text-center py-3 px-4 font-medium text-amber-500">Your Company</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">Industry Avg</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">Top 25%</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">vs. Industry</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Industry Avg</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Top 25%</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>vs. Industry</th>
               </tr>
             </thead>
             <tbody>
@@ -244,13 +244,13 @@ export default function QuotaAttainmentInsightsPage() {
                 const industryNum = parseFloat(b.industry);
                 const isAbove = companyNum > industryNum;
                 return (
-                  <tr key={b.metric} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                    <td className="py-3 px-4 font-medium">{b.metric}</td>
+                  <tr key={b.metric} className="transition-colors" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                    <td className="py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{b.metric}</td>
                     <td className="py-3 px-4 text-center font-semibold text-amber-400">{b.company}</td>
-                    <td className="py-3 px-4 text-center text-muted-foreground">{b.industry}</td>
-                    <td className="py-3 px-4 text-center text-muted-foreground">{b.top25}</td>
+                    <td className="py-3 px-4 text-center" style={{ color: 'var(--prizym-text-muted)' }}>{b.industry}</td>
+                    <td className="py-3 px-4 text-center" style={{ color: 'var(--prizym-text-muted)' }}>{b.top25}</td>
                     <td className="py-3 px-4 text-center">
-                      <span className={`flex items-center justify-center gap-1 text-xs font-medium ${isAbove ? 'text-emerald-400' : 'text-red-400'}`}>
+                      <span className={`flex items-center justify-center gap-1 text-xs font-medium ${isAbove ? 'text-emerald-600' : 'text-red-600'}`}>
                         {isAbove ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
                         {isAbove ? 'Above' : 'Below'}
                       </span>
@@ -264,32 +264,32 @@ export default function QuotaAttainmentInsightsPage() {
       </div>
 
       {/* Success Patterns */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <Lightbulb className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">What Top Performers Do Differently</h2>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>What Top Performers Do Differently</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {SUCCESS_PATTERNS.map(p => (
-            <div key={p.title} className="p-4 rounded-lg border border-border/50 hover:border-amber-500/30 transition-colors">
+            <div key={p.title} className="p-4 rounded-lg hover:border-amber-500/30 transition-colors" style={{ border: '1px solid var(--prizym-border-default)' }}>
               <div className="flex items-start gap-3">
                 <div className={`w-9 h-9 rounded-lg ${p.bgColor} flex items-center justify-center shrink-0`}>
                   <p.icon className={`h-4 w-4 ${p.color}`} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-semibold">{p.title}</h3>
+                    <h3 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{p.title}</h3>
                     <span className={`text-xs px-2 py-0.5 rounded ${p.bgColor} ${p.color} font-medium`}>
                       {p.impact}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{p.description}</p>
+                  <p className="text-xs mt-1.5 leading-relaxed" style={{ color: 'var(--prizym-text-muted)' }}>{p.description}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: 'var(--prizym-text-muted)' }}>
           <ChevronRight className="h-3 w-3" />
           <span>Based on analysis of 8 reps over 12 months. Patterns validated against industry research.</span>
         </div>

@@ -59,13 +59,13 @@ export default function PipelineManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Pipeline Management</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Pipeline Management</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Visualize, track, and manage your sales pipeline from prospecting through close.
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition">
+          <button className="px-3 py-1.5 text-xs rounded-lg transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
             Pipeline Review
           </button>
           <button className="px-3 py-1.5 text-xs rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition">
@@ -77,30 +77,30 @@ export default function PipelineManagementPage() {
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         {kpis.map(k => (
-          <div key={k.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-muted-foreground uppercase tracking-wider">{k.label}</span>
+              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
-            <p className="text-2xl font-bold tracking-tight">{k.value}</p>
+            <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
             <div className="flex items-center gap-1 mt-1">
-              <ArrowUpRight className="h-3 w-3 text-emerald-400" />
-              <span className="text-xs text-emerald-400">{k.delta}</span>
+              <ArrowUpRight className="h-3 w-3 text-emerald-600" />
+              <span className="text-xs text-emerald-600">{k.delta}</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* Pipeline Funnel */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 mb-6">
-        <h2 className="text-sm font-semibold mb-5">Pipeline Funnel</h2>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-5" style={{ color: 'var(--prizym-text-primary)' }}>Pipeline Funnel</h2>
         <div className="space-y-3 max-w-2xl mx-auto">
           {PIPELINE.map((p, i) => {
             const widthPct = (p.value / maxVal) * 100;
             return (
               <div key={p.stage} className="relative">
                 <div className="flex items-center gap-4">
-                  <div className="w-28 text-xs text-right text-muted-foreground shrink-0">{p.stage}</div>
+                  <div className="w-28 text-xs text-right shrink-0" style={{ color: 'var(--prizym-text-muted)' }}>{p.stage}</div>
                   <div className="flex-1">
                     <div
                       className="h-10 rounded-lg flex items-center px-3 transition-all relative overflow-hidden"
@@ -119,13 +119,13 @@ export default function PipelineManagementPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="w-20 text-xs text-muted-foreground shrink-0">
+                  <div className="w-20 text-xs shrink-0" style={{ color: 'var(--prizym-text-muted)' }}>
                     {p.deals} deals
                   </div>
                 </div>
                 {i < PIPELINE.length - 1 && (
                   <div className="flex justify-center my-1">
-                    <ChevronDown className="h-3 w-3 text-white/20" />
+                    <ChevronDown className="h-3 w-3" style={{ color: 'var(--prizym-text-muted)' }} />
                   </div>
                 )}
               </div>
@@ -136,16 +136,16 @@ export default function PipelineManagementPage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Pipeline Value by Stage */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Value by Stage</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Value by Stage</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={PIPELINE} margin={{ left: 10, right: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="stage" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-                <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="stage" tick={{ fill: '#64748B', fontSize: 10 }} />
+                <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#64748B', fontSize: 11 }} />
                 <Tooltip
-                  contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                   formatter={(v: any) => [fmtDollar(v), 'Value']}
                 />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={40}>
@@ -159,8 +159,8 @@ export default function PipelineManagementPage() {
         </div>
 
         {/* Pipeline Velocity */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Deal Velocity Trend</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Deal Velocity Trend</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={velocityTrend} margin={{ left: 0, right: 10 }}>
@@ -170,11 +170,11 @@ export default function PipelineManagementPage() {
                     <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="week" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="week" tick={{ fill: '#64748B', fontSize: 11 }} />
+                <YAxis tick={{ fill: '#64748B', fontSize: 11 }} />
                 <Tooltip
-                  contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                 />
                 <Area type="monotone" dataKey="created" stroke="#f59e0b" fill="url(#velGrad)" strokeWidth={2} name="Created" />
                 <Area type="monotone" dataKey="closed" stroke="#34d399" fill="none" strokeWidth={2} strokeDasharray="4 2" name="Closed" />
@@ -185,12 +185,12 @@ export default function PipelineManagementPage() {
       </div>
 
       {/* Stage Detail Table */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 mb-6">
-        <h2 className="text-sm font-semibold mb-4">Stage Breakdown</h2>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Stage Breakdown</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-muted-foreground text-xs uppercase tracking-wider">
+              <tr className="text-xs uppercase tracking-wider" style={{ borderBottom: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                 <th className="text-left py-3 pr-4">Stage</th>
                 <th className="text-right py-3 pr-4">Deals</th>
                 <th className="text-right py-3 pr-4">Value</th>
@@ -201,11 +201,11 @@ export default function PipelineManagementPage() {
             </thead>
             <tbody>
               {PIPELINE.map((p, i) => (
-                <tr key={p.stage} className="border-b border-white/5 hover:bg-white/[0.02] transition">
+                <tr key={p.stage} className="transition hover:opacity-80" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                   <td className="py-3 pr-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full" style={{ background: funnelColors[i] }} />
-                      <span className="font-medium">{p.stage}</span>
+                      <span className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{p.stage}</span>
                     </div>
                   </td>
                   <td className="py-3 pr-4 text-right font-mono text-xs">{p.deals}</td>
@@ -219,7 +219,7 @@ export default function PipelineManagementPage() {
               ))}
             </tbody>
             <tfoot>
-              <tr className="border-t border-white/10">
+              <tr style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
                 <td className="py-3 font-semibold">Total</td>
                 <td className="py-3 pr-4 text-right font-mono">{totalDeals}</td>
                 <td className="py-3 pr-4 text-right font-mono">{fmtDollar(totalPipeline)}</td>
@@ -235,22 +235,22 @@ export default function PipelineManagementPage() {
       {/* Stalled Deals */}
       <div className="rounded-xl border border-red-400/20 bg-red-400/[0.03] p-5">
         <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="h-4 w-4 text-red-400" />
-          <h2 className="text-sm font-semibold text-red-400">Stalled Deals ({stalledDeals.length})</h2>
+          <AlertTriangle className="h-4 w-4 text-red-600" />
+          <h2 className="text-sm font-semibold text-red-600">Stalled Deals ({stalledDeals.length})</h2>
         </div>
         <div className="space-y-3">
           {stalledDeals.map(d => (
-            <div key={d.name} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+            <div key={d.name} className="flex items-center justify-between py-2 last:border-0" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
               <div>
-                <span className="font-medium text-sm">{d.name}</span>
+                <span className="font-medium text-sm" style={{ color: 'var(--prizym-text-primary)' }}>{d.name}</span>
                 <div className="flex items-center gap-3 mt-0.5">
-                  <span className="text-xs text-muted-foreground">{d.owner}</span>
-                  <span className="text-xs text-muted-foreground">{d.stage}</span>
+                  <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{d.owner}</span>
+                  <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{d.stage}</span>
                 </div>
               </div>
               <div className="text-right">
                 <span className="font-mono text-sm font-semibold">{fmtDollar(d.value)}</span>
-                <div className="text-xs text-red-400">{d.days} days stalled</div>
+                <div className="text-xs text-red-600">{d.days} days stalled</div>
               </div>
             </div>
           ))}

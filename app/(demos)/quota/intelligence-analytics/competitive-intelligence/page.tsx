@@ -18,20 +18,20 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-5 flex flex-col gap-1">
+    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</span>
+        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5 mt-0.5">
         {trend && (
-          <span className={`flex items-center text-xs font-medium ${trendUp === undefined ? 'text-muted-foreground' : trendUp ? 'text-emerald-500' : 'text-red-400'}`}>
+          <span className={`flex items-center text-xs font-medium ${trendUp === undefined ? '' : trendUp ? 'text-emerald-600' : 'text-red-600'}`} style={trendUp === undefined ? { color: 'var(--prizym-text-muted)' } : undefined}>
             {trendUp !== undefined && (trendUp ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />)}
             {trend}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{subtitle}</span>
       </div>
     </div>
   );
@@ -112,8 +112,8 @@ export default function CompetitiveIntelligencePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Competitive Intelligence</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Competitive Intelligence</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Win/loss analysis, competitor benchmarks, and market positioning insights.
           </p>
         </div>
@@ -129,32 +129,32 @@ export default function CompetitiveIntelligencePage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Win/Loss by Competitor */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Win/Loss by Competitor</h2>
-          <p className="text-xs text-muted-foreground mb-4">Head-to-head outcomes over last 4 quarters</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Win/Loss by Competitor</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Head-to-head outcomes over last 4 quarters</p>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={WIN_LOSS_CHART} layout="vertical" margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" horizontal={false} />
-              <XAxis type="number" tick={{ fill: '#888', fontSize: 11 }} domain={[-12, 16]} />
-              <YAxis type="category" dataKey="name" tick={{ fill: '#888', fontSize: 11 }} width={100} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
+              <XAxis type="number" tick={{ fill: '#64748B', fontSize: 11 }} domain={[-12, 16]} />
+              <YAxis type="category" dataKey="name" tick={{ fill: '#64748B', fontSize: 11 }} width={100} />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+                contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                 formatter={(v: any) => [Math.abs(v), v > 0 ? 'Wins' : 'Losses']}
               />
               <Bar dataKey="wins" fill="#22c55e" radius={[0, 4, 4, 0]} name="Wins" />
               <Bar dataKey="losses" fill="#ef4444" radius={[4, 0, 0, 4]} name="Losses" />
             </BarChart>
           </ResponsiveContainer>
-          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground justify-center">
+          <div className="flex items-center gap-4 mt-2 text-xs justify-center" style={{ color: 'var(--prizym-text-muted)' }}>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Wins</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-red-500" /> Losses</span>
           </div>
         </div>
 
         {/* Market Share */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Estimated Market Share</h2>
-          <p className="text-xs text-muted-foreground mb-4">Sales Quota Management segment</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Estimated Market Share</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Sales Quota Management segment</p>
           <div className="flex items-center justify-center">
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
@@ -172,7 +172,7 @@ export default function CompetitiveIntelligencePage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                   formatter={(v: any) => [`${v}%`, 'Share']}
                 />
               </PieChart>
@@ -180,7 +180,7 @@ export default function CompetitiveIntelligencePage() {
           </div>
           <div className="flex flex-wrap gap-3 justify-center mt-2">
             {MARKET_SHARE_DATA.map(s => (
-              <span key={s.name} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span key={s.name} className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--prizym-text-muted)' }}>
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: s.color }} />
                 {s.name} ({s.value}%)
               </span>
@@ -191,33 +191,33 @@ export default function CompetitiveIntelligencePage() {
 
       {/* Win/Loss Reasons */}
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1 text-emerald-400">Why We Win</h2>
-          <p className="text-xs text-muted-foreground mb-4">Top reasons cited in won competitive deals</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1 text-emerald-600">Why We Win</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Top reasons cited in won competitive deals</p>
           <div className="space-y-3">
             {WIN_LOSS_REASONS.filter(r => r.type === 'win').map(r => (
               <div key={r.reason} className="flex items-center gap-3">
-                <span className="text-sm flex-1">{r.reason}</span>
-                <div className="w-40 h-2.5 bg-muted rounded-full overflow-hidden">
+                <span className="text-sm flex-1" style={{ color: 'var(--prizym-text-primary)' }}>{r.reason}</span>
+                <div className="w-40 h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                   <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${r.pct}%` }} />
                 </div>
-                <span className="text-xs font-medium w-10 text-right">{r.pct}%</span>
+                <span className="text-xs font-medium w-10 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{r.pct}%</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1 text-red-400">Why We Lose</h2>
-          <p className="text-xs text-muted-foreground mb-4">Top reasons cited in lost competitive deals</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1 text-red-600">Why We Lose</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Top reasons cited in lost competitive deals</p>
           <div className="space-y-3">
             {WIN_LOSS_REASONS.filter(r => r.type === 'loss').map(r => (
               <div key={r.reason} className="flex items-center gap-3">
-                <span className="text-sm flex-1">{r.reason}</span>
-                <div className="w-40 h-2.5 bg-muted rounded-full overflow-hidden">
+                <span className="text-sm flex-1" style={{ color: 'var(--prizym-text-primary)' }}>{r.reason}</span>
+                <div className="w-40 h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                   <div className="h-full bg-red-500 rounded-full" style={{ width: `${r.pct}%` }} />
                 </div>
-                <span className="text-xs font-medium w-10 text-right">{r.pct}%</span>
+                <span className="text-xs font-medium w-10 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{r.pct}%</span>
               </div>
             ))}
           </div>
@@ -225,21 +225,21 @@ export default function CompetitiveIntelligencePage() {
       </div>
 
       {/* Feature Comparison Matrix */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <Shield className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">Feature Comparison Matrix</h2>
-          <span className="text-xs text-muted-foreground ml-auto">Rating: 1 (basic) to 5 (best-in-class)</span>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Feature Comparison Matrix</h2>
+          <span className="text-xs ml-auto" style={{ color: 'var(--prizym-text-muted)' }}>Rating: 1 (basic) to 5 (best-in-class)</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Feature</th>
+              <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="text-left py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Feature</th>
                 <th className="text-center py-3 px-4 font-medium text-amber-400">Us</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">CompetitorX</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">SalesForceIQ</th>
-                <th className="text-center py-3 px-4 font-medium text-muted-foreground">QuotaPath</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>CompetitorX</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>SalesForceIQ</th>
+                <th className="text-center py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>QuotaPath</th>
               </tr>
             </thead>
             <tbody>
@@ -253,8 +253,8 @@ export default function CompetitiveIntelligencePage() {
                         {Array.from({ length: 5 }).map((_, i) => (
                           <div key={i} className={`w-3 h-3 rounded-sm ${
                             i < score
-                              ? isUs ? 'bg-amber-500' : isMax ? 'bg-emerald-500' : 'bg-muted-foreground/40'
-                              : 'bg-muted'
+                              ? isUs ? 'bg-amber-500' : isMax ? 'bg-emerald-500' : 'bg-slate-300'
+                              : 'bg-slate-100'
                           }`} />
                         ))}
                       </div>
@@ -262,8 +262,8 @@ export default function CompetitiveIntelligencePage() {
                   );
                 };
                 return (
-                  <tr key={f.feature} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                    <td className="py-3 px-4 font-medium">{f.feature}</td>
+                  <tr key={f.feature} className="transition-colors" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                    <td className="py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{f.feature}</td>
                     {renderScore(f.us, true)}
                     {renderScore(f.compX, false)}
                     {renderScore(f.salesIQ, false)}
@@ -278,31 +278,31 @@ export default function CompetitiveIntelligencePage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Competitor Table */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-3">Competitor Overview</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-3" style={{ color: 'var(--prizym-text-primary)' }}>Competitor Overview</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-2 px-3 font-medium text-muted-foreground">Competitor</th>
-                  <th className="text-right py-2 px-3 font-medium text-muted-foreground">Win Rate</th>
-                  <th className="text-right py-2 px-3 font-medium text-muted-foreground">Share</th>
-                  <th className="text-center py-2 px-3 font-medium text-muted-foreground">Threat</th>
+                <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                  <th className="text-left py-2 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Competitor</th>
+                  <th className="text-right py-2 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Win Rate</th>
+                  <th className="text-right py-2 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Share</th>
+                  <th className="text-center py-2 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Threat</th>
                 </tr>
               </thead>
               <tbody>
                 {COMPETITORS.filter(c => c.name !== 'Other/None').map(c => (
-                  <tr key={c.name} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                    <td className="py-2.5 px-3 font-medium">{c.name}</td>
+                  <tr key={c.name} className="transition-colors" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                    <td className="py-2.5 px-3 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{c.name}</td>
                     <td className="py-2.5 px-3 text-right">
-                      <span className={c.winRate >= 60 ? 'text-emerald-400' : c.winRate >= 45 ? 'text-amber-400' : 'text-red-400'}>
+                      <span className={c.winRate >= 60 ? 'text-emerald-600' : c.winRate >= 45 ? 'text-amber-400' : 'text-red-600'}>
                         {c.winRate}%
                       </span>
                     </td>
-                    <td className="py-2.5 px-3 text-right">{c.marketShare}%</td>
+                    <td className="py-2.5 px-3 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{c.marketShare}%</td>
                     <td className="py-2.5 px-3 text-center">
                       <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                        c.threat === 'high' ? 'bg-red-500/10 text-red-400'
+                        c.threat === 'high' ? 'bg-red-500/10 text-red-600'
                         : c.threat === 'medium' ? 'bg-amber-500/10 text-amber-400'
                         : 'bg-slate-500/10 text-slate-400'
                       }`}>
@@ -317,22 +317,22 @@ export default function CompetitiveIntelligencePage() {
         </div>
 
         {/* Competitive Alerts */}
-        <div className="rounded-xl border bg-card p-5">
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-4 w-4 text-amber-500" />
-            <h2 className="font-semibold">Competitive Alerts</h2>
+            <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Competitive Alerts</h2>
           </div>
           <div className="space-y-3">
             {COMPETITIVE_ALERTS.map((a, i) => (
-              <div key={i} className="p-3 rounded-lg border border-border/50 hover:border-amber-500/30 transition-colors">
+              <div key={i} className="p-3 rounded-lg hover:border-amber-500/30 transition-colors" style={{ border: '1px solid var(--prizym-border-default)' }}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${a.severity === 'high' ? 'bg-red-400' : 'bg-amber-400'}`} />
-                    <h3 className="text-sm font-medium">{a.title}</h3>
+                    <h3 className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{a.title}</h3>
                   </div>
-                  <span className="text-xs text-muted-foreground">{a.date}</span>
+                  <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{a.date}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1.5 ml-4">{a.impact}</p>
+                <p className="text-xs mt-1.5 ml-4" style={{ color: 'var(--prizym-text-muted)' }}>{a.impact}</p>
               </div>
             ))}
           </div>
@@ -340,20 +340,20 @@ export default function CompetitiveIntelligencePage() {
       </div>
 
       {/* Deal Displacement Trend */}
-      <div className="rounded-xl border bg-card p-5">
-        <h2 className="font-semibold mb-1">Competitive Displacement Trend</h2>
-        <p className="text-xs text-muted-foreground mb-4">Deals we displaced competitors vs. deals we were displaced</p>
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Competitive Displacement Trend</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Deals we displaced competitors vs. deals we were displaced</p>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={DEAL_DISPLACEMENT} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="quarter" tick={{ fill: '#888', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#888', fontSize: 12 }} />
-            <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="quarter" tick={{ fill: '#64748B', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+            <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }} />
             <Bar dataKey="displaced" fill="#22c55e" radius={[4, 4, 0, 0]} name="We Displaced" />
             <Bar dataKey="displacedBy" fill="#ef4444" radius={[4, 4, 0, 0]} name="Displaced By" />
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground justify-center">
+        <div className="flex items-center gap-4 mt-3 text-xs justify-center" style={{ color: 'var(--prizym-text-muted)' }}>
           <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" /> We Displaced Competitor</span>
           <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-red-500" /> Competitor Displaced Us</span>
           <span className="flex items-center gap-1.5">

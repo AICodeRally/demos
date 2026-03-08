@@ -68,10 +68,10 @@ const demos = [
   {
     name: 'QUOTA',
     slug: 'quota',
-    industry: 'Sales Quota Management',
-    tagline: 'Intelligent quota planning, attainment tracking, and commission management',
+    industry: 'Prizym RevOps',
+    tagline: 'Quota planning and attainment for the modern CRO',
     color: '#f59e0b',
-    pages: 22,
+    pages: 29,
   },
 ];
 

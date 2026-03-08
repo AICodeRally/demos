@@ -1,20 +1,21 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineSpmDemo } from '@/components/spm-shell';
 
-export default defineDemo({
-  client: {
-    name: 'Blue Horizons Group',
-    tagline: 'Intelligent Sales Performance Management',
-  },
-  product: {
-    name: 'QUOTA',
-    badge: 'SQM Platform',
-  },
-  theme: 'clean-light',
-  colors: {
-    primary: '#f59e0b',
-    accent: '#ef4444',
-  },
+export default defineSpmDemo({
+  suite: { name: 'PRIZYM', tagline: 'RevOps Suite' },
+  module: { code: 'QTA', name: 'QUOTA', description: 'Quota Planning and Attainment' },
+  gradient: { start: '#F59E0B', mid: '#F97316', end: '#EF4444' },
+  theme: 'prizym-navy',
   nav: [
+    {
+      section: 'Quota Design',
+      items: [
+        { label: 'Design Center', href: '/quota/design', icon: 'Compass' },
+        { label: 'Allocation Frameworks', href: '/quota/design/allocation-frameworks', icon: 'GitBranch' },
+        { label: 'Scenario Simulator', href: '/quota/design/scenario-simulator', icon: 'FlaskConical' },
+        { label: 'Quota Forces Model', href: '/quota/design/quota-forces', icon: 'Orbit' },
+        { label: 'Ramp Designer', href: '/quota/design/ramp-designer', icon: 'TrendingUp' },
+      ],
+    },
     {
       section: 'Executive Command Center',
       items: [
@@ -48,6 +49,13 @@ export default defineDemo({
       ],
     },
     {
+      section: 'Dispute & Fairness',
+      items: [
+        { label: 'Dispute Console', href: '/quota/dispute/console', icon: 'Scale' },
+        { label: 'Fairness Analyzer', href: '/quota/dispute/fairness-analyzer', icon: 'BarChart3' },
+      ],
+    },
+    {
       section: 'Administration',
       items: [
         { label: 'System Config', href: '/quota/administration-control/system-configuration', icon: 'Settings' },
@@ -59,7 +67,7 @@ export default defineDemo({
     },
   ],
   footer: {
-    copyright: '\u00A9 2026 Blue Horizons Group',
+    copyright: '\u00A9 2026 Prizym',
     poweredBy: 'AICR',
   },
 });

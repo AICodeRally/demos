@@ -52,18 +52,18 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   label: string; value: string; icon: React.ElementType; trend: string; trendUp: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5 flex flex-col gap-2">
+    <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/50">{label}</span>
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5">
         {trendUp
-          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
-          : <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />}
-        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>{trend}</span>
-        <span className="text-xs text-white/40">vs last month</span>
+          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-600" />
+          : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />}
+        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>{trend}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>vs last month</span>
       </div>
     </div>
   );
@@ -71,8 +71,8 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
 
 function StatusBadge({ status }: { status: Status }) {
   const colors: Record<Status, string> = {
-    Active: 'bg-emerald-500/20 text-emerald-400',
-    Inactive: 'bg-red-500/20 text-red-400',
+    Active: 'bg-emerald-500/20 text-emerald-600',
+    Inactive: 'bg-red-500/20 text-red-600',
     Pending: 'bg-amber-500/20 text-amber-400',
   };
   return (
@@ -88,7 +88,7 @@ function RoleBadge({ role }: { role: Role }) {
     Admin: 'bg-purple-500/20 text-purple-400',
     Manager: 'bg-blue-500/20 text-blue-400',
     Rep: 'bg-amber-500/20 text-amber-400',
-    Viewer: 'bg-white/10 text-white/50',
+    Viewer: 'bg-slate-100 text-slate-400',
   };
   return (
     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${colors[role]}`}>
@@ -99,8 +99,8 @@ function RoleBadge({ role }: { role: Role }) {
 
 function PermCheck({ allowed }: { allowed: boolean }) {
   return allowed
-    ? <span className="text-emerald-400 text-xs font-bold">&#10003;</span>
-    : <span className="text-white/20 text-xs">&#8212;</span>;
+    ? <span className="text-emerald-600 text-xs font-bold">&#10003;</span>
+    : <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>&#8212;</span>;
 }
 
 /* ── Page ──────────────────────────────────────────────────────── */
@@ -114,8 +114,8 @@ export default function UserManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">User Management</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>User Management</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Manage team access, roles, and permissions across the quota platform.
           </p>
         </div>
@@ -135,66 +135,67 @@ export default function UserManagementPage() {
       {/* Search / Filter Bar */}
       <div className="flex items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
           <input
             type="text"
             placeholder="Search users..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 pl-9 pr-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-amber-500/50"
+            className="w-full rounded-lg pl-9 pr-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:border-amber-500/50"
+            style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-primary)' }}
           />
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/60 hover:bg-white/10 transition">
+        <button className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-secondary)' }}>
           <Filter className="h-3 w-3" /> Filters <ChevronDown className="h-3 w-3" />
         </button>
       </div>
 
       {/* User Table */}
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5 mb-6">
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-white">All Users</h2>
-          <span className="text-xs text-white/40">{USERS.length} users</span>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>All Users</h2>
+          <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{USERS.length} users</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-left">
-                <th className="pb-3 text-xs font-medium text-white/40">User</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Role</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Team</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Status</th>
-                <th className="pb-3 text-xs font-medium text-white/40 text-right">Quota Assigned</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Last Login</th>
-                <th className="pb-3 text-xs font-medium text-white/40 w-10"></th>
+              <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Role</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
+                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Quota Assigned</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Last Login</th>
+                <th className="pb-3 text-xs font-medium w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
               </tr>
             </thead>
             <tbody>
               {USERS.map(u => (
-                <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition">
+                <tr key={u.id} className="transition hover:bg-slate-50" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                   <td className="py-3">
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold">
                         {u.avatar}
                       </div>
                       <div>
-                        <p className="font-medium text-white">{u.name}</p>
-                        <p className="text-xs text-white/40">{u.email}</p>
+                        <p className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{u.name}</p>
+                        <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{u.email}</p>
                       </div>
                     </div>
                   </td>
                   <td className="py-3"><RoleBadge role={u.role} /></td>
-                  <td className="py-3 text-white/60">{u.team}</td>
+                  <td className="py-3" style={{ color: 'var(--prizym-text-secondary)' }}>{u.team}</td>
                   <td className="py-3"><StatusBadge status={u.status} /></td>
-                  <td className="py-3 text-right text-white/60 font-mono">
+                  <td className="py-3 text-right font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>
                     {u.quotaAssigned > 0 ? fmtDollar(u.quotaAssigned) : '\u2014'}
                   </td>
                   <td className="py-3">
-                    <div className="flex items-center gap-1.5 text-white/40">
+                    <div className="flex items-center gap-1.5" style={{ color: 'var(--prizym-text-muted)' }}>
                       <Clock className="h-3 w-3" />
                       <span className="text-xs">{u.lastLogin}</span>
                     </div>
                   </td>
                   <td className="py-3">
-                    <button className="p-1 rounded hover:bg-white/10 transition">
-                      <MoreHorizontal className="h-4 w-4 text-white/30" />
+                    <button className="p-1 rounded hover:bg-slate-100 transition">
+                      <MoreHorizontal className="h-4 w-4" style={{ color: 'var(--prizym-text-muted)' }} />
                     </button>
                   </td>
                 </tr>
@@ -205,26 +206,26 @@ export default function UserManagementPage() {
       </div>
 
       {/* Role Permission Matrix */}
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-white">Role Permission Matrix</h2>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Role Permission Matrix</h2>
           <button className="text-xs text-amber-400 hover:text-amber-300 font-medium transition">Edit Permissions</button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-left">
-                <th className="pb-3 text-xs font-medium text-white/40">Permission</th>
+              <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Permission</th>
                 <th className="pb-3 text-xs font-medium text-center text-purple-400">Admin</th>
                 <th className="pb-3 text-xs font-medium text-center text-blue-400">Manager</th>
                 <th className="pb-3 text-xs font-medium text-center text-amber-400">Rep</th>
-                <th className="pb-3 text-xs font-medium text-center text-white/50">Viewer</th>
+                <th className="pb-3 text-xs font-medium text-center" style={{ color: 'var(--prizym-text-muted)' }}>Viewer</th>
               </tr>
             </thead>
             <tbody>
               {PERMISSIONS.map((p, i) => (
-                <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition">
-                  <td className="py-2.5 text-white/70">{p.action}</td>
+                <tr key={i} className="transition hover:bg-slate-50" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                  <td className="py-2.5" style={{ color: 'var(--prizym-text-secondary)' }}>{p.action}</td>
                   <td className="py-2.5 text-center"><PermCheck allowed={p.Admin} /></td>
                   <td className="py-2.5 text-center"><PermCheck allowed={p.Manager} /></td>
                   <td className="py-2.5 text-center"><PermCheck allowed={p.Rep} /></td>
@@ -237,22 +238,22 @@ export default function UserManagementPage() {
       </div>
 
       {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+      <div className="mt-6 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-            <span className="text-xs text-white/50">Active ({activeCount})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Active ({activeCount})</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-            <span className="text-xs text-white/50">Pending ({pendingCount})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Pending ({pendingCount})</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
-            <span className="text-xs text-white/50">Inactive ({USERS.filter(u => u.status === 'Inactive').length})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Inactive ({USERS.filter(u => u.status === 'Inactive').length})</span>
           </div>
         </div>
-        <span className="text-xs text-white/30">SSO via Azure AD</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>SSO via Azure AD</span>
       </div>
     </>
   );
