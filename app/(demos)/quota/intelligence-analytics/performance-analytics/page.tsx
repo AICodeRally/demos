@@ -18,20 +18,20 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-5 flex flex-col gap-1">
+    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</span>
+        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5 mt-0.5">
         {trend && (
-          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-500' : 'text-red-400'}`}>
+          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>
             {trendUp ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
             {trend}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{subtitle}</span>
       </div>
     </div>
   );
@@ -83,8 +83,8 @@ export default function PerformanceAnalyticsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Performance Analytics</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Analytics</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Deep-dive analytics on sales velocity, team performance, and success correlators.
           </p>
         </div>
@@ -99,19 +99,19 @@ export default function PerformanceAnalyticsPage() {
       </div>
 
       {/* Team Performance Comparison */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
-        <h2 className="font-semibold mb-1">Team Performance Comparison</h2>
-        <p className="text-xs text-muted-foreground mb-4">Quota vs. actual by team segment</p>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Team Performance Comparison</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Quota vs. actual by team segment</p>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={TEAM_DATA} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="team" tick={{ fill: '#888', fontSize: 12 }} />
-            <YAxis tickFormatter={(v: number) => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#888', fontSize: 12 }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="team" tick={{ fill: '#64748B', fontSize: 12 }} />
+            <YAxis tickFormatter={(v: number) => `$${(v / 1e6).toFixed(1)}M`} tick={{ fill: '#64748B', fontSize: 12 }} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+              contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
               formatter={(v: any) => [fmtDollar(v), '']}
             />
-            <Bar dataKey="quota" fill="#333" radius={[4, 4, 0, 0]} name="Quota" />
+            <Bar dataKey="quota" fill="#CBD5E1" radius={[4, 4, 0, 0]} name="Quota" />
             <Bar dataKey="actual" radius={[4, 4, 0, 0]} name="Actual">
               {TEAM_DATA.map((entry, i) => (
                 <Cell key={i} fill={entry.attainment >= 100 ? '#22c55e' : '#f59e0b'} />
@@ -119,8 +119,8 @@ export default function PerformanceAnalyticsPage() {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex items-center gap-6 mt-3 text-xs text-muted-foreground justify-center">
-          <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#333]" /> Quota</span>
+        <div className="flex items-center gap-6 mt-3 text-xs justify-center" style={{ color: 'var(--prizym-text-muted)' }}>
+          <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#CBD5E1]" /> Quota</span>
           <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-500" /> Below Target</span>
           <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Above Target</span>
         </div>
@@ -128,37 +128,37 @@ export default function PerformanceAnalyticsPage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Sales Velocity Trend */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Sales Velocity Trend</h2>
-          <p className="text-xs text-muted-foreground mb-4">Win rate and cycle time over 8 months</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Sales Velocity Trend</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Win rate and cycle time over 8 months</p>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={VELOCITY_TREND} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-              <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 12 }} />
-              <YAxis yAxisId="left" tick={{ fill: '#888', fontSize: 12 }} domain={[55, 80]} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fill: '#888', fontSize: 12 }} domain={[30, 55]} />
-              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="month" tick={{ fill: '#64748B', fontSize: 12 }} />
+              <YAxis yAxisId="left" tick={{ fill: '#64748B', fontSize: 12 }} domain={[55, 80]} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fill: '#64748B', fontSize: 12 }} domain={[30, 55]} />
+              <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }} />
               <Line yAxisId="left" type="monotone" dataKey="winRate" stroke="#f59e0b" strokeWidth={2} name="Win Rate %" dot={{ r: 3 }} />
               <Line yAxisId="right" type="monotone" dataKey="cycleTime" stroke="#ef4444" strokeWidth={2} name="Cycle Time (days)" dot={{ r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
-          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground justify-center">
+          <div className="flex items-center gap-4 mt-3 text-xs justify-center" style={{ color: 'var(--prizym-text-muted)' }}>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-500" /> Win Rate</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-red-500" /> Cycle Time</span>
           </div>
         </div>
 
         {/* Avg Deal Size Trend */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Average Deal Size Trend</h2>
-          <p className="text-xs text-muted-foreground mb-4">Monthly progression of average closed-won deal value</p>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Average Deal Size Trend</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Monthly progression of average closed-won deal value</p>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={VELOCITY_TREND} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-              <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 12 }} />
-              <YAxis tickFormatter={(v: number) => `$${(v / 1e3).toFixed(0)}K`} tick={{ fill: '#888', fontSize: 12 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="month" tick={{ fill: '#64748B', fontSize: 12 }} />
+              <YAxis tickFormatter={(v: number) => `$${(v / 1e3).toFixed(0)}K`} tick={{ fill: '#64748B', fontSize: 12 }} />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+                contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                 formatter={(v: any) => [fmtDollar(v), 'Avg Deal']}
               />
               <Bar dataKey="avgDealSize" fill="#f59e0b" radius={[4, 4, 0, 0]} />
@@ -168,47 +168,47 @@ export default function PerformanceAnalyticsPage() {
       </div>
 
       {/* Rep Performance Table */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <Users className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">Rep Performance Breakdown</h2>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Rep Performance Breakdown</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-3 px-3 font-medium text-muted-foreground">Rep</th>
-                <th className="text-left py-3 px-3 font-medium text-muted-foreground">Team</th>
-                <th className="text-right py-3 px-3 font-medium text-muted-foreground">Attainment</th>
-                <th className="text-right py-3 px-3 font-medium text-muted-foreground">Pipeline</th>
-                <th className="text-right py-3 px-3 font-medium text-muted-foreground">Deals</th>
-                <th className="text-right py-3 px-3 font-medium text-muted-foreground">Cycle</th>
-                <th className="text-left py-3 px-3 font-medium text-muted-foreground">Status</th>
+              <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Rep</th>
+                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
+                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
+                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Pipeline</th>
+                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Deals</th>
+                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Cycle</th>
+                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
               </tr>
             </thead>
             <tbody>
               {REP_PERFORMANCE.map((r, i) => (
-                <tr key={r.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                <tr key={r.id} className="transition-colors" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
                       {i === 0 && <Award className="h-3.5 w-3.5 text-amber-500" />}
-                      <span className="font-medium">{r.name}</span>
+                      <span className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{r.name}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-muted-foreground">{r.team}</td>
+                  <td className="py-3 px-3" style={{ color: 'var(--prizym-text-muted)' }}>{r.team}</td>
                   <td className="py-3 px-3 text-right">
-                    <span className={`font-medium ${r.attainment >= 100 ? 'text-emerald-400' : r.attainment >= 85 ? 'text-amber-400' : 'text-red-400'}`}>
+                    <span className={`font-medium ${r.attainment >= 100 ? 'text-emerald-600' : r.attainment >= 85 ? 'text-amber-400' : 'text-red-600'}`}>
                       {r.attainment}%
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-right">{r.pipelineCoverage}x</td>
-                  <td className="py-3 px-3 text-right">{r.dealsClosed}</td>
-                  <td className="py-3 px-3 text-right">{r.avgCycleTime}d</td>
+                  <td className="py-3 px-3 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{r.pipelineCoverage}x</td>
+                  <td className="py-3 px-3 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{r.dealsClosed}</td>
+                  <td className="py-3 px-3 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{r.avgCycleTime}d</td>
                   <td className="py-3 px-3">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      r.attainment >= 100 ? 'bg-emerald-500/10 text-emerald-400'
+                      r.attainment >= 100 ? 'bg-emerald-500/10 text-emerald-600'
                       : r.attainment >= 85 ? 'bg-amber-500/10 text-amber-400'
-                      : 'bg-red-500/10 text-red-400'
+                      : 'bg-red-500/10 text-red-600'
                     }`}>
                       {r.attainment >= 100 ? 'Exceeding' : r.attainment >= 85 ? 'On Track' : 'At Risk'}
                     </span>
@@ -221,27 +221,27 @@ export default function PerformanceAnalyticsPage() {
       </div>
 
       {/* Performance Correlators */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <Activity className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">Performance Correlators</h2>
-          <span className="text-xs text-muted-foreground ml-auto">Factors most correlated with quota attainment</span>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Correlators</h2>
+          <span className="text-xs ml-auto" style={{ color: 'var(--prizym-text-muted)' }}>Factors most correlated with quota attainment</span>
         </div>
         <div className="space-y-3">
           {PERFORMANCE_CORRELATORS.map(c => (
             <div key={c.factor} className="flex items-center gap-4">
-              <span className="text-sm w-48 shrink-0">{c.factor}</span>
-              <div className="flex-1 h-2.5 bg-muted rounded-full overflow-hidden">
+              <span className="text-sm w-48 shrink-0" style={{ color: 'var(--prizym-text-primary)' }}>{c.factor}</span>
+              <div className="flex-1 h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                 <div
                   className={`h-full rounded-full ${c.correlation > 0 ? 'bg-amber-500' : 'bg-red-400'}`}
                   style={{ width: `${Math.abs(c.correlation) * 100}%` }}
                 />
               </div>
-              <span className="text-xs font-mono w-12 text-right">{c.correlation > 0 ? '+' : ''}{c.correlation.toFixed(2)}</span>
+              <span className="text-xs font-mono w-12 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{c.correlation > 0 ? '+' : ''}{c.correlation.toFixed(2)}</span>
               <span className={`text-xs px-2 py-0.5 rounded w-36 text-center ${
-                c.impact.includes('Strong Positive') ? 'bg-emerald-500/10 text-emerald-400'
+                c.impact.includes('Strong Positive') ? 'bg-emerald-500/10 text-emerald-600'
                 : c.impact.includes('Moderate Positive') ? 'bg-amber-500/10 text-amber-400'
-                : c.impact.includes('Strong Negative') ? 'bg-red-500/10 text-red-400'
+                : c.impact.includes('Strong Negative') ? 'bg-red-500/10 text-red-600'
                 : 'bg-orange-500/10 text-orange-400'
               }`}>
                 {c.impact}

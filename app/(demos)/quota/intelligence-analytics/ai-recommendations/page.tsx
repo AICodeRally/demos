@@ -19,20 +19,20 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-5 flex flex-col gap-1">
+    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</span>
+        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5 mt-0.5">
         {trend && (
-          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-500' : 'text-red-400'}`}>
+          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>
             {trendUp ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
             {trend}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{subtitle}</span>
       </div>
     </div>
   );
@@ -130,7 +130,7 @@ const CATEGORY_META: Record<string, { icon: React.ElementType; color: string; bg
   'Quota Adjustment': { icon: Target, color: 'text-amber-400', bg: 'bg-amber-500/10' },
   'Territory Rebalance': { icon: MapPin, color: 'text-blue-400', bg: 'bg-blue-500/10' },
   'Coaching Focus': { icon: Users, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-  'Pipeline Action': { icon: Zap, color: 'text-red-400', bg: 'bg-red-500/10' },
+  'Pipeline Action': { icon: Zap, color: 'text-red-600', bg: 'bg-red-500/10' },
 };
 
 const IMPACT_CHART = [
@@ -148,7 +148,7 @@ function RecommendationCard({ rec }: { rec: Rec }) {
   const CatIcon = meta.icon;
 
   return (
-    <div className="rounded-xl border bg-card overflow-hidden hover:border-amber-500/30 transition-colors">
+    <div className="rounded-xl overflow-hidden hover:border-amber-500/30 transition-colors" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full text-left p-5 flex items-start gap-4"
@@ -160,14 +160,14 @@ function RecommendationCard({ rec }: { rec: Rec }) {
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`text-xs px-2 py-0.5 rounded font-medium ${meta.bg} ${meta.color}`}>{rec.category}</span>
             <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-              rec.impact === 'high' ? 'bg-red-500/10 text-red-400'
+              rec.impact === 'high' ? 'bg-red-500/10 text-red-600'
               : rec.impact === 'medium' ? 'bg-amber-500/10 text-amber-400'
               : 'bg-slate-500/10 text-slate-400'
             }`}>
               {rec.impact.toUpperCase()} IMPACT
             </span>
             {rec.status === 'implemented' && (
-              <span className="text-xs px-2 py-0.5 rounded font-medium bg-emerald-500/10 text-emerald-400 flex items-center gap-1">
+              <span className="text-xs px-2 py-0.5 rounded font-medium bg-emerald-500/10 text-emerald-600 flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3" /> Implemented
               </span>
             )}
@@ -177,49 +177,49 @@ function RecommendationCard({ rec }: { rec: Rec }) {
               </span>
             )}
           </div>
-          <h3 className="text-sm font-semibold mt-2">{rec.title}</h3>
-          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{rec.description}</p>
+          <h3 className="text-sm font-semibold mt-2" style={{ color: 'var(--prizym-text-primary)' }}>{rec.title}</h3>
+          <p className="text-xs mt-1 line-clamp-2" style={{ color: 'var(--prizym-text-muted)' }}>{rec.description}</p>
           <div className="flex items-center gap-4 mt-2">
-            <span className="text-xs text-emerald-400 font-medium">{rec.impactValue}</span>
-            <span className="text-xs text-muted-foreground">Confidence: {rec.confidence}%</span>
-            <span className="text-xs text-muted-foreground">{rec.affectedReps.length} rep{rec.affectedReps.length > 1 ? 's' : ''} affected</span>
+            <span className="text-xs text-emerald-600 font-medium">{rec.impactValue}</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Confidence: {rec.confidence}%</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{rec.affectedReps.length} rep{rec.affectedReps.length > 1 ? 's' : ''} affected</span>
           </div>
         </div>
         <div className="shrink-0 mt-1">
-          {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+          {expanded ? <ChevronUp className="h-4 w-4" style={{ color: 'var(--prizym-text-muted)' }} /> : <ChevronDown className="h-4 w-4" style={{ color: 'var(--prizym-text-muted)' }} />}
         </div>
       </button>
 
       {expanded && (
-        <div className="px-5 pb-5 border-t border-border/50">
+        <div className="px-5 pb-5" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
           <div className="grid gap-4 md:grid-cols-2 mt-4">
             <div>
-              <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Affected Reps</h4>
+              <h4 className="text-xs font-medium uppercase tracking-wide mb-2" style={{ color: 'var(--prizym-text-muted)' }}>Affected Reps</h4>
               <div className="flex flex-wrap gap-2">
                 {rec.affectedReps.map(r => (
-                  <span key={r} className="text-xs px-2.5 py-1 rounded-full bg-muted font-medium">{r}</span>
+                  <span key={r} className="text-xs px-2.5 py-1 rounded-full font-medium" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-primary)' }}>{r}</span>
                 ))}
               </div>
             </div>
             <div>
-              <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Confidence Score</h4>
+              <h4 className="text-xs font-medium uppercase tracking-wide mb-2" style={{ color: 'var(--prizym-text-muted)' }}>Confidence Score</h4>
               <div className="flex items-center gap-3">
-                <div className="flex-1 h-2.5 bg-muted rounded-full overflow-hidden">
+                <div className="flex-1 h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                   <div className="h-full bg-amber-500 rounded-full" style={{ width: `${rec.confidence}%` }} />
                 </div>
-                <span className="text-sm font-semibold">{rec.confidence}%</span>
+                <span className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{rec.confidence}%</span>
               </div>
             </div>
           </div>
           <div className="mt-4">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Implementation Steps</h4>
+            <h4 className="text-xs font-medium uppercase tracking-wide mb-2" style={{ color: 'var(--prizym-text-muted)' }}>Implementation Steps</h4>
             <div className="space-y-2">
               {rec.steps.map((step, i) => (
                 <div key={i} className="flex items-start gap-2.5">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium flex items-center justify-center shrink-0 mt-0.5">
                     {i + 1}
                   </span>
-                  <span className="text-sm text-muted-foreground">{step}</span>
+                  <span className="text-sm" style={{ color: 'var(--prizym-text-muted)' }}>{step}</span>
                 </div>
               ))}
             </div>
@@ -228,7 +228,7 @@ function RecommendationCard({ rec }: { rec: Rec }) {
             <button className="text-xs px-4 py-2 rounded-lg bg-amber-500 text-black font-medium hover:bg-amber-400 transition-colors flex items-center gap-1.5">
               <CheckCircle2 className="h-3 w-3" /> Accept & Implement
             </button>
-            <button className="text-xs px-4 py-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-border/80 transition-colors">
+            <button className="text-xs px-4 py-2 rounded-lg transition-colors" style={{ border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
               Dismiss
             </button>
           </div>
@@ -249,8 +249,8 @@ export default function AiRecommendationsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">AI Recommendations</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>AI Recommendations</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Machine learning-driven recommendations for quota optimization and territory adjustments.
           </p>
         </div>
@@ -270,16 +270,16 @@ export default function AiRecommendationsPage() {
       </div>
 
       {/* Impact by Category Chart */}
-      <div className="rounded-xl border bg-card p-5 mb-6">
-        <h2 className="font-semibold mb-1">Estimated Revenue Impact by Category</h2>
-        <p className="text-xs text-muted-foreground mb-4">Potential revenue lift if recommendations are implemented</p>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Estimated Revenue Impact by Category</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Potential revenue lift if recommendations are implemented</p>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={IMPACT_CHART} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="category" tick={{ fill: '#888', fontSize: 11 }} />
-            <YAxis tickFormatter={(v: number) => `$${(v / 1e3).toFixed(0)}K`} tick={{ fill: '#888', fontSize: 12 }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="category" tick={{ fill: '#64748B', fontSize: 11 }} />
+            <YAxis tickFormatter={(v: number) => `$${(v / 1e3).toFixed(0)}K`} tick={{ fill: '#64748B', fontSize: 12 }} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }}
+              contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
               formatter={(v: any) => [fmtDollar(v), 'Impact']}
             />
             <Bar dataKey="value" fill="#f59e0b" radius={[4, 4, 0, 0]} />
@@ -293,13 +293,13 @@ export default function AiRecommendationsPage() {
           const count = RECOMMENDATIONS.filter(r => r.category === cat).length;
           const CatIcon = meta.icon;
           return (
-            <div key={cat} className={`rounded-xl border p-4 ${meta.bg} border-transparent`}>
+            <div key={cat} className={`rounded-xl p-4 ${meta.bg} border-transparent`} style={{ border: '1px solid transparent' }}>
               <div className="flex items-center gap-2 mb-2">
                 <CatIcon className={`h-4 w-4 ${meta.color}`} />
                 <span className={`text-sm font-medium ${meta.color}`}>{cat}</span>
               </div>
-              <p className="text-2xl font-bold">{count}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{count === 1 ? 'recommendation' : 'recommendations'}</p>
+              <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{count}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{count === 1 ? 'recommendation' : 'recommendations'}</p>
             </div>
           );
         })}
@@ -309,8 +309,8 @@ export default function AiRecommendationsPage() {
       <div className="space-y-4 mb-6">
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">All Recommendations</h2>
-          <span className="text-xs text-muted-foreground ml-auto">Click to expand details</span>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>All Recommendations</h2>
+          <span className="text-xs ml-auto" style={{ color: 'var(--prizym-text-muted)' }}>Click to expand details</span>
         </div>
         {RECOMMENDATIONS.map(rec => (
           <RecommendationCard key={rec.id} rec={rec} />
@@ -318,8 +318,8 @@ export default function AiRecommendationsPage() {
       </div>
 
       {/* How It Works */}
-      <div className="rounded-xl border bg-card p-5">
-        <h2 className="font-semibold mb-4">How AI Recommendations Work</h2>
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>How AI Recommendations Work</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
             { step: '1', title: 'Data Collection', desc: 'CRM, pipeline, and historical performance data ingested daily' },
@@ -332,10 +332,10 @@ export default function AiRecommendationsPage() {
                 {s.step}
               </div>
               <div>
-                <h3 className="text-sm font-semibold">{s.title}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{s.desc}</p>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{s.title}</h3>
+                <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>{s.desc}</p>
               </div>
-              {i < 3 && <ArrowRight className="h-4 w-4 text-muted-foreground/30 mt-2 hidden md:block" />}
+              {i < 3 && <ArrowRight className="h-4 w-4 mt-2 hidden md:block" style={{ color: 'var(--prizym-text-muted)', opacity: 0.3 }} />}
             </div>
           ))}
         </div>

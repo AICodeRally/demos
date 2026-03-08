@@ -1,8 +1,8 @@
 'use client';
 
-import { DemoShell } from '@/components/demo-shell';
+import { SpmShell } from '@/components/spm-shell';
 import demoConfig from './demo.config';
 
 export default function QuotaLayout({ children }: { children: React.ReactNode }) {
-  return <DemoShell config={demoConfig}>{children}</DemoShell>;
+  return <SpmShell config={demoConfig}>{children}</SpmShell>;
 }

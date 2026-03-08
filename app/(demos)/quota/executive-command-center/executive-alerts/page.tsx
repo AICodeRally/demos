@@ -20,8 +20,8 @@ type AlertType = 'risk' | 'success' | 'warning' | 'info';
 const alertConfig: Record<AlertType, {
   border: string; bg: string; text: string; icon: React.ElementType; label: string;
 }> = {
-  risk: { border: 'border-red-500/40', bg: 'bg-red-500/5', text: 'text-red-400', icon: ShieldAlert, label: 'CRITICAL' },
-  success: { border: 'border-emerald-500/40', bg: 'bg-emerald-500/5', text: 'text-emerald-400', icon: CheckCircle2, label: 'SUCCESS' },
+  risk: { border: 'border-red-500/40', bg: 'bg-red-500/5', text: 'text-red-600', icon: ShieldAlert, label: 'CRITICAL' },
+  success: { border: 'border-emerald-500/40', bg: 'bg-emerald-500/5', text: 'text-emerald-600', icon: CheckCircle2, label: 'SUCCESS' },
   warning: { border: 'border-amber-500/40', bg: 'bg-amber-500/5', text: 'text-amber-400', icon: AlertTriangle, label: 'WARNING' },
   info: { border: 'border-blue-500/40', bg: 'bg-blue-500/5', text: 'text-blue-400', icon: Info, label: 'INFO' },
 };
@@ -64,9 +64,9 @@ const weeklyTrend = [
 
 /* ── Quick actions ────────────────────────────────────────────── */
 const quickActions = [
-  { icon: TrendingDown, label: 'Review at-risk reps', desc: '3 reps below 85% attainment', color: 'text-red-400', bg: 'bg-red-500/10' },
+  { icon: TrendingDown, label: 'Review at-risk reps', desc: '3 reps below 85% attainment', color: 'text-red-600', bg: 'bg-red-500/10' },
   { icon: Target, label: 'Approve Q2 quota plans', desc: '8 plans pending review', color: 'text-amber-400', bg: 'bg-amber-500/10' },
-  { icon: Zap, label: 'Process accelerators', desc: '4 reps earned accelerator tier', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  { icon: Zap, label: 'Process accelerators', desc: '4 reps earned accelerator tier', color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
 ];
 
 /* ── KPI card ─────────────────────────────────────────────────── */
@@ -75,19 +75,19 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp, accent }: {
   icon: React.ElementType; trend: string; trendUp: boolean; accent?: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5 flex flex-col gap-2">
+    <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/50">{label}</span>
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className={`h-4 w-4 ${accent ?? 'text-amber-400'}`} />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5">
         {trendUp
-          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
-          : <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />
+          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-600" />
+          : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />
         }
-        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>{trend}</span>
-        <span className="text-xs text-white/40">{sub}</span>
+        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>{trend}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{sub}</span>
       </div>
     </div>
   );
@@ -111,14 +111,14 @@ export default function ExecutiveAlertsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Executive Alerts</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Executive Alerts</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Critical notifications for quota risks, pipeline gaps, and performance anomalies.
           </p>
         </div>
-        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
+        <div className="flex items-center gap-2 rounded-lg px-3 py-1.5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
           <Bell className="h-3.5 w-3.5 text-amber-400" />
-          <span className="text-xs font-medium text-white/70">{extendedAlerts.length - dismissedIds.size} active</span>
+          <span className="text-xs font-medium" style={{ color: 'var(--prizym-text-secondary)' }}>{extendedAlerts.length - dismissedIds.size} active</span>
         </div>
       </div>
 
@@ -130,7 +130,7 @@ export default function ExecutiveAlertsPage() {
         />
         <KPI
           label="Critical" value={String(typeCounts.risk)} sub="need action"
-          icon={AlertOctagon} trend="+1 vs yesterday" trendUp={false} accent="text-red-400"
+          icon={AlertOctagon} trend="+1 vs yesterday" trendUp={false} accent="text-red-600"
         />
         <KPI
           label="Warnings" value={String(typeCounts.warning)} sub="monitoring"
@@ -138,7 +138,7 @@ export default function ExecutiveAlertsPage() {
         />
         <KPI
           label="Resolved Today" value={String(typeCounts.success)} sub="wins"
-          icon={CheckCircle2} trend="+2 resolved" trendUp accent="text-emerald-400"
+          icon={CheckCircle2} trend="+2 resolved" trendUp accent="text-emerald-600"
         />
       </div>
 
@@ -157,15 +157,16 @@ export default function ExecutiveAlertsPage() {
               onClick={() => setActiveFilter(filter)}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition whitespace-nowrap ${
                 isActive
-                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                  : 'bg-white/5 text-white/50 border border-white/10 hover:bg-white/10'
+                  ? 'bg-amber-500/20 text-amber-600 border border-amber-500/30'
+                  : 'border border-transparent hover:opacity-80'
               }`}
+              style={isActive ? undefined : { background: 'var(--prizym-card-bg)', borderColor: 'var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}
             >
               {cfg && <cfg.icon className={`h-3 w-3 ${cfg.text}`} />}
               {filter === 'all' ? 'All Alerts' : cfg?.label}
               <span className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] ${
-                isActive ? 'bg-amber-500/30 text-amber-200' : 'bg-white/10 text-white/40'
-              }`}>
+                isActive ? 'bg-amber-500/30 text-amber-600' : ''
+              }`} style={isActive ? undefined : { background: 'var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                 {count}
               </span>
             </button>
@@ -178,9 +179,9 @@ export default function ExecutiveAlertsPage() {
         {/* Alert Cards */}
         <div className="lg:col-span-2 space-y-3">
           {filteredAlerts.length === 0 && (
-            <div className="rounded-xl border border-white/10 bg-white/5 p-8 text-center">
-              <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto mb-2" />
-              <p className="text-sm text-white/50">No alerts matching this filter.</p>
+            <div className="rounded-xl p-8 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+              <CheckCircle2 className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+              <p className="text-sm" style={{ color: 'var(--prizym-text-muted)' }}>No alerts matching this filter.</p>
             </div>
           )}
           {filteredAlerts.map(alert => {
@@ -189,7 +190,8 @@ export default function ExecutiveAlertsPage() {
             return (
               <div
                 key={alert.id}
-                className={`rounded-xl border-l-4 ${cfg.border} border border-white/10 ${cfg.bg} p-4 group transition hover:bg-white/5`}
+                className={`rounded-xl border-l-4 ${cfg.border} ${cfg.bg} p-4 group transition`}
+                style={{ border: '1px solid var(--prizym-border-default)', borderLeftWidth: '4px', borderLeftColor: undefined }}
               >
                 <div className="flex items-start gap-3">
                   <div className={`mt-0.5 rounded-lg p-2 ${cfg.bg}`}>
@@ -202,24 +204,24 @@ export default function ExecutiveAlertsPage() {
                           <span className={`text-[10px] font-semibold uppercase tracking-wider ${cfg.text}`}>
                             {cfg.label}
                           </span>
-                          <span className="text-[10px] text-white/30">&middot;</span>
-                          <span className="text-[10px] text-white/30 flex items-center gap-1">
+                          <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>&middot;</span>
+                          <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}>
                             <Clock className="h-2.5 w-2.5" /> {alert.time}
                           </span>
                         </div>
-                        <p className="text-sm font-semibold text-white">{alert.title}</p>
-                        <p className="text-xs text-white/50 mt-1">{alert.desc}</p>
+                        <p className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{alert.title}</p>
+                        <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>{alert.desc}</p>
                       </div>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition shrink-0">
-                        <button className="rounded p-1 hover:bg-white/10 transition" title="View">
-                          <ChevronRight className="h-3.5 w-3.5 text-white/40" />
+                        <button className="rounded p-1 hover:opacity-70 transition" title="View">
+                          <ChevronRight className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                         </button>
                         <button
                           onClick={() => handleDismiss(alert.id)}
-                          className="rounded p-1 hover:bg-white/10 transition"
+                          className="rounded p-1 hover:opacity-70 transition"
                           title="Dismiss"
                         >
-                          <XCircle className="h-3.5 w-3.5 text-white/40" />
+                          <XCircle className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                         </button>
                       </div>
                     </div>
@@ -227,13 +229,13 @@ export default function ExecutiveAlertsPage() {
                     {/* Action buttons for risk alerts */}
                     {alert.type === 'risk' && (
                       <div className="mt-3 flex items-center gap-2">
-                        <button className="rounded-lg bg-red-500/20 border border-red-500/30 px-3 py-1 text-[10px] font-semibold text-red-300 hover:bg-red-500/30 transition">
+                        <button className="rounded-lg bg-red-500/20 border border-red-500/30 px-3 py-1 text-[10px] font-semibold text-red-600 hover:bg-red-500/30 transition">
                           Investigate
                         </button>
-                        <button className="rounded-lg bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-semibold text-white/50 hover:bg-white/10 transition">
+                        <button className="rounded-lg px-3 py-1 text-[10px] font-semibold transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                           Assign
                         </button>
-                        <button className="rounded-lg bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-semibold text-white/50 hover:bg-white/10 transition">
+                        <button className="rounded-lg px-3 py-1 text-[10px] font-semibold transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                           Snooze
                         </button>
                       </div>
@@ -248,8 +250,8 @@ export default function ExecutiveAlertsPage() {
         {/* Right Sidebar */}
         <div className="space-y-6">
           {/* Alert Distribution Pie */}
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-            <h3 className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-3">Distribution</h3>
+          <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+            <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-secondary)' }}>Distribution</h3>
             <ResponsiveContainer width="100%" height={180}>
               <PieChart>
                 <Pie
@@ -268,7 +270,7 @@ export default function ExecutiveAlertsPage() {
                   content={({ active, payload }: any) => {
                     if (!active || !payload?.length) return null;
                     return (
-                      <div className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-2 shadow-xl text-xs text-white">
+                      <div className="rounded-lg px-3 py-2 text-xs" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}>
                         {payload[0].name}: {payload[0].value}
                       </div>
                     );
@@ -280,25 +282,25 @@ export default function ExecutiveAlertsPage() {
               {pieData.map(d => (
                 <div key={d.name} className="flex items-center gap-1.5">
                   <div className="h-2 w-2 rounded-full" style={{ backgroundColor: d.fill }} />
-                  <span className="text-[10px] text-white/50">{d.name} ({d.value})</span>
+                  <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>{d.name} ({d.value})</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Weekly Trend */}
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-            <h3 className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-3">Weekly Trend</h3>
+          <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+            <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-secondary)' }}>Weekly Trend</h3>
             <ResponsiveContainer width="100%" height={160}>
               <BarChart data={weeklyTrend} margin={{ top: 5, right: 5, bottom: 0, left: -10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="day" tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 10 }} />
-                <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 10 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="day" tick={{ fill: '#64748B', fontSize: 10 }} />
+                <YAxis tick={{ fill: '#64748B', fontSize: 10 }} />
                 <Tooltip
                   content={({ active, payload, label }: any) => {
                     if (!active || !payload?.length) return null;
                     return (
-                      <div className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-2 shadow-xl text-xs text-white">
+                      <div className="rounded-lg px-3 py-2 text-xs" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}>
                         <p className="font-medium mb-1">{label}</p>
                         {payload.map((p: any, i: number) => (
                           <p key={i} style={{ color: p.color }}>{p.name}: {p.value}</p>
@@ -316,23 +318,24 @@ export default function ExecutiveAlertsPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-            <h3 className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-3">Quick Actions</h3>
+          <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+            <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--prizym-text-secondary)' }}>Quick Actions</h3>
             <div className="space-y-2">
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  className="w-full text-left rounded-lg border border-white/10 bg-white/5 p-3 hover:bg-white/10 transition group"
+                  className="w-full text-left rounded-lg p-3 hover:opacity-90 transition group"
+                  style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`rounded-lg p-2 ${action.bg}`}>
                       <action.icon className={`h-4 w-4 ${action.color}`} />
                     </div>
                     <div className="flex-1">
-                      <p className="text-xs font-medium text-white">{action.label}</p>
-                      <p className="text-[10px] text-white/40">{action.desc}</p>
+                      <p className="text-xs font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{action.label}</p>
+                      <p className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>{action.desc}</p>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 text-white/30 group-hover:text-white/60 transition" />
+                    <ChevronRight className="h-3.5 w-3.5 group-hover:opacity-80 transition" style={{ color: 'var(--prizym-text-muted)' }} />
                   </div>
                 </button>
               ))}
@@ -344,23 +347,23 @@ export default function ExecutiveAlertsPage() {
       {/* At-Risk Reps Section */}
       <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-5">
         <div className="flex items-center gap-2 mb-4">
-          <ShieldAlert className="h-4 w-4 text-red-400" />
-          <h2 className="text-sm font-semibold text-white">Reps Requiring Attention</h2>
+          <ShieldAlert className="h-4 w-4 text-red-600" />
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Reps Requiring Attention</h2>
         </div>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {REPS.filter(r => r.actual / r.quota < 0.92).map(rep => {
             const att = (rep.actual / rep.quota) * 100;
             const gap = rep.quota - rep.actual;
             return (
-              <div key={rep.id} className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <div key={rep.id} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-sm font-medium text-white">{rep.name}</p>
-                  <span className={`text-xs font-bold ${att >= 85 ? 'text-amber-400' : 'text-red-400'}`}>
+                  <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{rep.name}</p>
+                  <span className={`text-xs font-bold ${att >= 85 ? 'text-amber-400' : 'text-red-600'}`}>
                     {fmtPct(att)}
                   </span>
                 </div>
-                <p className="text-xs text-white/40 mb-2">{rep.territory} &middot; {rep.team}</p>
-                <div className="h-1.5 rounded-full bg-white/10 mb-2 overflow-hidden">
+                <p className="text-xs mb-2" style={{ color: 'var(--prizym-text-muted)' }}>{rep.territory} &middot; {rep.team}</p>
+                <div className="h-1.5 rounded-full mb-2 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                   <div
                     className="h-full rounded-full"
                     style={{
@@ -369,7 +372,7 @@ export default function ExecutiveAlertsPage() {
                     }}
                   />
                 </div>
-                <p className="text-[10px] text-red-400">{fmtDollar(gap)} needed to hit quota</p>
+                <p className="text-[10px] text-red-600">{fmtDollar(gap)} needed to hit quota</p>
               </div>
             );
           })}
@@ -377,7 +380,7 @@ export default function ExecutiveAlertsPage() {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 flex items-center justify-between text-xs text-white/30">
+      <div className="mt-4 flex items-center justify-between text-xs" style={{ color: 'var(--prizym-text-muted)' }}>
         <span>Alert engine v2.1 &middot; Next scan in 14 min</span>
         <span>{dismissedIds.size > 0 ? `${dismissedIds.size} dismissed this session` : 'No alerts dismissed'}</span>
       </div>

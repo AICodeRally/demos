@@ -9,4 +9,4 @@ export type {
 } from './types';
 export { tokensToCssVars } from './tokens';
 export { resolveTheme, createThemeVars, createThemeStyle } from './create-theme';
-export { barrelBrass, midnight, cleanLight, aegisIvory, registerSlate } from './presets';
+export { barrelBrass, midnight, cleanLight, aegisIvory, registerSlate, prizymNavy } from './presets';

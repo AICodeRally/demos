@@ -66,18 +66,18 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   label: string; value: string; icon: React.ElementType; trend: string; trendUp: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5 flex flex-col gap-2">
+    <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/50">{label}</span>
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5">
         {trendUp
-          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
-          : <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />}
-        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>{trend}</span>
-        <span className="text-xs text-white/40">vs last month</span>
+          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-600" />
+          : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />}
+        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>{trend}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>vs last month</span>
       </div>
     </div>
   );
@@ -87,7 +87,7 @@ function SeverityBadge({ severity }: { severity: EventSeverity }) {
   const config = {
     info: { color: 'bg-blue-500/20 text-blue-400', dot: 'bg-blue-400' },
     warning: { color: 'bg-amber-500/20 text-amber-400', dot: 'bg-amber-400' },
-    critical: { color: 'bg-red-500/20 text-red-400', dot: 'bg-red-400' },
+    critical: { color: 'bg-red-500/20 text-red-600', dot: 'bg-red-400' },
   };
   const c = config[severity];
   return (
@@ -99,8 +99,8 @@ function SeverityBadge({ severity }: { severity: EventSeverity }) {
 }
 
 function ComplianceIcon({ status }: { status: ComplianceStatus }) {
-  if (status === 'pass') return <CheckCircle2 className="h-4 w-4 text-emerald-400" />;
-  if (status === 'fail') return <XCircle className="h-4 w-4 text-red-400" />;
+  if (status === 'pass') return <CheckCircle2 className="h-4 w-4 text-emerald-600" />;
+  if (status === 'fail') return <XCircle className="h-4 w-4 text-red-600" />;
   return <AlertCircle className="h-4 w-4 text-amber-400" />;
 }
 
@@ -117,12 +117,12 @@ export default function AuditCompliancePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Audit & Compliance</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Audit & Compliance</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Track every change, enforce policies, and maintain regulatory compliance.
           </p>
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70 hover:bg-white/10 transition">
+        <button className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-secondary)' }}>
           <Download className="h-3 w-3" /> Export Audit Log
         </button>
       </div>
@@ -138,71 +138,72 @@ export default function AuditCompliancePage() {
       {/* Search Bar */}
       <div className="flex items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
           <input
             type="text"
             placeholder="Search audit events..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 pl-9 pr-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-amber-500/50"
+            className="w-full rounded-lg pl-9 pr-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:border-amber-500/50"
+            style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-primary)' }}
           />
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/60 hover:bg-white/10 transition">
+        <button className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-secondary)' }}>
           <Filter className="h-3 w-3" /> Severity <ChevronDown className="h-3 w-3" />
         </button>
-        <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/60 hover:bg-white/10 transition">
+        <button className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-secondary)' }}>
           <Clock className="h-3 w-3" /> Date Range <ChevronDown className="h-3 w-3" />
         </button>
       </div>
 
       {/* Audit Event Log */}
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5 mb-6">
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-white">Audit Event Log</h2>
-          <span className="text-xs text-white/40">{AUDIT_EVENTS.length} events — Mar 4-8, 2026</span>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Audit Event Log</h2>
+          <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{AUDIT_EVENTS.length} events — Mar 4-8, 2026</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-left">
-                <th className="pb-3 text-xs font-medium text-white/40">Timestamp</th>
-                <th className="pb-3 text-xs font-medium text-white/40">User</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Action</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Entity</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Old Value</th>
-                <th className="pb-3 text-xs font-medium text-white/40">New Value</th>
-                <th className="pb-3 text-xs font-medium text-white/40">Severity</th>
-                <th className="pb-3 text-xs font-medium text-white/40">IP</th>
-                <th className="pb-3 text-xs font-medium text-white/40 w-10"></th>
+              <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Timestamp</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Action</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Entity</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Old Value</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>New Value</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Severity</th>
+                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>IP</th>
+                <th className="pb-3 text-xs font-medium w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
               </tr>
             </thead>
             <tbody>
               {AUDIT_EVENTS.map(e => (
-                <tr key={e.id} className="border-b border-white/5 hover:bg-white/5 transition">
+                <tr key={e.id} className="transition hover:bg-slate-50" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                   <td className="py-2.5">
-                    <div className="flex items-center gap-1.5 text-white/40">
+                    <div className="flex items-center gap-1.5" style={{ color: 'var(--prizym-text-muted)' }}>
                       <Clock className="h-3 w-3 shrink-0" />
                       <span className="text-xs font-mono whitespace-nowrap">{e.timestamp}</span>
                     </div>
                   </td>
                   <td className="py-2.5">
                     <div className="flex items-center gap-1.5">
-                      <User className="h-3 w-3 text-white/30 shrink-0" />
-                      <span className="text-xs text-white/70 whitespace-nowrap">{e.user}</span>
+                      <User className="h-3 w-3 shrink-0" style={{ color: 'var(--prizym-text-muted)' }} />
+                      <span className="text-xs whitespace-nowrap" style={{ color: 'var(--prizym-text-secondary)' }}>{e.user}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-xs font-medium text-white whitespace-nowrap">{e.action}</td>
-                  <td className="py-2.5 text-xs text-white/60 max-w-[180px] truncate">{e.entity}</td>
-                  <td className="py-2.5 text-xs text-white/40 font-mono whitespace-nowrap">{e.oldValue}</td>
-                  <td className="py-2.5 text-xs text-white/70 font-mono whitespace-nowrap">{e.newValue}</td>
+                  <td className="py-2.5 text-xs font-medium whitespace-nowrap" style={{ color: 'var(--prizym-text-primary)' }}>{e.action}</td>
+                  <td className="py-2.5 text-xs max-w-[180px] truncate" style={{ color: 'var(--prizym-text-secondary)' }}>{e.entity}</td>
+                  <td className="py-2.5 text-xs font-mono whitespace-nowrap" style={{ color: 'var(--prizym-text-muted)' }}>{e.oldValue}</td>
+                  <td className="py-2.5 text-xs font-mono whitespace-nowrap" style={{ color: 'var(--prizym-text-secondary)' }}>{e.newValue}</td>
                   <td className="py-2.5"><SeverityBadge severity={e.severity} /></td>
                   <td className="py-2.5">
-                    <div className="flex items-center gap-1 text-white/30">
+                    <div className="flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}>
                       <Globe className="h-3 w-3 shrink-0" />
                       <span className="text-[10px] font-mono">{e.ip}</span>
                     </div>
                   </td>
                   <td className="py-2.5">
-                    <button className="p-1 rounded hover:bg-white/10 transition">
-                      <Eye className="h-3.5 w-3.5 text-white/30" />
+                    <button className="p-1 rounded hover:bg-slate-100 transition">
+                      <Eye className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                     </button>
                   </td>
                 </tr>
@@ -213,12 +214,12 @@ export default function AuditCompliancePage() {
       </div>
 
       {/* Compliance Checklist */}
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-white">Compliance Checklist</h2>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Compliance Checklist</h2>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-emerald-400 font-medium">{passCount}/{COMPLIANCE_ITEMS.length} passing</span>
-            <div className="h-2 w-24 rounded-full bg-white/10 overflow-hidden">
+            <span className="text-xs text-emerald-600 font-medium">{passCount}/{COMPLIANCE_ITEMS.length} passing</span>
+            <div className="h-2 w-24 rounded-full bg-slate-200 overflow-hidden">
               <div className="h-full rounded-full bg-emerald-400" style={{ width: `${complianceScore}%` }} />
             </div>
           </div>
@@ -226,19 +227,19 @@ export default function AuditCompliancePage() {
 
         {['SOX', 'GDPR', 'Internal'].map(category => (
           <div key={category} className="mb-4 last:mb-0">
-            <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2">{category}</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--prizym-text-muted)' }}>{category}</h3>
             {COMPLIANCE_ITEMS.filter(c => c.category === category).map(item => (
-              <div key={item.id} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0">
+              <div key={item.id} className="flex items-center justify-between py-2.5 last:border-0" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                 <div className="flex items-center gap-3">
                   <ComplianceIcon status={item.status} />
                   <div>
-                    <p className="text-sm text-white">{item.name}</p>
-                    <p className="text-xs text-white/40">{item.detail}</p>
+                    <p className="text-sm" style={{ color: 'var(--prizym-text-primary)' }}>{item.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{item.detail}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-white/30">Checked {item.lastCheck}</span>
-                  <span className={`text-[10px] font-semibold uppercase ${item.status === 'pass' ? 'text-emerald-400' : item.status === 'fail' ? 'text-red-400' : 'text-amber-400'}`}>
+                  <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>Checked {item.lastCheck}</span>
+                  <span className={`text-[10px] font-semibold uppercase ${item.status === 'pass' ? 'text-emerald-600' : item.status === 'fail' ? 'text-red-600' : 'text-amber-400'}`}>
                     {item.status === 'pass' ? 'PASS' : item.status === 'fail' ? 'FAIL' : 'REVIEW'}
                   </span>
                 </div>
@@ -249,22 +250,22 @@ export default function AuditCompliancePage() {
       </div>
 
       {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+      <div className="mt-6 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-blue-400" />
-            <span className="text-xs text-white/50">Info ({AUDIT_EVENTS.filter(e => e.severity === 'info').length})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Info ({AUDIT_EVENTS.filter(e => e.severity === 'info').length})</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-            <span className="text-xs text-white/50">Warning ({AUDIT_EVENTS.filter(e => e.severity === 'warning').length})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Warning ({AUDIT_EVENTS.filter(e => e.severity === 'warning').length})</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
-            <span className="text-xs text-white/50">Critical ({criticalEvents})</span>
+            <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Critical ({criticalEvents})</span>
           </div>
         </div>
-        <span className="text-xs text-white/30">Retention: 84 months | Next audit: Apr 1, 2026</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Retention: 84 months | Next audit: Apr 1, 2026</span>
       </div>
     </>
   );

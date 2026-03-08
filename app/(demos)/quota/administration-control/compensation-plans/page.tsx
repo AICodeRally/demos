@@ -90,18 +90,18 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   label: string; value: string; icon: React.ElementType; trend: string; trendUp: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5 flex flex-col gap-2">
+    <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/50">{label}</span>
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5">
         {trendUp
-          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
-          : <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />}
-        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>{trend}</span>
-        <span className="text-xs text-white/40">vs prior year</span>
+          ? <ArrowUpRight className="h-3.5 w-3.5 text-emerald-600" />
+          : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />}
+        <span className={`text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>{trend}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>vs prior year</span>
       </div>
     </div>
   );
@@ -109,15 +109,15 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
 
 function PlanStatusBadge({ status }: { status: PlanStatus }) {
   const colors: Record<PlanStatus, string> = {
-    Active: 'bg-emerald-500/20 text-emerald-400',
+    Active: 'bg-emerald-500/20 text-emerald-600',
     Draft: 'bg-blue-500/20 text-blue-400',
-    Archived: 'bg-white/10 text-white/40',
+    Archived: 'bg-slate-100 text-slate-400',
     'Pending Approval': 'bg-amber-500/20 text-amber-400',
   };
   const dots: Record<PlanStatus, string> = {
     Active: 'bg-emerald-400',
     Draft: 'bg-blue-400',
-    Archived: 'bg-white/30',
+    Archived: 'bg-slate-300',
     'Pending Approval': 'bg-amber-400',
   };
   return (
@@ -129,7 +129,7 @@ function PlanStatusBadge({ status }: { status: PlanStatus }) {
 }
 
 function TierBar({ tiers }: { tiers: Tier[] }) {
-  const colors = ['bg-white/10', 'bg-amber-500/30', 'bg-amber-500/60', 'bg-amber-500'];
+  const colors = ['bg-slate-200', 'bg-amber-500/30', 'bg-amber-500/60', 'bg-amber-500'];
   return (
     <div className="flex gap-0.5 h-2 rounded-full overflow-hidden">
       {tiers.map((_, i) => (
@@ -151,8 +151,8 @@ export default function CompensationPlansPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Compensation Plans</h1>
-          <p className="text-sm text-white/50 mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Compensation Plans</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Design, manage, and version commission structures and incentive plans.
           </p>
         </div>
@@ -172,54 +172,54 @@ export default function CompensationPlansPage() {
       {/* Plan Cards */}
       <div className="grid gap-4 lg:grid-cols-2 mb-6">
         {PLANS.map(plan => (
-          <div key={plan.id} className="rounded-xl border border-white/10 bg-white/5 p-5 hover:border-amber-500/30 transition group">
+          <div key={plan.id} className="rounded-xl p-5 transition group hover:border-amber-500/30" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             {/* Card Header */}
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-sm font-semibold text-white">{plan.name}</h3>
+                  <h3 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{plan.name}</h3>
                   <PlanStatusBadge status={plan.status} />
                 </div>
-                <p className="text-xs text-white/40">{plan.effectiveFrom} — {plan.effectiveTo}</p>
+                <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{plan.effectiveFrom} — {plan.effectiveTo}</p>
               </div>
-              <span className="text-xs text-white/30 font-mono">{plan.version}</span>
+              <span className="text-xs font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{plan.version}</span>
             </div>
 
             {/* Metrics Row */}
             <div className="grid grid-cols-3 gap-3 mb-4">
-              <div className="rounded-lg bg-white/5 p-2.5 text-center">
-                <p className="text-xs text-white/40 mb-0.5">Enrolled</p>
-                <p className="text-sm font-bold text-white">{plan.enrolled}</p>
+              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Enrolled</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{plan.enrolled}</p>
               </div>
-              <div className="rounded-lg bg-white/5 p-2.5 text-center">
-                <p className="text-xs text-white/40 mb-0.5">Budget</p>
-                <p className="text-sm font-bold text-white">{fmtDollar(plan.budget)}</p>
+              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Budget</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{fmtDollar(plan.budget)}</p>
               </div>
-              <div className="rounded-lg bg-white/5 p-2.5 text-center">
-                <p className="text-xs text-white/40 mb-0.5">Max Rate</p>
+              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Max Rate</p>
                 <p className="text-sm font-bold text-amber-400">{plan.tiers[plan.tiers.length - 1].rate}</p>
               </div>
             </div>
 
             {/* Tier Structure */}
             <div className="mb-3">
-              <p className="text-xs text-white/40 mb-2">Tier Structure</p>
+              <p className="text-xs mb-2" style={{ color: 'var(--prizym-text-muted)' }}>Tier Structure</p>
               <TierBar tiers={plan.tiers} />
               <div className="flex justify-between mt-1.5">
                 {plan.tiers.map((t, i) => (
                   <div key={i} className="text-center flex-1">
-                    <p className="text-[10px] text-white/30">{t.name}</p>
-                    <p className="text-xs font-semibold text-white/70">{t.rate}</p>
-                    <p className="text-[10px] text-white/20">{t.threshold}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>{t.name}</p>
+                    <p className="text-xs font-semibold" style={{ color: 'var(--prizym-text-secondary)' }}>{t.rate}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>{t.threshold}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Approval */}
-            <div className="flex items-center justify-between pt-3 border-t border-white/5">
+            <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
               {plan.approvedBy ? (
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                <div className="flex items-center gap-1.5 text-xs text-emerald-600">
                   <CheckCircle2 className="h-3 w-3" />
                   Approved by {plan.approvedBy} on {plan.approvedDate}
                 </div>
@@ -230,14 +230,14 @@ export default function CompensationPlansPage() {
                 </div>
               )}
               <div className="flex items-center gap-1">
-                <button className="p-1.5 rounded hover:bg-white/10 transition" title="View">
-                  <Eye className="h-3.5 w-3.5 text-white/30" />
+                <button className="p-1.5 rounded hover:bg-slate-100 transition" title="View">
+                  <Eye className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                 </button>
-                <button className="p-1.5 rounded hover:bg-white/10 transition" title="Clone">
-                  <Copy className="h-3.5 w-3.5 text-white/30" />
+                <button className="p-1.5 rounded hover:bg-slate-100 transition" title="Clone">
+                  <Copy className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                 </button>
-                <button className="p-1.5 rounded hover:bg-white/10 transition" title="Edit">
-                  <Edit3 className="h-3.5 w-3.5 text-white/30" />
+                <button className="p-1.5 rounded hover:bg-slate-100 transition" title="Edit">
+                  <Edit3 className="h-3.5 w-3.5" style={{ color: 'var(--prizym-text-muted)' }} />
                 </button>
               </div>
             </div>
@@ -246,28 +246,28 @@ export default function CompensationPlansPage() {
       </div>
 
       {/* Version History */}
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-white">Version History — Enterprise Plan</h2>
-          <span className="text-xs text-white/40">Last 5 changes</span>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Version History — Enterprise Plan</h2>
+          <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Last 5 changes</span>
         </div>
         <div className="relative pl-6">
           {/* Timeline line */}
-          <div className="absolute left-2 top-1 bottom-1 w-px bg-white/10" />
+          <div className="absolute left-2 top-1 bottom-1 w-px" style={{ background: 'var(--prizym-border-default)' }} />
           {VERSION_HISTORY.map((v, i) => (
             <div key={i} className="relative mb-4 last:mb-0">
               {/* Timeline dot */}
-              <div className={`absolute -left-4 top-1 h-2.5 w-2.5 rounded-full border-2 ${i === 0 ? 'bg-amber-400 border-amber-400' : 'bg-zinc-900 border-white/20'}`} />
+              <div className={`absolute -left-4 top-1 h-2.5 w-2.5 rounded-full border-2 ${i === 0 ? 'bg-amber-400 border-amber-400' : 'bg-white border-slate-300'}`} />
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-white">{v.version}</span>
-                    <span className="text-xs text-white/30">{v.date}</span>
+                    <span className="text-xs font-mono font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{v.version}</span>
+                    <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{v.date}</span>
                   </div>
-                  <p className="text-sm text-white/60 mt-0.5">{v.change}</p>
-                  <p className="text-xs text-white/30 mt-0.5">by {v.author}</p>
+                  <p className="text-sm mt-0.5" style={{ color: 'var(--prizym-text-secondary)' }}>{v.change}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>by {v.author}</p>
                 </div>
-                <button className="text-xs text-white/30 hover:text-white/60 transition flex items-center gap-0.5">
+                <button className="text-xs transition flex items-center gap-0.5" style={{ color: 'var(--prizym-text-muted)' }}>
                   Details <ChevronRight className="h-3 w-3" />
                 </button>
               </div>
@@ -277,10 +277,10 @@ export default function CompensationPlansPage() {
       </div>
 
       {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-        <p className="text-xs text-white/30">Plans governed by SOX compliance policy P-2024-091</p>
+      <div className="mt-6 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
+        <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>Plans governed by SOX compliance policy P-2024-091</p>
         <div className="flex items-center gap-4">
-          <button className="text-xs text-white/40 hover:text-white/70 transition">Compare Plans</button>
+          <button className="text-xs transition" style={{ color: 'var(--prizym-text-muted)' }}>Compare Plans</button>
           <button className="text-xs text-amber-400 hover:text-amber-300 font-medium transition">Export All Plans</button>
         </div>
       </div>

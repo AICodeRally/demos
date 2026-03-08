@@ -64,13 +64,13 @@ export default function GoalSettingPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Goal Setting & Cascading</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Goal Setting & Cascading</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Set company-wide goals and cascade targets through teams to individual contributors.
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition">
+          <button className="px-3 py-1.5 text-xs rounded-lg transition" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
             Import Goals
           </button>
           <button className="px-3 py-1.5 text-xs rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition">
@@ -82,38 +82,38 @@ export default function GoalSettingPage() {
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         {kpis.map(k => (
-          <div key={k.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-muted-foreground uppercase tracking-wider">{k.label}</span>
+              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
-            <p className="text-2xl font-bold tracking-tight">{k.value}</p>
+            <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
             <div className="flex items-center gap-1 mt-1">
-              {k.up ? <ArrowUpRight className="h-3 w-3 text-emerald-400" /> : <ArrowDownRight className="h-3 w-3 text-red-400" />}
-              <span className={`text-xs ${k.up ? 'text-emerald-400' : 'text-red-400'}`}>{k.delta}</span>
+              {k.up ? <ArrowUpRight className="h-3 w-3 text-emerald-600" /> : <ArrowDownRight className="h-3 w-3 text-red-600" />}
+              <span className={`text-xs ${k.up ? 'text-emerald-600' : 'text-red-600'}`}>{k.delta}</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* Goal Cascade Visual */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 mb-6">
-        <h2 className="text-sm font-semibold mb-5">Goal Cascade: Company &rarr; Teams &rarr; Individuals</h2>
+      <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-5" style={{ color: 'var(--prizym-text-primary)' }}>Goal Cascade: Company &rarr; Teams &rarr; Individuals</h2>
 
         {/* Company Level */}
         <div className="max-w-3xl mx-auto">
           <div className="rounded-xl border-2 border-amber-400/40 bg-amber-400/[0.05] p-5 mb-2">
             <div className="flex items-center gap-3 mb-3">
               <Building2 className="h-5 w-5 text-amber-400" />
-              <span className="font-bold text-lg">Company Target</span>
+              <span className="font-bold text-lg" style={{ color: 'var(--prizym-text-primary)' }}>Company Target</span>
               <span className="ml-auto text-2xl font-bold text-amber-400">{fmtDollar(companyGoal)}</span>
             </div>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground mb-2">
+            <div className="flex items-center gap-4 text-xs mb-2" style={{ color: 'var(--prizym-text-muted)' }}>
               <span>FY2026 Annual Revenue Goal</span>
               <span>|</span>
               <span>Current: {fmtDollar(companyActual)} ({fmtPct(companyAtt * 100)} YTD pace)</span>
             </div>
-            <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+            <div className="w-full rounded-full h-3 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
               <div
                 className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400 transition-all"
                 style={{ width: `${Math.min(companyAtt * 100, 100)}%` }}
@@ -131,33 +131,33 @@ export default function GoalSettingPage() {
               const att = t.actual / t.goal;
               const color = att >= 0.90 ? '#34d399' : att >= 0.75 ? '#f59e0b' : '#ef4444';
               return (
-                <div key={t.team} className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+                <div key={t.team} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <Layers className="h-4 w-4 text-amber-400" />
-                      <span className="font-semibold text-sm">{t.team}</span>
+                      <span className="font-semibold text-sm" style={{ color: 'var(--prizym-text-primary)' }}>{t.team}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">{t.members} reps</span>
+                    <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{t.members} reps</span>
                   </div>
                   <div className="space-y-1.5 text-xs mb-3">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Goal</span>
+                      <span style={{ color: 'var(--prizym-text-muted)' }}>Goal</span>
                       <span className="font-mono font-semibold">{fmtDollar(t.goal)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Stretch</span>
-                      <span className="font-mono text-muted-foreground">{fmtDollar(t.stretch)}</span>
+                      <span style={{ color: 'var(--prizym-text-muted)' }}>Stretch</span>
+                      <span className="font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{fmtDollar(t.stretch)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Actual</span>
+                      <span style={{ color: 'var(--prizym-text-muted)' }}>Actual</span>
                       <span className="font-mono">{fmtDollar(t.actual)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Attainment</span>
+                      <span style={{ color: 'var(--prizym-text-muted)' }}>Attainment</span>
                       <span className="font-semibold" style={{ color }}>{fmtPct(att * 100)}</span>
                     </div>
                   </div>
-                  <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                  <div className="w-full rounded-full h-2 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                     <div className="h-full rounded-full" style={{ width: `${Math.min(att * 100, 100)}%`, background: color }} />
                   </div>
                 </div>
@@ -170,24 +170,24 @@ export default function GoalSettingPage() {
           </div>
 
           {/* Individual Level */}
-          <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+          <div className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
             <div className="flex items-center gap-2 mb-3">
               <Users className="h-4 w-4 text-amber-400" />
-              <span className="font-semibold text-sm">Individual Targets ({individualTargets.length} reps)</span>
+              <span className="font-semibold text-sm" style={{ color: 'var(--prizym-text-primary)' }}>Individual Targets ({individualTargets.length} reps)</span>
             </div>
             <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4">
               {individualTargets.map(r => {
                 const color = r.att >= 1.0 ? '#34d399' : r.att >= 0.85 ? '#f59e0b' : '#ef4444';
                 return (
-                  <div key={r.id} className="rounded border border-white/5 bg-white/[0.01] p-3">
+                  <div key={r.id} className="rounded p-3" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium">{r.name}</span>
+                      <span className="text-xs font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{r.name}</span>
                       <span className="text-xs font-semibold" style={{ color }}>{fmtPct(r.att * 100)}</span>
                     </div>
-                    <div className="text-xs text-muted-foreground mb-2">
+                    <div className="text-xs mb-2" style={{ color: 'var(--prizym-text-muted)' }}>
                       {r.team} &middot; {fmtDollar(r.target)}
                     </div>
-                    <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                    <div className="w-full rounded-full h-1.5 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                       <div className="h-full rounded-full" style={{ width: `${Math.min(r.att * 100, 100)}%`, background: color }} />
                     </div>
                   </div>
@@ -200,19 +200,19 @@ export default function GoalSettingPage() {
 
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         {/* Team Goals Chart */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Team Goal vs Actual</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Team Goal vs Actual</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={teamChartData} margin={{ left: 10, right: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="team" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(0)}M`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="team" tick={{ fill: '#64748B', fontSize: 11 }} />
+                <YAxis tickFormatter={v => `$${(v / 1e6).toFixed(0)}M`} tick={{ fill: '#64748B', fontSize: 11 }} />
                 <Tooltip
-                  contentStyle={{ background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, fontSize: 12, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
                   formatter={(v: any) => [fmtDollar(v)]}
                 />
-                <Bar dataKey="goal" fill="rgba(255,255,255,0.15)" radius={[4, 4, 0, 0]} maxBarSize={36} name="Goal" />
+                <Bar dataKey="goal" fill="rgba(148,163,184,0.25)" radius={[4, 4, 0, 0]} maxBarSize={36} name="Goal" />
                 <Bar dataKey="actual" radius={[4, 4, 0, 0]} maxBarSize={36} name="Actual">
                   {teamChartData.map((entry, i) => (
                     <Cell key={i} fill={entry.att >= 90 ? '#34d399' : entry.att >= 75 ? '#f59e0b' : '#ef4444'} />
@@ -225,21 +225,21 @@ export default function GoalSettingPage() {
         </div>
 
         {/* Quarterly Milestones */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-sm font-semibold mb-4">Quarterly Milestones</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Quarterly Milestones</h2>
           <div className="space-y-4">
             {milestones.map(m => {
               const att = m.actual > 0 ? m.actual / m.target : 0;
               const isComplete = m.status === 'complete';
               const isCurrent = m.status === 'current';
               return (
-                <div key={m.quarter} className={`rounded-lg border p-4 ${isCurrent ? 'border-amber-400/30 bg-amber-400/[0.05]' : 'border-white/10 bg-white/[0.02]'}`}>
+                <div key={m.quarter} className={`rounded-lg p-4 ${isCurrent ? 'border-amber-400/30 bg-amber-400/[0.05]' : ''}`} style={isCurrent ? { border: '1px solid rgba(251,191,36,0.3)' } : { background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      {isComplete && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
+                      {isComplete && <CheckCircle2 className="h-4 w-4 text-emerald-600" />}
                       {isCurrent && <Activity className="h-4 w-4 text-amber-400 animate-pulse" />}
-                      {m.status === 'upcoming' && <Target className="h-4 w-4 text-white/30" />}
-                      <span className={`font-semibold ${m.status === 'upcoming' ? 'text-muted-foreground' : ''}`}>{m.quarter} FY2026</span>
+                      {m.status === 'upcoming' && <Target className="h-4 w-4" style={{ color: 'var(--prizym-text-muted)' }} />}
+                      <span className="font-semibold" style={m.status === 'upcoming' ? { color: 'var(--prizym-text-muted)' } : { color: 'var(--prizym-text-primary)' }}>{m.quarter} FY2026</span>
                       {isCurrent && <span className="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-400 text-xs border border-amber-400/30">Current</span>}
                     </div>
                     <span className="font-mono text-sm">{fmtDollar(m.target)}</span>
@@ -247,16 +247,16 @@ export default function GoalSettingPage() {
                   {(isComplete || isCurrent) && (
                     <>
                       <div className="flex items-center justify-between text-xs mb-2">
-                        <span className="text-muted-foreground">
+                        <span style={{ color: 'var(--prizym-text-muted)' }}>
                           {isComplete ? `Closed: ${fmtDollar(m.actual)}` : 'In Progress'}
                         </span>
                         {m.actual > 0 && (
-                          <span className={att >= 0.90 ? 'text-emerald-400' : att >= 0.75 ? 'text-amber-400' : 'text-red-400'}>
+                          <span className={att >= 0.90 ? 'text-emerald-600' : att >= 0.75 ? 'text-amber-400' : 'text-red-600'}>
                             {fmtPct(att * 100)}
                           </span>
                         )}
                       </div>
-                      <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                      <div className="w-full rounded-full h-2 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>
                         <div
                           className="h-full rounded-full"
                           style={{
@@ -275,12 +275,12 @@ export default function GoalSettingPage() {
       </div>
 
       {/* Alignment Summary */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <h2 className="text-sm font-semibold mb-4">Cascade Alignment Summary</h2>
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Cascade Alignment Summary</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-muted-foreground text-xs uppercase tracking-wider">
+              <tr className="text-xs uppercase tracking-wider" style={{ borderBottom: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-muted)' }}>
                 <th className="text-left py-3 pr-4">Level</th>
                 <th className="text-right py-3 pr-4">Target</th>
                 <th className="text-right py-3 pr-4">Actual</th>
@@ -290,11 +290,11 @@ export default function GoalSettingPage() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-white/5 bg-amber-400/[0.03]">
-                <td className="py-3 pr-4 font-semibold">Company</td>
+              <tr className="bg-amber-400/[0.03]" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                <td className="py-3 pr-4 font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Company</td>
                 <td className="py-3 pr-4 text-right font-mono">{fmtDollar(companyGoal)}</td>
                 <td className="py-3 pr-4 text-right font-mono">{fmtDollar(companyActual)}</td>
-                <td className="py-3 pr-4 text-right font-mono text-red-400">{fmtDollar(companyGoal - companyActual)}</td>
+                <td className="py-3 pr-4 text-right font-mono text-red-600">{fmtDollar(companyGoal - companyActual)}</td>
                 <td className="py-3 pr-4 text-right font-semibold text-amber-400">{fmtPct(companyAtt * 100)}</td>
                 <td className="py-3 text-center">
                   <span className="px-2 py-0.5 rounded-full text-xs border border-amber-400/30 bg-amber-400/10 text-amber-400">On Pace</span>
@@ -303,16 +303,16 @@ export default function GoalSettingPage() {
               {teamGoals.map(t => {
                 const att = t.actual / t.goal;
                 const gap = t.goal - t.actual;
-                const color = att >= 0.90 ? 'text-emerald-400' : att >= 0.75 ? 'text-amber-400' : 'text-red-400';
+                const color = att >= 0.90 ? 'text-emerald-600' : att >= 0.75 ? 'text-amber-400' : 'text-red-600';
                 return (
-                  <tr key={t.team} className="border-b border-white/5">
-                    <td className="py-3 pr-4 pl-6 text-muted-foreground">{t.team}</td>
+                  <tr key={t.team} style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
+                    <td className="py-3 pr-4 pl-6" style={{ color: 'var(--prizym-text-muted)' }}>{t.team}</td>
                     <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.goal)}</td>
                     <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.actual)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs text-red-400">{gap > 0 ? fmtDollar(gap) : '--'}</td>
+                    <td className="py-3 pr-4 text-right font-mono text-xs text-red-600">{gap > 0 ? fmtDollar(gap) : '--'}</td>
                     <td className={`py-3 pr-4 text-right font-semibold ${color}`}>{fmtPct(att * 100)}</td>
                     <td className="py-3 text-center">
-                      <span className={`px-2 py-0.5 rounded-full text-xs border ${att >= 0.90 ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-400' : att >= 0.75 ? 'border-amber-400/30 bg-amber-400/10 text-amber-400' : 'border-red-400/30 bg-red-400/10 text-red-400'}`}>
+                      <span className={`px-2 py-0.5 rounded-full text-xs border ${att >= 0.90 ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-600' : att >= 0.75 ? 'border-amber-400/30 bg-amber-400/10 text-amber-400' : 'border-red-400/30 bg-red-400/10 text-red-600'}`}>
                         {att >= 0.90 ? 'On Track' : att >= 0.75 ? 'At Risk' : 'Behind'}
                       </span>
                     </td>

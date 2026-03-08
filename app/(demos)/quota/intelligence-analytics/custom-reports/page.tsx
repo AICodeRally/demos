@@ -19,20 +19,20 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   icon: React.ElementType; trend?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-5 flex flex-col gap-1">
+    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</span>
+        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
       <div className="flex items-center gap-1.5 mt-0.5">
         {trend && (
-          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-500' : 'text-red-400'}`}>
+          <span className={`flex items-center text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>
             {trendUp ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
             {trend}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{subtitle}</span>
       </div>
     </div>
   );
@@ -130,8 +130,8 @@ const FORMAT_ICONS: Record<string, React.ElementType> = {
 };
 
 const FORMAT_COLORS: Record<string, string> = {
-  PDF: 'text-red-400 bg-red-500/10',
-  Excel: 'text-emerald-400 bg-emerald-500/10',
+  PDF: 'text-red-600 bg-red-500/10',
+  Excel: 'text-emerald-600 bg-emerald-500/10',
   Dashboard: 'text-blue-400 bg-blue-500/10',
   CSV: 'text-slate-400 bg-slate-500/10',
 };
@@ -150,8 +150,8 @@ export default function CustomReportsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Custom Reports</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Custom Reports</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Build and schedule custom reports with flexible data connections and visualizations.
           </p>
         </div>
@@ -170,26 +170,26 @@ export default function CustomReportsPage() {
 
       <div className="grid gap-6 lg:grid-cols-3 mb-6">
         {/* Report Usage Chart */}
-        <div className="lg:col-span-2 rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-1">Report Views This Week</h2>
-          <p className="text-xs text-muted-foreground mb-4">Daily report access across all users</p>
+        <div className="lg:col-span-2 rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-1" style={{ color: 'var(--prizym-text-primary)' }}>Report Views This Week</h2>
+          <p className="text-xs mb-4" style={{ color: 'var(--prizym-text-muted)' }}>Daily report access across all users</p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={USAGE_DATA} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-              <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 12 }} />
-              <YAxis tick={{ fill: '#888', fontSize: 12 }} />
-              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: 8 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="day" tick={{ fill: '#64748B', fontSize: 12 }} />
+              <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+              <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }} />
               <Bar dataKey="views" fill="#f59e0b" radius={[4, 4, 0, 0]} name="Views" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Recent Activity */}
-        <div className="rounded-xl border bg-card p-5">
-          <h2 className="font-semibold mb-3">Recent Activity</h2>
+        <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+          <h2 className="font-semibold mb-3" style={{ color: 'var(--prizym-text-primary)' }}>Recent Activity</h2>
           <div className="space-y-3">
             {RECENT_ACTIVITY.map((a, i) => (
-              <div key={i} className="flex items-start gap-3 pb-3 border-b border-border/50 last:border-0 last:pb-0">
+              <div key={i} className="flex items-start gap-3 pb-3 last:border-0 last:pb-0" style={{ borderBottom: i < RECENT_ACTIVITY.length - 1 ? '1px solid var(--prizym-border-default)' : 'none' }}>
                 <div className={`w-2 h-2 rounded-full mt-1.5 ${
                   a.action === 'Generated' ? 'bg-emerald-400'
                   : a.action === 'Viewed' ? 'bg-blue-400'
@@ -198,12 +198,12 @@ export default function CustomReportsPage() {
                   : 'bg-slate-400'
                 }`} />
                 <div className="min-w-0">
-                  <p className="text-xs">
+                  <p className="text-xs" style={{ color: 'var(--prizym-text-primary)' }}>
                     <span className="font-medium">{a.user}</span>
-                    <span className="text-muted-foreground"> {a.action.toLowerCase()} </span>
+                    <span style={{ color: 'var(--prizym-text-muted)' }}> {a.action.toLowerCase()} </span>
                     <span className="font-medium">{a.report}</span>
                   </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{a.time}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{a.time}</p>
                 </div>
               </div>
             ))}
@@ -213,15 +213,16 @@ export default function CustomReportsPage() {
 
       {/* Filter Bar */}
       <div className="flex items-center gap-2 mb-4">
-        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Filter className="h-4 w-4" style={{ color: 'var(--prizym-text-muted)' }} />
         <div className="flex gap-1.5">
           {categories.map(c => (
             <button
               key={c}
               onClick={() => setFilter(c)}
               className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${
-                filter === c ? 'bg-amber-500 text-black font-medium' : 'bg-muted text-muted-foreground hover:text-foreground'
+                filter === c ? 'bg-amber-500 text-black font-medium' : ''
               }`}
+              style={filter !== c ? { background: 'var(--prizym-card-bg)', color: 'var(--prizym-text-muted)', border: '1px solid var(--prizym-border-default)' } : undefined}
             >
               {c === 'all' ? 'All' : c}
             </button>
@@ -236,7 +237,7 @@ export default function CustomReportsPage() {
           const formatColor = FORMAT_COLORS[r.format] || 'text-slate-400 bg-slate-500/10';
 
           return (
-            <div key={r.id} className="rounded-xl border bg-card p-5 hover:border-amber-500/30 transition-colors">
+            <div key={r.id} className="rounded-xl p-5 hover:border-amber-500/30 transition-colors" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className={`w-9 h-9 rounded-lg ${formatColor.split(' ')[1]} flex items-center justify-center`}>
@@ -244,14 +245,14 @@ export default function CustomReportsPage() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-semibold">{r.name}</h3>
+                      <h3 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{r.name}</h3>
                       {r.starred && <Star className="h-3 w-3 text-amber-500 fill-amber-500" />}
                     </div>
-                    <span className="text-xs text-muted-foreground">{r.category}</span>
+                    <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{r.category}</span>
                   </div>
                 </div>
                 <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                  r.status === 'ready' ? 'bg-emerald-500/10 text-emerald-400'
+                  r.status === 'ready' ? 'bg-emerald-500/10 text-emerald-600'
                   : r.status === 'generating' ? 'bg-amber-500/10 text-amber-400'
                   : 'bg-blue-500/10 text-blue-400'
                 }`}>
@@ -259,32 +260,32 @@ export default function CustomReportsPage() {
                 </span>
               </div>
 
-              <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{r.description}</p>
+              <p className="text-xs mb-3 line-clamp-2" style={{ color: 'var(--prizym-text-muted)' }}>{r.description}</p>
 
               <div className="grid grid-cols-3 gap-2 mb-3 text-xs">
-                <div className="p-2 rounded bg-muted/30">
-                  <p className="text-muted-foreground">Last Run</p>
-                  <p className="font-medium mt-0.5">{r.lastRun}</p>
+                <div className="p-2 rounded" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                  <p style={{ color: 'var(--prizym-text-muted)' }}>Last Run</p>
+                  <p className="font-medium mt-0.5" style={{ color: 'var(--prizym-text-primary)' }}>{r.lastRun}</p>
                 </div>
-                <div className="p-2 rounded bg-muted/30">
-                  <p className="text-muted-foreground">Schedule</p>
-                  <p className="font-medium mt-0.5">{r.schedule}</p>
+                <div className="p-2 rounded" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                  <p style={{ color: 'var(--prizym-text-muted)' }}>Schedule</p>
+                  <p className="font-medium mt-0.5" style={{ color: 'var(--prizym-text-primary)' }}>{r.schedule}</p>
                 </div>
-                <div className="p-2 rounded bg-muted/30">
-                  <p className="text-muted-foreground">Format</p>
-                  <p className="font-medium mt-0.5">{r.format}</p>
+                <div className="p-2 rounded" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                  <p style={{ color: 'var(--prizym-text-muted)' }}>Format</p>
+                  <p className="font-medium mt-0.5" style={{ color: 'var(--prizym-text-primary)' }}>{r.format}</p>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="text-xs flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}>
                   <Mail className="h-3 w-3" /> {r.recipients} recipients
                 </span>
                 <div className="flex gap-1.5">
-                  <button className="text-xs px-3 py-1.5 rounded-lg bg-muted text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                  <button className="text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" style={{ background: 'var(--prizym-card-bg)', color: 'var(--prizym-text-muted)', border: '1px solid var(--prizym-border-default)' }}>
                     <Eye className="h-3 w-3" /> Preview
                   </button>
-                  <button className="text-xs px-3 py-1.5 rounded-lg bg-muted text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                  <button className="text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" style={{ background: 'var(--prizym-card-bg)', color: 'var(--prizym-text-muted)', border: '1px solid var(--prizym-border-default)' }}>
                     <Download className="h-3 w-3" /> Export
                   </button>
                   <button className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 text-black font-medium hover:bg-amber-400 transition-colors flex items-center gap-1">
@@ -298,10 +299,10 @@ export default function CustomReportsPage() {
       </div>
 
       {/* Quick Create Templates */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <div className="flex items-center gap-2 mb-4">
           <Printer className="h-4 w-4 text-amber-500" />
-          <h2 className="font-semibold">Quick Create from Template</h2>
+          <h2 className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Quick Create from Template</h2>
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {[
@@ -309,10 +310,10 @@ export default function CustomReportsPage() {
             { name: 'From Existing', desc: 'Clone and modify an existing report template', icon: FileText },
             { name: 'AI Generated', desc: 'Describe what you need and AI builds the report', icon: Star },
           ].map(t => (
-            <button key={t.name} className="p-4 rounded-lg border border-dashed border-border hover:border-amber-500/50 transition-colors text-left group">
-              <t.icon className="h-5 w-5 text-muted-foreground group-hover:text-amber-500 transition-colors mb-2" />
-              <h3 className="text-sm font-medium">{t.name}</h3>
-              <p className="text-xs text-muted-foreground mt-1">{t.desc}</p>
+            <button key={t.name} className="p-4 rounded-lg border border-dashed hover:border-amber-500/50 transition-colors text-left group" style={{ borderColor: 'var(--prizym-border-default)' }}>
+              <t.icon className="h-5 w-5 group-hover:text-amber-500 transition-colors mb-2" style={{ color: 'var(--prizym-text-muted)' }} />
+              <h3 className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{t.name}</h3>
+              <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>{t.desc}</p>
             </button>
           ))}
         </div>
