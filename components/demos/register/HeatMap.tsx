@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 interface HeatMapProps {
   rows: string[];
   cols: string[];
@@ -89,10 +91,9 @@ export function HeatMap({
 
         {/* Data rows */}
         {rows.map((row, ri) => (
-          <>
+          <React.Fragment key={`row-${ri}`}>
             {/* Row label */}
             <div
-              key={`row-${ri}`}
               className="flex items-center pr-2"
             >
               <span
@@ -125,7 +126,7 @@ export function HeatMap({
                 </div>
               );
             })}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>
