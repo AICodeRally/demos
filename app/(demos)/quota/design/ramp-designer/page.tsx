@@ -308,10 +308,11 @@ export default function RampDesignerPage() {
                   borderRadius: 8,
                   fontSize: 12,
                 }}
-                formatter={(value: number | undefined, name: string) => [
-                  `$${(value ?? 0).toLocaleString()}`,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                formatter={((value: any, name: any) => [
+                  `$${Number(value ?? 0).toLocaleString()}`,
                   name === 'fullQuota' ? 'Full Quota' : name === 'rampedQuota' ? 'Ramped Quota' : 'Expected Attainment',
-                ]}
+                ]) as any}
               />
               <Line
                 type="monotone"

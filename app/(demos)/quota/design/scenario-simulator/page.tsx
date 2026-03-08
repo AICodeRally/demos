@@ -158,8 +158,8 @@ export default function ScenarioSimulatorPage() {
               />
               <Tooltip
                 contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 8, color: '#111827', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}
-                formatter={(v: number) => [`${v.toFixed(2)}%`, 'Density']}
-                labelFormatter={(v: number) => `$${v}M Revenue`}
+                formatter={((v: any) => [`${Number(v ?? 0).toFixed(2)}%`, 'Density']) as any}
+                labelFormatter={((v: any) => `$${v}M Revenue`) as any}
                 labelStyle={{ color: '#64748B' }}
               />
               <Area type="monotone" dataKey="density" stroke="#f59e0b" fill="url(#mcGrad)" strokeWidth={2.5} />
