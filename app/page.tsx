@@ -18,6 +18,14 @@ const demos = [
     pages: 22,
   },
   {
+    name: 'CRESTLINE',
+    slug: 'crestline',
+    industry: 'Department Store Retail',
+    tagline: 'Premium retail compensation for multi-format department stores',
+    color: '#c9a84c',
+    pages: 25,
+  },
+  {
     name: 'EQUIPR',
     slug: 'equipr',
     industry: 'Equipment Rental',
