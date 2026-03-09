@@ -214,6 +214,128 @@ export default function DualCalendar() {
         </div>
       </div>
 
+      {/* Gantt-Style Annual Calendar View */}
+      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Annual Calendar — Gantt View</h2>
+        <p className="text-xs mb-5" style={{ color: '#475569' }}>
+          All three calendars overlaid across the fiscal year
+        </p>
+
+        {/* Month header */}
+        <div className="grid gap-0" style={{ gridTemplateColumns: '140px repeat(12, 1fr)' }}>
+          <div className="text-[10px] font-semibold" style={{ color: '#94a3b8' }}>CALENDAR</div>
+          {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => (
+            <div key={m} className="text-[10px] text-center font-medium" style={{ color: '#94a3b8' }}>{m}</div>
+          ))}
+        </div>
+
+        {/* Semi-Monthly Payroll */}
+        <div className="grid gap-0 mt-2" style={{ gridTemplateColumns: '140px repeat(12, 1fr)' }}>
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#1a1f3d' }} />
+            <span className="text-[10px] font-semibold" style={{ color: '#0F172A' }}>Semi-Monthly</span>
+          </div>
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="flex gap-0.5 px-0.5">
+              <div className="flex-1 h-6 rounded-sm" style={{ backgroundColor: '#1a1f3d', opacity: 0.75 }} />
+              <div className="flex-1 h-6 rounded-sm" style={{ backgroundColor: '#1a1f3d', opacity: 0.55 }} />
+            </div>
+          ))}
+        </div>
+
+        {/* 4-5-4 Retail */}
+        <div className="grid gap-0 mt-2" style={{ gridTemplateColumns: '140px repeat(12, 1fr)' }}>
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#c9a84c' }} />
+            <span className="text-[10px] font-semibold" style={{ color: '#0F172A' }}>4-5-4 Retail</span>
+          </div>
+          {/* 4-5-4 pattern: each quarter = 4wk + 5wk + 4wk ≈ 1mo + 1.25mo + 1mo */}
+          {[4,5,4,4,5,4,4,5,4,4,5,4].map((weeks, i) => (
+            <div key={i} className="px-0.5">
+              <div
+                className="h-6 rounded-sm flex items-center justify-center text-[8px] font-bold text-white"
+                style={{ backgroundColor: weeks === 5 ? '#b8942e' : '#c9a84c' }}
+              >
+                {weeks}w
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Counter Lead Bonus Windows */}
+        <div className="grid gap-0 mt-2" style={{ gridTemplateColumns: '140px repeat(12, 1fr)' }}>
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#059669' }} />
+            <span className="text-[10px] font-semibold" style={{ color: '#0F172A' }}>Counter Lead</span>
+          </div>
+          {/* CLB windows align with the 5-week retail periods: ~Mar, Jun, Sep, Dec */}
+          {Array.from({ length: 12 }).map((_, i) => {
+            const isWindow = [2, 5, 8, 11].includes(i); // Mar, Jun, Sep, Dec
+            return (
+              <div key={i} className="px-0.5">
+                {isWindow ? (
+                  <div className="h-6 rounded-sm flex items-center justify-center text-[8px] font-bold text-white" style={{ backgroundColor: '#059669' }}>
+                    CLB
+                  </div>
+                ) : (
+                  <div className="h-6" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="border-t pt-3 mt-4" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-[11px]" style={{ color: '#475569' }}>
+            Counter Lead Bonus calculation windows align with 5-week retail periods.
+            Semi-monthly payroll runs on the 1st and 16th regardless of retail period boundaries.
+          </p>
+        </div>
+      </div>
+
+      {/* Commission Stream Comparison Table */}
+      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Commission Stream Calendar Comparison</h2>
+        <p className="text-xs mb-4" style={{ color: '#475569' }}>
+          Each commission stream runs on its own calendar and frequency
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
+                <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Component</th>
+                <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Calendar</th>
+                <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Frequency</th>
+                <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Current Period</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { comp: 'Basic Commission', cal: 'Semi-Monthly Payroll', freq: '24x / year', period: 'PP5 (Apr 1-15)', calColor: '#1a1f3d' },
+                { comp: 'Premium Commission', cal: 'Semi-Monthly Payroll', freq: '24x / year', period: 'PP5 (Apr 1-15)', calColor: '#1a1f3d' },
+                { comp: 'Counter Lead Bonus', cal: '4-5-4 Retail', freq: '4x / year (5-wk)', period: 'P2 (Mar 1 - Apr 4)', calColor: '#c9a84c' },
+                { comp: 'Achiever Scorecard', cal: 'Semi-Monthly Payroll', freq: '24x / year', period: 'PP5 (Apr 1-15)', calColor: '#1a1f3d' },
+                { comp: 'Neg. Balance Carry-Fwd', cal: 'Semi-Monthly Payroll', freq: 'Rolling', period: 'Cumulative', calColor: '#1a1f3d' },
+              ].map((row, i) => (
+                <tr key={i} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                  <td className="py-3 text-xs font-medium" style={{ color: '#0F172A' }}>{row.comp}</td>
+                  <td className="py-3">
+                    <span
+                      className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-white"
+                      style={{ backgroundColor: row.calColor }}
+                    >
+                      {row.cal}
+                    </span>
+                  </td>
+                  <td className="py-3 text-xs font-mono" style={{ color: '#475569' }}>{row.freq}</td>
+                  <td className="py-3 text-xs font-medium" style={{ color: '#0F172A' }}>{row.period}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Component-to-Calendar mapping table */}
       <div className="rounded-xl border bg-white p-5" style={{ borderColor: '#E2E8F0' }}>
         <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Component Calendar Assignment</h2>
