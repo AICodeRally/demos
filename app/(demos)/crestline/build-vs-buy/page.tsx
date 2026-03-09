@@ -1,7 +1,7 @@
 'use client';
 
 import { StatCard } from '@/components/demos/crestline';
-import { Scale, Hammer, ShoppingCart, AlertTriangle, ArrowRight, Clock, Users, Wrench, ChevronRight } from 'lucide-react';
+import { Scale, Hammer, ShoppingCart, Sparkles, AlertTriangle, ArrowRight, Clock, Users, Wrench, ChevronRight, Zap, BarChart3, Shield, Bot } from 'lucide-react';
 import Link from 'next/link';
 
 /* ── Color tokens ─────────────────────────────────────────────────────── */
@@ -15,16 +15,21 @@ const C = {
   amber: '#F59E0B',
   green: '#059669',
   blue: '#2563EB',
+  purple: '#7c3aed',
+  navy: '#1a1f3d',
+  gold: '#c9a84c',
 };
 
 /* ── Badge definitions ────────────────────────────────────────────────── */
 type Complexity = 'Very High' | 'High' | 'Moderate';
-type Risk = 'Critical' | 'High' | 'Moderate';
+type Risk = 'Critical' | 'High' | 'Moderate' | 'Low';
 type Readiness = 'Native' | 'Configurable' | 'Custom Extension';
+type AiReadiness = 'AI-Native' | 'AI-Accelerated' | 'AI-Assisted';
 
 const complexityColor: Record<Complexity, string> = { 'Very High': C.red, 'High': C.amber, 'Moderate': C.green };
-const riskColor: Record<Risk, string> = { 'Critical': C.red, 'High': C.amber, 'Moderate': C.green };
+const riskColor: Record<Risk, string> = { 'Critical': C.red, 'High': C.amber, 'Moderate': C.green, 'Low': C.green };
 const readinessColor: Record<Readiness, string> = { 'Native': C.green, 'Configurable': C.blue, 'Custom Extension': C.amber };
+const aiReadinessColor: Record<AiReadiness, string> = { 'AI-Native': C.purple, 'AI-Accelerated': C.blue, 'AI-Assisted': C.green };
 
 function Badge({ label, color }: { label: string; color: string }) {
   return (
@@ -43,11 +48,16 @@ interface ComponentRow {
   buildComplexity: Complexity;
   buildRisk: Risk;
   buyReadiness: Readiness;
+  aiReadiness: AiReadiness;
+  aiRisk: Risk;
   keyDifferentiator: string;
   buildBullets: string[];
   buildEffort: string;
   buildRiskFactors: string[];
   buyBullets: string[];
+  aiBullets: string[];
+  aiEffort: string;
+  aiBonus: string;
   insight: string;
 }
 
@@ -57,7 +67,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'Very High',
     buildRisk: 'Critical',
     buyReadiness: 'Native',
-    keyDifferentiator: 'POS-to-commission pipeline with receipt-linked return handling, 14-attribute staging, audit controls. Modern platforms ingest POS natively.',
+    aiReadiness: 'AI-Native',
+    aiRisk: 'Low',
+    keyDifferentiator: 'POS-to-commission pipeline with receipt-linked return handling, 14-attribute staging, audit controls.',
     buildBullets: [
       'Must build custom POS connectors for 200+ stores with heterogeneous terminal hardware',
       'Receipt-linked return matching requires real-time state management across 14 transaction attributes',
@@ -69,6 +81,13 @@ const COMPONENTS: ComponentRow[] = [
       'SPM platforms provide native POS ingestion with pre-built connectors for major retail systems',
       'Transaction staging, deduplication, and audit trail are foundational infrastructure',
     ],
+    aiBullets: [
+      'AI generates POS connector adapters from API specs — days instead of months',
+      'Pre-built data pipeline templates with AI-validated audit controls',
+      'Anomaly detection flags ingestion issues before they cascade',
+    ],
+    aiEffort: '3-4 weeks',
+    aiBonus: 'AI-powered anomaly detection on transaction flow — not available in off-the-shelf Buy',
     insight: 'This is plumbing, not differentiation. Every dollar spent here is a dollar not spent on associate experience.',
   },
   {
@@ -76,7 +95,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'High',
     buildRisk: 'High',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Selling department rates, merchandise mapping, Achiever goals — all require effective dating. Platforms provide this as table infrastructure.',
+    aiReadiness: 'AI-Native',
+    aiRisk: 'Low',
+    keyDifferentiator: 'Selling department rates, merchandise mapping, Achiever goals — all require effective dating.',
     buildBullets: [
       'Every rate table, department mapping, and goal must be versioned with effective/expiry dates',
       'Retroactive changes require re-processing all transactions in the affected date range',
@@ -87,6 +108,13 @@ const COMPONENTS: ComponentRow[] = [
       'SPM platforms treat effective dating as core table infrastructure — not an add-on',
       'Built-in version history, diff views, and approval workflows for configuration changes',
     ],
+    aiBullets: [
+      'AI scaffolds entire temporal data layer from schema definitions',
+      'Auto-generated admin UI with diff views and approval workflows',
+      'AI validates retroactive change impact before commit',
+    ],
+    aiEffort: '2-3 weeks',
+    aiBonus: 'AI impact analysis previews what a rate change affects before you commit — proactive, not reactive',
     insight: 'Effective dating sounds simple until you layer in retro corrections, mid-period rate changes, and 200 stores with different go-live dates.',
   },
   {
@@ -94,11 +122,13 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'Very High',
     buildRisk: 'Critical',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Basic, Premium, Counter Lead Bonus, Achiever Scorecard, Negative Balance — 5 interdependent calc streams. SPM platforms are literally built for this.',
+    aiReadiness: 'AI-Accelerated',
+    aiRisk: 'Moderate',
+    keyDifferentiator: 'Basic, Premium, Counter Lead Bonus, Achiever Scorecard, Negative Balance — 5 interdependent calc streams.',
     buildBullets: [
       'Five calculation streams with interdependencies (Negative Balance carries forward, Achiever modifies rates)',
       'Each stream has different trigger conditions, periodicity, and aggregation rules',
-      'Must handle 3,200 associates x 26 pay periods x 5 streams = 416,000 calculations per year',
+      'Must handle 3,200 associates × 26 pay periods × 5 streams = 416,000 calculations per year',
     ],
     buildEffort: '9-12 months, 5-8 engineers',
     buildRiskFactors: ['Stream interaction bugs produce silent calculation errors', 'Performance degrades non-linearly with rule complexity'],
@@ -107,6 +137,13 @@ const COMPONENTS: ComponentRow[] = [
       'Rule engines support arbitrary stream interdependencies with built-in execution ordering',
       'Calculation audit trails show exactly how each dollar was computed',
     ],
+    aiBullets: [
+      'AI translates business rules into executable calc engine code with test coverage',
+      'Stream dependency graph auto-validated — AI catches interaction bugs at design time',
+      'Performance-optimized calculation pipeline generated from rule specifications',
+    ],
+    aiEffort: '6-8 weeks',
+    aiBonus: 'Custom engine tailored to Crestline — no forcing business logic into a vendor\'s rule syntax',
     insight: 'This is the heart of the problem. Building a commission engine is building an SPM platform — the question is whether Crestline is a software company.',
   },
   {
@@ -114,7 +151,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'High',
     buildRisk: 'High',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Per-period percentile ranking across peer groups. Standard analytics function in SPM platforms.',
+    aiReadiness: 'AI-Native',
+    aiRisk: 'Low',
+    keyDifferentiator: 'Per-period percentile ranking across peer groups — the explicit Workday Prism gap.',
     buildBullets: [
       'Requires real-time ranking of 3,200 associates across dynamic peer groups (department, store, region)',
       'Peer group composition changes with transfers, new hires, and terminations mid-period',
@@ -125,6 +164,12 @@ const COMPONENTS: ComponentRow[] = [
       'Standard analytics function — most SPM platforms include percentile ranking out of the box',
       'Configurable peer group definitions with automatic rebalancing',
     ],
+    aiBullets: [
+      'Trivial for AI — percentile calculations with dynamic peer groups generated in hours',
+      'AI optimizes query performance for real-time recalculation at scale',
+    ],
+    aiEffort: '1 week',
+    aiBonus: 'AI-powered peer group analysis identifies optimal groupings automatically',
     insight: 'Low effort to build in isolation, but the complexity explodes when percentiles feed into Achiever eligibility and tier progression.',
   },
   {
@@ -132,9 +177,11 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'Very High',
     buildRisk: 'Critical',
     buyReadiness: 'Configurable',
-    keyDifferentiator: 'YTD aggregation, staffing history, tier progression (Silver\u2192Gold\u2192Platinum), dual-sync with HR system. Configurable rule engines handle this.',
+    aiReadiness: 'AI-Accelerated',
+    aiRisk: 'Low',
+    keyDifferentiator: 'YTD aggregation, staffing history, tier progression (Silver→Gold→Platinum), dual-sync with HR system.',
     buildBullets: [
-      'Tier progression logic (Silver\u2192Gold\u2192Platinum) with YTD aggregation and staffing history requirements',
+      'Tier progression logic (Silver→Gold→Platinum) with YTD aggregation and staffing history requirements',
       'Must dual-sync with HR system for eligibility changes (transfers, leaves, terminations)',
       'Achiever status affects Premium commission rates — creating a circular dependency with the engine',
     ],
@@ -145,6 +192,13 @@ const COMPONENTS: ComponentRow[] = [
       'HR integration connectors handle bidirectional sync with Workday, SAP, etc.',
       'Built-in dispute workflow for tier boundary cases',
     ],
+    aiBullets: [
+      'AI generates eligibility rules from business requirements — including edge cases humans miss',
+      'Connector framework with AI-generated Workday sync adapters',
+      'AI proactively identifies tier boundary edge cases and generates test scenarios',
+    ],
+    aiEffort: '4-5 weeks',
+    aiBonus: 'AI-driven "what-if" for Achiever thresholds — model impact of changing tier boundaries before you change them',
     insight: 'The Achiever program is Crestline\'s primary retention tool for top sellers. Errors here directly impact the associates you can least afford to lose.',
   },
   {
@@ -152,7 +206,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'High',
     buildRisk: 'High',
     buyReadiness: 'Configurable',
-    keyDifferentiator: '4-5-4 retail calendar for Counter Lead Bonus vs. semi-monthly payroll. SPM platforms support multiple calendar types.',
+    aiReadiness: 'AI-Native',
+    aiRisk: 'Low',
+    keyDifferentiator: '4-5-4 retail calendar for Counter Lead Bonus vs. semi-monthly payroll. Dual-calendar complexity.',
     buildBullets: [
       'Must support 4-5-4 retail calendar (Counter Lead Bonus) alongside semi-monthly payroll calendar',
       'Calendar boundaries affect accrual, payout timing, and retro correction windows',
@@ -163,6 +219,12 @@ const COMPONENTS: ComponentRow[] = [
       'SPM platforms support multiple concurrent calendar types as configuration',
       'Period-aware calculations automatically handle boundary transitions',
     ],
+    aiBullets: [
+      'AI generates complete calendar logic including all retail industry edge cases',
+      'Automated boundary testing across year transitions, leap years, and fiscal periods',
+    ],
+    aiEffort: '1-2 weeks',
+    aiBonus: 'AI generates 4-5-4 calendars for any fiscal year start date — fully parameterized, not hardcoded',
     insight: 'Dual calendars sound manageable until a retro correction spans a 4-5-4 boundary that doesn\'t align with the payroll period it affects.',
   },
   {
@@ -170,7 +232,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'Very High',
     buildRisk: 'Critical',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Immutable snapshots, time-rewind replay, differential adjustments. Phil called this "untenable" in Workday Prism. SPM platforms have built-in retro processing.',
+    aiReadiness: 'AI-Accelerated',
+    aiRisk: 'Moderate',
+    keyDifferentiator: 'Immutable snapshots, time-rewind replay, differential adjustments. Described as "untenable" in Workday Prism.',
     buildBullets: [
       'Requires immutable snapshots of every calculation state for time-rewind replay',
       'Differential adjustments must propagate through all 5 commission streams',
@@ -183,18 +247,27 @@ const COMPONENTS: ComponentRow[] = [
       'Built-in retro processing with automatic differential adjustment propagation',
       'Audit trail shows before/after for every correction',
     ],
-    insight: 'This is the single biggest pain point in Crestline\'s current operation. Phil\'s team spends 52 hours per week on manual corrections that a platform handles automatically.',
+    aiBullets: [
+      'Event-sourced architecture generated by AI — immutable by design, not by retrofit',
+      'AI-generated diff engine with automatic multi-stream propagation',
+      'AI identifies which corrections actually change outcomes — skip no-ops',
+    ],
+    aiEffort: '4-6 weeks',
+    aiBonus: 'AI predicts which transfers will need retro corrections based on historical patterns — proactive, not reactive',
+    insight: 'This is the single biggest pain point in Crestline\'s current operation. The team spends 52 hours per week on manual corrections that a platform handles automatically.',
   },
   {
     name: 'Override & Adjustment Workflow',
     buildComplexity: 'High',
     buildRisk: 'High',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Manual corrections, override audit trail, X-in-X-out validation. Currently 52 hrs/week in OIC. Workflow engines are core SPM.',
+    aiReadiness: 'AI-Accelerated',
+    aiRisk: 'Low',
+    keyDifferentiator: 'Manual corrections, override audit trail, X-in-X-out validation. Currently 52 hrs/week in legacy system.',
     buildBullets: [
       'Must support multi-level approval workflows with role-based authorization',
       'X-in-X-out validation ensures every override has a balancing entry',
-      'Currently consuming 52 hours/week of analyst time in the OIC',
+      'Currently consuming 52 hours/week of analyst time in the legacy system',
     ],
     buildEffort: '4-6 months, 2-4 engineers',
     buildRiskFactors: ['Unapproved overrides create audit exposure', 'Workflow exceptions pile up at period-end'],
@@ -203,14 +276,23 @@ const COMPONENTS: ComponentRow[] = [
       'Built-in override audit trail with SOX-ready reporting',
       'Automated X-in-X-out validation eliminates manual reconciliation',
     ],
-    insight: 'The 52 hrs/week Phil\'s team spends on overrides is not a technology problem — it\'s the absence of a workflow engine. This is table stakes for any SPM platform.',
+    aiBullets: [
+      'AI generates complete dispute resolution workflow with configurable approval chains',
+      'Automated X-in-X-out validation with AI-powered anomaly detection',
+      'AI suggests resolution paths based on historical override patterns',
+    ],
+    aiEffort: '3-4 weeks',
+    aiBonus: 'AI auto-classifies overrides and suggests resolutions — turns 52 hrs/week into 5',
+    insight: 'The 52 hrs/week the team spends on overrides is not a technology problem — it\'s the absence of a workflow engine. This is table stakes for any SPM platform.',
   },
   {
     name: 'Audit & Controls',
     buildComplexity: 'Very High',
     buildRisk: 'Critical',
     buyReadiness: 'Native',
-    keyDifferentiator: 'Transaction-level reconciliation, dispute workflow, full POS\u2192payout trace. Compliance infrastructure is foundational in SPM.',
+    aiReadiness: 'AI-Accelerated',
+    aiRisk: 'Low',
+    keyDifferentiator: 'Transaction-level reconciliation, dispute workflow, full POS→payout trace. Compliance infrastructure.',
     buildBullets: [
       'Full POS-to-payout trace requires linking every commission dollar to its source transaction',
       'Dispute workflow must support associate self-service, manager review, and analyst resolution',
@@ -223,6 +305,13 @@ const COMPONENTS: ComponentRow[] = [
       'Transaction-level lineage, dispute workflow, and SOX reporting are standard features',
       'Associate self-service portals reduce dispute volume by 40-60%',
     ],
+    aiBullets: [
+      'AI generates SOX-compliant audit trail architecture from compliance requirements',
+      'Dispute resolution workflow with AI-powered root cause analysis',
+      'AI continuously validates audit completeness — gaps caught immediately, not at SOX review',
+    ],
+    aiEffort: '4-5 weeks',
+    aiBonus: 'AI-powered continuous compliance monitoring — not periodic audits, but real-time assurance',
     insight: 'Audit and controls are non-negotiable for a publicly traded retailer. Building compliance infrastructure from scratch is expensive and risky.',
   },
   {
@@ -230,7 +319,9 @@ const COMPONENTS: ComponentRow[] = [
     buildComplexity: 'Moderate',
     buildRisk: 'Moderate',
     buyReadiness: 'Configurable',
-    keyDifferentiator: 'Commission\u2192Workday payroll feed, guarantee calculations, hours reconciliation. Standard integration pattern.',
+    aiReadiness: 'AI-Native',
+    aiRisk: 'Low',
+    keyDifferentiator: 'Commission→Workday payroll feed, guarantee calculations, hours reconciliation.',
     buildBullets: [
       'Commission-to-Workday payroll feed with guarantee calculations and hours reconciliation',
       'Must handle mid-period adjustments, retro corrections, and negative balance carry-forwards',
@@ -241,11 +332,17 @@ const COMPONENTS: ComponentRow[] = [
       'Standard integration pattern — most SPM platforms have pre-built Workday connectors',
       'Configurable payroll file formats, approval workflows, and reconciliation reports',
     ],
+    aiBullets: [
+      'AI generates Workday integration adapters from API documentation',
+      'Automated reconciliation with AI-flagged discrepancies before payroll submit',
+    ],
+    aiEffort: '1-2 weeks',
+    aiBonus: 'AI pre-validates every payroll file — catches errors before associates see them, not after',
     insight: 'The simplest component on this list, but errors here are the most visible. Associates notice paycheck discrepancies immediately.',
   },
 ];
 
-/* ── Border color by build risk ───────────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────────────────────── */
 function borderColorForRisk(risk: Risk): string {
   return riskColor[risk];
 }
@@ -261,46 +358,162 @@ export default function BuildVsBuyPage() {
             <Scale size={20} style={{ color: '#64748B' }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: C.heading }}>Build vs. Buy Analysis</h1>
+            <h1 className="text-2xl font-bold" style={{ color: C.heading }}>Build vs. Buy vs. AI-Accelerated</h1>
             <p className="text-sm" style={{ color: C.body }}>
-              Neutral advisor assessment — 10 components, independently evaluated
+              Three paths evaluated — 10 components, independently assessed
             </p>
           </div>
         </div>
       </div>
 
-      {/* KPI Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Components Assessed" value="10" color="#64748B" />
-        <StatCard label="Build Estimate" value="18-24 mo" color={C.red} />
-        <StatCard label="Engineers Required" value="15-25" color={C.amber} />
-        <StatCard label="Ongoing FTEs" value="5-8" color="#7c3aed" />
+      {/* KPI Row — three options compared */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="rounded-xl border p-5" style={{ borderColor: C.border, borderTop: `4px solid ${C.red}` }}>
+          <div className="flex items-center gap-2 mb-3">
+            <Hammer size={16} style={{ color: C.red }} />
+            <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.red }}>Traditional Build</span>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>18-24</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>months</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>15-25</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>engineers</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>5-8</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>ongoing FTEs</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.red }}>5/10</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>critical risk</p>
+            </div>
+          </div>
+          <p className="text-[11px] mt-3 leading-snug" style={{ color: C.body }}>
+            Full custom development. Total control but maximum risk, cost, and time. Commission engine only — no RevOps, analytics, or governance.
+          </p>
+        </div>
+
+        <div className="rounded-xl border p-5" style={{ borderColor: C.border, borderTop: `4px solid ${C.green}` }}>
+          <div className="flex items-center gap-2 mb-3">
+            <ShoppingCart size={16} style={{ color: C.green }} />
+            <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.green }}>Buy (Off-the-Shelf)</span>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>6-9</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>months impl.</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>3-5</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>consultants</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>2-3</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>ongoing FTEs</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.amber }}>Vendor</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>lock-in risk</p>
+            </div>
+          </div>
+          <p className="text-[11px] mt-3 leading-snug" style={{ color: C.body }}>
+            Varicent, Xactly, or similar. Faster to deploy but locked into vendor roadmap. Customization limited by platform constraints.
+          </p>
+        </div>
+
+        <div className="rounded-xl border-2 p-5" style={{ borderColor: C.purple, borderTop: `4px solid ${C.purple}`, backgroundColor: `${C.purple}04` }}>
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={16} style={{ color: C.purple }} />
+            <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.purple }}>AI-Accelerated Build</span>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>6-9</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>months</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>3-5</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>engineers + AI</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.heading }}>2-3</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>ongoing FTEs</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: C.green }}>0/10</p>
+              <p className="text-[10px]" style={{ color: C.muted }}>critical risk</p>
+            </div>
+          </div>
+          <p className="text-[11px] mt-3 leading-snug" style={{ color: C.body }}>
+            Custom-built with AI + AICR platform. Same timeline as Buy, full ownership like Build — plus RevOps, analytics, governance, and dispute resolution included.
+          </p>
+        </div>
       </div>
 
-      {/* ─── Section 1: Summary Scorecard ─────────────────────────────── */}
+      {/* Beyond Commission — Platform Capabilities */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: C.border }}>
+        <div className="flex items-center gap-2 mb-4">
+          <Sparkles size={16} style={{ color: C.purple }} />
+          <h2 className="text-sm font-semibold" style={{ color: C.heading }}>
+            Beyond Commission — What AI-Accelerated Includes That Build &amp; Buy Don&apos;t
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { icon: BarChart3, label: 'RevOps Analytics', desc: 'Corporate strategy, district performance, market position, seasonal planning — full executive visibility', color: C.navy },
+            { icon: Zap, label: 'Real-Time What-If', desc: 'POS-integrated commission preview — associates see earnings impact before the sale closes', color: C.purple },
+            { icon: Shield, label: 'Governance & Compliance', desc: 'Policy engine, approval workflows, SOX-ready audit trails, continuous compliance monitoring', color: C.green },
+            { icon: Bot, label: 'AI-Powered Insights', desc: 'Anomaly detection, predictive dispute resolution, auto-classification, proactive compliance alerts', color: C.blue },
+          ].map((cap) => (
+            <div key={cap.label} className="rounded-lg p-4" style={{ backgroundColor: C.bg, border: `1px solid ${C.border}` }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-2" style={{ backgroundColor: `${cap.color}15` }}>
+                <cap.icon size={16} style={{ color: cap.color }} />
+              </div>
+              <p className="text-xs font-semibold mb-1" style={{ color: C.heading }}>{cap.label}</p>
+              <p className="text-[10px] leading-snug" style={{ color: C.body }}>{cap.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 rounded-lg p-3" style={{ backgroundColor: `${C.purple}08`, border: `1px solid ${C.purple}20` }}>
+          <p className="text-[11px] leading-snug" style={{ color: C.body }}>
+            <span className="font-semibold" style={{ color: C.purple }}>Key distinction:</span> Traditional Build delivers only the commission engine. Buy delivers commission + limited analytics. AI-Accelerated delivers the full platform — corporate strategy, sales operations, real-time POS, commission engine, dispute resolution, governance, and AI-powered insights — all in the same timeline.
+          </p>
+        </div>
+      </div>
+
+      {/* ─── Summary Scorecard ─────────────────────────────────────────── */}
       <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: C.border }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: C.heading }}>
-          Summary Scorecard Matrix
+          Component Scorecard — Three Paths Compared
         </h2>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
               <tr style={{ color: C.muted }}>
                 <th className="text-left pb-3 font-medium pr-4">Component</th>
-                <th className="text-left pb-3 font-medium pr-4">Build Complexity</th>
-                <th className="text-left pb-3 font-medium pr-4">Build Risk</th>
-                <th className="text-left pb-3 font-medium pr-4">Buy Readiness</th>
-                <th className="text-left pb-3 font-medium">Key Differentiator</th>
+                <th className="text-left pb-3 font-medium pr-4">
+                  <span className="flex items-center gap-1"><Hammer size={11} /> Build</span>
+                </th>
+                <th className="text-left pb-3 font-medium pr-4">
+                  <span className="flex items-center gap-1"><ShoppingCart size={11} /> Buy</span>
+                </th>
+                <th className="text-left pb-3 font-medium pr-4">
+                  <span className="flex items-center gap-1"><Sparkles size={11} /> AI-Accelerated</span>
+                </th>
+                <th className="text-left pb-3 font-medium">AI Timeline</th>
               </tr>
             </thead>
             <tbody>
               {COMPONENTS.map((c, i) => (
                 <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
                   <td className="py-3 pr-4 font-semibold whitespace-nowrap" style={{ color: C.heading }}>{c.name}</td>
-                  <td className="py-3 pr-4"><Badge label={c.buildComplexity} color={complexityColor[c.buildComplexity]} /></td>
-                  <td className="py-3 pr-4"><Badge label={c.buildRisk} color={riskColor[c.buildRisk]} /></td>
+                  <td className="py-3 pr-4"><Badge label={`${c.buildComplexity} / ${c.buildRisk}`} color={riskColor[c.buildRisk]} /></td>
                   <td className="py-3 pr-4"><Badge label={c.buyReadiness} color={readinessColor[c.buyReadiness]} /></td>
-                  <td className="py-3 text-[11px] leading-snug" style={{ color: C.body }}>{c.keyDifferentiator}</td>
+                  <td className="py-3 pr-4"><Badge label={c.aiReadiness} color={aiReadinessColor[c.aiReadiness]} /></td>
+                  <td className="py-3 text-[11px] font-semibold" style={{ color: C.purple }}>{c.aiEffort}</td>
                 </tr>
               ))}
             </tbody>
@@ -308,13 +521,13 @@ export default function BuildVsBuyPage() {
         </div>
       </div>
 
-      {/* ─── Section 2: Per-Component Detail Cards ────────────────────── */}
+      {/* ─── Per-Component Detail Cards ────────────────────────────────── */}
       <div className="mb-4">
         <h2 className="text-sm font-semibold" style={{ color: C.heading }}>
           Per-Component Analysis
         </h2>
         <p className="text-xs mt-1" style={{ color: C.muted }}>
-          Each card compares the build path against platform capabilities
+          Each card compares three paths — traditional build, off-the-shelf buy, and AI-accelerated build
         </p>
       </div>
 
@@ -334,101 +547,118 @@ export default function BuildVsBuyPage() {
               </div>
             </div>
 
-            {/* Build vs Buy Columns */}
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            {/* Three Columns */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
               {/* Build side */}
               <div>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Hammer size={13} style={{ color: C.red }} />
-                  <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: C.red }}>Build</span>
+                  <Hammer size={12} style={{ color: C.red }} />
+                  <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: C.red }}>Build</span>
                 </div>
-                <ul className="space-y-1.5">
+                <ul className="space-y-1">
                   {c.buildBullets.map((b, j) => (
-                    <li key={j} className="text-[11px] leading-snug flex gap-1.5" style={{ color: C.body }}>
-                      <span className="shrink-0 mt-1" style={{ color: C.muted }}>&bull;</span>
-                      <span>{b}</span>
-                    </li>
+                    <li key={j} className="text-[10px] leading-snug" style={{ color: C.body }}>• {b}</li>
                   ))}
                 </ul>
-                <div className="mt-2 flex items-center gap-1.5">
-                  <Clock size={11} style={{ color: C.muted }} />
-                  <span className="text-[10px] font-semibold" style={{ color: C.heading }}>{c.buildEffort}</span>
+                <div className="mt-2 flex items-center gap-1">
+                  <Clock size={10} style={{ color: C.muted }} />
+                  <span className="text-[9px] font-semibold" style={{ color: C.heading }}>{c.buildEffort}</span>
                 </div>
-                <div className="mt-1">
-                  {c.buildRiskFactors.map((r, j) => (
-                    <div key={j} className="flex items-start gap-1 mt-0.5">
-                      <AlertTriangle size={10} className="shrink-0 mt-0.5" style={{ color: C.amber }} />
-                      <span className="text-[10px]" style={{ color: C.body }}>{r}</span>
-                    </div>
-                  ))}
-                </div>
+                {c.buildRiskFactors.map((r, j) => (
+                  <div key={j} className="flex items-start gap-1 mt-0.5">
+                    <AlertTriangle size={9} className="shrink-0 mt-0.5" style={{ color: C.amber }} />
+                    <span className="text-[9px]" style={{ color: C.body }}>{r}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Buy side */}
               <div>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <ShoppingCart size={13} style={{ color: C.green }} />
-                  <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: C.green }}>Buy</span>
+                  <ShoppingCart size={12} style={{ color: C.green }} />
+                  <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: C.green }}>Buy</span>
                 </div>
-                <ul className="space-y-1.5">
+                <ul className="space-y-1">
                   {c.buyBullets.map((b, j) => (
-                    <li key={j} className="text-[11px] leading-snug flex gap-1.5" style={{ color: C.body }}>
-                      <span className="shrink-0 mt-1" style={{ color: C.muted }}>&bull;</span>
-                      <span>{b}</span>
-                    </li>
+                    <li key={j} className="text-[10px] leading-snug" style={{ color: C.body }}>• {b}</li>
                   ))}
                 </ul>
                 <div className="mt-2">
                   <Badge label={c.buyReadiness} color={readinessColor[c.buyReadiness]} />
                 </div>
               </div>
+
+              {/* AI-Accelerated side */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Sparkles size={12} style={{ color: C.purple }} />
+                  <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: C.purple }}>AI Build</span>
+                </div>
+                <ul className="space-y-1">
+                  {c.aiBullets.map((b, j) => (
+                    <li key={j} className="text-[10px] leading-snug" style={{ color: C.body }}>• {b}</li>
+                  ))}
+                </ul>
+                <div className="mt-2 flex items-center gap-2">
+                  <Badge label={c.aiReadiness} color={aiReadinessColor[c.aiReadiness]} />
+                  <span className="text-[9px] font-bold" style={{ color: C.purple }}>{c.aiEffort}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Bonus callout */}
+            <div className="rounded-lg p-2.5 mb-3" style={{ backgroundColor: `${C.purple}06`, border: `1px solid ${C.purple}15` }}>
+              <p className="text-[10px] leading-snug" style={{ color: C.body }}>
+                <span className="font-semibold" style={{ color: C.purple }}>AI advantage:</span> {c.aiBonus}
+              </p>
             </div>
 
             {/* Insight callout */}
-            <div className="rounded-lg p-3" style={{ backgroundColor: C.bg, borderLeft: `3px solid ${C.muted}` }}>
-              <p className="text-[11px] leading-snug italic" style={{ color: C.body }}>
-                {c.insight}
-              </p>
+            <div className="rounded-lg p-2.5" style={{ backgroundColor: C.bg, borderLeft: `3px solid ${C.muted}` }}>
+              <p className="text-[10px] leading-snug italic" style={{ color: C.body }}>{c.insight}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* ─── Section 3: Summary Footer ────────────────────────────────── */}
+      {/* ─── Summary Footer ────────────────────────────────────────────── */}
       <div className="rounded-xl bg-white border p-6 mb-6" style={{ borderColor: C.border }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: C.heading }}>
-          Aggregate Build Estimate
+          Side-by-Side Summary
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.red}08`, border: `1px solid ${C.red}20` }}>
-            <div className="flex items-center gap-2 mb-1">
-              <Clock size={14} style={{ color: C.red }} />
-              <span className="text-xs font-semibold" style={{ color: C.red }}>Total Build Timeline</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.red}06`, border: `1px solid ${C.red}15` }}>
+            <div className="flex items-center gap-2 mb-2">
+              <Hammer size={14} style={{ color: C.red }} />
+              <span className="text-xs font-bold" style={{ color: C.red }}>Traditional Build</span>
             </div>
-            <p className="text-xl font-bold" style={{ color: C.heading }}>18-24 Months</p>
-            <p className="text-[11px] mt-1" style={{ color: C.body }}>
-              15-25 engineers working in parallel across 6-7 workstreams
-            </p>
+            <p className="text-lg font-bold" style={{ color: C.heading }}>18-24 months</p>
+            <p className="text-xs" style={{ color: C.body }}>15-25 engineers, 6-7 parallel workstreams</p>
+            <p className="text-xs mt-1" style={{ color: C.body }}>5-8 FTEs ongoing maintenance</p>
+            <p className="text-xs mt-1 font-semibold" style={{ color: C.red }}>5 of 10 components rated Critical risk</p>
+            <p className="text-xs mt-2" style={{ color: C.muted }}>Delivers: commission engine only</p>
           </div>
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.amber}08`, border: `1px solid ${C.amber}20` }}>
-            <div className="flex items-center gap-2 mb-1">
-              <Users size={14} style={{ color: C.amber }} />
-              <span className="text-xs font-semibold" style={{ color: C.amber }}>Ongoing Maintenance</span>
+          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.green}06`, border: `1px solid ${C.green}15` }}>
+            <div className="flex items-center gap-2 mb-2">
+              <ShoppingCart size={14} style={{ color: C.green }} />
+              <span className="text-xs font-bold" style={{ color: C.green }}>Buy (Off-the-Shelf)</span>
             </div>
-            <p className="text-xl font-bold" style={{ color: C.heading }}>5-8 FTEs</p>
-            <p className="text-[11px] mt-1" style={{ color: C.body }}>
-              For ongoing operations, maintenance, and bi-weekly calculation support
-            </p>
+            <p className="text-lg font-bold" style={{ color: C.heading }}>6-9 months</p>
+            <p className="text-xs" style={{ color: C.body }}>3-5 consultants, vendor-led implementation</p>
+            <p className="text-xs mt-1" style={{ color: C.body }}>2-3 FTEs + annual license fees</p>
+            <p className="text-xs mt-1 font-semibold" style={{ color: C.amber }}>Vendor lock-in, limited customization</p>
+            <p className="text-xs mt-2" style={{ color: C.muted }}>Delivers: commission + basic analytics</p>
           </div>
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.green}08`, border: `1px solid ${C.green}20` }}>
-            <div className="flex items-center gap-2 mb-1">
-              <Wrench size={14} style={{ color: C.green }} />
-              <span className="text-xs font-semibold" style={{ color: C.green }}>Critical Components</span>
+          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.purple}06`, border: `2px solid ${C.purple}30` }}>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles size={14} style={{ color: C.purple }} />
+              <span className="text-xs font-bold" style={{ color: C.purple }}>AI-Accelerated Build</span>
             </div>
-            <p className="text-xl font-bold" style={{ color: C.heading }}>5 of 10</p>
-            <p className="text-[11px] mt-1" style={{ color: C.body }}>
-              Rated "Critical" build risk — failure in any one cascades to downstream systems
-            </p>
+            <p className="text-lg font-bold" style={{ color: C.heading }}>6-9 months</p>
+            <p className="text-xs" style={{ color: C.body }}>3-5 engineers + AI platform, full ownership</p>
+            <p className="text-xs mt-1" style={{ color: C.body }}>2-3 FTEs, no vendor license fees</p>
+            <p className="text-xs mt-1 font-semibold" style={{ color: C.green }}>Zero critical risk, full customization</p>
+            <p className="text-xs mt-2 font-semibold" style={{ color: C.purple }}>Delivers: full platform — commission, RevOps, analytics, governance, AI insights</p>
           </div>
         </div>
       </div>
@@ -437,22 +667,22 @@ export default function BuildVsBuyPage() {
       <Link href="/crestline/comp/engine" className="block">
         <div
           className="rounded-xl border-2 p-5 flex items-center justify-between hover:shadow-md transition-shadow cursor-pointer"
-          style={{ borderColor: C.green, backgroundColor: `${C.green}06` }}
+          style={{ borderColor: C.purple, backgroundColor: `${C.purple}06` }}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${C.green}18` }}>
-              <ArrowRight size={20} style={{ color: C.green }} />
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${C.purple}18` }}>
+              <ArrowRight size={20} style={{ color: C.purple }} />
             </div>
             <div>
               <p className="text-sm font-bold" style={{ color: C.heading }}>
-                See how Crestline&apos;s platform handles each component
+                See Crestline&apos;s AI-accelerated platform in action
               </p>
               <p className="text-xs mt-0.5" style={{ color: C.body }}>
-                Commission Engine &mdash; 5-stream calculation pipeline with built-in retro processing, audit trail, and real-time visibility
+                Commission Engine, RevOps, Real-Time What-If, Dispute Resolution, Audit &amp; Compliance — all live
               </p>
             </div>
           </div>
-          <ChevronRight size={20} style={{ color: C.green }} />
+          <ChevronRight size={20} style={{ color: C.purple }} />
         </div>
       </Link>
     </>
