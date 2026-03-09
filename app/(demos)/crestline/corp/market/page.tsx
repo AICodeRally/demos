@@ -93,7 +93,7 @@ export default function MarketPosition() {
       </div>
 
       {/* Market Share Donut + Radar */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>National Market Share (%)</p>
           <DonutChart
@@ -131,7 +131,7 @@ export default function MarketPosition() {
       </div>
 
       {/* Regional Share + 5-Year Trend */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Crestline Market Share by Region (%)</p>
           <BarChart data={REGION_SHARE} unit="%" color={COLORS.primary} />
@@ -144,7 +144,7 @@ export default function MarketPosition() {
       </div>
 
       {/* Competitor Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {COMPETITORS.map((c) => (
           <div key={c.name} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
             <div className="flex items-center justify-between mb-3">
@@ -175,7 +175,7 @@ export default function MarketPosition() {
 
       {/* SWOT Grid */}
       <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>SWOT Analysis</p>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {SWOT.map((q) => (
           <div
             key={q.title}

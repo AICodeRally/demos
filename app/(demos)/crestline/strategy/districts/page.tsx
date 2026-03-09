@@ -66,7 +66,7 @@ export default function DistrictPlanning() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Revenue" value={`$${totalRevenue}M`} color={COLORS.primary} />
         <StatCard label="Total Stores" value={String(totalStores)} color={COLORS.accent} />
         <StatCard label="Avg Attainment" value={`${avgAttainment}%`} trend="up" trendValue="+2pp YoY" color="#10B981" />
@@ -89,7 +89,7 @@ export default function DistrictPlanning() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Revenue by District — {format.charAt(0).toUpperCase() + format.slice(1)} ($M)
@@ -109,7 +109,7 @@ export default function DistrictPlanning() {
       </div>
 
       {/* District Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {DISTRICTS.map((d) => {
           const rev = d.revenue.flagship + d.revenue.standard + d.revenue.rack + d.revenue.counter;
           return (
@@ -140,7 +140,7 @@ export default function DistrictPlanning() {
       </div>
 
       {/* Radar + Quota Attainment */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Pacific NW vs Company Average

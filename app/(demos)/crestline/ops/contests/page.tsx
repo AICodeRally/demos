@@ -123,7 +123,7 @@ export default function ContestsAndBoards() {
       </div>
 
       {/* 3 Active SPIFF Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {ACTIVE_SPIFFS.map((spiff) => {
           const pct = Math.round((spiff.earned / spiff.target) * 100);
           return (
@@ -227,7 +227,7 @@ export default function ContestsAndBoards() {
       </div>
 
       {/* Radar Chart + HeatMap */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Top Performer Radar (5 Dimensions)
@@ -261,7 +261,7 @@ export default function ContestsAndBoards() {
       </div>
 
       {/* Achiever Tier Distribution + Contest Dept Revenue */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Achiever Tier Distribution

@@ -154,7 +154,7 @@ export default function CustomerJourney() {
       </div>
 
       {/* Stage Conversion + Traffic by Dept */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Stage Conversion Rate (%)
@@ -171,7 +171,7 @@ export default function CustomerJourney() {
       </div>
 
       {/* Peak Hours + 30-day Traffic */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Peak Hours Analysis (visitors/hr)
@@ -188,7 +188,7 @@ export default function CustomerJourney() {
       </div>
 
       {/* Customer Segments + CSAT Radar */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Customer Segments
@@ -248,7 +248,7 @@ export default function CustomerJourney() {
         <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
           Abandonment Analysis
         </p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {ABANDONMENT.map((item, i) => (
             <div
               key={i}

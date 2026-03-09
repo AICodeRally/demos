@@ -45,7 +45,7 @@ export default function RateTables() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Selling Depts" value="5" color={COLORS.primary} />
         <StatCard label="Rate Changes / Year" value="12" color={COLORS.accent} />
         <StatCard label="Effective-Date Ranges" value="3" color="#7c3aed" />
@@ -137,7 +137,7 @@ export default function RateTables() {
         <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
           Merchandise-to-Department Mapping
         </p>
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {SELLING_DEPTS.map((dept) => {
             const products = productsByDept[dept.id] ?? [];
             return (
@@ -168,7 +168,7 @@ export default function RateTables() {
         <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
           Comp Plan Assignment by Store Format
         </p>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {COMP_PLANS.map((cp) => (
             <div
               key={cp.format}

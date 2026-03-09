@@ -234,7 +234,7 @@ export default function Statements() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard
           label="Current Period Payout"
           value={snapshot ? fmt(snapshot.total) : '--'}
@@ -282,7 +282,7 @@ export default function Statements() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Statement Card (2 cols) */}
         <div
           className="col-span-2 rounded-xl bg-white border p-8"
@@ -303,7 +303,7 @@ export default function Statements() {
           </div>
 
           {/* Rep Info */}
-          <div className="grid grid-cols-4 gap-4 mb-6 pb-4 border-b" style={{ borderColor: '#F1F5F9' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-4 border-b" style={{ borderColor: '#F1F5F9' }}>
             <div>
               <p className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>Associate</p>
               <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{rep.name}</p>
@@ -368,6 +368,7 @@ export default function Statements() {
               <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#94a3b8' }}>
                 2. Commission Breakdown
               </p>
+              <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
                   <tr style={{ color: '#94a3b8' }}>
@@ -405,6 +406,7 @@ export default function Statements() {
                   })}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
 

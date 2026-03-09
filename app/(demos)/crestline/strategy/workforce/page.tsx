@@ -137,7 +137,7 @@ export default function WorkforceModel() {
       <FormatSelector selected={format} onSelect={setFormat} />
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Associates" value={wf.total.toLocaleString()} color={COLORS.primary} />
         <StatCard label="Rev / Associate" value={`$${(wf.revenuePerAssoc / 1000).toFixed(0)}K`} trend="up" trendValue="+6%" color={COLORS.standard} />
         <StatCard label="Avg Tenure" value={`${wf.avgTenure} yrs`} color={COLORS.accent} />
@@ -145,7 +145,7 @@ export default function WorkforceModel() {
       </div>
 
       {/* Revenue/Associate + Turnover */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Revenue per Associate by Format ($K)
@@ -162,7 +162,7 @@ export default function WorkforceModel() {
       </div>
 
       {/* Tenure Distribution + Radar */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Tenure Distribution (Sample Associates)
@@ -197,7 +197,7 @@ export default function WorkforceModel() {
       </div>
 
       {/* Labor Cost Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {COST_MODELS.map((c) => (
           <div key={c.format} className="rounded-xl bg-white border p-4" style={{ borderColor: '#E2E8F0' }}>
             <div className="flex items-center gap-2 mb-2">

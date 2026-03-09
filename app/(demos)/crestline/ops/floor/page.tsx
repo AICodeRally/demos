@@ -1,7 +1,6 @@
 'use client';
 
 import { StatCard, AreaChart, BarChart, DonutChart } from '@/components/demos/crestline';
-import { FloorLayoutMap } from '@/components/demos/register/FloorLayoutMap';
 import { TransactionFeed, type Transaction } from '@/components/demos/register/TransactionFeed';
 import { FLOOR_ZONES, TRANSACTIONS, SELLING_DEPTS, COLORS } from '@/data/crestline';
 
@@ -71,7 +70,7 @@ export default function FloorDashboard() {
       </div>
 
       {/* Floor Map + Transaction Feed (hero row) */}
-      <div className="grid grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
         <div className="col-span-3 rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
@@ -128,7 +127,7 @@ export default function FloorDashboard() {
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard
           label="Today's Revenue"
           value="$98.4K"
@@ -156,7 +155,7 @@ export default function FloorDashboard() {
       </div>
 
       {/* Charts row: Hourly Sales + Revenue by Dept + Payment Mix */}
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Hourly Sales Curve ($K)
@@ -182,7 +181,7 @@ export default function FloorDashboard() {
       </div>
 
       {/* Live Alerts Strip */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {ALERTS.map((alert, i) => (
           <div
             key={i}

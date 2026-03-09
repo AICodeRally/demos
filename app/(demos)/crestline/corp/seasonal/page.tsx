@@ -93,7 +93,7 @@ export default function SeasonalStrategy() {
       </div>
 
       {/* Demand Heatmap + Quarterly Spend */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Department Demand Intensity (0-100)</p>
           <HeatMap
@@ -112,7 +112,7 @@ export default function SeasonalStrategy() {
 
       {/* Key Selling Seasons */}
       <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Key Selling Seasons</p>
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {SEASONS.map((evt) => (
           <div
             key={evt.name}

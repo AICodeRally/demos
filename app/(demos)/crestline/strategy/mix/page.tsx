@@ -67,7 +67,7 @@ export default function ProductMix() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Revenue" value={`$${totalRevenue}M`} color={COLORS.primary} />
         <StatCard label="Departments" value="5" color={COLORS.accent} />
         <StatCard label="Product SKUs" value={String(PRODUCTS.length)} color={COLORS.flagship} />
@@ -75,7 +75,7 @@ export default function ProductMix() {
       </div>
 
       {/* Donut + Revenue Bars */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Revenue by Department (%)</p>
           <DonutChart segments={MIX_DONUT} centerValue={`$${totalRevenue}M`} centerLabel="Revenue" size={200} />
@@ -129,7 +129,7 @@ export default function ProductMix() {
       {/* Product Catalog Grid */}
       <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
         <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Product Catalog</p>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {PRODUCTS.map((p) => {
             const dept = SELLING_DEPTS.find((d) => d.id === p.department);
             return (
@@ -156,7 +156,7 @@ export default function ProductMix() {
       {/* Format Mix Impact */}
       <FormatSelector selected={format} onSelect={setFormat} />
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FORMATS.map((f) => {
           const isActive = f.id === format;
           const note = FORMAT_MIX_NOTES[f.id];
