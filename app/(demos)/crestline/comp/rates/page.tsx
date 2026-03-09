@@ -2,6 +2,23 @@
 
 import { StatCard } from '@/components/demos/crestline';
 import { SELLING_DEPTS, PRODUCTS, FORMATS, COLORS } from '@/data/crestline';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+
+/* Chart data: base commission rates by selling dept */
+const DEPT_RATE_DATA = [
+  { name: 'Cosmetics', rate: 8 },
+  { name: 'Designer', rate: 6.5 },
+  { name: 'Shoes', rate: 5 },
+  { name: 'Accessories', rate: 4.5 },
+  { name: 'Home', rate: 4 },
+];
+
+/* Rate change history for Cosmetics (3 effective-date periods) */
+const RATE_HISTORY = [
+  { period: 'Jan-Mar', cosmetics: 7.0, designer: 5.5, shoes: 4.5 },
+  { period: 'Apr-Jun', cosmetics: 7.5, designer: 6.0, shoes: 4.8 },
+  { period: 'Jul-Dec', cosmetics: 8.0, designer: 6.5, shoes: 5.0 },
+];
 
 /* Effective-dated rate schedule: 3 periods per year */
 const RATE_PERIODS = [
@@ -188,6 +205,47 @@ export default function RateTables() {
               <p className="text-[11px] leading-snug" style={{ color: '#475569' }}>{cp.description}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Rate Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Horizontal Bar Chart — Base Rates by Department */}
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+            Base Commission Rate by Department
+          </p>
+          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+            Current effective-period base rates (%)
+          </p>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={DEPT_RATE_DATA} layout="vertical" margin={{ left: 20, right: 20, top: 5, bottom: 5 }}>
+              <XAxis type="number" domain={[0, 10]} tickFormatter={(v) => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <YAxis type="category" dataKey="name" tick={{ fill: '#0F172A', fontSize: 11 }} width={85} />
+              <Tooltip formatter={(v) => [`${v}%`, 'Base Rate']} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+              <Bar dataKey="rate" fill="#1a1f3d" radius={[0, 4, 4, 0]} barSize={20} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Area Chart — Rate Change History */}
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+            Rate Change History
+          </p>
+          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+            Effective-dated rate progression across 3 periods
+          </p>
+          <ResponsiveContainer width="100%" height={200}>
+            <AreaChart data={RATE_HISTORY} margin={{ left: 0, right: 20, top: 5, bottom: 5 }}>
+              <XAxis dataKey="period" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <YAxis domain={[3, 9]} tickFormatter={(v) => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <Tooltip formatter={(v) => [`${v}%`]} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+              <Area type="monotone" dataKey="cosmetics" stroke="#d946ef" fill="#d946ef" fillOpacity={0.15} strokeWidth={2} name="Cosmetics" />
+              <Area type="monotone" dataKey="designer" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.1} strokeWidth={2} name="Designer" />
+              <Area type="monotone" dataKey="shoes" stroke="#2563eb" fill="#2563eb" fillOpacity={0.08} strokeWidth={2} name="Shoes" />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </div>
 

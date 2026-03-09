@@ -17,6 +17,13 @@ export default defineDemo({
   },
   nav: [
     {
+      section: 'Strategic Context',
+      color: '#64748B',
+      items: [
+        { label: 'Build vs. Buy Analysis', href: '/crestline/build-vs-buy', icon: 'Scale' },
+      ],
+    },
+    {
       section: 'Act 1 — Corporate Strategy',
       color: '#1a1f3d',
       items: [

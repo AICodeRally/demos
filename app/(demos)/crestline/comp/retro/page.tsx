@@ -3,6 +3,26 @@
 import { useState } from 'react';
 import { StatCard } from '@/components/demos/crestline';
 import { CALC_SNAPSHOTS, COLORS } from '@/data/crestline';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+
+/* Monthly correction volume — 6-month history */
+const CORRECTIONS_BY_MONTH = [
+  { month: 'Oct', count: 12, severity: 'amber' },
+  { month: 'Nov', count: 8, severity: 'amber' },
+  { month: 'Dec', count: 15, severity: 'amber' },
+  { month: 'Jan', count: 22, severity: 'red' },
+  { month: 'Feb', count: 10, severity: 'amber' },
+  { month: 'Mar', count: 6, severity: 'amber' },
+];
+
+/* Waterfall data: original → adjustments → final */
+const WATERFALL_DATA = [
+  { name: 'Original Calc', value: 4250, cumulative: 4250, fill: '#1a1f3d', base: 0 },
+  { name: 'Rate Correction', value: -180, cumulative: 4070, fill: '#DC2626', base: 4070 },
+  { name: 'Transfer Adj.', value: 320, cumulative: 4390, fill: '#059669', base: 4070 },
+  { name: 'Achiever Reclass.', value: 85, cumulative: 4475, fill: '#059669', base: 4390 },
+  { name: 'Final Adjusted', value: 4475, cumulative: 4475, fill: '#c9a84c', base: 0 },
+];
 
 const AUDIT_TRAIL = [
   { ts: '2026-03-16 06:00', actor: 'System', action: 'Snapshot frozen', detail: 'PP3 original calculation finalized for Elena Vasquez. Total: $6,430.' },
@@ -259,6 +279,77 @@ export default function RetroCorrections() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Corrections by Month */}
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+            Corrections by Month
+          </p>
+          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+            6-month history — January spike from year-end reconciliation
+          </p>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={CORRECTIONS_BY_MONTH} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
+              <XAxis dataKey="month" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} formatter={(v) => [v, 'Corrections']} />
+              <ReferenceLine y={15} stroke="#94a3b8" strokeDasharray="3 3" label={{ value: 'Avg', fill: '#94a3b8', fontSize: 10, position: 'right' }} />
+              <Bar dataKey="count" radius={[4, 4, 0, 0]} barSize={32}>
+                {CORRECTIONS_BY_MONTH.map((entry, i) => (
+                  <Cell key={i} fill={entry.severity === 'red' ? '#DC2626' : '#D97706'} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Waterfall Chart — Adjustment Breakdown */}
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+            Adjustment Waterfall
+          </p>
+          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+            Original calculation through each correction to final adjusted payout
+          </p>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={WATERFALL_DATA} margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
+              <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 9 }} interval={0} angle={0} />
+              <YAxis domain={[0, 5000]} tickFormatter={(v) => `$${(Number(v) / 1000).toFixed(1)}k`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <Tooltip
+                contentStyle={{ borderRadius: 8, fontSize: 12 }}
+                formatter={(v, name) => {
+                  if (name === 'base') return [null, null];
+                  return [`$${Number(v).toLocaleString()}`, 'Amount'];
+                }}
+              />
+              {/* Invisible base bar for stacking */}
+              <Bar dataKey="base" stackId="waterfall" fill="transparent" />
+              {/* Visible value bar */}
+              <Bar dataKey="value" stackId="waterfall" radius={[4, 4, 0, 0]} barSize={36}>
+                {WATERFALL_DATA.map((entry, i) => (
+                  <Cell key={i} fill={entry.fill} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+          <div className="flex items-center gap-4 mt-2 justify-center">
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#1a1f3d' }} />
+              <span className="text-[10px]" style={{ color: '#475569' }}>Original / Final</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#059669' }} />
+              <span className="text-[10px]" style={{ color: '#475569' }}>Increase</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#DC2626' }} />
+              <span className="text-[10px]" style={{ color: '#475569' }}>Decrease</span>
+            </div>
           </div>
         </div>
       </div>
