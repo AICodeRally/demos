@@ -83,7 +83,7 @@ export default function TargetsAndQuotas() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Quota" value={`$${totalQuota}M`} color={COLORS.primary} />
         <StatCard label="Avg Attainment" value={`${avgAttainment}%`} trend="up" trendValue="+4pp YoY" color="#10B981" />
         <StatCard label="Platinum Achievers" value={String(tierCounts.find((t) => t.id === 'platinum')?.count ?? 0)} color={COLORS.platinum} />
@@ -91,7 +91,7 @@ export default function TargetsAndQuotas() {
       </div>
 
       {/* Achiever Tier Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {ACHIEVER_TIERS.map((tier) => {
           const count = ASSOCIATES.filter((a) => a.achieverTier === tier.id).length;
           return (
@@ -116,7 +116,7 @@ export default function TargetsAndQuotas() {
       </div>
 
       {/* Attainment Bar + Quota by District */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Associate Attainment vs Target (%)

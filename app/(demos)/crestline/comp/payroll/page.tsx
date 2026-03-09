@@ -1,8 +1,8 @@
 'use client';
 
 import { StatCard, WaterfallChart, BarChart } from '@/components/demos/crestline';
-import { ASSOCIATES, COLORS } from '@/data/crestline';
-import { CheckCircle, Clock, ArrowRight, ShieldCheck } from 'lucide-react';
+import { COLORS } from '@/data/crestline';
+import { CheckCircle, ShieldCheck } from 'lucide-react';
 
 /* ── Waterfall: X-in-X-out reconciliation ── */
 const RECONCILIATION_WATERFALL = [
@@ -60,7 +60,7 @@ export default function PayrollOutput() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Payout" value="$324K" trend="up" trendValue="+4.2% vs last period" color={COLORS.accent} sparkline={[290, 298, 305, 312, 318, 324]} />
         <StatCard label="Guarantees Applied" value="12" trend="down" trendValue="-3 vs last period" color="#d946ef" sparkline={[18, 16, 15, 14, 15, 12]} />
         <StatCard label="Avg Commission" value="$2,840" trend="up" trendValue="+$120" color="#7c3aed" sparkline={[2540, 2620, 2680, 2720, 2780, 2840]} />
@@ -68,7 +68,7 @@ export default function PayrollOutput() {
       </div>
 
       {/* X-in-X-out Reconciliation Waterfall */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
             X-in-X-out Reconciliation
@@ -143,6 +143,7 @@ export default function PayrollOutput() {
           When commission falls below the hourly minimum, the guarantee floor kicks in automatically
         </p>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
             <tr style={{ color: '#94a3b8' }}>
@@ -189,6 +190,7 @@ export default function PayrollOutput() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Hours-to-Commission Reconciliation */}
@@ -200,6 +202,7 @@ export default function PayrollOutput() {
           Selling hours from Workday mapped against commission output — delta determines guarantee eligibility
         </p>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
             <tr style={{ color: '#94a3b8' }}>
@@ -228,6 +231,7 @@ export default function PayrollOutput() {
             ))}
           </tbody>
         </table>
+        </div>
 
         <div className="mt-4 rounded-lg px-4 py-2.5" style={{ backgroundColor: '#FEF3C7' }}>
           <p className="text-[11px]" style={{ color: '#92400e' }}>
@@ -237,7 +241,7 @@ export default function PayrollOutput() {
       </div>
 
       {/* Payroll Integration Status */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Status Panel */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <div className="flex items-center justify-between mb-5">

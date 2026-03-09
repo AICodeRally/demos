@@ -73,7 +73,7 @@ export default function PromotionsAndSpiffs() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Promo Budget" value={totalPromoBudget} color={COLORS.primary} />
         <StatCard label="SPIFF Budget" value={totalSpiffBudget} color={COLORS.accent} />
         <StatCard label="Active SPIFFs" value={String(SPIFFS.filter((s) => s.active).length)} color="#10B981" />
@@ -82,7 +82,7 @@ export default function PromotionsAndSpiffs() {
 
       {/* SPIFF Cards */}
       <p className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>Active SPIFF Programs</p>
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {SPIFFS.map((spiff) => (
           <div key={spiff.name} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0', borderTopWidth: 3, borderTopColor: COLORS.accent }}>
             <div className="flex items-center justify-between mb-2">
@@ -144,7 +144,7 @@ export default function PromotionsAndSpiffs() {
       </div>
 
       {/* ROI Bar + Spend Donut */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Revenue Lift by Promotion (%)</p>
           <BarChart data={ROI_DATA} unit="%" />
@@ -205,7 +205,7 @@ export default function PromotionsAndSpiffs() {
 
       {/* Promo Detail Cards */}
       <p className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>Promotion Details</p>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {PROMO_EVENTS.map((p, i) => (
           <div
             key={p.name}

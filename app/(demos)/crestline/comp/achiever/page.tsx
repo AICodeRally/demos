@@ -88,7 +88,7 @@ export default function AchieverProgram() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Platinum" value={String(platCount)} color={COLORS.platinum} />
         <StatCard label="Gold" value={String(goldCount)} color={COLORS.gold} />
         <StatCard label="Silver" value={String(silverCount)} color={COLORS.silver} />
@@ -96,7 +96,7 @@ export default function AchieverProgram() {
       </div>
 
       {/* Tier Overview Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {tierCounts.map((t) => (
           <div
             key={t.id}
@@ -200,7 +200,7 @@ export default function AchieverProgram() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Attainment vs Target Bar Chart */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
@@ -224,7 +224,7 @@ export default function AchieverProgram() {
       </div>
 
       {/* Percentile Ranking + Tier Progression */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Percentile Bar Chart */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>

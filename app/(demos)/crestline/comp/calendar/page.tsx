@@ -59,7 +59,7 @@ export default function DualCalendar() {
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Payroll Periods / Year" value="24" color={COLORS.standard} />
         <StatCard label="Retail Periods / Year" value="12" color={COLORS.flagship} />
         <StatCard label="5-Week Periods" value="4" color={COLORS.counter} />
@@ -67,7 +67,7 @@ export default function DualCalendar() {
       </div>
 
       {/* Side-by-side calendars */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Payroll calendar */}
         <div className="rounded-xl border bg-white p-5" style={{ borderColor: '#E2E8F0' }}>
           <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Semi-Monthly Payroll Calendar</h2>
@@ -220,6 +220,7 @@ export default function DualCalendar() {
         <p className="text-xs mb-4" style={{ color: '#475569' }}>
           Each commission component is tied to a specific calendar for calculation and payout
         </p>
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
@@ -248,6 +249,7 @@ export default function DualCalendar() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );

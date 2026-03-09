@@ -55,7 +55,7 @@ export default function CompanyOverview() {
       <FormatSelector selected={format} onSelect={setFormat} />
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Stores" value="200" color={COLORS.primary} />
         <StatCard
           label="Annual Revenue"
@@ -76,7 +76,7 @@ export default function CompanyOverview() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Revenue by Format */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Revenue by Format</p>
@@ -114,7 +114,7 @@ export default function CompanyOverview() {
       </div>
 
       {/* Format Summary Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FORMATS.map((f) => {
           const Icon = FORMAT_ICONS[f.id] ?? Store;
           const isActive = f.id === format;

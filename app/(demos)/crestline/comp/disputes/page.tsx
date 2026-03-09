@@ -80,7 +80,7 @@ export default function DisputesAndAudit() {
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Open Disputes" value="2" color="#3b82f6" />
         <StatCard label="Avg Resolution" value="3.2 days" trend="down" trendValue="-1.8d" color="#059669" />
         <StatCard label="Override Rate" value="0.8%" trend="flat" trendValue="stable" color={COLORS.accent} />
@@ -94,7 +94,7 @@ export default function DisputesAndAudit() {
           Click any dispute card to view its detail and timeline
         </p>
 
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {KANBAN_COLUMNS.map(status => {
             const cards = DISPUTES.filter(d => d.status === status);
             const sc = STATUS_COLORS[status];
@@ -296,7 +296,7 @@ export default function DisputesAndAudit() {
           Total commissionable sales in must equal the sum of all commission outputs — no dollars lost or created
         </p>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Input */}
           <div className="rounded-lg p-4 text-center" style={{ backgroundColor: '#DBEAFE' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#2563EB' }}>Total Sales In</p>

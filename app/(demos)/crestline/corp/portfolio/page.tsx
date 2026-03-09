@@ -74,7 +74,7 @@ export default function StorePortfolio() {
       <FormatSelector selected={format} onSelect={setFormat} />
 
       {/* Heat Map + Rev/SqFt */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Store Count by District & Format</p>
           <HeatMap
@@ -92,7 +92,7 @@ export default function StorePortfolio() {
       </div>
 
       {/* District Revenue + SqFt Allocation */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>District Revenue ($M)</p>
           <BarChart
@@ -162,7 +162,7 @@ export default function StorePortfolio() {
       </div>
 
       {/* Format Comparison Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FORMAT_COMPARE.map((fc) => {
           const meta = FORMATS.find((f) => f.id === fc.id);
           const fColor = FORMAT_BADGE_COLORS[fc.id]?.text ?? '#475569';

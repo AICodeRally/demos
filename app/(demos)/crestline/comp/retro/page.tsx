@@ -43,7 +43,7 @@ export default function RetroCorrections() {
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Snapshots Stored / Year" value="2,400" color={COLORS.standard} />
         <StatCard label="Avg Correction Time" value="4 hrs" trend="down" trendValue="-62%" color="#059669" />
         <StatCard label="Corrections This Quarter" value="18" color={COLORS.accent} />
@@ -106,6 +106,7 @@ export default function RetroCorrections() {
                   </span>
                 </div>
               </div>
+              <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
@@ -128,6 +129,7 @@ export default function RetroCorrections() {
                   </tr>
                 </tfoot>
               </table>
+              </div>
               <p className="text-[10px] mt-2 font-mono" style={{ color: '#94a3b8' }}>Frozen at: {fmtTs(snap.frozenAt)}</p>
             </div>
           );
@@ -141,6 +143,7 @@ export default function RetroCorrections() {
           Side-by-side comparison showing exactly what changed and why
         </p>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
@@ -175,6 +178,7 @@ export default function RetroCorrections() {
             </tr>
           </tfoot>
         </table>
+        </div>
       </div>
 
       {/* Adjustment Output */}

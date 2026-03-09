@@ -120,7 +120,7 @@ export default function BrandPartners() {
             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
             <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{dept.dept}</p>
           </div>
-          <div className="grid grid-cols-4 gap-4" style={{ gridTemplateColumns: `repeat(${Math.min(dept.brands.length, 4)}, 1fr)` }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ gridTemplateColumns: `repeat(${Math.min(dept.brands.length, 4)}, 1fr)` }}>
             {dept.brands.map((brand) => (
               <div
                 key={brand.name}
@@ -157,7 +157,7 @@ export default function BrandPartners() {
       ))}
 
       {/* Revenue by Dept + Commission Rates */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Revenue by Department (%)</p>
           <DonutChart

@@ -89,7 +89,7 @@ export default function PosAnalytics() {
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Transactions Today" value="142" trend="up" trendValue="+12%" color={COLORS.primary} />
         <StatCard label="Avg Items/Transaction" value="1.8" trend="up" trendValue="+0.3" color="#2563eb" />
         <StatCard label="Return Rate" value="3.1%" trend="down" trendValue="-0.4%" color="#059669" />
@@ -97,7 +97,7 @@ export default function PosAnalytics() {
       </div>
 
       {/* Revenue by Dept + Payment Mix */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Revenue by Selling Department ($K)
@@ -116,7 +116,7 @@ export default function PosAnalytics() {
       </div>
 
       {/* Hourly Volume + Transaction Size */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Transaction Volume by Hour

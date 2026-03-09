@@ -125,7 +125,7 @@ export default function ManagerConsole() {
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="relative">
           <StatCard label="Today's Revenue" value="$98.4K" color={COLORS.primary} />
           <span className="absolute top-3 right-3 text-[10px] font-mono" style={{ color: '#059669' }}>
@@ -138,7 +138,7 @@ export default function ManagerConsole() {
       </div>
 
       {/* Rep Performance + Hourly Revenue */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
             Rep Commission Today ($K)
@@ -171,7 +171,7 @@ export default function ManagerConsole() {
         <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
           Department Performance vs Target ($K)
         </p>
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {DEPT_VS_TARGET.map((dept) => (
             <div
               key={dept.id}
@@ -253,7 +253,7 @@ export default function ManagerConsole() {
       </div>
 
       {/* Exception Alerts */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {EXCEPTIONS.map((ex, i) => (
           <div
             key={i}
@@ -278,7 +278,7 @@ export default function ManagerConsole() {
         <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
           Coaching Queue
         </p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {COACHING.map((coach, i) => (
             <div
               key={i}

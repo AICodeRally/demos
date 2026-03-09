@@ -2,7 +2,7 @@
 
 import { StatCard, WaterfallChart } from '@/components/demos/crestline';
 import { COMMISSION_COMPONENTS, COLORS } from '@/data/crestline';
-import { Zap, Users, Percent, Clock, ArrowRight } from 'lucide-react';
+import { Zap, ArrowRight } from 'lucide-react';
 
 const TYPE_BADGES: Record<string, { label: string; bg: string; fg: string }> = {
   percent_of: { label: 'percent_of', bg: '#dbeafe', fg: '#1d4ed8' },
@@ -44,7 +44,7 @@ export default function CommissionEngine() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Components" value="5" color={COLORS.primary} />
         <StatCard label="Active Reps" value="3,200" color={COLORS.accent} />
         <StatCard label="Avg Commission Rate" value="5.8%" color="#7c3aed" />
@@ -124,7 +124,7 @@ export default function CommissionEngine() {
       </div>
 
       {/* Waterfall: How $100K flows through streams */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
             $100K Sale: Commission Waterfall
@@ -137,6 +137,7 @@ export default function CommissionEngine() {
           <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
             Stream-by-Stream Breakdown
           </p>
+          <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
               <tr style={{ color: '#94a3b8' }}>
@@ -170,6 +171,7 @@ export default function CommissionEngine() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
@@ -178,7 +180,7 @@ export default function CommissionEngine() {
         <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
           Component Registry
         </p>
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {COMMISSION_COMPONENTS.map((comp, i) => {
             const badge = TYPE_BADGES[comp.type];
             return (
