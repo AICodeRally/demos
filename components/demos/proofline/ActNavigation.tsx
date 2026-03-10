@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 interface ActNavigationProps {
-  currentAct: 1 | 2 | 3 | 4 | 5;
+  currentAct: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 const ACTS = [
@@ -12,6 +12,7 @@ const ACTS = [
   { act: 3, label: 'Sales Operations', pages: 7, color: '#2563EB', href: '/ops/day-planner' },
   { act: 4, label: 'Sales Comp Planning', pages: 5, color: '#10B981', href: '/comp/plan' },
   { act: 5, label: 'Sales Comp Management', pages: 6, color: '#0EA5E9', href: '/comp/mgmt/data' },
+  { act: 6, label: 'Platform & Integrations', pages: 1, color: '#F97316', href: '/integrations' },
 ] as const;
 
 export function ActNavigation({ currentAct }: ActNavigationProps) {

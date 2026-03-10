@@ -75,6 +75,13 @@ export default defineDemo({
         { label: 'Reports', href: '/proofline-andrews/comp/mgmt/reports', icon: 'FileBarChart' },
       ],
     },
+    {
+      section: 'Act 6 \u2014 Platform & Integrations',
+      color: '#F97316',
+      items: [
+        { label: 'Integrations', href: '/proofline-andrews/integrations', icon: 'Cable' },
+      ],
+    },
   ],
   footer: {
     copyright: '\u00A9 2026 Andrews Distributing',
