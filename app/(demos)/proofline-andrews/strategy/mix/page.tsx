@@ -48,7 +48,7 @@ function MixTargetBar({
 
   return (
     <>
-    <div className="py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors">
+    <div className="py-3 px-4 rounded-lg hover:opacity-80 transition-colors">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <div className="w-3 h-3 rounded-full" style={{ background: color }} />

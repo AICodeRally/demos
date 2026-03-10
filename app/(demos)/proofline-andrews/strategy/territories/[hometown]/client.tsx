@@ -256,8 +256,10 @@ function RouteRow({ route, seller, idx, isSelected, onSelect }: {
   return (
     <>
     <tr
-      className={`cursor-pointer transition-colors ${isSelected ? 'bg-purple-50' : ''} hover:bg-purple-50/50`}
-      style={!isSelected && idx % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}
+      className="cursor-pointer transition-colors"
+      style={{
+        background: isSelected ? 'rgba(124,58,237,0.08)' : !isSelected && idx % 2 === 0 ? 'var(--pl-stripe)' : undefined,
+      }}
       onClick={onSelect}
     >
       <td className="py-3 pl-3">
@@ -365,7 +367,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {prevHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${prevHometown.id}`}
-                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:bg-gray-50 transition-colors"
+                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 &larr; {prevHometown.name.replace(' HQ', '')}
@@ -374,7 +376,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {nextHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${nextHometown.id}`}
-                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:bg-gray-50 transition-colors"
+                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 {nextHometown.name.replace(' HQ', '')} &rarr;
@@ -489,7 +491,8 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             return (
               <div
                 key={seller.id}
-                className={`flex items-center gap-4 py-2 px-3 rounded-lg transition-colors cursor-pointer ${isSelected ? 'bg-purple-50' : 'hover:bg-gray-50'}`}
+                className="flex items-center gap-4 py-2 px-3 rounded-lg transition-colors cursor-pointer hover:opacity-80"
+                style={{ background: isSelected ? 'rgba(124,58,237,0.08)' : undefined }}
                 onClick={() => setSelectedRoute(isSelected ? null : seller.routeId)}
               >
                 <div className="w-32 shrink-0">

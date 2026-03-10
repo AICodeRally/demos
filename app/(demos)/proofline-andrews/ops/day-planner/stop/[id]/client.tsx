@@ -84,7 +84,8 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
               </span>
             )}
             {stop.photoRequired && (
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-400">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+                style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
                 Photo Required
               </span>
             )}
@@ -151,7 +152,8 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
                   <div className="flex items-center gap-2">
                     <span className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{item.brand}</span>
                     {item.promo && (
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">{item.promo}</span>
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                        style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>{item.promo}</span>
                     )}
                   </div>
                   <div className="flex items-center gap-4 text-[11px] font-mono">
@@ -178,10 +180,11 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
 
             {stop.displayInstructions && (
               <div className="rounded-xl p-5" style={{ background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.15)' }}>
-                <div className="text-[10px] uppercase tracking-wider text-blue-400 font-mono mb-2">Display Instructions</div>
+                <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: '#2563EB' }}>Display Instructions</div>
                 <div className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{stop.displayInstructions}</div>
                 {stop.photoRequired && (
-                  <button className="mt-3 text-[11px] font-bold px-4 py-2 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors">
+                  <button className="mt-3 text-[11px] font-bold px-4 py-2 rounded-lg transition-colors"
+                    style={{ background: 'rgba(37,99,235,0.2)', color: '#2563EB' }}>
                     Capture Photo
                   </button>
                 )}
@@ -224,7 +227,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
                 <div className="flex-1">
                   <div className="flex items-center gap-3 text-[11px] font-mono">
                     <span style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
-                    <span className="text-emerald-400">${fmt(visit.rev)}</span>
+                    <span style={{ color: '#22C55E' }}>${fmt(visit.rev)}</span>
                   </div>
                   <div className="text-[11px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.note}</div>
                 </div>
@@ -262,7 +265,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
           <div className="space-y-4">
             {stop.competitiveIntel && (
               <div className="rounded-xl p-5" style={{ background: 'rgba(168,85,247,0.04)', border: '1px solid rgba(168,85,247,0.15)' }}>
-                <div className="text-[10px] uppercase tracking-wider text-purple-400 font-mono mb-2">Competitive Intel</div>
+                <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: '#A855F7' }}>Competitive Intel</div>
                 <div className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{stop.competitiveIntel}</div>
               </div>
             )}
@@ -300,7 +303,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
         {prevStop ? (
           <Link
             href={`/proofline-andrews/ops/day-planner/stop/${prevStop.id}`}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:bg-slate-50 transition-colors"
+            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
             style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-secondary)' }}
           >
             &larr; Stop {prevStop.sequence}: {prevStop.accountName.split(' \u2014 ')[0].split(' #')[0]}
@@ -309,7 +312,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
         {nextStop ? (
           <Link
             href={`/proofline-andrews/ops/day-planner/stop/${nextStop.id}`}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:bg-slate-50 transition-colors"
+            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
             style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-secondary)' }}
           >
             Stop {nextStop.sequence}: {nextStop.accountName.split(' \u2014 ')[0].split(' #')[0]} &rarr;
