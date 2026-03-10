@@ -123,7 +123,7 @@ export default function MarketPositionPage() {
 
   return (
     <>
-    
+
       <ActNavigation currentAct={1} />
 
       {/* Page Header */}
@@ -133,11 +133,11 @@ export default function MarketPositionPage() {
         </div>
         <h1
           className="text-2xl font-extrabold mb-1"
-          style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+          style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}
         >
           Market Position &amp; Growth
         </h1>
-        <p className="text-[13px]" style={{ color: '#718096' }}>
+        <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
           Texas beverage distribution competitive landscape &middot; Andrews is the fastest-growing distributor at +12% YoY
         </p>
       </div>
@@ -160,15 +160,15 @@ export default function MarketPositionPage() {
           </defs>
 
           {/* Grid background */}
-          <rect x={PAD.left} y={PAD.top} width={INNER_W} height={INNER_H} fill="#FAFBFC" rx="4" />
+          <rect x={PAD.left} y={PAD.top} width={INNER_W} height={INNER_H} fill="var(--pl-card-alt)" rx="4" />
 
           {/* Grid lines - horizontal */}
           {[0, 0.04, 0.08, 0.12].map((g) => {
             const y = toPlotY(g);
             return (
               <g key={g}>
-                <line x1={PAD.left} y1={y} x2={PAD.left + INNER_W} y2={y} stroke="#E2E8F0" strokeWidth="1" />
-                <text x={PAD.left - 8} y={y + 4} textAnchor="end" fill="#A0AEC0" fontSize="10" fontFamily="monospace">
+                <line x1={PAD.left} y1={y} x2={PAD.left + INNER_W} y2={y} stroke="var(--pl-chart-grid)" strokeWidth="1" />
+                <text x={PAD.left - 8} y={y + 4} textAnchor="end" fill="var(--pl-text-faint)" fontSize="10" fontFamily="monospace">
                   {(g * 100).toFixed(0)}%
                 </text>
               </g>
@@ -180,8 +180,8 @@ export default function MarketPositionPage() {
             const x = toPlotX(s);
             return (
               <g key={s}>
-                <line x1={x} y1={PAD.top} x2={x} y2={PAD.top + INNER_H} stroke="#E2E8F0" strokeWidth="1" />
-                <text x={x} y={PAD.top + INNER_H + 18} textAnchor="middle" fill="#A0AEC0" fontSize="10" fontFamily="monospace">
+                <line x1={x} y1={PAD.top} x2={x} y2={PAD.top + INNER_H} stroke="var(--pl-chart-grid)" strokeWidth="1" />
+                <text x={x} y={PAD.top + INNER_H + 18} textAnchor="middle" fill="var(--pl-text-faint)" fontSize="10" fontFamily="monospace">
                   {(s * 100).toFixed(0)}%
                 </text>
               </g>
@@ -189,14 +189,14 @@ export default function MarketPositionPage() {
           })}
 
           {/* Axis labels */}
-          <text x={PAD.left + INNER_W / 2} y={PLOT_H - 8} textAnchor="middle" fill="#718096" fontSize="11" fontWeight="600" fontFamily="'Space Grotesk', sans-serif">
+          <text x={PAD.left + INNER_W / 2} y={PLOT_H - 8} textAnchor="middle" fill="var(--pl-text-muted)" fontSize="11" fontWeight="600" fontFamily="'Space Grotesk', sans-serif">
             Market Share →
           </text>
           <text
             x={16}
             y={PAD.top + INNER_H / 2}
             textAnchor="middle"
-            fill="#718096"
+            fill="var(--pl-text-muted)"
             fontSize="11"
             fontWeight="600"
             fontFamily="'Space Grotesk', sans-serif"
@@ -206,10 +206,10 @@ export default function MarketPositionPage() {
           </text>
 
           {/* Quadrant labels */}
-          <text x={PAD.left + 8} y={PAD.top + 14} fill="#A0AEC0" fontSize="9" fontFamily="monospace" opacity="0.6">
+          <text x={PAD.left + 8} y={PAD.top + 14} fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace" opacity="0.6">
             LOW SHARE / HIGH GROWTH
           </text>
-          <text x={PAD.left + INNER_W - 8} y={PAD.top + 14} textAnchor="end" fill="#A0AEC0" fontSize="9" fontFamily="monospace" opacity="0.6">
+          <text x={PAD.left + INNER_W - 8} y={PAD.top + 14} textAnchor="end" fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace" opacity="0.6">
             HIGH SHARE / HIGH GROWTH
           </text>
 
@@ -263,7 +263,7 @@ export default function MarketPositionPage() {
                   x={x}
                   y={y - r - 8}
                   textAnchor="middle"
-                  fill={isAndrews ? player.color : '#4A5568'}
+                  fill={isAndrews ? player.color : 'var(--pl-text-secondary)'}
                   fontSize={isAndrews ? 12 : 10}
                   fontWeight={isAndrews ? 800 : 600}
                   fontFamily="'Space Grotesk', sans-serif"
@@ -281,11 +281,11 @@ export default function MarketPositionPage() {
                 {/* Hover tooltip */}
                 {isHovered && !isAndrews && (
                   <g>
-                    <rect x={x - 70} y={y - r - 44} width={140} height={30} rx={6} fill="white" stroke="#E2E8F0" />
-                    <text x={x} y={y - r - 32} textAnchor="middle" fill="#718096" fontSize="9" fontFamily="monospace">
+                    <rect x={x - 70} y={y - r - 44} width={140} height={30} rx={6} fill="var(--pl-chart-tooltip-bg)" stroke="var(--pl-chart-tooltip-border)" />
+                    <text x={x} y={y - r - 32} textAnchor="middle" fill="var(--pl-text-muted)" fontSize="9" fontFamily="monospace">
                       {pct(player.marketShare)} share · +{pct(player.growthRate)} YoY
                     </text>
-                    <text x={x} y={y - r - 20} textAnchor="middle" fill="#718096" fontSize="9" fontFamily="monospace">
+                    <text x={x} y={y - r - 20} textAnchor="middle" fill="var(--pl-text-muted)" fontSize="9" fontFamily="monospace">
                       ~{fmtM(player.revenue)} annual rev
                     </text>
                   </g>
@@ -303,7 +303,7 @@ export default function MarketPositionPage() {
                 className="w-3 h-3 rounded-full"
                 style={{ background: p.color, border: p.isAndrews ? '2px solid #C6A052' : undefined }}
               />
-              <span className="text-[10px] font-mono" style={{ color: p.isAndrews ? '#C6A052' : '#718096', fontWeight: p.isAndrews ? 700 : 400 }}>
+              <span className="text-[10px] font-mono" style={{ color: p.isAndrews ? '#C6A052' : 'var(--pl-text-muted)', fontWeight: p.isAndrews ? 700 : 400 }}>
                 {p.name}
               </span>
             </div>
@@ -317,9 +317,9 @@ export default function MarketPositionPage() {
           <svg viewBox="0 0 400 440" className="absolute inset-0 w-full h-full" fill="none">
             <path
               d="M 120 10 L 260 10 L 260 50 L 310 50 L 310 80 L 340 80 L 340 120 L 360 140 L 370 180 L 360 220 L 340 260 L 310 300 L 280 340 L 250 360 L 220 380 L 190 400 L 160 420 L 130 430 L 100 420 L 80 400 L 60 360 L 40 300 L 30 240 L 30 180 L 40 120 L 60 80 L 80 50 L 100 30 L 120 10 Z"
-              stroke="#E2E8F0" strokeWidth="2" fill="rgba(198,160,82,0.03)"
+              stroke="var(--pl-border)" strokeWidth="2" fill="rgba(198,160,82,0.03)"
             />
-            <text x="180" y="240" fill="#E2E8F0" fontSize="48" fontWeight="bold" fontFamily="'Space Grotesk', sans-serif" textAnchor="middle" opacity="0.5">TX</text>
+            <text x="180" y="240" fill="var(--pl-border)" fontSize="48" fontWeight="bold" fontFamily="'Space Grotesk', sans-serif" textAnchor="middle" opacity="0.5">TX</text>
           </svg>
 
           {HOMETOWNS.map((ht) => {
@@ -334,15 +334,15 @@ export default function MarketPositionPage() {
                 style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
               >
                 <div className="w-4 h-4 rounded-full border-2 border-white" style={{ background: dotColor, boxShadow: `0 0 8px ${dotColor}60` }} />
-                <div className="rounded-lg px-2 py-1 whitespace-nowrap" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 1px 4px rgba(0,0,0,0.10)' }}>
-                  <div className="text-[11px] font-bold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>{ht.name}</div>
-                  <div className="text-[9px] font-mono" style={{ color: '#718096' }}>{ht.routes} routes &middot; {fmt(ht.accounts)} accts</div>
+                <div className="rounded-lg px-2 py-1 whitespace-nowrap" style={{ background: 'var(--pl-card)', boxShadow: '0 1px 4px rgba(0,0,0,0.10)' }}>
+                  <div className="text-[11px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>{ht.name}</div>
+                  <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{ht.routes} routes &middot; {fmt(ht.accounts)} accts</div>
                 </div>
               </div>
             );
           })}
 
-          <div className="absolute bottom-2 left-2 flex items-center gap-4 text-[10px] px-3 py-1.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.9)', color: '#718096' }}>
+          <div className="absolute bottom-2 left-2 flex items-center gap-4 text-[10px] px-3 py-1.5 rounded-lg" style={{ background: 'var(--pl-card)', color: 'var(--pl-text-muted)' }}>
             <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full" style={{ background: '#C6A052' }} />HQ</div>
             <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full" style={{ background: '#2563EB' }} />Established</div>
             <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full" style={{ background: '#F59E0B' }} />Acquired</div>
@@ -360,9 +360,9 @@ export default function MarketPositionPage() {
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[11px] font-bold font-mono px-2 py-0.5 rounded" style={{ background: `${item.color}12`, color: item.color }}>{item.year}</span>
-                  <span className="text-[14px] font-bold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</span>
+                  <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</span>
                 </div>
-                <p className="text-[12px] leading-relaxed" style={{ color: '#718096' }}>{item.desc}</p>
+                <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{item.desc}</p>
               </div>
             </div>
           ))}
@@ -371,33 +371,33 @@ export default function MarketPositionPage() {
 
       {/* ── Growth Vectors ───────────────────────────── */}
       <div className="mb-8">
-        <div className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4" style={{ color: '#718096' }}>Growth Vectors</div>
+        <div className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4" style={{ color: 'var(--pl-text-muted)' }}>Growth Vectors</div>
         <div className="grid grid-cols-3 gap-4">
           {GROWTH_VECTORS.map((v) => (
             <div
               key={v.title}
-              className="rounded-xl border bg-white p-5 hover:shadow-md transition-shadow"
-              style={{ borderColor: '#E2E8F0', borderTop: `3px solid ${v.accent}`, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+              className="rounded-xl border p-5 hover:shadow-md transition-shadow"
+              style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: `3px solid ${v.accent}`, boxShadow: 'var(--pl-shadow)' }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[14px] font-bold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>{v.title}</span>
+                <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>{v.title}</span>
                 <span className="text-[11px] font-bold font-mono px-2 py-0.5 rounded-full" style={{ background: `${v.accent}12`, color: v.accent }}>{v.stat}</span>
               </div>
-              <p className="text-[12px] leading-relaxed mb-3" style={{ color: '#718096' }}>{v.desc}</p>
-              <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Focus: {v.areas}</div>
+              <p className="text-[12px] leading-relaxed mb-3" style={{ color: 'var(--pl-text-muted)' }}>{v.desc}</p>
+              <div className="text-[10px] font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>Focus: {v.areas}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Andrews Advantage */}
-      <div className="rounded-lg px-4 py-3 text-[12px]" style={{ background: 'rgba(198,160,82,0.06)', color: '#718096' }}>
+      <div className="rounded-lg px-4 py-3 text-[12px]" style={{ background: 'rgba(198,160,82,0.06)', color: 'var(--pl-text-muted)' }}>
         <strong style={{ color: '#C6A052' }}>Andrews Advantage:</strong>{' '}
         Molson Coors + Constellation + Heineken alignment covers 81% of portfolio.
         Sazerac spirits partnership creates a differentiated position against beer-only competitors in South Texas.
         At 22% share with +12% YoY growth, Andrews is on track to overtake Silver Eagle by FY2027.
       </div>
-    
+
     </>
   );
 }

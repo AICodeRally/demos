@@ -106,11 +106,11 @@ export default function CeoMandatePage() {
           </div>
           <h1
             className="text-2xl font-extrabold mb-1"
-            style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+            style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}
           >
             FY2026 Corporate Strategy
           </h1>
-          <p className="text-[13px]" style={{ color: '#718096' }}>
+          <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             Andrews Distributing &middot; North &amp; South Texas
           </p>
         </div>
@@ -120,10 +120,10 @@ export default function CeoMandatePage() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         {/* Revenue Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Revenue Target
           </div>
           <div
@@ -139,10 +139,10 @@ export default function CeoMandatePage() {
 
         {/* Sazerac Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #F87171', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #F87171', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Sazerac Portfolio Share
           </div>
           <div
@@ -151,17 +151,17 @@ export default function CeoMandatePage() {
           >
             8%
           </div>
-          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
+          <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
             Currently 5% &mdash; 60% growth
           </div>
         </div>
 
         {/* South TX Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #2563EB', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #2563EB', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             South TX Cases
           </div>
           <div
@@ -170,7 +170,7 @@ export default function CeoMandatePage() {
           >
             5.5M
           </div>
-          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
+          <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
             Currently {fmtM(southTXCases * 4)} annual
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function CeoMandatePage() {
             data={donutData}
             size={200}
             label={`${BRAND_FAMILIES.length} brands`}
-            labelColor="#1A1A2E"
+            labelColor="var(--pl-text)"
           />
           <div className="flex-1 grid grid-cols-2 gap-3">
             {donutData.map((d) => (
@@ -193,10 +193,10 @@ export default function CeoMandatePage() {
                   style={{ background: d.color }}
                 />
                 <div>
-                  <div className="text-[13px] font-semibold" style={{ color: '#1A1A2E' }}>
+                  <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                     {d.name}
                   </div>
-                  <div className="text-[11px] font-mono" style={{ color: '#718096' }}>
+                  <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                     {pct(d.value)} share
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function CeoMandatePage() {
       <LightSectionCard title="FY2025 vs FY2026 Targets" className="mb-8">
         <table className="w-full text-[13px]">
           <thead>
-            <tr style={{ color: '#718096' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left font-medium pb-3 pl-2">Metric</th>
               <th className="text-right font-medium pb-3">FY2025</th>
               <th className="text-right font-medium pb-3">FY2026 Target</th>
@@ -221,17 +221,17 @@ export default function CeoMandatePage() {
             {YOY.map((row, i) => (
               <tr
                 key={row.metric}
-                className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}
+                style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}
               >
-                <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>
+                <td className="py-2.5 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {row.metric}
                 </td>
-                <td className="py-2.5 text-right font-mono" style={{ color: '#718096' }}>
+                <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                   {row.fy25}
                 </td>
                 <td
                   className="py-2.5 text-right font-mono font-bold"
-                  style={{ color: '#1A1A2E' }}
+                  style={{ color: 'var(--pl-text)' }}
                 >
                   {row.fy26}
                 </td>
@@ -251,7 +251,7 @@ export default function CeoMandatePage() {
       <div className="mb-4">
         <div
           className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4"
-          style={{ color: '#718096' }}
+          style={{ color: 'var(--pl-text-muted)' }}
         >
           Strategic Priorities
         </div>
@@ -259,8 +259,8 @@ export default function CeoMandatePage() {
           {PRIORITIES.map((p) => (
             <div
               key={p.title}
-              className="rounded-xl border bg-white p-5 hover:shadow-md transition-shadow"
-              style={{ borderColor: '#E2E8F0', borderLeft: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+              className="rounded-xl border p-5 hover:shadow-md transition-shadow"
+              style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderLeft: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl shrink-0">{p.icon}</span>
@@ -268,7 +268,7 @@ export default function CeoMandatePage() {
                   <div className="flex items-center justify-between mb-1">
                     <span
                       className="text-[14px] font-bold"
-                      style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+                      style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       {p.title}
                     </span>
@@ -279,7 +279,7 @@ export default function CeoMandatePage() {
                       {p.stat}
                     </span>
                   </div>
-                  <p className="text-[12px] leading-relaxed" style={{ color: '#718096' }}>
+                  <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                     {p.desc}
                   </p>
                 </div>
@@ -294,7 +294,7 @@ export default function CeoMandatePage() {
         className="rounded-lg px-6 py-4 mt-6"
         style={{ background: 'rgba(198,160,82,0.06)', borderLeft: '3px solid #C6A052' }}
       >
-        <p className="text-[14px] italic leading-relaxed" style={{ color: '#4A5568' }}>
+        <p className="text-[14px] italic leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>
           &ldquo;We need to sell the right product, not just more product. If we hit 8% spirits
           and get display compliance to 89%, we will blow past $5.2 billion.&rdquo;
         </p>
