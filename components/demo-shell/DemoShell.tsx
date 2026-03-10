@@ -27,6 +27,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDark, setIsDark] = useState(true); // default: dark
+  const [expandedSections, setExpandedSections] = useState<Set<number>>(() => new Set());
 
   useEffect(() => {
     if (!config.darkMode) return;
@@ -35,10 +36,50 @@ export function DemoShell({ config, children }: DemoShellProps) {
     if (saved === 'dark') setIsDark(true);
   }, [config.darkMode]);
 
+  useEffect(() => {
+    const storageKey = `demoshell-nav-state-${config.product.name}`;
+    const saved = localStorage.getItem(storageKey);
+    let initial: Set<number>;
+
+    if (saved) {
+      try {
+        initial = new Set(JSON.parse(saved) as number[]);
+      } catch {
+        initial = new Set();
+      }
+    } else {
+      initial = new Set();
+    }
+
+    // Always expand the section containing the active route
+    const activeIdx = config.nav.findIndex((section) =>
+      section.items.some((item) =>
+        item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href)
+      )
+    );
+    if (activeIdx !== -1) initial.add(activeIdx);
+
+    setExpandedSections(initial);
+  }, [pathname, config.product.name, config.nav]);
+
   const toggleTheme = () => {
     setIsDark((prev) => {
       const next = !prev;
       localStorage.setItem('proofline-theme', next ? 'dark' : 'light');
+      return next;
+    });
+  };
+
+  const toggleSection = (idx: number) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
+      const storageKey = `demoshell-nav-state-${config.product.name}`;
+      localStorage.setItem(storageKey, JSON.stringify(Array.from(next)));
       return next;
     });
   };
@@ -121,16 +162,36 @@ export function DemoShell({ config, children }: DemoShellProps) {
         <nav className="sidebar-scroll flex-1 overflow-y-auto px-3 py-5">
           {config.nav.map((section, idx) => {
             const sectionClr = section.color ?? primaryColor;
+            const isExpanded = expandedSections.has(idx);
 
             return (
               <div key={`${idx}-${section.section}`}>
-                <div
-                  className="mb-2 mt-4 first:mt-0 px-3 text-[10px] font-semibold tracking-[0.15em] uppercase"
-                  style={{ color: `${sectionClr}CC` }}
+                {/* Collapsible section header */}
+                <button
+                  onClick={() => toggleSection(idx)}
+                  className="w-full flex items-center justify-between mb-2 mt-4 first:mt-0 px-3 py-0.5 rounded transition-colors hover:bg-white/[0.03] group"
                 >
-                  {section.section}
-                </div>
-                {section.items.map((item) => {
+                  <span
+                    className="text-[10px] font-semibold tracking-[0.15em] uppercase"
+                    style={{ color: `${sectionClr}CC` }}
+                  >
+                    {section.section}
+                  </span>
+                  {isExpanded ? (
+                    <LucideIcons.ChevronDown
+                      className="h-3 w-3 transition-transform duration-200"
+                      style={{ color: `${sectionClr}66` }}
+                    />
+                  ) : (
+                    <LucideIcons.ChevronRight
+                      className="h-3 w-3 transition-transform duration-200"
+                      style={{ color: `${sectionClr}44` }}
+                    />
+                  )}
+                </button>
+
+                {/* Section items — only rendered when expanded */}
+                {isExpanded && section.items.map((item) => {
                   const Icon = getIcon(item.icon);
                   const isActive =
                     item.href === '/' ? pathname === '/' : pathname === item.href;
