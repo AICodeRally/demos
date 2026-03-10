@@ -233,6 +233,18 @@ export default function DayPlannerPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <Link
+            href="/proofline-route"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold transition-all hover:opacity-90"
+            style={{
+              background: 'linear-gradient(135deg, #C6A052, #a8842e)',
+              color: '#0a0f1e',
+              boxShadow: '0 1px 4px rgba(198,160,82,0.2)',
+            }}
+          >
+            <span>🚚</span>
+            <span>Rep Tablet</span>
+          </Link>
           <div className="w-56">
             <RepSelector reps={reps} selected={selectedRep} onChange={setSelectedRep} />
           </div>
@@ -339,6 +351,21 @@ export default function DayPlannerPage() {
                 <span className="text-base">📱</span>
                 <span>Rep&apos;s Mobile View</span>
               </button>
+
+              {/* Bridge to Rep Tablet Demo */}
+              <Link
+                href="/proofline-route"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[11px] font-mono font-bold transition-all hover:opacity-90"
+                style={{
+                  background: 'linear-gradient(135deg, #C6A052, #a8842e)',
+                  color: '#0a0f1e',
+                  boxShadow: '0 2px 8px rgba(198,160,82,0.25)',
+                }}
+              >
+                <span className="text-base">🚚</span>
+                <span>Launch Rep Tablet View</span>
+                <span style={{ fontSize: 10, opacity: 0.7 }}>&rarr;</span>
+              </Link>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-center py-20">
