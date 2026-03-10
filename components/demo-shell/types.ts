@@ -36,4 +36,5 @@ export interface DemoConfig {
   theme: ThemeConfig;
   nav: NavSection[];
   footer: FooterConfig;
+  darkMode?: boolean;
 }

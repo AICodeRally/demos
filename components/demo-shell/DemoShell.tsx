@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as LucideIcons from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { createThemeVars, resolveTheme } from '@/lib/theme';
@@ -26,6 +26,22 @@ interface DemoShellProps {
 export function DemoShell({ config, children }: DemoShellProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isDark, setIsDark] = useState(true); // default: dark
+
+  useEffect(() => {
+    if (!config.darkMode) return;
+    const saved = localStorage.getItem('proofline-theme');
+    if (saved === 'light') setIsDark(false);
+    if (saved === 'dark') setIsDark(true);
+  }, [config.darkMode]);
+
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      localStorage.setItem('proofline-theme', next ? 'dark' : 'light');
+      return next;
+    });
+  };
 
   const themeVars = createThemeVars(config.theme);
   const resolved = resolveTheme(config.theme);
@@ -45,7 +61,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
   const LogoIcon = config.client.logo ?? LucideIcons.Circle;
 
   return (
-    <div className="h-screen flex overflow-hidden" style={themeVars as React.CSSProperties}>
+    <div className={`h-screen flex overflow-hidden${config.darkMode && isDark ? ' dark' : ''}`} style={themeVars as React.CSSProperties}>
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
@@ -60,14 +76,16 @@ export function DemoShell({ config, children }: DemoShellProps) {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         style={{
-          background: `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
+          background: config.darkMode
+            ? `linear-gradient(180deg, var(--pl-sidebar-bg-start) 0%, var(--pl-sidebar-bg-end) 100%)`
+            : `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
         }}
       >
         {/* Logo */}
         <Link
           href="/"
           className="flex flex-col px-6 py-5 hover:bg-white/[0.02] transition-colors"
-          style={{ borderBottom: `1px solid var(--prizym-border-subtle)` }}
+          style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
           <div className="flex items-center gap-3.5">
             <div
@@ -82,7 +100,10 @@ export function DemoShell({ config, children }: DemoShellProps) {
             <div>
               <div
                 className="text-[19px] font-bold tracking-wide text-white"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
+                }}
               >
                 {config.product.name.toUpperCase()}
               </div>
@@ -121,18 +142,26 @@ export function DemoShell({ config, children }: DemoShellProps) {
                       href={item.href}
                       className={cn(
                         'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all duration-150',
-                        isActive
+                        config.darkMode
+                          ? isActive
+                            ? 'shadow-sm'
+                            : ''
+                          : isActive
                           ? 'bg-white/[0.10] text-white shadow-sm'
                           : 'text-white/65 hover:bg-white/[0.04] hover:text-white/80'
                       )}
+                      style={config.darkMode ? {
+                        background: isActive ? 'var(--pl-sidebar-active-bg)' : undefined,
+                        color: isActive ? 'var(--pl-sidebar-text)' : 'var(--pl-sidebar-text-muted)',
+                      } : undefined}
                       onClick={() => setSidebarOpen(false)}
                     >
                       <Icon
                         className={cn(
                           'h-[18px] w-[18px] shrink-0 transition-colors',
-                          isActive ? '' : 'text-white/50 group-hover:text-white/60'
+                          !config.darkMode && !isActive ? 'text-white/50 group-hover:text-white/60' : ''
                         )}
-                        style={isActive ? { color: itemColor } : undefined}
+                        style={isActive ? { color: itemColor } : config.darkMode ? { color: 'var(--pl-sidebar-text-muted)' } : undefined}
                       />
                       <span className="flex-1 truncate">{item.label}</span>
                       {isActive && (
@@ -150,7 +179,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
         </nav>
 
         {/* Client info */}
-        <div className="p-4" style={{ borderTop: `1px solid var(--prizym-border-subtle)` }}>
+        <div className="p-4" style={{ borderTop: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}>
           <div
             className="rounded-xl p-3.5"
             style={{ background: `${primaryColor}0F` }}
@@ -165,7 +194,10 @@ export function DemoShell({ config, children }: DemoShellProps) {
               <div>
                 <div
                   className="text-[13px] font-semibold text-white/90"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
+                  }}
                 >
                   {config.client.name}
                 </div>
@@ -191,7 +223,9 @@ export function DemoShell({ config, children }: DemoShellProps) {
         <header
           className="shrink-0 z-30 flex h-14 items-center px-6 lg:px-8 backdrop-blur-xl"
           style={{
-            background: `color-mix(in srgb, var(--prizym-bg-content) 95%, transparent)`,
+            background: config.darkMode
+              ? `var(--pl-header-bg)`
+              : `color-mix(in srgb, var(--prizym-bg-content) 95%, transparent)`,
             borderBottom: `1px solid var(--prizym-border-default)`,
           }}
         >
@@ -228,26 +262,42 @@ export function DemoShell({ config, children }: DemoShellProps) {
             </div>
           </div>
 
-          <div
-            className="ml-auto flex items-center gap-2.5 rounded-full px-4 py-1.5 text-[13px] font-medium shadow-sm shimmer"
-            style={{
-              border: `1px solid ${primaryColor}40`,
-              background: `${primaryColor}0F`,
-              color: primaryColor,
-            }}
-          >
+          <div className="ml-auto flex items-center gap-3">
+            {config.darkMode && (
+              <button
+                onClick={toggleTheme}
+                className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+                style={{ background: 'var(--pl-hover, rgba(0,0,0,0.04))' }}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDark ? (
+                  <LucideIcons.Sun className="h-4 w-4" style={{ color: '#F59E0B' }} />
+                ) : (
+                  <LucideIcons.Moon className="h-4 w-4" style={{ color: 'var(--pl-text-muted)' }} />
+                )}
+              </button>
+            )}
             <div
-              className="h-2 w-2 animate-pulse rounded-full"
-              style={{ background: primaryColor, boxShadow: `0 0 6px ${primaryColor}66` }}
-            />
-            {config.product.badge ?? 'Interactive Demo'}
+              className="flex items-center gap-2.5 rounded-full px-4 py-1.5 text-[13px] font-medium shadow-sm shimmer"
+              style={{
+                border: `1px solid ${primaryColor}40`,
+                background: `${primaryColor}0F`,
+                color: primaryColor,
+              }}
+            >
+              <div
+                className="h-2 w-2 animate-pulse rounded-full"
+                style={{ background: primaryColor, boxShadow: `0 0 6px ${primaryColor}66` }}
+              />
+              {config.product.badge ?? 'Interactive Demo'}
+            </div>
           </div>
         </header>
 
         {/* Page content — this is the ONLY thing that scrolls */}
         <main
           className="flex-1 overflow-y-auto min-h-0 p-6 lg:p-8"
-          style={{ background: 'var(--prizym-bg-content)' }}
+          style={{ background: config.darkMode ? 'var(--pl-bg)' : 'var(--prizym-bg-content)' }}
         >
           <div className="mx-auto max-w-[1200px]">{children}</div>
         </main>
@@ -256,7 +306,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
         <footer
           className="shrink-0"
           style={{
-            background: 'var(--prizym-bg-content)',
+            background: config.darkMode ? 'var(--pl-footer-bg)' : 'var(--prizym-bg-content)',
             borderTop: `1px solid var(--prizym-border-default)`,
           }}
         >

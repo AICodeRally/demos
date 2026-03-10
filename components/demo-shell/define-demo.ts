@@ -8,6 +8,7 @@ interface DefineDemoInput {
   colors?: DemoConfig['theme']['colors'];
   nav: DemoConfig['nav'];
   footer: DemoConfig['footer'];
+  darkMode?: boolean;
 }
 
 export function defineDemo(input: DefineDemoInput): DemoConfig {
@@ -20,5 +21,6 @@ export function defineDemo(input: DefineDemoInput): DemoConfig {
     },
     nav: input.nav,
     footer: input.footer,
+    darkMode: input.darkMode,
   };
 }
