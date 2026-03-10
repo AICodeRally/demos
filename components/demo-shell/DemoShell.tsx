@@ -99,7 +99,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
             </div>
             <div>
               <div
-                className="text-[19px] font-bold tracking-wide text-white"
+                className={cn("text-[19px] font-bold tracking-wide", !config.darkMode && "text-white")}
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
@@ -193,7 +193,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
               </div>
               <div>
                 <div
-                  className="text-[13px] font-semibold text-white/90"
+                  className={cn("text-[13px] font-semibold", !config.darkMode && "text-white/90")}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
                     ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
