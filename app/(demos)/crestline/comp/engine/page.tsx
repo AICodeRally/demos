@@ -1,8 +1,8 @@
 'use client';
 
 import { StatCard, WaterfallChart } from '@/components/demos/crestline';
-import { COMMISSION_COMPONENTS, COLORS } from '@/data/crestline';
-import { Zap, ArrowRight } from 'lucide-react';
+import { COMMISSION_COMPONENTS, COLORS, DRAW_CONFIG } from '@/data/crestline';
+import { Zap, ArrowRight, Scale } from 'lucide-react';
 
 const TYPE_BADGES: Record<string, { label: string; bg: string; fg: string }> = {
   percent_of: { label: 'percent_of', bg: '#dbeafe', fg: '#1d4ed8' },
@@ -205,6 +205,68 @@ export default function CommissionEngine() {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Draw vs Commission Mechanic */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <div className="flex items-center gap-2 mb-1">
+          <Scale size={18} style={{ color: COLORS.primary }} />
+          <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+            Draw vs. Commission — &ldquo;Whichever Is Higher&rdquo;
+          </p>
+        </div>
+        <p className="text-xs mb-5" style={{ color: '#475569' }}>
+          Associates earn either their hourly draw rate or their commission on sales — whichever is greater.
+          Sales Per Hour (SPH) is the gating metric: if SPH is too low, commission won&apos;t beat the draw.
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+          {DRAW_CONFIG.map((dc) => (
+            <div
+              key={dc.format}
+              className="rounded-lg border p-4"
+              style={{ borderColor: '#E2E8F0', backgroundColor: '#F8FAFC' }}
+            >
+              <p className="text-xs font-bold mb-2" style={{ color: COLORS.primary }}>{dc.format}</p>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="text-lg font-bold font-mono" style={{ color: COLORS.accent }}>${dc.hourlyDraw}</span>
+                <span className="text-[10px]" style={{ color: '#94A3B8' }}>/hr draw</span>
+              </div>
+              <div className="flex items-center gap-1 mb-2">
+                <span className="text-[10px]" style={{ color: '#475569' }}>Commission threshold:</span>
+                <span className="text-xs font-bold font-mono" style={{ color: '#059669' }}>${dc.commissionThresholdSPH} SPH</span>
+              </div>
+              <p className="text-[10px] leading-snug" style={{ color: '#94A3B8' }}>{dc.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Visual: How SPH determines pay mode */}
+        <div className="rounded-lg p-4" style={{ backgroundColor: `${COLORS.primary}06`, border: `1px solid ${COLORS.primary}15` }}>
+          <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>
+            How It Works — Flagship Example ($20/hr draw, 5% Designer rate)
+          </p>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="rounded-lg p-3" style={{ backgroundColor: '#FEE2E2', border: '1px solid #FECACA' }}>
+              <p className="text-[10px] font-semibold mb-1" style={{ color: '#EF4444' }}>Below Draw</p>
+              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $300 &times; 5% = $15/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Earns draw: <strong>$20/hr</strong></p>
+              <p className="text-[9px] mt-0.5" style={{ color: '#EF4444' }}>Commission doesn&apos;t beat draw</p>
+            </div>
+            <div className="rounded-lg p-3" style={{ backgroundColor: '#FEF9C3', border: '1px solid #FDE68A' }}>
+              <p className="text-[10px] font-semibold mb-1" style={{ color: '#D97706' }}>At Threshold</p>
+              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $400 &times; 5% = $20/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Break-even: <strong>$20/hr</strong></p>
+              <p className="text-[9px] mt-0.5" style={{ color: '#D97706' }}>Commission = draw exactly</p>
+            </div>
+            <div className="rounded-lg p-3" style={{ backgroundColor: '#D1FAE5', border: '1px solid #A7F3D0' }}>
+              <p className="text-[10px] font-semibold mb-1" style={{ color: '#059669' }}>Making Commission</p>
+              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $600 &times; 5% = $30/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Earns commission: <strong>$30/hr</strong></p>
+              <p className="text-[9px] mt-0.5" style={{ color: '#059669' }}>+$10/hr above draw</p>
+            </div>
+          </div>
         </div>
       </div>
 

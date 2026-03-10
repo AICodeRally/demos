@@ -1,7 +1,7 @@
 'use client';
 
-import { StatCard, BarChart, AreaChart } from '@/components/demos/crestline';
-import { ASSOCIATES, SELLING_DEPTS, ACHIEVER_TIERS, COLORS } from '@/data/crestline';
+import { StatCard, BarChart, AreaChart, DonutChart } from '@/components/demos/crestline';
+import { ASSOCIATES, SELLING_DEPTS, ACHIEVER_TIERS, COLORS, DRAW_CONFIG, SPH_BENCHMARKS, SELLING_EFFICIENCY, LOYALTY_METRICS } from '@/data/crestline';
 
 /* -- Flagship F-001 associates (filtered) --------------- */
 
@@ -271,6 +271,179 @@ export default function ManagerConsole() {
             </p>
           </div>
         ))}
+      </div>
+
+      {/* SPH Leaderboard — The Core Metric */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
+              Sales Per Hour (SPH) — Real-Time Leaderboard
+            </p>
+            <p className="text-[11px]" style={{ color: '#475569' }}>
+              The #1 performance metric — drives commission eligibility, schedule quality, and retention
+            </p>
+          </div>
+          <span
+            className="text-[10px] font-bold px-2.5 py-1 rounded-full"
+            style={{ backgroundColor: '#DBEAFE', color: '#1D4ED8' }}
+          >
+            NET OF RETURNS
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b" style={{ borderColor: '#E2E8F0' }}>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider w-12 text-center" style={{ color: '#94A3B8' }}>#</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>Associate</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>SPH</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Draw</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-center" style={{ color: '#94A3B8' }}>Status</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Selling Hrs</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Net Sales</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Returns</th>
+              </tr>
+            </thead>
+            <tbody>
+              {STORE_REPS
+                .sort((a, b) => b.sph - a.sph)
+                .map((rep, i) => {
+                  const drawConfig = DRAW_CONFIG.find(d => d.format === (rep.format.charAt(0).toUpperCase() + rep.format.slice(1)));
+                  const threshold = drawConfig?.commissionThresholdSPH ?? 340;
+                  const makingCommission = rep.sph >= threshold;
+                  const netSales = rep.mtdSales - rep.mtdReturns;
+                  return (
+                    <tr key={rep.id} className="border-b last:border-0" style={{ borderColor: '#F1F5F9' }}>
+                      <td className="py-2.5 text-center text-[13px] font-bold font-mono" style={{ color: i < 3 ? COLORS.accent : '#94A3B8' }}>
+                        {i + 1}
+                      </td>
+                      <td className="py-2.5">
+                        <span className="text-[13px] font-semibold" style={{ color: '#0F172A' }}>{rep.name}</span>
+                        <span className="ml-2 text-[10px]" style={{ color: '#94A3B8' }}>{rep.department}</span>
+                      </td>
+                      <td className="py-2.5 text-right">
+                        <span className="text-[14px] font-bold font-mono" style={{ color: makingCommission ? '#059669' : '#EF4444' }}>
+                          ${rep.sph}
+                        </span>
+                      </td>
+                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: '#94A3B8' }}>
+                        ${rep.hourlyDraw}/hr
+                      </td>
+                      <td className="py-2.5 text-center">
+                        <span
+                          className="rounded-full px-2 py-0.5 text-[10px] font-bold"
+                          style={{
+                            backgroundColor: makingCommission ? '#D1FAE5' : '#FEE2E2',
+                            color: makingCommission ? '#059669' : '#EF4444',
+                          }}
+                        >
+                          {makingCommission ? 'COMMISSION' : 'ON DRAW'}
+                        </span>
+                      </td>
+                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: '#475569' }}>
+                        {rep.sellingHours}h / {rep.scheduledHours}h
+                      </td>
+                      <td className="py-2.5 text-right text-[12px] font-bold font-mono" style={{ color: '#0F172A' }}>
+                        ${(netSales / 1000).toFixed(0)}K
+                      </td>
+                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: '#EF4444' }}>
+                        -${(rep.mtdReturns / 1000).toFixed(1)}K
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-3 pt-3 border-t text-[10px]" style={{ borderColor: '#F1F5F9', color: '#94A3B8' }}>
+          SPH = (MTD Net Sales) &divide; (Selling Hours). Net Sales = Gross Sales &minus; Returns.
+          Associates earning below draw threshold receive hourly rate as floor.
+        </div>
+      </div>
+
+      {/* Selling-Time Efficiency + Credit Card Tracking */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>
+            Selling-Time Efficiency
+          </p>
+          <p className="text-[11px] mb-4" style={{ color: '#475569' }}>
+            SPH is sensitive to selling hours — time on the floor directly impacts earnings
+          </p>
+          <div className="space-y-3">
+            {SELLING_EFFICIENCY.byFormat.map((f) => (
+              <div key={f.format} className="flex items-center gap-3">
+                <span className="text-[11px] font-medium w-20" style={{ color: '#0F172A' }}>{f.format}</span>
+                <div className="flex-1 h-5 rounded-full overflow-hidden flex" style={{ backgroundColor: '#F1F5F9' }}>
+                  <div
+                    className="h-full rounded-l-full flex items-center justify-end pr-1"
+                    style={{ width: `${f.sellingPct * 100}%`, backgroundColor: '#059669' }}
+                  >
+                    <span className="text-[9px] font-bold text-white">{Math.round(f.sellingPct * 100)}%</span>
+                  </div>
+                  <div
+                    className="h-full rounded-r-full flex items-center justify-start pl-1"
+                    style={{ width: `${f.nonSellingPct * 100}%`, backgroundColor: '#CBD5E1' }}
+                  >
+                    <span className="text-[9px] font-bold" style={{ color: '#475569' }}>{Math.round(f.nonSellingPct * 100)}%</span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono w-16 text-right" style={{ color: '#475569' }}>
+                  ${f.avgSph} SPH
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center gap-4 mt-3 pt-3 border-t" style={{ borderColor: '#F1F5F9' }}>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: '#059669' }} />
+              <span className="text-[10px]" style={{ color: '#94A3B8' }}>Selling</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: '#CBD5E1' }} />
+              <span className="text-[10px]" style={{ color: '#94A3B8' }}>Non-Selling</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>
+            Credit Card & Loyalty Tracking
+          </p>
+          <p className="text-[11px] mb-4" style={{ color: '#475569' }}>
+            Secondary metric — influences coaching, perception, and schedule preference
+          </p>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+              <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>MTD Sign-ups</span>
+              <p className="text-xl font-bold" style={{ color: COLORS.primary }}>{LOYALTY_METRICS.mtdSignups}</p>
+              <p className="text-[10px] font-mono" style={{ color: LOYALTY_METRICS.mtdSignups >= LOYALTY_METRICS.targetSignups ? '#059669' : '#c9a84c' }}>
+                {Math.round((LOYALTY_METRICS.mtdSignups / LOYALTY_METRICS.targetSignups) * 100)}% of {LOYALTY_METRICS.targetSignups} target
+              </p>
+            </div>
+            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+              <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Loyalty Lift</span>
+              <p className="text-xl font-bold" style={{ color: '#059669' }}>+74%</p>
+              <p className="text-[10px] font-mono" style={{ color: '#475569' }}>
+                ${LOYALTY_METRICS.avgSpendLoyalty} vs ${LOYALTY_METRICS.avgSpendNonLoyalty} avg
+              </p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {LOYALTY_METRICS.topPerformers.slice(0, 4).map((p, i) => (
+              <div key={i} className="flex items-center justify-between text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono w-5 text-center" style={{ color: i < 3 ? COLORS.accent : '#94A3B8' }}>#{i + 1}</span>
+                  <span className="font-medium" style={{ color: '#0F172A' }}>{p.name}</span>
+                </div>
+                <span className="font-bold font-mono" style={{ color: COLORS.primary }}>{p.signups} sign-ups</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Coaching Queue */}
