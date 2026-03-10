@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { PRODUCTS, ASSOCIATES, SELLING_DEPTS, ACHIEVER_TIERS, COLORS, calculateCommission, whatIf } from '@/data/crestline';
+import { PRODUCTS, ASSOCIATES, SELLING_DEPTS, ACHIEVER_TIERS, COLORS, DRAW_CONFIG, calculateCommission, whatIf } from '@/data/crestline';
 import type { SaleItem, Associate } from '@/data/crestline';
 
 /* -- Department filter tabs ----------------------------- */
@@ -202,6 +202,20 @@ export default function RtwcWhatIf() {
                   {((repDept?.baseRate ?? 0) * 100).toFixed(1)}%
                 </p>
               </div>
+              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>SPH</span>
+                <p className="text-[12px] font-bold font-mono" style={{ color: selectedRep.sph >= 340 ? '#059669' : '#EF4444' }}>
+                  ${selectedRep.sph}
+                </p>
+              </div>
+              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>MTD Returns</span>
+                <p className="text-[12px] font-bold font-mono" style={{ color: '#EF4444' }}>
+                  -${(selectedRep.mtdReturns / 1000).toFixed(1)}K
+                </p>
+              </div>
             </div>
 
             {/* Basket summary */}
@@ -296,6 +310,44 @@ export default function RtwcWhatIf() {
                 </div>
               )}
             </div>
+
+            {/* Draw vs Commission Indicator */}
+            {basket.length > 0 && (
+              <div className="mt-4 rounded-lg p-3" style={{
+                backgroundColor: commission.beatsDrawBy > 0 ? '#F0FDF4' : '#FEF2F2',
+                border: `1px solid ${commission.beatsDrawBy > 0 ? '#BBF7D0' : '#FECACA'}`,
+              }}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>
+                    Draw vs. Commission
+                  </span>
+                  <span
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                    style={{
+                      backgroundColor: commission.beatsDrawBy > 0 ? '#D1FAE5' : '#FEE2E2',
+                      color: commission.beatsDrawBy > 0 ? '#059669' : '#EF4444',
+                    }}
+                  >
+                    {commission.beatsDrawBy > 0 ? 'MAKING COMMISSION' : 'ON DRAW'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span style={{ color: '#475569' }}>Draw rate ({selectedRep.format})</span>
+                  <span className="font-mono" style={{ color: '#94A3B8' }}>${selectedRep.hourlyDraw}/hr</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] mt-0.5">
+                  <span style={{ color: '#475569' }}>Commission this sale</span>
+                  <span className="font-mono font-bold" style={{ color: commission.beatsDrawBy > 0 ? '#059669' : '#EF4444' }}>
+                    {formatCurrency(commission.total)}
+                  </span>
+                </div>
+                {commission.beatsDrawBy > 0 && (
+                  <p className="text-[10px] mt-1 text-right" style={{ color: '#059669' }}>
+                    Beats draw by {formatCurrency(commission.beatsDrawBy)}
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Threshold Meter */}
             {commission.nextTier && (

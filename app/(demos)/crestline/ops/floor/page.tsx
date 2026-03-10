@@ -296,7 +296,7 @@ export default function FloorDashboard() {
       </div>
 
       {/* 6 StatCards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
         <StatCard
           label="Today's Revenue"
           value={stats.revenue}
@@ -332,6 +332,13 @@ export default function FloorDashboard() {
           label="Active Reps"
           value={stats.activeReps}
           color="#059669"
+        />
+        <StatCard
+          label="Avg SPH"
+          value={format === 'flagship' ? '$480' : format === 'standard' ? '$310' : format === 'rack' ? '$185' : '$240'}
+          trend="up"
+          trendValue={format === 'flagship' ? '+$22' : format === 'standard' ? '+$15' : format === 'rack' ? '+$8' : '+$12'}
+          color={COLORS.accent}
         />
       </div>
 

@@ -44,6 +44,28 @@ export interface Associate {
   mtdTarget: number;
   tenure: number;
   department: string;
+  // SPH & Draw fields (Nordstrom-style retail comp mechanics)
+  hourlyDraw: number;           // $/hr base rate (floor — associate earns whichever is higher)
+  scheduledHours: number;       // hours scheduled this period
+  sellingHours: number;         // hours on floor actively selling
+  sph: number;                  // Sales Per Hour = net sales ÷ selling hours
+  mtdReturns: number;           // returns this month (reduce net sales & SPH)
+  creditCardSignups: number;    // store credit card referrals this period
+}
+
+export interface DrawConfig {
+  format: string;
+  hourlyDraw: number;           // base hourly rate
+  commissionThresholdSPH: number; // SPH needed to "make commission" (beat draw)
+  description: string;
+}
+
+export interface SphBenchmark {
+  department: string;
+  floor: number;         // minimum acceptable SPH
+  target: number;        // expected SPH
+  top10Pct: number;      // top performer SPH
+  color: string;
 }
 
 export interface Product {
@@ -157,16 +179,16 @@ export const SELLING_DEPTS: SellingDepartment[] = [
 // === ASSOCIATES ===
 
 export const ASSOCIATES: Associate[] = [
-  { id: 'a1', name: 'Elena Vasquez', storeId: 'F-001', district: 'Pacific NW', format: 'flagship', achieverTier: 'platinum', ytdSales: 892000, ytdTarget: 750000, mtdSales: 78000, mtdTarget: 65000, tenure: 8, department: 'designer' },
-  { id: 'a2', name: 'Marcus Chen', storeId: 'F-003', district: 'Northeast', format: 'flagship', achieverTier: 'gold', ytdSales: 745000, ytdTarget: 720000, mtdSales: 62000, mtdTarget: 60000, tenure: 5, department: 'shoes' },
-  { id: 'a3', name: 'Diana Okafor', storeId: 'S-015', district: 'Southeast', format: 'standard', achieverTier: 'silver', ytdSales: 410000, ytdTarget: 380000, mtdSales: 35000, mtdTarget: 32000, tenure: 3, department: 'cosmetics' },
-  { id: 'a4', name: 'James Park', storeId: 'F-002', district: 'Mid-Atlantic', format: 'flagship', achieverTier: 'gold', ytdSales: 680000, ytdTarget: 700000, mtdSales: 58000, mtdTarget: 58000, tenure: 6, department: 'accessories' },
-  { id: 'a5', name: 'Sarah Kim', storeId: 'S-042', district: 'Midwest', format: 'standard', achieverTier: 'none', ytdSales: 285000, ytdTarget: 350000, mtdSales: 24000, mtdTarget: 29000, tenure: 1, department: 'home' },
-  { id: 'a6', name: 'Roberto Diaz', storeId: 'R-008', district: 'Southwest', format: 'rack', achieverTier: 'silver', ytdSales: 195000, ytdTarget: 180000, mtdSales: 18000, mtdTarget: 15000, tenure: 4, department: 'shoes' },
-  { id: 'a7', name: 'Aisha Thompson', storeId: 'C-005', district: 'Pacific NW', format: 'counter', achieverTier: 'gold', ytdSales: 320000, ytdTarget: 300000, mtdSales: 28000, mtdTarget: 25000, tenure: 7, department: 'cosmetics' },
-  { id: 'a8', name: 'Tyler Morrison', storeId: 'S-028', district: 'Great Lakes', format: 'standard', achieverTier: 'none', ytdSales: 310000, ytdTarget: 340000, mtdSales: 26000, mtdTarget: 28000, tenure: 2, department: 'designer' },
-  { id: 'a9', name: 'Priya Sharma', storeId: 'F-005', district: 'Northeast', format: 'flagship', achieverTier: 'platinum', ytdSales: 920000, ytdTarget: 800000, mtdSales: 82000, mtdTarget: 67000, tenure: 10, department: 'accessories' },
-  { id: 'a10', name: 'Chris Nakamura', storeId: 'R-012', district: 'Mountain', format: 'rack', achieverTier: 'none', ytdSales: 145000, ytdTarget: 160000, mtdSales: 12000, mtdTarget: 13000, tenure: 1, department: 'home' },
+  { id: 'a1', name: 'Elena Vasquez', storeId: 'F-001', district: 'Pacific NW', format: 'flagship', achieverTier: 'platinum', ytdSales: 892000, ytdTarget: 750000, mtdSales: 78000, mtdTarget: 65000, tenure: 8, department: 'designer', hourlyDraw: 20, scheduledHours: 152, sellingHours: 138, sph: 565, mtdReturns: 2340, creditCardSignups: 12 },
+  { id: 'a2', name: 'Marcus Chen', storeId: 'F-003', district: 'Northeast', format: 'flagship', achieverTier: 'gold', ytdSales: 745000, ytdTarget: 720000, mtdSales: 62000, mtdTarget: 60000, tenure: 5, department: 'shoes', hourlyDraw: 20, scheduledHours: 148, sellingHours: 130, sph: 477, mtdReturns: 1850, creditCardSignups: 8 },
+  { id: 'a3', name: 'Diana Okafor', storeId: 'S-015', district: 'Southeast', format: 'standard', achieverTier: 'silver', ytdSales: 410000, ytdTarget: 380000, mtdSales: 35000, mtdTarget: 32000, tenure: 3, department: 'cosmetics', hourlyDraw: 17, scheduledHours: 140, sellingHours: 118, sph: 297, mtdReturns: 980, creditCardSignups: 6 },
+  { id: 'a4', name: 'James Park', storeId: 'F-002', district: 'Mid-Atlantic', format: 'flagship', achieverTier: 'gold', ytdSales: 680000, ytdTarget: 700000, mtdSales: 58000, mtdTarget: 58000, tenure: 6, department: 'accessories', hourlyDraw: 20, scheduledHours: 152, sellingHours: 134, sph: 433, mtdReturns: 2100, creditCardSignups: 9 },
+  { id: 'a5', name: 'Sarah Kim', storeId: 'S-042', district: 'Midwest', format: 'standard', achieverTier: 'none', ytdSales: 285000, ytdTarget: 350000, mtdSales: 24000, mtdTarget: 29000, tenure: 1, department: 'home', hourlyDraw: 17, scheduledHours: 120, sellingHours: 92, sph: 261, mtdReturns: 1420, creditCardSignups: 2 },
+  { id: 'a6', name: 'Roberto Diaz', storeId: 'R-008', district: 'Southwest', format: 'rack', achieverTier: 'silver', ytdSales: 195000, ytdTarget: 180000, mtdSales: 18000, mtdTarget: 15000, tenure: 4, department: 'shoes', hourlyDraw: 15, scheduledHours: 136, sellingHours: 120, sph: 150, mtdReturns: 640, creditCardSignups: 5 },
+  { id: 'a7', name: 'Aisha Thompson', storeId: 'C-005', district: 'Pacific NW', format: 'counter', achieverTier: 'gold', ytdSales: 320000, ytdTarget: 300000, mtdSales: 28000, mtdTarget: 25000, tenure: 7, department: 'cosmetics', hourlyDraw: 18, scheduledHours: 144, sellingHours: 132, sph: 212, mtdReturns: 560, creditCardSignups: 14 },
+  { id: 'a8', name: 'Tyler Morrison', storeId: 'S-028', district: 'Great Lakes', format: 'standard', achieverTier: 'none', ytdSales: 310000, ytdTarget: 340000, mtdSales: 26000, mtdTarget: 28000, tenure: 2, department: 'designer', hourlyDraw: 17, scheduledHours: 132, sellingHours: 104, sph: 250, mtdReturns: 1680, creditCardSignups: 3 },
+  { id: 'a9', name: 'Priya Sharma', storeId: 'F-005', district: 'Northeast', format: 'flagship', achieverTier: 'platinum', ytdSales: 920000, ytdTarget: 800000, mtdSales: 82000, mtdTarget: 67000, tenure: 10, department: 'accessories', hourlyDraw: 20, scheduledHours: 156, sellingHours: 142, sph: 577, mtdReturns: 1950, creditCardSignups: 11 },
+  { id: 'a10', name: 'Chris Nakamura', storeId: 'R-012', district: 'Mountain', format: 'rack', achieverTier: 'none', ytdSales: 145000, ytdTarget: 160000, mtdSales: 12000, mtdTarget: 13000, tenure: 1, department: 'home', hourlyDraw: 15, scheduledHours: 124, sellingHours: 96, sph: 125, mtdReturns: 820, creditCardSignups: 1 },
 ];
 
 // === PRODUCT CATALOG ===
@@ -342,6 +364,10 @@ export interface RtwcResult {
   total: number;
   currentTier: string;
   nextTier: { label: string; threshold: number; remaining: number } | null;
+  // Draw comparison
+  drawEarnings: number;      // what the rep would earn at draw rate
+  beatsDrawBy: number;       // commission - draw (positive = making commission)
+  effectiveSph: number;      // SPH for this sale
 }
 
 export interface WhatIfResult {
@@ -377,6 +403,12 @@ export function calculateCommission(items: SaleItem[], rep: Associate): RtwcResu
   const total = components.reduce((s, c) => s + c.amount, 0);
   const nextTierData = ACHIEVER_TIERS.find(t => t.threshold > (tierInfo?.threshold ?? 0));
 
+  // Draw comparison: what would this rep earn at their hourly draw?
+  // Assume 1 hour of selling time per sale for RTWC purposes
+  const drawEarnings = rep.hourlyDraw;
+  const beatsDrawBy = Math.round((total - drawEarnings) * 100) / 100;
+  const effectiveSph = saleTotal; // SPH = sale total when selling time is 1 hour
+
   return {
     components,
     total: Math.round(total * 100) / 100,
@@ -386,6 +418,9 @@ export function calculateCommission(items: SaleItem[], rep: Associate): RtwcResu
       threshold: nextTierData.threshold,
       remaining: Math.max(0, Math.round(rep.ytdTarget * (nextTierData.threshold / 100) - rep.ytdSales - saleTotal)),
     } : null,
+    drawEarnings,
+    beatsDrawBy,
+    effectiveSph,
   };
 }
 
@@ -437,3 +472,82 @@ export const SPIFFS = [
   { name: 'Fragrance Gift Set Bonus', amount: 25, trigger: 'Any fragrance gift set over $100', active: true, expires: '2026-03-31' },
   { name: 'Loyalty Sign-Up', amount: 10, trigger: 'New Crestline Rewards enrollment at POS', active: true, expires: null },
 ];
+
+// === DRAW VS COMMISSION CONFIG (Nordstrom-style) ===
+
+export const DRAW_CONFIG: DrawConfig[] = [
+  { format: 'Flagship', hourlyDraw: 20, commissionThresholdSPH: 340, description: 'Draw at $20/hr — commission kicks in when SPH exceeds ~$340 (varies by dept rate)' },
+  { format: 'Standard', hourlyDraw: 17, commissionThresholdSPH: 290, description: 'Draw at $17/hr — lower threshold due to lower ASP; commission beats draw above ~$290 SPH' },
+  { format: 'Rack', hourlyDraw: 15, commissionThresholdSPH: 375, description: 'Draw at $15/hr — flat rate means higher volume needed; SPH must exceed ~$375 to beat draw' },
+  { format: 'Counter', hourlyDraw: 18, commissionThresholdSPH: 300, description: 'Draw at $18/hr — Counter Lead Bonus helps; SPH ~$300 typically crosses threshold' },
+];
+
+// === SPH BENCHMARKS BY DEPARTMENT ===
+
+export const SPH_BENCHMARKS: SphBenchmark[] = [
+  { department: 'Cosmetics & Fragrance', floor: 180, target: 280, top10Pct: 420, color: '#d946ef' },
+  { department: 'Designer Apparel', floor: 250, target: 400, top10Pct: 620, color: '#7c3aed' },
+  { department: 'Shoes', floor: 200, target: 340, top10Pct: 520, color: '#2563eb' },
+  { department: 'Accessories & Handbags', floor: 220, target: 360, top10Pct: 580, color: '#c9a84c' },
+  { department: 'Home', floor: 160, target: 260, top10Pct: 380, color: '#059669' },
+];
+
+// === RETURNS DATA (net sales impact) ===
+
+export const RETURNS_IMPACT = {
+  mtdGrossSales: 2920000,
+  mtdReturns: 91200,
+  mtdNetSales: 2828800,
+  returnRate: 0.031,
+  avgReturnValue: 285,
+  topReturnReasons: [
+    { reason: 'Fit/Size', pct: 38, color: '#7c3aed' },
+    { reason: 'Changed Mind', pct: 24, color: '#2563eb' },
+    { reason: 'Defect/Damage', pct: 15, color: '#EF4444' },
+    { reason: 'Gift Return', pct: 14, color: '#c9a84c' },
+    { reason: 'Other', pct: 9, color: '#94A3B8' },
+  ],
+  byDepartment: [
+    { dept: 'Designer Apparel', grossSales: 817600, returns: 32700, returnRate: 0.040, netImpact: -1635, color: '#7c3aed' },
+    { dept: 'Shoes', grossSales: 584000, returns: 22800, returnRate: 0.039, netImpact: -1026, color: '#2563eb' },
+    { dept: 'Cosmetics & Fragrance', grossSales: 642400, returns: 12850, returnRate: 0.020, netImpact: -771, color: '#d946ef' },
+    { dept: 'Accessories & Handbags', grossSales: 525600, returns: 15770, returnRate: 0.030, netImpact: -867, color: '#c9a84c' },
+    { dept: 'Home', grossSales: 350400, returns: 7010, returnRate: 0.020, netImpact: -280, color: '#059669' },
+  ],
+};
+
+// === CREDIT CARD & LOYALTY METRICS ===
+
+export const LOYALTY_METRICS = {
+  mtdSignups: 284,
+  targetSignups: 320,
+  conversionRate: 0.068,
+  avgSpendLoyalty: 842,
+  avgSpendNonLoyalty: 485,
+  topPerformers: [
+    { name: 'Aisha Thompson', signups: 14, store: 'C-005' },
+    { name: 'Elena Vasquez', signups: 12, store: 'F-001' },
+    { name: 'Priya Sharma', signups: 11, store: 'F-005' },
+    { name: 'James Park', signups: 9, store: 'F-002' },
+    { name: 'Marcus Chen', signups: 8, store: 'F-003' },
+  ],
+};
+
+// === SELLING-TIME EFFICIENCY ===
+
+export const SELLING_EFFICIENCY = {
+  companyAvg: { sellingPct: 0.78, nonSellingPct: 0.22 },
+  byFormat: [
+    { format: 'Flagship', sellingPct: 0.82, nonSellingPct: 0.18, avgSph: 480 },
+    { format: 'Standard', sellingPct: 0.76, nonSellingPct: 0.24, avgSph: 310 },
+    { format: 'Rack', sellingPct: 0.74, nonSellingPct: 0.26, avgSph: 185 },
+    { format: 'Counter', sellingPct: 0.88, nonSellingPct: 0.12, avgSph: 240 },
+  ],
+  nonSellingBreakdown: [
+    { activity: 'Restocking/Recovery', pct: 35, color: '#2563eb' },
+    { activity: 'POS/Admin', pct: 25, color: '#7c3aed' },
+    { activity: 'Training/Meetings', pct: 20, color: '#c9a84c' },
+    { activity: 'Breaks', pct: 15, color: '#059669' },
+    { activity: 'Other', pct: 5, color: '#94A3B8' },
+  ],
+};

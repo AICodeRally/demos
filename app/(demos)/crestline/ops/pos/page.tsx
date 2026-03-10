@@ -1,7 +1,7 @@
 'use client';
 
 import { StatCard, BarChart, DonutChart, AreaChart, HeatMap } from '@/components/demos/crestline';
-import { SELLING_DEPTS, PRODUCTS, COLORS } from '@/data/crestline';
+import { SELLING_DEPTS, PRODUCTS, COLORS, RETURNS_IMPACT } from '@/data/crestline';
 
 /* -- Transaction volume by hour ------------------------- */
 
@@ -145,6 +145,104 @@ export default function PosAnalytics() {
           data={TX_HEATMAP}
           colorScale={{ low: '#F5F3FF', mid: '#8B5CF6', high: COLORS.primary }}
         />
+      </div>
+
+      {/* Returns Impact — Net Sales (Nordstrom-style) */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
+              Returns Impact — Net Sales
+            </p>
+            <p className="text-[11px]" style={{ color: '#475569' }}>
+              Commission is calculated on net sales, not gross. Returns reduce prior sales credit and directly impact SPH.
+            </p>
+          </div>
+          <span
+            className="text-[10px] font-bold px-2.5 py-1 rounded-full"
+            style={{ backgroundColor: '#FEE2E2', color: '#EF4444' }}
+          >
+            {(RETURNS_IMPACT.returnRate * 100).toFixed(1)}% RETURN RATE
+          </span>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-4 gap-3 mb-5">
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Gross Sales</span>
+            <p className="text-lg font-bold font-mono" style={{ color: '#0F172A' }}>
+              ${(RETURNS_IMPACT.mtdGrossSales / 1000000).toFixed(2)}M
+            </p>
+          </div>
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#FEF2F2', border: '1px solid #FECACA' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Returns</span>
+            <p className="text-lg font-bold font-mono" style={{ color: '#EF4444' }}>
+              -${(RETURNS_IMPACT.mtdReturns / 1000).toFixed(1)}K
+            </p>
+          </div>
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Net Sales</span>
+            <p className="text-lg font-bold font-mono" style={{ color: '#059669' }}>
+              ${(RETURNS_IMPACT.mtdNetSales / 1000000).toFixed(2)}M
+            </p>
+          </div>
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Avg Return</span>
+            <p className="text-lg font-bold font-mono" style={{ color: '#475569' }}>
+              ${RETURNS_IMPACT.avgReturnValue}
+            </p>
+          </div>
+        </div>
+
+        {/* Returns by Department + Reasons */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* By Department */}
+          <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>Return Rate by Department</p>
+            <div className="space-y-2.5">
+              {RETURNS_IMPACT.byDepartment.map((d) => (
+                <div key={d.dept}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[11px] font-medium" style={{ color: '#0F172A' }}>{d.dept}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-mono" style={{ color: '#EF4444' }}>
+                        -${(d.returns / 1000).toFixed(1)}K
+                      </span>
+                      <span className="text-[10px] font-bold font-mono" style={{ color: d.returnRate > 0.035 ? '#EF4444' : '#475569' }}>
+                        {(d.returnRate * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E2E8F0' }}>
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${d.returnRate * 2500}%`, backgroundColor: d.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-[9px] mt-3" style={{ color: '#94A3B8' }}>
+              Shoes &amp; Designer have highest return rates (fit/size issues). Associates can start a pay period &ldquo;in the hole&rdquo; from returns.
+            </p>
+          </div>
+
+          {/* Return Reasons */}
+          <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>Return Reasons</p>
+            <div className="flex justify-center mb-3">
+              <DonutChart
+                segments={RETURNS_IMPACT.topReturnReasons.map(r => ({ label: r.reason, value: r.pct, color: r.color }))}
+                centerValue={`${(RETURNS_IMPACT.returnRate * 100).toFixed(1)}%`}
+                centerLabel="return rate"
+                size={160}
+              />
+            </div>
+            <p className="text-[9px] text-center" style={{ color: '#94A3B8' }}>
+              Fit/Size (38%) is the #1 return reason — impacts Designer &amp; Shoes departments most heavily
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Top-Selling Items Table */}
