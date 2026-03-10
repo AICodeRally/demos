@@ -34,9 +34,9 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
       onClick={onClick}
       className="w-full text-left rounded-lg transition-all duration-200"
       style={{
-        background: isActive ? '#F8FAFC' : 'white',
+        background: isActive ? 'var(--pl-stripe)' : 'var(--pl-card)',
         border: '1px solid',
-        borderColor: isActive ? `${borderColor}60` : '#E2E8F0',
+        borderColor: isActive ? `${borderColor}60` : 'var(--pl-border)',
         borderLeft: `3px solid ${borderColor}`,
         overflow: 'hidden',
       }}
@@ -71,11 +71,11 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
               </span>
             )}
           </div>
-          <div className="text-sm font-semibold mt-1 truncate" style={{ color: '#1A1A2E' }}>
+          <div className="text-sm font-semibold mt-1 truncate" style={{ color: 'var(--pl-text)' }}>
             {stop.accountName}
           </div>
           <div className="flex items-center gap-3 mt-0.5">
-            <span className="text-[11px] text-slate-400 flex items-center gap-1">
+            <span className="text-[11px] flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
               <MapPin size={10} />
               {stop.address.split(',')[0]}
             </span>
@@ -84,11 +84,11 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
 
         {/* Time + revenue */}
         <div className="shrink-0 text-right">
-          <div className="text-xs text-slate-500 flex items-center gap-1 justify-end">
+          <div className="text-xs flex items-center gap-1 justify-end" style={{ color: 'var(--pl-text-muted)' }}>
             <Clock size={10} />
             {stop.arrivalTime}
           </div>
-          <div className="text-xs font-semibold text-slate-700 flex items-center gap-1 justify-end mt-0.5">
+          <div className="text-xs font-semibold flex items-center gap-1 justify-end mt-0.5" style={{ color: 'var(--pl-text-secondary)' }}>
             <DollarSign size={10} className="text-emerald-500" />
             ${stop.revenueOpportunity.toLocaleString()}
           </div>
@@ -100,11 +100,11 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
         className="overflow-hidden transition-all duration-300 ease-out"
         style={{ maxHeight: isActive ? 200 : 0, opacity: isActive ? 1 : 0 }}
       >
-        <div className="px-4 pb-3 border-t border-slate-100 pt-2">
+        <div className="px-4 pb-3 border-t pt-2" style={{ borderColor: 'var(--pl-border)' }}>
           {/* Delivery manifest preview */}
           {firstManifest.length > 0 && (
             <div className="mb-2">
-              <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-1 flex items-center gap-1">
+              <div className="text-[9px] uppercase tracking-wider font-mono mb-1 flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
                 <Package size={9} />
                 Delivery Manifest
               </div>
@@ -112,7 +112,8 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
                 {firstManifest.map((item) => (
                   <span
                     key={item.sku}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600"
+                    className="text-[10px] px-1.5 py-0.5 rounded"
+                    style={{ background: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}
                   >
                     {item.brand} ({item.cases}cs)
                     {item.promo && (
@@ -121,7 +122,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
                   </span>
                 ))}
                 {stop.deliveryManifest.length > 3 && (
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[10px]" style={{ color: 'var(--pl-text-faint)' }}>
                     +{stop.deliveryManifest.length - 3} more
                   </span>
                 )}
@@ -148,8 +149,8 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
                 }`,
               }}
             >
-              <span className="text-slate-600">{firstInsight.insight}</span>
-              <span className="text-[9px] text-slate-400 ml-1.5 uppercase">
+              <span style={{ color: 'var(--pl-text-secondary)' }}>{firstInsight.insight}</span>
+              <span className="text-[9px] ml-1.5 uppercase" style={{ color: 'var(--pl-text-faint)' }}>
                 via {firstInsight.source}
               </span>
             </div>

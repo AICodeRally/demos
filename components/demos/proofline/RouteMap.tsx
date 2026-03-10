@@ -166,7 +166,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
       </defs>
 
       {/* Background — light map style */}
-      <rect x="0" y="0" width="600" height="500" rx="16" fill="#EDF2F7" />
+      <rect x="0" y="0" width="600" height="500" rx="16" fill="var(--pl-map-bg)" />
 
       {/* Road network */}
       {regionData.roads.map((road) => {
@@ -174,7 +174,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
         const opacity = isHwy ? 0.6 : 0.4;
         const width = isHwy ? 2.5 : 1.5;
         const dash = isHwy ? undefined : '4 3';
-        const strokeColor = isHwy ? '#94A3B8' : '#CBD5E1';
+        const strokeColor = isHwy ? 'var(--pl-map-road)' : 'var(--pl-map-road-minor)';
 
         if (road.type === 'line') {
           const [x1, y1, x2, y2] = road.coords.split(',').map(Number);
@@ -191,7 +191,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
                 x={x1 < 100 ? x1 + 4 : x2 - 4}
                 y={y1 < 100 ? y1 + 14 : y2 - 6}
                 fontSize="8"
-                fill="#94A3B8"
+                fill="var(--pl-map-road)"
                 fontFamily="monospace"
                 textAnchor={x1 < 100 ? 'start' : 'end'}
               >
@@ -213,7 +213,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
             <text
               x={300} y={road.label === 'I-30' ? (region === 'dallas' ? 405 : 125) : 75}
               fontSize="8"
-              fill="#94A3B8"
+              fill="var(--pl-map-road)"
               fontFamily="monospace"
               textAnchor="middle"
             >
@@ -230,7 +230,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
           x={area.x}
           y={area.y}
           fontSize={area.size ?? 12}
-          fill="#CBD5E1"
+          fill="var(--pl-map-label)"
           fontWeight="700"
           textAnchor="middle"
           style={{ letterSpacing: '2px' }}
@@ -333,7 +333,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
               textAnchor="middle"
               fontSize={isActive ? 9 : 8}
               fontWeight={isActive ? 700 : 600}
-              fill="#475569"
+              fill="var(--pl-map-stop-label)"
               style={{
                 pointerEvents: 'none',
                 transition: 'font-size 0.2s ease',
@@ -351,7 +351,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
       {Array.from(new Set(stops.map(s => s.type))).map((type, i) => (
         <g key={type} transform={`translate(16, ${430 + i * 14})`}>
           <circle cx="5" cy="-2" r="3.5" fill={STOP_COLORS[type] ?? '#6B7280'} />
-          <text x="14" y="1" fontSize="8" fill="#94A3B8" fontFamily="monospace">
+          <text x="14" y="1" fontSize="8" fill="var(--pl-map-road)" fontFamily="monospace">
             {type.replace(/-/g, ' ')}
           </text>
         </g>
