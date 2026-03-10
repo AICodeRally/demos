@@ -94,6 +94,26 @@ export {
   type Kicker,
 } from './comp';
 
+// ── Comp Management (Act 5) ─────────────────────
+export {
+  TRANSACTIONS,
+  PAYMENTS,
+  CLUB_TIERS,
+  MGMT_INQUIRIES,
+  STATUS_CONFIG,
+  CATEGORY_LABELS,
+  type Transaction,
+  type CreditRule,
+  type Payment,
+  type PaymentType,
+  type PaymentStatus,
+  type ClubTierDef,
+  type ClubTier,
+  type Inquiry,
+  type InquiryStatus,
+  type InquiryCategory,
+} from './mgmt';
+
 // ── Scenarios ──────────────────────────────────
 export {
   SCENARIOS,
