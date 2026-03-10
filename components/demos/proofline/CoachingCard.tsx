@@ -22,16 +22,16 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
     <div
       className="rounded-xl overflow-hidden"
       style={{
-        background: 'white',
-        border: '1px solid #E2E8F0',
+        background: 'var(--pl-card)',
+        border: '1px solid var(--pl-border)',
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b" style={{ borderColor: 'var(--pl-border)' }}>
         <div className="flex items-center gap-2">
-          <User size={14} className="text-slate-400" />
-          <span className="text-sm font-semibold" style={{ color: '#1A1A2E' }}>{repName}</span>
-          <span className="text-[11px] text-slate-400 font-mono">{route}</span>
+          <User size={14} style={{ color: 'var(--pl-text-faint)' }} />
+          <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{repName}</span>
+          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{route}</span>
         </div>
         <span
           className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1"
@@ -46,10 +46,10 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
       <div className="px-4 py-3 space-y-2.5">
         {/* Insight */}
         <div>
-          <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-1">
+          <div className="text-[9px] uppercase tracking-wider font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>
             Insight
           </div>
-          <p className="text-[13px] text-slate-600 leading-relaxed">{insight}</p>
+          <p className="text-[13px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{insight}</p>
         </div>
 
         {/* Suggested action */}
@@ -60,13 +60,13 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
           <div className="text-[9px] uppercase tracking-wider text-[#C6A052]/60 font-mono mb-1">
             Suggested Action
           </div>
-          <p className="text-[12px] text-slate-600 leading-relaxed">{action}</p>
+          <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{action}</p>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-2 border-t border-slate-100">
-        <span className="text-[10px] text-slate-400 flex items-center gap-1">
+      <div className="px-4 py-2 border-t" style={{ borderColor: 'var(--pl-border)' }}>
+        <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
           <Tag size={9} />
           {category}
         </span>

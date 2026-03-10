@@ -16,17 +16,17 @@ export function RepSelector({ reps, selected, onChange }: RepSelectorProps) {
       <div
         className="rounded-lg px-3 py-2 flex items-center gap-2"
         style={{
-          background: 'white',
-          border: '1px solid #E2E8F0',
+          background: 'var(--pl-card)',
+          border: '1px solid var(--pl-border)',
         }}
       >
         {/* Selected rep info */}
         {selectedRep && (
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-semibold truncate" style={{ color: '#1A1A2E' }}>
+            <div className="text-sm font-semibold truncate" style={{ color: 'var(--pl-text)' }}>
               {selectedRep.name}
             </div>
-            <div className="flex items-center gap-2 text-[10px] text-slate-400">
+            <div className="flex items-center gap-2 text-[10px]" style={{ color: 'var(--pl-text-faint)' }}>
               <span className="flex items-center gap-0.5">
                 <Route size={9} />
                 {selectedRep.route}
@@ -39,7 +39,7 @@ export function RepSelector({ reps, selected, onChange }: RepSelectorProps) {
           </div>
         )}
 
-        <ChevronDown size={14} className="text-slate-400 shrink-0" />
+        <ChevronDown size={14} className="shrink-0" style={{ color: 'var(--pl-text-faint)' }} />
 
         {/* Native select overlay */}
         <select
