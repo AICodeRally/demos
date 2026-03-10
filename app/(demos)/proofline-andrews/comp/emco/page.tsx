@@ -58,11 +58,11 @@ function GateBar({ value, threshold, color }: { value: number; threshold: number
   return (
     <>
     <div className="relative" style={{ width: 120, height: 16 }}>
-      <div className="absolute inset-0 rounded-full" style={{ background: '#F1F5F9' }} />
+      <div className="absolute inset-0 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }} />
       <div className="absolute top-0 left-0 h-full rounded-full transition-all" style={{ width: `${pctVal}%`, background: barColor, opacity: 0.7 }} />
       {/* Threshold marker */}
-      <div className="absolute top-0 h-full" style={{ left: `${threshPct}%`, width: 2, background: '#1A1A2E', opacity: 0.3 }} />
-      <div className="absolute inset-0 flex items-center justify-center text-[8px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
+      <div className="absolute top-0 h-full" style={{ left: `${threshPct}%`, width: 2, background: 'var(--pl-text)', opacity: 0.3 }} />
+      <div className="absolute inset-0 flex items-center justify-center text-[8px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
         {(value * 100).toFixed(0)}%
       </div>
     </div>
@@ -96,10 +96,10 @@ export default function EmcoGatesPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           EMCO Gate System &middot; 4-Gate Architecture
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           EMCO Gate Performance
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {allSellers.length} reps &middot; {EMCO_GATES.length} gates &middot; {full4Gate} with all 4 unlocked
         </p>
       </div>
@@ -118,20 +118,20 @@ export default function EmcoGatesPage() {
         {gateStats.map(({ gate, unlocked, atRisk, locked }) => (
           <div key={gate.name} className="rounded-lg border p-4" style={{ borderColor: `${gate.color}40` }}>
             <div className="text-[10px] font-bold font-mono mb-1" style={{ color: gate.color }}>{gate.name.toUpperCase()} GATE</div>
-            <div className="text-[14px] font-bold mb-1" style={{ color: '#1A1A2E' }}>{gate.label}</div>
-            <div className="text-[10px] font-mono mb-2" style={{ color: '#718096' }}>Multiplier: {gate.multiplier.toFixed(2)}x</div>
+            <div className="text-[14px] font-bold mb-1" style={{ color: 'var(--pl-text)' }}>{gate.label}</div>
+            <div className="text-[10px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>Multiplier: {gate.multiplier.toFixed(2)}x</div>
 
             {/* Stacked status bar */}
             <div className="flex rounded-full overflow-hidden mb-2" style={{ height: 8 }}>
               <div style={{ width: `${(unlocked / allSellers.length) * 100}%`, background: '#22C55E' }} />
               <div style={{ width: `${(atRisk / allSellers.length) * 100}%`, background: '#F59E0B' }} />
-              <div style={{ width: `${(locked / allSellers.length) * 100}%`, background: '#F1F5F9' }} />
+              <div style={{ width: `${(locked / allSellers.length) * 100}%`, background: 'var(--pl-chart-bar-track)' }} />
             </div>
 
             <div className="flex gap-3 text-[9px] font-mono">
               <span style={{ color: '#22C55E' }}>{unlocked} unlocked</span>
               <span style={{ color: '#F59E0B' }}>{atRisk} at-risk</span>
-              <span style={{ color: '#A0AEC0' }}>{locked} locked</span>
+              <span style={{ color: 'var(--pl-text-faint)' }}>{locked} locked</span>
             </div>
           </div>
         ))}
@@ -142,7 +142,7 @@ export default function EmcoGatesPage() {
         <button
           onClick={() => setSelectedHometown(null)}
           className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold transition-colors"
-          style={{ background: !selectedHometown ? '#10B981' : '#F1F5F9', color: !selectedHometown ? 'white' : '#718096' }}
+          style={{ background: !selectedHometown ? '#10B981' : 'var(--pl-chart-bar-track)', color: !selectedHometown ? 'white' : 'var(--pl-text-muted)' }}
         >
           All ({allSellers.length})
         </button>
@@ -153,7 +153,7 @@ export default function EmcoGatesPage() {
               key={ht.id}
               onClick={() => setSelectedHometown(ht.id)}
               className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold transition-colors"
-              style={{ background: selectedHometown === ht.id ? '#10B981' : '#F1F5F9', color: selectedHometown === ht.id ? 'white' : '#718096' }}
+              style={{ background: selectedHometown === ht.id ? '#10B981' : 'var(--pl-chart-bar-track)', color: selectedHometown === ht.id ? 'white' : 'var(--pl-text-muted)' }}
             >
               {ht.name} ({count})
             </button>
@@ -166,16 +166,16 @@ export default function EmcoGatesPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-[11px]">
             <thead>
-              <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
-                <th className="text-left py-2 px-2 font-mono font-bold" style={{ color: '#718096' }}>Rep</th>
-                <th className="text-left py-2 px-2 font-mono font-bold" style={{ color: '#718096' }}>Route</th>
+              <tr style={{ borderBottom: `2px solid var(--pl-border)` }}>
+                <th className="text-left py-2 px-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>Rep</th>
+                <th className="text-left py-2 px-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>Route</th>
                 <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#60A5FA' }}>Core</th>
                 <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#F59E0B' }}>Import</th>
                 <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#A78BFA' }}>Emerging</th>
                 <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#10B981' }}>Combined</th>
-                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#718096' }}>Gates</th>
-                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#718096' }}>Mult</th>
-                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: '#718096' }}>13-Wk</th>
+                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>Gates</th>
+                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>Mult</th>
+                <th className="text-center py-2 px-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>13-Wk</th>
               </tr>
             </thead>
             <tbody>
@@ -184,9 +184,9 @@ export default function EmcoGatesPage() {
                 const mult = getEffectiveMultiplier(seller.emcoGates);
 
                 return (
-                  <tr key={seller.id} className="hover:bg-slate-50 transition-colors" style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td className="py-2 px-2 font-bold" style={{ color: '#1A1A2E' }}>{seller.name}</td>
-                    <td className="py-2 px-2 font-mono" style={{ color: '#718096' }}>{seller.routeId}</td>
+                  <tr key={seller.id} className="hover:bg-slate-50 transition-colors" style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                    <td className="py-2 px-2 font-bold" style={{ color: 'var(--pl-text)' }}>{seller.name}</td>
+                    <td className="py-2 px-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{seller.routeId}</td>
 
                     {EMCO_GATES.map(gate => {
                       const val = seller.emcoGates[gate.name];
@@ -206,7 +206,7 @@ export default function EmcoGatesPage() {
                       </span>
                     </td>
                     <td className="py-2 px-2 text-center font-mono font-bold" style={{
-                      color: mult > 1.25 ? '#22C55E' : mult > 1 ? '#F59E0B' : '#A0AEC0'
+                      color: mult > 1.25 ? '#22C55E' : mult > 1 ? '#F59E0B' : 'var(--pl-text-faint)'
                     }}>
                       {mult.toFixed(2)}x
                     </td>
@@ -225,7 +225,7 @@ export default function EmcoGatesPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         EMCO = Extended Mixed Category Objective. Gates evaluate supplier-group attainment as a % of quarterly target.
         Thresholds: Core ≥85% (Molson Coors), Import ≥80% (Constellation+Heineken), Emerging ≥70% (Craft+Spirits+FMB), Combined ≥90% (all).
         At-risk = within 5% of threshold. Multipliers stack — only highest unlocked gate applies.

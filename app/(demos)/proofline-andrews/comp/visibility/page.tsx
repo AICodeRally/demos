@@ -39,41 +39,41 @@ function AttainmentRing({ seller }: { seller: Seller }) {
             <stop offset="100%" stopColor={color} stopOpacity="0.4" />
           </linearGradient>
         </defs>
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="#F1F5F9" strokeWidth="12" />
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--pl-chart-bar-track)" strokeWidth="12" />
         <circle cx={cx} cy={cy} r={r} fill="none" stroke="url(#att-ring-grad)" strokeWidth="12" strokeLinecap="round"
           strokeDasharray={`${fillPct * circ} ${circ}`}
           transform={`rotate(-90 ${cx} ${cy})`}
         />
-        <text x={cx} y={cy - 6} textAnchor="middle" fontSize="32" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+        <text x={cx} y={cy - 6} textAnchor="middle" fontSize="32" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
           {(seller.attainment * 100).toFixed(0)}%
         </text>
-        <text x={cx} y={cy + 14} textAnchor="middle" fontSize="10" fill="#718096" fontFamily="monospace">
+        <text x={cx} y={cy + 14} textAnchor="middle" fontSize="10" fill="var(--pl-text-muted)" fontFamily="monospace">
           attainment
         </text>
       </svg>
 
       <div className="grid grid-cols-2 gap-x-6 gap-y-3">
         <div>
-          <div className="text-[9px] font-mono font-bold" style={{ color: '#A0AEC0' }}>TIER</div>
-          <div className="text-[18px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{tier.label.split(' \u2014 ')[1]}</div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>{(tier.rate * 100).toFixed(1)}% commission rate</div>
+          <div className="text-[9px] font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>TIER</div>
+          <div className="text-[18px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{tier.label.split(' \u2014 ')[1]}</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{(tier.rate * 100).toFixed(1)}% commission rate</div>
         </div>
         <div>
-          <div className="text-[9px] font-mono font-bold" style={{ color: '#A0AEC0' }}>EMCO GATES</div>
+          <div className="text-[9px] font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>EMCO GATES</div>
           <div className="text-[18px] font-bold font-mono" style={{ color: gates >= 3 ? '#22C55E' : '#F59E0B' }}>{gates}/4</div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>{mult.toFixed(2)}x multiplier</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{mult.toFixed(2)}x multiplier</div>
         </div>
         <div>
-          <div className="text-[9px] font-mono font-bold" style={{ color: '#A0AEC0' }}>SPIRITS</div>
+          <div className="text-[9px] font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>SPIRITS</div>
           <div className="text-[18px] font-bold font-mono" style={{ color: seller.spiritsAccounts >= 5 ? '#10B981' : '#F87171' }}>{seller.spiritsAccounts}</div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>{seller.spiritsAccounts >= 5 ? '1.5% adder qualified' : `Need ${5 - seller.spiritsAccounts} more accts`}</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{seller.spiritsAccounts >= 5 ? '1.5% adder qualified' : `Need ${5 - seller.spiritsAccounts} more accts`}</div>
         </div>
         <div>
-          <div className="text-[9px] font-mono font-bold" style={{ color: '#A0AEC0' }}>STATUS</div>
+          <div className="text-[9px] font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>STATUS</div>
           <div className="text-[18px] font-bold font-mono" style={{ color: seller.atRisk ? '#F87171' : '#22C55E' }}>
             {seller.atRisk ? 'AT RISK' : 'ON TRACK'}
           </div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>Week 9 of 13</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Week 9 of 13</div>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@ function AttainmentCurve({ seller }: { seller: Seller }) {
 
       {/* Week labels */}
       {data.map((_, i) => (
-        <text key={i} x={(i / (data.length - 1)) * w} y={h + 14} textAnchor="middle" fontSize="7" fill="#A0AEC0" fontFamily="monospace">
+        <text key={i} x={(i / (data.length - 1)) * w} y={h + 14} textAnchor="middle" fontSize="7" fill="var(--pl-text-faint)" fontFamily="monospace">
           W{i + 1}
         </text>
       ))}
@@ -154,7 +154,7 @@ function GateProgress({ gate, value }: { gate: typeof EMCO_GATES[0]; value: numb
 
   return (
     <>
-    <div className="rounded-lg border p-3" style={{ borderColor: isUnlocked ? '#22C55E40' : '#E2E8F0' }}>
+    <div className="rounded-lg border p-3" style={{ borderColor: isUnlocked ? '#22C55E40' : 'var(--pl-border)' }}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-[10px] font-bold font-mono" style={{ color: gate.color }}>{gate.name.toUpperCase()}</span>
         <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{
@@ -166,15 +166,15 @@ function GateProgress({ gate, value }: { gate: typeof EMCO_GATES[0]; value: numb
       </div>
 
       {/* Progress bar */}
-      <div className="relative rounded-full overflow-hidden mb-1" style={{ height: 10, background: '#F1F5F9' }}>
+      <div className="relative rounded-full overflow-hidden mb-1" style={{ height: 10, background: 'var(--pl-chart-bar-track)' }}>
         <div className="h-full rounded-full transition-all" style={{
           width: `${Math.min(value * 100, 100)}%`,
           background: isUnlocked ? '#22C55E' : isAtRisk ? '#F59E0B' : gate.color,
         }} />
-        <div className="absolute top-0 h-full" style={{ left: `${gate.threshold * 100}%`, width: 2, background: '#1A1A2E', opacity: 0.4 }} />
+        <div className="absolute top-0 h-full" style={{ left: `${gate.threshold * 100}%`, width: 2, background: 'var(--pl-text)', opacity: 0.4 }} />
       </div>
 
-      <div className="text-[9px] font-mono" style={{ color: '#718096' }}>
+      <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
         {(value * 100).toFixed(0)}% / {(gate.threshold * 100).toFixed(0)}% threshold &middot; {gate.multiplier.toFixed(2)}x
       </div>
 
@@ -210,10 +210,10 @@ export default function MidQuarterVisibilityPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Mid-Quarter Visibility &middot; Week 9 of 13
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           Mid-Quarter Check-In
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           Real-time attainment tracking with gate progress and actions-to-unlock coaching
         </p>
       </div>
@@ -225,7 +225,7 @@ export default function MidQuarterVisibilityPage() {
             key={mode}
             onClick={() => setViewMode(mode)}
             className="px-4 py-2 rounded-lg text-[12px] font-mono font-bold transition-colors"
-            style={{ background: viewMode === mode ? '#10B981' : '#F1F5F9', color: viewMode === mode ? 'white' : '#718096' }}
+            style={{ background: viewMode === mode ? '#10B981' : 'var(--pl-chart-bar-track)', color: viewMode === mode ? 'white' : 'var(--pl-text-muted)' }}
           >
             {mode === 'seller' ? 'Seller View' : 'Manager View'}
           </button>
@@ -242,8 +242,8 @@ export default function MidQuarterVisibilityPage() {
                 onClick={() => setSelectedSeller(s)}
                 className="px-2 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors"
                 style={{
-                  background: selectedSeller.id === s.id ? '#10B981' : '#F1F5F9',
-                  color: selectedSeller.id === s.id ? 'white' : '#718096',
+                  background: selectedSeller.id === s.id ? '#10B981' : 'var(--pl-chart-bar-track)',
+                  color: selectedSeller.id === s.id ? 'white' : 'var(--pl-text-muted)',
                 }}
               >
                 {s.name.split(' ')[0]}
@@ -286,7 +286,7 @@ export default function MidQuarterVisibilityPage() {
                     if (first) setSelectedSeller(first);
                   }}
                   className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold transition-colors"
-                  style={{ background: isSelected ? '#10B981' : '#F1F5F9', color: isSelected ? 'white' : '#718096' }}
+                  style={{ background: isSelected ? '#10B981' : 'var(--pl-chart-bar-track)', color: isSelected ? 'white' : 'var(--pl-text-muted)' }}
                 >
                   {ht.name}
                 </button>
@@ -308,11 +308,11 @@ export default function MidQuarterVisibilityPage() {
               {hometownSellers.map(seller => {
                 const sTier = COMP_TIERS.find(t => seller.attainment >= t.floor && seller.attainment < t.ceiling) ?? COMP_TIERS[3];
                 const sGates = countUnlockedGates(seller.emcoGates);
-                const tierColors = ['#22C55E', '#2563EB', '#F59E0B', '#A0AEC0'];
+                const tierColors = ['#22C55E', '#2563EB', '#F59E0B', 'var(--pl-text-faint)'];
 
                 return (
                   <div key={seller.id} className="flex items-center gap-4 px-3 py-2 rounded-lg border" style={{
-                    borderColor: seller.atRisk ? 'rgba(248,113,113,0.3)' : '#E2E8F0',
+                    borderColor: seller.atRisk ? 'rgba(248,113,113,0.3)' : 'var(--pl-border)',
                   }}>
                     {/* Status dot */}
                     <div className="w-2 h-2 rounded-full flex-shrink-0" style={{
@@ -321,13 +321,13 @@ export default function MidQuarterVisibilityPage() {
 
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{seller.name}</span>
-                        <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{seller.routeId}</span>
+                        <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{seller.name}</span>
+                        <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.routeId}</span>
                         {seller.atRisk && (
                           <span className="text-[8px] font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>AT-RISK</span>
                         )}
                       </div>
-                      <div className="text-[10px]" style={{ color: '#718096' }}>{seller.coachingNote}</div>
+                      <div className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{seller.coachingNote}</div>
                     </div>
 
                     <div className="flex items-center gap-3 flex-shrink-0">
@@ -335,15 +335,15 @@ export default function MidQuarterVisibilityPage() {
                         <div className="text-[14px] font-bold font-mono" style={{ color: seller.attainment >= 1 ? '#22C55E' : '#F59E0B' }}>
                           {(seller.attainment * 100).toFixed(0)}%
                         </div>
-                        <div className="text-[8px] font-mono" style={{ color: '#A0AEC0' }}>attain</div>
+                        <div className="text-[8px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>attain</div>
                       </div>
                       <div className="text-center">
                         <div className="text-[12px] font-bold font-mono" style={{ color: tierColors[sTier.level - 1] }}>T{sTier.level}</div>
-                        <div className="text-[8px] font-mono" style={{ color: '#A0AEC0' }}>tier</div>
+                        <div className="text-[8px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>tier</div>
                       </div>
                       <div className="text-center">
                         <div className="text-[12px] font-bold font-mono" style={{ color: sGates >= 3 ? '#22C55E' : '#F59E0B' }}>{sGates}/4</div>
-                        <div className="text-[8px] font-mono" style={{ color: '#A0AEC0' }}>gates</div>
+                        <div className="text-[8px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>gates</div>
                       </div>
                     </div>
                   </div>
@@ -355,7 +355,7 @@ export default function MidQuarterVisibilityPage() {
       )}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Mid-quarter visibility shows week-9 attainment snapshots. Attainment curve tracks cumulative performance across 13 weeks.
         Gate progress shows each EMCO gate with specific actions to unlock. Manager view aggregates hometown performance for coaching prioritization.
       </div>

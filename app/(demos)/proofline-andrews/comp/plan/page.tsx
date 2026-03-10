@@ -26,12 +26,12 @@ function TierTrack() {
   return (
     <>
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
-      <text x={w / 2} y={20} textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+      <text x={w / 2} y={20} textAnchor="middle" fontSize="10" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
         ATTAINMENT PROGRESSION → TIER → COMMISSION RATE
       </text>
 
       {/* Background track */}
-      <rect x={pad} y={trackY} width={trackW} height={trackH} rx={8} fill="#F1F5F9" />
+      <rect x={pad} y={trackY} width={trackW} height={trackH} rx={8} fill="var(--pl-chart-bar-track)" />
 
       {/* Tier bands */}
       {tiers.map((tier, i) => {
@@ -56,7 +56,7 @@ function TierTrack() {
             </text>
 
             {/* Attainment range below */}
-            <text x={(x1 + x2) / 2} y={trackY + trackH + 14} textAnchor="middle" fontSize="8" fill="#A0AEC0" fontFamily="monospace">
+            <text x={(x1 + x2) / 2} y={trackY + trackH + 14} textAnchor="middle" fontSize="8" fill="var(--pl-text-faint)" fontFamily="monospace">
               {tier.floor === 0 ? '0' : (tier.floor * 100).toFixed(0)}{'\u2013'}{tier.ceiling === 999 ? '\u221E' : (tier.ceiling * 100).toFixed(0)}%
             </text>
           </g>
@@ -71,7 +71,7 @@ function TierTrack() {
         MARCUS 92%
       </text>
 
-      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="8" fill="#A0AEC0" fontFamily="monospace">
+      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="8" fill="var(--pl-text-faint)" fontFamily="monospace">
         Higher tiers = lower rate but higher absolute earnings (volume {'\u00D7'} rate). Inverted rates protect floor earnings.
       </text>
     </svg>
@@ -88,7 +88,7 @@ function EmcoGateRings() {
   return (
     <>
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
-      <text x={w / 2} y={18} textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+      <text x={w / 2} y={18} textAnchor="middle" fontSize="10" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
         EMCO GATE CASCADE — Multiplier Progression
       </text>
 
@@ -109,7 +109,7 @@ function EmcoGateRings() {
         return (
           <g key={gate.name}>
             {/* Background ring */}
-            <circle cx={cx} cy={cy} r={r} fill="none" stroke="#F1F5F9" strokeWidth="8" />
+            <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--pl-chart-bar-track)" strokeWidth="8" />
 
             {/* Progress arc (fills to threshold %) */}
             <circle cx={cx} cy={cy} r={r} fill="none"
@@ -119,7 +119,7 @@ function EmcoGateRings() {
             />
 
             {/* Multiplier value */}
-            <text x={cx} y={cy - 6} textAnchor="middle" fontSize="16" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+            <text x={cx} y={cy - 6} textAnchor="middle" fontSize="16" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
               {gate.multiplier.toFixed(2)}x
             </text>
             <text x={cx} y={cy + 10} textAnchor="middle" fontSize="9" fontWeight="bold" fill={gate.color} fontFamily="monospace">
@@ -132,7 +132,7 @@ function EmcoGateRings() {
             </text>
 
             {/* Supplier groups below ring */}
-            <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="7" fill="#A0AEC0" fontFamily="monospace">
+            <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="7" fill="var(--pl-text-faint)" fontFamily="monospace">
               {gate.supplierGroups.join(' + ')}
             </text>
 
@@ -153,7 +153,7 @@ function EmcoGateRings() {
         );
       })}
 
-      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="8" fill="#718096" fontFamily="monospace">
+      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="8" fill="var(--pl-text-muted)" fontFamily="monospace">
         Cascade: Core {'\u2192'} Import {'\u2192'} Emerging {'\u2192'} Combined. Only highest unlocked multiplier applies.
       </text>
     </svg>
@@ -190,33 +190,33 @@ function EarningsComparison() {
         <div key={s.label} className="rounded-lg border p-4" style={{ borderColor: `${s.color}40` }}>
           <div className="text-[10px] font-bold font-mono mb-2" style={{ color: s.color }}>{s.label}</div>
 
-          <div className="text-[28px] font-bold font-mono mb-3" style={{ color: '#1A1A2E' }}>
+          <div className="text-[28px] font-bold font-mono mb-3" style={{ color: 'var(--pl-text)' }}>
             ${fmt(Math.round(s.data.totalEstimate))}
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-[11px]">
-              <span style={{ color: '#718096' }}>Base (quarterly)</span>
-              <span className="font-mono font-bold" style={{ color: '#1A1A2E' }}>${fmt(Math.round(s.data.baseEarnings))}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Base (quarterly)</span>
+              <span className="font-mono font-bold" style={{ color: 'var(--pl-text)' }}>${fmt(Math.round(s.data.baseEarnings))}</span>
             </div>
             <div className="flex justify-between text-[11px]">
-              <span style={{ color: '#718096' }}>Variable ({s.data.tier.label})</span>
-              <span className="font-mono font-bold" style={{ color: '#1A1A2E' }}>${fmt(Math.round(s.data.variableEarnings))}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Variable ({s.data.tier.label})</span>
+              <span className="font-mono font-bold" style={{ color: 'var(--pl-text)' }}>${fmt(Math.round(s.data.variableEarnings))}</span>
             </div>
             <div className="flex justify-between text-[11px]">
-              <span style={{ color: '#718096' }}>EMCO multiplier</span>
-              <span className="font-mono font-bold" style={{ color: s.data.emcoMultiplier > 1 ? '#22C55E' : '#A0AEC0' }}>
+              <span style={{ color: 'var(--pl-text-muted)' }}>EMCO multiplier</span>
+              <span className="font-mono font-bold" style={{ color: s.data.emcoMultiplier > 1 ? '#22C55E' : 'var(--pl-text-faint)' }}>
                 {s.data.emcoMultiplier.toFixed(2)}x ({s.data.unlockedGates}/4 gates)
               </span>
             </div>
             <div className="flex justify-between text-[11px]">
-              <span style={{ color: '#718096' }}>Spirits adder</span>
-              <span className="font-mono font-bold" style={{ color: s.data.spiritsBonus > 0 ? '#10B981' : '#A0AEC0' }}>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Spirits adder</span>
+              <span className="font-mono font-bold" style={{ color: s.data.spiritsBonus > 0 ? '#10B981' : 'var(--pl-text-faint)' }}>
                 {s.data.spiritsBonus > 0 ? `+$${fmt(Math.round(s.data.spiritsBonus))}` : 'Not qualified'}
               </span>
             </div>
-            <div className="border-t pt-2 mt-2 flex justify-between text-[11px]" style={{ borderColor: '#E2E8F0' }}>
-              <span className="font-bold" style={{ color: '#1A1A2E' }}>Annualized OTE</span>
+            <div className="border-t pt-2 mt-2 flex justify-between text-[11px]" style={{ borderColor: 'var(--pl-border)' }}>
+              <span className="font-bold" style={{ color: 'var(--pl-text)' }}>Annualized OTE</span>
               <span className="font-mono font-bold" style={{ color: s.color }}>${fmt(Math.round(s.data.totalEstimate * 4))}</span>
             </div>
           </div>
@@ -241,10 +241,10 @@ export default function CompPlanPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Compensation Architecture &middot; FY{plan.planYear}
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           {plan.planName}
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {COMP_TIERS.length} tiers &middot; {EMCO_GATES.length} EMCO gates &middot; {plan.kickers.length} quarterly kickers &middot; Spirits {(SPIRITS_ADDER.rate * 100).toFixed(1)}% adder
         </p>
       </div>
@@ -263,7 +263,7 @@ export default function CompPlanPage() {
         <TierTrack />
         <div className="mt-3 rounded-md px-4 py-3" style={{ background: 'rgba(16,185,129,0.04)', borderLeft: '3px solid #10B981' }}>
           <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#10B981' }}>WHY INVERSE RATES?</div>
-          <p className="text-[11px]" style={{ color: '#4A5568' }}>
+          <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>
             Lower-tier reps get higher commission rates to ensure livable earnings while they develop. Higher-tier reps earn more in absolute dollars
             because their volume is larger. A T1 rep at 2.5% on $450K revenue earns more than a T4 rep at 6.5% on $180K revenue.
             This &quot;inverted rate&quot; design incentivizes upward mobility without floor earnings risk.
@@ -281,8 +281,8 @@ export default function CompPlanPage() {
         <div className="rounded-lg p-5" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.2)' }}>
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-[16px] font-bold" style={{ color: '#1A1A2E' }}>Sazerac Portfolio Adder</div>
-              <p className="text-[12px] mt-1" style={{ color: '#718096' }}>{SPIRITS_ADDER.description}</p>
+              <div className="text-[16px] font-bold" style={{ color: 'var(--pl-text)' }}>Sazerac Portfolio Adder</div>
+              <p className="text-[12px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>{SPIRITS_ADDER.description}</p>
               <div className="mt-3">
                 <div className="text-[9px] font-bold font-mono" style={{ color: '#10B981' }}>QUALIFYING BRANDS</div>
                 <div className="flex flex-wrap gap-1 mt-1">
@@ -296,8 +296,8 @@ export default function CompPlanPage() {
             </div>
             <div className="text-right flex-shrink-0 ml-4">
               <div className="text-[32px] font-bold font-mono" style={{ color: '#10B981' }}>+{(SPIRITS_ADDER.rate * 100).toFixed(1)}%</div>
-              <div className="text-[10px] font-mono" style={{ color: '#718096' }}>on all Sazerac revenue</div>
-              <div className="text-[10px] font-mono mt-1" style={{ color: '#A0AEC0' }}>Min {SPIRITS_ADDER.minAccounts} spirits accounts</div>
+              <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>on all Sazerac revenue</div>
+              <div className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>Min {SPIRITS_ADDER.minAccounts} spirits accounts</div>
             </div>
           </div>
         </div>
@@ -305,7 +305,7 @@ export default function CompPlanPage() {
 
       {/* Earnings Comparison */}
       <LightSectionCard title="Earnings Scenario: Marcus Reyes (DAL-03)" className="mb-4">
-        <div className="text-[11px] mb-3" style={{ color: '#718096' }}>
+        <div className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>
           Side-by-side quarterly earnings comparison showing how attainment, gate status, and spirits accounts compound.
         </div>
         <EarningsComparison />
@@ -313,9 +313,9 @@ export default function CompPlanPage() {
 
       {/* Plan details grid */}
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="rounded-lg border p-4" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-[10px] font-bold font-mono mb-2" style={{ color: '#2563EB' }}>PLAN MECHANICS</div>
-          <div className="space-y-1.5 text-[11px]" style={{ color: '#4A5568' }}>
+          <div className="space-y-1.5 text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>
             <div>Pay frequency: <strong className="font-mono">{plan.payFrequency}</strong></div>
             <div>True-up frequency: <strong className="font-mono">{plan.trueUpFrequency}</strong></div>
             <div>Plan year: <strong className="font-mono">FY{plan.planYear}</strong></div>
@@ -323,9 +323,9 @@ export default function CompPlanPage() {
             <div>Kickers: <strong className="font-mono">{plan.kickers.length} quarterly</strong></div>
           </div>
         </div>
-        <div className="rounded-lg border p-4" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-[10px] font-bold font-mono mb-2" style={{ color: '#22C55E' }}>OTE RANGES</div>
-          <div className="space-y-1.5 text-[11px]" style={{ color: '#4A5568' }}>
+          <div className="space-y-1.5 text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>
             <div>Minimum OTE: <strong className="font-mono">${fmt(plan.ote.min)}</strong></div>
             <div>Median OTE: <strong className="font-mono">${fmt(plan.ote.median)}</strong></div>
             <div>Maximum OTE: <strong className="font-mono">${fmt(plan.ote.max)}</strong></div>
@@ -336,7 +336,7 @@ export default function CompPlanPage() {
       </div>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Compensation plan designed by PROOFLINE for Andrews Distributing FY2026. Tier rates are inverse to attainment to protect floor earnings.
         EMCO gates cascade from Core → Import → Emerging → Combined. Spirits adder stacks on top of EMCO-adjusted variable.
         Kickers are quarterly bonus opportunities tied to seasonal events and supplier priorities.

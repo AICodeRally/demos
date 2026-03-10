@@ -99,16 +99,16 @@ function InquiryTimeline({ inquiry }: { inquiry: Inquiry }) {
         <div key={step.label} className="flex items-center">
           <div className="flex flex-col items-center">
             <div className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold" style={{
-              background: step.done ? '#22C55E' : '#F1F5F9',
-              color: step.done ? 'white' : '#A0AEC0',
+              background: step.done ? '#22C55E' : 'var(--pl-chart-bar-track)',
+              color: step.done ? 'white' : 'var(--pl-text-faint)',
             }}>
               {step.done ? '\u2713' : i + 1}
             </div>
-            <div className="text-[8px] font-mono mt-0.5" style={{ color: step.done ? '#22C55E' : '#A0AEC0' }}>{step.label}</div>
+            <div className="text-[8px] font-mono mt-0.5" style={{ color: step.done ? '#22C55E' : 'var(--pl-text-faint)' }}>{step.label}</div>
             <div className="text-[7px] font-mono" style={{ color: '#CBD5E0' }}>{step.date}</div>
           </div>
           {i < steps.length - 1 && (
-            <div className="w-8 h-0.5 mx-1" style={{ background: step.done ? '#22C55E' : '#E2E8F0' }} />
+            <div className="w-8 h-0.5 mx-1" style={{ background: step.done ? '#22C55E' : 'var(--pl-border)' }} />
           )}
         </div>
       ))}
@@ -135,10 +135,10 @@ export default function InquiryManagementPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Inquiry Management &middot; Dispute Resolution
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           Compensation Inquiries
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {INQUIRIES.length} total inquiries &middot; {avgResolutionDays}-day avg resolution &middot; Transparent 3-step process
         </p>
       </div>
@@ -154,27 +154,27 @@ export default function InquiryManagementPage() {
 
       {/* Resolution Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="rounded-lg border p-4 text-center" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4 text-center" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#2563EB' }}>BY CATEGORY</div>
           {Object.entries(CATEGORY_LABELS).slice(0, 4).map(([key, label]) => {
             const count = INQUIRIES.filter(i => i.category === key).length;
             return (
               <div key={key} className="flex justify-between text-[10px] py-0.5">
-                <span style={{ color: '#718096' }}>{label}</span>
-                <span className="font-mono font-bold" style={{ color: '#1A1A2E' }}>{count}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>{label}</span>
+                <span className="font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{count}</span>
               </div>
             );
           })}
         </div>
-        <div className="rounded-lg border p-4 text-center" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4 text-center" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#22C55E' }}>RESOLUTION RATE</div>
           <div className="text-[28px] font-bold font-mono" style={{ color: '#22C55E' }}>{((resolvedCount / INQUIRIES.length) * 100).toFixed(0)}%</div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>{resolvedCount} of {INQUIRIES.length} resolved</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{resolvedCount} of {INQUIRIES.length} resolved</div>
         </div>
-        <div className="rounded-lg border p-4 text-center" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4 text-center" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#10B981' }}>TOTAL $ IMPACT</div>
-          <div className="text-[28px] font-bold font-mono" style={{ color: '#1A1A2E' }}>${fmt(totalImpact)}</div>
-          <div className="text-[10px] font-mono" style={{ color: '#718096' }}>pending + resolved adjustments</div>
+          <div className="text-[28px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>${fmt(totalImpact)}</div>
+          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>pending + resolved adjustments</div>
         </div>
       </div>
 
@@ -185,7 +185,7 @@ export default function InquiryManagementPage() {
             const statusCfg = STATUS_CONFIG[inquiry.status];
             return (
               <div key={inquiry.id} className="rounded-lg border p-4" style={{
-                borderColor: inquiry.status === 'escalated' ? 'rgba(248,113,113,0.3)' : '#E2E8F0',
+                borderColor: inquiry.status === 'escalated' ? 'rgba(248,113,113,0.3)' : 'var(--pl-border)',
               }}>
                 <div className="flex items-start justify-between mb-2">
                   <div>
@@ -193,13 +193,13 @@ export default function InquiryManagementPage() {
                       <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: statusCfg.bg, color: statusCfg.color }}>
                         {statusCfg.label}
                       </span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
+                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
                         {CATEGORY_LABELS[inquiry.category]}
                       </span>
-                      <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{inquiry.id}</span>
+                      <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{inquiry.id}</span>
                     </div>
-                    <h4 className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>{inquiry.subject}</h4>
-                    <div className="text-[10px] font-mono mt-0.5" style={{ color: '#718096' }}>
+                    <h4 className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{inquiry.subject}</h4>
+                    <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>
                       {inquiry.repName} ({inquiry.routeId}) &middot; {inquiry.submittedDate}
                       {inquiry.reviewerName && <> &middot; Reviewer: {inquiry.reviewerName}</>}
                     </div>
@@ -211,12 +211,12 @@ export default function InquiryManagementPage() {
                       }}>
                         {inquiry.impactAmount > 0 ? `+$${fmt(inquiry.impactAmount)}` : `-$${fmt(Math.abs(inquiry.impactAmount))}`}
                       </div>
-                      <div className="text-[9px] font-mono" style={{ color: '#A0AEC0' }}>$ impact</div>
+                      <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>$ impact</div>
                     </div>
                   )}
                 </div>
 
-                <p className="text-[11px] mb-3" style={{ color: '#4A5568' }}>{inquiry.description}</p>
+                <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-secondary)' }}>{inquiry.description}</p>
 
                 {/* Timeline */}
                 <div className="mb-2">
@@ -227,7 +227,7 @@ export default function InquiryManagementPage() {
                 {inquiry.resolution && (
                   <div className="rounded-md px-3 py-2" style={{ background: 'rgba(34,197,94,0.04)', borderLeft: '3px solid #22C55E' }}>
                     <div className="text-[9px] font-bold font-mono mb-0.5" style={{ color: '#22C55E' }}>RESOLUTION</div>
-                    <p className="text-[11px]" style={{ color: '#4A5568' }}>{inquiry.resolution}</p>
+                    <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{inquiry.resolution}</p>
                   </div>
                 )}
               </div>
@@ -237,7 +237,7 @@ export default function InquiryManagementPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         PROOFLINE inquiry management follows a 3-step process: Submit → Review → Resolve. Target SLA is &lt;3 business days.
         All inquiries are tracked with full audit trail. Escalations go to VP Sales Ops. Impact amounts are calculated based
         on the comp plan and applied retroactively when resolved in the rep&apos;s favor.
