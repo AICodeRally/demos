@@ -1,4 +1,4 @@
-// Andrews Distributing — 6 Hometowns (Facilities)
+// Lone Star Distribution — 6 Hometowns (Facilities)
 // Total: 36 routes across North and South Texas
 
 export interface Hometown {
@@ -87,7 +87,7 @@ export const HOMETOWNS: Hometown[] = [
     cases: 148800,
     rev: 4464000,
     sqft: 210000,
-    acquired: '1976 — founding territory (Barry & Lana Andrews)',
+    acquired: '1976 — founding territory',
     profile: 'coastal',
     lat: 27.8006,
     lng: -97.3964,

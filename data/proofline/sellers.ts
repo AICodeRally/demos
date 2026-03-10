@@ -1,4 +1,4 @@
-// Andrews Distributing — 36 Sellers + 6 District Managers
+// Lone Star Distribution — 36 Sellers + 6 District Managers
 // Each seller maps to exactly one route. Each manager maps to one hometown.
 
 import type { SupplierGroup } from './brands';

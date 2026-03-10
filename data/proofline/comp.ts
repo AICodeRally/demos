@@ -1,4 +1,4 @@
-// Andrews Distributing — Sales Compensation Model
+// Lone Star Distribution — Sales Compensation Model
 // 4-gate EMCO system: Core (Molson Coors), Import (Constellation+Heineken),
 // Emerging (Craft+Spirits+FMB), Combined (blended)
 // Replaces old 3-gate emco.ts
@@ -198,7 +198,7 @@ export interface CompPlan {
 
 export const COMP_PLAN: CompPlan = {
   planYear: 2026,
-  planName: 'Andrews Distributing — Route Sales Representative Incentive Plan FY2026',
+  planName: 'Lone Star Distribution — Route Sales Representative Incentive Plan FY2026',
   baseSalary: { min: 42000, max: 58000, median: 48000 },
   variableTarget: 0.35,       // 35% of base as target variable
   ote: { min: 56700, max: 78300, median: 64800 },

@@ -7,7 +7,7 @@ interface LightSectionCardProps {
 export function LightSectionCard({ title, children, className }: LightSectionCardProps) {
   return (
     <div
-      className={`rounded-xl border p-5 ${className ?? ''}`}
+      className={`rounded-xl border p-5 mb-6 ${className ?? ''}`}
       style={{
         background: 'var(--pl-card)',
         borderColor: 'var(--pl-border)',

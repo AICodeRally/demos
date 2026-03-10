@@ -1,4 +1,4 @@
-// Andrews Distributing — Manager Coaching Cards & Rep Coaching History
+// Lone Star Distribution — Manager Coaching Cards & Rep Coaching History
 // Used by: /ops/manager (Tab 1: Coaching Dashboard), /ops/manager/rep/[id]
 // Manager: Sarah Chen, Dallas District (8 reps)
 
@@ -45,7 +45,7 @@ export const COACHING_CARDS: CoachingCard[] = [
     description: 'Marcus is at Cedar Springs Tap House (stop 4 of 12). Blue Moon pitch success rate 67% at this account. Last 3 visits: 2 successful, 1 rejected (manager preferred local craft).',
     dataPoints: [
       'Blue Moon pitch success: 67% (2/3 visits)',
-      'Account has 8 taps — Andrews holds 3, target is 5',
+      'Account has 8 taps — Lone Star holds 3, target is 5',
       'Ben E. Keith craft delivery spotted Tuesday AM',
       'Seasonal keg pricing available through March 31',
     ],

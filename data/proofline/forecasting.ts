@@ -1,4 +1,4 @@
-// Andrews Distributing — Demand Forecasting Data
+// Lone Star Distribution — Demand Forecasting Data
 // 13-week forecast by brand family + seasonal overlays + confidence bands
 // Used by: /ops/ai/forecasting, /strategy/mix
 

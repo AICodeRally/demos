@@ -1,4 +1,4 @@
-// Andrews Distributing — 36 Routes across 6 Hometowns
+// Lone Star Distribution — 36 Routes across 6 Hometowns
 // Dallas (8), Allen (6), Fort Worth (8), Ennis (4), Corpus Christi (6), Laredo (4)
 
 export interface Route {

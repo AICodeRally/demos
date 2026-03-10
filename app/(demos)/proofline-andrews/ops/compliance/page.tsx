@@ -159,7 +159,7 @@ export default function CompliancePage() {
       <div className="grid grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Overall Score" value={String(avgScore)} accent={avgScore >= 85 ? '#22C55E' : '#F59E0B'} sub="Avg across hometowns" />
         <LightKpiCard label="Compliance Rate" value={pct(totalCompliant / totalAccounts)} accent="#22C55E" sub={`${totalCompliant.toLocaleString()} of ${totalAccounts.toLocaleString()}`} />
-        <LightKpiCard label="Cold Vault Share" value={pct(avgColdVault)} accent={avgColdVault >= 0.40 ? '#22C55E' : '#F59E0B'} sub="Avg Andrews share" />
+        <LightKpiCard label="Cold Vault Share" value={pct(avgColdVault)} accent={avgColdVault >= 0.40 ? '#22C55E' : '#F59E0B'} sub="Avg Lone Star share" />
         <LightKpiCard label="TABC Flags" value={String(totalTABCIssues)} accent={totalTABCIssues > 0 ? '#F87171' : '#22C55E'} sub={`${tabcIssues.expired} expired · ${tabcIssues.suspended} suspended`} />
         <LightKpiCard label="Photo Verified" value={pct(DISPLAY_COMPLIANCE.filter(d => d.photoVerified).length / DISPLAY_COMPLIANCE.length)} accent="#3B82F6" sub="Of sample audits" />
       </div>
@@ -195,7 +195,7 @@ export default function CompliancePage() {
           </LightSectionCard>
 
           {/* Cold Vault Share */}
-          <LightSectionCard title="Cold Vault Share — Andrews vs Target by Hometown" className="mb-6">
+          <LightSectionCard title="Cold Vault Share — Lone Star vs Target by Hometown" className="mb-6">
             {HOMETOWN_COMPLIANCE.map(h => {
               const ht = HOMETOWNS.find(x => x.id === h.hometownId);
               return (
@@ -210,7 +210,7 @@ export default function CompliancePage() {
             <div className="flex items-center gap-4 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
               <span>■ bar = current share</span>
               <span>│ marker = 40% target</span>
-              <span>Cold vault = cooler/refrigerator door facings allocated to Andrews brands</span>
+              <span>Cold vault = cooler/refrigerator door facings allocated to Lone Star brands</span>
             </div>
           </LightSectionCard>
 
@@ -337,7 +337,7 @@ export default function CompliancePage() {
       {/* Methodology */}
       <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Display compliance scored 0-100 based on cold vault share, endcap placement, POS materials, and shelf planogram adherence.
-        TABC license status verified quarterly. Cold vault target: 40% of cooler facings for Andrews brands.
+        TABC license status verified quarterly. Cold vault target: 40% of cooler facings for Lone Star brands.
       </div>
 
     </>

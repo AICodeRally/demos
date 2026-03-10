@@ -1,4 +1,4 @@
-// Andrews Distributing — PROOFLINE Data Barrel
+// Lone Star Distribution — PROOFLINE Data Barrel
 // All data modules re-exported from a single entry point.
 // Pages import from '@/data' which resolves here.
 

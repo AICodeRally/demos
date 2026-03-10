@@ -199,7 +199,7 @@ export default function CeoImpactPage() {
           From Spreadsheets to Revenue Operating System
         </h1>
         <p className="text-[14px] mt-2" style={{ color: 'var(--pl-text-muted)' }}>
-          What changes when Andrews Distributing deploys PROOFLINE across 6 hometowns, 36 routes, and 4,800+ accounts.
+          What changes when Lone Star Distribution deploys PROOFLINE across 6 hometowns, 36 routes, and 4,800+ accounts.
         </p>
       </div>
 
@@ -276,7 +276,7 @@ export default function CeoImpactPage() {
       <div className="rounded-lg p-6 mb-6" style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(37,99,235,0.04) 100%)', border: '1px solid rgba(16,185,129,0.2)' }}>
         <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#10B981' }}>THE BOTTOM LINE</div>
         <p className="text-[16px] font-bold leading-relaxed mb-4" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
-          PROOFLINE transforms Andrews Distributing from a company that discovers results at quarter-close into one that
+          PROOFLINE transforms Lone Star Distribution from a company that discovers results at quarter-close into one that
           shapes outcomes in real-time. Every rep, every route, every case — visible, optimized, and aligned to the CEO mandate.
         </p>
         <div className="flex gap-4">
@@ -295,7 +295,7 @@ export default function CeoImpactPage() {
       {/* Methodology */}
       <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Impact projections based on industry benchmarks for SPM platform deployments in beverage distribution (Aberdeen Group, Gartner).
-        Revenue uplift calculated from historical Andrews growth rate (1.4%) vs. PROOFLINE-enabled rate (4%). Turnover savings use
+        Revenue uplift calculated from historical Lone Star growth rate (1.4%) vs. PROOFLINE-enabled rate (4%). Turnover savings use
         SHRM replacement cost methodology ($36K per route sales rep). Spirits revenue is additive new category.
         Payback = Total investment / (Total returns / 365).
       </div>

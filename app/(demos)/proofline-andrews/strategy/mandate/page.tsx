@@ -111,7 +111,7 @@ export default function CeoMandatePage() {
             FY2026 Corporate Strategy
           </h1>
           <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
-            Andrews Distributing &middot; North &amp; South Texas
+            Lone Star Distribution &middot; North &amp; South Texas
           </p>
         </div>
       </div>

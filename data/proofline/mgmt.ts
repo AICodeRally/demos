@@ -1,4 +1,4 @@
-// Andrews Distributing — Sales Comp Management Data
+// Lone Star Distribution — Sales Comp Management Data
 // Act 5 module data: transactions (crediting), payments, club tiers, inquiries (enhanced)
 
 // ─── Types ───────────────────────────────────────
