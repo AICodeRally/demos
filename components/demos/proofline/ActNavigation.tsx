@@ -15,7 +15,7 @@ const ACTS = [
 
 export function ActNavigation({ currentAct }: ActNavigationProps) {
   return (
-    <div className="flex w-full gap-1 rounded-lg overflow-hidden" style={{ background: 'rgba(0,0,0,0.03)' }}>
+    <div className="flex w-full gap-1 rounded-lg overflow-hidden" style={{ background: 'var(--pl-hover)' }}>
       {ACTS.map(({ act, label, pages, color, href }) => {
         const isActive = act === currentAct;
         return (
@@ -32,8 +32,8 @@ export function ActNavigation({ currentAct }: ActNavigationProps) {
             <span
               className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
               style={{
-                background: isActive ? `${color}25` : 'rgba(0,0,0,0.06)',
-                color: isActive ? color : 'rgba(0,0,0,0.3)',
+                background: isActive ? `${color}25` : 'var(--pl-hover)',
+                color: isActive ? color : 'var(--pl-text-faint)',
               }}
             >
               {act}
@@ -43,13 +43,13 @@ export function ActNavigation({ currentAct }: ActNavigationProps) {
             <div className="min-w-0">
               <div
                 className="text-[11px] font-semibold truncate"
-                style={{ color: isActive ? color : 'rgba(0,0,0,0.4)' }}
+                style={{ color: isActive ? color : 'var(--pl-text-faint)' }}
               >
                 {label}
               </div>
               <div
                 className="text-[9px] font-mono"
-                style={{ color: isActive ? `${color}80` : 'rgba(0,0,0,0.3)' }}
+                style={{ color: isActive ? `${color}80` : 'var(--pl-text-faint)' }}
               >
                 {pages} pages
               </div>

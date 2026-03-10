@@ -7,10 +7,17 @@ interface LightSectionCardProps {
 export function LightSectionCard({ title, children, className }: LightSectionCardProps) {
   return (
     <div
-      className={`rounded-xl border bg-white p-5 ${className ?? ''}`}
-      style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+      className={`rounded-xl border p-5 ${className ?? ''}`}
+      style={{
+        background: 'var(--pl-card)',
+        borderColor: 'var(--pl-border)',
+        boxShadow: 'var(--pl-shadow)',
+      }}
     >
-      <div className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4" style={{ color: '#718096' }}>
+      <div
+        className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4"
+        style={{ color: 'var(--pl-text-muted)' }}
+      >
         {title}
       </div>
       {children}
