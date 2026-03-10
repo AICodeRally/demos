@@ -29,15 +29,15 @@ function ScenarioCard({
       onClick={onSelect}
       className="text-left rounded-xl border p-5 transition-all"
       style={{
-        borderColor: isSelected ? scenario.color : '#E2E8F0',
+        borderColor: isSelected ? scenario.color : 'var(--pl-border)',
         borderWidth: isSelected ? 2 : 1,
-        boxShadow: isSelected ? `0 4px 12px ${scenario.color}20` : '0 1px 3px rgba(0,0,0,0.06)',
-        background: isSelected ? `${scenario.color}06` : 'white',
+        boxShadow: isSelected ? `0 4px 12px ${scenario.color}20` : 'var(--pl-shadow)',
+        background: isSelected ? `${scenario.color}06` : 'var(--pl-card)',
       }}
     >
       <div className="flex items-center gap-2 mb-2">
         <div className="w-3 h-3 rounded-full" style={{ background: scenario.color }} />
-        <span className="text-[15px] font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <span className="text-[15px] font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           {scenario.name}
         </span>
         <span
@@ -47,23 +47,23 @@ function ScenarioCard({
           {scenario.label}
         </span>
       </div>
-      <p className="text-[11px] mb-3" style={{ color: '#718096' }}>
+      <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>
         {scenario.description.slice(0, 100)}{scenario.description.length > 100 ? '...' : ''}
       </p>
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Revenue</div>
-          <div className="text-[15px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{fmtM(scenario.revenueTarget)}</div>
+          <div className="text-[10px] font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>Revenue</div>
+          <div className="text-[15px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtM(scenario.revenueTarget)}</div>
         </div>
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Growth</div>
+          <div className="text-[10px] font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>Growth</div>
           <div className="text-[15px] font-bold font-mono" style={{ color: scenario.color }}>
             +{pct(scenario.yoyGrowth)}
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Risks</div>
-          <div className="text-[15px] font-bold font-mono" style={{ color: scenario.risks.length >= 5 ? '#F87171' : '#718096' }}>
+          <div className="text-[10px] font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>Risks</div>
+          <div className="text-[15px] font-bold font-mono" style={{ color: scenario.risks.length >= 5 ? '#F87171' : 'var(--pl-text-muted)' }}>
             {scenario.risks.length}
           </div>
         </div>
@@ -101,15 +101,15 @@ function QuarterlyProjection({ scenario }: { scenario: Scenario }) {
       <div className="flex gap-3">
         {quarters.map((q, i) => (
           <div key={q} className="flex-1 text-center">
-            <span className="text-[11px] font-mono font-bold" style={{ color: '#1A1A2E' }}>{q}</span>
+            <span className="text-[11px] font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{q}</span>
           </div>
         ))}
       </div>
       <div className="text-center mt-2">
-        <span className="text-[11px] font-mono" style={{ color: '#718096' }}>
+        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
           Annual total: <strong style={{ color: scenario.color }}>{fmtM(total)}</strong>
           {total !== scenario.revenueTarget && (
-            <span style={{ color: '#A0AEC0' }}> (vs {fmtM(scenario.revenueTarget)} target)</span>
+            <span style={{ color: 'var(--pl-text-faint)' }}> (vs {fmtM(scenario.revenueTarget)} target)</span>
           )}
         </span>
       </div>
@@ -128,7 +128,7 @@ function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
     <div className="space-y-3">
       {gates.map(gate => (
         <div key={gate} className="flex items-center gap-3">
-          <span className="text-[12px] font-mono w-20 text-right" style={{ color: '#718096' }}>
+          <span className="text-[12px] font-mono w-20 text-right" style={{ color: 'var(--pl-text-muted)' }}>
             {gateLabels[gate]}
           </span>
           <div className="flex-1 flex items-center gap-2">
@@ -137,7 +137,7 @@ function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
               return (
                 <div key={s.id} className="flex-1">
                   <div className="flex items-center gap-1.5">
-                    <div className="flex-1 h-3 rounded-full" style={{ background: '#F1F5F9' }}>
+                    <div className="flex-1 h-3 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div
                         className="h-full rounded-full transition-all"
                         style={{ width: `${val * 100}%`, background: s.color, opacity: 0.7 }}
@@ -182,10 +182,10 @@ export default function ScenarioModelingPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Scenario Modeling &middot; FY2026 Planning
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           Strategic Scenario Comparison
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           3 planning scenarios from conservative ($5.07B) to aggressive ($5.5B) &middot; Select to explore
         </p>
       </div>
@@ -249,7 +249,7 @@ export default function ScenarioModelingPage() {
       <LightSectionCard title={`${activeScenario.name} — Hometown Projections`} className="mb-6">
         <table className="w-full text-[12px]">
           <thead>
-            <tr style={{ color: '#718096' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left font-medium pb-3 pl-2">Hometown</th>
               <th className="text-right font-medium pb-3">Case Growth</th>
               <th className="text-right font-medium pb-3">Revenue Growth</th>
@@ -265,16 +265,16 @@ export default function ScenarioModelingPage() {
               const impactRev = hometown.rev * hp.revenueGrowth * 4; // annual impact
 
               return (
-                <tr key={hp.hometownId} className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}>
-                  <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>{hometown.name}</td>
+                <tr key={hp.hometownId} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
+                  <td className="py-2.5 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>{hometown.name}</td>
                   <td className="py-2.5 text-right font-mono font-bold" style={{ color: hp.caseGrowth >= 0.05 ? '#22C55E' : '#3B82F6' }}>
                     +{pct(hp.caseGrowth)}
                   </td>
                   <td className="py-2.5 text-right font-mono font-bold" style={{ color: hp.revenueGrowth >= 0.05 ? '#22C55E' : '#3B82F6' }}>
                     +{pct(hp.revenueGrowth)}
                   </td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: '#1A1A2E' }}>+{hp.newAccounts}</td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: hp.spiritsPenetration >= 0.25 ? '#F87171' : '#718096' }}>
+                  <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text)' }}>+{hp.newAccounts}</td>
+                  <td className="py-2.5 text-right font-mono" style={{ color: hp.spiritsPenetration >= 0.25 ? '#F87171' : 'var(--pl-text-muted)' }}>
                     {pct(hp.spiritsPenetration)}
                   </td>
                   <td className="py-2.5 text-right pr-2 font-mono font-bold" style={{ color: activeScenario.color }}>
@@ -299,12 +299,12 @@ export default function ScenarioModelingPage() {
             ].map(item => (
               <div key={item.label}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[12px] font-semibold" style={{ color: '#1A1A2E' }}>{item.label}</span>
+                  <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{item.label}</span>
                   <span className="text-[11px] font-mono" style={{ color: activeScenario.color }}>
                     {item.unit === '%' ? pct(item.target) : fmt(item.target)}
                   </span>
                 </div>
-                <div className="h-2.5 rounded-full" style={{ background: '#F1F5F9' }}>
+                <div className="h-2.5 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{
@@ -314,7 +314,7 @@ export default function ScenarioModelingPage() {
                     }}
                   />
                 </div>
-                <div className="text-[9px] font-mono mt-0.5" style={{ color: '#A0AEC0' }}>
+                <div className="text-[9px] font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>
                   Current: {item.unit === '%' ? pct(item.current) : fmt(item.current)}
                 </div>
               </div>
@@ -330,9 +330,9 @@ export default function ScenarioModelingPage() {
               { label: 'Q Revenue Target', value: activeScenario.spiritsTarget.revenueTarget, fmt: fmtM },
               { label: 'New SKUs', value: activeScenario.spiritsTarget.newSkuCount, fmt: (v: number) => String(v) },
             ].map(item => (
-              <div key={item.label} className="flex items-center justify-between py-2 border-b" style={{ borderColor: '#F1F5F9' }}>
-                <span className="text-[12px]" style={{ color: '#718096' }}>{item.label}</span>
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{item.fmt(item.value)}</span>
+              <div key={item.label} className="flex items-center justify-between py-2 border-b" style={{ borderColor: 'var(--pl-chart-bar-track)' }}>
+                <span className="text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>{item.label}</span>
+                <span className="text-[14px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{item.fmt(item.value)}</span>
               </div>
             ))}
           </div>
@@ -353,7 +353,7 @@ export default function ScenarioModelingPage() {
               >
                 {i + 1}
               </span>
-              <span className="text-[12px]" style={{ color: '#4A5568' }}>{risk}</span>
+              <span className="text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>{risk}</span>
             </div>
           ))}
         </div>
@@ -363,7 +363,7 @@ export default function ScenarioModelingPage() {
       <LightSectionCard title="Side-by-Side Comparison" className="mb-6">
         <table className="w-full text-[12px]">
           <thead>
-            <tr style={{ color: '#718096' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left font-medium pb-3 pl-2">Metric</th>
               {SCENARIOS.map(s => (
                 <th key={s.id} className="text-right font-medium pb-3 pr-2">
@@ -383,8 +383,8 @@ export default function ScenarioModelingPage() {
               { label: 'New Accounts', values: SCENARIOS.map(s => String(s.hometownProjections.reduce((sum, h) => sum + h.newAccounts, 0))) },
               { label: 'Risk Count', values: SCENARIOS.map(s => String(s.risks.length)) },
             ].map((row, i) => (
-              <tr key={row.label} className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}>
-                <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>{row.label}</td>
+              <tr key={row.label} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
+                <td className="py-2.5 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>{row.label}</td>
                 {row.values.map((v, j) => (
                   <td key={j} className="py-2.5 text-right pr-2 font-mono font-bold" style={{ color: SCENARIOS[j].color }}>
                     {v}
@@ -397,7 +397,7 @@ export default function ScenarioModelingPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Scenarios model FY2026 outcomes under three risk profiles. Conservative protects base; Stretch meets CEO mandate ($5.2B);
         Aggressive pushes beyond with route expansion and maximum spirits ramp. All scenarios assume Molson Coors house alignment.
       </div>

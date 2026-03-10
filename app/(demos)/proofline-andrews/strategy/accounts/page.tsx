@@ -18,7 +18,7 @@ const TIER_CONFIG: Record<AccountTier, { label: string; color: string; bg: strin
   A: { label: 'Tier A', color: '#22C55E', bg: 'rgba(34,197,94,0.08)', desc: 'Major chains, key accounts' },
   B: { label: 'Tier B', color: '#3B82F6', bg: 'rgba(59,130,246,0.08)', desc: 'Regional grocery, large independents' },
   C: { label: 'Tier C', color: '#F59E0B', bg: 'rgba(245,158,11,0.08)', desc: 'Bars, restaurants, hotels' },
-  D: { label: 'Tier D', color: '#718096', bg: 'rgba(113,128,150,0.08)', desc: 'Convenience, small independents' },
+  D: { label: 'Tier D', color: 'var(--pl-text-muted)', bg: 'rgba(113,128,150,0.08)', desc: 'Convenience, small independents' },
 };
 
 const TYPE_LABELS: Record<AccountType, string> = {
@@ -62,22 +62,22 @@ function TierDistribution() {
                 >
                   {cfg.label}
                 </span>
-                <span className="text-[11px]" style={{ color: '#718096' }}>{cfg.desc}</span>
+                <span className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>{cfg.desc}</span>
               </div>
               <div className="flex items-center gap-4 text-[11px] font-mono">
-                <span style={{ color: '#718096' }}>{count} accounts ({pct(count / total)})</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>{count} accounts ({pct(count / total)})</span>
                 <span className="font-bold" style={{ color: cfg.color }}>{fmtM(rev)} ({pct(rev / totalRev)})</span>
               </div>
             </div>
             {/* Stacked bar: count and revenue */}
             <div className="flex gap-2">
-              <div className="flex-1 h-3 rounded-full" style={{ background: '#F1F5F9' }}>
+              <div className="flex-1 h-3 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${(count / total) * 100}%`, background: cfg.color, opacity: 0.4 }}
                 />
               </div>
-              <div className="flex-1 h-3 rounded-full" style={{ background: '#F1F5F9' }}>
+              <div className="flex-1 h-3 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${(rev / totalRev) * 100}%`, background: cfg.color }}
@@ -85,8 +85,8 @@ function TierDistribution() {
               </div>
             </div>
             <div className="flex gap-2 mt-0.5">
-              <span className="flex-1 text-[9px] font-mono text-center" style={{ color: '#A0AEC0' }}>% of accounts</span>
-              <span className="flex-1 text-[9px] font-mono text-center" style={{ color: '#A0AEC0' }}>% of revenue</span>
+              <span className="flex-1 text-[9px] font-mono text-center" style={{ color: 'var(--pl-text-faint)' }}>% of accounts</span>
+              <span className="flex-1 text-[9px] font-mono text-center" style={{ color: 'var(--pl-text-faint)' }}>% of revenue</span>
             </div>
           </div>
         );
@@ -131,10 +131,10 @@ export default function AccountSegmentationPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Account Segmentation &middot; 4-Tier Model
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           Account Portfolio Analysis
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {fmt(ACCOUNTS.length)} representative accounts across {HOMETOWNS.length} hometowns &middot; Pareto-driven tiering
         </p>
       </div>
@@ -165,13 +165,13 @@ export default function AccountSegmentationPage() {
             <div
               key={h.id}
               className="rounded-lg border p-4"
-              style={{ borderColor: '#E2E8F0' }}
+              style={{ borderColor: 'var(--pl-border)' }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>
+                <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>
                   {h.name.replace(' HQ', '')}
                 </span>
-                <span className="text-[11px] font-mono" style={{ color: '#718096' }}>
+                <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                   {h.acctCount} accts
                 </span>
               </div>
@@ -188,7 +188,7 @@ export default function AccountSegmentationPage() {
                   );
                 })}
               </div>
-              <div className="flex items-center justify-between text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+              <div className="flex items-center justify-between text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
                 <span>{h.aCount} Tier A</span>
                 <span>{fmtM(h.annualRev)}/yr</span>
                 <span>{h.spiritsCount} spirits</span>
@@ -201,16 +201,16 @@ export default function AccountSegmentationPage() {
       {/* Filters */}
       <div className="flex items-center gap-4 mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono" style={{ color: '#718096' }}>Tier:</span>
+          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Tier:</span>
           {(['all', 'A', 'B', 'C', 'D'] as const).map(t => (
             <button
               key={t}
               onClick={() => setFilterTier(t)}
               className="text-[11px] font-mono px-2.5 py-1 rounded-lg border transition-colors"
               style={{
-                borderColor: filterTier === t ? '#7C3AED' : '#E2E8F0',
-                background: filterTier === t ? 'rgba(184,115,51,0.08)' : 'white',
-                color: filterTier === t ? '#7C3AED' : '#718096',
+                borderColor: filterTier === t ? '#7C3AED' : 'var(--pl-border)',
+                background: filterTier === t ? 'rgba(184,115,51,0.08)' : 'var(--pl-card)',
+                color: filterTier === t ? '#7C3AED' : 'var(--pl-text-muted)',
                 fontWeight: filterTier === t ? 700 : 400,
               }}
             >
@@ -219,12 +219,12 @@ export default function AccountSegmentationPage() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono" style={{ color: '#718096' }}>Hometown:</span>
+          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Hometown:</span>
           <select
             value={filterHometown}
             onChange={e => setFilterHometown(e.target.value)}
             className="text-[11px] font-mono px-2.5 py-1 rounded-lg border"
-            style={{ borderColor: '#E2E8F0', color: '#1A1A2E' }}
+            style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text)' }}
           >
             <option value="all">All Hometowns</option>
             {HOMETOWNS.map(h => (
@@ -232,7 +232,7 @@ export default function AccountSegmentationPage() {
             ))}
           </select>
         </div>
-        <span className="text-[11px] font-mono ml-auto" style={{ color: '#A0AEC0' }}>
+        <span className="text-[11px] font-mono ml-auto" style={{ color: 'var(--pl-text-faint)' }}>
           Showing {filtered.length} of {ACCOUNTS.length}
         </span>
       </div>
@@ -241,8 +241,8 @@ export default function AccountSegmentationPage() {
       <LightSectionCard title="Account Detail" className="mb-6">
         <div className="overflow-x-auto max-h-[480px] overflow-y-auto">
           <table className="w-full text-[12px]">
-            <thead className="sticky top-0 bg-white">
-              <tr style={{ color: '#718096' }}>
+            <thead className="sticky top-0" style={{ background: 'var(--pl-card)' }}>
+              <tr style={{ color: 'var(--pl-text-muted)' }}>
                 <th className="text-left font-medium pb-3 pl-2">Account</th>
                 <th className="text-left font-medium pb-3">Tier</th>
                 <th className="text-left font-medium pb-3">Type</th>
@@ -258,10 +258,10 @@ export default function AccountSegmentationPage() {
               {filtered.slice(0, 50).map((a, i) => {
                 const tc = TIER_CONFIG[a.tier];
                 return (
-                  <tr key={a.id} className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}>
+                  <tr key={a.id} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
                     <td className="py-2 pl-2">
-                      <div className="text-[12px] font-semibold" style={{ color: '#1A1A2E' }}>{a.name}</div>
-                      <div className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{a.id}</div>
+                      <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{a.name}</div>
+                      <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{a.id}</div>
                     </td>
                     <td className="py-2">
                       <span
@@ -271,21 +271,21 @@ export default function AccountSegmentationPage() {
                         {tc.label}
                       </span>
                     </td>
-                    <td className="py-2 text-[12px]" style={{ color: '#718096' }}>{TYPE_LABELS[a.type]}</td>
-                    <td className="py-2 text-[12px] font-mono" style={{ color: '#1A1A2E' }}>{a.routeId}</td>
+                    <td className="py-2 text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>{TYPE_LABELS[a.type]}</td>
+                    <td className="py-2 text-[12px] font-mono" style={{ color: 'var(--pl-text)' }}>{a.routeId}</td>
                     <td className="py-2">
                       <span
                         className="text-[10px] font-mono px-1.5 py-0.5 rounded"
                         style={{
                           background: a.tabcLicense === 'W' || a.tabcLicense === 'MB' ? 'rgba(248,113,113,0.08)' : 'rgba(113,128,150,0.08)',
-                          color: a.tabcLicense === 'W' || a.tabcLicense === 'MB' ? '#F87171' : '#718096',
+                          color: a.tabcLicense === 'W' || a.tabcLicense === 'MB' ? '#F87171' : 'var(--pl-text-muted)',
                         }}
                       >
                         {TABC_LABELS[a.tabcLicense]}
                       </span>
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#1A1A2E' }}>${fmt(a.weeklyRevenue)}</td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#718096' }}>{fmt(a.monthlyCases)}</td>
+                    <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text)' }}>${fmt(a.weeklyRevenue)}</td>
+                    <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>{fmt(a.monthlyCases)}</td>
                     <td className="py-2 text-right font-mono" style={{ color: a.displayCompliance >= 0.90 ? '#22C55E' : a.displayCompliance >= 0.80 ? '#F59E0B' : '#F87171' }}>
                       {pct(a.displayCompliance)}
                     </td>
@@ -303,7 +303,7 @@ export default function AccountSegmentationPage() {
             </tbody>
           </table>
           {filtered.length > 50 && (
-            <div className="text-center py-3 text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+            <div className="text-center py-3 text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
               Showing 50 of {filtered.length} — scroll or filter to narrow
             </div>
           )}
@@ -311,7 +311,7 @@ export default function AccountSegmentationPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         4-tier model based on annual revenue contribution + strategic value. Tier A = top 12% of accounts driving ~45% of revenue.
         TABC license types determine spirits eligibility (W-permit, Mixed Bev).
       </div>
