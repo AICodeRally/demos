@@ -33,7 +33,7 @@ const MEETING_LABELS: Record<string, { label: string; color: string }> = {
   '1:1':        { label: '1:1', color: '#3B82F6' },
   'ride-along': { label: 'Ride-Along', color: '#F87171' },
   'review':     { label: 'Review', color: '#F59E0B' },
-  'skip':       { label: 'Skip', color: '#A0AEC0' },
+  'skip':       { label: 'Skip', color: 'var(--pl-text-faint)' },
 };
 
 /* ── Rep Status Card (traffic light) ─────────── */
@@ -47,23 +47,23 @@ function RepCard({ rep }: { rep: DistrictRepSnapshot }) {
     <Link
       href={`/proofline-andrews/ops/manager/rep/${rep.sellerId}`}
       className="block rounded-lg border p-4 hover:shadow-md transition-shadow"
-      style={{ borderColor: rep.statusColor === 'red' ? '#FCA5A5' : '#E2E8F0' }}
+      style={{ borderColor: rep.statusColor === 'red' ? '#FCA5A5' : 'var(--pl-border)' }}
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: light }} />
-          <span className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>{rep.sellerName}</span>
+          <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{rep.sellerName}</span>
         </div>
-        <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{rep.routeId}</span>
+        <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{rep.routeId}</span>
       </div>
 
       {/* Stop progress */}
       <div className="mb-2">
         <div className="flex items-center justify-between text-[10px] font-mono mb-0.5">
-          <span style={{ color: '#718096' }}>Stop {rep.currentStop}/{rep.totalStops}</span>
+          <span style={{ color: 'var(--pl-text-muted)' }}>Stop {rep.currentStop}/{rep.totalStops}</span>
           <span style={{ color: light }}>{rep.status}</span>
         </div>
-        <div className="h-1.5 rounded-full" style={{ background: '#F1F5F9' }}>
+        <div className="h-1.5 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
           <div className="h-full rounded-full" style={{ width: `${progressPct}%`, background: light }} />
         </div>
       </div>
@@ -71,15 +71,15 @@ function RepCard({ rep }: { rep: DistrictRepSnapshot }) {
       {/* Metrics row */}
       <div className="grid grid-cols-3 gap-1 text-[10px] font-mono">
         <div>
-          <span style={{ color: '#A0AEC0' }}>Cases</span>
+          <span style={{ color: 'var(--pl-text-faint)' }}>Cases</span>
           <br /><span style={{ color: casesPct >= 0.8 ? '#22C55E' : '#F59E0B' }}>{fmt(rep.casesDelivered)}/{fmt(rep.casesTarget)}</span>
         </div>
         <div>
-          <span style={{ color: '#A0AEC0' }}>On-Time</span>
+          <span style={{ color: 'var(--pl-text-faint)' }}>On-Time</span>
           <br /><span style={{ color: rep.onTimeRate >= 0.90 ? '#22C55E' : '#F87171' }}>{pct(rep.onTimeRate)}</span>
         </div>
         <div>
-          <span style={{ color: '#A0AEC0' }}>Attain</span>
+          <span style={{ color: 'var(--pl-text-faint)' }}>Attain</span>
           <br /><span style={{ color: rep.attainment >= 1.0 ? '#22C55E' : rep.attainment >= 0.90 ? '#F59E0B' : '#F87171' }}>{pct(rep.attainment)}</span>
         </div>
       </div>
@@ -97,7 +97,7 @@ function CoachingCardView({ card }: { card: CoachingCard }) {
     <>
     <div
       className="rounded-lg border p-4 cursor-pointer hover:shadow-sm transition-shadow"
-      style={{ borderColor: card.priority === 'urgent' ? '#FCA5A5' : '#E2E8F0' }}
+      style={{ borderColor: card.priority === 'urgent' ? '#FCA5A5' : 'var(--pl-border)' }}
       onClick={() => setExpanded(!expanded)}
     >
       <div className="flex items-start gap-3">
@@ -109,23 +109,23 @@ function CoachingCardView({ card }: { card: CoachingCard }) {
         </span>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{card.title}</span>
+            <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{card.title}</span>
             {card.aiGenerated && (
               <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
                 AI
               </span>
             )}
           </div>
-          <p className="text-[11px] mb-2" style={{ color: '#718096' }}>{card.description}</p>
+          <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-muted)' }}>{card.description}</p>
 
           {expanded && (
             <>
               {/* Data Points */}
               <div className="mb-2">
-                <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#A0AEC0' }}>DATA POINTS</div>
+                <div className="text-[10px] font-bold font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>DATA POINTS</div>
                 <ul className="space-y-0.5">
                   {card.dataPoints.map((dp, i) => (
-                    <li key={i} className="text-[11px] flex items-start gap-1.5" style={{ color: '#718096' }}>
+                    <li key={i} className="text-[11px] flex items-start gap-1.5" style={{ color: 'var(--pl-text-muted)' }}>
                       <span style={{ color: pCfg.color }}>&#x2022;</span> {dp}
                     </li>
                   ))}
@@ -135,12 +135,12 @@ function CoachingCardView({ card }: { card: CoachingCard }) {
               {/* Suggested Action */}
               <div className="rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.1)' }}>
                 <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#2563EB' }}>SUGGESTED ACTION</div>
-                <p className="text-[11px]" style={{ color: '#1A1A2E' }}>{card.suggestedAction}</p>
+                <p className="text-[11px]" style={{ color: 'var(--pl-text)' }}>{card.suggestedAction}</p>
               </div>
             </>
           )}
 
-          <div className="flex items-center gap-3 mt-2 text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+          <div className="flex items-center gap-3 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
             <span>{card.sellerName} · {card.routeId}</span>
             <span>{card.category}</span>
             {card.dueDate && <span style={{ color: '#F59E0B' }}>Due: {card.dueDate}</span>}
@@ -165,13 +165,13 @@ function TerritoryMap({ reps }: { reps: DistrictRepSnapshot[] }) {
 
   return (
     <>
-    <svg viewBox="0 0 420 300" className="w-full rounded-lg" style={{ background: '#F8FAFC' }}>
+    <svg viewBox="0 0 420 300" className="w-full rounded-lg" style={{ background: 'var(--pl-stripe)' }}>
       {/* Grid */}
       {[60, 120, 180, 240].map(y => (
-        <line key={`h${y}`} x1="20" y1={y} x2="400" y2={y} stroke="#E2E8F0" strokeWidth="0.5" />
+        <line key={`h${y}`} x1="20" y1={y} x2="400" y2={y} stroke="var(--pl-chart-grid)" strokeWidth="0.5" />
       ))}
       {[80, 160, 240, 320].map(x => (
-        <line key={`v${x}`} x1={x} y1="20" x2={x} y2="280" stroke="#E2E8F0" strokeWidth="0.5" />
+        <line key={`v${x}`} x1={x} y1="20" x2={x} y2="280" stroke="var(--pl-chart-grid)" strokeWidth="0.5" />
       ))}
 
       {/* Route zones (subtle polygons) */}
@@ -196,10 +196,10 @@ function TerritoryMap({ reps }: { reps: DistrictRepSnapshot[] }) {
               <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
             </circle>
             {/* Label */}
-            <text x={pos.x} y={pos.y - 16} textAnchor="middle" fontSize="9" fontFamily="monospace" fill="#1A1A2E" fontWeight="bold">
+            <text x={pos.x} y={pos.y - 16} textAnchor="middle" fontSize="9" fontFamily="monospace" fill="var(--pl-text)" fontWeight="bold">
               {rep.routeId}
             </text>
-            <text x={pos.x} y={pos.y + 24} textAnchor="middle" fontSize="8" fontFamily="monospace" fill="#718096">
+            <text x={pos.x} y={pos.y + 24} textAnchor="middle" fontSize="8" fontFamily="monospace" fill="var(--pl-text-muted)">
               {rep.sellerName.split(' ')[0]}
             </text>
           </g>
@@ -207,7 +207,7 @@ function TerritoryMap({ reps }: { reps: DistrictRepSnapshot[] }) {
       })}
 
       {/* Dallas label */}
-      <text x="210" y="290" textAnchor="middle" fontSize="10" fontFamily="monospace" fill="#A0AEC0">
+      <text x="210" y="290" textAnchor="middle" fontSize="10" fontFamily="monospace" fill="var(--pl-text-faint)">
         Dallas District — 8 Routes · Live Positions
       </text>
     </svg>
@@ -230,10 +230,10 @@ export default function ManagerDashboardPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Manager Dashboard &middot; Sarah Chen &middot; Dallas District
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           District Command Center
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           8 reps · {district.stopsCompleted}/{district.totalStops} stops completed · Real-time coaching & territory view
         </p>
       </div>
@@ -256,9 +256,9 @@ export default function ManagerDashboardPage() {
             onClick={() => setTab(t)}
             className="text-[12px] font-mono px-4 py-1.5 rounded-lg border transition-colors"
             style={{
-              borderColor: tab === t ? '#2563EB' : '#E2E8F0',
-              background: tab === t ? 'rgba(37,99,235,0.08)' : 'white',
-              color: tab === t ? '#2563EB' : '#718096',
+              borderColor: tab === t ? '#2563EB' : 'var(--pl-border)',
+              background: tab === t ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
+              color: tab === t ? '#2563EB' : 'var(--pl-text-muted)',
               fontWeight: tab === t ? 700 : 400,
             }}
           >
@@ -292,7 +292,7 @@ export default function ManagerDashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-[12px]">
                 <thead>
-                  <tr style={{ color: '#718096' }}>
+                  <tr style={{ color: 'var(--pl-text-muted)' }}>
                     <th className="text-left font-medium pb-3 pl-2">Rep</th>
                     <th className="text-left font-medium pb-3">Route</th>
                     <th className="text-left font-medium pb-3">Type</th>
@@ -306,21 +306,21 @@ export default function ManagerDashboardPage() {
                     const mt = MEETING_LABELS[item.meetingType];
                     const pCfg = PRIORITY_CONFIG[item.urgency];
                     return (
-                      <tr key={item.sellerId} className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}>
+                      <tr key={item.sellerId} style={{ background: i % 2 === 0 ? 'var(--pl-stripe)' : undefined }}>
                         <td className="py-2 pl-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-[12px] font-semibold" style={{ color: '#1A1A2E' }}>{item.sellerName}</span>
+                            <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{item.sellerName}</span>
                             <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ background: pCfg.bg, color: pCfg.color }}>
                               {pCfg.label}
                             </span>
                           </div>
                         </td>
-                        <td className="py-2 font-mono" style={{ color: '#718096' }}>{item.routeId}</td>
+                        <td className="py-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item.routeId}</td>
                         <td className="py-2">
                           <span className="text-[10px] font-bold font-mono" style={{ color: mt.color }}>{mt.label}</span>
                         </td>
-                        <td className="py-2 font-mono" style={{ color: '#718096' }}>{item.scheduledDate}</td>
-                        <td className="py-2 text-[11px] max-w-[200px]" style={{ color: '#718096' }}>
+                        <td className="py-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item.scheduledDate}</td>
+                        <td className="py-2 text-[11px] max-w-[200px]" style={{ color: 'var(--pl-text-muted)' }}>
                           {item.focusTopics[0]}
                         </td>
                         <td className="py-2 text-right pr-2 font-mono font-bold" style={{ color: item.attainmentGap > 0.05 ? '#F87171' : item.attainmentGap > 0 ? '#F59E0B' : '#22C55E' }}>
@@ -339,7 +339,7 @@ export default function ManagerDashboardPage() {
           {/* Territory Map */}
           <LightSectionCard title="Dallas District — Live Route Positions" className="mb-6">
             <TerritoryMap reps={DALLAS_DISTRICT_LIVE} />
-            <div className="flex items-center gap-6 mt-3 text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+            <div className="flex items-center gap-6 mt-3 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
               <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full" style={{ background: '#22C55E' }} /> On Track / Ahead</div>
               <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full" style={{ background: '#F59E0B' }} /> Behind Schedule</div>
               <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full" style={{ background: '#F87171' }} /> Issue</div>
@@ -353,27 +353,27 @@ export default function ManagerDashboardPage() {
               {DALLAS_DISTRICT_LIVE.map(rep => {
                 const light = STATUS_LIGHT[rep.statusColor];
                 return (
-                  <div key={rep.sellerId} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
+                  <div key={rep.sellerId} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-2 h-2 rounded-full" style={{ background: light }} />
-                      <span className="text-[11px] font-bold" style={{ color: '#1A1A2E' }}>{rep.sellerName.split(' ')[0]}</span>
-                      <span className="text-[10px] font-mono ml-auto" style={{ color: '#A0AEC0' }}>{rep.routeId}</span>
+                      <span className="text-[11px] font-bold" style={{ color: 'var(--pl-text)' }}>{rep.sellerName.split(' ')[0]}</span>
+                      <span className="text-[10px] font-mono ml-auto" style={{ color: 'var(--pl-text-faint)' }}>{rep.routeId}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-[10px] font-mono">
                       <div>
-                        <span style={{ color: '#A0AEC0' }}>Cases</span>
-                        <div className="font-bold" style={{ color: '#1A1A2E' }}>{fmt(rep.casesDelivered)}</div>
+                        <span style={{ color: 'var(--pl-text-faint)' }}>Cases</span>
+                        <div className="font-bold" style={{ color: 'var(--pl-text)' }}>{fmt(rep.casesDelivered)}</div>
                       </div>
                       <div>
-                        <span style={{ color: '#A0AEC0' }}>Revenue</span>
+                        <span style={{ color: 'var(--pl-text-faint)' }}>Revenue</span>
                         <div className="font-bold" style={{ color: '#2563EB' }}>${fmtK(rep.revenueToday)}</div>
                       </div>
                       <div>
-                        <span style={{ color: '#A0AEC0' }}>Stops</span>
+                        <span style={{ color: 'var(--pl-text-faint)' }}>Stops</span>
                         <div className="font-bold" style={{ color: light }}>{rep.currentStop}/{rep.totalStops}</div>
                       </div>
                       <div>
-                        <span style={{ color: '#A0AEC0' }}>Attain</span>
+                        <span style={{ color: 'var(--pl-text-faint)' }}>Attain</span>
                         <div className="font-bold" style={{ color: rep.attainment >= 1.0 ? '#22C55E' : '#F59E0B' }}>{pct(rep.attainment)}</div>
                       </div>
                     </div>
@@ -394,11 +394,11 @@ export default function ManagerDashboardPage() {
                     <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 animate-pulse" style={{ background: light }} />
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{rep.sellerName}</span>
-                        <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{rep.routeId}</span>
+                        <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{rep.sellerName}</span>
+                        <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{rep.routeId}</span>
                         <span className="text-[10px] font-bold font-mono uppercase" style={{ color: light }}>{rep.status}</span>
                       </div>
-                      <p className="text-[11px]" style={{ color: '#718096' }}>
+                      <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
                         {card?.title ?? `Stop ${rep.currentStop}/${rep.totalStops} — on-time rate ${pct(rep.onTimeRate)}`}
                       </p>
                     </div>
@@ -418,9 +418,9 @@ export default function ManagerDashboardPage() {
                 const pctDone = spiritsAccounts / target;
                 return (
                   <div key={rep.sellerId} className="flex items-center gap-3">
-                    <span className="text-[11px] font-mono w-20" style={{ color: '#1A1A2E' }}>{rep.routeId}</span>
-                    <span className="text-[11px] w-28 truncate" style={{ color: '#718096' }}>{rep.sellerName}</span>
-                    <div className="flex-1 h-3 rounded-full" style={{ background: '#F1F5F9' }}>
+                    <span className="text-[11px] font-mono w-20" style={{ color: 'var(--pl-text)' }}>{rep.routeId}</span>
+                    <span className="text-[11px] w-28 truncate" style={{ color: 'var(--pl-text-muted)' }}>{rep.sellerName}</span>
+                    <div className="flex-1 h-3 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -429,14 +429,14 @@ export default function ManagerDashboardPage() {
                         }}
                       />
                     </div>
-                    <span className="text-[11px] font-mono w-16 text-right" style={{ color: pctDone >= 1.0 ? '#22C55E' : '#718096' }}>
+                    <span className="text-[11px] font-mono w-16 text-right" style={{ color: pctDone >= 1.0 ? '#22C55E' : 'var(--pl-text-muted)' }}>
                       {spiritsAccounts}/{target}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <div className="mt-2 text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+            <div className="mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
               Target: 12 spirits-carrying accounts per route. W-permit and MB-license accounts only.
             </div>
           </LightSectionCard>
@@ -444,7 +444,7 @@ export default function ManagerDashboardPage() {
       )}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Manager view: Sarah Chen, Dallas District (8 reps). Coaching cards AI-generated from route performance, CRM, and competitive intel.
         Territory map shows live positions (simulated). Click any rep card to view detailed performance history.
       </div>

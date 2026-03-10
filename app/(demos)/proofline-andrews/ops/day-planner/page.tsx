@@ -30,8 +30,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
             onClick={() => setTab(t.id)}
             className="text-[11px] font-mono px-3 py-1.5 rounded-lg transition-colors"
             style={{
-              background: tab === t.id ? '#2563EB' : '#F1F5F9',
-              color: tab === t.id ? 'white' : '#718096',
+              background: tab === t.id ? '#2563EB' : 'var(--pl-chart-bar-track)',
+              color: tab === t.id ? 'white' : 'var(--pl-text-muted)',
               fontWeight: tab === t.id ? 700 : 400,
             }}
           >
@@ -46,14 +46,14 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Delivery Manifest */}
           {stop.deliveryManifest.length > 0 && (
             <div>
-              <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+              <div className="text-[9px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
                 Delivery Manifest ({stop.deliveryManifest.reduce((s, m) => s + m.cases, 0)} cases)
               </div>
               <div className="space-y-1">
                 {stop.deliveryManifest.map(item => (
-                  <div key={item.sku} className="flex items-center justify-between py-1.5 border-b border-slate-100">
+                  <div key={item.sku} className="flex items-center justify-between py-1.5 border-b" style={{ borderColor: 'var(--pl-border)' }}>
                     <div className="flex items-center gap-2">
-                      <span className="text-[12px] text-slate-800">{item.brand}</span>
+                      <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{item.brand}</span>
                       {item.promo && (
                         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">
                           {item.promo}
@@ -61,8 +61,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
                       )}
                     </div>
                     <div className="flex items-center gap-3 text-[11px] font-mono">
-                      <span style={{ color: '#718096' }}>{item.sku}</span>
-                      <span className="text-slate-800 font-bold">{item.cases}cs</span>
+                      <span style={{ color: 'var(--pl-text-muted)' }}>{item.sku}</span>
+                      <span className="font-bold" style={{ color: 'var(--pl-text)' }}>{item.cases}cs</span>
                     </div>
                   </div>
                 ))}
@@ -73,10 +73,10 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Talking Points */}
           {stop.talkingPoints.length > 0 && (
             <div>
-              <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-2">Talking Points</div>
+              <div className="text-[9px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
               <ul className="space-y-1.5">
                 {stop.talkingPoints.map((tp, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[12px] text-slate-600">
+                  <li key={i} className="flex items-start gap-2 text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>
                     <span className="text-[#C6A052] mt-0.5 shrink-0">&bull;</span>
                     <span className="leading-snug">{tp}</span>
                   </li>
@@ -89,7 +89,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {stop.displayInstructions && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.08)', borderLeft: '2px solid #2563EB' }}>
               <div className="text-[9px] uppercase tracking-wider text-blue-400 font-mono mb-1">Display Instructions</div>
-              <div className="text-[11px] text-slate-600">{stop.displayInstructions}</div>
+              <div className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.displayInstructions}</div>
               {stop.photoRequired && (
                 <div className="mt-1.5 text-[10px] font-bold text-amber-400">📸 Photo Required</div>
               )}
@@ -97,8 +97,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
           )}
 
           {/* Contact */}
-          <div className="flex items-center gap-4 text-[11px]" style={{ color: '#718096' }}>
-            <span>Contact: <strong className="text-slate-600">{stop.contactName}</strong></span>
+          <div className="flex items-center gap-4 text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
+            <span>Contact: <strong style={{ color: 'var(--pl-text-secondary)' }}>{stop.contactName}</strong></span>
             <span className="font-mono">{stop.contactPhone}</span>
           </div>
         </div>
@@ -107,21 +107,21 @@ function DetailPanel({ stop }: { stop: Stop }) {
       {/* History Tab */}
       {tab === 'history' && (
         <div className="space-y-3">
-          <div className="text-[11px] mb-3" style={{ color: '#718096' }}>Last 4 deliveries to this account</div>
+          <div className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>Last 4 deliveries to this account</div>
           {[
             { date: 'Feb 25', cases: 128, rev: 15400, notes: 'Standard delivery. Corona facing at 8 (target 12).' },
             { date: 'Feb 18', cases: 134, rev: 16100, notes: 'Added Modelo Negra. Robert requested spirits tasting info.' },
             { date: 'Feb 11', cases: 121, rev: 14500, notes: 'Corona short 12cs — warehouse issue. Resolved same-day.' },
             { date: 'Feb 4', cases: 115, rev: 13800, notes: 'Routine. Pacifico trial 6cs — sold through in 5 days.' },
           ].map((visit, i) => (
-            <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-100">
-              <span className="text-[10px] font-mono text-slate-400 w-14 shrink-0">{visit.date}</span>
+            <div key={i} className="flex items-start gap-3 py-2 border-b" style={{ borderColor: 'var(--pl-border)' }}>
+              <span className="text-[10px] font-mono w-14 shrink-0" style={{ color: 'var(--pl-text-faint)' }}>{visit.date}</span>
               <div className="flex-1">
                 <div className="flex items-center gap-3 text-[11px]">
-                  <span className="text-slate-600 font-mono">{visit.cases}cs</span>
+                  <span className="font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
                   <span className="text-emerald-500 font-mono">${fmt(visit.rev)}</span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-0.5">{visit.notes}</div>
+                <div className="text-[11px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.notes}</div>
               </div>
             </div>
           ))}
@@ -145,7 +145,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
                 }`,
               }}
             >
-              <div className="text-[11px] text-slate-600 leading-snug">{insight.insight}</div>
+              <div className="text-[11px] leading-snug" style={{ color: 'var(--pl-text-secondary)' }}>{insight.insight}</div>
               <div className="mt-1.5">
                 <DataSourceBadge source={insight.source} synced="2m ago" />
               </div>
@@ -156,7 +156,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {stop.competitiveIntel && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(168,85,247,0.06)', borderLeft: '2px solid #A855F7' }}>
               <div className="text-[9px] uppercase tracking-wider text-purple-400 font-mono mb-1">Competitive Intel</div>
-              <div className="text-[11px] text-slate-600">{stop.competitiveIntel}</div>
+              <div className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.competitiveIntel}</div>
             </div>
           )}
 
@@ -170,8 +170,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
                     stop.tabcStatus === 'expiring' ? '#F59E0B' : '#EF4444',
                 }}
               />
-              <span style={{ color: '#718096' }}>
-                TABC: <strong className="text-slate-800">{stop.tabcStatus}</strong>
+              <span style={{ color: 'var(--pl-text-muted)' }}>
+                TABC: <strong style={{ color: 'var(--pl-text)' }}>{stop.tabcStatus}</strong>
               </span>
             </div>
           )}
@@ -215,7 +215,7 @@ export default function DayPlannerPage() {
 
   return (
     <>
-    
+
       <ActNavigation currentAct={3} />
 
       {/* Header Row */}
@@ -224,10 +224,10 @@ export default function DayPlannerPage() {
           <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
             Day-in-the-Life &middot; Route Planner
           </div>
-          <h1 className="text-xl font-extrabold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#1A1A2E' }}>
+          <h1 className="text-xl font-extrabold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--pl-text)' }}>
             {plan.repName} — {plan.route}
           </h1>
-          <p className="text-[12px] mt-0.5" style={{ color: '#718096' }}>
+          <p className="text-[12px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>
             {plan.date} &middot; {plan.stops.length} stops &middot; {plan.totalMiles} miles &middot; {plan.totalDuration}
           </p>
         </div>
@@ -245,12 +245,12 @@ export default function DayPlannerPage() {
       >
         <div className="flex items-center gap-3">
           <span className="text-[12px] font-bold text-emerald-500">Route Optimized</span>
-          <span className="text-[11px]" style={{ color: '#718096' }}>
+          <span className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
             Saves <strong className="text-emerald-500">{plan.optimizationSavings.miles} miles</strong> and{' '}
             <strong className="text-emerald-500">{plan.optimizationSavings.minutes} min</strong> vs standard sequence
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[11px] font-mono" style={{ color: '#718096' }}>
+        <div className="flex items-center gap-4 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
           <span>{plan.truckNumber}</span>
           <span>{fmt(plan.totalCases)} cases</span>
           <span className="text-emerald-500 font-bold">${fmt(plan.totalRevenue)}</span>
@@ -263,9 +263,9 @@ export default function DayPlannerPage() {
         <div className="col-span-4">
           <div
             className="rounded-xl p-3 sticky top-4"
-            style={{ background: 'white', border: '1px solid #E2E8F0' }}
+            style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}
           >
-            <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+            <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
               Route Map &middot; {plan.hometownName}
             </div>
             <RouteMap
@@ -279,7 +279,7 @@ export default function DayPlannerPage() {
 
         {/* Center: Stop List */}
         <div className="col-span-4">
-          <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+          <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
             Stops ({plan.stops.length})
           </div>
           <div className="space-y-2 max-h-[680px] overflow-y-auto pr-1">
@@ -309,17 +309,17 @@ export default function DayPlannerPage() {
         <div className="col-span-4">
           {activeStop ? (
             <div>
-              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+              <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
                 Stop Detail
               </div>
               <div
                 className="rounded-xl p-4 mb-4"
-                style={{ background: 'white', border: '1px solid #E2E8F0' }}
+                style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[15px] font-bold" style={{ color: '#1A1A2E' }}>{activeStop.accountName}</span>
+                  <span className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{activeStop.accountName}</span>
                 </div>
-                <div className="flex items-center gap-3 mb-4 text-[11px]" style={{ color: '#718096' }}>
+                <div className="flex items-center gap-3 mb-4 text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
                   <span>{activeStop.arrivalTime}</span>
                   <span>{activeStop.duration} min</span>
                   {activeStop.revenueOpportunity > 0 && (
@@ -333,7 +333,7 @@ export default function DayPlannerPage() {
               <button
                 onClick={() => setShowMobile(true)}
                 className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[11px] font-mono transition-all hover:bg-slate-50"
-                style={{ border: '1px solid #E2E8F0', color: '#718096' }}
+                style={{ border: '1px solid var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 <span className="text-base">📱</span>
                 <span>Rep&apos;s Mobile View</span>
@@ -344,8 +344,8 @@ export default function DayPlannerPage() {
               <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-4">
                 <span className="text-3xl opacity-30">📍</span>
               </div>
-              <div className="text-sm" style={{ color: '#A0AEC0' }}>Select a stop</div>
-              <div className="text-[11px] mt-1" style={{ color: '#CBD5E0' }}>
+              <div className="text-sm" style={{ color: 'var(--pl-text-faint)' }}>Select a stop</div>
+              <div className="text-[11px] mt-1" style={{ color: 'var(--pl-text-faint)' }}>
                 Click any stop on the map or list to view details
               </div>
             </div>
@@ -377,8 +377,7 @@ export default function DayPlannerPage() {
           </div>
         </div>
       )}
-    
+
     </>
   );
 }
-

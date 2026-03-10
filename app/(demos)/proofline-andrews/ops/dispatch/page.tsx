@@ -18,7 +18,7 @@ const STATUS_CONFIG: Record<DeliveryStatus, { label: string; color: string; bg: 
   'loaded':     { label: 'Loaded',     color: '#3B82F6', bg: 'rgba(59,130,246,0.08)' },
   'en-route':   { label: 'En Route',   color: '#22C55E', bg: 'rgba(34,197,94,0.08)' },
   'delivering': { label: 'Delivering', color: '#F59E0B', bg: 'rgba(245,158,11,0.08)' },
-  'returning':  { label: 'Returning',  color: '#718096', bg: 'rgba(113,128,150,0.08)' },
+  'returning':  { label: 'Returning',  color: 'var(--pl-text-muted)', bg: 'rgba(113,128,150,0.08)' },
   'exception':  { label: 'Exception',  color: '#F87171', bg: 'rgba(248,113,113,0.08)' },
 };
 
@@ -51,7 +51,7 @@ function ExceptionAlert({ route }: { route: Route }) {
     <>
     <div className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: 'rgba(248,113,113,0.3)', background: 'rgba(248,113,113,0.04)' }}>
       <span className="text-[12px] font-bold font-mono" style={{ color: '#F87171' }}>{route.id}</span>
-      <span className="text-[12px]" style={{ color: '#1A1A2E' }}>{seller?.name ?? 'Unknown'}</span>
+      <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? 'Unknown'}</span>
       <span className="text-[11px] font-mono" style={{ color: '#F87171' }}>{reasons.join(' · ')}</span>
     </div>
     </>
@@ -68,10 +68,10 @@ function RouteCard({ route }: { route: Route }) {
 
   return (
     <>
-    <div className="rounded-lg border p-3 hover:shadow-sm transition-shadow" style={{ borderColor: '#E2E8F0' }}>
+    <div className="rounded-lg border p-3 hover:shadow-sm transition-shadow" style={{ borderColor: 'var(--pl-border)' }}>
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{route.id}</span>
+          <span className="text-[13px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{route.id}</span>
           <span
             className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
             style={{ background: cfg.bg, color: cfg.color }}
@@ -84,20 +84,20 @@ function RouteCard({ route }: { route: Route }) {
         )}
       </div>
 
-      <div className="text-[12px] mb-1" style={{ color: '#1A1A2E' }}>{seller?.name ?? '—'}</div>
-      <div className="text-[10px] font-mono mb-2" style={{ color: '#A0AEC0' }}>
+      <div className="text-[12px] mb-1" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? '—'}</div>
+      <div className="text-[10px] font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
         {route.stopsPerDay} stops · {route.accounts} accts · {route.channel}
       </div>
 
       {/* Cases delivered progress */}
       <div className="mb-1">
         <div className="flex items-center justify-between text-[10px] font-mono mb-0.5">
-          <span style={{ color: '#718096' }}>Cases</span>
+          <span style={{ color: 'var(--pl-text-muted)' }}>Cases</span>
           <span style={{ color: deliveredPct >= 0.8 ? '#22C55E' : deliveredPct >= 0.6 ? '#F59E0B' : '#F87171' }}>
             {fmt(delivered)}/{fmt(planned)}
           </span>
         </div>
-        <div className="h-1.5 rounded-full" style={{ background: '#F1F5F9' }}>
+        <div className="h-1.5 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
@@ -110,7 +110,7 @@ function RouteCard({ route }: { route: Route }) {
 
       {/* On-time rate */}
       <div className="flex items-center justify-between text-[10px] font-mono">
-        <span style={{ color: '#718096' }}>On-time</span>
+        <span style={{ color: 'var(--pl-text-muted)' }}>On-time</span>
         <span
           className="font-bold"
           style={{ color: route.onTimeRate >= 0.95 ? '#22C55E' : route.onTimeRate >= 0.90 ? '#F59E0B' : '#F87171' }}
@@ -141,7 +141,7 @@ export default function DeliveryDispatchPage() {
 
   return (
     <>
-    
+
       <ActNavigation currentAct={3} />
 
       {/* Header */}
@@ -149,10 +149,10 @@ export default function DeliveryDispatchPage() {
         <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Delivery Dispatch &middot; Real-Time Operations
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
           Route Dispatch Board
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {ROUTES.length} routes across {HOMETOWNS.length} hometowns &middot; Live delivery status
         </p>
       </div>
@@ -182,9 +182,9 @@ export default function DeliveryDispatchPage() {
           ].map(alert => (
             <div key={alert.id} className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: `${alert.color}30`, background: `${alert.color}06` }}>
               <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${alert.color}15`, color: alert.color }}>{alert.type.toUpperCase()}</span>
-              <span className="text-[12px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{alert.route}</span>
-              <span className="text-[12px]" style={{ color: '#1A1A2E' }}>{alert.rep}</span>
-              <span className="text-[11px] font-mono flex-1" style={{ color: '#718096' }}>{alert.detail}</span>
+              <span className="text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{alert.route}</span>
+              <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{alert.rep}</span>
+              <span className="text-[11px] font-mono flex-1" style={{ color: 'var(--pl-text-muted)' }}>{alert.detail}</span>
             </div>
           ))}
         </div>
@@ -192,14 +192,14 @@ export default function DeliveryDispatchPage() {
 
       {/* Hometown Filter */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[11px] font-mono" style={{ color: '#718096' }}>Hometown:</span>
+        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Hometown:</span>
         <button
           onClick={() => setFilterHometown('all')}
           className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
           style={{
-            borderColor: filterHometown === 'all' ? '#2563EB' : '#E2E8F0',
-            background: filterHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'white',
-            color: filterHometown === 'all' ? '#2563EB' : '#718096',
+            borderColor: filterHometown === 'all' ? '#2563EB' : 'var(--pl-border)',
+            background: filterHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
+            color: filterHometown === 'all' ? '#2563EB' : 'var(--pl-text-muted)',
             fontWeight: filterHometown === 'all' ? 700 : 400,
           }}
         >
@@ -213,9 +213,9 @@ export default function DeliveryDispatchPage() {
               onClick={() => setFilterHometown(h.id)}
               className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
               style={{
-                borderColor: filterHometown === h.id ? '#2563EB' : '#E2E8F0',
-                background: filterHometown === h.id ? 'rgba(37,99,235,0.08)' : 'white',
-                color: filterHometown === h.id ? '#2563EB' : '#718096',
+                borderColor: filterHometown === h.id ? '#2563EB' : 'var(--pl-border)',
+                background: filterHometown === h.id ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
+                color: filterHometown === h.id ? '#2563EB' : 'var(--pl-text-muted)',
                 fontWeight: filterHometown === h.id ? 700 : 400,
               }}
             >
@@ -249,10 +249,10 @@ export default function DeliveryDispatchPage() {
             className="mb-6"
           >
             {/* Hometown summary bar */}
-            <div className="flex items-center gap-6 mb-4 text-[11px] font-mono" style={{ color: '#718096' }}>
-              <span>Manager: <strong style={{ color: '#1A1A2E' }}>{hometown.manager}</strong></span>
+            <div className="flex items-center gap-6 mb-4 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <span>Manager: <strong style={{ color: 'var(--pl-text)' }}>{hometown.manager}</strong></span>
               <span>Avg on-time: <strong style={{ color: htAvgOnTime >= 0.93 ? '#22C55E' : '#F59E0B' }}>{pct(htAvgOnTime)}</strong></span>
-              <span>Cases/day: <strong style={{ color: '#1A1A2E' }}>{fmt(routes.reduce((s, r) => s + Math.round(r.cases / 65), 0))}</strong></span>
+              <span>Cases/day: <strong style={{ color: 'var(--pl-text)' }}>{fmt(routes.reduce((s, r) => s + Math.round(r.cases / 65), 0))}</strong></span>
               {htExceptions > 0 && (
                 <span style={{ color: '#F87171' }}>
                   <strong>{htExceptions}</strong> exception{htExceptions > 1 ? 's' : ''}
@@ -271,11 +271,11 @@ export default function DeliveryDispatchPage() {
       })}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Status reflects simulated real-time delivery tracking. Cases = daily plan based on quarterly target &divide; 65 working days.
         On-time rate sourced from route performance data. Exception threshold: shrinkage &gt;2%, on-time &lt;90%, or display compliance &lt;80%.
       </div>
-    
+
     </>
   );
 }
