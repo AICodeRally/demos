@@ -49,6 +49,46 @@ Add collapsible sidebar sections to DemoShell to manage the expanded nav.
 | `comp/visibility/page.tsx` | `comp/mgmt/measurements` (Visibility tab) | No content changes |
 | `comp/inquiries/page.tsx` | `comp/mgmt/inquiries/page.tsx` | Add status filter tabs, category filter |
 
+## Config & Component Updates
+
+### demo.config.ts
+
+Update `app/(demos)/proofline-andrews/demo.config.ts`:
+
+1. **Rename** Act 4 section label from `"Act 4 — Sales Compensation"` to `"Act 4 — Sales Comp Planning"`
+2. **Remove** 3 items from Act 4: EMCO Gates, Visibility, Inquiries
+3. **Add** new Act 5 section `"Act 5 — Sales Comp Management"` with color `#0EA5E9` and 6 nav items:
+   - Data → `/comp/mgmt/data` (icon: `Database`)
+   - Measurements → `/comp/mgmt/measurements` (icon: `BarChart3`)
+   - Rewards → `/comp/mgmt/rewards` (icon: `Award`)
+   - Payments → `/comp/mgmt/payments` (icon: `Wallet`)
+   - Inquiries → `/comp/mgmt/inquiries` (icon: `MessageSquare`)
+   - Reports → `/comp/mgmt/reports` (icon: `FileBarChart`)
+
+### ActNavigation.tsx
+
+Update `components/demos/proofline/ActNavigation.tsx`:
+
+1. **Extend** `currentAct` type from `1 | 2 | 3 | 4` to `1 | 2 | 3 | 4 | 5`
+2. **Add** Act 5 entry to the `ACTS` array: `{ act: 5, label: 'Sales Comp Management', color: '#0EA5E9', href: '/comp/mgmt/data', pages: 6 }`
+3. **Update** Act 4 entry: label to `'Sales Comp Planning'`, pages from `8` to `5`
+
+### Old Route Disposition
+
+Delete the old page files after content is moved to new locations:
+
+| Old File | Action |
+|----------|--------|
+| `comp/emco/page.tsx` | Delete — content absorbed into `comp/mgmt/measurements` |
+| `comp/visibility/page.tsx` | Delete — content absorbed into `comp/mgmt/measurements` |
+| `comp/inquiries/page.tsx` | Delete — content moved to `comp/mgmt/inquiries/page.tsx` |
+
+No redirects needed — this is a demo, not a production app with external links.
+
+### Inquiries Accent Color
+
+When moving `inquiries/page.tsx` to `comp/mgmt/inquiries/`, update all hardcoded Act 4 green (`#10B981`) references in the header/accent areas to Act 5 sky blue (`#0EA5E9`). The `ActNavigation` component handles this automatically via `currentAct={5}`, but any inline accent colors need manual update.
+
 ## DemoShell: Collapsible Sidebar Sections
 
 ### Behavior
@@ -56,7 +96,7 @@ Add collapsible sidebar sections to DemoShell to manage the expanded nav.
 - Small chevron indicator: ▸ collapsed, ▾ expanded
 - Section containing the active route auto-expands
 - Other sections collapsed by default on page load
-- Persisted to `localStorage` key `demoshell-nav-state`
+- Persisted to `localStorage` key `demoshell-nav-state-${config.product.name}` (scoped per demo to avoid cross-demo collisions)
 - Backward compatible — existing demos with fewer sections unaffected
 
 ### Implementation
@@ -157,7 +197,9 @@ Kicker payouts and special incentives:
 
 **Purpose:** Payment processing and deposit tracking.
 
-**Single view: Deposits**
+**2 tabs: Deposits | Exceptions**
+
+No tab bar shown — Payments uses section headers instead of tabs since it has fewer sub-views than other modules. Content is presented as a single scrollable page with clear section breaks.
 
 - **Pay Cycle Timeline:** Visual timeline of bi-weekly pay cycles, current cycle highlighted, next pay date callout
 - **KPIs:** Total payroll this cycle, pending approvals count, exceptions count, next deposit date
@@ -257,7 +299,7 @@ All Act 5 modules pull from the same data sources already used in Act 4:
 - `COMP_PLAN`, `COMP_TIERS`, `EMCO_GATES`, `KICKERS`
 - New constants needed: `TRANSACTIONS` (crediting samples), `PAYMENTS` (ledger), `CLUB_TIERS`
 
-Define shared data in a new file: `app/(demos)/proofline-andrews/comp/mgmt/data/constants.ts` or extend existing constants files.
+Add new constants to `data/proofline/mgmt.ts` and export through `data/proofline/index.ts`, following the existing `@/data/proofline` barrel pattern used by all comp pages.
 
 ## Tab Component Pattern
 
@@ -277,5 +319,5 @@ Tabs styled with the Act 5 accent color (`#0EA5E9`) for active state, `--pl-text
 - No functional actions (approve payments, resolve inquiries) — demo is read-only
 - No real data integrations — all mock data
 - No changes to Acts 1-3
-- No changes to Act 4 page content (only nav restructuring)
+- No changes to Act 4 page content (except ActNavigation label/count updates and removing moved pages)
 - No new shared components beyond what's needed for tabs
