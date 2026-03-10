@@ -54,21 +54,21 @@ export function LightAreaChart({
               })}
             </defs>
           )}
-          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-          <XAxis dataKey={xKey} axisLine={false} tickLine={false} tick={{ fill: '#718096', fontSize: 11 }} />
-          <YAxis axisLine={false} tickLine={false} tick={{ fill: '#718096', fontSize: 11 }} tickFormatter={(v) => valFormatter(v as number)} />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--pl-chart-grid)" />
+          <XAxis dataKey={xKey} axisLine={false} tickLine={false} tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
+          <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} tickFormatter={(v) => valFormatter(v as number)} />
           <Tooltip
             contentStyle={{
-              background: '#FFFFFF',
-              border: '1px solid #E2E8F0',
+              background: 'var(--pl-chart-tooltip-bg)',
+              border: '1px solid var(--pl-chart-tooltip-border)',
               borderRadius: 8,
-              color: '#1A1A2E',
+              color: 'var(--pl-text)',
               fontSize: 12,
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
             }}
             formatter={(value) => [valFormatter(value as number), undefined]}
           />
-          {yKeys.length > 1 && <Legend wrapperStyle={{ fontSize: 11, color: '#4A5568' }} />}
+          {yKeys.length > 1 && <Legend wrapperStyle={{ fontSize: 11, color: 'var(--pl-text-secondary)' }} />}
           {yKeys.map((key, idx) => {
             const color = colors[idx % colors.length];
             return (

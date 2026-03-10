@@ -18,10 +18,10 @@ export function BarChart({ data, valueKey, labelKey, color = '#C6A052', maxVal }
         const val = Number(d[valueKey]);
         return (
           <div key={i} className="flex items-center gap-2.5">
-            <div className="w-[90px] text-[11px] text-right font-mono shrink-0" style={{ color: '#718096' }}>
+            <div className="w-[90px] text-[11px] text-right font-mono shrink-0" style={{ color: 'var(--pl-text-muted)' }}>
               {String(d[labelKey])}
             </div>
-            <div className="flex-1 h-[18px] overflow-hidden rounded" style={{ background: '#F1F5F9' }}>
+            <div className="flex-1 h-[18px] overflow-hidden rounded" style={{ background: 'var(--pl-chart-bar-track)' }}>
               <div
                 className="h-full rounded flex items-center justify-end pr-1.5 transition-[width] duration-500 ease-out"
                 style={{

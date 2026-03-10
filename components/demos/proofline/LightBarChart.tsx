@@ -16,10 +16,10 @@ export function LightBarChart({ data, maxVal, formatValue }: LightBarChartProps)
     <div className="flex flex-col gap-2.5">
       {data.map((d, i) => (
         <div key={i} className="flex items-center gap-3">
-          <div className="w-[120px] text-[12px] text-right font-medium shrink-0" style={{ color: '#4A5568' }}>
+          <div className="w-[120px] text-[12px] text-right font-medium shrink-0" style={{ color: 'var(--pl-text-secondary)' }}>
             {d.label}
           </div>
-          <div className="flex-1 h-[22px] overflow-hidden rounded-md" style={{ background: '#F1F5F9' }}>
+          <div className="flex-1 h-[22px] overflow-hidden rounded-md" style={{ background: 'var(--pl-chart-bar-track)' }}>
             <div
               className="h-full rounded-md flex items-center justify-end pr-2 transition-[width] duration-500 ease-out"
               style={{
