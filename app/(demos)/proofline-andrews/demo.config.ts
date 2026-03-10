@@ -2,6 +2,7 @@ import { defineDemo } from '@/components/demo-shell';
 import { Beer } from 'lucide-react';
 
 export default defineDemo({
+  darkMode: true,
   client: {
     name: 'Andrews Distributing',
     tagline: 'Revenue Operating System',
