@@ -16,6 +16,7 @@
   --pl-card: #FFFFFF;
   --pl-card-alt: #F7FAFC;
   --pl-border: #E2E8F0;
+  --pl-border-faint: #EDF2F7;
   --pl-shadow: 0 1px 3px rgba(0,0,0,0.06);
   --pl-hover: rgba(0,0,0,0.04);
   --pl-stripe: #F8FAFC;
@@ -57,6 +58,7 @@
   --pl-card: #1E293B;
   --pl-card-alt: #162032;
   --pl-border: #334155;
+  --pl-border-faint: #1E293B;
   --pl-shadow: 0 1px 3px rgba(0,0,0,0.3);
   --pl-hover: rgba(255,255,255,0.04);
   --pl-stripe: rgba(255,255,255,0.03);

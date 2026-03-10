@@ -68,6 +68,7 @@ export interface CompTier {
   ceiling: number;     // attainment ceiling
   rate: number;        // commission rate (e.g., 0.025 = 2.5%)
   description: string;
+  color: string;
 }
 
 export const COMP_TIERS: CompTier[] = [
@@ -78,6 +79,7 @@ export const COMP_TIERS: CompTier[] = [
     ceiling: 999,    // uncapped
     rate: 0.025,     // 2.5%
     description: 'Top performers exceeding 105% attainment. Lowest commission rate because base earnings are already high from volume.',
+    color: '#059669',
   },
   {
     level: 2,
@@ -86,6 +88,7 @@ export const COMP_TIERS: CompTier[] = [
     ceiling: 1.05,
     rate: 0.035,     // 3.5%
     description: 'Solid performers between 90-105% attainment. The sweet spot where most seasoned reps operate.',
+    color: '#2563eb',
   },
   {
     level: 3,
@@ -94,6 +97,7 @@ export const COMP_TIERS: CompTier[] = [
     ceiling: 0.90,
     rate: 0.050,     // 5.0%
     description: 'Developing reps or those in transition. Higher rate incentivizes catch-up behavior.',
+    color: '#c9a84c',
   },
   {
     level: 4,
@@ -102,6 +106,7 @@ export const COMP_TIERS: CompTier[] = [
     ceiling: 0.75,
     rate: 0.065,     // 6.5%
     description: 'New hires or struggling reps below 75% attainment. Highest rate to ensure minimum viable earnings.',
+    color: '#EF4444',
   },
 ];
 
