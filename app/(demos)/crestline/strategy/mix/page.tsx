@@ -60,8 +60,8 @@ export default function ProductMix() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Product Mix</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Product Mix</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Category allocation, margin analysis, and department performance across 5 selling departments
         </p>
       </div>
@@ -76,42 +76,42 @@ export default function ProductMix() {
 
       {/* Donut + Revenue Bars */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Revenue by Department (%)</p>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Revenue by Department (%)</p>
           <DonutChart segments={MIX_DONUT} centerValue={`$${totalRevenue}M`} centerLabel="Revenue" size={200} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Department Revenue ($M)</p>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Department Revenue ($M)</p>
           <BarChart data={REVENUE_BARS} unit="M" />
         </div>
       </div>
 
       {/* Margin Analysis Table */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Department Margin & Commission Analysis</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Department Margin & Commission Analysis</p>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Department', 'Avg Margin', 'Revenue', 'Mix %', 'Base Rate', 'Premium Rate'].map((h) => (
-                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: '#94A3B8' }}>{h}</th>
+                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {DEPT_MARGINS.map((row) => (
-                <tr key={row.department} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                <tr key={row.department} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
                   <td className="py-2 px-3">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: row.color }} />
-                      <span className="font-medium" style={{ color: '#0F172A' }}>{row.department}</span>
+                      <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.department}</span>
                     </div>
                   </td>
                   <td className="py-2 px-3 font-mono font-semibold" style={{ color: COLORS.accent }}>{row.margin}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: '#0F172A' }}>{row.revenue}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: '#475569' }}>{row.contribution}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: '#475569' }}>{row.baseRate}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{row.revenue}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.contribution}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.baseRate}</td>
                   <td className="py-2 px-3 font-mono font-semibold" style={{ color: '#10B981' }}>{row.premiumRate}</td>
                 </tr>
               ))}
@@ -121,29 +121,29 @@ export default function ProductMix() {
       </div>
 
       {/* Margin Bar Chart */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Average Product Margin by Department (%)</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Average Product Margin by Department (%)</p>
         <BarChart data={MARGIN_BAR_DATA} unit="%" />
       </div>
 
       {/* Product Catalog Grid */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Product Catalog</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Product Catalog</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {PRODUCTS.map((p) => {
             const dept = SELLING_DEPTS.find((d) => d.id === p.department);
             return (
-              <div key={p.id} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0', borderLeftWidth: 3, borderLeftColor: dept?.color ?? '#94A3B8' }}>
-                <p className="text-xs font-medium truncate" style={{ color: '#0F172A' }}>{p.name}</p>
-                <p className="text-[10px] mt-0.5" style={{ color: '#94A3B8' }}>{p.category}</p>
+              <div key={p.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)', borderLeftWidth: 3, borderLeftColor: dept?.color ?? '#94A3B8' }}>
+                <p className="text-xs font-medium truncate" style={{ color: 'var(--pl-text)' }}>{p.name}</p>
+                <p className="text-[10px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{p.category}</p>
                 <div className="mt-2 flex justify-between text-[11px]">
-                  <span className="font-mono font-medium" style={{ color: '#0F172A' }}>${p.price}</span>
+                  <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>${p.price}</span>
                   <span className="font-mono" style={{ color: '#10B981' }}>{Math.round(p.margin * 100)}% margin</span>
                 </div>
                 {p.tags.length > 0 && (
                   <div className="mt-1.5 flex gap-1 flex-wrap">
                     {p.tags.map((tag) => (
-                      <span key={tag} className="rounded px-1 py-0.5 text-[9px] font-medium" style={{ backgroundColor: '#F1F5F9', color: '#475569' }}>{tag}</span>
+                      <span key={tag} className="rounded px-1 py-0.5 text-[9px] font-medium" style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}>{tag}</span>
                     ))}
                   </div>
                 )}
@@ -165,15 +165,15 @@ export default function ProductMix() {
               key={f.id}
               className="rounded-xl border p-4 cursor-pointer transition-all"
               style={{
-                borderColor: isActive ? f.color : '#E2E8F0',
-                backgroundColor: isActive ? `${f.color}08` : '#FFFFFF',
+                borderColor: isActive ? f.color : 'var(--pl-border)',
+                backgroundColor: isActive ? `${f.color}08` : 'var(--pl-card)',
                 borderWidth: isActive ? 2 : 1,
               }}
               onClick={() => setFormat(f.id)}
             >
-              <p className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{f.name}</p>
-              <p className="text-[11px] mb-2" style={{ color: '#94A3B8' }}>{f.count} stores</p>
-              <p className="text-[11px] mb-2" style={{ color: '#475569' }}>{note?.note}</p>
+              <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>{f.name}</p>
+              <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-muted)' }}>{f.count} stores</p>
+              <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-secondary)' }}>{note?.note}</p>
               <p className="text-[10px] italic" style={{ color: f.color }}>{note?.highlight}</p>
             </div>
           );

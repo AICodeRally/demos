@@ -11,6 +11,7 @@ export default defineDemo({
     badge: 'Interactive Demo',
   },
   theme: 'midnight',
+  darkMode: true,
   colors: {
     primary: '#1a1f3d',
     accent: '#c9a84c',

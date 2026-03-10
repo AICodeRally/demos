@@ -76,8 +76,8 @@ export default function TargetsAndQuotas() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Targets & Quotas</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Targets & Quotas</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           ${totalQuota}M corporate target cascading through districts, formats, and achiever tiers
         </p>
       </div>
@@ -95,19 +95,19 @@ export default function TargetsAndQuotas() {
         {ACHIEVER_TIERS.map((tier) => {
           const count = ASSOCIATES.filter((a) => a.achieverTier === tier.id).length;
           return (
-            <div key={tier.id} className="rounded-xl bg-white border p-4" style={{ borderColor: '#E2E8F0' }}>
+            <div key={tier.id} className="rounded-xl border p-4" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: tier.color }} />
-                <span className="text-sm font-semibold" style={{ color: '#0F172A' }}>{tier.label}</span>
+                <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{tier.label}</span>
               </div>
               <p className="text-2xl font-bold mb-1" style={{ color: tier.color }}>{tier.threshold}%</p>
-              <p className="text-[10px]" style={{ color: '#94A3B8' }}>Attainment Threshold</p>
+              <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Attainment Threshold</p>
               <div className="mt-2 flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Associates</span>
-                <span className="font-mono font-medium" style={{ color: '#0F172A' }}>{count}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Associates</span>
+                <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{count}</span>
               </div>
               <div className="flex justify-between text-xs mt-1">
-                <span style={{ color: '#94A3B8' }}>Additive Rate</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Additive Rate</span>
                 <span className="font-mono font-medium" style={{ color: tier.color }}>{(tier.additiveRate * 100).toFixed(1)}%</span>
               </div>
             </div>
@@ -117,8 +117,8 @@ export default function TargetsAndQuotas() {
 
       {/* Attainment Bar + Quota by District */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Associate Attainment vs Target (%)
           </p>
           <BarChart data={ASSOCIATE_ATTAINMENT} unit="%" />
@@ -126,14 +126,14 @@ export default function TargetsAndQuotas() {
             {ACHIEVER_TIERS.filter((t) => t.id !== 'none').map((t) => (
               <div key={t.id} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: t.color }} />
-                <span className="text-[10px]" style={{ color: '#94A3B8' }}>{t.label}</span>
+                <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{t.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Quota Allocation by District ($M)
           </p>
           <BarChart data={DISTRICT_QUOTA_DATA} unit="M" />
@@ -141,8 +141,8 @@ export default function TargetsAndQuotas() {
       </div>
 
       {/* District x Month Attainment HeatMap */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           District Attainment by Month (% of target)
         </p>
         <HeatMap
@@ -156,26 +156,26 @@ export default function TargetsAndQuotas() {
       {/* Rep Quota Table */}
       <FormatSelector selected={format} onSelect={setFormat} />
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Associate Quotas — {format.charAt(0).toUpperCase() + format.slice(1)}
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Name', 'Store', 'Quota', 'Actual', 'Attainment', 'Pacing'].map((h) => (
-                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: '#94A3B8' }}>{h}</th>
+                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {(FORMAT_QUOTAS[format] ?? []).map((r) => (
-                <tr key={r.name} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                  <td className="py-2 px-3 font-medium" style={{ color: '#0F172A' }}>{r.name}</td>
-                  <td className="py-2 px-3" style={{ color: '#475569' }}>{r.store}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: '#0F172A' }}>{r.quota}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: '#0F172A' }}>{r.actual}</td>
+                <tr key={r.name} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                  <td className="py-2 px-3 font-medium" style={{ color: 'var(--pl-text)' }}>{r.name}</td>
+                  <td className="py-2 px-3" style={{ color: 'var(--pl-text-secondary)' }}>{r.store}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{r.quota}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{r.actual}</td>
                   <td className="py-2 px-3 font-mono font-semibold" style={{ color: r.attainment >= 100 ? '#10B981' : r.attainment >= 90 ? COLORS.standard : '#EF4444' }}>
                     {r.attainment}%
                   </td>

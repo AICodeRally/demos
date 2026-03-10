@@ -66,8 +66,8 @@ export default function PromotionsAndSpiffs() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Promotions & SPIFFs</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Promotions & SPIFFs</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           6 promotional events and 3 active SPIFFs driving {totalPromoBudget} in annual spend with targeted revenue lift
         </p>
       </div>
@@ -81,12 +81,12 @@ export default function PromotionsAndSpiffs() {
       </div>
 
       {/* SPIFF Cards */}
-      <p className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>Active SPIFF Programs</p>
+      <p className="text-sm font-semibold mb-3" style={{ color: 'var(--pl-text)' }}>Active SPIFF Programs</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {SPIFFS.map((spiff) => (
-          <div key={spiff.name} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0', borderTopWidth: 3, borderTopColor: COLORS.accent }}>
+          <div key={spiff.name} className="rounded-xl border p-5" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTopWidth: 3, borderTopColor: COLORS.accent }}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{spiff.name}</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{spiff.name}</p>
               {spiff.active && (
                 <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold" style={{ backgroundColor: '#10B98118', color: '#10B981' }}>
                   Active
@@ -94,28 +94,28 @@ export default function PromotionsAndSpiffs() {
               )}
             </div>
             <p className="text-2xl font-bold mb-2" style={{ color: COLORS.accent }}>${spiff.amount}</p>
-            <p className="text-[11px] mb-3" style={{ color: '#475569' }}>{spiff.trigger}</p>
+            <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-secondary)' }}>{spiff.trigger}</p>
             <div className="flex justify-between text-xs">
-              <span style={{ color: '#94A3B8' }}>Expires</span>
-              <span className="font-mono" style={{ color: '#0F172A' }}>{spiff.expires ?? 'Ongoing'}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Expires</span>
+              <span className="font-mono" style={{ color: 'var(--pl-text)' }}>{spiff.expires ?? 'Ongoing'}</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* Promotion Timeline */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Annual Promotion Timeline</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Annual Promotion Timeline</p>
         <div className="relative">
           <div className="flex mb-2">
             {MONTH_LABELS.map((m) => (
-              <div key={m} className="flex-1 text-center text-[10px] font-medium" style={{ color: '#94A3B8' }}>{m}</div>
+              <div key={m} className="flex-1 text-center text-[10px] font-medium" style={{ color: 'var(--pl-text-muted)' }}>{m}</div>
             ))}
           </div>
           <div className="space-y-2">
             {PROMO_EVENTS.map((p, i) => (
               <div key={p.name} className="flex items-center gap-2">
-                <span className="w-[130px] text-right text-[11px] shrink-0 truncate" style={{ color: '#475569' }}>{p.name}</span>
+                <span className="w-[130px] text-right text-[11px] shrink-0 truncate" style={{ color: 'var(--pl-text-secondary)' }}>{p.name}</span>
                 <div className="flex-1 relative h-6">
                   {p.months.map((m) => {
                     const left = (m / 12) * 100;
@@ -145,20 +145,20 @@ export default function PromotionsAndSpiffs() {
 
       {/* ROI Bar + Spend Donut */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Revenue Lift by Promotion (%)</p>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Revenue Lift by Promotion (%)</p>
           <BarChart data={ROI_DATA} unit="%" />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Promotional Spend Breakdown</p>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Promotional Spend Breakdown</p>
           <DonutChart segments={SPEND_SEGMENTS} centerValue={totalPromoBudget} centerLabel="Total Spend" size={200} />
         </div>
       </div>
 
       {/* Promo x Department HeatMap */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Promotion x Department Participation</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Promotion x Department Participation</p>
         <HeatMap
           rows={PROMO_EVENTS.map((p) => p.name)}
           cols={SELLING_DEPTS.map((d) => d.name.split(' ')[0])}
@@ -168,34 +168,34 @@ export default function PromotionsAndSpiffs() {
         <div className="flex justify-center gap-4 mt-3">
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded" style={{ backgroundColor: COLORS.primary }} />
-            <span className="text-[10px]" style={{ color: '#94A3B8' }}>Participating</span>
+            <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Participating</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded" style={{ backgroundColor: '#F1F5F9', border: '1px solid #E2E8F0' }} />
-            <span className="text-[10px]" style={{ color: '#94A3B8' }}>Not participating</span>
+            <span className="w-3 h-3 rounded" style={{ backgroundColor: 'var(--pl-stripe)', border: '1px solid var(--pl-border)' }} />
+            <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Not participating</span>
           </div>
         </div>
       </div>
 
       {/* Monthly Calendar Table */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Monthly Promotion Calendar</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Monthly Promotion Calendar</p>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Month', 'Events', 'Active SPIFFs', 'Est. Spend'].map((h) => (
-                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: '#94A3B8' }}>{h}</th>
+                  <th key={h} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {MONTHLY_ACTIVITY.map((row) => (
-                <tr key={row.month} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                  <td className="py-2 px-3 font-medium" style={{ color: '#0F172A' }}>{row.month}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: row.events > 0 ? COLORS.flagship : '#94A3B8' }}>{row.events}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: row.spiffs > 1 ? COLORS.accent : '#475569' }}>{row.spiffs}</td>
-                  <td className="py-2 px-3 font-mono font-medium" style={{ color: '#0F172A' }}>{row.spend}</td>
+                <tr key={row.month} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                  <td className="py-2 px-3 font-medium" style={{ color: 'var(--pl-text)' }}>{row.month}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: row.events > 0 ? COLORS.flagship : 'var(--pl-text-muted)' }}>{row.events}</td>
+                  <td className="py-2 px-3 font-mono" style={{ color: row.spiffs > 1 ? COLORS.accent : 'var(--pl-text-secondary)' }}>{row.spiffs}</td>
+                  <td className="py-2 px-3 font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{row.spend}</td>
                 </tr>
               ))}
             </tbody>
@@ -204,38 +204,38 @@ export default function PromotionsAndSpiffs() {
       </div>
 
       {/* Promo Detail Cards */}
-      <p className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>Promotion Details</p>
+      <p className="text-sm font-semibold mb-3" style={{ color: 'var(--pl-text)' }}>Promotion Details</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {PROMO_EVENTS.map((p, i) => (
           <div
             key={p.name}
             className="rounded-xl border p-4 cursor-pointer transition-all"
             style={{
-              borderColor: selectedPromo === i ? p.color : '#E2E8F0',
+              borderColor: selectedPromo === i ? p.color : 'var(--pl-border)',
               borderWidth: selectedPromo === i ? 2 : 1,
               borderTopWidth: 3,
               borderTopColor: p.color,
-              backgroundColor: selectedPromo === i ? `${p.color}08` : '#FFFFFF',
+              backgroundColor: selectedPromo === i ? `${p.color}08` : 'var(--pl-card)',
             }}
             onClick={() => setSelectedPromo(i)}
           >
-            <p className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{p.name}</p>
-            <p className="text-[11px] mb-3" style={{ color: '#94A3B8' }}>{p.span}</p>
+            <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>{p.name}</p>
+            <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>{p.span}</p>
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Departments</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Departments</span>
                 <div className="flex gap-1 flex-wrap justify-end">
                   {p.departments.map((d) => (
-                    <span key={d} className="rounded px-1 py-0.5 text-[9px] font-medium" style={{ backgroundColor: '#F1F5F9', color: '#475569' }}>{d.split(' ')[0]}</span>
+                    <span key={d} className="rounded px-1 py-0.5 text-[9px] font-medium" style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}>{d.split(' ')[0]}</span>
                   ))}
                 </div>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Budget</span>
-                <span className="font-mono font-medium" style={{ color: '#0F172A' }}>{p.budget}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Budget</span>
+                <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{p.budget}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Projected Lift</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Projected Lift</span>
                 <span className="font-mono font-semibold" style={{ color: '#10B981' }}>+{p.lift}</span>
               </div>
             </div>

@@ -56,8 +56,8 @@ export default function RetroCorrections() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Retro Corrections</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Retro Corrections</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Time-rewind and replay — immutable snapshots make corrections traceable, not destructive
         </p>
       </div>
@@ -71,9 +71,9 @@ export default function RetroCorrections() {
       </div>
 
       {/* Snapshot Viewer */}
-      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Snapshot Viewer — Elena Vasquez</h2>
-        <p className="text-xs mb-4" style={{ color: '#475569' }}>
+      <div className="rounded-xl border p-5 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>Snapshot Viewer — Elena Vasquez</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
           Three immutable snapshots showing original, next period, and corrected calculations
         </p>
 
@@ -88,9 +88,9 @@ export default function RetroCorrections() {
                 onClick={() => setSelectedIdx(i)}
                 className="rounded-lg px-4 py-2 text-xs font-semibold transition-colors"
                 style={{
-                  backgroundColor: isActive ? (isCorrected ? '#DCFCE7' : '#DBEAFE') : '#F8FAFC',
-                  color: isActive ? (isCorrected ? '#059669' : COLORS.standard) : '#64748B',
-                  border: isActive ? `2px solid ${isCorrected ? '#059669' : COLORS.standard}` : '1px solid #E2E8F0',
+                  backgroundColor: isActive ? (isCorrected ? '#DCFCE7' : '#DBEAFE') : 'var(--pl-bg)',
+                  color: isActive ? (isCorrected ? '#059669' : COLORS.standard) : 'var(--pl-text-muted)',
+                  border: isActive ? `2px solid ${isCorrected ? '#059669' : COLORS.standard}` : '1px solid var(--pl-border)',
                 }}
               >
                 {i === 0 ? 'Original' : i === 1 ? 'Next Period' : 'Corrected'}
@@ -105,11 +105,11 @@ export default function RetroCorrections() {
           const snap = CALC_SNAPSHOTS[selectedIdx];
           const isCorrected = snap.periodLabel.includes('CORRECTED');
           return (
-            <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC' }}>
+            <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <span className="text-sm font-bold" style={{ color: '#0F172A' }}>{snap.repName}</span>
-                  <span className="text-xs ml-2" style={{ color: '#475569' }}>{snap.department} | Store {snap.store}</span>
+                  <span className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{snap.repName}</span>
+                  <span className="text-xs ml-2" style={{ color: 'var(--pl-text-secondary)' }}>{snap.department} | Store {snap.store}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
@@ -129,48 +129,48 @@ export default function RetroCorrections() {
               <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
-                    <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Component</th>
-                    <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Amount</th>
+                  <tr style={{ borderBottom: '2px solid var(--pl-border)' }}>
+                    <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Component</th>
+                    <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {snap.components.map(c => (
-                    <tr key={c.componentId} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                      <td className="py-2 text-xs" style={{ color: '#0F172A' }}>{c.label}</td>
-                      <td className="py-2 text-xs text-right font-mono font-medium" style={{ color: '#0F172A' }}>${c.amount.toLocaleString()}</td>
+                    <tr key={c.componentId} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                      <td className="py-2 text-xs" style={{ color: 'var(--pl-text)' }}>{c.label}</td>
+                      <td className="py-2 text-xs text-right font-mono font-medium" style={{ color: 'var(--pl-text)' }}>${c.amount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr style={{ borderTop: '2px solid #E2E8F0' }}>
-                    <td className="py-2 text-sm font-bold" style={{ color: '#0F172A' }}>Total</td>
-                    <td className="py-2 text-sm font-bold text-right font-mono" style={{ color: '#0F172A' }}>${snap.total.toLocaleString()}</td>
+                  <tr style={{ borderTop: '2px solid var(--pl-border)' }}>
+                    <td className="py-2 text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Total</td>
+                    <td className="py-2 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text)' }}>${snap.total.toLocaleString()}</td>
                   </tr>
                 </tfoot>
               </table>
               </div>
-              <p className="text-[10px] mt-2 font-mono" style={{ color: '#94a3b8' }}>Frozen at: {fmtTs(snap.frozenAt)}</p>
+              <p className="text-[10px] mt-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>Frozen at: {fmtTs(snap.frozenAt)}</p>
             </div>
           );
         })()}
       </div>
 
       {/* Diff View: Original vs Corrected */}
-      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Diff View — Original vs. Corrected</h2>
-        <p className="text-xs mb-4" style={{ color: '#475569' }}>
+      <div className="rounded-xl border p-5 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>Diff View — Original vs. Corrected</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
           Side-by-side comparison showing exactly what changed and why
         </p>
 
         <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
-              <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Component</th>
-              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Original (PP3)</th>
-              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Corrected (PP3)</th>
-              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Delta</th>
+            <tr style={{ borderBottom: '2px solid var(--pl-border)' }}>
+              <th className="text-left py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Component</th>
+              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Original (PP3)</th>
+              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Corrected (PP3)</th>
+              <th className="text-right py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Delta</th>
             </tr>
           </thead>
           <tbody>
@@ -178,11 +178,11 @@ export default function RetroCorrections() {
               const cc = corrected.components[i];
               const delta = cc.amount - oc.amount;
               return (
-                <tr key={oc.componentId} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                  <td className="py-3 text-xs font-medium" style={{ color: '#0F172A' }}>{oc.label}</td>
-                  <td className="py-3 text-xs text-right font-mono" style={{ color: '#64748B' }}>${oc.amount.toLocaleString()}</td>
-                  <td className="py-3 text-xs text-right font-mono" style={{ color: '#0F172A' }}>${cc.amount.toLocaleString()}</td>
-                  <td className="py-3 text-xs text-right font-mono font-semibold" style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : '#94a3b8' }}>
+                <tr key={oc.componentId} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                  <td className="py-3 text-xs font-medium" style={{ color: 'var(--pl-text)' }}>{oc.label}</td>
+                  <td className="py-3 text-xs text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>${oc.amount.toLocaleString()}</td>
+                  <td className="py-3 text-xs text-right font-mono" style={{ color: 'var(--pl-text)' }}>${cc.amount.toLocaleString()}</td>
+                  <td className="py-3 text-xs text-right font-mono font-semibold" style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : 'var(--pl-text-muted)' }}>
                     {delta > 0 ? '+' : ''}{delta === 0 ? '—' : `$${delta.toLocaleString()}`}
                   </td>
                 </tr>
@@ -190,10 +190,10 @@ export default function RetroCorrections() {
             })}
           </tbody>
           <tfoot>
-            <tr style={{ borderTop: '2px solid #E2E8F0' }}>
-              <td className="py-3 text-sm font-bold" style={{ color: '#0F172A' }}>Total</td>
-              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: '#64748B' }}>${original.total.toLocaleString()}</td>
-              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: '#0F172A' }}>${corrected.total.toLocaleString()}</td>
+            <tr style={{ borderTop: '2px solid var(--pl-border)' }}>
+              <td className="py-3 text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Total</td>
+              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>${original.total.toLocaleString()}</td>
+              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text)' }}>${corrected.total.toLocaleString()}</td>
               <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: '#059669' }}>+${(corrected.total - original.total).toLocaleString()}</td>
             </tr>
           </tfoot>
@@ -208,8 +208,8 @@ export default function RetroCorrections() {
             <span className="text-white text-lg font-bold">$</span>
           </div>
           <div>
-            <h3 className="text-sm font-bold mb-1" style={{ color: '#0F172A' }}>Payroll Adjustment Generated</h3>
-            <p className="text-xs" style={{ color: '#475569' }}>
+            <h3 className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)' }}>Payroll Adjustment Generated</h3>
+            <p className="text-xs" style={{ color: 'var(--pl-text-secondary)' }}>
               <strong style={{ color: '#059669' }}>+$400</strong> adjustment applied to <strong>PP5 (Apr 1-15)</strong> for Elena Vasquez.
               Original PP3 snapshot preserved. Corrected snapshot created as separate immutable record.
             </p>
@@ -218,9 +218,9 @@ export default function RetroCorrections() {
       </div>
 
       {/* Replay Mechanism */}
-      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Replay Mechanism</h2>
-        <p className="text-xs mb-5" style={{ color: '#475569' }}>
+      <div className="rounded-xl border p-5 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>Replay Mechanism</h2>
+        <p className="text-xs mb-5" style={{ color: 'var(--pl-text-secondary)' }}>
           The 5-step correction pipeline — errors are detected, snapshots replayed, and adjustments generated automatically
         </p>
 
@@ -234,8 +234,8 @@ export default function RetroCorrections() {
                 >
                   {step.icon}
                 </div>
-                <p className="text-xs font-semibold text-center mb-1" style={{ color: '#0F172A' }}>{step.label}</p>
-                <p className="text-[10px] text-center px-1" style={{ color: '#475569' }}>{step.desc}</p>
+                <p className="text-xs font-semibold text-center mb-1" style={{ color: 'var(--pl-text)' }}>{step.label}</p>
+                <p className="text-[10px] text-center px-1" style={{ color: 'var(--pl-text-secondary)' }}>{step.desc}</p>
               </div>
               {i < REPLAY_STEPS.length - 1 && (
                 <div className="flex items-center pt-3 px-0.5 flex-shrink-0">
@@ -249,15 +249,15 @@ export default function RetroCorrections() {
       </div>
 
       {/* Audit Trail */}
-      <div className="rounded-xl border bg-white p-5 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: '#0F172A' }}>Audit Trail</h2>
-        <p className="text-xs mb-4" style={{ color: '#475569' }}>
+      <div className="rounded-xl border p-5 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>Audit Trail</h2>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
           Every action timestamped and attributed — complete chain of custody
         </p>
 
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-3 top-2 bottom-2 w-0.5" style={{ backgroundColor: '#E2E8F0' }} />
+          <div className="absolute left-3 top-2 bottom-2 w-0.5" style={{ backgroundColor: 'var(--pl-border)' }} />
 
           <div className="space-y-4">
             {AUDIT_TRAIL.map((entry, i) => (
@@ -265,17 +265,17 @@ export default function RetroCorrections() {
                 <div
                   className="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 z-10 border-2"
                   style={{
-                    backgroundColor: i === AUDIT_TRAIL.length - 1 ? '#059669' : '#FFFFFF',
+                    backgroundColor: i === AUDIT_TRAIL.length - 1 ? '#059669' : 'var(--pl-card)',
                     borderColor: i === AUDIT_TRAIL.length - 1 ? '#059669' : '#CBD5E1',
                   }}
                 />
-                <div className="flex-1 rounded-lg p-3" style={{ backgroundColor: '#F8FAFC' }}>
+                <div className="flex-1 rounded-lg p-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold" style={{ color: '#0F172A' }}>{entry.action}</span>
-                    <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{entry.ts}</span>
+                    <span className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>{entry.action}</span>
+                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{entry.ts}</span>
                   </div>
-                  <p className="text-[11px]" style={{ color: '#475569' }}>{entry.detail}</p>
-                  <p className="text-[10px] mt-1 font-medium" style={{ color: '#94a3b8' }}>{entry.actor}</p>
+                  <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{entry.detail}</p>
+                  <p className="text-[10px] mt-1 font-medium" style={{ color: 'var(--pl-text-muted)' }}>{entry.actor}</p>
                 </div>
               </div>
             ))}
@@ -286,19 +286,19 @@ export default function RetroCorrections() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Corrections by Month */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             Corrections by Month
           </p>
-          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+          <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
             6-month history — January spike from year-end reconciliation
           </p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={CORRECTIONS_BY_MONTH} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
-              <XAxis dataKey="month" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <XAxis dataKey="month" tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
+              <YAxis tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
               <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} formatter={(v) => [v, 'Corrections']} />
-              <ReferenceLine y={15} stroke="#94a3b8" strokeDasharray="3 3" label={{ value: 'Avg', fill: '#94a3b8', fontSize: 10, position: 'right' }} />
+              <ReferenceLine y={15} stroke="var(--pl-text-muted)" strokeDasharray="3 3" label={{ value: 'Avg', fill: 'var(--pl-text-muted)', fontSize: 10, position: 'right' }} />
               <Bar dataKey="count" radius={[4, 4, 0, 0]} barSize={32}>
                 {CORRECTIONS_BY_MONTH.map((entry, i) => (
                   <Cell key={i} fill={entry.severity === 'red' ? '#DC2626' : '#D97706'} />
@@ -309,17 +309,17 @@ export default function RetroCorrections() {
         </div>
 
         {/* Waterfall Chart — Adjustment Breakdown */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             Adjustment Waterfall
           </p>
-          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+          <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
             Original calculation through each correction to final adjusted payout
           </p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={WATERFALL_DATA} margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
-              <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 9 }} interval={0} angle={0} />
-              <YAxis domain={[0, 5000]} tickFormatter={(v) => `$${(Number(v) / 1000).toFixed(1)}k`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <XAxis dataKey="name" tick={{ fill: 'var(--pl-text-muted)', fontSize: 9 }} interval={0} angle={0} />
+              <YAxis domain={[0, 5000]} tickFormatter={(v) => `$${(Number(v) / 1000).toFixed(1)}k`} tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
               <Tooltip
                 contentStyle={{ borderRadius: 8, fontSize: 12 }}
                 formatter={(v, name) => {
@@ -340,15 +340,15 @@ export default function RetroCorrections() {
           <div className="flex items-center gap-4 mt-2 justify-center">
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#1a1f3d' }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>Original / Final</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Original / Final</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#059669' }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>Increase</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Increase</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: '#DC2626' }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>Decrease</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Decrease</span>
             </div>
           </div>
         </div>
@@ -356,7 +356,7 @@ export default function RetroCorrections() {
 
       {/* Key callout */}
       <div className="rounded-xl border-2 p-4" style={{ borderColor: COLORS.accent, backgroundColor: '#FFFBEB' }}>
-        <p className="text-xs font-semibold" style={{ color: '#0F172A' }}>
+        <p className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>
           Every calculation is immutable and timestamped. Corrections create new snapshots — originals are never modified.
         </p>
       </div>

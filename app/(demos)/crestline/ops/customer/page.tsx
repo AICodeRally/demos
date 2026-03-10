@@ -99,15 +99,15 @@ export default function CustomerJourney() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Customer Journey</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Customer Journey</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           End-to-end conversion funnel, traffic analysis, and customer segment insights &mdash; Flagship F-001
         </p>
       </div>
 
       {/* Funnel Visualization */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-5" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-5" style={{ color: 'var(--pl-text)' }}>
           Conversion Funnel &mdash; Today
         </p>
         <div className="space-y-2">
@@ -117,7 +117,7 @@ export default function CustomerJourney() {
             const convPct = i > 0 ? ((stage.count / prevCount) * 100).toFixed(0) : '100';
             return (
               <div key={stage.stage} className="flex items-center gap-4">
-                <span className="w-[140px] text-right text-[12px] font-medium shrink-0" style={{ color: '#475569' }}>
+                <span className="w-[140px] text-right text-[12px] font-medium shrink-0" style={{ color: 'var(--pl-text-secondary)' }}>
                   {stage.stage}
                 </span>
                 <div className="flex-1 relative">
@@ -143,8 +143,8 @@ export default function CustomerJourney() {
             );
           })}
         </div>
-        <div className="mt-4 pt-3 border-t text-center" style={{ borderColor: '#F1F5F9' }}>
-          <span className="text-[12px]" style={{ color: '#94A3B8' }}>
+        <div className="mt-4 pt-3 border-t text-center" style={{ borderColor: 'var(--pl-stripe)' }}>
+          <span className="text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>
             Overall Conversion: Browse &rarr; Purchase ={' '}
             <span className="font-bold" style={{ color: '#059669' }}>
               {((FUNNEL[FUNNEL.length - 1].count / FUNNEL[0].count) * 100).toFixed(1)}%
@@ -155,15 +155,15 @@ export default function CustomerJourney() {
 
       {/* Stage Conversion + Traffic by Dept */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Stage Conversion Rate (%)
           </p>
           <BarChart data={STAGE_CONV} unit="%" />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Traffic by Department
           </p>
           <BarChart data={DEPT_TRAFFIC} unit="" />
@@ -172,15 +172,15 @@ export default function CustomerJourney() {
 
       {/* Peak Hours + 30-day Traffic */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Peak Hours Analysis (visitors/hr)
           </p>
           <AreaChart data={PEAK_HOURS} color={COLORS.accent} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             30-Day Traffic Trend (daily visitors)
           </p>
           <AreaChart data={TRAFFIC_TREND} color="#2563eb" showDots={false} />
@@ -189,8 +189,8 @@ export default function CustomerJourney() {
 
       {/* Customer Segments + CSAT Radar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Customer Segments
           </p>
           <div className="space-y-3">
@@ -198,24 +198,24 @@ export default function CustomerJourney() {
               <div
                 key={seg.name}
                 className="rounded-lg p-4 border-l-4"
-                style={{ borderLeftColor: seg.color, backgroundColor: '#F8FAFC' }}
+                style={{ borderLeftColor: seg.color, backgroundColor: 'var(--pl-bg)' }}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[14px] font-bold" style={{ color: '#0F172A' }}>{seg.name}</span>
+                  <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.name}</span>
                   <span className="text-[12px] font-bold font-mono" style={{ color: seg.color }}>{seg.pct}% of traffic</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div>
-                    <span className="text-[9px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Avg Spend</span>
-                    <p className="text-[12px] font-bold" style={{ color: '#0F172A' }}>{seg.asp}</p>
+                    <span className="text-[9px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Avg Spend</span>
+                    <p className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.asp}</p>
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Visits/Mo</span>
-                    <p className="text-[12px] font-bold" style={{ color: '#0F172A' }}>{seg.visits}</p>
+                    <span className="text-[9px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Visits/Mo</span>
+                    <p className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.visits}</p>
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Loyalty</span>
-                    <p className="text-[12px] font-bold" style={{ color: '#0F172A' }}>{seg.loyalty}</p>
+                    <span className="text-[9px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Loyalty</span>
+                    <p className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.loyalty}</p>
                   </div>
                 </div>
               </div>
@@ -223,8 +223,8 @@ export default function CustomerJourney() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Customer Satisfaction (CSAT)
           </p>
           <div className="flex justify-center">
@@ -233,19 +233,19 @@ export default function CustomerJourney() {
           <div className="flex justify-center gap-6 mt-2">
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-0.5 rounded" style={{ backgroundColor: COLORS.flagship }} />
-              <span className="text-[11px]" style={{ color: '#475569' }}>Crestline</span>
+              <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Crestline</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-0.5 rounded border-b border-dashed" style={{ borderColor: '#A8A29E' }} />
-              <span className="text-[11px]" style={{ color: '#475569' }}>Industry Avg</span>
+              <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Industry Avg</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Abandonment Analysis */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Abandonment Analysis
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -253,20 +253,20 @@ export default function CustomerJourney() {
             <div
               key={i}
               className="rounded-lg border-l-4 p-4"
-              style={{ borderLeftColor: item.color, backgroundColor: '#F8FAFC' }}
+              style={{ borderLeftColor: item.color, backgroundColor: 'var(--pl-bg)' }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[12px] font-semibold" style={{ color: '#0F172A' }}>
+                <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                   Drop-off: {item.transition}
                 </span>
                 <span className="text-[13px] font-bold font-mono" style={{ color: item.color }}>
                   {item.dropPct}
                 </span>
               </div>
-              <p className="text-[11px] mb-2" style={{ color: '#475569' }}>
+              <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-secondary)' }}>
                 <span className="font-medium" style={{ color: '#EF4444' }}>Reason:</span> {item.reason}
               </p>
-              <p className="text-[11px]" style={{ color: '#475569' }}>
+              <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>
                 <span className="font-medium" style={{ color: '#10B981' }}>Action:</span> {item.suggestion}
               </p>
             </div>

@@ -128,8 +128,8 @@ export default function WorkforceModel() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Workforce Model</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Workforce Model</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Staffing, scheduling, workforce health, and turnover analysis across {totalAssociates.toLocaleString()} associates
         </p>
       </div>
@@ -146,15 +146,15 @@ export default function WorkforceModel() {
 
       {/* Revenue/Associate + Turnover */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Revenue per Associate by Format ($K)
           </p>
           <BarChart data={REV_PER_ASSOC_BARS} unit="K" />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Turnover Rate by Format (%)
           </p>
           <BarChart data={TURNOVER_BARS} unit="%" />
@@ -163,15 +163,15 @@ export default function WorkforceModel() {
 
       {/* Tenure Distribution + Radar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Tenure Distribution (Sample Associates)
           </p>
           <BarChart data={TENURE_BARS} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Workforce Health — {FORMAT_LABELS[format as FormatKey] ?? 'Flagship'}
           </p>
           <div className="flex justify-center">
@@ -181,11 +181,11 @@ export default function WorkforceModel() {
       </div>
 
       {/* Staffing HeatMap */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-2" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-2" style={{ color: 'var(--pl-text)' }}>
           Optimal Staffing Levels — {FORMAT_LABELS[format as FormatKey] ?? 'Flagship'}
         </p>
-        <p className="text-[11px] mb-4" style={{ color: '#94A3B8' }}>
+        <p className="text-[11px] mb-4" style={{ color: 'var(--pl-text-muted)' }}>
           Traffic-based staffing model (0=low, 100=peak)
         </p>
         <HeatMap
@@ -199,18 +199,18 @@ export default function WorkforceModel() {
       {/* Labor Cost Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {COST_MODELS.map((c) => (
-          <div key={c.format} className="rounded-xl bg-white border p-4" style={{ borderColor: '#E2E8F0' }}>
+          <div key={c.format} className="rounded-xl border p-4" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: c.color }} />
-              <span className="text-sm font-semibold" style={{ color: '#0F172A' }}>{c.format}</span>
+              <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{c.format}</span>
             </div>
             <p className="text-2xl font-bold mb-1" style={{ color: c.color }}>{c.pct}</p>
-            <p className="text-[10px]" style={{ color: '#94A3B8' }}>Labor % of Revenue</p>
+            <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Labor % of Revenue</p>
             <div className="flex justify-between text-xs mt-2">
-              <span style={{ color: '#94A3B8' }}>Headcount</span>
-              <span className="font-mono font-medium" style={{ color: '#0F172A' }}>{c.total.toLocaleString()}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Headcount</span>
+              <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{c.total.toLocaleString()}</span>
             </div>
-            <p className="text-[10px] mt-2 italic" style={{ color: '#475569' }}>{c.note}</p>
+            <p className="text-[10px] mt-2 italic" style={{ color: 'var(--pl-text-secondary)' }}>{c.note}</p>
           </div>
         ))}
       </div>

@@ -81,7 +81,7 @@ export default function RtwcWhatIf() {
     <>
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Real-Time What-If Calculator</h1>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Real-Time What-If Calculator</h1>
           <span
             className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
             style={{ backgroundColor: '#EDE9FE', color: '#7c3aed' }}
@@ -89,7 +89,7 @@ export default function RtwcWhatIf() {
             RTWC
           </span>
         </div>
-        <p className="text-sm" style={{ color: '#475569' }}>
+        <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
           Build a sale basket, select a rep, and see commission impact in real time
         </p>
       </div>
@@ -97,8 +97,8 @@ export default function RtwcWhatIf() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* ── LEFT PANEL: Product Catalog ── */}
         <div className="lg:col-span-3">
-          <div className="rounded-xl bg-white border p-4" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>Product Catalog</p>
+          <div className="rounded-xl border p-4" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+            <p className="text-sm font-semibold mb-3" style={{ color: 'var(--pl-text)' }}>Product Catalog</p>
 
             {/* Department filter tabs */}
             <div className="flex flex-wrap gap-1 mb-3">
@@ -108,8 +108,8 @@ export default function RtwcWhatIf() {
                   onClick={() => setDeptFilter(tab.id)}
                   className="rounded-md px-2 py-1 text-[10px] font-semibold transition-all"
                   style={{
-                    backgroundColor: deptFilter === tab.id ? (DEPT_COLORS[tab.id] ?? COLORS.primary) : '#F1F5F9',
-                    color: deptFilter === tab.id ? '#FFFFFF' : '#475569',
+                    backgroundColor: deptFilter === tab.id ? (DEPT_COLORS[tab.id] ?? COLORS.primary) : 'var(--pl-stripe)',
+                    color: deptFilter === tab.id ? '#FFFFFF' : 'var(--pl-text-secondary)',
                   }}
                 >
                   {tab.label}
@@ -123,10 +123,10 @@ export default function RtwcWhatIf() {
                 <div
                   key={p.id}
                   className="flex items-center justify-between rounded-lg px-3 py-2 border"
-                  style={{ borderColor: '#F1F5F9', backgroundColor: '#FAFAFA' }}
+                  style={{ borderColor: 'var(--pl-stripe)', backgroundColor: 'var(--pl-bg)' }}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-medium truncate" style={{ color: '#0F172A' }}>{p.name}</p>
+                    <p className="text-[11px] font-medium truncate" style={{ color: 'var(--pl-text)' }}>{p.name}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span
                         className="rounded-full px-1.5 py-px text-[8px] font-bold uppercase"
@@ -134,7 +134,7 @@ export default function RtwcWhatIf() {
                       >
                         {p.department}
                       </span>
-                      <span className="text-[10px] font-mono" style={{ color: '#475569' }}>${p.price}</span>
+                      <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${p.price}</span>
                     </div>
                   </div>
                   <button
@@ -152,10 +152,10 @@ export default function RtwcWhatIf() {
 
         {/* ── CENTER PANEL: Commission Preview (hero) ── */}
         <div className="lg:col-span-5">
-          <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
+          <div className="rounded-xl border p-5" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
             {/* Rep selector */}
             <div className="mb-4">
-              <label className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Select Associate</label>
+              <label className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Select Associate</label>
               <select
                 value={selectedRep.id}
                 onChange={(e) => {
@@ -163,7 +163,7 @@ export default function RtwcWhatIf() {
                   if (rep) setSelectedRep(rep);
                 }}
                 className="mt-1 w-full rounded-lg border px-3 py-2 text-sm font-medium"
-                style={{ borderColor: '#E2E8F0', color: '#0F172A', backgroundColor: '#F8FAFC' }}
+                style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text)', backgroundColor: 'var(--pl-bg)' }}
               >
                 {ASSOCIATES.map((a) => (
                   <option key={a.id} value={a.id}>
@@ -174,44 +174,44 @@ export default function RtwcWhatIf() {
             </div>
 
             {/* Rep info bar */}
-            <div className="flex items-center gap-3 mb-4 rounded-lg px-4 py-2.5" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <div className="flex items-center gap-3 mb-4 rounded-lg px-4 py-2.5" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Department</span>
-                <p className="text-[12px] font-bold" style={{ color: DEPT_COLORS[selectedRep.department] ?? '#475569' }}>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Department</span>
+                <p className="text-[12px] font-bold" style={{ color: DEPT_COLORS[selectedRep.department] ?? 'var(--pl-text-secondary)' }}>
                   {repDept?.name ?? selectedRep.department}
                 </p>
               </div>
-              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div className="h-6 w-px" style={{ backgroundColor: 'var(--pl-border)' }} />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Tier</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Tier</span>
                 <p className="text-[12px] font-bold" style={{ color: TIER_COLORS[selectedRep.achieverTier] ?? '#64748b' }}>
                   {selectedRep.achieverTier === 'none' ? 'Not Qualified' : selectedRep.achieverTier.charAt(0).toUpperCase() + selectedRep.achieverTier.slice(1)}
                 </p>
               </div>
-              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div className="h-6 w-px" style={{ backgroundColor: 'var(--pl-border)' }} />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>YTD Attainment</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>YTD Attainment</span>
                 <p className="text-[12px] font-bold" style={{ color: attainmentPct >= 100 ? '#059669' : attainmentPct >= 80 ? '#c9a84c' : '#EF4444' }}>
                   {attainmentPct}%
                 </p>
               </div>
-              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div className="h-6 w-px" style={{ backgroundColor: 'var(--pl-border)' }} />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Base Rate</span>
-                <p className="text-[12px] font-bold font-mono" style={{ color: '#0F172A' }}>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Base Rate</span>
+                <p className="text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
                   {((repDept?.baseRate ?? 0) * 100).toFixed(1)}%
                 </p>
               </div>
-              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div className="h-6 w-px" style={{ backgroundColor: 'var(--pl-border)' }} />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>SPH</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>SPH</span>
                 <p className="text-[12px] font-bold font-mono" style={{ color: selectedRep.sph >= 340 ? '#059669' : '#EF4444' }}>
                   ${selectedRep.sph}
                 </p>
               </div>
-              <div className="h-6 w-px" style={{ backgroundColor: '#E2E8F0' }} />
+              <div className="h-6 w-px" style={{ backgroundColor: 'var(--pl-border)' }} />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>MTD Returns</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>MTD Returns</span>
                 <p className="text-[12px] font-bold font-mono" style={{ color: '#EF4444' }}>
                   -${(selectedRep.mtdReturns / 1000).toFixed(1)}K
                 </p>
@@ -220,10 +220,10 @@ export default function RtwcWhatIf() {
 
             {/* Basket summary */}
             <div className="mb-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: '#94A3B8' }}>Current Basket</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-muted)' }}>Current Basket</p>
               {basket.length === 0 ? (
-                <div className="rounded-lg border-2 border-dashed px-4 py-6 text-center" style={{ borderColor: '#E2E8F0' }}>
-                  <p className="text-[12px]" style={{ color: '#94A3B8' }}>Add products from the catalog to begin</p>
+                <div className="rounded-lg border-2 border-dashed px-4 py-6 text-center" style={{ borderColor: 'var(--pl-border)' }}>
+                  <p className="text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>Add products from the catalog to begin</p>
                 </div>
               ) : (
                 <div className="space-y-1.5 max-h-[200px] overflow-y-auto">
@@ -231,11 +231,11 @@ export default function RtwcWhatIf() {
                     <div
                       key={item.productId}
                       className="flex items-center justify-between rounded-lg px-3 py-2"
-                      style={{ backgroundColor: '#F8FAFC', border: '1px solid #F1F5F9' }}
+                      style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-stripe)' }}
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] font-medium truncate" style={{ color: '#0F172A' }}>{item.name}</p>
-                        <span className="text-[10px] font-mono" style={{ color: '#475569' }}>
+                        <p className="text-[11px] font-medium truncate" style={{ color: 'var(--pl-text)' }}>{item.name}</p>
+                        <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
                           ${item.price} x {item.quantity} = ${(item.price * item.quantity).toLocaleString()}
                         </span>
                       </div>
@@ -243,15 +243,15 @@ export default function RtwcWhatIf() {
                         <button
                           onClick={() => updateQuantity(item.productId, -1)}
                           className="w-6 h-6 rounded text-[12px] font-bold flex items-center justify-center"
-                          style={{ backgroundColor: '#F1F5F9', color: '#475569' }}
+                          style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}
                         >
                           -
                         </button>
-                        <span className="w-6 text-center text-[11px] font-mono font-bold" style={{ color: '#0F172A' }}>{item.quantity}</span>
+                        <span className="w-6 text-center text-[11px] font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.productId, 1)}
                           className="w-6 h-6 rounded text-[12px] font-bold flex items-center justify-center"
-                          style={{ backgroundColor: '#F1F5F9', color: '#475569' }}
+                          style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}
                         >
                           +
                         </button>
@@ -268,11 +268,11 @@ export default function RtwcWhatIf() {
                 </div>
               )}
               {basket.length > 0 && (
-                <div className="flex items-center justify-between mt-2 pt-2 border-t" style={{ borderColor: '#F1F5F9' }}>
-                  <span className="text-[11px] font-semibold" style={{ color: '#475569' }}>
+                <div className="flex items-center justify-between mt-2 pt-2 border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
+                  <span className="text-[11px] font-semibold" style={{ color: 'var(--pl-text-secondary)' }}>
                     {basket.reduce((s, i) => s + i.quantity, 0)} items
                   </span>
-                  <span className="text-[14px] font-bold" style={{ color: '#0F172A' }}>
+                  <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)' }}>
                     Subtotal: {formatCurrency(basketTotal)}
                   </span>
                 </div>
@@ -283,15 +283,15 @@ export default function RtwcWhatIf() {
             <div className="rounded-lg p-4" style={{ backgroundColor: COLORS.primary + '08', border: `1px solid ${COLORS.primary}20` }}>
               <p className="text-[11px] font-semibold uppercase tracking-wider mb-3" style={{ color: COLORS.primary }}>Commission Breakdown</p>
               {commission.components.length === 0 ? (
-                <p className="text-[11px]" style={{ color: '#94A3B8' }}>Add items to see commission preview</p>
+                <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>Add items to see commission preview</p>
               ) : (
                 <div className="space-y-2">
                   {commission.components.map((c) => (
                     <div key={c.id} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-medium" style={{ color: '#475569' }}>{c.label}</span>
+                        <span className="text-[11px] font-medium" style={{ color: 'var(--pl-text-secondary)' }}>{c.label}</span>
                         {c.rate !== undefined && c.rate > 0 && (
-                          <span className="text-[9px] font-mono rounded px-1 py-px" style={{ backgroundColor: '#F1F5F9', color: '#94A3B8' }}>
+                          <span className="text-[9px] font-mono rounded px-1 py-px" style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-muted)' }}>
                             {(c.rate * 100).toFixed(1)}%
                           </span>
                         )}
@@ -318,7 +318,7 @@ export default function RtwcWhatIf() {
                 border: `1px solid ${commission.beatsDrawBy > 0 ? '#BBF7D0' : '#FECACA'}`,
               }}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>
                     Draw vs. Commission
                   </span>
                   <span
@@ -332,11 +332,11 @@ export default function RtwcWhatIf() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-[11px]">
-                  <span style={{ color: '#475569' }}>Draw rate ({selectedRep.format})</span>
-                  <span className="font-mono" style={{ color: '#94A3B8' }}>${selectedRep.hourlyDraw}/hr</span>
+                  <span style={{ color: 'var(--pl-text-secondary)' }}>Draw rate ({selectedRep.format})</span>
+                  <span className="font-mono" style={{ color: 'var(--pl-text-muted)' }}>${selectedRep.hourlyDraw}/hr</span>
                 </div>
                 <div className="flex items-center justify-between text-[11px] mt-0.5">
-                  <span style={{ color: '#475569' }}>Commission this sale</span>
+                  <span style={{ color: 'var(--pl-text-secondary)' }}>Commission this sale</span>
                   <span className="font-mono font-bold" style={{ color: commission.beatsDrawBy > 0 ? '#059669' : '#EF4444' }}>
                     {formatCurrency(commission.total)}
                   </span>
@@ -351,16 +351,16 @@ export default function RtwcWhatIf() {
 
             {/* Threshold Meter */}
             {commission.nextTier && (
-              <div className="mt-4 rounded-lg p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+              <div className="mt-4 rounded-lg p-3" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>
                     Progress to {commission.nextTier.label}
                   </span>
                   <span className="text-[10px] font-mono" style={{ color: TIER_COLORS[commission.nextTier.label.toLowerCase()] ?? '#94A3B8' }}>
                     {commission.nextTier.threshold}% attainment needed
                   </span>
                 </div>
-                <div className="h-3 rounded-full overflow-hidden" style={{ backgroundColor: '#E2E8F0' }}>
+                <div className="h-3 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--pl-border)' }}>
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{
@@ -369,7 +369,7 @@ export default function RtwcWhatIf() {
                     }}
                   />
                 </div>
-                <p className="text-[10px] mt-1 text-right font-mono" style={{ color: '#475569' }}>
+                <p className="text-[10px] mt-1 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
                   ${commission.nextTier.remaining.toLocaleString()} remaining to {commission.nextTier.label}
                 </p>
               </div>
@@ -379,12 +379,12 @@ export default function RtwcWhatIf() {
 
         {/* ── RIGHT PANEL: What-If Impact ── */}
         <div className="lg:col-span-4">
-          <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>What-If Impact</p>
+          <div className="rounded-xl border p-5" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+            <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>What-If Impact</p>
 
             {basket.length === 0 ? (
-              <div className="rounded-lg border-2 border-dashed px-4 py-8 text-center" style={{ borderColor: '#E2E8F0' }}>
-                <p className="text-[12px]" style={{ color: '#94A3B8' }}>Build a basket to see projected impact</p>
+              <div className="rounded-lg border-2 border-dashed px-4 py-8 text-center" style={{ borderColor: 'var(--pl-border)' }}>
+                <p className="text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>Build a basket to see projected impact</p>
               </div>
             ) : (
               <>
@@ -408,7 +408,7 @@ export default function RtwcWhatIf() {
                   className="rounded-lg p-5 mb-4 text-center"
                   style={{ backgroundColor: impact.delta > 0 ? '#F0FDF4' : '#FEF2F2', border: `1px solid ${impact.delta > 0 ? '#BBF7D0' : '#FECACA'}` }}
                 >
-                  <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
                     Commission Impact
                   </span>
                   <p
@@ -418,7 +418,7 @@ export default function RtwcWhatIf() {
                     {impact.delta >= 0 ? '+' : ''}{formatCurrency(impact.delta)}
                   </p>
                   {impact.deltaPercent !== 0 && (
-                    <p className="text-[11px] font-mono mt-1" style={{ color: '#475569' }}>
+                    <p className="text-[11px] font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
                       ({impact.deltaPercent >= 0 ? '+' : ''}{(impact.deltaPercent * 100).toFixed(1)}%)
                     </p>
                   )}
@@ -426,14 +426,14 @@ export default function RtwcWhatIf() {
 
                 {/* Baseline vs Projected */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                    <span className="text-[9px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Baseline (MTD)</span>
-                    <p className="text-[16px] font-bold font-mono mt-1" style={{ color: '#475569' }}>
+                  <div className="rounded-lg p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+                    <span className="text-[9px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Baseline (MTD)</span>
+                    <p className="text-[16px] font-bold font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
                       {formatCurrency(impact.baseline)}
                     </p>
                   </div>
                   <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
-                    <span className="text-[9px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Projected</span>
+                    <span className="text-[9px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Projected</span>
                     <p className="text-[16px] font-bold font-mono mt-1" style={{ color: '#059669' }}>
                       {formatCurrency(impact.projected)}
                     </p>
@@ -441,17 +441,17 @@ export default function RtwcWhatIf() {
                 </div>
 
                 {/* Component-by-component delta */}
-                <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: '#94A3B8' }}>
+                <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-muted)' }}>
                     Component Deltas
                   </p>
                   <div className="space-y-2">
                     {impact.componentDeltas.map((cd) => (
                       <div key={cd.id} className="flex items-center justify-between">
-                        <span className="text-[11px] font-medium" style={{ color: '#475569' }}>{cd.label}</span>
+                        <span className="text-[11px] font-medium" style={{ color: 'var(--pl-text-secondary)' }}>{cd.label}</span>
                         <span
                           className="text-[12px] font-bold font-mono"
-                          style={{ color: cd.delta > 0 ? '#059669' : cd.delta < 0 ? '#EF4444' : '#94A3B8' }}
+                          style={{ color: cd.delta > 0 ? '#059669' : cd.delta < 0 ? '#EF4444' : 'var(--pl-text-muted)' }}
                         >
                           {cd.delta >= 0 ? '+' : ''}{formatCurrency(cd.delta)}
                         </span>
@@ -466,11 +466,11 @@ export default function RtwcWhatIf() {
                     Sale Summary
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px]" style={{ color: '#475569' }}>Basket Value</span>
-                    <span className="text-[12px] font-bold font-mono" style={{ color: '#0F172A' }}>{formatCurrency(basketTotal)}</span>
+                    <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Basket Value</span>
+                    <span className="text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{formatCurrency(basketTotal)}</span>
                   </div>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-[11px]" style={{ color: '#475569' }}>Effective Commission Rate</span>
+                    <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Effective Commission Rate</span>
                     <span className="text-[12px] font-bold font-mono" style={{ color: '#059669' }}>
                       {basketTotal > 0 ? ((commission.total / basketTotal) * 100).toFixed(2) : '0.00'}%
                     </span>

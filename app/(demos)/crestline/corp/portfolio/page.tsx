@@ -65,8 +65,8 @@ export default function StorePortfolio() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: COLORS.primary }}>Store Portfolio</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Store Portfolio</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           200-store fleet analysis across 8 districts and 4 formats
         </p>
       </div>
@@ -75,8 +75,8 @@ export default function StorePortfolio() {
 
       {/* Heat Map + Rev/SqFt */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Store Count by District & Format</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Store Count by District & Format</p>
           <HeatMap
             rows={DISTRICT_NAMES}
             cols={['Flagship', 'Standard', 'Rack', 'Counter']}
@@ -85,16 +85,16 @@ export default function StorePortfolio() {
           />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Revenue per Square Foot</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Revenue per Square Foot</p>
           <BarChart data={REV_PER_SQFT} unit="$/sqft" />
         </div>
       </div>
 
       {/* District Revenue + SqFt Allocation */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>District Revenue ($M)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>District Revenue ($M)</p>
           <BarChart
             data={DISTRICTS.map((d) => ({
               label: d.name,
@@ -106,8 +106,8 @@ export default function StorePortfolio() {
           />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Square Footage Allocation</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Square Footage Allocation</p>
           <DonutChart
             segments={SQFT_ALLOCATION}
             centerValue="3.2M"
@@ -118,14 +118,14 @@ export default function StorePortfolio() {
       </div>
 
       {/* Top 10 Performance Ranking */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Top 10 Performing Stores</p>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Top 10 Performing Stores</p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Rank', 'Store Name', 'Format', 'District', 'Revenue', 'YoY', 'Trend'].map((h) => (
-                  <th key={h} className="text-left pb-3 pr-4 text-xs font-semibold" style={{ color: '#94A3B8' }}>{h}</th>
+                  <th key={h} className="text-left pb-3 pr-4 text-xs font-semibold" style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -134,9 +134,9 @@ export default function StorePortfolio() {
                 const badge = FORMAT_BADGE_COLORS[store.format] || FORMAT_BADGE_COLORS.standard;
                 const formatMeta = FORMATS.find((f) => f.id === store.format);
                 return (
-                  <tr key={store.rank} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td className="py-2.5 pr-4 font-mono text-xs" style={{ color: '#94A3B8' }}>#{store.rank}</td>
-                    <td className="py-2.5 pr-4 font-medium" style={{ color: COLORS.primary }}>{store.name}</td>
+                  <tr key={store.rank} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
+                    <td className="py-2.5 pr-4 font-mono text-xs" style={{ color: 'var(--pl-text-muted)' }}>#{store.rank}</td>
+                    <td className="py-2.5 pr-4 font-medium" style={{ color: 'var(--pl-text)' }}>{store.name}</td>
                     <td className="py-2.5 pr-4">
                       <span
                         className="px-2 py-0.5 rounded-full text-[10px] font-semibold"
@@ -145,8 +145,8 @@ export default function StorePortfolio() {
                         {formatMeta?.name ?? store.format}
                       </span>
                     </td>
-                    <td className="py-2.5 pr-4 text-xs" style={{ color: '#475569' }}>{store.district}</td>
-                    <td className="py-2.5 pr-4 font-mono font-medium" style={{ color: COLORS.primary }}>{store.revenue}</td>
+                    <td className="py-2.5 pr-4 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{store.district}</td>
+                    <td className="py-2.5 pr-4 font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{store.revenue}</td>
                     <td className="py-2.5 pr-4">
                       <span className="text-xs font-semibold" style={{ color: '#10B981' }}>{store.yoy}</span>
                     </td>
@@ -167,7 +167,7 @@ export default function StorePortfolio() {
           const meta = FORMATS.find((f) => f.id === fc.id);
           const fColor = FORMAT_BADGE_COLORS[fc.id]?.text ?? '#475569';
           return (
-            <div key={fc.id} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
+            <div key={fc.id} className="rounded-xl border p-5" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
               <p className="text-sm font-semibold mb-3" style={{ color: fColor }}>{meta?.name ?? fc.id}</p>
               <div className="space-y-2">
                 {[
@@ -177,8 +177,8 @@ export default function StorePortfolio() {
                   ['Avg Staff', fc.avgStaff],
                 ].map(([label, val]) => (
                   <div key={label} className="flex justify-between text-xs">
-                    <span style={{ color: '#94A3B8' }}>{label}</span>
-                    <span className="font-medium" style={{ color: COLORS.primary }}>{val}</span>
+                    <span style={{ color: 'var(--pl-text-muted)' }}>{label}</span>
+                    <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{val}</span>
                   </div>
                 ))}
               </div>

@@ -28,17 +28,17 @@ export function StatCard({
   return (
     <div
       className="relative overflow-hidden rounded-xl border p-5"
-      style={{ backgroundColor: '#FFFFFF', borderColor: '#E7E5E4' }}
+      style={{ backgroundColor: 'var(--pl-card, #FFFFFF)', borderColor: 'var(--pl-border, #E7E5E4)' }}
     >
       <p
         className="text-xs font-medium uppercase tracking-wider"
-        style={{ color: '#A8A29E' }}
+        style={{ color: 'var(--pl-text-muted, #A8A29E)' }}
       >
         {label}
       </p>
       <p
         className="mt-1 text-2xl font-bold"
-        style={{ color: '#1C1917' }}
+        style={{ color: 'var(--pl-text, #1C1917)' }}
       >
         {value}
       </p>

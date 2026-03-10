@@ -225,10 +225,10 @@ export default function Statements() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>
           Commission Statements
         </h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Immutable statement records replacing CiC+ — Phil Step 13
         </p>
       </div>
@@ -254,25 +254,25 @@ export default function Statements() {
             value={selectedRepId}
             onChange={e => setSelectedRepId(e.target.value)}
             className="appearance-none rounded-lg border pl-4 pr-10 py-2.5 text-sm font-medium cursor-pointer"
-            style={{ borderColor: '#E2E8F0', color: COLORS.primary, backgroundColor: '#FFFFFF' }}
+            style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text)', backgroundColor: 'var(--pl-card)' }}
           >
             {selectableReps.map(a => (
               <option key={a.id} value={a.id}>{a.name}</option>
             ))}
           </select>
-          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#94a3b8' }} />
+          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--pl-text-muted)' }} />
         </div>
 
         {/* Period tabs */}
-        <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: '#F1F5F9' }}>
+        <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--pl-stripe)' }}>
           {PERIODS.map(p => (
             <button
               key={p.id}
               onClick={() => setSelectedPeriod(p.id)}
               className="px-4 py-1.5 rounded-md text-xs font-medium transition-all"
               style={{
-                backgroundColor: selectedPeriod === p.id ? '#FFFFFF' : 'transparent',
-                color: selectedPeriod === p.id ? COLORS.primary : '#94a3b8',
+                backgroundColor: selectedPeriod === p.id ? 'var(--pl-card)' : 'transparent',
+                color: selectedPeriod === p.id ? 'var(--pl-text)' : 'var(--pl-text-muted)',
                 boxShadow: selectedPeriod === p.id ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
               }}
             >
@@ -285,41 +285,41 @@ export default function Statements() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Statement Card (2 cols) */}
         <div
-          className="col-span-2 rounded-xl bg-white border p-8"
-          style={{ borderColor: '#E2E8F0', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
+          className="col-span-2 rounded-xl border p-8"
+          style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
         >
           {/* Statement Header */}
-          <div className="flex items-start justify-between mb-6 pb-4 border-b" style={{ borderColor: '#E2E8F0' }}>
+          <div className="flex items-start justify-between mb-6 pb-4 border-b" style={{ borderColor: 'var(--pl-border)' }}>
             <div>
-              <p className="text-lg font-bold" style={{ color: COLORS.primary }}>
+              <p className="text-lg font-bold" style={{ color: 'var(--pl-text)' }}>
                 Commission Statement — {PERIODS.find(p => p.id === selectedPeriod)?.label}
               </p>
-              <p className="text-xs mt-1" style={{ color: '#94a3b8' }}>Crestline Department Stores</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Crestline Department Stores</p>
             </div>
             <div className="flex items-center gap-2">
-              <Printer size={14} style={{ color: '#94a3b8' }} />
-              <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>print-ready</span>
+              <Printer size={14} style={{ color: 'var(--pl-text-muted)' }} />
+              <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>print-ready</span>
             </div>
           </div>
 
           {/* Rep Info */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-4 border-b" style={{ borderColor: '#F1F5F9' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-4 border-b" style={{ borderColor: 'var(--pl-stripe)' }}>
             <div>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>Associate</p>
-              <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{rep.name}</p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Associate</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{rep.name}</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>Store</p>
-              <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{rep.storeId}</p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Store</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{rep.storeId}</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>Department</p>
-              <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Department</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
                 {SELLING_DEPTS.find(d => d.id === rep.department)?.name ?? rep.department}
               </p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>Achiever Tier</p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Achiever Tier</p>
               <span
                 className="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full mt-0.5"
                 style={{ backgroundColor: tierStyle.bg, color: tierStyle.fg }}
@@ -331,7 +331,7 @@ export default function Statements() {
 
           {/* Section 1: Sales Summary */}
           <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#94a3b8' }}>
+            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-muted)' }}>
               1. Sales Summary
             </p>
             <div className="space-y-1">
@@ -343,17 +343,17 @@ export default function Statements() {
                 <div
                   key={i}
                   className="flex items-center justify-between py-1.5 px-3 rounded"
-                  style={{ backgroundColor: row.bold ? '#F8FAFC' : 'transparent' }}
+                  style={{ backgroundColor: row.bold ? 'var(--pl-bg)' : 'transparent' }}
                 >
                   <span
                     className={`text-xs ${row.bold ? 'font-bold' : 'font-medium'}`}
-                    style={{ color: row.bold ? COLORS.primary : '#475569' }}
+                    style={{ color: row.bold ? 'var(--pl-text)' : 'var(--pl-text-secondary)' }}
                   >
                     {row.label}
                   </span>
                   <span
                     className={`text-xs font-mono ${row.bold ? 'font-bold' : ''}`}
-                    style={{ color: row.value < 0 ? '#DC2626' : COLORS.primary }}
+                    style={{ color: row.value < 0 ? '#DC2626' : 'var(--pl-text)' }}
                   >
                     {row.value < 0 ? `-${fmt(Math.abs(row.value))}` : fmt(row.value)}
                   </span>
@@ -365,13 +365,13 @@ export default function Statements() {
           {/* Section 2: Commission Breakdown */}
           {snapshot && (
             <div className="mb-6">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#94a3b8' }}>
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-muted)' }}>
                 2. Commission Breakdown
               </p>
               <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr style={{ color: '#94a3b8' }}>
+                  <tr style={{ color: 'var(--pl-text-muted)' }}>
                     <th className="text-left pb-2 font-medium">Component</th>
                     <th className="text-right pb-2 font-medium">Rate</th>
                     <th className="text-right pb-2 font-medium">Commissionable</th>
@@ -392,13 +392,13 @@ export default function Statements() {
                     else if (comp.componentId === 'negative-balance') rate = '--';
 
                     return (
-                      <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+                      <tr key={i} className="border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
                         <td className="py-2">
-                          <span className="font-medium" style={{ color: COLORS.primary }}>{comp.label}</span>
+                          <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{comp.label}</span>
                         </td>
-                        <td className="py-2 text-right font-mono" style={{ color: '#475569' }}>{rate}</td>
-                        <td className="py-2 text-right font-mono" style={{ color: '#475569' }}>{fmt(sales.net)}</td>
-                        <td className="py-2 text-right font-mono font-semibold" style={{ color: comp.amount > 0 ? COLORS.primary : '#94a3b8' }}>
+                        <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{rate}</td>
+                        <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{fmt(sales.net)}</td>
+                        <td className="py-2 text-right font-mono font-semibold" style={{ color: comp.amount > 0 ? 'var(--pl-text)' : 'var(--pl-text-muted)' }}>
                           {fmt(comp.amount)}
                         </td>
                       </tr>
@@ -412,7 +412,7 @@ export default function Statements() {
 
           {/* Section 3: Adjustments */}
           <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#94a3b8' }}>
+            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-muted)' }}>
               3. Adjustments & SPIFFs
             </p>
             {spiffs.length > 0 ? (
@@ -425,23 +425,23 @@ export default function Statements() {
                 ))}
               </div>
             ) : (
-              <p className="text-xs px-3" style={{ color: '#94a3b8' }}>No adjustments or SPIFFs this period</p>
+              <p className="text-xs px-3" style={{ color: 'var(--pl-text-muted)' }}>No adjustments or SPIFFs this period</p>
             )}
           </div>
 
           {/* Section 4: Total */}
           <div className="border-t-2 pt-4" style={{ borderColor: COLORS.primary }}>
-            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#94a3b8' }}>
+            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-muted)' }}>
               4. Total
             </p>
             <div className="space-y-1">
               <div className="flex items-center justify-between py-1.5 px-3">
-                <span className="text-xs font-medium" style={{ color: '#475569' }}>Gross Commission</span>
-                <span className="text-xs font-mono" style={{ color: COLORS.primary }}>{snapshot ? fmt(snapshot.total) : '--'}</span>
+                <span className="text-xs font-medium" style={{ color: 'var(--pl-text-secondary)' }}>Gross Commission</span>
+                <span className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>{snapshot ? fmt(snapshot.total) : '--'}</span>
               </div>
               <div className="flex items-center justify-between py-1.5 px-3">
-                <span className="text-xs font-medium" style={{ color: '#475569' }}>SPIFFs</span>
-                <span className="text-xs font-mono" style={{ color: spiffTotal > 0 ? '#059669' : '#94a3b8' }}>
+                <span className="text-xs font-medium" style={{ color: 'var(--pl-text-secondary)' }}>SPIFFs</span>
+                <span className="text-xs font-mono" style={{ color: spiffTotal > 0 ? '#059669' : 'var(--pl-text-muted)' }}>
                   {spiffTotal > 0 ? `+${fmt(spiffTotal)}` : '$0'}
                 </span>
               </div>
@@ -458,10 +458,10 @@ export default function Statements() {
           </div>
 
           {/* Footer */}
-          <div className="mt-6 pt-4 border-t flex items-center justify-between" style={{ borderColor: '#F1F5F9' }}>
+          <div className="mt-6 pt-4 border-t flex items-center justify-between" style={{ borderColor: 'var(--pl-stripe)' }}>
             <div className="flex items-center gap-2">
-              <FileText size={12} style={{ color: '#94a3b8' }} />
-              <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
+              <FileText size={12} style={{ color: 'var(--pl-text-muted)' }} />
+              <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                 Statement generated {snapshot ? fmtDate(snapshot.frozenAt) : '--'} — Immutable record
               </span>
             </div>
@@ -478,8 +478,8 @@ export default function Statements() {
         <div className="space-y-6">
           {/* Period Comparison */}
           {prevSnapshot && snapshot && (
-            <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
-              <p className="text-xs font-semibold mb-4" style={{ color: COLORS.primary }}>
+            <div className="rounded-xl border p-5" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+              <p className="text-xs font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
                 Period Comparison
               </p>
 
@@ -493,20 +493,20 @@ export default function Statements() {
                   return (
                     <div key={i}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[11px] font-medium" style={{ color: COLORS.primary }}>{comp.label}</span>
+                        <span className="text-[11px] font-medium" style={{ color: 'var(--pl-text)' }}>{comp.label}</span>
                         <div className="flex items-center gap-1">
                           {delta > 0 && <ArrowUp size={10} style={{ color: '#059669' }} />}
                           {delta < 0 && <ArrowDown size={10} style={{ color: '#DC2626' }} />}
-                          {delta === 0 && <Minus size={10} style={{ color: '#94a3b8' }} />}
+                          {delta === 0 && <Minus size={10} style={{ color: 'var(--pl-text-muted)' }} />}
                           <span
                             className="text-[10px] font-mono font-semibold"
-                            style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : '#94a3b8' }}
+                            style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : 'var(--pl-text-muted)' }}
                           >
                             {delta > 0 ? '+' : ''}{pct}%
                           </span>
                         </div>
                       </div>
-                      <div className="flex gap-2 text-[10px] font-mono" style={{ color: '#475569' }}>
+                      <div className="flex gap-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
                         <span>{prevSnapshot.periodId}: {fmt(prevAmt)}</span>
                         <span style={{ color: '#CBD5E1' }}>|</span>
                         <span>{snapshot.periodId}: {fmt(comp.amount)}</span>
@@ -516,9 +516,9 @@ export default function Statements() {
                 })}
 
                 {/* Total comparison */}
-                <div className="border-t pt-3 mt-2" style={{ borderColor: '#F1F5F9' }}>
+                <div className="border-t pt-3 mt-2" style={{ borderColor: 'var(--pl-stripe)' }}>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold" style={{ color: COLORS.primary }}>Total</span>
+                    <span className="text-xs font-bold" style={{ color: 'var(--pl-text)' }}>Total</span>
                     <div className="flex items-center gap-1">
                       {snapshot.total > prevSnapshot.total && <ArrowUp size={12} style={{ color: '#059669' }} />}
                       {snapshot.total < prevSnapshot.total && <ArrowDown size={12} style={{ color: '#DC2626' }} />}
@@ -531,7 +531,7 @@ export default function Statements() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex gap-2 text-[10px] font-mono mt-1" style={{ color: '#475569' }}>
+                  <div className="flex gap-2 text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
                     <span>{prevSnapshot.periodId}: {fmt(prevSnapshot.total)}</span>
                     <span style={{ color: '#CBD5E1' }}>|</span>
                     <span className="font-semibold">{snapshot.periodId}: {fmt(snapshot.total)}</span>
@@ -542,8 +542,8 @@ export default function Statements() {
           )}
 
           {/* Payout History Chart */}
-          <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-xs font-semibold mb-4" style={{ color: COLORS.primary }}>
+          <div className="rounded-xl border p-5" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+            <p className="text-xs font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
               Payout History (6 Periods)
             </p>
             <BarChart
@@ -555,7 +555,7 @@ export default function Statements() {
               unit=""
               color={COLORS.accent}
             />
-            <p className="text-[10px] mt-3 text-center" style={{ color: '#94a3b8' }}>
+            <p className="text-[10px] mt-3 text-center" style={{ color: 'var(--pl-text-muted)' }}>
               {rep.name} — Semi-monthly payroll periods
             </p>
           </div>
@@ -574,12 +574,12 @@ export default function Statements() {
           <FileText size={20} style={{ color: COLORS.accent }} />
         </div>
         <div>
-          <p className="text-sm font-bold mb-1" style={{ color: COLORS.primary }}>Replacing CiC+</p>
-          <p className="text-sm" style={{ color: '#475569' }}>
-            This portal replaces <span className="font-semibold" style={{ color: COLORS.primary }}>Crestline&apos;s legacy CiC+ system</span> with
+          <p className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)' }}>Replacing CiC+</p>
+          <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
+            This portal replaces <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>Crestline&apos;s legacy CiC+ system</span> with
             immutable, frozen statement records. Each statement is generated at period close, cryptographically timestamped,
             and cannot be modified — only superseded by a corrected version. Associates get{' '}
-            <span className="font-semibold" style={{ color: COLORS.primary }}>real-time visibility</span> into their commission breakdown,
+            <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>real-time visibility</span> into their commission breakdown,
             historical trends, and SPIFF earnings without waiting for payroll to process.
           </p>
         </div>
