@@ -1,4 +1,4 @@
-// Andrews Distributing — Competitive Intelligence & Market Share Data
+// Lone Star Distribution — Competitive Intelligence & Market Share Data
 // Used by: /ops/field-intel, stop card competitive intel, manager dashboard
 
 // ─── Competitor Profiles ────────────────────────
@@ -35,7 +35,7 @@ export const COMPETITORS: Competitor[] = [
       'AB InBev losing share to Modelo/Corona nationally',
       'Bud Light volume still recovering from 2023 boycott',
       'Less focused — food division splits management attention',
-      'Slower technology adoption than Andrews',
+      'Slower technology adoption than Lone Star',
     ],
   },
   {
@@ -47,13 +47,13 @@ export const COMPETITORS: Competitor[] = [
     estimatedShare: 0.28,
     threat: 'medium',
     strengths: [
-      'Dominant in Houston and San Antonio — markets Andrews does not serve',
+      'Dominant in Houston and San Antonio — markets Lone Star does not serve',
       'Strong AB InBev execution',
       'White Claw exclusivity in territory',
-      'Larger warehouse footprint than Andrews in South TX',
+      'Larger warehouse footprint than Lone Star in South TX',
     ],
     weaknesses: [
-      'Minimal overlap with Andrews territory (limited direct competition)',
+      'Minimal overlap with Lone Star territory (limited direct competition)',
       'No spirits portfolio',
       'Dependent on AB InBev volume which is declining',
       'No DFW presence',
@@ -70,12 +70,12 @@ export const COMPETITORS: Competitor[] = [
     strengths: [
       'Dominant spirits distributor in Texas',
       'Deep on-premise relationships for spirits',
-      'Wine portfolio Andrews cannot match',
+      'Wine portfolio Lone Star cannot match',
       'Statewide coverage',
     ],
     weaknesses: [
       'Beer is secondary business — limited beer focus',
-      'Andrews Sazerac deal cuts into spirits territory',
+      'Lone Star Sazerac deal cuts into spirits territory',
       'Higher delivery costs (spirits = lower volume per stop)',
       'Less DSD expertise than beer distributors',
     ],
@@ -94,7 +94,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     weaknesses: [
       'Not a beer competitor',
-      'Limited overlap with Andrews product mix',
+      'Limited overlap with Lone Star product mix',
       'Consolidation rumors creating uncertainty',
     ],
   },
@@ -146,7 +146,7 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
     reportedBy: 'SEL-DAL-05', routeId: 'DAL-05',
     accountId: 'ACC-D001', accountName: '7-Eleven #2847',
     location: 'Ross Ave, Dallas',
-    description: 'Bud Light floor display installed in Andrews cold vault space. 24-pack pricing at $19.99 (below our Miller Lite at $21.49). Display appears to have been placed over the weekend.',
+    description: 'Bud Light floor display installed in Lone Star cold vault space. 24-pack pricing at $19.99 (below our Miller Lite at $21.49). Display appears to have been placed over the weekend.',
     brandsSighted: ['Bud Light', 'Michelob Ultra'],
     threatLevel: 'high',
     actionTaken: 'Flagged for immediate reset. Store manager contacted — confirmed Ben E. Keith rep placed without authorization. Display will be removed by Friday.',
@@ -159,10 +159,10 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
     reportedBy: 'SEL-DAL-01', routeId: 'DAL-01',
     accountId: null, accountName: 'The Henderson (new restaurant)',
     location: 'Henderson Ave, Dallas',
-    description: 'New upscale restaurant opening March 15. Ben E. Keith beer trailer spotted during construction. They appear to be setting up the bar program. This is in Andrews territory — we should be the primary distributor.',
+    description: 'New upscale restaurant opening March 15. Ben E. Keith beer trailer spotted during construction. They appear to be setting up the bar program. This is in Lone Star territory — we should be the primary distributor.',
     brandsSighted: ['AB InBev portfolio'],
     threatLevel: 'high',
-    actionTaken: 'Derek submitted new account request. Sales manager Sarah Chen scheduling meet with restaurant group owner. Will pitch full Andrews portfolio including Sazerac cocktail program.',
+    actionTaken: 'Derek submitted new account request. Sales manager Sarah Chen scheduling meet with restaurant group owner. Will pitch full Lone Star portfolio including Sazerac cocktail program.',
     lat: 32.8215, lng: -96.7785,
   },
   {
@@ -215,7 +215,7 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
     reportedBy: 'SEL-FTW-05', routeId: 'FTW-05',
     accountId: null, accountName: 'Stockyards Entertainment District',
     location: 'E Exchange Ave, Fort Worth',
-    description: 'Ben E. Keith sponsoring "Stockyards Brews" weekend event March 8-9. Sampling stations for Michelob Ultra, Bud Light, and 6 craft brands. Banner ads around the district. Andrews was not invited to co-sponsor.',
+    description: 'Ben E. Keith sponsoring "Stockyards Brews" weekend event March 8-9. Sampling stations for Michelob Ultra, Bud Light, and 6 craft brands. Banner ads around the district. Lone Star was not invited to co-sponsor.',
     brandsSighted: ['Michelob Ultra', 'Bud Light', 'Various Craft'],
     threatLevel: 'medium',
     actionTaken: 'Jake coordinating with Fort Worth events team. Planning Coors Light + Blue Moon counter-event at nearby Billy Bob\'s Texas for same weekend.',
@@ -227,7 +227,7 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
 
 export interface MarketShareSegment {
   category: string;
-  andrewsShare: number;
+  loneStarShare: number;
   benEKeithShare: number;
   silverEagleShare: number;
   otherShare: number;
@@ -236,19 +236,19 @@ export interface MarketShareSegment {
 }
 
 export const MARKET_SHARE_DFW: MarketShareSegment[] = [
-  { category: 'Domestic Beer', andrewsShare: 0.42, benEKeithShare: 0.45, silverEagleShare: 0.0, otherShare: 0.13, trend: 'stable', notes: 'Miller Lite and Coors Light hold steady vs Bud Light recovery. Andrews gaining in convenience channel.' },
-  { category: 'Import Beer', andrewsShare: 0.58, benEKeithShare: 0.30, silverEagleShare: 0.0, otherShare: 0.12, trend: 'gaining', notes: 'Corona + Modelo dominance. Gaining 1.2% annually. Laredo acquisition adds import volume.' },
-  { category: 'Craft Beer', andrewsShare: 0.35, benEKeithShare: 0.48, silverEagleShare: 0.0, otherShare: 0.17, trend: 'losing', notes: 'Ben E. Keith has 120+ craft brands vs Andrews 30+. Local craft (Deep Ellum, Peticolas) going BEK.' },
-  { category: 'Spirits', andrewsShare: 0.08, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.92, trend: 'gaining', notes: 'New category for Andrews (Sazerac 2024). Glazer\'s dominates. Andrews spirits share up from 0% to 8% in 18 months.' },
-  { category: 'FMB/RTD', andrewsShare: 0.38, benEKeithShare: 0.42, silverEagleShare: 0.0, otherShare: 0.20, trend: 'stable', notes: 'Truly and Twisted Tea vs White Claw (BEK exclusive). Category declining 8% YoY.' },
+  { category: 'Domestic Beer', loneStarShare: 0.42, benEKeithShare: 0.45, silverEagleShare: 0.0, otherShare: 0.13, trend: 'stable', notes: 'Miller Lite and Coors Light hold steady vs Bud Light recovery. Lone Star gaining in convenience channel.' },
+  { category: 'Import Beer', loneStarShare: 0.58, benEKeithShare: 0.30, silverEagleShare: 0.0, otherShare: 0.12, trend: 'gaining', notes: 'Corona + Modelo dominance. Gaining 1.2% annually. Laredo acquisition adds import volume.' },
+  { category: 'Craft Beer', loneStarShare: 0.35, benEKeithShare: 0.48, silverEagleShare: 0.0, otherShare: 0.17, trend: 'losing', notes: 'Ben E. Keith has 120+ craft brands vs Lone Star 30+. Local craft (Deep Ellum, Peticolas) going BEK.' },
+  { category: 'Spirits', loneStarShare: 0.08, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.92, trend: 'gaining', notes: 'New category for Lone Star (Sazerac 2024). Glazer\'s dominates. Lone Star spirits share up from 0% to 8% in 18 months.' },
+  { category: 'FMB/RTD', loneStarShare: 0.38, benEKeithShare: 0.42, silverEagleShare: 0.0, otherShare: 0.20, trend: 'stable', notes: 'Truly and Twisted Tea vs White Claw (BEK exclusive). Category declining 8% YoY.' },
 ];
 
 export const MARKET_SHARE_SOUTH_TX: MarketShareSegment[] = [
-  { category: 'Domestic Beer', andrewsShare: 0.38, benEKeithShare: 0.0, silverEagleShare: 0.42, otherShare: 0.20, trend: 'gaining', notes: 'Corpus Christi heritage territory. Laredo acquisition growing Andrews presence.' },
-  { category: 'Import Beer', andrewsShare: 0.62, benEKeithShare: 0.0, silverEagleShare: 0.25, otherShare: 0.13, trend: 'gaining', notes: 'Corona/Modelo/Tecate dominant in border market. Andrews has natural advantage with Hispanic consumer base.' },
-  { category: 'Craft Beer', andrewsShare: 0.28, benEKeithShare: 0.0, silverEagleShare: 0.35, otherShare: 0.37, trend: 'stable', notes: 'Smaller craft market in South TX. Shiner Bock is dominant regional brand (Andrews exclusive).' },
-  { category: 'Spirits', andrewsShare: 0.05, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.95, trend: 'gaining', notes: 'Sazerac just entering South TX market. Tequila and mezcal competition from established importers.' },
-  { category: 'FMB/RTD', andrewsShare: 0.32, benEKeithShare: 0.0, silverEagleShare: 0.45, otherShare: 0.23, trend: 'losing', notes: 'White Claw (Silver Eagle) strong in South TX convenience. Category overall declining.' },
+  { category: 'Domestic Beer', loneStarShare: 0.38, benEKeithShare: 0.0, silverEagleShare: 0.42, otherShare: 0.20, trend: 'gaining', notes: 'Corpus Christi heritage territory. Laredo acquisition growing Lone Star presence.' },
+  { category: 'Import Beer', loneStarShare: 0.62, benEKeithShare: 0.0, silverEagleShare: 0.25, otherShare: 0.13, trend: 'gaining', notes: 'Corona/Modelo/Tecate dominant in border market. Lone Star has natural advantage with Hispanic consumer base.' },
+  { category: 'Craft Beer', loneStarShare: 0.28, benEKeithShare: 0.0, silverEagleShare: 0.35, otherShare: 0.37, trend: 'stable', notes: 'Smaller craft market in South TX. Shiner Bock is dominant regional brand (Lone Star exclusive).' },
+  { category: 'Spirits', loneStarShare: 0.05, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.95, trend: 'gaining', notes: 'Sazerac just entering South TX market. Tequila and mezcal competition from established importers.' },
+  { category: 'FMB/RTD', loneStarShare: 0.32, benEKeithShare: 0.0, silverEagleShare: 0.45, otherShare: 0.23, trend: 'losing', notes: 'White Claw (Silver Eagle) strong in South TX convenience. Category overall declining.' },
 ];
 
 // ─── New Account Pipeline ───────────────────────
@@ -304,7 +304,7 @@ export const PIPELINE_ACCOUNTS: PipelineAccount[] = [
     expectedOpenDate: '2026-06-01', permitStatus: 'inspection',
     estimatedWeeklyCases: 15, estimatedWeeklyRevenue: 1200,
     competitorInterest: null,
-    assignedSeller: 'SEL-LAR-02', notes: 'First craft brewery in Laredo. Applying for BG license. Will also carry Andrews brands on-premise. Rosa Gutierrez building relationship.',
+    assignedSeller: 'SEL-LAR-02', notes: 'First craft brewery in Laredo. Applying for BG license. Will also carry Lone Star brands on-premise. Rosa Gutierrez building relationship.',
     lat: 27.5028, lng: -99.5012,
   },
   {

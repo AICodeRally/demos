@@ -177,7 +177,7 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
         {data.map((seg, i) => {
           const y = i * (barH + gap);
           const shares = [
-            { label: 'Lone Star', value: seg.andrewsShare, color: '#2563EB' },
+            { label: 'Lone Star', value: seg.loneStarShare, color: '#2563EB' },
             { label: 'BEK', value: seg.benEKeithShare, color: '#F87171' },
             { label: 'SE', value: seg.silverEagleShare, color: '#F59E0B' },
             { label: 'Other', value: seg.otherShare, color: '#CBD5E0' },
@@ -233,7 +233,7 @@ export default function FieldIntelPage() {
   const highThreats = getHighThreatSightings();
   const pipelineRevenue = getTotalPipelineRevenue();
   const pipelineCases = PIPELINE_ACCOUNTS.reduce((s, p) => s + p.estimatedWeeklyCases * 52, 0);
-  const avgCompanyShareDFW = MARKET_SHARE_DFW.reduce((s, m) => s + m.andrewsShare, 0) / MARKET_SHARE_DFW.length;
+  const avgCompanyShareDFW = MARKET_SHARE_DFW.reduce((s, m) => s + m.loneStarShare, 0) / MARKET_SHARE_DFW.length;
   const gainingCategories = [...MARKET_SHARE_DFW, ...MARKET_SHARE_SOUTH_TX].filter(m => m.trend === 'gaining').length;
 
   const tabs = [
@@ -477,7 +477,7 @@ export default function FieldIntelPage() {
                     <div>
                       <span className="text-[11px] font-bold" style={{ color: '#1A1A2E' }}>{seg.category}</span>
                       <span className="text-[10px] font-mono ml-2" style={{ color: '#A0AEC0' }}>{region}</span>
-                      <span className="text-[10px] font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.andrewsShare * 100).toFixed(0)}% Lone Star</span>
+                      <span className="text-[10px] font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
                       <p className="text-[10px] mt-0.5" style={{ color: '#718096' }}>{seg.notes}</p>
                     </div>
                   </div>

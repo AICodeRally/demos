@@ -1,4 +1,4 @@
-// Andrews Distributing — 3 Pre-Built Route Day Plans
+// Lone Star Distribution — 3 Pre-Built Route Day Plans
 // Marcus Reyes (DAL-03, Tuesday, 12 stops)
 // Rosa Gutierrez (LAR-02, Wednesday, 10 stops)
 // Jake Williams (FTW-05, Monday, 11 stops)
@@ -199,7 +199,7 @@ export const MARCUS_DAY_PLAN: DayPlan = {
       arrivalTime: '8:55 AM', duration: 35,
       deliveryManifest: [],
       talkingPoints: [
-        '8 total taps — Andrews currently has 3 (Miller Lite, Coors Light, Blue Moon). Target: 5 taps.',
+        '8 total taps — Lone Star currently has 3 (Miller Lite, Coors Light, Blue Moon). Target: 5 taps.',
         'Pitch Blue Moon Belgian White seasonal keg — spring seasonal now available',
         'Present Shiner Bock as 4th tap: "Texas craft that sells itself — 26% margin, guaranteed pulls"',
         'Discuss upcoming patio season — Corona bucket deal ($24/bucket of 5)',
@@ -265,7 +265,7 @@ export const MARCUS_DAY_PLAN: DayPlan = {
         'Quick order: restock cold vault singles + 6-packs',
       ],
       aiInsights: [
-        { source: 'encompass', insight: 'Cold vault share dropped from 38% to 34% — competitor filled 2 Andrews facings with Hard Mountain Dew. Escalate to manager.', priority: 'high' },
+        { source: 'encompass', insight: 'Cold vault share dropped from 38% to 34% — competitor filled 2 Lone Star facings with Hard Mountain Dew. Escalate to manager.', priority: 'high' },
         { source: 'crm', insight: 'Vijay prefers visits before 11 AM (shift change at 11). Quick in-and-out — he handles restock himself.', priority: 'low' },
       ],
       competitiveIntel: 'Hard Mountain Dew (PepsiCo/FIFCO) took 2 cold vault facings that were previously Corona and Miller Lite. Needs reclaim.',
@@ -547,7 +547,7 @@ export const ROSA_DAY_PLAN: DayPlan = {
       talkingPoints: [
         'Standard 138cs delivery. Ricardo prefers receiving before 8:30 AM.',
         'Check cold vault compliance — Modelo should have 6 door facings',
-        'H-E-B spring reset coming week of March 10 — confirm Andrews shelf space allocation',
+        'H-E-B spring reset coming week of March 10 — confirm Lone Star shelf space allocation',
       ],
       aiInsights: [
         { source: 'encompass', insight: 'H-E-B Laredo is highest-volume H-E-B for import beer in South Texas. 420cs/month average.', priority: 'medium' },
@@ -574,7 +574,7 @@ export const ROSA_DAY_PLAN: DayPlan = {
         'Jose Luis prefiere hablar en espanol — toda la presentacion en espanol',
       ],
       aiInsights: [
-        { source: 'crm', insight: 'Jose Luis is a loyal Corona customer since Southern Distributing days. Andrews acquired this account in 2024. Relationship is strong.', priority: 'medium' },
+        { source: 'crm', insight: 'Jose Luis is a loyal Corona customer since Southern Distributing days. Lone Star acquired this account in 2024. Relationship is strong.', priority: 'medium' },
         { source: 'nielsen', insight: 'On-premise Mexican restaurants in border markets consume 3x more import beer than DFW average.', priority: 'medium' },
       ],
       competitiveIntel: null,
@@ -622,7 +622,7 @@ export const ROSA_DAY_PLAN: DayPlan = {
         { brand: 'Miller Lite', cases: 6, sku: 'MIL-12-12oz' },
       ],
       talkingPoints: [
-        'Cold vault audit: Andrews should have 45% share of door facings',
+        'Cold vault audit: Lone Star should have 45% share of door facings',
         'Restock Corona singles + 6-packs. Verify pricing signs.',
         'Check for competitor encroachment in cooler',
       ],
@@ -656,7 +656,7 @@ export const ROSA_DAY_PLAN: DayPlan = {
       ],
       aiInsights: [
         { source: 'crm', insight: 'La Michoacana caters to bilingual families. 95% of sales are import brands. Minimal domestic opportunity.', priority: 'medium' },
-        { source: 'encompass', insight: 'Consistent 150cs/month. Account has grown 15% since Andrews acquisition of Southern.', priority: 'low' },
+        { source: 'encompass', insight: 'Consistent 150cs/month. Account has grown 15% since Lone Star acquisition of Southern.', priority: 'low' },
       ],
       competitiveIntel: null,
       revenueOpportunity: 3800,
@@ -820,7 +820,7 @@ export const JAKE_DAY_PLAN: DayPlan = {
         { source: 'nielsen', insight: 'Fort Worth craft beer market growing 18% YoY. Rahr & Sons and Revolver are the top 2 local brands.', priority: 'high' },
         { source: 'tabc', insight: 'P license verified, W permit current. All permits through Dec 2026.', priority: 'low' },
       ],
-      competitiveIntel: 'Andrews Beer Project (different company, confusing name) placing aggressive craft displays. Differentiate with local Fort Worth angle.',
+      competitiveIntel: 'Local craft brewery collective placing aggressive displays. Differentiate with established portfolio and local Fort Worth angle.',
       revenueOpportunity: 15900,
       contactName: 'Amanda Brooks', contactPhone: '(817) 555-0721',
       displayInstructions: 'Set up "Fort Worth Craft" end-cap: Rahr Blonde, Revolver Blood & Honey, Firestone 805. Shelf talkers with "Brewed in Texas" messaging.',
@@ -866,7 +866,7 @@ export const JAKE_DAY_PLAN: DayPlan = {
       deliveryManifest: [],
       talkingPoints: [
         'Present full Sazerac bar program: Buffalo Trace, Fireball, Southern Comfort, Wheatley Vodka',
-        'Rodeo Goat has 12 taps — Andrews has 4 (Miller Lite, Blue Moon, Shiner, Firestone). Target: 6.',
+        'Rodeo Goat has 12 taps — Lone Star has 4 (Miller Lite, Blue Moon, Shiner, Firestone). Target: 6.',
         'Pitch Revolver Blood & Honey as 5th tap — "Fort Worth\'s own, your customers will love it"',
         'Discuss branded bar mats and glassware for Buffalo Trace cocktails',
       ],
@@ -892,11 +892,11 @@ export const JAKE_DAY_PLAN: DayPlan = {
       ],
       talkingPoints: [
         'Taproom restock: 24cs Rahr & Sons variety (Blonde, Ugly Pug, Iron Thistle)',
-        'Discuss upcoming Rahr anniversary party — Andrews to provide Miller Lite and Coors Light for event',
+        'Discuss upcoming Rahr anniversary party — Lone Star to provide Miller Lite and Coors Light for event',
         'Fritz wants to expand distribution to 3 more bars in West 7th — coordinate with route scheduling',
       ],
       aiInsights: [
-        { source: 'crm', insight: 'Fritz Rahr is a key craft partner. Rahr & Sons is exclusively distributed by Andrews in Tarrant County.', priority: 'high' },
+        { source: 'crm', insight: 'Fritz Rahr is a key craft partner. Rahr & Sons is exclusively distributed by Lone Star in Tarrant County.', priority: 'high' },
         { source: 'encompass', insight: 'Rahr taproom sells 60cs/month through taproom + to-go. Wholesale to other accounts adds 180cs/month.', priority: 'medium' },
       ],
       competitiveIntel: null,
@@ -993,10 +993,10 @@ export const JAKE_DAY_PLAN: DayPlan = {
       arrivalTime: '11:50 AM', duration: 25,
       deliveryManifest: [],
       talkingPoints: [
-        'World of Beer has 50 taps — Andrews has 8. Target: 12.',
+        'World of Beer has 50 taps — Lone Star has 8. Target: 12.',
         'Pitch 4 new taps: Revolver Blood & Honey, Firestone Walker 805, Rahr Blonde, Yuengling',
         'Isaac wants more Texas craft — we have the deepest Texas portfolio',
-        'Discuss monthly tap takeover events — Andrews provides kegs at reduced rate for exposure',
+        'Discuss monthly tap takeover events — Lone Star provides kegs at reduced rate for exposure',
       ],
       aiInsights: [
         { source: 'crm', insight: 'Isaac Coleman rotates taps monthly. He tracks velocity — bring sales data on Revolver and Firestone from other WoB locations.', priority: 'high' },

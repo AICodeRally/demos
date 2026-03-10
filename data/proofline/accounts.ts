@@ -1,4 +1,4 @@
-// Andrews Distributing — ~125 Representative Accounts across 4 Tiers
+// Lone Star Distribution — ~125 Representative Accounts across 4 Tiers
 // Tier A (15): Major chains, key accounts
 // Tier B (30): Regional grocery, large independents
 // Tier C (50): Bars, restaurants, hotels
@@ -319,7 +319,7 @@ export const ACCOUNTS: Account[] = [
   {
     id: 'ACC-B026', name: 'Kroger #4421 — Fort Worth', address: '6100 Southwest Blvd, Fort Worth, TX 76109',
     tier: 'B', type: 'chain', hometownId: 'ftw', routeId: 'FTW-06',
-    contactName: 'Phillip Andrews', contactPhone: '(817) 555-3376',
+    contactName: 'Phillip Anderson', contactPhone: '(817) 555-3376',
     displayCompliance: 0.85, spiritsCarrying: false, tabcLicense: 'BG', tabcStatus: 'verified',
     lastVisit: '2026-02-27', weeklyRevenue: 4600, monthlyCases: 175,
   },

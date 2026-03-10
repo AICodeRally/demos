@@ -108,7 +108,7 @@ function SightingsMap() {
         </g>
       ))}
 
-      {/* Andrews territory zones */}
+      {/* Lone Star territory zones */}
       <circle cx={toX(-96.80)} cy={toY(32.78)} r={60} fill="rgba(37,99,235,0.04)" stroke="rgba(37,99,235,0.15)" strokeWidth="1" strokeDasharray="4 2" />
       <circle cx={toX(-97.33)} cy={toY(32.75)} r={40} fill="rgba(37,99,235,0.04)" stroke="rgba(37,99,235,0.15)" strokeWidth="1" strokeDasharray="4 2" />
       <circle cx={toX(-99.51)} cy={toY(27.50)} r={30} fill="rgba(37,99,235,0.04)" stroke="rgba(37,99,235,0.15)" strokeWidth="1" strokeDasharray="4 2" />
@@ -177,7 +177,7 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
         {data.map((seg, i) => {
           const y = i * (barH + gap);
           const shares = [
-            { label: 'Andrews', value: seg.andrewsShare, color: '#2563EB' },
+            { label: 'Lone Star', value: seg.loneStarShare, color: '#2563EB' },
             { label: 'BEK', value: seg.benEKeithShare, color: '#F87171' },
             { label: 'SE', value: seg.silverEagleShare, color: '#F59E0B' },
             { label: 'Other', value: seg.otherShare, color: '#CBD5E0' },
@@ -233,7 +233,7 @@ export default function FieldIntelPage() {
   const highThreats = getHighThreatSightings();
   const pipelineRevenue = getTotalPipelineRevenue();
   const pipelineCases = PIPELINE_ACCOUNTS.reduce((s, p) => s + p.estimatedWeeklyCases * 52, 0);
-  const avgAndrewsShareDFW = MARKET_SHARE_DFW.reduce((s, m) => s + m.andrewsShare, 0) / MARKET_SHARE_DFW.length;
+  const avgLoneStarShareDFW = MARKET_SHARE_DFW.reduce((s, m) => s + m.loneStarShare, 0) / MARKET_SHARE_DFW.length;
   const gainingCategories = [...MARKET_SHARE_DFW, ...MARKET_SHARE_SOUTH_TX].filter(m => m.trend === 'gaining').length;
 
   const tabs = [
@@ -263,7 +263,7 @@ export default function FieldIntelPage() {
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Active Sightings" value={String(COMPETITOR_SIGHTINGS.length)} accent="#F87171" sub={`${highThreats.length} high threat`} />
-        <LightKpiCard label="DFW Avg Share" value={pct(avgAndrewsShareDFW)} accent="#2563EB" sub="Andrews position" />
+        <LightKpiCard label="DFW Avg Share" value={pct(avgLoneStarShareDFW)} accent="#2563EB" sub="Lone Star position" />
         <LightKpiCard label="Gaining Categories" value={`${gainingCategories}/10`} accent="#22C55E" sub="Across both markets" />
         <LightKpiCard label="Pipeline Revenue" value={`$${(pipelineRevenue / 1e6).toFixed(1)}M`} accent="#F59E0B" sub={`${fmt(pipelineCases)} cases/yr`} />
         <LightKpiCard label="Tracked Competitors" value={String(COMPETITORS.length)} accent="#A855F7" sub="Active monitoring" />
@@ -443,7 +443,7 @@ export default function FieldIntelPage() {
           {/* Share legend */}
           <div className="flex gap-4 mb-4">
             {[
-              { label: 'Andrews', color: '#2563EB' },
+              { label: 'Lone Star', color: '#2563EB' },
               { label: 'Ben E. Keith', color: '#F87171' },
               { label: 'Silver Eagle', color: '#F59E0B' },
               { label: 'Other', color: '#CBD5E0' },
@@ -477,7 +477,7 @@ export default function FieldIntelPage() {
                     <div>
                       <span className="text-[11px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.category}</span>
                       <span className="text-[10px] font-mono ml-2" style={{ color: 'var(--pl-text-faint)' }}>{region}</span>
-                      <span className="text-[10px] font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.andrewsShare * 100).toFixed(0)}% Andrews</span>
+                      <span className="text-[10px] font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
                       <p className="text-[10px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{seg.notes}</p>
                     </div>
                   </div>
@@ -576,7 +576,7 @@ export default function FieldIntelPage() {
       {/* Methodology */}
       <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Field intelligence sourced from route sales reps via mobile sighting reports. Competitive market share estimates based on
-        IRI/Nielsen syndicated data + Andrews internal shipment analysis. Pipeline accounts tracked from TABC permit filings and
+        IRI/Nielsen syndicated data + Lone Star internal shipment analysis. Pipeline accounts tracked from TABC permit filings and
         commercial real estate monitoring. Updated weekly.
       </div>
 

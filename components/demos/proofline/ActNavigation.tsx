@@ -17,7 +17,7 @@ const ACTS = [
 
 export function ActNavigation({ currentAct }: ActNavigationProps) {
   return (
-    <div className="flex w-full gap-1 rounded-lg overflow-hidden" style={{ background: 'var(--pl-hover)' }}>
+    <div className="flex w-full gap-1 rounded-lg overflow-hidden mb-6" style={{ background: 'var(--pl-hover)' }}>
       {ACTS.map(({ act, label, pages, color, href }) => {
         const isActive = act === currentAct;
         return (

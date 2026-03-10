@@ -1,4 +1,4 @@
-// Andrews Distributing — Scenario Modeling Presets
+// Lone Star Distribution — Scenario Modeling Presets
 // 3 pre-built scenarios for the Scenario Modeling page (/strategy/scenarios)
 // Each scenario adjusts growth rates, EMCO thresholds, Laredo ramp, and spirits targets
 

@@ -1,4 +1,4 @@
-// Andrews Distributing Brand Portfolio
+// Lone Star Distribution Brand Portfolio
 // Molson Coors-aligned house. Does NOT carry AB InBev.
 // 6 supplier groups: Molson Coors (38%), Constellation (28%), Heineken (15%), Craft (11%), Sazerac (5%), FMB/RTD (3%)
 

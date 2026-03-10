@@ -1,4 +1,4 @@
-// Andrews Distributing — Display Compliance & TABC Status Data
+// Lone Star Distribution — Display Compliance & TABC Status Data
 // Used by: /ops/compliance, stop cards in day planner, account details
 
 // ─── TABC License Types ─────────────────────────
@@ -92,7 +92,7 @@ export const DISPLAY_COMPLIANCE: DisplayCompliance[] = [
     coldVaultShare: 0.34, coldVaultTarget: 0.40, endcapCount: 0, endcapTarget: 1,
     posDisplays: 1, posTarget: 2, shelfCompliance: 0.65, photoVerified: false, lastPhotoDate: '2026-01-28',
     issues: [
-      { type: 'cold-vault', severity: 'critical', description: 'Cold vault share 34% vs 40% target. AB InBev competitor product in Andrews-allocated space.', dueDate: '2026-03-04' },
+      { type: 'cold-vault', severity: 'critical', description: 'Cold vault share 34% vs 40% target. AB InBev competitor product in Lone Star-allocated space.', dueDate: '2026-03-04' },
       { type: 'endcap', severity: 'warning', description: 'Corona floor display removed by store manager. Need reset.', dueDate: '2026-03-04' },
       { type: 'pricing', severity: 'warning', description: 'Miller Lite 12-pack priced $1 above competitor — needs price adjustment', dueDate: null },
       { type: 'pos', severity: 'info', description: 'POS header card faded — replace with Q1 spring creative', dueDate: null },
@@ -207,7 +207,7 @@ export const HOMETOWN_COMPLIANCE: HometownComplianceSummary[] = [
   { hometownId: 'ftw', totalAccounts: 2781, compliantAccounts: 2225, partialAccounts: 389, nonCompliantAccounts: 167, avgScore: 82, avgColdVaultShare: 0.37, tabcIssues: 14, lastFullAudit: '2026-02-12', topIssue: 'Stockyards district bars below cold vault targets' },
   { hometownId: 'ens', totalAccounts: 890, compliantAccounts: 756, partialAccounts: 98, nonCompliantAccounts: 36, avgScore: 86, avgColdVaultShare: 0.43, tabcIssues: 3, lastFullAudit: '2026-02-20', topIssue: 'Rural accounts have irregular audit cadence' },
   { hometownId: 'crp', totalAccounts: 1840, compliantAccounts: 1472, partialAccounts: 276, nonCompliantAccounts: 92, avgScore: 83, avgColdVaultShare: 0.40, tabcIssues: 8, lastFullAudit: '2026-02-14', topIssue: 'Beach district seasonal accounts need spring reset' },
-  { hometownId: 'lar', totalAccounts: 1120, compliantAccounts: 784, partialAccounts: 246, nonCompliantAccounts: 90, avgScore: 76, avgColdVaultShare: 0.35, tabcIssues: 18, lastFullAudit: '2026-02-08', topIssue: 'Post-acquisition — 30% of accounts not yet on Andrews planogram. Border compliance documentation gaps.' },
+  { hometownId: 'lar', totalAccounts: 1120, compliantAccounts: 784, partialAccounts: 246, nonCompliantAccounts: 90, avgScore: 76, avgColdVaultShare: 0.35, tabcIssues: 18, lastFullAudit: '2026-02-08', topIssue: 'Post-acquisition — 30% of accounts not yet on Lone Star planogram. Border compliance documentation gaps.' },
 ];
 
 // ─── Helpers ────────────────────────────────────
