@@ -172,7 +172,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
                   className="w-full flex items-center justify-between mb-2 mt-4 first:mt-0 px-3 py-0.5 rounded transition-colors hover:bg-white/[0.03] group"
                 >
                   <span
-                    className="text-[10px] font-semibold tracking-[0.15em] uppercase"
+                    className="text-[10px] font-semibold tracking-[0.15em] uppercase text-left"
                     style={{ color: `${sectionClr}CC` }}
                   >
                     {section.section}

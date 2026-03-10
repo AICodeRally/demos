@@ -15,7 +15,7 @@ export function LightSectionCard({ title, children, className }: LightSectionCar
       }}
     >
       <div
-        className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4"
+        className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4 text-left"
         style={{ color: 'var(--pl-text-muted)' }}
       >
         {title}
