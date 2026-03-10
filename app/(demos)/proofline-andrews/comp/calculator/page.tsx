@@ -485,7 +485,7 @@ export default function RtccCalculatorPage() {
               <button
                 key={s.label}
                 onClick={s.action}
-                className="block w-full text-left text-[10px] font-mono px-2 py-1.5 rounded hover:bg-slate-50 transition-colors"
+                className="block w-full text-left text-[10px] font-mono px-2 py-1.5 rounded hover:opacity-80 transition-colors"
                 style={{ color: '#2563EB' }}
               >
                 {s.label} {'\u2192'}

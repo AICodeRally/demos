@@ -55,7 +55,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
                     <div className="flex items-center gap-2">
                       <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{item.brand}</span>
                       {item.promo && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                          style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
                           {item.promo}
                         </span>
                       )}
@@ -88,10 +89,10 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Display Instructions */}
           {stop.displayInstructions && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.08)', borderLeft: '2px solid #2563EB' }}>
-              <div className="text-[9px] uppercase tracking-wider text-blue-400 font-mono mb-1">Display Instructions</div>
+              <div className="text-[9px] uppercase tracking-wider font-mono mb-1" style={{ color: '#2563EB' }}>Display Instructions</div>
               <div className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.displayInstructions}</div>
               {stop.photoRequired && (
-                <div className="mt-1.5 text-[10px] font-bold text-amber-400">📸 Photo Required</div>
+                <div className="mt-1.5 text-[10px] font-bold" style={{ color: '#F59E0B' }}>📸 Photo Required</div>
               )}
             </div>
           )}
@@ -119,7 +120,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
               <div className="flex-1">
                 <div className="flex items-center gap-3 text-[11px]">
                   <span className="font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
-                  <span className="text-emerald-500 font-mono">${fmt(visit.rev)}</span>
+                  <span className="text-[#22C55E] font-mono">${fmt(visit.rev)}</span>
                 </div>
                 <div className="text-[11px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.notes}</div>
               </div>
@@ -155,7 +156,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Competitive Intel */}
           {stop.competitiveIntel && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(168,85,247,0.06)', borderLeft: '2px solid #A855F7' }}>
-              <div className="text-[9px] uppercase tracking-wider text-purple-400 font-mono mb-1">Competitive Intel</div>
+              <div className="text-[9px] uppercase tracking-wider font-mono mb-1" style={{ color: '#A855F7' }}>Competitive Intel</div>
               <div className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.competitiveIntel}</div>
             </div>
           )}
@@ -244,16 +245,16 @@ export default function DayPlannerPage() {
         style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}
       >
         <div className="flex items-center gap-3">
-          <span className="text-[12px] font-bold text-emerald-500">Route Optimized</span>
+          <span className="text-[12px] font-bold text-[#22C55E]">Route Optimized</span>
           <span className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
-            Saves <strong className="text-emerald-500">{plan.optimizationSavings.miles} miles</strong> and{' '}
-            <strong className="text-emerald-500">{plan.optimizationSavings.minutes} min</strong> vs standard sequence
+            Saves <strong className="text-[#22C55E]">{plan.optimizationSavings.miles} miles</strong> and{' '}
+            <strong className="text-[#22C55E]">{plan.optimizationSavings.minutes} min</strong> vs standard sequence
           </span>
         </div>
         <div className="flex items-center gap-4 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
           <span>{plan.truckNumber}</span>
           <span>{fmt(plan.totalCases)} cases</span>
-          <span className="text-emerald-500 font-bold">${fmt(plan.totalRevenue)}</span>
+          <span className="text-[#22C55E] font-bold">${fmt(plan.totalRevenue)}</span>
         </div>
       </div>
 
@@ -294,7 +295,7 @@ export default function DayPlannerPage() {
                 {activeStopId === stop.id && (
                   <Link
                     href={`/proofline-andrews/ops/day-planner/stop/${stop.id}`}
-                    className="block mt-1 text-center text-[10px] font-mono py-1.5 rounded-lg transition-colors hover:bg-slate-50"
+                    className="block mt-1 text-center text-[10px] font-mono py-1.5 rounded-lg transition-colors hover:opacity-80"
                     style={{ color: '#2563EB' }}
                   >
                     Full Stop Detail &rarr;
@@ -323,7 +324,7 @@ export default function DayPlannerPage() {
                   <span>{activeStop.arrivalTime}</span>
                   <span>{activeStop.duration} min</span>
                   {activeStop.revenueOpportunity > 0 && (
-                    <span className="text-emerald-500 font-bold">${fmt(activeStop.revenueOpportunity)}</span>
+                    <span className="text-[#22C55E] font-bold">${fmt(activeStop.revenueOpportunity)}</span>
                   )}
                 </div>
                 <DetailPanel stop={activeStop} />
@@ -332,7 +333,7 @@ export default function DayPlannerPage() {
               {/* Mobile Preview Button */}
               <button
                 onClick={() => setShowMobile(true)}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[11px] font-mono transition-all hover:bg-slate-50"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[11px] font-mono transition-all hover:opacity-80"
                 style={{ border: '1px solid var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 <span className="text-base">📱</span>
@@ -341,7 +342,7 @@ export default function DayPlannerPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-center py-20">
-              <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--pl-hover)' }}>
                 <span className="text-3xl opacity-30">📍</span>
               </div>
               <div className="text-sm" style={{ color: 'var(--pl-text-faint)' }}>Select a stop</div>
