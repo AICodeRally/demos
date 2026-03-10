@@ -3,14 +3,15 @@
 import Link from 'next/link';
 
 interface ActNavigationProps {
-  currentAct: 1 | 2 | 3 | 4;
+  currentAct: 1 | 2 | 3 | 4 | 5;
 }
 
 const ACTS = [
   { act: 1, label: 'Corporate Strategy', pages: 3, color: '#C6A052', href: '/strategy/mandate' },
   { act: 2, label: 'Sales Strategy', pages: 5, color: '#7C3AED', href: '/strategy/territories' },
   { act: 3, label: 'Sales Operations', pages: 7, color: '#2563EB', href: '/ops/day-planner' },
-  { act: 4, label: 'Sales Compensation', pages: 8, color: '#10B981', href: '/comp/plan' },
+  { act: 4, label: 'Sales Comp Planning', pages: 5, color: '#10B981', href: '/comp/plan' },
+  { act: 5, label: 'Sales Comp Management', pages: 6, color: '#0EA5E9', href: '/comp/mgmt/data' },
 ] as const;
 
 export function ActNavigation({ currentAct }: ActNavigationProps) {
@@ -28,7 +29,6 @@ export function ActNavigation({ currentAct }: ActNavigationProps) {
               borderBottom: isActive ? `2px solid ${color}` : '2px solid transparent',
             }}
           >
-            {/* Act number */}
             <span
               className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
               style={{
@@ -38,8 +38,6 @@ export function ActNavigation({ currentAct }: ActNavigationProps) {
             >
               {act}
             </span>
-
-            {/* Label + page count */}
             <div className="min-w-0">
               <div
                 className="text-[11px] font-semibold truncate"
