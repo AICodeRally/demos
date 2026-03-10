@@ -40,21 +40,21 @@ const acts = [
 
 export default function CrestlineHome() {
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8FAFC' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--pl-bg)' }}>
       <header className="flex-1 flex flex-col items-center justify-center px-6 pt-16 pb-10 text-center">
         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#1a1f3d' }}>
           <span className="text-2xl font-bold" style={{ color: '#c9a84c' }}>C</span>
         </div>
-        <h1 className="text-5xl font-bold tracking-tight mb-2" style={{ color: '#0F172A' }}>
+        <h1 className="text-5xl font-bold tracking-tight mb-2" style={{ color: 'var(--pl-text)' }}>
           CRESTLINE
         </h1>
-        <p className="text-xl mb-1" style={{ color: '#475569' }}>
+        <p className="text-xl mb-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Department Stores
         </p>
-        <p className="text-lg italic mb-4" style={{ color: '#1a1f3d' }}>
+        <p className="text-lg italic mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
           Premium Retail, Intelligent Compensation
         </p>
-        <p className="max-w-2xl text-base leading-relaxed" style={{ color: '#475569' }}>
+        <p className="max-w-2xl text-base leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>
           End-to-end sales performance management for multi-format retail — from corporate strategy to real-time POS commission to payroll output. 200 stores, 3,200 associates, $2.8B in annual revenue.
         </p>
         <div className="flex gap-8 mt-6">
@@ -65,8 +65,8 @@ export default function CrestlineHome() {
             { label: 'Associates', value: '3,200' },
           ].map(s => (
             <div key={s.label} className="text-center">
-              <div className="text-2xl font-bold" style={{ color: '#1a1f3d' }}>{s.value}</div>
-              <div className="text-xs uppercase tracking-wide" style={{ color: '#94A3B8' }}>{s.label}</div>
+              <div className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>{s.value}</div>
+              <div className="text-xs uppercase tracking-wide" style={{ color: 'var(--pl-text-muted)' }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -78,8 +78,8 @@ export default function CrestlineHome() {
             <Link
               key={act.href}
               href={act.href}
-              className="group block rounded-lg bg-white transition-all duration-200 hover:scale-[1.02]"
-              style={{ border: '1px solid #E2E8F0', borderTop: `4px solid ${act.color}` }}
+              className="group block rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              style={{ backgroundColor: 'var(--pl-card)', border: '1px solid var(--pl-border)', borderTop: `4px solid ${act.color}` }}
             >
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
@@ -88,18 +88,18 @@ export default function CrestlineHome() {
                     Act {idx + 1}
                   </span>
                 </div>
-                <h2 className="text-lg font-semibold mb-2" style={{ color: '#0F172A' }}>{act.title}</h2>
-                <p className="text-sm leading-relaxed mb-4" style={{ color: '#475569' }}>{act.description}</p>
-                <p className="text-xs" style={{ color: '#94A3B8' }}>{act.stats}</p>
+                <h2 className="text-lg font-semibold mb-2" style={{ color: 'var(--pl-text)' }}>{act.title}</h2>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--pl-text-secondary)' }}>{act.description}</p>
+                <p className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{act.stats}</p>
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <footer className="text-center pb-8 text-sm" style={{ color: '#94A3B8' }}>
+      <footer className="text-center pb-8 text-sm" style={{ color: 'var(--pl-text-muted)' }}>
         <p>&copy; 2026 Crestline Department Stores</p>
-        <p className="mt-1">Powered by <span className="font-bold" style={{ color: '#64748B' }}>AICR</span></p>
+        <p className="mt-1">Powered by <span className="font-bold" style={{ color: 'var(--pl-text-secondary)' }}>AICR</span></p>
       </footer>
     </div>
   );

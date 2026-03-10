@@ -22,8 +22,8 @@ interface TransactionFeedProps {
 
 export function TransactionFeed({ transactions }: TransactionFeedProps) {
   return (
-    <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
-      <h3 className="text-sm font-semibold mb-3" style={{ color: '#0F172A' }}>
+    <div className="rounded-xl border p-5" style={{ backgroundColor: 'var(--pl-card, #FFFFFF)', borderColor: 'var(--pl-border, #E2E8F0)' }}>
+      <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--pl-text, #0F172A)' }}>
         Live Transaction Feed
       </h3>
       <div className="max-h-96 overflow-y-auto space-y-1.5">
@@ -33,18 +33,18 @@ export function TransactionFeed({ transactions }: TransactionFeedProps) {
             <div
               key={i}
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-[12px]"
-              style={{ backgroundColor: i % 2 === 0 ? '#F8FAFC' : 'transparent' }}
+              style={{ backgroundColor: i % 2 === 0 ? 'var(--pl-stripe, #F8FAFC)' : 'transparent' }}
             >
-              <span className="font-mono shrink-0" style={{ color: '#94A3B8', width: 48 }}>
+              <span className="font-mono shrink-0" style={{ color: 'var(--pl-text-muted, #94A3B8)', width: 48 }}>
                 {tx.time}
               </span>
-              <span className="font-medium shrink-0" style={{ color: '#1E3A5F', width: 64 }}>
+              <span className="font-medium shrink-0" style={{ color: 'var(--pl-text, #1E3A5F)', width: 64 }}>
                 {tx.rep}
               </span>
-              <span className="flex-1 truncate" style={{ color: '#475569' }}>
+              <span className="flex-1 truncate" style={{ color: 'var(--pl-text-secondary, #475569)' }}>
                 {tx.items}
               </span>
-              <span className="font-bold shrink-0" style={{ color: '#0F172A', width: 64, textAlign: 'right' }}>
+              <span className="font-bold shrink-0" style={{ color: 'var(--pl-text, #0F172A)', width: 64, textAlign: 'right' }}>
                 {tx.total}
               </span>
               <span className="font-medium shrink-0" style={{ color: '#10B981', width: 56, textAlign: 'right' }}>

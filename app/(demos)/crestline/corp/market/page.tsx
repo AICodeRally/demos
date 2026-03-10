@@ -86,16 +86,16 @@ export default function MarketPosition() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: COLORS.primary }}>Market Position</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Market Position</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Competitive landscape analysis for the $120B U.S. department store market
         </p>
       </div>
 
       {/* Market Share Donut + Radar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>National Market Share (%)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>National Market Share (%)</p>
           <DonutChart
             segments={MARKET_SHARE}
             centerValue="18%"
@@ -104,8 +104,8 @@ export default function MarketPosition() {
           />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Competitive Dimensions (vs Industry Avg)
           </p>
           <div className="flex justify-center">
@@ -120,11 +120,11 @@ export default function MarketPosition() {
           <div className="flex justify-center gap-6 mt-2">
             <div className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-0.5 rounded" style={{ backgroundColor: COLORS.primary }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>Crestline</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Crestline</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-0.5 rounded border-dashed" style={{ borderBottom: '1.5px dashed #A8A29E' }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>Industry Avg</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Industry Avg</span>
             </div>
           </div>
         </div>
@@ -132,13 +132,13 @@ export default function MarketPosition() {
 
       {/* Regional Share + 5-Year Trend */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Crestline Market Share by Region (%)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Crestline Market Share by Region (%)</p>
           <BarChart data={REGION_SHARE} unit="%" color={COLORS.primary} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>5-Year Market Share Trend (%)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>5-Year Market Share Trend (%)</p>
           <AreaChart data={MARKET_SHARE_TREND} color={COLORS.accent} height={180} />
         </div>
       </div>
@@ -146,11 +146,11 @@ export default function MarketPosition() {
       {/* Competitor Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {COMPETITORS.map((c) => (
-          <div key={c.name} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E2E8F0' }}>
+          <div key={c.name} className="rounded-xl border p-5" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: c.color }} />
-                <span className="text-sm font-semibold" style={{ color: COLORS.primary }}>{c.name}</span>
+                <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{c.name}</span>
               </div>
               <span
                 className="px-2 py-0.5 rounded-full text-[10px] font-semibold"
@@ -161,12 +161,12 @@ export default function MarketPosition() {
             </div>
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Stores</span>
-                <span className="font-medium" style={{ color: COLORS.primary }}>{c.stores}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Stores</span>
+                <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{c.stores}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Revenue</span>
-                <span className="font-medium" style={{ color: COLORS.primary }}>{c.revenue}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Revenue</span>
+                <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{c.revenue}</span>
               </div>
             </div>
           </div>
@@ -174,18 +174,18 @@ export default function MarketPosition() {
       </div>
 
       {/* SWOT Grid */}
-      <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>SWOT Analysis</p>
+      <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>SWOT Analysis</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {SWOT.map((q) => (
           <div
             key={q.title}
             className="rounded-xl border p-5"
-            style={{ borderColor: '#E2E8F0', borderLeft: `4px solid ${q.color}` }}
+            style={{ borderColor: 'var(--pl-border)', borderLeft: `4px solid ${q.color}` }}
           >
             <p className="text-sm font-semibold mb-3" style={{ color: q.color }}>{q.title}</p>
             <ul className="space-y-1.5">
               {q.items.map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-xs" style={{ color: '#475569' }}>
+                <li key={i} className="flex items-start gap-2 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>
                   <span className="mt-1 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: q.color }} />
                   {item}
                 </li>

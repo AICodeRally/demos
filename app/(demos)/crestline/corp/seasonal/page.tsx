@@ -75,18 +75,18 @@ export default function SeasonalStrategy() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: COLORS.primary }}>Seasonal Strategy</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Seasonal Strategy</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Annual promotional calendar, demand forecasting, and inventory pre-positioning
         </p>
       </div>
 
       {/* Seasonality Curve */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
           12-Month Revenue by Month ($M, all formats)
         </p>
-        <p className="text-xs mb-4" style={{ color: '#94A3B8' }}>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-muted)' }}>
           Holiday peak (Nov-Dec) drives 32% of annual revenue; Aug back-to-school second peak
         </p>
         <AreaChart data={SEASONALITY} color={COLORS.primary} height={200} />
@@ -94,8 +94,8 @@ export default function SeasonalStrategy() {
 
       {/* Demand Heatmap + Quarterly Spend */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Department Demand Intensity (0-100)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Department Demand Intensity (0-100)</p>
           <HeatMap
             rows={DEPT_NAMES}
             cols={MONTHS}
@@ -104,35 +104,35 @@ export default function SeasonalStrategy() {
           />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Promotional Investment by Quarter ($M)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Promotional Investment by Quarter ($M)</p>
           <BarChart data={QUARTERLY_SPEND} unit="M" />
         </div>
       </div>
 
       {/* Key Selling Seasons */}
-      <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Key Selling Seasons</p>
+      <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Key Selling Seasons</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {SEASONS.map((evt) => (
           <div
             key={evt.name}
-            className="rounded-xl bg-white border p-5"
-            style={{ borderColor: '#E2E8F0', borderLeft: `4px solid ${evt.color}` }}
+            className="rounded-xl border p-5"
+            style={{ borderColor: 'var(--pl-border)', borderLeft: `4px solid ${evt.color}`, backgroundColor: 'var(--pl-card)' }}
           >
-            <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>{evt.name}</p>
-            <p className="text-xs mb-3" style={{ color: '#94A3B8' }}>{evt.dates}</p>
+            <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>{evt.name}</p>
+            <p className="text-xs mb-3" style={{ color: 'var(--pl-text-muted)' }}>{evt.dates}</p>
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Budget</span>
-                <span className="font-medium" style={{ color: COLORS.primary }}>{evt.budget}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Budget</span>
+                <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{evt.budget}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Target Lift</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Target Lift</span>
                 <span className="font-semibold" style={{ color: '#10B981' }}>+{evt.lift}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94A3B8' }}>Key Depts</span>
-                <span className="font-medium text-right" style={{ color: '#475569' }}>{evt.depts}</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Key Depts</span>
+                <span className="font-medium text-right" style={{ color: 'var(--pl-text-secondary)' }}>{evt.depts}</span>
               </div>
             </div>
           </div>
@@ -140,9 +140,9 @@ export default function SeasonalStrategy() {
       </div>
 
       {/* 4-5-4 Retail Calendar */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>4-5-4 Retail Calendar</p>
-        <p className="text-xs mb-4" style={{ color: '#94A3B8' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>4-5-4 Retail Calendar</p>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-muted)' }}>
           Commission calculated on 4-5-4 retail weeks (not semi-monthly payroll). 5-week periods trigger Counter Lead Bonus.
         </p>
         <div className="grid grid-cols-12 gap-1.5">
@@ -154,13 +154,13 @@ export default function SeasonalStrategy() {
                 key={p.period}
                 className="rounded-lg p-3 text-center"
                 style={{
-                  backgroundColor: isCounterLead ? `${qColor}18` : '#F8FAFC',
-                  border: `1px solid ${isCounterLead ? qColor : '#E2E8F0'}`,
+                  backgroundColor: isCounterLead ? `${qColor}18` : 'var(--pl-bg)',
+                  border: `1px solid ${isCounterLead ? qColor : 'var(--pl-border)'}`,
                 }}
               >
                 <p className="text-xs font-bold" style={{ color: qColor }}>{p.period}</p>
-                <p className="text-[10px] font-mono mt-1" style={{ color: '#475569' }}>{p.weeks}w</p>
-                <p className="text-[9px] mt-0.5" style={{ color: '#94A3B8' }}>{p.quarter}</p>
+                <p className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>{p.weeks}w</p>
+                <p className="text-[9px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{p.quarter}</p>
                 {isCounterLead && (
                   <span
                     className="inline-block mt-1 px-1 py-0.5 rounded text-[8px] font-bold"
@@ -176,18 +176,18 @@ export default function SeasonalStrategy() {
       </div>
 
       {/* Inventory Buildup Timeline */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Inventory Pre-Positioning (weeks before event)</p>
+      <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Inventory Pre-Positioning (weeks before event)</p>
         <div className="space-y-3">
           {INVENTORY_TIMELINE.map((item) => {
             const maxWeeks = 10;
             const pct = (item.weeks / maxWeeks) * 100;
             return (
               <div key={item.event} className="flex items-center gap-3">
-                <span className="w-[140px] shrink-0 text-right text-xs" style={{ color: '#475569' }}>
+                <span className="w-[140px] shrink-0 text-right text-xs" style={{ color: 'var(--pl-text-secondary)' }}>
                   {item.event}
                 </span>
-                <div className="flex-1 h-6 rounded-lg overflow-hidden" style={{ backgroundColor: '#F1F5F9' }}>
+                <div className="flex-1 h-6 rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--pl-stripe)' }}>
                   <div
                     className="h-full rounded-lg flex items-center px-2 transition-all duration-500"
                     style={{ width: `${pct}%`, backgroundColor: item.color }}

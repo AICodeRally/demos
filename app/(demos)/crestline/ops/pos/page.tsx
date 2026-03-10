@@ -82,8 +82,8 @@ export default function PosAnalytics() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>POS Analytics</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>POS Analytics</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Point-of-sale transaction patterns, department mix, and product performance &mdash; Flagship F-001
         </p>
       </div>
@@ -98,15 +98,15 @@ export default function PosAnalytics() {
 
       {/* Revenue by Dept + Payment Mix */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Revenue by Selling Department ($K)
           </p>
           <BarChart data={DEPT_BREAKDOWN} unit="K" />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Payment Method Split
           </p>
           <div className="flex justify-center">
@@ -117,15 +117,15 @@ export default function PosAnalytics() {
 
       {/* Hourly Volume + Transaction Size */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Transaction Volume by Hour
           </p>
           <AreaChart data={HOURLY_VOLUME} color={COLORS.accent} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Transaction Size Distribution
           </p>
           <div className="flex justify-center">
@@ -135,8 +135,8 @@ export default function PosAnalytics() {
       </div>
 
       {/* Heatmap */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Transaction Volume Heatmap (Day x Hour)
         </p>
         <HeatMap
@@ -148,13 +148,13 @@ export default function PosAnalytics() {
       </div>
 
       {/* Returns Impact — Net Sales (Nordstrom-style) */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
               Returns Impact — Net Sales
             </p>
-            <p className="text-[11px]" style={{ color: '#475569' }}>
+            <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>
               Commission is calculated on net sales, not gross. Returns reduce prior sales credit and directly impact SPH.
             </p>
           </div>
@@ -168,27 +168,27 @@ export default function PosAnalytics() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-4 gap-3 mb-5">
-          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Gross Sales</span>
-            <p className="text-lg font-bold font-mono" style={{ color: '#0F172A' }}>
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Gross Sales</span>
+            <p className="text-lg font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
               ${(RETURNS_IMPACT.mtdGrossSales / 1000000).toFixed(2)}M
             </p>
           </div>
           <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#FEF2F2', border: '1px solid #FECACA' }}>
-            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Returns</span>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Returns</span>
             <p className="text-lg font-bold font-mono" style={{ color: '#EF4444' }}>
               -${(RETURNS_IMPACT.mtdReturns / 1000).toFixed(1)}K
             </p>
           </div>
           <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
-            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Net Sales</span>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Net Sales</span>
             <p className="text-lg font-bold font-mono" style={{ color: '#059669' }}>
               ${(RETURNS_IMPACT.mtdNetSales / 1000000).toFixed(2)}M
             </p>
           </div>
-          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-            <span className="text-[10px] uppercase tracking-wider" style={{ color: '#94A3B8' }}>Avg Return</span>
-            <p className="text-lg font-bold font-mono" style={{ color: '#475569' }}>
+          <div className="rounded-lg p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+            <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Avg Return</span>
+            <p className="text-lg font-bold font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
               ${RETURNS_IMPACT.avgReturnValue}
             </p>
           </div>
@@ -197,23 +197,23 @@ export default function PosAnalytics() {
         {/* Returns by Department + Reasons */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* By Department */}
-          <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+          <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
             <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>Return Rate by Department</p>
             <div className="space-y-2.5">
               {RETURNS_IMPACT.byDepartment.map((d) => (
                 <div key={d.dept}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-medium" style={{ color: '#0F172A' }}>{d.dept}</span>
+                    <span className="text-[11px] font-medium" style={{ color: 'var(--pl-text)' }}>{d.dept}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-mono" style={{ color: '#EF4444' }}>
                         -${(d.returns / 1000).toFixed(1)}K
                       </span>
-                      <span className="text-[10px] font-bold font-mono" style={{ color: d.returnRate > 0.035 ? '#EF4444' : '#475569' }}>
+                      <span className="text-[10px] font-bold font-mono" style={{ color: d.returnRate > 0.035 ? '#EF4444' : 'var(--pl-text-secondary)' }}>
                         {(d.returnRate * 100).toFixed(1)}%
                       </span>
                     </div>
                   </div>
-                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E2E8F0' }}>
+                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--pl-border)' }}>
                     <div
                       className="h-full rounded-full"
                       style={{ width: `${d.returnRate * 2500}%`, backgroundColor: d.color }}
@@ -222,13 +222,13 @@ export default function PosAnalytics() {
                 </div>
               ))}
             </div>
-            <p className="text-[9px] mt-3" style={{ color: '#94A3B8' }}>
+            <p className="text-[9px] mt-3" style={{ color: 'var(--pl-text-muted)' }}>
               Shoes &amp; Designer have highest return rates (fit/size issues). Associates can start a pay period &ldquo;in the hole&rdquo; from returns.
             </p>
           </div>
 
           {/* Return Reasons */}
-          <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+          <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
             <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>Return Reasons</p>
             <div className="flex justify-center mb-3">
               <DonutChart
@@ -238,7 +238,7 @@ export default function PosAnalytics() {
                 size={160}
               />
             </div>
-            <p className="text-[9px] text-center" style={{ color: '#94A3B8' }}>
+            <p className="text-[9px] text-center" style={{ color: 'var(--pl-text-muted)' }}>
               Fit/Size (38%) is the #1 return reason — impacts Designer &amp; Shoes departments most heavily
             </p>
           </div>
@@ -246,19 +246,19 @@ export default function PosAnalytics() {
       </div>
 
       {/* Top-Selling Items Table */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Top-Selling Items Today
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b" style={{ borderColor: '#E2E8F0' }}>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>Product</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>Department</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Units</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Revenue</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>ASP</th>
+              <tr className="border-b" style={{ borderColor: 'var(--pl-border)' }}>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Product</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Department</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: 'var(--pl-text-muted)' }}>Units</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: 'var(--pl-text-muted)' }}>Revenue</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: 'var(--pl-text-muted)' }}>ASP</th>
               </tr>
             </thead>
             <tbody>
@@ -266,9 +266,9 @@ export default function PosAnalytics() {
                 <tr
                   key={i}
                   className="border-b last:border-0"
-                  style={{ borderColor: '#F1F5F9', backgroundColor: i % 2 === 0 ? '#F8FAFC' : 'transparent' }}
+                  style={{ borderColor: 'var(--pl-stripe)', backgroundColor: i % 2 === 0 ? 'var(--pl-bg)' : 'transparent' }}
                 >
-                  <td className="py-2.5 text-[12px] font-medium" style={{ color: '#0F172A' }}>{item.name}</td>
+                  <td className="py-2.5 text-[12px] font-medium" style={{ color: 'var(--pl-text)' }}>{item.name}</td>
                   <td className="py-2.5">
                     <span
                       className="rounded-full px-2 py-0.5 text-[10px] font-bold"
@@ -280,11 +280,11 @@ export default function PosAnalytics() {
                       {item.dept}
                     </span>
                   </td>
-                  <td className="py-2.5 text-[12px] font-mono text-right" style={{ color: '#475569' }}>{item.units}</td>
-                  <td className="py-2.5 text-[12px] font-bold font-mono text-right" style={{ color: '#0F172A' }}>
+                  <td className="py-2.5 text-[12px] font-mono text-right" style={{ color: 'var(--pl-text-secondary)' }}>{item.units}</td>
+                  <td className="py-2.5 text-[12px] font-bold font-mono text-right" style={{ color: 'var(--pl-text)' }}>
                     ${item.revenue.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-[12px] font-mono text-right" style={{ color: '#475569' }}>
+                  <td className="py-2.5 text-[12px] font-mono text-right" style={{ color: 'var(--pl-text-secondary)' }}>
                     ${item.asp.toLocaleString()}
                   </td>
                 </tr>

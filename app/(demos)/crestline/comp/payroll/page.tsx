@@ -51,10 +51,10 @@ export default function PayrollOutput() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>
           Payroll Output & Reconciliation
         </h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           X-in-X-out reconciliation, guarantee floors, and Workday integration — Phil Step 10
         </p>
       </div>
@@ -69,24 +69,24 @@ export default function PayrollOutput() {
 
       {/* X-in-X-out Reconciliation Waterfall */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             X-in-X-out Reconciliation
           </p>
-          <p className="text-xs mb-4" style={{ color: '#94a3b8' }}>
+          <p className="text-xs mb-4" style={{ color: 'var(--pl-text-muted)' }}>
             $4.2M commissionable sales flowing through 5 streams to $324K total payout
           </p>
           <WaterfallChart data={RECONCILIATION_WATERFALL} height={300} />
         </div>
 
         {/* Flow breakdown cards */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Payout Flow Breakdown
           </p>
           <div className="space-y-2">
             {[
-              { label: 'Total Commissionable Sales', amount: '$4,200,000', pct: '', color: '#1a1f3d', bg: '#F8FAFC' },
+              { label: 'Total Commissionable Sales', amount: '$4,200,000', pct: '', color: '#1a1f3d', bg: 'var(--pl-bg)' },
               { label: 'Basic Commission', amount: '$210,000', pct: '5.0%', color: '#2563eb', bg: '#eff6ff' },
               { label: 'Premium Commission', amount: '$84,000', pct: '2.0%', color: '#7c3aed', bg: '#f5f3ff' },
               { label: 'Counter Lead Bonus', amount: '$12,000', pct: '0.3%', color: '#d946ef', bg: '#fdf4ff' },
@@ -108,7 +108,7 @@ export default function PayrollOutput() {
                 </div>
                 <div className="flex items-center gap-3">
                   {row.pct && (
-                    <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{row.pct}</span>
+                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.pct}</span>
                   )}
                   <span className="text-sm font-bold font-mono" style={{ color: row.color }}>{row.amount}</span>
                 </div>
@@ -127,9 +127,9 @@ export default function PayrollOutput() {
       </div>
 
       {/* Guarantee Calculation */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
         <div className="flex items-center justify-between mb-1">
-          <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+          <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
             Guarantee Floor Calculation
           </p>
           <span
@@ -139,14 +139,14 @@ export default function PayrollOutput() {
             hourly_minimum_enforcement
           </span>
         </div>
-        <p className="text-xs mb-5" style={{ color: '#94a3b8' }}>
+        <p className="text-xs mb-5" style={{ color: 'var(--pl-text-muted)' }}>
           When commission falls below the hourly minimum, the guarantee floor kicks in automatically
         </p>
 
         <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr style={{ color: '#94a3b8' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left pb-3 font-medium">Associate</th>
               <th className="text-right pb-3 font-medium">Commission Earned</th>
               <th className="text-right pb-3 font-medium">Hourly Guarantee</th>
@@ -156,14 +156,14 @@ export default function PayrollOutput() {
           </thead>
           <tbody>
             {GUARANTEE_TABLE.map((row, i) => (
-              <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+              <tr key={i} className="border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
                 <td className="py-3">
-                  <span className="font-medium" style={{ color: COLORS.primary }}>{row.name}</span>
+                  <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.name}</span>
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: row.floorApplied ? '#DC2626' : '#475569' }}>
+                <td className="py-3 text-right font-mono" style={{ color: row.floorApplied ? '#DC2626' : 'var(--pl-text-secondary)' }}>
                   ${row.commission.toLocaleString()}
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: '#475569' }}>
+                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
                   ${row.guarantee.toLocaleString()}
                 </td>
                 <td className="py-3 text-center">
@@ -183,7 +183,7 @@ export default function PayrollOutput() {
                     </span>
                   )}
                 </td>
-                <td className="py-3 text-right font-mono font-bold" style={{ color: COLORS.primary }}>
+                <td className="py-3 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>
                   ${row.payout.toLocaleString()}
                 </td>
               </tr>
@@ -194,18 +194,18 @@ export default function PayrollOutput() {
       </div>
 
       {/* Hours-to-Commission Reconciliation */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
           Hours-to-Commission Reconciliation
         </p>
-        <p className="text-xs mb-5" style={{ color: '#94a3b8' }}>
+        <p className="text-xs mb-5" style={{ color: 'var(--pl-text-muted)' }}>
           Selling hours from Workday mapped against commission output — delta determines guarantee eligibility
         </p>
 
         <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr style={{ color: '#94a3b8' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left pb-3 font-medium">Associate</th>
               <th className="text-right pb-3 font-medium">Selling Hours</th>
               <th className="text-right pb-3 font-medium">Hourly Rate</th>
@@ -216,14 +216,14 @@ export default function PayrollOutput() {
           </thead>
           <tbody>
             {HOURS_RECONCILIATION.map((row, i) => (
-              <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+              <tr key={i} className="border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
                 <td className="py-3">
-                  <span className="font-medium" style={{ color: COLORS.primary }}>{row.name}</span>
+                  <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.name}</span>
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: '#475569' }}>{row.sellingHours}</td>
-                <td className="py-3 text-right font-mono" style={{ color: '#475569' }}>${row.hourlyRate.toFixed(2)}</td>
-                <td className="py-3 text-right font-mono" style={{ color: '#475569' }}>${row.minGuarantee.toLocaleString()}</td>
-                <td className="py-3 text-right font-mono" style={{ color: '#475569' }}>${row.actualCommission.toLocaleString()}</td>
+                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.sellingHours}</td>
+                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.hourlyRate.toFixed(2)}</td>
+                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.minGuarantee.toLocaleString()}</td>
+                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.actualCommission.toLocaleString()}</td>
                 <td className="py-3 text-right font-mono font-bold" style={{ color: row.delta < 0 ? '#DC2626' : '#059669' }}>
                   {row.delta < 0 ? '-' : '+'}${Math.abs(row.delta).toLocaleString()}
                 </td>
@@ -243,9 +243,9 @@ export default function PayrollOutput() {
       {/* Payroll Integration Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Status Panel */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
           <div className="flex items-center justify-between mb-5">
-            <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
               Payroll Integration Status
             </p>
             <span
@@ -271,31 +271,31 @@ export default function PayrollOutput() {
           </div>
 
           {/* Summary stats */}
-          <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC' }}>
+          <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <p style={{ color: '#94a3b8' }}>Records Processed</p>
-                <p className="font-bold text-base" style={{ color: COLORS.primary }}>3,247</p>
+                <p style={{ color: 'var(--pl-text-muted)' }}>Records Processed</p>
+                <p className="font-bold text-base" style={{ color: 'var(--pl-text)' }}>3,247</p>
               </div>
               <div>
-                <p style={{ color: '#94a3b8' }}>Errors</p>
+                <p style={{ color: 'var(--pl-text-muted)' }}>Errors</p>
                 <p className="font-bold text-base" style={{ color: '#059669' }}>0</p>
               </div>
               <div>
-                <p style={{ color: '#94a3b8' }}>Batch ID</p>
-                <p className="font-mono font-medium" style={{ color: '#475569' }}>CL-2026-PP04-001</p>
+                <p style={{ color: 'var(--pl-text-muted)' }}>Batch ID</p>
+                <p className="font-mono font-medium" style={{ color: 'var(--pl-text-secondary)' }}>CL-2026-PP04-001</p>
               </div>
               <div>
-                <p style={{ color: '#94a3b8' }}>Last Run</p>
-                <p className="font-mono font-medium" style={{ color: '#475569' }}>Mar 31, 06:00 UTC</p>
+                <p style={{ color: 'var(--pl-text-muted)' }}>Last Run</p>
+                <p className="font-mono font-medium" style={{ color: 'var(--pl-text-secondary)' }}>Mar 31, 06:00 UTC</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Integration Timeline */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-5" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-5" style={{ color: 'var(--pl-text)' }}>
             Integration Timeline
           </p>
 
@@ -311,13 +311,13 @@ export default function PayrollOutput() {
                     {i + 1}
                   </div>
                   {i < TIMELINE_STEPS.length - 1 && (
-                    <div className="w-0.5 h-12" style={{ backgroundColor: '#E2E8F0' }} />
+                    <div className="w-0.5 h-12" style={{ backgroundColor: 'var(--pl-border)' }} />
                   )}
                 </div>
 
                 {/* Content */}
                 <div className="pt-1 pb-6">
-                  <p className="text-xs font-bold" style={{ color: COLORS.primary }}>{step.label}</p>
+                  <p className="text-xs font-bold" style={{ color: 'var(--pl-text)' }}>{step.label}</p>
                   <p className="text-[10px] font-mono mt-0.5" style={{ color: step.color }}>{step.offset}</p>
                 </div>
               </div>
@@ -325,22 +325,22 @@ export default function PayrollOutput() {
           </div>
 
           {/* Total processing bar */}
-          <div className="mt-4 rounded-lg overflow-hidden" style={{ backgroundColor: '#F1F5F9' }}>
+          <div className="mt-4 rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--pl-stripe)' }}>
             <div className="h-2 rounded-lg" style={{ width: '100%', background: `linear-gradient(90deg, #2563eb, #7c3aed, #d946ef, #059669)` }} />
           </div>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>T+0</span>
+            <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>T+0</span>
             <span className="text-[10px] font-mono font-bold" style={{ color: '#059669' }}>T+4hr (complete)</span>
           </div>
         </div>
       </div>
 
       {/* Commission Distribution Bar Chart */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
           Payout Distribution by Component
         </p>
-        <p className="text-xs mb-4" style={{ color: '#94a3b8' }}>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-muted)' }}>
           How $324K total payout breaks down across commission streams
         </p>
         <BarChart
@@ -368,11 +368,11 @@ export default function PayrollOutput() {
           <ShieldCheck size={20} style={{ color: COLORS.accent }} />
         </div>
         <div>
-          <p className="text-sm font-bold mb-1" style={{ color: COLORS.primary }}>Payroll Integrity</p>
-          <p className="text-sm" style={{ color: '#475569' }}>
-            The X-in-X-out reconciliation ensures <span className="font-semibold" style={{ color: COLORS.primary }}>every dollar is traceable</span> from
+          <p className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)' }}>Payroll Integrity</p>
+          <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
+            The X-in-X-out reconciliation ensures <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>every dollar is traceable</span> from
             commissionable sale to payroll submission. Guarantee floors are calculated automatically using Workday selling hours,
-            eliminating the manual spreadsheet process that previously required <span className="font-semibold" style={{ color: COLORS.primary }}>12 hours of payroll admin time</span> per cycle.
+            eliminating the manual spreadsheet process that previously required <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>12 hours of payroll admin time</span> per cycle.
             EIB feeds are generated in Workday-native format, ready for direct import.
           </p>
         </div>

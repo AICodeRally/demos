@@ -206,7 +206,7 @@ export default function FloorDashboard() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Floor Dashboard</h1>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Floor Dashboard</h1>
           <span
             className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider animate-pulse"
             style={{ backgroundColor: '#D1FAE5', color: '#059669' }}
@@ -214,7 +214,7 @@ export default function FloorDashboard() {
             LIVE
           </span>
         </div>
-        <p className="text-sm" style={{ color: '#475569' }}>
+        <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
           {currentFormat?.name ?? 'Flagship'} Format &mdash; Live View &mdash; {currentFormat?.avgStaff ?? 45} avg staff, {zones.length} zones
         </p>
       </div>
@@ -223,18 +223,18 @@ export default function FloorDashboard() {
 
       {/* Floor Map + Transaction Feed (hero row) */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
-        <div className="col-span-3 rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+        <div className="col-span-3 rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
               Live Floor Layout &mdash; {currentFormat?.name ?? 'Flagship'}
             </p>
-            <span className="text-[10px] font-mono" style={{ color: '#94A3B8' }}>
+            <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
               {format === 'flagship' ? '48,000' : format === 'standard' ? '28,000' : format === 'rack' ? '18,000' : '4,500'} sq ft
             </span>
           </div>
           {/* Department store SVG floor map */}
           <svg viewBox="0 0 580 360" className="w-full" height={320}>
-            <rect x="0" y="0" width="580" height="360" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+            <rect x="0" y="0" width="580" height="360" rx="8" fill="var(--pl-bg)" stroke="var(--pl-border)" />
             {zones.map((zone) => {
               const sx = zone.x * 5.2;
               const sy = zone.y * 3.2;
@@ -274,18 +274,18 @@ export default function FloorDashboard() {
             <path d="M 540 170 Q 500 80 300 30" fill="none" stroke="#94A3B8" strokeWidth="1" strokeDasharray="3 4" markerEnd="url(#arrowhead-c)" opacity="0.4" />
             {/* Entrance label */}
             <rect x="520" y="168" width="50" height="28" rx="4" fill="#1a1f3d" opacity="0.08" />
-            <text x="545" y="186" textAnchor="middle" fill="#1a1f3d" fontSize="10" fontWeight="600">Entry</text>
+            <text x="545" y="186" textAnchor="middle" fill="var(--pl-text)" fontSize="10" fontWeight="600">Entry</text>
           </svg>
-          <div className="flex items-center gap-4 mt-3 pt-3 border-t flex-wrap" style={{ borderColor: '#F1F5F9' }}>
+          <div className="flex items-center gap-4 mt-3 pt-3 border-t flex-wrap" style={{ borderColor: 'var(--pl-stripe)' }}>
             {zones.map((zone) => (
               <div key={zone.id} className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: `${zone.color}20`, border: `1px solid ${zone.color}60` }} />
-                <span className="text-[10px]" style={{ color: '#94A3B8' }}>{zone.name}</span>
+                <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{zone.name}</span>
               </div>
             ))}
             <div className="flex items-center gap-1.5">
-              <span className="w-6 border-b border-dashed" style={{ borderColor: '#94A3B8' }} />
-              <span className="text-[10px]" style={{ color: '#94A3B8' }}>Traffic Flow</span>
+              <span className="w-6 border-b border-dashed" style={{ borderColor: 'var(--pl-text-muted)' }} />
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Traffic Flow</span>
             </div>
           </div>
         </div>
@@ -344,15 +344,15 @@ export default function FloorDashboard() {
 
       {/* Charts row 1: Hourly Sales + Revenue by Dept */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Hourly Sales Curve ($K) &mdash; {currentFormat?.name ?? 'Flagship'}
           </p>
           <AreaChart data={HOURLY_SALES[format]} color={COLORS.accent} />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Revenue by Department ($K)
           </p>
           <BarChart data={DEPT_REVENUE[format]} unit="K" />
@@ -361,9 +361,9 @@ export default function FloorDashboard() {
 
       {/* Charts row 2: Peak Hours + Payment Mix */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
               Peak Hours (Traffic Count)
             </p>
             <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: '#EDE9FE', color: '#7c3aed' }}>
@@ -373,8 +373,8 @@ export default function FloorDashboard() {
           <BarChart data={PEAK_HOURS[format]} color="#7c3aed" />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Payment Method Mix
           </p>
           <div className="flex justify-center">

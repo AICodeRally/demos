@@ -81,8 +81,8 @@ export default function AchieverProgram() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Achiever Program</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Achiever Program</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Tier progression, percentile ranking, and additive commission rates
         </p>
       </div>
@@ -104,7 +104,7 @@ export default function AchieverProgram() {
             style={{ borderColor: t.color, backgroundColor: `${t.color}08` }}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-bold" style={{ color: COLORS.primary }}>{t.label}</span>
+              <span className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{t.label}</span>
               <span
                 className="text-xs font-bold px-2.5 py-1 rounded-full"
                 style={{ backgroundColor: `${t.color}20`, color: t.color }}
@@ -114,13 +114,13 @@ export default function AchieverProgram() {
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94a3b8' }}>Threshold</span>
-                <span className="font-mono font-semibold" style={{ color: COLORS.primary }}>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Threshold</span>
+                <span className="font-mono font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {t.threshold > 0 ? `${t.threshold}%` : '--'}
                 </span>
               </div>
               <div className="flex justify-between text-xs">
-                <span style={{ color: '#94a3b8' }}>Additive Rate</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Additive Rate</span>
                 <span className="font-mono font-semibold" style={{ color: t.color }}>
                   {t.additiveRate > 0 ? `+${(t.additiveRate * 100).toFixed(1)}%` : '--'}
                 </span>
@@ -131,14 +131,14 @@ export default function AchieverProgram() {
       </div>
 
       {/* Associate Progress Table */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Associate Progress & Ranking
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ color: '#94a3b8' }}>
+              <tr style={{ color: 'var(--pl-text-muted)' }}>
                 <th className="text-left pb-3 font-medium">Rank</th>
                 <th className="text-left pb-3 font-medium">Associate</th>
                 <th className="text-right pb-3 font-medium">YTD Sales</th>
@@ -154,20 +154,20 @@ export default function AchieverProgram() {
                 <tr
                   key={a.id}
                   className="border-t cursor-pointer hover:bg-slate-50 transition-colors"
-                  style={{ borderColor: '#F1F5F9', backgroundColor: selectedRep === a.id ? `${a.tier.color}06` : undefined }}
+                  style={{ borderColor: 'var(--pl-stripe)', backgroundColor: selectedRep === a.id ? `${a.tier.color}06` : undefined }}
                   onClick={() => setSelectedRep(a.id)}
                 >
-                  <td className="py-2.5 font-mono font-medium" style={{ color: '#94a3b8' }}>#{i + 1}</td>
+                  <td className="py-2.5 font-mono font-medium" style={{ color: 'var(--pl-text-muted)' }}>#{i + 1}</td>
                   <td className="py-2.5">
                     <div>
-                      <span className="font-medium" style={{ color: COLORS.primary }}>{a.name}</span>
-                      <span className="ml-2 text-[10px]" style={{ color: '#94a3b8' }}>{a.storeId}</span>
+                      <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{a.name}</span>
+                      <span className="ml-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{a.storeId}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-right font-mono font-semibold" style={{ color: COLORS.primary }}>
+                  <td className="py-2.5 text-right font-mono font-semibold" style={{ color: 'var(--pl-text)' }}>
                     ${(a.ytdSales / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: '#94a3b8' }}>
+                  <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                     ${(a.ytdTarget / 1000).toFixed(0)}K
                   </td>
                   <td className="py-2.5 text-right">
@@ -187,9 +187,9 @@ export default function AchieverProgram() {
                     </span>
                   </td>
                   <td className="py-2.5 text-right">
-                    <span className="font-mono" style={{ color: '#475569' }}>P{a.percentile}</span>
+                    <span className="font-mono" style={{ color: 'var(--pl-text-secondary)' }}>P{a.percentile}</span>
                   </td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: a.nextTier ? '#475569' : '#94a3b8' }}>
+                  <td className="py-2.5 text-right font-mono" style={{ color: a.nextTier ? 'var(--pl-text-secondary)' : 'var(--pl-text-muted)' }}>
                     {a.nextTier ? `$${(a.distanceToNext / 1000).toFixed(0)}K` : '--'}
                   </td>
                 </tr>
@@ -202,16 +202,16 @@ export default function AchieverProgram() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Attainment vs Target Bar Chart */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Attainment vs Target (%)
           </p>
           <BarChart data={attainmentBarData} unit="%" maxVal={140} />
         </div>
 
         {/* Tier Distribution Donut */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Tier Distribution
           </p>
           <DonutChart
@@ -226,19 +226,19 @@ export default function AchieverProgram() {
       {/* Percentile Ranking + Tier Progression */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Percentile Bar Chart */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Sales Performance Ranking ($K YTD)
           </p>
           <BarChart data={salesBarData} unit="K" />
         </div>
 
         {/* Tier Progression Timeline */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             Tier Progression Timeline
           </p>
-          <p className="text-[11px] mb-4" style={{ color: '#94a3b8' }}>
+          <p className="text-[11px] mb-4" style={{ color: 'var(--pl-text-muted)' }}>
             {selectedAssoc.name} — 6-month simulated trajectory
           </p>
 
@@ -261,7 +261,7 @@ export default function AchieverProgram() {
                       }}
                     />
                   </div>
-                  <span className="text-[10px] mt-1" style={{ color: '#94a3b8' }}>{p.month}</span>
+                  <span className="text-[10px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>{p.month}</span>
                   <span
                     className="text-[8px] font-bold px-1 rounded mt-0.5"
                     style={{ backgroundColor: `${p.tier.color}20`, color: p.tier.color }}
@@ -274,12 +274,12 @@ export default function AchieverProgram() {
           </div>
 
           {/* Tier threshold lines (legend) */}
-          <div className="flex gap-4 mt-4 pt-3 border-t" style={{ borderColor: '#F1F5F9' }}>
+          <div className="flex gap-4 mt-4 pt-3 border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
             {ACHIEVER_TIERS.filter((t) => t.threshold > 0).map((t) => (
               <div key={t.id} className="flex items-center gap-1.5 text-[10px]">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: t.color }} />
-                <span style={{ color: '#475569' }}>{t.label}</span>
-                <span className="font-mono" style={{ color: '#94a3b8' }}>{t.threshold}%</span>
+                <span style={{ color: 'var(--pl-text-secondary)' }}>{t.label}</span>
+                <span className="font-mono" style={{ color: 'var(--pl-text-muted)' }}>{t.threshold}%</span>
               </div>
             ))}
           </div>

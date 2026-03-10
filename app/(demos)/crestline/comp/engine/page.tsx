@@ -37,8 +37,8 @@ export default function CommissionEngine() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Commission Engine</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Commission Engine</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           5-stream calculation pipeline — Phil Burnett Steps 2-6
         </p>
       </div>
@@ -52,8 +52,8 @@ export default function CommissionEngine() {
       </div>
 
       {/* Pipeline Visualization */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-6" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-6" style={{ color: 'var(--pl-text)' }}>
           Calculation Pipeline — 5 Connected Streams
         </p>
 
@@ -77,7 +77,7 @@ export default function CommissionEngine() {
                     >
                       {comp.philStep}
                     </div>
-                    <span className="text-xs font-bold" style={{ color: COLORS.primary }}>
+                    <span className="text-xs font-bold" style={{ color: 'var(--pl-text)' }}>
                       {comp.label}
                     </span>
                   </div>
@@ -91,7 +91,7 @@ export default function CommissionEngine() {
                   </span>
 
                   {/* Description */}
-                  <p className="text-[11px] leading-snug mb-3 flex-1" style={{ color: '#475569' }}>
+                  <p className="text-[11px] leading-snug mb-3 flex-1" style={{ color: 'var(--pl-text-secondary)' }}>
                     {comp.description}
                   </p>
 
@@ -100,7 +100,7 @@ export default function CommissionEngine() {
                     <p className="text-[10px] font-semibold mb-0.5" style={{ color: pipeColor }}>
                       {SAMPLE_REP}
                     </p>
-                    <p className="text-[10px]" style={{ color: '#64748b' }}>{calc.detail}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{calc.detail}</p>
                     <p className="text-sm font-bold mt-1" style={{ color: pipeColor }}>
                       {calc.amount > 0 ? `$${calc.amount.toLocaleString()}` : '$0'}
                     </p>
@@ -118,29 +118,29 @@ export default function CommissionEngine() {
           })}
         </div>
 
-        <p className="text-xs mt-4" style={{ color: '#94a3b8' }}>
+        <p className="text-xs mt-4" style={{ color: 'var(--pl-text-muted)' }}>
           Sample: {SAMPLE_REP} (Platinum, Designer Apparel) on ${SAMPLE_SALE.toLocaleString()} commissionable sale
         </p>
       </div>
 
       {/* Waterfall: How $100K flows through streams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             $100K Sale: Commission Waterfall
           </p>
           <WaterfallChart data={WATERFALL_DATA} height={280} />
         </div>
 
         {/* Stream breakdown table */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Stream-by-Stream Breakdown
           </p>
           <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ color: '#94a3b8' }}>
+              <tr style={{ color: 'var(--pl-text-muted)' }}>
                 <th className="text-left pb-3 font-medium">Stream</th>
                 <th className="text-left pb-3 font-medium">Rate</th>
                 <th className="text-right pb-3 font-medium">Amount</th>
@@ -148,25 +148,25 @@ export default function CommissionEngine() {
             </thead>
             <tbody>
               {SAMPLE_CALCS.map((c, i) => (
-                <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+                <tr key={i} className="border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
                   <td className="py-2.5">
                     <div className="flex items-center gap-2">
                       <div
                         className="w-2 h-2 rounded-full"
                         style={{ backgroundColor: PIPELINE_COLORS[i] }}
                       />
-                      <span className="font-medium" style={{ color: COLORS.primary }}>{c.stream}</span>
+                      <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{c.stream}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 font-mono" style={{ color: '#475569' }}>{c.rate}</td>
-                  <td className="py-2.5 text-right font-semibold" style={{ color: c.amount > 0 ? PIPELINE_COLORS[i] : '#94a3b8' }}>
+                  <td className="py-2.5 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{c.rate}</td>
+                  <td className="py-2.5 text-right font-semibold" style={{ color: c.amount > 0 ? PIPELINE_COLORS[i] : 'var(--pl-text-muted)' }}>
                     ${c.amount.toLocaleString()}
                   </td>
                 </tr>
               ))}
               <tr className="border-t-2" style={{ borderColor: COLORS.primary }}>
-                <td className="py-2.5 font-bold" style={{ color: COLORS.primary }}>Total Payout</td>
-                <td className="py-2.5 font-mono" style={{ color: '#475569' }}>9.0%</td>
+                <td className="py-2.5 font-bold" style={{ color: 'var(--pl-text)' }}>Total Payout</td>
+                <td className="py-2.5 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>9.0%</td>
                 <td className="py-2.5 text-right font-bold text-base" style={{ color: COLORS.accent }}>$9,000</td>
               </tr>
             </tbody>
@@ -176,15 +176,15 @@ export default function CommissionEngine() {
       </div>
 
       {/* Component Registry */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Component Registry
         </p>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {COMMISSION_COMPONENTS.map((comp, i) => {
             const badge = TYPE_BADGES[comp.type];
             return (
-              <div key={comp.id} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
+              <div key={comp.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <div
                     className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
@@ -192,7 +192,7 @@ export default function CommissionEngine() {
                   >
                     {comp.philStep}
                   </div>
-                  <span className="text-[11px] font-semibold truncate" style={{ color: COLORS.primary }}>
+                  <span className="text-[11px] font-semibold truncate" style={{ color: 'var(--pl-text)' }}>
                     {comp.label}
                   </span>
                 </div>
@@ -209,14 +209,14 @@ export default function CommissionEngine() {
       </div>
 
       {/* Draw vs Commission Mechanic */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
         <div className="flex items-center gap-2 mb-1">
           <Scale size={18} style={{ color: COLORS.primary }} />
-          <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+          <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
             Draw vs. Commission — &ldquo;Whichever Is Higher&rdquo;
           </p>
         </div>
-        <p className="text-xs mb-5" style={{ color: '#475569' }}>
+        <p className="text-xs mb-5" style={{ color: 'var(--pl-text-secondary)' }}>
           Associates earn either their hourly draw rate or their commission on sales — whichever is greater.
           Sales Per Hour (SPH) is the gating metric: if SPH is too low, commission won&apos;t beat the draw.
         </p>
@@ -226,44 +226,44 @@ export default function CommissionEngine() {
             <div
               key={dc.format}
               className="rounded-lg border p-4"
-              style={{ borderColor: '#E2E8F0', backgroundColor: '#F8FAFC' }}
+              style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-bg)' }}
             >
-              <p className="text-xs font-bold mb-2" style={{ color: COLORS.primary }}>{dc.format}</p>
+              <p className="text-xs font-bold mb-2" style={{ color: 'var(--pl-text)' }}>{dc.format}</p>
               <div className="flex items-baseline gap-1 mb-1">
                 <span className="text-lg font-bold font-mono" style={{ color: COLORS.accent }}>${dc.hourlyDraw}</span>
-                <span className="text-[10px]" style={{ color: '#94A3B8' }}>/hr draw</span>
+                <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>/hr draw</span>
               </div>
               <div className="flex items-center gap-1 mb-2">
-                <span className="text-[10px]" style={{ color: '#475569' }}>Commission threshold:</span>
+                <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Commission threshold:</span>
                 <span className="text-xs font-bold font-mono" style={{ color: '#059669' }}>${dc.commissionThresholdSPH} SPH</span>
               </div>
-              <p className="text-[10px] leading-snug" style={{ color: '#94A3B8' }}>{dc.description}</p>
+              <p className="text-[10px] leading-snug" style={{ color: 'var(--pl-text-muted)' }}>{dc.description}</p>
             </div>
           ))}
         </div>
 
         {/* Visual: How SPH determines pay mode */}
         <div className="rounded-lg p-4" style={{ backgroundColor: `${COLORS.primary}06`, border: `1px solid ${COLORS.primary}15` }}>
-          <p className="text-[11px] font-semibold mb-3" style={{ color: COLORS.primary }}>
+          <p className="text-[11px] font-semibold mb-3" style={{ color: 'var(--pl-text)' }}>
             How It Works — Flagship Example ($20/hr draw, 5% Designer rate)
           </p>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div className="rounded-lg p-3" style={{ backgroundColor: '#FEE2E2', border: '1px solid #FECACA' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#EF4444' }}>Below Draw</p>
-              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $300 &times; 5% = $15/hr</p>
-              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Earns draw: <strong>$20/hr</strong></p>
+              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $300 &times; 5% = $15/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Earns draw: <strong>$20/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#EF4444' }}>Commission doesn&apos;t beat draw</p>
             </div>
             <div className="rounded-lg p-3" style={{ backgroundColor: '#FEF9C3', border: '1px solid #FDE68A' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#D97706' }}>At Threshold</p>
-              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $400 &times; 5% = $20/hr</p>
-              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Break-even: <strong>$20/hr</strong></p>
+              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $400 &times; 5% = $20/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Break-even: <strong>$20/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#D97706' }}>Commission = draw exactly</p>
             </div>
             <div className="rounded-lg p-3" style={{ backgroundColor: '#D1FAE5', border: '1px solid #A7F3D0' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#059669' }}>Making Commission</p>
-              <p className="text-xs font-mono" style={{ color: '#0F172A' }}>SPH $600 &times; 5% = $30/hr</p>
-              <p className="text-[10px] mt-1" style={{ color: '#475569' }}>Earns commission: <strong>$30/hr</strong></p>
+              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $600 &times; 5% = $30/hr</p>
+              <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Earns commission: <strong>$30/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#059669' }}>+$10/hr above draw</p>
             </div>
           </div>
@@ -282,9 +282,9 @@ export default function CommissionEngine() {
           <Zap size={20} style={{ color: COLORS.accent }} />
         </div>
         <div>
-          <p className="text-sm font-bold mb-1" style={{ color: COLORS.primary }}>Build vs Buy</p>
-          <p className="text-sm" style={{ color: '#475569' }}>
-            This engine replaces <span className="font-semibold" style={{ color: COLORS.primary }}>7 custom-built services</span> identified
+          <p className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)' }}>Build vs Buy</p>
+          <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
+            This engine replaces <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>7 custom-built services</span> identified
             in the Workday assessment. By unifying all 5 calculation streams into a single pipeline,
             Crestline eliminates rate synchronization errors, reduces payroll processing time by 60%,
             and provides real-time commission visibility to 3,200 associates.

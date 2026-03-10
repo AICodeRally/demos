@@ -6,11 +6,13 @@ import Link from 'next/link';
 
 /* ── Color tokens ─────────────────────────────────────────────────────── */
 const C = {
-  heading: '#0F172A',
-  body: '#475569',
-  muted: '#94a3b8',
-  border: '#E2E8F0',
-  bg: '#F8FAFC',
+  heading: 'var(--pl-text)',
+  body: 'var(--pl-text-secondary)',
+  muted: 'var(--pl-text-muted)',
+  border: 'var(--pl-border)',
+  bg: 'var(--pl-bg)',
+  card: 'var(--pl-card)',
+  stripe: 'var(--pl-stripe)',
   red: '#DC2626',
   amber: '#F59E0B',
   green: '#059669',
@@ -454,7 +456,7 @@ export default function BuildVsBuyPage() {
       </div>
 
       {/* Beyond Commission — Platform Capabilities */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: C.border }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: C.border, backgroundColor: C.card }}>
         <div className="flex items-center gap-2 mb-4">
           <Sparkles size={16} style={{ color: C.purple }} />
           <h2 className="text-sm font-semibold" style={{ color: C.heading }}>
@@ -485,7 +487,7 @@ export default function BuildVsBuyPage() {
       </div>
 
       {/* ─── Summary Scorecard ─────────────────────────────────────────── */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: C.border }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: C.border, backgroundColor: C.card }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: C.heading }}>
           Component Scorecard — Three Paths Compared
         </h2>
@@ -508,7 +510,7 @@ export default function BuildVsBuyPage() {
             </thead>
             <tbody>
               {COMPONENTS.map((c, i) => (
-                <tr key={i} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+                <tr key={i} className="border-t" style={{ borderColor: C.stripe }}>
                   <td className="py-3 pr-4 font-semibold whitespace-nowrap" style={{ color: C.heading }}>{c.name}</td>
                   <td className="py-3 pr-4"><Badge label={`${c.buildComplexity} / ${c.buildRisk}`} color={riskColor[c.buildRisk]} /></td>
                   <td className="py-3 pr-4"><Badge label={c.buyReadiness} color={readinessColor[c.buyReadiness]} /></td>
@@ -535,8 +537,8 @@ export default function BuildVsBuyPage() {
         {COMPONENTS.map((c, i) => (
           <div
             key={i}
-            className="rounded-xl bg-white border p-5"
-            style={{ borderColor: C.border, borderLeftWidth: 4, borderLeftColor: borderColorForRisk(c.buildRisk) }}
+            className="rounded-xl border p-5"
+            style={{ borderColor: C.border, backgroundColor: C.card, borderLeftWidth: 4, borderLeftColor: borderColorForRisk(c.buildRisk) }}
           >
             {/* Card Header */}
             <div className="flex items-center justify-between mb-4">
@@ -622,7 +624,7 @@ export default function BuildVsBuyPage() {
       </div>
 
       {/* ─── Summary Footer ────────────────────────────────────────────── */}
-      <div className="rounded-xl bg-white border p-6 mb-6" style={{ borderColor: C.border }}>
+      <div className="rounded-xl border p-6 mb-6" style={{ borderColor: C.border, backgroundColor: C.card }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: C.heading }}>
           Side-by-Side Summary
         </h2>

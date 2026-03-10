@@ -48,7 +48,7 @@ export function DonutChart({
             cy={cy}
             r={radius}
             fill="none"
-            stroke="#F1F5F9"
+            stroke="var(--pl-stripe, #F1F5F9)"
             strokeWidth={strokeWidth}
           />
           {/* Segment arcs */}
@@ -75,7 +75,7 @@ export function DonutChart({
             {centerValue && (
               <span
                 className="text-xl font-bold"
-                style={{ color: '#1C1917' }}
+                style={{ color: 'var(--pl-text, #1C1917)' }}
               >
                 {centerValue}
               </span>
@@ -83,7 +83,7 @@ export function DonutChart({
             {centerLabel && (
               <span
                 className="text-xs"
-                style={{ color: '#A8A29E' }}
+                style={{ color: 'var(--pl-text-muted, #A8A29E)' }}
               >
                 {centerLabel}
               </span>
@@ -99,10 +99,10 @@ export function DonutChart({
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: seg.color }}
             />
-            <span className="text-[11px]" style={{ color: '#57534E' }}>
+            <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary, #57534E)' }}>
               {seg.label}
             </span>
-            <span className="text-[11px] font-medium" style={{ color: '#1C1917' }}>
+            <span className="text-[11px] font-medium" style={{ color: 'var(--pl-text, #1C1917)' }}>
               {seg.value}
             </span>
           </div>

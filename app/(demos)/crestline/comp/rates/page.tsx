@@ -55,8 +55,8 @@ export default function RateTables() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Rate Tables</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Rate Tables</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Effective-dated selling department commission rates and merchandise mapping
         </p>
       </div>
@@ -70,8 +70,8 @@ export default function RateTables() {
       </div>
 
       {/* Rate Table Grid */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Commission Rate Schedule by Selling Department
         </p>
 
@@ -79,9 +79,9 @@ export default function RateTables() {
           <table className="w-full text-xs">
             <thead>
               <tr>
-                <th className="text-left pb-3 font-medium" style={{ color: '#94a3b8' }}>Department</th>
+                <th className="text-left pb-3 font-medium" style={{ color: 'var(--pl-text-muted)' }}>Department</th>
                 {RATE_PERIODS.map((p) => (
-                  <th key={p.label} colSpan={2} className="text-center pb-1 font-medium" style={{ color: '#94a3b8' }}>
+                  <th key={p.label} colSpan={2} className="text-center pb-1 font-medium" style={{ color: 'var(--pl-text-muted)' }}>
                     <span className={p.current ? 'font-bold' : ''}>{p.label}</span>
                     {p.current && (
                       <span className="ml-1 text-[9px] px-1.5 py-0.5 rounded-full font-semibold" style={{ backgroundColor: '#dcfce7', color: '#166534' }}>
@@ -91,13 +91,13 @@ export default function RateTables() {
                   </th>
                 ))}
               </tr>
-              <tr style={{ color: '#94a3b8' }}>
+              <tr style={{ color: 'var(--pl-text-muted)' }}>
                 <th className="text-left pb-3 font-medium" />
                 {RATE_PERIODS.map((p) => (
                   <th key={`base-${p.label}`} className="text-center pb-3 font-medium" colSpan={1}>Base</th>
                 )).flatMap((el, i) => [
-                  <th key={`b-${i}`} className="text-center pb-3 font-medium" style={{ color: '#94a3b8' }}>Base</th>,
-                  <th key={`p-${i}`} className="text-center pb-3 font-medium" style={{ color: '#94a3b8' }}>Premium</th>,
+                  <th key={`b-${i}`} className="text-center pb-3 font-medium" style={{ color: 'var(--pl-text-muted)' }}>Base</th>,
+                  <th key={`p-${i}`} className="text-center pb-3 font-medium" style={{ color: 'var(--pl-text-muted)' }}>Premium</th>,
                 ]).slice(0, 6)}
               </tr>
             </thead>
@@ -105,11 +105,11 @@ export default function RateTables() {
               {SELLING_DEPTS.map((dept) => {
                 const adj = RATE_ADJUSTMENTS[dept.id] ?? [1, 1, 1];
                 return (
-                  <tr key={dept.id} className="border-t" style={{ borderColor: '#F1F5F9' }}>
+                  <tr key={dept.id} className="border-t" style={{ borderColor: 'var(--pl-stripe)' }}>
                     <td className="py-3">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
-                        <span className="font-medium" style={{ color: COLORS.primary }}>{dept.name}</span>
+                        <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{dept.name}</span>
                       </div>
                     </td>
                     {adj.map((m, pi) => {
@@ -122,7 +122,7 @@ export default function RateTables() {
                             <span
                               className="font-mono"
                               style={{
-                                color: isCurrent ? dept.color : '#475569',
+                                color: isCurrent ? dept.color : 'var(--pl-text-secondary)',
                                 fontWeight: isCurrent ? 700 : 400,
                               }}
                             >
@@ -131,7 +131,7 @@ export default function RateTables() {
                             <span
                               className="font-mono"
                               style={{
-                                color: isCurrent ? dept.color : '#475569',
+                                color: isCurrent ? dept.color : 'var(--pl-text-secondary)',
                                 fontWeight: isCurrent ? 700 : 400,
                               }}
                             >
@@ -150,28 +150,28 @@ export default function RateTables() {
       </div>
 
       {/* Merch-to-Dept Mapping */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Merchandise-to-Department Mapping
         </p>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {SELLING_DEPTS.map((dept) => {
             const products = productsByDept[dept.id] ?? [];
             return (
-              <div key={dept.id} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
+              <div key={dept.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
-                  <span className="text-xs font-semibold" style={{ color: COLORS.primary }}>{dept.name}</span>
+                  <span className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>{dept.name}</span>
                 </div>
                 <div className="space-y-1.5">
                   {products.map((p) => (
                     <div key={p.id} className="flex items-center justify-between text-[11px]">
-                      <span className="truncate pr-1" style={{ color: '#475569' }}>{p.name}</span>
-                      <span className="font-mono shrink-0" style={{ color: '#94a3b8' }}>${p.price}</span>
+                      <span className="truncate pr-1" style={{ color: 'var(--pl-text-secondary)' }}>{p.name}</span>
+                      <span className="font-mono shrink-0" style={{ color: 'var(--pl-text-muted)' }}>${p.price}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-2 pt-2 border-t text-[10px] font-medium" style={{ borderColor: '#F1F5F9', color: dept.color }}>
+                <div className="mt-2 pt-2 border-t text-[10px] font-medium" style={{ borderColor: 'var(--pl-stripe)', color: dept.color }}>
                   {products.length} products
                 </div>
               </div>
@@ -181,8 +181,8 @@ export default function RateTables() {
       </div>
 
       {/* Comp Plan Assignments */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Comp Plan Assignment by Store Format
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -193,7 +193,7 @@ export default function RateTables() {
               style={{ borderColor: cp.color, backgroundColor: `${cp.color}06` }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-bold" style={{ color: COLORS.primary }}>{cp.format}</span>
+                <span className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{cp.format}</span>
                 <span
                   className="text-[10px] font-mono px-2 py-0.5 rounded-full"
                   style={{ backgroundColor: `${cp.color}18`, color: cp.color }}
@@ -202,7 +202,7 @@ export default function RateTables() {
                 </span>
               </div>
               <p className="text-xs font-semibold mb-1" style={{ color: cp.color }}>{cp.plan}</p>
-              <p className="text-[11px] leading-snug" style={{ color: '#475569' }}>{cp.description}</p>
+              <p className="text-[11px] leading-snug" style={{ color: 'var(--pl-text-secondary)' }}>{cp.description}</p>
             </div>
           ))}
         </div>
@@ -211,17 +211,17 @@ export default function RateTables() {
       {/* Rate Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Horizontal Bar Chart — Base Rates by Department */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             Base Commission Rate by Department
           </p>
-          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+          <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
             Current effective-period base rates (%)
           </p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={DEPT_RATE_DATA} layout="vertical" margin={{ left: 20, right: 20, top: 5, bottom: 5 }}>
-              <XAxis type="number" domain={[0, 10]} tickFormatter={(v) => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis type="category" dataKey="name" tick={{ fill: '#0F172A', fontSize: 11 }} width={85} />
+              <XAxis type="number" domain={[0, 10]} tickFormatter={(v) => `${v}%`} tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
+              <YAxis type="category" dataKey="name" tick={{ fill: 'var(--pl-text)', fontSize: 11 }} width={85} />
               <Tooltip formatter={(v) => [`${v}%`, 'Base Rate']} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
               <Bar dataKey="rate" fill="#1a1f3d" radius={[0, 4, 4, 0]} barSize={20} />
             </BarChart>
@@ -229,17 +229,17 @@ export default function RateTables() {
         </div>
 
         {/* Area Chart — Rate Change History */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>
             Rate Change History
           </p>
-          <p className="text-xs mb-4" style={{ color: '#475569' }}>
+          <p className="text-xs mb-4" style={{ color: 'var(--pl-text-secondary)' }}>
             Effective-dated rate progression across 3 periods
           </p>
           <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={RATE_HISTORY} margin={{ left: 0, right: 20, top: 5, bottom: 5 }}>
-              <XAxis dataKey="period" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis domain={[3, 9]} tickFormatter={(v) => `${v}%`} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <XAxis dataKey="period" tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
+              <YAxis domain={[3, 9]} tickFormatter={(v) => `${v}%`} tick={{ fill: 'var(--pl-text-muted)', fontSize: 11 }} />
               <Tooltip formatter={(v) => [`${v}%`]} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
               <Area type="monotone" dataKey="cosmetics" stroke="#d946ef" fill="#d946ef" fillOpacity={0.15} strokeWidth={2} name="Cosmetics" />
               <Area type="monotone" dataKey="designer" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.1} strokeWidth={2} name="Designer" />
@@ -261,11 +261,11 @@ export default function RateTables() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <p className="text-sm font-bold mb-1" style={{ color: COLORS.primary }}>Effective-Dated Architecture</p>
-          <p className="text-sm" style={{ color: '#475569' }}>
+          <p className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)' }}>Effective-Dated Architecture</p>
+          <p className="text-sm" style={{ color: 'var(--pl-text-secondary)' }}>
             All rates are effective-dated — no hardcoded values. Historical rates are preserved for retro calculations.
             When a rate change takes effect, the engine automatically uses the correct rate for each transaction based on
-            its <span className="font-semibold" style={{ color: COLORS.primary }}>business date</span>, not processing date.
+            its <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>business date</span>, not processing date.
             This eliminates the most common source of commission disputes.
           </p>
         </div>

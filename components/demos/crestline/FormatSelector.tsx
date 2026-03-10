@@ -34,10 +34,10 @@ export function FormatSelector({ selected, onSelect }: FormatSelectorProps) {
             onClick={() => onSelect(f.id)}
             className="flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium transition-all"
             style={{
-              backgroundColor: isActive ? '#FFFFFF' : '#F1F5F9',
-              color: isActive ? f.color : '#475569',
-              border: `1px solid ${isActive ? f.color : '#E2E8F0'}`,
-              borderBottom: isActive ? `3px solid ${f.color}` : '1px solid #E2E8F0',
+              backgroundColor: isActive ? 'var(--pl-card)' : 'var(--pl-stripe)',
+              color: isActive ? f.color : 'var(--pl-text-secondary)',
+              border: `1px solid ${isActive ? f.color : 'var(--pl-border)'}`,
+              borderBottom: isActive ? `3px solid ${f.color}` : '1px solid var(--pl-border)',
               boxShadow: isActive ? `0 4px 12px ${f.color}25` : 'none',
             }}
           >
@@ -46,8 +46,8 @@ export function FormatSelector({ selected, onSelect }: FormatSelectorProps) {
             <span
               className="rounded-full px-1.5 py-0.5 text-[10px] font-bold"
               style={{
-                backgroundColor: isActive ? f.color : '#E2E8F0',
-                color: isActive ? '#FFFFFF' : '#64748B',
+                backgroundColor: isActive ? f.color : 'var(--pl-border)',
+                color: isActive ? '#FFFFFF' : 'var(--pl-text-muted)',
               }}
             >
               {f.stores}

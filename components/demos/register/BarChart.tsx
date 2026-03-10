@@ -25,13 +25,13 @@ export function BarChart({
           <div key={i} className="flex items-center gap-3">
             <span
               className="w-[100px] shrink-0 text-right text-[11px] leading-tight"
-              style={{ color: '#57534E' }}
+              style={{ color: 'var(--pl-text-secondary, #57534E)' }}
             >
               {item.label}
             </span>
             <div
               className="relative h-[20px] flex-1 overflow-hidden rounded"
-              style={{ backgroundColor: '#F1F5F9' }}
+              style={{ backgroundColor: 'var(--pl-stripe, #F1F5F9)' }}
             >
               <div
                 className="absolute inset-y-0 left-0 flex items-center rounded transition-all duration-500"

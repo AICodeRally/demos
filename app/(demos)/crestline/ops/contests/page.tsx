@@ -95,8 +95,8 @@ export default function ContestsAndBoards() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Contests &amp; Leaderboards</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Contests &amp; Leaderboards</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Active SPIFFs, performance rankings, Achiever tiers, and engagement tracking across 200 stores
         </p>
       </div>
@@ -111,12 +111,12 @@ export default function ContestsAndBoards() {
             <p className="text-[16px] font-bold" style={{ color: COLORS.flagship }}>
               Spring Designer Challenge
             </p>
-            <p className="text-[12px] mt-0.5" style={{ color: '#475569' }}>
+            <p className="text-[12px] mt-0.5" style={{ color: 'var(--pl-text-secondary)' }}>
               Top revenue in Designer Apparel wins $2,500 bonus + Platinum fast-track &mdash; Mar 1&ndash;31
             </p>
           </div>
           <div className="text-right">
-            <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Leader</span>
+            <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Leader</span>
             <p className="text-[14px] font-bold" style={{ color: COLORS.flagship }}>Elena Vasquez &mdash; $78K</p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function ContestsAndBoards() {
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <p className="text-[14px] font-bold" style={{ color: spiff.color }}>{spiff.name}</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: '#475569' }}>
+                  <p className="text-[11px] mt-0.5" style={{ color: 'var(--pl-text-secondary)' }}>
                     {spiff.trigger}
                   </p>
                 </div>
@@ -148,7 +148,7 @@ export default function ContestsAndBoards() {
               </div>
               <div className="mt-3">
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span style={{ color: '#475569' }}>${(spiff.earned / 1000).toFixed(1)}K earned</span>
+                  <span style={{ color: 'var(--pl-text-secondary)' }}>${(spiff.earned / 1000).toFixed(1)}K earned</span>
                   <span className="font-mono" style={{ color: spiff.color }}>{pct}%</span>
                 </div>
                 <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: `${spiff.color}20` }}>
@@ -157,7 +157,7 @@ export default function ContestsAndBoards() {
                     style={{ width: `${pct}%`, backgroundColor: spiff.color }}
                   />
                 </div>
-                <p className="text-[10px] mt-1 text-right" style={{ color: '#94A3B8' }}>
+                <p className="text-[10px] mt-1 text-right" style={{ color: 'var(--pl-text-muted)' }}>
                   Target: ${(spiff.target / 1000).toFixed(0)}K
                   {spiff.expires ? ` | Expires ${spiff.expires}` : ''}
                 </p>
@@ -168,20 +168,20 @@ export default function ContestsAndBoards() {
       </div>
 
       {/* Leaderboard Table */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Leaderboard &mdash; Top 10 Associates (MTD)
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b" style={{ borderColor: '#E2E8F0' }}>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider w-16 text-center" style={{ color: '#94A3B8' }}>Rank</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>Name</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#94A3B8' }}>Department</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Revenue</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: '#94A3B8' }}>Commission</th>
-                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-center" style={{ color: '#94A3B8' }}>Achiever Tier</th>
+              <tr className="border-b" style={{ borderColor: 'var(--pl-border)' }}>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider w-16 text-center" style={{ color: 'var(--pl-text-muted)' }}>Rank</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Name</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Department</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: 'var(--pl-text-muted)' }}>Revenue</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-right" style={{ color: 'var(--pl-text-muted)' }}>Commission</th>
+                <th className="pb-2 text-[11px] font-semibold uppercase tracking-wider text-center" style={{ color: 'var(--pl-text-muted)' }}>Achiever Tier</th>
               </tr>
             </thead>
             <tbody>
@@ -189,7 +189,7 @@ export default function ContestsAndBoards() {
                 const rankStyle = RANK_STYLES[rep.rank];
                 const tierBadge = TIER_BADGE[rep.tier];
                 return (
-                  <tr key={rep.rank} className="border-b last:border-0" style={{ borderColor: '#F1F5F9' }}>
+                  <tr key={rep.rank} className="border-b last:border-0" style={{ borderColor: 'var(--pl-stripe)' }}>
                     <td className="py-2.5 text-center">
                       {rankStyle ? (
                         <span
@@ -199,12 +199,12 @@ export default function ContestsAndBoards() {
                           {rep.rank}
                         </span>
                       ) : (
-                        <span className="text-[13px] font-mono" style={{ color: '#94A3B8' }}>{rep.rank}</span>
+                        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{rep.rank}</span>
                       )}
                     </td>
-                    <td className="py-2.5 text-[13px] font-semibold" style={{ color: '#0F172A' }}>{rep.name}</td>
-                    <td className="py-2.5 text-[12px]" style={{ color: '#475569' }}>{rep.department}</td>
-                    <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: '#0F172A' }}>
+                    <td className="py-2.5 text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{rep.name}</td>
+                    <td className="py-2.5 text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>{rep.department}</td>
+                    <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: 'var(--pl-text)' }}>
                       ${(rep.revenue / 1000).toFixed(0)}K
                     </td>
                     <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: '#059669' }}>
@@ -228,8 +228,8 @@ export default function ContestsAndBoards() {
 
       {/* Radar Chart + HeatMap */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Top Performer Radar (5 Dimensions)
           </p>
           <div className="flex justify-center">
@@ -238,17 +238,17 @@ export default function ContestsAndBoards() {
           <div className="flex justify-center gap-6 mt-2">
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-0.5 rounded" style={{ backgroundColor: COLORS.flagship }} />
-              <span className="text-[11px]" style={{ color: '#475569' }}>Elena V. (#1)</span>
+              <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Elena V. (#1)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-0.5 rounded border-b border-dashed" style={{ borderColor: '#A8A29E' }} />
-              <span className="text-[11px]" style={{ color: '#475569' }}>Top 3 Avg</span>
+              <span className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>Top 3 Avg</span>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Rep Performance Grid (Percentile)
           </p>
           <HeatMap
@@ -262,8 +262,8 @@ export default function ContestsAndBoards() {
 
       {/* Achiever Tier Distribution + Contest Dept Revenue */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Achiever Tier Distribution
           </p>
           <div className="flex justify-center">
@@ -271,8 +271,8 @@ export default function ContestsAndBoards() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Designer Challenge &mdash; Revenue by Department ($K)
           </p>
           <BarChart data={CONTEST_DEPT} unit="K" />
@@ -280,13 +280,13 @@ export default function ContestsAndBoards() {
       </div>
 
       {/* Contest Engagement Trend */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
+      <div className="rounded-xl border p-6" style={{ backgroundColor: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Contest Engagement (30-Day Participation %)
         </p>
         <AreaChart data={ENGAGEMENT_TREND} color={COLORS.flagship} showDots={false} />
         <div className="flex justify-center gap-6 mt-2">
-          <span className="text-[10px]" style={{ color: '#94A3B8' }}>
+          <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
             Day 1: 55% participation
           </span>
           <span className="text-[10px] font-bold" style={{ color: '#059669' }}>

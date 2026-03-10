@@ -107,8 +107,8 @@ export default function BrandPartners() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: COLORS.primary }}>Brand Partners</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Brand Partners</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           5 selling departments, 20 key brand partnerships driving $2.8B in revenue
         </p>
       </div>
@@ -118,17 +118,17 @@ export default function BrandPartners() {
         <div key={dept.dept} className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
-            <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{dept.dept}</p>
+            <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{dept.dept}</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ gridTemplateColumns: `repeat(${Math.min(dept.brands.length, 4)}, 1fr)` }}>
             {dept.brands.map((brand) => (
               <div
                 key={brand.name}
-                className="rounded-xl bg-white border p-5"
-                style={{ borderColor: '#E2E8F0', borderLeft: `4px solid ${dept.color}` }}
+                className="rounded-xl border p-5"
+                style={{ borderColor: 'var(--pl-border)', borderLeft: `4px solid ${dept.color}`, backgroundColor: 'var(--pl-card)' }}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>{brand.name}</p>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{brand.name}</p>
                   <span
                     className="px-2 py-0.5 rounded-full text-[10px] font-semibold"
                     style={{ backgroundColor: `${dept.color}18`, color: dept.color }}
@@ -138,15 +138,15 @@ export default function BrandPartners() {
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs">
-                    <span style={{ color: '#94A3B8' }}>Exclusive SKUs</span>
-                    <span className="font-medium" style={{ color: COLORS.primary }}>{brand.exclusiveSKUs}</span>
+                    <span style={{ color: 'var(--pl-text-muted)' }}>Exclusive SKUs</span>
+                    <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{brand.exclusiveSKUs}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span style={{ color: '#94A3B8' }}>Co-op Fund</span>
-                    <span className="font-medium" style={{ color: COLORS.primary }}>{brand.coopFund}</span>
+                    <span style={{ color: 'var(--pl-text-muted)' }}>Co-op Fund</span>
+                    <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{brand.coopFund}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span style={{ color: '#94A3B8' }}>Dept Share</span>
+                    <span style={{ color: 'var(--pl-text-muted)' }}>Dept Share</span>
                     <span className="font-semibold" style={{ color: dept.color }}>{brand.share}%</span>
                   </div>
                 </div>
@@ -158,8 +158,8 @@ export default function BrandPartners() {
 
       {/* Revenue by Dept + Commission Rates */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Revenue by Department (%)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Revenue by Department (%)</p>
           <DonutChart
             segments={REVENUE_BY_DEPT}
             centerValue="$2.8B"
@@ -168,15 +168,15 @@ export default function BrandPartners() {
           />
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Premium Commission Rates by Dept (%)</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Premium Commission Rates by Dept (%)</p>
           <BarChart data={COMMISSION_RATES} unit="%" />
         </div>
       </div>
 
       {/* Brand Availability Heatmap */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+      <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
           Brand Availability Matrix (by Format)
         </p>
         <HeatMap
@@ -194,7 +194,7 @@ export default function BrandPartners() {
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }} />
-              <span className="text-[10px]" style={{ color: '#475569' }}>{item.label}</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>{item.label}</span>
             </div>
           ))}
         </div>

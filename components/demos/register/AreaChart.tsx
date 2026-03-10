@@ -76,7 +76,7 @@ export function AreaChart({
             y1={y}
             x2={width - paddingRight}
             y2={y}
-            stroke="#F1F5F9"
+            stroke="var(--pl-stripe, #F1F5F9)"
             strokeWidth={1}
           />
         );
@@ -127,7 +127,7 @@ export function AreaChart({
               x={xFor(i)}
               y={height - 6}
               textAnchor="middle"
-              fill="#A8A29E"
+              fill="var(--pl-text-muted, #A8A29E)"
               fontSize={10}
             >
               {d.label}

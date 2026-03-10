@@ -48,8 +48,8 @@ export default function CompanyOverview() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: COLORS.primary }}>Company Overview</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Company Overview</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Crestline Department Stores — {BRAND.stores} stores across {BRAND.formats} formats
         </p>
       </div>
@@ -83,8 +83,8 @@ export default function CompanyOverview() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Revenue by Format */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>Revenue by Format</p>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>Revenue by Format</p>
           <DonutChart
             segments={REVENUE_BY_FORMAT}
             centerValue="$2.8B"
@@ -94,8 +94,8 @@ export default function CompanyOverview() {
         </div>
 
         {/* Revenue by District */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: COLORS.primary }}>
+        <div className="rounded-xl border p-6" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
+          <p className="text-sm font-semibold mb-4" style={{ color: 'var(--pl-text)' }}>
             Revenue by District ({currentFormat?.name ?? 'All'}, $M)
           </p>
           <BarChart
@@ -107,9 +107,9 @@ export default function CompanyOverview() {
       </div>
 
       {/* 12-Month Revenue Trend — Multi-Line (all 4 formats) */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+      <div className="rounded-xl border p-6 mb-8" style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}>
         <div className="flex items-center justify-between mb-4">
-          <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+          <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
             12-Month Revenue Trend by Format ($M)
           </p>
           <div className="flex items-center gap-3">
@@ -121,7 +121,7 @@ export default function CompanyOverview() {
             ].map((s) => (
               <div key={s.key} className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }} />
-                <span className="text-[10px]" style={{ color: '#64748b' }}>{s.key}</span>
+                <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{s.key}</span>
               </div>
             ))}
           </div>
@@ -146,11 +146,11 @@ export default function CompanyOverview() {
                 <stop offset="95%" stopColor={COLORS.counter} stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-            <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--pl-stripe)" />
+            <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'var(--pl-text-muted)' }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 11, fill: 'var(--pl-text-muted)' }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E2E8F0' }}
+              contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid var(--pl-border)' }}
               formatter={((value: number) => [`$${value}M`]) as never}
             />
             <Area type="monotone" dataKey="Flagship" stroke={COLORS.flagship} fill="url(#gFlagship)" strokeWidth={2} dot={false} />
@@ -165,7 +165,7 @@ export default function CompanyOverview() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <MapPin size={16} style={{ color: COLORS.primary }} />
-          <p className="text-sm font-semibold" style={{ color: COLORS.primary }}>District Performance</p>
+          <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>District Performance</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {DISTRICTS.map((d) => {
@@ -175,28 +175,28 @@ export default function CompanyOverview() {
             return (
               <div
                 key={d.name}
-                className="rounded-lg border bg-white p-3.5"
-                style={{ borderColor: '#E2E8F0' }}
+                className="rounded-lg border p-3.5"
+                style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}
               >
-                <p className="text-xs font-semibold truncate" style={{ color: COLORS.primary }}>{d.name}</p>
-                <p className="text-[10px] truncate mt-0.5" style={{ color: '#94A3B8' }}>{d.dm}</p>
+                <p className="text-xs font-semibold truncate" style={{ color: 'var(--pl-text)' }}>{d.name}</p>
+                <p className="text-[10px] truncate mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{d.dm}</p>
                 <div className="flex items-baseline justify-between mt-2">
-                  <span className="text-lg font-bold" style={{ color: COLORS.primary }}>{d.stores}</span>
-                  <span className="text-[10px]" style={{ color: '#94A3B8' }}>stores</span>
+                  <span className="text-lg font-bold" style={{ color: 'var(--pl-text)' }}>{d.stores}</span>
+                  <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>stores</span>
                 </div>
                 <div className="mt-2">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px]" style={{ color: '#64748b' }}>Attainment</span>
+                    <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Attainment</span>
                     <span className="text-[10px] font-semibold" style={{ color: barColor }}>{attPct}%</span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: '#F1F5F9' }}>
+                  <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: 'var(--pl-stripe)' }}>
                     <div
                       className="h-1.5 rounded-full transition-all"
                       style={{ width: `${Math.min(attPct, 100)}%`, backgroundColor: barColor }}
                     />
                   </div>
                 </div>
-                <p className="text-[10px] mt-1.5" style={{ color: '#94A3B8' }}>
+                <p className="text-[10px] mt-1.5" style={{ color: 'var(--pl-text-muted)' }}>
                   ${totalRev}M revenue
                 </p>
               </div>
@@ -216,8 +216,8 @@ export default function CompanyOverview() {
               key={f.id}
               className="rounded-xl border p-5 transition-all cursor-pointer"
               style={{
-                borderColor: isActive ? f.color : '#E2E8F0',
-                backgroundColor: isActive ? `${f.color}08` : '#FFFFFF',
+                borderColor: isActive ? f.color : 'var(--pl-border)',
+                backgroundColor: isActive ? `${f.color}08` : 'var(--pl-card)',
                 borderWidth: isActive ? 2 : 1,
               }}
               onClick={() => setFormat(f.id)}
@@ -229,22 +229,22 @@ export default function CompanyOverview() {
                 >
                   <Icon size={16} style={{ color: f.color }} />
                 </div>
-                <span className="text-sm font-semibold" style={{ color: COLORS.primary }}>
+                <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {f.name}
                 </span>
               </div>
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: '#94A3B8' }}>Stores</span>
-                  <span className="font-medium" style={{ color: COLORS.primary }}>{f.count}</span>
+                  <span style={{ color: 'var(--pl-text-muted)' }}>Stores</span>
+                  <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{f.count}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: '#94A3B8' }}>Avg Revenue</span>
-                  <span className="font-medium" style={{ color: COLORS.primary }}>{f.avgRevenue}</span>
+                  <span style={{ color: 'var(--pl-text-muted)' }}>Avg Revenue</span>
+                  <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{f.avgRevenue}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: '#94A3B8' }}>Avg Staff</span>
-                  <span className="font-medium" style={{ color: COLORS.primary }}>{f.avgStaff}</span>
+                  <span style={{ color: 'var(--pl-text-muted)' }}>Avg Staff</span>
+                  <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{f.avgStaff}</span>
                 </div>
               </div>
             </div>
