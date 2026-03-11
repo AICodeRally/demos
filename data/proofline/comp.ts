@@ -1,16 +1,16 @@
 // Lone Star Distribution — Sales Compensation Model
-// 4-gate EMCO system: Core (Molson Coors), Import (Constellation+Heineken),
+// 4-gate BBI (Brand Balance Index) system: Core (Molson Coors), Import (Constellation+Heineken),
 // Emerging (Craft+Spirits+FMB), Combined (blended)
-// Replaces old 3-gate emco.ts
+// Replaces old 3-gate bbi.ts
 
 import type { SupplierGroup } from './brands';
 
-// ─── EMCO Gate System ───────────────────────────
+// ─── BBI Gate System ────────────────────────────
 
 export type GateName = 'core' | 'import' | 'emerging' | 'combined';
 export type GateStatus = 'locked' | 'unlocked' | 'at-risk';
 
-export interface EmcoGate {
+export interface BBIGate {
   name: GateName;
   label: string;
   threshold: number;            // % required to unlock (e.g., 0.85 = 85%)
@@ -20,19 +20,19 @@ export interface EmcoGate {
   color: string;                // gate badge color
 }
 
-export const EMCO_GATES: EmcoGate[] = [
+export const BBI_GATES: BBIGate[] = [
   {
     name: 'core',
-    label: 'Core Brands ≥ 85%',
+    label: 'BBI-Core ≥ 85%',
     threshold: 0.85,
     multiplier: 1.00,
     supplierGroups: ['molson-coors'],
-    description: 'Molson Coors domestic portfolio must represent ≥85% of target volume. This is the foundation gate — without it, no EMCO bonus applies.',
+    description: 'Molson Coors domestic portfolio must represent ≥85% of target volume. This is the foundation gate — without it, no BBI bonus applies.',
     color: '#60A5FA',
   },
   {
     name: 'import',
-    label: 'Import Brands ≥ 80%',
+    label: 'BBI-Import ≥ 80%',
     threshold: 0.80,
     multiplier: 1.15,
     supplierGroups: ['constellation', 'heineken'],
@@ -41,7 +41,7 @@ export const EMCO_GATES: EmcoGate[] = [
   },
   {
     name: 'emerging',
-    label: 'Emerging ≥ 70%',
+    label: 'BBI-Emerging ≥ 70%',
     threshold: 0.70,
     multiplier: 1.25,
     supplierGroups: ['craft', 'sazerac', 'fmb-rtd'],
@@ -50,7 +50,7 @@ export const EMCO_GATES: EmcoGate[] = [
   },
   {
     name: 'combined',
-    label: 'Combined ≥ 90%',
+    label: 'BBI-Combined ≥ 90%',
     threshold: 0.90,
     multiplier: 1.50,
     supplierGroups: ['molson-coors', 'constellation', 'heineken', 'craft', 'sazerac', 'fmb-rtd'],
@@ -122,7 +122,7 @@ export interface SpiritsAdder {
 export const SPIRITS_ADDER: SpiritsAdder = {
   rate: 0.015,             // 1.5% adder on all Sazerac revenue
   minAccounts: 5,          // must have at least 5 spirits-carrying accounts
-  description: '1.5% commission adder on all Sazerac portfolio revenue. Requires minimum 5 spirits-carrying accounts on route. Stacks with EMCO multiplier and tier rate.',
+  description: '1.5% commission adder on all Sazerac portfolio revenue. Requires minimum 5 spirits-carrying accounts on route. Stacks with BBI multiplier and tier rate.',
   qualifyingBrands: ['buffalo-trace', 'fireball', 'southern-comfort', 'wheatley-vodka'],
 };
 
@@ -189,7 +189,7 @@ export interface CompPlan {
   variableTarget: number;     // target variable % of base
   ote: { min: number; max: number; median: number }; // on-target earnings
   tiers: CompTier[];
-  emcoGates: EmcoGate[];
+  bbiGates: BBIGate[];
   spiritsAdder: SpiritsAdder;
   kickers: Kicker[];
   payFrequency: 'biweekly';
@@ -203,7 +203,7 @@ export const COMP_PLAN: CompPlan = {
   variableTarget: 0.35,       // 35% of base as target variable
   ote: { min: 56700, max: 78300, median: 64800 },
   tiers: COMP_TIERS,
-  emcoGates: EMCO_GATES,
+  bbiGates: BBI_GATES,
   spiritsAdder: SPIRITS_ADDER,
   kickers: KICKERS,
   payFrequency: 'biweekly',
@@ -221,30 +221,30 @@ export function getGateStatus(
   return 'locked';
 }
 
-// Count unlocked gates for a seller's EMCO values
-export function countUnlockedGates(emcoValues: {
+// Count unlocked gates for a seller's BBI values
+export function countUnlockedGates(bbiValues: {
   core: number;
   import: number;
   emerging: number;
   combined: number;
 }): number {
   let count = 0;
-  for (const gate of EMCO_GATES) {
-    if (emcoValues[gate.name] >= gate.threshold) count++;
+  for (const gate of BBI_GATES) {
+    if (bbiValues[gate.name] >= gate.threshold) count++;
   }
   return count;
 }
 
 // Calculate effective multiplier (highest unlocked gate)
-export function getEffectiveMultiplier(emcoValues: {
+export function getEffectiveMultiplier(bbiValues: {
   core: number;
   import: number;
   emerging: number;
   combined: number;
 }): number {
   let maxMultiplier = 1.0;
-  for (const gate of EMCO_GATES) {
-    if (emcoValues[gate.name] >= gate.threshold && gate.multiplier > maxMultiplier) {
+  for (const gate of BBI_GATES) {
+    if (bbiValues[gate.name] >= gate.threshold && gate.multiplier > maxMultiplier) {
       maxMultiplier = gate.multiplier;
     }
   }
@@ -255,13 +255,13 @@ export function getEffectiveMultiplier(emcoValues: {
 export function estimateQuarterlyEarnings(
   quarterlyRevenue: number,
   attainment: number,
-  emcoValues: { core: number; import: number; emerging: number; combined: number },
+  bbiValues: { core: number; import: number; emerging: number; combined: number },
   spiritsRevenue: number,
   spiritsAccountCount: number,
 ): {
   baseEarnings: number;
   variableEarnings: number;
-  emcoMultiplier: number;
+  bbiMultiplier: number;
   spiritsBonus: number;
   totalEstimate: number;
   tier: CompTier;
@@ -274,8 +274,8 @@ export function estimateQuarterlyEarnings(
 
   const quarterlyBase = COMP_PLAN.baseSalary.median / 4;
   const variableEarnings = quarterlyRevenue * tier.rate;
-  const emcoMultiplier = getEffectiveMultiplier(emcoValues);
-  const adjustedVariable = variableEarnings * emcoMultiplier;
+  const bbiMultiplier = getEffectiveMultiplier(bbiValues);
+  const adjustedVariable = variableEarnings * bbiMultiplier;
 
   // Spirits adder
   const spiritsBonus =
@@ -286,17 +286,17 @@ export function estimateQuarterlyEarnings(
   return {
     baseEarnings: quarterlyBase,
     variableEarnings: adjustedVariable,
-    emcoMultiplier,
+    bbiMultiplier,
     spiritsBonus,
     totalEstimate: quarterlyBase + adjustedVariable + spiritsBonus,
     tier,
-    unlockedGates: countUnlockedGates(emcoValues),
+    unlockedGates: countUnlockedGates(bbiValues),
   };
 }
 
 // Get gate by name
-export const getGateByName = (name: GateName): EmcoGate | undefined =>
-  EMCO_GATES.find(g => g.name === name);
+export const getGateByName = (name: GateName): BBIGate | undefined =>
+  BBI_GATES.find(g => g.name === name);
 
 // Get tier by level
 export const getTierByLevel = (level: 1 | 2 | 3 | 4): CompTier | undefined =>
