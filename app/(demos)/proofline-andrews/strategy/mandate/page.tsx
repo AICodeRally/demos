@@ -102,13 +102,13 @@ export default function CeoMandatePage() {
             className="text-xs tracking-[3px] uppercase font-mono mb-1"
             style={{ color: '#C6A052' }}
           >
-            Corporate Strategy &middot; FY2026
+            Act 1 &middot; Corporate Strategy
           </div>
           <h1
             className="text-2xl font-extrabold mb-1"
             style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
           >
-            FY2026 Corporate Strategy
+            FY2026 CEO Mandate
           </h1>
           <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             Lone Star Distribution &middot; North &amp; South Texas
