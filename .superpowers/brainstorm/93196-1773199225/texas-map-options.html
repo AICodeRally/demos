@@ -1,0 +1,172 @@
+<h2>Texas Territory Coverage Map</h2>
+<p class="subtitle">Pick the map style that looks best for the demo. All three use a real Texas outline.</p>
+
+<div class="cards" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+  <!-- Option A: Clean filled state with glowing territory zones -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;">
+    <div class="card-image" style="padding:16px;background:#0F172A;">
+      <svg viewBox="0 0 320 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <radialGradient id="z1" cx="65%" cy="28%" r="25%"><stop offset="0%" stop-color="#C6A052" stop-opacity="0.35"/><stop offset="100%" stop-color="#C6A052" stop-opacity="0"/></radialGradient>
+          <radialGradient id="z2" cx="58%" cy="52%" r="15%"><stop offset="0%" stop-color="#F59E0B" stop-opacity="0.30"/><stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/></radialGradient>
+          <radialGradient id="z3" cx="42%" cy="82%" r="20%"><stop offset="0%" stop-color="#F87171" stop-opacity="0.30"/><stop offset="100%" stop-color="#F87171" stop-opacity="0"/></radialGradient>
+          <filter id="g1"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <!-- Texas outline - accurate simplified -->
+        <path d="M94,8 L94,36 L84,36 L84,55 L66,55 L54,55 L54,8 Z" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+        <path d="M94,8 L210,8 L210,30 L222,30 L222,8 L250,8 L250,36 L264,36 L264,55 L276,55 L276,72 L288,86 L296,108 L300,132 L298,156 L292,178 L282,198 L268,216 L252,232 L234,246 L216,258 L196,268 L174,278 L150,286 L128,292 L108,296 L90,298 L74,296 L60,288 L50,276 L42,260 L36,240 L32,218 L30,194 L30,170 L32,148 L36,126 L42,106 L50,88 L60,72 L72,58 L66,55 L54,55 L54,8 Z" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+        <!-- Territory glow zones -->
+        <ellipse cx="208" cy="80" rx="70" ry="45" fill="url(#z1)"/>
+        <ellipse cx="185" cy="155" rx="40" ry="30" fill="url(#z2)"/>
+        <ellipse cx="130" cy="260" rx="60" ry="35" fill="url(#z3)"/>
+        <!-- Zone borders -->
+        <ellipse cx="208" cy="80" rx="70" ry="45" fill="none" stroke="#C6A052" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+        <ellipse cx="185" cy="155" rx="40" ry="30" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <ellipse cx="130" cy="260" rx="60" ry="35" fill="none" stroke="#F87171" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <!-- Zone labels -->
+        <text x="208" y="55" text-anchor="middle" fill="#C6A052" font-size="9" font-weight="700" letter-spacing="1.5" opacity="0.7">DFW METRO</text>
+        <text x="185" y="140" text-anchor="middle" fill="#F59E0B" font-size="8" font-weight="600" letter-spacing="1" opacity="0.6">CENTRAL</text>
+        <text x="130" y="248" text-anchor="middle" fill="#F87171" font-size="8" font-weight="600" letter-spacing="1" opacity="0.6">SOUTH TX</text>
+        <!-- City dots -->
+        <circle cx="220" cy="72" r="6" fill="#C6A052" stroke="#0F172A" stroke-width="2"/>
+        <circle cx="220" cy="72" r="12" fill="#C6A052" opacity="0.15"/>
+        <text x="232" y="75" fill="#E2E8F0" font-size="8" font-weight="700">Dallas HQ</text>
+        <circle cx="190" cy="82" r="4" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="200" y="92" fill="#94A3B8" font-size="7">Fort Worth</text>
+        <circle cx="230" cy="60" r="3.5" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="240" y="63" fill="#94A3B8" font-size="7">Allen</text>
+        <circle cx="195" cy="155" r="4" fill="#F59E0B" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="205" y="158" fill="#94A3B8" font-size="7">Ennis</text>
+        <circle cx="155" cy="270" r="4" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="165" y="273" fill="#94A3B8" font-size="7">Corpus</text>
+        <circle cx="95" cy="262" r="4" fill="#F59E0B" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="65" y="258" fill="#94A3B8" font-size="7">Laredo</text>
+        <!-- Connection paths -->
+        <path d="M210,100 Q200,130 192,145" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <path d="M185,175 Q160,220 140,248" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A: Dark filled state + glow zones</h3>
+      <p>Slate-filled Texas with radial gradient territory zones that glow. Matches the dark mode demo theme. Clean and modern.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Outline only with colored fill zones -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;">
+    <div class="card-image" style="padding:16px;background:#0F172A;">
+      <svg viewBox="0 0 320 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <!-- Texas outline only -->
+        <path d="M94,8 L94,36 L84,36 L84,55 L66,55 L54,55 L54,8 Z" fill="none" stroke="#475569" stroke-width="2"/>
+        <path d="M94,8 L210,8 L210,30 L222,30 L222,8 L250,8 L250,36 L264,36 L264,55 L276,55 L276,72 L288,86 L296,108 L300,132 L298,156 L292,178 L282,198 L268,216 L252,232 L234,246 L216,258 L196,268 L174,278 L150,286 L128,292 L108,296 L90,298 L74,296 L60,288 L50,276 L42,260 L36,240 L32,218 L30,194 L30,170 L32,148 L36,126 L42,106 L50,88 L60,72 L72,58 L66,55 L54,55 L54,8 Z" fill="none" stroke="#475569" stroke-width="2"/>
+        <!-- Colored territory fill regions -->
+        <ellipse cx="208" cy="80" rx="65" ry="42" fill="#C6A052" fill-opacity="0.15" stroke="#C6A052" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <ellipse cx="185" cy="155" rx="38" ry="28" fill="#F59E0B" fill-opacity="0.12" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <ellipse cx="130" cy="260" rx="55" ry="32" fill="#F87171" fill-opacity="0.12" stroke="#F87171" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <!-- Labels -->
+        <text x="208" y="55" text-anchor="middle" fill="#C6A052" font-size="9" font-weight="700" letter-spacing="1.5">DFW METRO</text>
+        <text x="185" y="140" text-anchor="middle" fill="#F59E0B" font-size="8" font-weight="600" letter-spacing="1">CENTRAL</text>
+        <text x="130" y="248" text-anchor="middle" fill="#F87171" font-size="8" font-weight="600" letter-spacing="1">SOUTH TX</text>
+        <!-- City dots -->
+        <circle cx="220" cy="72" r="6" fill="#C6A052" stroke="#111827" stroke-width="2"/>
+        <circle cx="220" cy="72" r="12" fill="#C6A052" opacity="0.2"/>
+        <text x="232" y="75" fill="#E2E8F0" font-size="8" font-weight="700">Dallas HQ</text>
+        <circle cx="190" cy="82" r="4" fill="#2563EB" stroke="#111827" stroke-width="1.5"/>
+        <text x="200" y="92" fill="#94A3B8" font-size="7">Fort Worth</text>
+        <circle cx="230" cy="60" r="3.5" fill="#2563EB" stroke="#111827" stroke-width="1.5"/>
+        <text x="240" y="63" fill="#94A3B8" font-size="7">Allen</text>
+        <circle cx="195" cy="155" r="4" fill="#F59E0B" stroke="#111827" stroke-width="1.5"/>
+        <text x="205" y="158" fill="#94A3B8" font-size="7">Ennis</text>
+        <circle cx="155" cy="270" r="4" fill="#2563EB" stroke="#111827" stroke-width="1.5"/>
+        <text x="165" y="273" fill="#94A3B8" font-size="7">Corpus</text>
+        <circle cx="95" cy="262" r="4" fill="#F59E0B" stroke="#111827" stroke-width="1.5"/>
+        <text x="65" y="258" fill="#94A3B8" font-size="7">Laredo</text>
+        <!-- Connections -->
+        <path d="M210,100 Q200,130 192,145" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+        <path d="M185,175 Q160,220 140,248" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B: Outline + territory fills</h3>
+      <p>Texas outline only (no fill), with colored territory zone overlays. Lighter and more "map-like". Good contrast.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Filled state with heat-map gradient -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;">
+    <div class="card-image" style="padding:16px;background:#0F172A;">
+      <svg viewBox="0 0 320 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C6A052" stop-opacity="0.20"/>
+            <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.10"/>
+            <stop offset="100%" stop-color="#F87171" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        <!-- Texas filled with heat gradient -->
+        <path d="M94,8 L94,36 L84,36 L84,55 L66,55 L54,55 L54,8 Z" fill="url(#hg)" stroke="#475569" stroke-width="1.5"/>
+        <path d="M94,8 L210,8 L210,30 L222,30 L222,8 L250,8 L250,36 L264,36 L264,55 L276,55 L276,72 L288,86 L296,108 L300,132 L298,156 L292,178 L282,198 L268,216 L252,232 L234,246 L216,258 L196,268 L174,278 L150,286 L128,292 L108,296 L90,298 L74,296 L60,288 L50,276 L42,260 L36,240 L32,218 L30,194 L30,170 L32,148 L36,126 L42,106 L50,88 L60,72 L72,58 L66,55 L54,55 L54,8 Z" fill="url(#hg)" stroke="#475569" stroke-width="1.5"/>
+        <!-- Territory borders only (no ellipses) — use lines to divide regions -->
+        <path d="M30,130 Q160,120 276,130" fill="none" stroke="#C6A052" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+        <path d="M36,210 Q150,200 282,210" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+        <!-- Region labels -->
+        <text x="210" y="55" text-anchor="middle" fill="#C6A052" font-size="10" font-weight="700" letter-spacing="2">DFW METRO</text>
+        <text x="170" y="170" text-anchor="middle" fill="#F59E0B" font-size="9" font-weight="600" letter-spacing="1.5">CENTRAL TX</text>
+        <text x="140" y="255" text-anchor="middle" fill="#F87171" font-size="9" font-weight="600" letter-spacing="1.5">SOUTH TX</text>
+        <!-- City dots -->
+        <circle cx="220" cy="72" r="7" fill="#C6A052" stroke="#0F172A" stroke-width="2.5"/>
+        <circle cx="220" cy="72" r="14" fill="#C6A052" opacity="0.12"/>
+        <text x="234" y="76" fill="#F1F5F9" font-size="9" font-weight="700">Dallas HQ</text>
+        <circle cx="190" cy="82" r="4.5" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="175" y="96" fill="#94A3B8" font-size="7">Fort Worth</text>
+        <circle cx="232" cy="60" r="3.5" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="242" y="63" fill="#94A3B8" font-size="7">Allen</text>
+        <circle cx="200" cy="160" r="4.5" fill="#F59E0B" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="210" y="164" fill="#94A3B8" font-size="7">Ennis</text>
+        <circle cx="165" cy="272" r="4.5" fill="#2563EB" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="175" y="276" fill="#94A3B8" font-size="7">Corpus</text>
+        <circle cx="95" cy="260" r="4.5" fill="#F59E0B" stroke="#0F172A" stroke-width="1.5"/>
+        <text x="60" y="255" fill="#94A3B8" font-size="7">Laredo</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C: Heat-map gradient fill + region dividers</h3>
+      <p>The entire state is filled with a north-to-south gradient (gold to red). Territory zones divided by horizontal lines instead of ellipses. Most "data viz" feel.</p>
+    </div>
+  </div>
+
+  <!-- Option D: Minimal outline with large territory badges -->
+  <div class="card" data-choice="d" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;">
+    <div class="card-image" style="padding:16px;background:#0F172A;">
+      <svg viewBox="0 0 320 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <!-- Texas outline subtle -->
+        <path d="M94,8 L94,36 L84,36 L84,55 L66,55 L54,55 L54,8 Z" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+        <path d="M94,8 L210,8 L210,30 L222,30 L222,8 L250,8 L250,36 L264,36 L264,55 L276,55 L276,72 L288,86 L296,108 L300,132 L298,156 L292,178 L282,198 L268,216 L252,232 L234,246 L216,258 L196,268 L174,278 L150,286 L128,292 L108,296 L90,298 L74,296 L60,288 L50,276 L42,260 L36,240 L32,218 L30,194 L30,170 L32,148 L36,126 L42,106 L50,88 L60,72 L72,58 L66,55 L54,55 L54,8 Z" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+        <!-- Large badge cards positioned on map -->
+        <rect x="155" y="52" width="120" height="48" rx="8" fill="#1E293B" stroke="#C6A052" stroke-width="1.5"/>
+        <circle cx="170" cy="68" r="6" fill="#C6A052"/><text x="170" y="71" text-anchor="middle" fill="#0F172A" font-size="7" font-weight="800">HQ</text>
+        <text x="182" y="68" fill="#C6A052" font-size="10" font-weight="700">DFW Metro</text>
+        <text x="182" y="82" fill="#64748B" font-size="8">4 cities | 32 routes | 890 accts</text>
+        <rect x="140" y="132" width="110" height="42" rx="8" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5"/>
+        <circle cx="155" cy="148" r="5" fill="#F59E0B"/>
+        <text x="166" y="150" fill="#F59E0B" font-size="10" font-weight="700">Central</text>
+        <text x="166" y="163" fill="#64748B" font-size="8">1 city | 8 routes | 210 accts</text>
+        <rect x="70" y="238" width="130" height="42" rx="8" fill="#1E293B" stroke="#F87171" stroke-width="1.5"/>
+        <circle cx="85" cy="254" r="5" fill="#F87171"/>
+        <text x="96" y="256" fill="#F87171" font-size="10" font-weight="700">South Texas</text>
+        <text x="96" y="269" fill="#64748B" font-size="8">2 cities | 14 routes | 380 accts</text>
+        <!-- Connection lines -->
+        <line x1="215" y1="100" x2="195" y2="132" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>
+        <line x1="185" y1="174" x2="150" y2="238" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>D: Filled state + info badge cards</h3>
+      <p>Dark Texas with positioned badge cards showing territory stats. No ellipses — the badges themselves define the regions. Most "dashboard" feel.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;text-align:center;">All options use the same recognizable Texas outline. Click to select your preferred style.</p>
