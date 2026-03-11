@@ -16,6 +16,17 @@ import {
 import { fmt, fmtK, fmtM, pct } from '@/lib/utils';
 import { broadcastCoaching, broadcastAlert } from '@/lib/proofline-broadcast';
 
+/* ── District OOS Summary ──────────────────────── */
+const DISTRICT_OOS = {
+  totalIncidents: 14,
+  topProducts: [
+    { product: 'Miller Lite 24pk', count: 5 },
+    { product: 'Corona Extra 12pk', count: 4 },
+    { product: 'Blue Moon 6pk', count: 3 },
+    { product: 'Modelo Especial 24pk', count: 2 },
+  ],
+};
+
 /* ── Priority config ─────────────────────────── */
 const PRIORITY_CONFIG: Record<CoachingPriority, { color: string; bg: string; label: string }> = {
   urgent: { color: '#DC2626', bg: 'rgba(220,38,38,0.08)', label: 'URGENT' },
@@ -297,6 +308,26 @@ export default function ManagerDashboardPage() {
         <LightKpiCard label="On Track" value={`${district.onTrackCount}/8`} accent="#22C55E" sub={district.issueCount > 0 ? `${district.issueCount} issue` : 'All clear'} stagger={4} />
         <LightKpiCard label="Urgent Cards" value={String(urgentCards.length)} accent={urgentCards.length > 0 ? '#F87171' : '#22C55E'} sub="Needs attention" stagger={5} />
       </div>
+
+      {/* ═══════ DISTRICT OOS ALERT ═══════ */}
+      <LightSectionCard title="OUT-OF-STOCK ALERTS — TODAY">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"
+            style={{ background: 'rgba(248,113,113,0.12)', color: '#F87171' }}>!</div>
+          <div>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#F87171' }}>{DISTRICT_OOS.totalIncidents}</div>
+            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>OOS incidents across district today</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {DISTRICT_OOS.topProducts.map((item) => (
+            <div key={item.product} className="p-3 rounded-lg" style={{ background: 'rgba(248,113,113,0.04)', border: '1px solid rgba(248,113,113,0.15)' }}>
+              <div className="text-lg font-bold font-mono mb-0.5" style={{ color: '#F87171' }}>{item.count}</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item.product}</div>
+            </div>
+          ))}
+        </div>
+      </LightSectionCard>
 
       {/* Tab Toggle */}
       <div className="flex items-center gap-3 mb-6">

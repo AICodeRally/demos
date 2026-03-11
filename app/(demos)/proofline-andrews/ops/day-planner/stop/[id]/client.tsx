@@ -6,6 +6,12 @@ import { ActNavigation, DataSourceBadge } from '@/components/demos/proofline';
 import { getStopById, DAY_PLANS, type Stop } from '@/data/proofline';
 import { fmt } from '@/lib/utils';
 
+/* ── OOS Alert Data ────────────────────────────── */
+const OOS_ALERTS = [
+  { product: 'Miller Lite 24pk', shelf: true, facings: 0, lastDelivery: 'Mar 5', priority: 'high' as const },
+  { product: 'Blue Moon 6pk', shelf: true, facings: 0, lastDelivery: 'Mar 3', priority: 'medium' as const },
+];
+
 /* -- Stop type colors -- */
 const STOP_COLORS: Record<string, string> = {
   'load-out': '#C6A052', 'key-account': '#2563EB', 'chain-drop': '#7C3AED',
@@ -166,6 +172,42 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
           </div>
 
           <div className="space-y-4">
+            {/* OOS Alerts */}
+            {OOS_ALERTS.length > 0 && (
+              <div className="mt-4">
+                <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: '#F87171' }}>
+                  OOS Alerts ({OOS_ALERTS.length})
+                </div>
+                {OOS_ALERTS.map((alert, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 mb-2 rounded-lg"
+                    style={{
+                      background: 'rgba(248,113,113,0.06)',
+                      border: '1px solid rgba(248,113,113,0.2)',
+                    }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
+                      style={{ background: 'rgba(248,113,113,0.15)', color: '#F87171' }}>!</div>
+                    <div className="flex-1">
+                      <div className="text-xs font-bold" style={{ color: 'var(--pl-text)' }}>
+                        OOS: {alert.product}
+                      </div>
+                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                        Shelf tag present, {alert.facings} facings &middot; Last delivery: {alert.lastDelivery}
+                      </div>
+                    </div>
+                    <span
+                      className="text-xs font-bold uppercase px-2 py-0.5 rounded"
+                      style={{
+                        background: alert.priority === 'high' ? 'rgba(248,113,113,0.15)' : 'rgba(245,158,11,0.15)',
+                        color: alert.priority === 'high' ? '#F87171' : '#F59E0B',
+                      }}
+                    >
+                      {alert.priority}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
               <div className="text-xs uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
               <ul className="space-y-2">
