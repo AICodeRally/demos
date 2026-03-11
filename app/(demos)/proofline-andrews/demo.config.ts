@@ -32,11 +32,10 @@ export default defineDemo({
       section: 'Act 2 \u2014 Sales Strategy',
       color: '#7C3AED',
       items: [
-        { label: 'Territory Design', href: '/proofline-andrews/strategy/territories', icon: 'Map' },
-        { label: 'Quota Waterfall', href: '/proofline-andrews/strategy/quotas', icon: 'GitBranch' },
-        { label: 'Accounts', href: '/proofline-andrews/strategy/accounts', icon: 'Building2' },
-        { label: 'Brand Mix', href: '/proofline-andrews/strategy/mix', icon: 'Sliders' },
-        { label: 'Scenarios', href: '/proofline-andrews/strategy/scenarios', icon: 'Shuffle' },
+        { label: 'Territory & Coverage', href: '/proofline-andrews/strategy/territories', icon: 'Map' },
+        { label: 'Quota Planning', href: '/proofline-andrews/strategy/quotas', icon: 'GitBranch' },
+        { label: 'Roles & Mechanics', href: '/proofline-andrews/strategy/roles', icon: 'Users' },
+        { label: 'Brand Mix & Scenarios', href: '/proofline-andrews/strategy/mix', icon: 'Sliders' },
       ],
     },
     {
