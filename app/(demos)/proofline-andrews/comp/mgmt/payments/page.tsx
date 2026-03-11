@@ -111,6 +111,14 @@ const PAYROLL_EXPORT_STATUS = {
   format: 'CSV (ADP Standard Import)',
 };
 
+/* ── Breakage & Returns ────────────────────────── */
+const CREDIT_MEMOS = [
+  { id: 'CM-0341', date: 'Mar 6', rep: 'Marcus Reyes', product: 'Miller Lite 24pk', cases: 3, reason: 'Out of code — expired Feb 28', amount: -72.00, route: 'DAL-03' },
+  { id: 'CM-0342', date: 'Mar 5', rep: 'Elena Vargas', product: 'Blue Moon 6pk', cases: 2, reason: 'Breakage — damaged in transit', amount: -38.40, route: 'FTW-02' },
+  { id: 'CM-0343', date: 'Mar 4', rep: 'Diego Santos', product: 'Corona Extra 12pk', cases: 1, reason: 'Retailer rejection — warm product', amount: -33.00, route: 'DAL-01' },
+  { id: 'CM-0344', date: 'Mar 3', rep: 'Sofia Reyes', product: 'High Noon Variety 12pk', cases: 4, reason: 'Out of code — seasonal SKU', amount: -132.00, route: 'ALN-02' },
+];
+
 export default function PaymentsPage() {
   const totalThisCycle = PAYMENTS.filter(p => p.date.startsWith('Mar 17')).reduce((s, p) => s + p.amount, 0);
 
@@ -413,6 +421,60 @@ export default function PaymentsPage() {
             <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Schedule</div>
             <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Biweekly (auto)</div>
           </div>
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ BREAKAGE & RETURNS ═══════ */}
+      <LightSectionCard title="BREAKAGE & RETURNS — CREDIT MEMOS">
+        <div className="mb-4 grid grid-cols-3 gap-3">
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+              {CREDIT_MEMOS.length}
+            </div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Credit memos (MTD)</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+              ${Math.abs(CREDIT_MEMOS.reduce((s, m) => s + m.amount, 0)).toFixed(2)}
+            </div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total credit impact</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+              {CREDIT_MEMOS.reduce((s, m) => s + m.cases, 0)}
+            </div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Cases returned</div>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['ID', 'Date', 'Rep', 'Product', 'Cases', 'Reason', 'Credit'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {CREDIT_MEMOS.map((memo) => (
+                <tr key={memo.id} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text-faint)' }}>{memo.id}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{memo.date}</td>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{memo.rep}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text)' }}>{memo.product}</td>
+                  <td className="py-1.5 pr-4 text-right" style={{ color: 'var(--pl-text)' }}>{memo.cases}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{memo.reason}</td>
+                  <td className="py-1.5 pr-4 text-right font-bold" style={{ color: '#F87171' }}>{memo.amount < 0 ? '-' : ''}${Math.abs(memo.amount).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          Credit memos reduce credited revenue for the affected rep. Commission adjustments applied in the next pay cycle. Out-of-code returns exceeding 2% of route volume trigger a FIFO rotation audit.
         </div>
       </LightSectionCard>
     </>
