@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ActNavigation, LightSectionCard, LightKpiCard, RadarChart } from '@/components/demos/proofline';
+import { ActNavigation, LightSectionCard, LightKpiCard, RadarChart, Sparkline } from '@/components/demos/proofline';
 import {
   BRAND_FAMILIES,
   BRAND_TOTAL_REVENUE as TOTAL_QUARTERLY_REVENUE,
@@ -110,6 +110,18 @@ const PLAN_COST_DATA = [
   { scenario: 'Stretch', avgAttainment: '100%', totalComp: '$5.6M', compRev: '10.8%', variableSpend: '$2.1M', upsideRisk: '+$420K', idx: 1 },
   { scenario: 'Aggressive', avgAttainment: '104%', totalComp: '$6.4M', compRev: '11.6%', variableSpend: '$2.8M', upsideRisk: '+$850K', idx: 2 },
 ];
+
+/* ── Cost Modeling Data ────────────────────────── */
+const ATTAINMENT_BANDS = [
+  { band: '<60%', reps: 2, totalPayout: 78000 },
+  { band: '60-80%', reps: 6, totalPayout: 312000 },
+  { band: '80-100%', reps: 15, totalPayout: 1680000 },
+  { band: '100-120%', reps: 13, totalPayout: 1820000 },
+  { band: '120-140%', reps: 5, totalPayout: 850000 },
+  { band: '>140%', reps: 2, totalPayout: 420000 },
+];
+
+const COMP_TO_REV_TREND = [11.8, 11.5, 11.2, 11.0, 11.0, 10.9, 11.0, 11.0]; // 8 quarters
 
 export default function BrandMixScenariosPage() {
   const [selectedScenario, setSelectedScenario] = useState<number>(1); // default: Stretch
@@ -458,6 +470,91 @@ export default function BrandMixScenariosPage() {
         <p className="text-[11px] font-mono mt-3" style={{ color: 'var(--pl-text-faint)' }}>
           Upside risk = additional comp cost if attainment exceeds plan by 10pp
         </p>
+      </LightSectionCard>
+
+      {/* ═══════ TOTAL COST OF COMPENSATION — MODELING ═══════ */}
+      <LightSectionCard title="TOTAL COST OF COMPENSATION \u2014 MODELING">
+        {/* KPI strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <LightKpiCard label="Total Annual Field Comp" value="$4.92M" accent="#8B5CF6" />
+          <LightKpiCard label="Comp-to-Revenue Ratio" value="11.0%" accent="#22C55E" sub="Benchmark: 10-13%" />
+          <LightKpiCard label="Field FTEs" value="43" accent="#3B82F6" sub="36 RSRs + 6 managers + 1 director" />
+          <LightKpiCard label="Avg Comp / FTE" value="$114K" accent="#F59E0B" sub="base + variable" />
+        </div>
+
+        {/* Attainment Distribution Bar Chart */}
+        <div className="mb-6">
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            ATTAINMENT DISTRIBUTION — 43 REPS
+          </div>
+          <div className="w-full overflow-hidden rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+            <svg viewBox="0 0 600 200" className="w-full" style={{ minHeight: 160 }}>
+              {ATTAINMENT_BANDS.map((band, i) => {
+                const maxReps = Math.max(...ATTAINMENT_BANDS.map(b => b.reps));
+                const barH = (band.reps / maxReps) * 120;
+                const barW = 70;
+                const gap = 20;
+                const x = 40 + i * (barW + gap);
+                const y = 150 - barH;
+                const color = i < 3 ? '#3B82F6' : '#22C55E';
+                return (
+                  <g key={band.band}>
+                    <rect x={x} y={y} width={barW} height={barH} rx={4} fill={color} opacity={0.8} />
+                    <text x={x + barW / 2} y={y - 8} textAnchor="middle" fill={color} fontSize="13" fontWeight="bold" fontFamily="monospace">
+                      {band.reps}
+                    </text>
+                    <text x={x + barW / 2} y={170} textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">
+                      {band.band}
+                    </text>
+                    <text x={x + barW / 2} y={185} textAnchor="middle" fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace">
+                      ${(band.totalPayout / 1000).toFixed(0)}K
+                    </text>
+                  </g>
+                );
+              })}
+              {/* Axis line */}
+              <line x1="30" y1="150" x2="580" y2="150" stroke="var(--pl-border)" strokeWidth="1" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Sensitivity Card */}
+        <div className="mb-6 p-4 rounded-xl" style={{
+          background: 'rgba(245,158,11,0.06)',
+          borderLeft: '4px solid #F59E0B',
+          border: '1px solid rgba(245,158,11,0.15)',
+        }}>
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-1" style={{ color: '#F59E0B' }}>
+            SENSITIVITY ANALYSIS
+          </div>
+          <div className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+            +5% avg attainment = +$182K variable payout (+8.8%)
+          </div>
+          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+            Model assumes current plan structure, territory assignments, and brand mix targets. Does not include kicker payouts.
+          </div>
+        </div>
+
+        {/* Comp-to-Revenue Trend */}
+        <div className="p-4 rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: 'var(--pl-text-muted)' }}>
+              COMP / REVENUE RATIO — 8-QUARTER TREND
+            </div>
+            <div className="text-sm font-bold font-mono" style={{ color: '#22C55E' }}>11.0%</div>
+          </div>
+          <Sparkline data={COMP_TO_REV_TREND} color="#22C55E" width={400} height={48} />
+          <div className="flex items-center gap-4 mt-2">
+            <div className="flex items-center gap-1">
+              <div className="w-8 h-0 border-t border-dashed" style={{ borderColor: '#22C55E' }} />
+              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Low benchmark (10%)</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-8 h-0 border-t border-dashed" style={{ borderColor: '#F59E0B' }} />
+              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>High benchmark (13%)</span>
+            </div>
+          </div>
+        </div>
       </LightSectionCard>
 
       {/* Methodology */}
