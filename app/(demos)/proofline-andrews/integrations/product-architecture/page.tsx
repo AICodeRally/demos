@@ -520,22 +520,20 @@ export default function ProductArchitecturePage() {
           value="6"
           accent={ORANGE}
           sub="purpose-built"
-          sparkline={[6, 6, 6, 6, 6, 6, 6, 6]}
           stagger={0}
         />
         <LightKpiCard
           label="Data Sources"
           value="8"
           accent={PURPLE}
-          sub="connectors"
-          sparkline={[4, 5, 6, 6, 7, 7, 8, 8]}
+          sub="connectors integrated"
           stagger={1}
         />
         <LightKpiCard
           label="Calc Latency"
           value="<50ms"
           accent={GOLD}
-          sub="end-to-end"
+          sub="end-to-end p95"
           sparkline={[62, 58, 54, 52, 50, 48, 47, 48]}
           stagger={2}
         />
@@ -544,7 +542,7 @@ export default function ProductArchitecturePage() {
           value="2.4M"
           accent={CYAN}
           delta={18.2}
-          sub="tracked"
+          sub="monthly (8-wk trend)"
           sparkline={[1.6, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4]}
           stagger={3}
         />
@@ -553,7 +551,6 @@ export default function ProductArchitecturePage() {
           value="99.97%"
           accent={GREEN}
           sub="zero incidents (30d)"
-          sparkline={[99.9, 99.95, 99.97, 99.96, 99.98, 99.97, 99.97, 99.97]}
           stagger={4}
         />
       </div>

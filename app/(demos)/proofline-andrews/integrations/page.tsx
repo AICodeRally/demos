@@ -338,7 +338,7 @@ export default function IntegrationsPage() {
           label="Live Connectors"
           value={String(liveCount)}
           accent={GREEN}
-          sub={`of ${CONNECTORS.length} total`}
+          sub={`of ${CONNECTORS.length} total (8-wk ramp)`}
           sparkline={[4, 5, 5, 6, 6, 7, 7, 7]}
           stagger={0}
         />
@@ -347,7 +347,7 @@ export default function IntegrationsPage() {
           value={totalRecords >= 1000000 ? `${(totalRecords / 1000000).toFixed(1)}M` : `${(totalRecords / 1000).toFixed(0)}K`}
           accent={ACCENT}
           delta={12.4}
-          sub="synced records"
+          sub="synced records (8-wk trend)"
           sparkline={[180, 210, 195, 240, 220, 260, 245, 265]}
           stagger={1}
         />
@@ -356,7 +356,7 @@ export default function IntegrationsPage() {
           value="67ms"
           accent={CYAN}
           delta={-8.2}
-          sub="across all endpoints"
+          sub="across all endpoints (8-wk trend)"
           sparkline={[89, 82, 74, 78, 71, 68, 65, 67]}
           stagger={2}
         />
@@ -365,7 +365,6 @@ export default function IntegrationsPage() {
           value="99.97%"
           accent={GREEN}
           sub="zero incidents (30d)"
-          sparkline={[99.9, 99.95, 99.97, 99.96, 99.98, 99.97, 99.97, 99.97]}
           stagger={3}
         />
       </div>

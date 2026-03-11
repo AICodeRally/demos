@@ -380,7 +380,6 @@ export default function PlatformArchitecturePage() {
           value="99.97%"
           accent={GREEN}
           sub="zero incidents (90d)"
-          sparkline={[99.9, 99.95, 99.97, 99.96, 99.98, 99.97, 99.97, 99.97]}
           stagger={0}
         />
         <LightKpiCard
@@ -388,7 +387,7 @@ export default function PlatformArchitecturePage() {
           value="2.4M"
           accent={CYAN}
           delta={18.2}
-          sub="immutable records"
+          sub="immutable records (8-wk growth)"
           sparkline={[1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.3, 2.4]}
           stagger={1}
         />
@@ -396,7 +395,7 @@ export default function PlatformArchitecturePage() {
           label="Active Policies"
           value="14"
           accent={PURPLE}
-          sub="governance rules"
+          sub="governance rules (deployment ramp)"
           sparkline={[8, 9, 10, 11, 12, 13, 14, 14]}
           stagger={2}
         />
@@ -404,7 +403,7 @@ export default function PlatformArchitecturePage() {
           label="AI Agents"
           value="6"
           accent={ACCENT}
-          sub="active & monitored"
+          sub="active & monitored (8-wk ramp)"
           sparkline={[2, 3, 3, 4, 4, 5, 6, 6]}
           stagger={3}
         />
@@ -413,7 +412,6 @@ export default function PlatformArchitecturePage() {
           value="Complete"
           accent={BLUE}
           sub="zero cross-tenant leaks"
-          sparkline={[100, 100, 100, 100, 100, 100, 100, 100]}
           stagger={4}
         />
       </div>
