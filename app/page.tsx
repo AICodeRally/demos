@@ -31,7 +31,7 @@ const demos = [
   },
   {
     name: 'PROOFLINE',
-    slug: 'proofline-andrews',
+    slug: 'proofline',
     industry: 'Beverage Distribution',
     tagline: 'Revenue operating system for beverage distributors — territory, comp, route ops',
     color: '#C6A052',
