@@ -223,3 +223,30 @@ export {
   SUPPLIER_PROGRAMS, type SupplierProgram,
   CASH_DISCIPLINE, type CashDiscipline,
 } from './tradeSpend';
+
+// ── Planning (Act 2 Redesign) ─────────────────────
+export {
+  COVERAGE_METRICS,
+  COVERAGE_POINTS,
+  QUOTA_NODES,
+  SEASONAL_WEIGHTS,
+  ROLE_DEFINITIONS,
+  COMMISSION_BANDS,
+  ATTAINMENT_HEATMAP,
+  FAIRNESS_SCORES,
+  getCoverageByRoute,
+  getCoverageByHometown,
+  getQuotaNodesByLevel,
+  getQuotaChildren,
+  getFairnessScore,
+  getAttainmentHistory,
+  getRoleByType,
+  type CoverageMetric,
+  type CoveragePoint,
+  type QuotaNode,
+  type SeasonalWeight,
+  type RoleDefinition,
+  type CommissionBand,
+  type AttainmentCell,
+  type FairnessScore,
+} from './planning';
