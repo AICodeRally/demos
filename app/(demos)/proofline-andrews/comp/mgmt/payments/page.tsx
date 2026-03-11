@@ -93,6 +93,24 @@ const SOX_CONTROLS = [
   { objective: 'Valid Calculations', feature: 'Version-aware engine with regression test suite', status: 'Active' },
 ];
 
+/* ── Payroll Export Data ────────────────────────── */
+const PAYROLL_EXPORT = [
+  { employeeId: 'LS-1001', name: 'Marcus Reyes', earningsCode: 'COM', amount: 2840, period: 'Mar 1-15', glCode: '5100-10' },
+  { employeeId: 'LS-1002', name: 'Sofia Reyes', earningsCode: 'COM', amount: 3920, period: 'Mar 1-15', glCode: '5100-10' },
+  { employeeId: 'LS-1003', name: 'Elena Vargas', earningsCode: 'VAR', amount: 1780, period: 'Mar 1-15', glCode: '5100-20' },
+  { employeeId: 'LS-1004', name: 'Diego Santos', earningsCode: 'VAR', amount: 1620, period: 'Mar 1-15', glCode: '5100-20' },
+  { employeeId: 'LS-1005', name: 'Raj Patel', earningsCode: 'VAR', amount: 1950, period: 'Mar 1-15', glCode: '5100-20' },
+  { employeeId: 'LS-1006', name: 'Kenji Morales', earningsCode: 'COM', amount: 2840, period: 'Mar 1-15', glCode: '5100-10' },
+];
+
+const PAYROLL_EXPORT_STATUS = {
+  lastExported: 'Mar 7, 2026',
+  totalRecords: 36,
+  totalAmount: 142800,
+  target: 'ADP Workforce Now',
+  format: 'CSV (ADP Standard Import)',
+};
+
 export default function PaymentsPage() {
   const totalThisCycle = PAYMENTS.filter(p => p.date.startsWith('Mar 17')).reduce((s, p) => s + p.amount, 0);
 
@@ -324,6 +342,77 @@ export default function PaymentsPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ PAYROLL EXPORT PREVIEW ═══════ */}
+      <LightSectionCard title="PAYROLL EXPORT \u2014 ADP INTEGRATION">
+        {/* Export status banner */}
+        <div className="mb-4 p-4 rounded-xl flex items-center justify-between" style={{
+          background: 'rgba(34,197,94,0.06)',
+          border: '1px solid rgba(34,197,94,0.15)',
+        }}>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
+              style={{ background: 'rgba(34,197,94,0.15)', color: '#22C55E' }}>{'\u2713'}</div>
+            <div>
+              <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+                Last exported {PAYROLL_EXPORT_STATUS.lastExported}
+              </div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                {PAYROLL_EXPORT_STATUS.totalRecords} records &middot; ${PAYROLL_EXPORT_STATUS.totalAmount.toLocaleString()} &middot; {PAYROLL_EXPORT_STATUS.format}
+              </div>
+            </div>
+          </div>
+          <button className="px-4 py-2 rounded-lg text-xs font-bold font-mono transition-all"
+            style={{ background: 'rgba(14,165,233,0.12)', color: ACCENT, border: `1px solid ${ACCENT}30` }}>
+            EXPORT CURRENT PERIOD
+          </button>
+        </div>
+
+        {/* Export preview table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['Employee ID', 'Name', 'Earnings Code', 'Amount', 'Period', 'GL Code'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PAYROLL_EXPORT.map((row, i) => (
+                <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{row.employeeId}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text)' }}>{row.name}</td>
+                  <td className="py-1.5 pr-4">
+                    <span className="px-1.5 py-0.5 rounded text-xs font-bold"
+                      style={{ background: 'rgba(14,165,233,0.1)', color: ACCENT }}>{row.earningsCode}</span>
+                  </td>
+                  <td className="py-1.5 pr-4 text-right font-bold" style={{ color: ACCENT }}>${row.amount.toLocaleString()}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{row.period}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-faint)' }}>{row.glCode}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ADP mapping */}
+        <div className="mt-4 grid grid-cols-3 gap-3">
+          <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Target</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{PAYROLL_EXPORT_STATUS.target}</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Format</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{PAYROLL_EXPORT_STATUS.format}</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Schedule</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Biweekly (auto)</div>
+          </div>
         </div>
       </LightSectionCard>
     </>
