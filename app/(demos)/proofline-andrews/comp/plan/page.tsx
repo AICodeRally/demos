@@ -227,6 +227,26 @@ function EarningsComparison() {
   );
 }
 
+/* ── Draw / Guarantee Program ──────────────────── */
+const DRAW_PROGRAM = {
+  amount: 3200,
+  frequency: 'biweekly',
+  durationMonths: 6,
+  recoveryPct: 0.25,
+  recoveryDescription: '25% of earned commission above guarantee floor applied to draw balance',
+};
+
+const DRAW_TIMELINE = [
+  { phase: 'Guarantee', months: '1-6', description: '$3,200 biweekly minimum guaranteed', color: '#3B82F6', pct: 50 },
+  { phase: 'Partial Ramp', months: '7-12', description: 'Draw tapers, recoverable against earned', color: '#F59E0B', pct: 33 },
+  { phase: 'Full Plan', months: '13+', description: 'Standard comp plan, no draw', color: '#22C55E', pct: 17 },
+];
+
+const CURRENT_DRAW_BALANCES = [
+  { rep: 'Nathan Chowdhury', route: 'DAL-08', hireDate: 'Jan 15, 2026', balance: 4800, phase: 'Guarantee', monthsRemaining: 4 },
+  { rep: 'Jackie Hernandez', route: 'DAL-07', hireDate: 'Feb 1, 2026', balance: 1200, phase: 'Guarantee', monthsRemaining: 5 },
+];
+
 export default function CompPlanPage() {
   const plan = COMP_PLAN;
   const maxMultiplier = Math.max(...BBI_GATES.map(g => g.multiplier));
@@ -335,13 +355,82 @@ export default function CompPlanPage() {
         </div>
       </div>
 
+      {/* ═══════ DRAW / GUARANTEE PROGRAM ═══════ */}
+      <LightSectionCard title="NEW HIRE DRAW / GUARANTEE PROGRAM">
+        {/* Program summary */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#3B82F6' }}>${DRAW_PROGRAM.amount.toLocaleString()}</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Biweekly guarantee</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#F59E0B' }}>{DRAW_PROGRAM.durationMonths} months</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Guarantee period</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#22C55E' }}>{(DRAW_PROGRAM.recoveryPct * 100).toFixed(0)}%</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Recovery rate above floor</div>
+          </div>
+        </div>
+
+        {/* Transition Timeline SVG */}
+        <div className="mb-6">
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            TRANSITION TIMELINE
+          </div>
+          <div className="flex rounded-xl overflow-hidden" style={{ height: 48, border: '1px solid var(--pl-border)' }}>
+            {DRAW_TIMELINE.map((phase) => (
+              <div key={phase.phase} className="flex items-center justify-center px-3" style={{
+                width: `${phase.pct}%`,
+                background: `${phase.color}15`,
+                borderRight: '1px solid var(--pl-border)',
+              }}>
+                <div className="text-center">
+                  <div className="text-xs font-bold font-mono" style={{ color: phase.color }}>{phase.phase}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Mo {phase.months}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-4">
+            {DRAW_TIMELINE.map((phase) => (
+              <div key={phase.phase} className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <span className="font-bold" style={{ color: phase.color }}>{phase.phase}:</span> {phase.description}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Current Draw Balances */}
+        <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          CURRENT DRAW BALANCES
+        </div>
+        <div className="grid gap-3">
+          {CURRENT_DRAW_BALANCES.map((rep) => (
+            <div key={rep.rep} className="flex items-center justify-between p-3 rounded-lg"
+              style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+              <div>
+                <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{rep.rep}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  {rep.route} &middot; Hired {rep.hireDate} &middot; {rep.monthsRemaining} months remaining
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-lg font-bold font-mono" style={{ color: '#F59E0B' }}>${rep.balance.toLocaleString()}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>outstanding draw</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </LightSectionCard>
+
       {/* Methodology */}
       <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Compensation plan designed by PROOFLINE for Lone Star Distribution FY2026. Tier rates are inverse to attainment to protect floor earnings.
         gates cascade from Core → Import → Emerging → Combined. Spirits adder stacks on top of gate-adjusted variable.
         Kickers are quarterly bonus opportunities tied to seasonal events and supplier priorities.
       </div>
-    
+
     </>
   );
 }
