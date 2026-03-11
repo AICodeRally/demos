@@ -212,12 +212,29 @@ export const COMP_PLAN: CompPlan = {
 
 // ─── Gate Status Helper ─────────────────────────
 
+type BBIValues = { core: number; import: number; emerging: number; combined: number };
+
+export function getGateStatus(gateThreshold: number, sellerPct: number): GateStatus;
+export function getGateStatus(bbiValues: BBIValues, gateName: GateName): GateStatus;
 export function getGateStatus(
-  gateThreshold: number,
-  sellerPct: number
+  thresholdOrValues: number | BBIValues,
+  pctOrName: number | GateName
 ): GateStatus {
-  if (sellerPct >= gateThreshold) return 'unlocked';
-  if (sellerPct >= gateThreshold * 0.95) return 'at-risk';
+  let threshold: number;
+  let sellerPct: number;
+
+  if (typeof thresholdOrValues === 'number') {
+    threshold = thresholdOrValues;
+    sellerPct = pctOrName as number;
+  } else {
+    const gateName = pctOrName as GateName;
+    const gate = BBI_GATES.find(g => g.name === gateName);
+    threshold = gate?.threshold ?? 0;
+    sellerPct = thresholdOrValues[gateName];
+  }
+
+  if (sellerPct >= threshold) return 'unlocked';
+  if (sellerPct >= threshold * 0.95) return 'at-risk';
   return 'locked';
 }
 

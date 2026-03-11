@@ -1,4 +1,3 @@
-// @ts-nocheck — pre-existing type mismatches with getGateStatus signature
 'use client';
 
 import { useState, useEffect } from 'react';
