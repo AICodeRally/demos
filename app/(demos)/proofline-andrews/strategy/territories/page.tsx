@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ActNavigation, LightSectionCard, LightKpiCard, ScatterQuadrant, Sparkline } from '@/components/demos/proofline';
@@ -34,79 +34,29 @@ function getPerformanceTier(hometown: Hometown): { label: string; color: string;
   return { label: 'At Risk', color: '#F87171', bg: 'rgba(248,113,113,0.08)' };
 }
 
-/* ── Hex grid constants ──────────────────────── */
-const HEX_W = 780;
-const HEX_H = 500;
-
-function hexPoints(cx: number, cy: number, r: number): string {
-  const pts: string[] = [];
-  for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 3) * i;
-    pts.push(`${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`);
+/* ── Heatmap color helpers ──────────────────── */
+function heatColor(value: number, thresholds: { green: number; yellow: number; direction: 'higher' | 'lower' }): string {
+  const { green, yellow, direction } = thresholds;
+  if (direction === 'higher') {
+    if (value >= green) return 'rgba(34,197,94,';
+    if (value >= yellow) return 'rgba(245,158,11,';
+    return 'rgba(248,113,113,';
   }
-  return pts.join(' ');
+  // lower is better
+  if (value <= green) return 'rgba(34,197,94,';
+  if (value <= yellow) return 'rgba(245,158,11,';
+  return 'rgba(248,113,113,';
 }
 
-const HEX_R = 90;
-const ROW_GAP = HEX_R * Math.sqrt(3) + 20;
-
-interface HexLayout {
-  id: string;
-  cx: number;
-  cy: number;
-  r: number;
-}
-
-function getHexLayout(): HexLayout[] {
-  const topY = HEX_H / 2 - ROW_GAP / 2 + 10;
-  const botY = topY + ROW_GAP;
-  const colW = HEX_R * 1.75;
-
-  const northStart = HEX_W / 2 - colW * 1.5;
-  const northIds = ['dal', 'aln', 'ftw', 'ens'];
-
-  const southStart = HEX_W / 2 - colW * 0.5;
-  const southIds = ['crp', 'lar'];
-
-  return [
-    ...northIds.map((id, i) => ({
-      id,
-      cx: northStart + i * colW,
-      cy: topY,
-      r: HEX_R,
-    })),
-    ...southIds.map((id, i) => ({
-      id,
-      cx: southStart + i * colW,
-      cy: botY,
-      r: HEX_R,
-    })),
-  ];
-}
-
-/* ── Attainment color gradient ───────────────── */
-function attainGradient(attain: number): { fill: string; stroke: string; opacity: number } {
-  if (attain >= 1.02) return { fill: '#22C55E', stroke: '#16A34A', opacity: 0.25 };
-  if (attain >= 1.0) return { fill: '#22C55E', stroke: '#22C55E', opacity: 0.18 };
-  if (attain >= 0.97) return { fill: '#F59E0B', stroke: '#D97706', opacity: 0.20 };
-  if (attain >= 0.95) return { fill: '#F59E0B', stroke: '#F59E0B', opacity: 0.15 };
-  return { fill: '#F87171', stroke: '#DC2626', opacity: 0.20 };
-}
-
-/* ── Workload color gradient ─────────────────── */
-function workloadGradient(idx: number): { fill: string; opacity: number } {
-  if (idx > 120) return { fill: '#F87171', opacity: 0.25 };
-  if (idx > 110) return { fill: '#F59E0B', opacity: 0.20 };
-  if (idx >= 90) return { fill: '#22C55E', opacity: 0.20 };
-  return { fill: '#3B82F6', opacity: 0.20 };
+function heatOpacity(value: number, min: number, max: number): number {
+  const range = max - min || 1;
+  return 0.15 + 0.45 * Math.abs((value - min) / range);
 }
 
 export default function TerritoryDesignPage() {
-  const [mapView, setMapView] = useState<'revenue' | 'workload'>('revenue');
   const [simulatorOpen, setSimulatorOpen] = useState(false);
 
   const avgCompanyAttain = ROUTES.reduce((s, r) => s + r.attain, 0) / ROUTES.length;
-  const hexLayout = getHexLayout();
 
   /* ── KPI computations ──────────────────── */
   const avgAccountsPerRoute = COVERAGE_METRICS.reduce((s, c) => s + c.accountsPerRoute, 0) / COVERAGE_METRICS.length;
@@ -191,291 +141,115 @@ export default function TerritoryDesignPage() {
         />
       </LightSectionCard>
 
-      {/* ── Hex Territory Grid ────────────────────────── */}
-      <LightSectionCard title="Territory Heatmap — Attainment by Hometown" className="mb-6">
-        {/* View toggle */}
-        <div className="flex justify-end mb-3">
-          <div className="flex rounded-lg overflow-hidden border" style={{ borderColor: 'var(--pl-border)' }}>
-            {(['revenue', 'workload'] as const).map((view) => (
-              <button
-                key={view}
-                onClick={() => setMapView(view)}
-                className="text-xs font-mono px-3 py-1.5 transition-colors"
-                style={{
-                  borderColor: mapView === view ? '#C6A052' : 'var(--pl-border)',
-                  background: mapView === view ? 'rgba(198,160,82,0.08)' : 'var(--pl-card)',
-                  color: mapView === view ? '#C6A052' : 'var(--pl-text-muted)',
-                  borderRight: view === 'revenue' ? '1px solid var(--pl-border)' : undefined,
-                }}
-              >
-                {view === 'revenue' ? 'Revenue View' : 'Workload View'}
-              </button>
-            ))}
-          </div>
+      {/* ── Territory Performance Heatmap ────────────── */}
+      <LightSectionCard title="Territory Heatmap — Route Performance" className="mb-6">
+        <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>
+          36 routes across 6 hometowns. Color intensity shows relative performance — darker = stronger.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-[11px] font-mono border-collapse">
+            <thead>
+              <tr>
+                <th className="text-left py-2 px-2 font-bold" style={{ color: 'var(--pl-text-muted)', width: 80 }}>Route</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Attainment</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>On-Time</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Workload</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Stops/Day</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Selling %</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Windshield %</th>
+                <th className="text-center py-2 px-1 font-bold" style={{ color: 'var(--pl-text-muted)' }}>Accounts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {HOMETOWNS.map((hometown) => {
+                const routes = getRoutesByHometown(hometown.id);
+                const coverage = getCoverageByHometown(hometown.id);
+                return (
+                  <React.Fragment key={hometown.id}>
+                    {/* Hometown group header */}
+                    <tr>
+                      <td colSpan={8} className="pt-3 pb-1 px-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold" style={{ color: '#7C3AED' }}>{hometown.name}</span>
+                          <span className="text-[10px]" style={{ color: 'var(--pl-text-faint)' }}>
+                            {hometown.routes} routes &middot; {fmt(hometown.accounts)} accts &middot; Mgr: {hometown.manager}
+                          </span>
+                          {hometown.id === 'lar' && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.12)', color: '#F59E0B' }}>NEW 2024</span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                    {/* Route rows */}
+                    {routes.map((route) => {
+                      const cov = coverage.find(c => c.routeId === route.id);
+                      const workload = cov?.workloadIndex ?? 100;
+                      const stopsDay = cov?.stopsPerDay ?? route.stopsPerDay;
+                      const sellingPct = cov?.sellingTimePct ?? 0.50;
+                      const windshield = cov?.windshieldTimePct ?? 0.25;
+                      const accounts = cov?.accountsPerRoute ?? 350;
+
+                      // Heatmap cell helper
+                      const cell = (val: number, display: string, colorBase: string, opacity: number) => (
+                        <td className="py-1.5 px-1 text-center">
+                          <div className="rounded px-2 py-1 font-bold" style={{
+                            background: `${colorBase}${opacity.toFixed(2)})`,
+                            color: 'var(--pl-text)',
+                          }}>
+                            {display}
+                          </div>
+                        </td>
+                      );
+
+                      return (
+                        <tr key={route.id}>
+                          <td className="py-1.5 px-2 font-bold" style={{ color: 'var(--pl-text)' }}>{route.id}</td>
+                          {cell(route.attain, pct(route.attain),
+                            heatColor(route.attain, { green: 1.0, yellow: 0.95, direction: 'higher' }),
+                            heatOpacity(route.attain, 0.85, 1.10))}
+                          {cell(route.onTimeRate, pct(route.onTimeRate),
+                            heatColor(route.onTimeRate, { green: 0.92, yellow: 0.85, direction: 'higher' }),
+                            heatOpacity(route.onTimeRate, 0.75, 1.0))}
+                          {cell(workload, String(workload),
+                            heatColor(Math.abs(workload - 100), { green: 10, yellow: 15, direction: 'lower' }),
+                            heatOpacity(Math.abs(workload - 100), 0, 25))}
+                          {cell(stopsDay, String(stopsDay),
+                            heatColor(stopsDay, { green: 15, yellow: 12, direction: 'higher' }),
+                            heatOpacity(stopsDay, 10, 22))}
+                          {cell(sellingPct, pct(sellingPct),
+                            heatColor(sellingPct, { green: 0.52, yellow: 0.45, direction: 'higher' }),
+                            heatOpacity(sellingPct, 0.35, 0.65))}
+                          {cell(windshield, pct(windshield),
+                            heatColor(windshield, { green: 0.25, yellow: 0.32, direction: 'lower' }),
+                            heatOpacity(windshield, 0.18, 0.40))}
+                          {cell(accounts, String(accounts),
+                            heatColor(accounts, { green: 380, yellow: 300, direction: 'higher' }),
+                            heatOpacity(accounts, 200, 450))}
+                        </tr>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
 
-        <svg viewBox={`0 0 ${HEX_W} ${HEX_H}`} className="w-full" style={{ height: 480 }}>
-          <defs>
-            <filter id="hexGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* Region labels */}
-          <text x={HEX_W / 2} y={22} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.7">
-            NORTH TEXAS
-          </text>
-          <text x={HEX_W / 2} y={HEX_H - 8} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.7">
-            SOUTH TEXAS
-          </text>
-
-          {/* Connection lines between hexes */}
-          {hexLayout.map((h1, i) =>
-            hexLayout.slice(i + 1).map((h2) => {
-              const dist = Math.sqrt((h1.cx - h2.cx) ** 2 + (h1.cy - h2.cy) ** 2);
-              if (dist > HEX_R * 4) return null;
-              return (
-                <line
-                  key={`${h1.id}-${h2.id}`}
-                  x1={h1.cx}
-                  y1={h1.cy}
-                  x2={h2.cx}
-                  y2={h2.cy}
-                  stroke="var(--pl-chart-grid)"
-                  strokeWidth="1"
-                  strokeDasharray="6 4"
-                />
-              );
-            })
-          )}
-
-          {/* Hex cells */}
-          {hexLayout.map((hex) => {
-            const hometown = HOMETOWNS.find(h => h.id === hex.id);
-            if (!hometown) return null;
-
-            const routes = getRoutesByHometown(hometown.id);
-            const sellers = getSellersByHometown(hometown.id);
-            const avgAttain = routes.reduce((s, r) => s + r.attain, 0) / routes.length;
-            const atRiskCount = sellers.filter(s => s.atRisk).length;
-            const coverageRoutes = getCoverageByHometown(hometown.id);
-            const avgWorkload = coverageRoutes.length > 0
-              ? Math.round(coverageRoutes.reduce((s, c) => s + c.workloadIndex, 0) / coverageRoutes.length)
-              : 100;
-
-            const grad = mapView === 'revenue' ? attainGradient(avgAttain) : (() => {
-              const wg = workloadGradient(avgWorkload);
-              return { fill: wg.fill, stroke: wg.fill, opacity: wg.opacity };
-            })();
-
-            const isLaredo = hex.id === 'lar';
-            const heroNumber = mapView === 'revenue' ? pct(avgAttain) : String(avgWorkload);
-
-            return (
-              <Link key={hex.id} href={`/proofline-andrews/strategy/territories/${hex.id}`}>
-                <g style={{ cursor: 'pointer' }} className="group">
-                  {/* Hex background */}
-                  <polygon
-                    points={hexPoints(hex.cx, hex.cy, hex.r)}
-                    fill={grad.fill}
-                    fillOpacity={grad.opacity}
-                    stroke={grad.stroke}
-                    strokeWidth={isLaredo ? 2 : 2}
-                    strokeDasharray={isLaredo ? '8 4' : undefined}
-                    className="transition-all duration-200"
-                  />
-
-                  {/* Inner hex border */}
-                  <polygon
-                    points={hexPoints(hex.cx, hex.cy, hex.r - 6)}
-                    fill="none"
-                    stroke={grad.stroke}
-                    strokeWidth="0.5"
-                    strokeDasharray="4 4"
-                    opacity="0.3"
-                  />
-
-                  {/* Hometown name */}
-                  <text
-                    x={hex.cx}
-                    y={hex.cy - 32}
-                    textAnchor="middle"
-                    fill="var(--pl-text)"
-                    fontSize="14"
-                    fontWeight="800"
-                    fontFamily="var(--pl-font)"
-                  >
-                    {hometown.name.replace(' HQ', '')}
-                  </text>
-
-                  {/* Route prefix badge */}
-                  <rect
-                    x={hex.cx - 18}
-                    y={hex.cy - 22}
-                    width={36}
-                    height={16}
-                    rx={4}
-                    fill={grad.stroke}
-                    fillOpacity={0.15}
-                  />
-                  <text
-                    x={hex.cx}
-                    y={hex.cy - 11}
-                    textAnchor="middle"
-                    fill={grad.stroke}
-                    fontSize="12"
-                    fontWeight="700"
-                    fontFamily="monospace"
-                  >
-                    {hometown.routePrefix}
-                  </text>
-
-                  {/* Hero number */}
-                  <text
-                    x={hex.cx}
-                    y={hex.cy + 12}
-                    textAnchor="middle"
-                    fill={grad.stroke}
-                    fontSize="22"
-                    fontWeight="800"
-                    fontFamily="var(--pl-font)"
-                  >
-                    {heroNumber}
-                  </text>
-
-                  {/* Stats line */}
-                  <text
-                    x={hex.cx}
-                    y={hex.cy + 30}
-                    textAnchor="middle"
-                    fill="var(--pl-text-muted)"
-                    fontSize="12"
-                    fontFamily="monospace"
-                  >
-                    {hometown.routes} routes &middot; {fmtM(hometown.rev)} &middot; {fmt(hometown.accounts)} accts
-                  </text>
-
-                  {/* At risk indicator */}
-                  {atRiskCount > 0 && (
-                    <>
-                      <circle cx={hex.cx} cy={hex.cy + 45} r={8} fill="#F87171" fillOpacity={0.15} />
-                      <text
-                        x={hex.cx}
-                        y={hex.cy + 49}
-                        textAnchor="middle"
-                        fill="#F87171"
-                        fontSize="12"
-                        fontWeight="700"
-                        fontFamily="monospace"
-                      >
-                        {atRiskCount}
-                      </text>
-                      <text
-                        x={hex.cx + 14}
-                        y={hex.cy + 49}
-                        fill="#F87171"
-                        fontSize="12"
-                        fontFamily="monospace"
-                      >
-                        at risk
-                      </text>
-                    </>
-                  )}
-
-                  {/* Manager name */}
-                  <text
-                    x={hex.cx}
-                    y={hex.cy + 62}
-                    textAnchor="middle"
-                    fill="var(--pl-text-faint)"
-                    fontSize="12"
-                    fontFamily="monospace"
-                  >
-                    Mgr: {hometown.manager}
-                  </text>
-
-                  {/* Route dots around the bottom of hex */}
-                  {routes.map((route, i) => {
-                    const angle = (Math.PI / (routes.length + 1)) * (i + 1) + Math.PI * 0.5;
-                    const dotR = hex.r - 14;
-                    const dx = hex.cx + Math.cos(angle) * dotR;
-                    const dy = hex.cy + Math.sin(angle) * dotR;
-                    const clr = route.attain >= 1.0 ? '#22C55E' : route.attain >= 0.95 ? '#F59E0B' : '#F87171';
-                    return (
-                      <circle
-                        key={route.id}
-                        cx={dx}
-                        cy={dy}
-                        r={3.5}
-                        fill={clr}
-                        fillOpacity={0.7}
-                        stroke="white"
-                        strokeWidth={1}
-                      />
-                    );
-                  })}
-
-                  {/* NEW 2024 badge for Laredo */}
-                  {isLaredo && (
-                    <text
-                      x={hex.cx}
-                      y={hex.cy + hex.r + 14}
-                      textAnchor="middle"
-                      fill="#F59E0B"
-                      fontSize="10"
-                      fontWeight="700"
-                      fontFamily="monospace"
-                    >
-                      NEW 2024
-                    </text>
-                  )}
-                </g>
-              </Link>
-            );
-          })}
-        </svg>
-
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-2 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
-          {mapView === 'revenue' ? (
-            <>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#22C55E', opacity: 0.25 }} />
-                On Track (&ge;100%)
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#F59E0B', opacity: 0.20 }} />
-                Watch (95-99%)
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#F87171', opacity: 0.20 }} />
-                At Risk (&lt;95%)
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#3B82F6', opacity: 0.20 }} />
-                Underutilized (&lt;90)
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#22C55E', opacity: 0.20 }} />
-                Balanced (90-110)
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#F59E0B', opacity: 0.20 }} />
-                Heavy (110-120)
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-6 h-3 rounded" style={{ background: '#F87171', opacity: 0.25 }} />
-                Overloaded (&gt;120)
-              </div>
-            </>
-          )}
+        <div className="flex items-center justify-center gap-6 mt-4 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-3 rounded" style={{ background: 'rgba(34,197,94,0.4)' }} />
+            Strong
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-3 rounded" style={{ background: 'rgba(245,158,11,0.35)' }} />
+            Watch
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-3 rounded" style={{ background: 'rgba(248,113,113,0.35)' }} />
+            At Risk
+          </div>
+          <span className="text-[10px]">Darker = further from threshold</span>
         </div>
       </LightSectionCard>
 
