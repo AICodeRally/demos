@@ -26,20 +26,20 @@ interface Connector {
 
 const CONNECTORS: Connector[] = [
   // Layer 1 — Ingestion
-  { name: 'SAP ERP', layer: 'ingestion', description: 'Order management, invoicing, product master data', status: 'live', lastSync: '2h ago', records: 48200, direction: 'inbound', icon: 'S', throughput: '1.2K/hr', latency: 42 },
-  { name: 'Oracle NetSuite', layer: 'ingestion', description: 'Financial ledger, GL posting, accruals', status: 'configured', direction: 'inbound', icon: 'O', latency: 89 },
-  { name: 'Salesforce', layer: 'ingestion', description: 'Account hierarchy, opportunity pipeline, contact data', status: 'live', lastSync: '6h ago', records: 4847, direction: 'inbound', icon: 'SF', throughput: '320/hr', latency: 38 },
-  { name: 'HubSpot', layer: 'ingestion', description: 'Marketing attribution, lead scoring, campaign data', status: 'available', direction: 'inbound', icon: 'H', latency: 65 },
-  { name: 'ADP Workforce', layer: 'ingestion', description: 'HRIS data — org chart, job levels, compensation bands', status: 'live', lastSync: '24h ago', records: 36, direction: 'inbound', icon: '$', throughput: '36/day', latency: 210 },
-  { name: 'Workday', layer: 'ingestion', description: 'HRIS — headcount, role changes, comp band updates', status: 'available', direction: 'inbound', icon: 'W', latency: 78 },
-  { name: 'Snowflake', layer: 'ingestion', description: 'Data warehouse — centralized sales & comp analytics', status: 'live', lastSync: '1h ago', records: 2400000, direction: 'bidirectional', icon: '\u2744', throughput: '48K/hr', latency: 124 },
-  { name: 'Alteryx', layer: 'ingestion', description: 'Legacy ETL workflows — territory mapping, data blending (being replaced)', status: 'live', lastSync: '4h ago', records: 186000, direction: 'inbound', icon: 'A', throughput: '8.4K/hr', latency: 56 },
-  // Layer 2 — Engine (Databricks feeds models into the engine)
-  { name: 'Databricks', layer: 'engine', description: 'ML pipelines — attainment forecasting, anomaly detection', status: 'configured', direction: 'bidirectional', icon: 'D', latency: 890 },
+  { name: 'eoStar', layer: 'ingestion', description: 'Route accounting & DSD — delivery confirmation, keg tracking, invoice reconciliation. Real-time sync on delivery close-out.', status: 'live', lastSync: '12m ago', records: 48200, direction: 'bidirectional', icon: 'eS', throughput: '2.4K/hr', latency: 28 },
+  { name: 'VIP/Encompass', layer: 'ingestion', description: 'Warehouse management — pick/pack/ship, inventory positions, lot tracking, FIFO rotation', status: 'live', lastSync: '45m ago', records: 186000, direction: 'inbound', icon: 'V', throughput: '1.8K/hr', latency: 56 },
+  { name: 'GreatPlains/D365', layer: 'ingestion', description: 'Financials — GL posting, accruals, AP/AR, chargebacks, supplier rebate tracking', status: 'live', lastSync: '2h ago', records: 24800, direction: 'bidirectional', icon: 'GP', throughput: '960/hr', latency: 89 },
+  { name: 'IRI/Nielsen', layer: 'ingestion', description: 'Syndicated scan data — velocity by SKU/store, category share, price tracking, promotional lift measurement', status: 'configured', direction: 'inbound', icon: 'IR', latency: 340 },
+  { name: 'RetailLink / Kroger 84.51\u00B0', layer: 'ingestion', description: 'Chain retail portals — POS scan data, on-shelf availability, promotional compliance, planogram adherence', status: 'available', direction: 'inbound', icon: 'RL', latency: 450 },
+  { name: 'TABC License API', layer: 'ingestion', description: 'Texas Alcoholic Beverage Commission — license validation, permit expiration alerts, compliance checks', status: 'live', lastSync: '24h ago', records: 4847, direction: 'inbound', icon: 'TX', throughput: '120/day', latency: 210 },
+  { name: 'ADP Workforce', layer: 'ingestion', description: 'HRIS data — org chart, job levels, compensation bands, RSR/KAM role mapping', status: 'live', lastSync: '24h ago', records: 43, direction: 'inbound', icon: '$', throughput: '43/day', latency: 210 },
+  { name: 'Snowflake', layer: 'ingestion', description: 'Data warehouse — centralized sales & comp analytics, historical route performance', status: 'live', lastSync: '1h ago', records: 2400000, direction: 'bidirectional', icon: '\u2744', throughput: '48K/hr', latency: 124 },
+  // Layer 2 — Engine
+  { name: 'Alteryx', layer: 'engine', description: 'Legacy ETL workflows — territory mapping, data blending (migration path to native PROOFLINE pipelines)', status: 'live', lastSync: '4h ago', records: 186000, direction: 'inbound', icon: 'A', throughput: '8.4K/hr', latency: 56 },
   // Layer 3 — Workflow / Outbound
-  { name: 'Tableau', layer: 'workflow', description: 'Executive dashboards — comp expense, attainment heatmaps', status: 'live', lastSync: '30m ago', records: 12400, direction: 'outbound', icon: 'T', throughput: '2.1K/hr', latency: 34 },
-  { name: 'Power BI', layer: 'workflow', description: 'Self-service analytics — territory deep-dives, what-if models', status: 'configured', direction: 'outbound', icon: 'P', latency: 67 },
-  { name: 'Looker', layer: 'workflow', description: 'Embedded analytics — rep-facing performance scorecards', status: 'available', direction: 'outbound', icon: 'L', latency: 45 },
+  { name: 'Power BI', layer: 'workflow', description: 'Executive dashboards — comp expense heatmaps, territory deep-dives, route profitability', status: 'live', lastSync: '30m ago', records: 12400, direction: 'outbound', icon: 'P', throughput: '2.1K/hr', latency: 34 },
+  { name: 'Tableau', layer: 'workflow', description: 'Self-service analytics — what-if models, brand mix scenario comparison, kicker ROI analysis', status: 'configured', direction: 'outbound', icon: 'T', latency: 67 },
+  { name: 'Alteryx Reports', layer: 'workflow', description: 'Scheduled report generation — payroll files, supplier scorecards, route performance PDFs', status: 'available', direction: 'outbound', icon: 'A', latency: 45 },
 ];
 
 const LAYER_META: Record<string, { label: string; color: string; description: string }> = {
