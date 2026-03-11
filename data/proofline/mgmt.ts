@@ -42,13 +42,13 @@ export const TRANSACTIONS: Transaction[] = [
   {
     id: 'TXN-2026-0302', date: '2026-03-01',
     accountName: 'El Mercado #3', product: 'Corona Extra', category: 'Import',
-    cases: 28, revenue: 924, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-01',
+    cases: 28, revenue: 924, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-02',
     rule: 'territory-override', confidence: 0.84,
   },
   {
     id: 'TXN-2026-0303', date: '2026-03-02',
     accountName: 'Total Wine Allen', product: 'Blue Moon', category: 'Core',
-    cases: 48, revenue: 1536, creditedRep: 'Tommy Nguyen', routeId: 'ALN-01',
+    cases: 48, revenue: 1536, creditedRep: 'David Sharma', routeId: 'ALN-01',
     rule: 'primary', confidence: 0.97,
   },
   {
@@ -65,14 +65,14 @@ export const TRANSACTIONS: Transaction[] = [
   },
   {
     id: 'TXN-2026-0306', date: '2026-03-03',
-    accountName: 'Alamo Drafthouse', product: 'Topo Chico Hard Seltzer', category: 'Emerging',
+    accountName: 'Alamo Drafthouse', product: 'Vizzy Hard Seltzer', category: 'Emerging',
     cases: 22, revenue: 770, creditedRep: 'Kim Tran', routeId: 'DAL-02',
     rule: 'primary', confidence: 0.98,
   },
   {
     id: 'TXN-2026-0307', date: '2026-03-04',
     accountName: 'HEB Laredo #12', product: 'Heineken Original', category: 'Import',
-    cases: 60, revenue: 2100, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-01',
+    cases: 60, revenue: 2100, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-02',
     rule: 'primary', confidence: 0.99,
   },
   {
@@ -84,7 +84,7 @@ export const TRANSACTIONS: Transaction[] = [
   {
     id: 'TXN-2026-0309', date: '2026-03-05',
     accountName: 'HEB Allen', product: 'Dos Equis Lager', category: 'Import',
-    cases: 42, revenue: 1386, creditedRep: 'Tommy Nguyen', routeId: 'ALN-01',
+    cases: 42, revenue: 1386, creditedRep: 'David Sharma', routeId: 'ALN-01',
     rule: 'primary', confidence: 0.96,
   },
   {
@@ -96,13 +96,13 @@ export const TRANSACTIONS: Transaction[] = [
   {
     id: 'TXN-2026-0311', date: '2026-03-06',
     accountName: 'Kroger Laredo', product: 'Pacifico Clara', category: 'Import',
-    cases: 54, revenue: 1782, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-01',
+    cases: 54, revenue: 1782, creditedRep: 'Rosa Gutierrez', routeId: 'LAR-02',
     rule: 'primary', confidence: 0.97,
   },
   {
     id: 'TXN-2026-0312', date: '2026-03-06',
     accountName: 'Bar Louie Allen', product: 'Woodford Reserve', category: 'Emerging',
-    cases: 6, revenue: 1140, creditedRep: 'Tommy Nguyen', routeId: 'ALN-01',
+    cases: 6, revenue: 1140, creditedRep: 'David Sharma', routeId: 'ALN-01',
     rule: 'primary', confidence: 0.95,
   },
   {
@@ -125,14 +125,14 @@ export const TRANSACTIONS: Transaction[] = [
   },
   {
     id: 'TXN-2026-0316', date: '2026-03-08',
-    accountName: 'Mi Tierra San Antonio', product: 'Modelo Negra', category: 'Import',
-    cases: 20, revenue: 680, creditedRep: 'Carlos Rivera', routeId: 'SAT-02',
+    accountName: 'Mi Tierra Corpus Christi', product: 'Modelo Negra', category: 'Import',
+    cases: 20, revenue: 680, creditedRep: 'Miguel Vega', routeId: 'CRP-01',
     rule: 'primary', confidence: 0.97,
   },
   {
     id: 'TXN-2026-0317', date: '2026-03-09',
     accountName: 'Costco Allen', product: 'Miller High Life', category: 'Core',
-    cases: 120, revenue: 3000, creditedRep: 'Tommy Nguyen', routeId: 'ALN-01',
+    cases: 120, revenue: 3000, creditedRep: 'David Sharma', routeId: 'ALN-01',
     rule: 'primary', confidence: 0.99,
   },
   {
@@ -165,8 +165,8 @@ export const PAYMENTS: Payment[] = [
   { id: 'PAY-004', date: '2026-02-14', repName: 'Derek Thompson', routeId: 'DAL-01', type: 'Commission', amount: 940.00, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
   { id: 'PAY-005', date: '2026-02-14', repName: 'Kim Tran', routeId: 'DAL-02', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
   { id: 'PAY-006', date: '2026-02-14', repName: 'Kim Tran', routeId: 'DAL-02', type: 'Commission', amount: 812.00, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
-  { id: 'PAY-007', date: '2026-02-14', repName: 'Rosa Gutierrez', routeId: 'LAR-01', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
-  { id: 'PAY-008', date: '2026-02-14', repName: 'Tommy Nguyen', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
+  { id: 'PAY-007', date: '2026-02-14', repName: 'Rosa Gutierrez', routeId: 'LAR-02', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
+  { id: 'PAY-008', date: '2026-02-14', repName: 'David Sharma', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
   { id: 'PAY-009', date: '2026-02-14', repName: 'Jake Williams', routeId: 'FTW-05', type: 'Base', amount: 2692.31, status: 'Deposited', payCycle: '2026-02-01 – 2026-02-14' },
   // Pay cycle 2: Feb 15–28
   { id: 'PAY-010', date: '2026-02-28', repName: 'Marcus Reyes', routeId: 'DAL-03', type: 'Base', amount: 3461.54, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
@@ -175,10 +175,10 @@ export const PAYMENTS: Payment[] = [
   { id: 'PAY-013', date: '2026-02-28', repName: 'Derek Thompson', routeId: 'DAL-01', type: 'Base', amount: 3076.92, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
   { id: 'PAY-014', date: '2026-02-28', repName: 'Derek Thompson', routeId: 'DAL-01', type: 'Variable', amount: 1620.00, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
   { id: 'PAY-015', date: '2026-02-28', repName: 'Kim Tran', routeId: 'DAL-02', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
-  { id: 'PAY-016', date: '2026-02-28', repName: 'Rosa Gutierrez', routeId: 'LAR-01', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
-  { id: 'PAY-017', date: '2026-02-28', repName: 'Rosa Gutierrez', routeId: 'LAR-01', type: 'Commission', amount: 760.00, status: 'Held', payCycle: '2026-02-15 – 2026-02-28', note: 'Territory dispute pending (INQ-002)' },
-  { id: 'PAY-018', date: '2026-02-28', repName: 'Tommy Nguyen', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
-  { id: 'PAY-019', date: '2026-02-28', repName: 'Tommy Nguyen', routeId: 'ALN-01', type: 'Variable', amount: 1840.00, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
+  { id: 'PAY-016', date: '2026-02-28', repName: 'Rosa Gutierrez', routeId: 'LAR-02', type: 'Base', amount: 2884.62, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
+  { id: 'PAY-017', date: '2026-02-28', repName: 'Rosa Gutierrez', routeId: 'LAR-02', type: 'Commission', amount: 760.00, status: 'Held', payCycle: '2026-02-15 – 2026-02-28', note: 'Territory dispute pending (INQ-002)' },
+  { id: 'PAY-018', date: '2026-02-28', repName: 'David Sharma', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
+  { id: 'PAY-019', date: '2026-02-28', repName: 'David Sharma', routeId: 'ALN-01', type: 'Variable', amount: 1840.00, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
   { id: 'PAY-020', date: '2026-02-28', repName: 'Jake Williams', routeId: 'FTW-05', type: 'Base', amount: 2692.31, status: 'Deposited', payCycle: '2026-02-15 – 2026-02-28' },
   // Pay cycle 3: Mar 1–14 (current — pending/approved)
   { id: 'PAY-021', date: '2026-03-14', repName: 'Marcus Reyes', routeId: 'DAL-03', type: 'Base', amount: 3461.54, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
@@ -186,11 +186,11 @@ export const PAYMENTS: Payment[] = [
   { id: 'PAY-023', date: '2026-03-14', repName: 'Derek Thompson', routeId: 'DAL-01', type: 'Base', amount: 3076.92, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
   { id: 'PAY-024', date: '2026-03-14', repName: 'Kim Tran', routeId: 'DAL-02', type: 'Base', amount: 2884.62, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
   { id: 'PAY-025', date: '2026-03-14', repName: 'Kim Tran', routeId: 'DAL-02', type: 'Bonus', amount: 2800.00, status: 'Pending', payCycle: '2026-03-01 – 2026-03-14', note: 'Kicker eligibility escalated (INQ-004) — awaiting VP review' },
-  { id: 'PAY-026', date: '2026-03-14', repName: 'Rosa Gutierrez', routeId: 'LAR-01', type: 'Base', amount: 2884.62, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
-  { id: 'PAY-027', date: '2026-03-14', repName: 'Tommy Nguyen', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
+  { id: 'PAY-026', date: '2026-03-14', repName: 'Rosa Gutierrez', routeId: 'LAR-02', type: 'Base', amount: 2884.62, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
+  { id: 'PAY-027', date: '2026-03-14', repName: 'David Sharma', routeId: 'ALN-01', type: 'Base', amount: 3076.92, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
   { id: 'PAY-028', date: '2026-03-14', repName: 'Jake Williams', routeId: 'FTW-05', type: 'Base', amount: 2692.31, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
   { id: 'PAY-029', date: '2026-03-14', repName: 'Jake Williams', routeId: 'FTW-05', type: 'Commission', amount: 980.00, status: 'Pending', payCycle: '2026-03-01 – 2026-03-14' },
-  { id: 'PAY-030', date: '2026-03-14', repName: 'Carlos Rivera', routeId: 'SAT-02', type: 'Base', amount: 2692.31, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
+  { id: 'PAY-030', date: '2026-03-14', repName: 'Miguel Vega', routeId: 'CRP-01', type: 'Base', amount: 2692.31, status: 'Approved', payCycle: '2026-03-01 – 2026-03-14' },
 ];
 
 // ─── Presidents Club Tiers ────────────────────────
@@ -263,9 +263,9 @@ export const MGMT_INQUIRIES: Inquiry[] = [
     resolvedDate: '2026-02-22', impactAmount: 340,
   },
   {
-    id: 'INQ-002', repName: 'Rosa Gutierrez', routeId: 'LAR-01', category: 'territory-credit',
-    subject: 'El Mercado delivery credited to LAR-02 instead of LAR-01',
-    description: 'El Mercado #3 is on my route (LAR-01) but Feb 23 delivery of 28 cases was credited to Eduardo on LAR-02. This account has been mine since Laredo integration.',
+    id: 'INQ-002', repName: 'Rosa Gutierrez', routeId: 'LAR-02', category: 'territory-credit',
+    subject: 'El Mercado delivery credited to LAR-01 instead of LAR-02',
+    description: 'El Mercado #3 is on my route (LAR-02) but Feb 23 delivery of 28 cases was credited to Fernando on LAR-01. This account has been mine since Laredo integration.',
     submittedDate: '2026-02-25', status: 'under-review', reviewerName: 'Roberto Garza',
     resolution: null, resolvedDate: null, impactAmount: 820,
   },
@@ -292,7 +292,7 @@ export const MGMT_INQUIRIES: Inquiry[] = [
     resolvedDate: '2026-02-19', impactAmount: -450,
   },
   {
-    id: 'INQ-006', repName: 'Tommy Nguyen', routeId: 'ALN-01', category: 'territory-credit',
+    id: 'INQ-006', repName: 'David Sharma', routeId: 'ALN-01', category: 'territory-credit',
     subject: 'New Total Wine account should be on ALN-01 not ALN-03',
     description: 'Total Wine at Allen Premium Outlets was assigned to ALN-03 but it is in my territory ZIP code. I had initial meeting with store manager and submitted new account request.',
     submittedDate: '2026-02-28', status: 'open', reviewerName: null,
