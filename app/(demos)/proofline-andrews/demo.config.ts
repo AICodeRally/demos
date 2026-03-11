@@ -57,6 +57,7 @@ export default defineDemo({
       items: [
         { label: 'Comp Plan', href: '/proofline-andrews/comp/plan', icon: 'Trophy' },
         { label: 'Kickers', href: '/proofline-andrews/comp/kickers', icon: 'Zap' },
+        { label: 'Opportunity Bonus', href: '/proofline-andrews/comp/opportunities', icon: 'Star' },
         { label: 'Calculator', href: '/proofline-andrews/comp/calculator', icon: 'Calculator' },
         { label: '13-Week Story', href: '/proofline-andrews/comp/story', icon: 'LineChart' },
         { label: 'CEO Impact', href: '/proofline-andrews/comp/impact', icon: 'BarChart3' },
