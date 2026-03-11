@@ -22,7 +22,8 @@
   --pl-border-faint: #EDF2F7;
   --pl-shadow: 0 1px 3px rgba(0,0,0,0.06);
   --pl-hover: rgba(0,0,0,0.04);
-  --pl-stripe: #F8FAFC;
+  --pl-stripe: #F1F5F9;
+  --pl-gold-text: #9A7B2E;
 
   /* Sidebar */
   --pl-sidebar-bg-start: #F1F5F9;
@@ -86,4 +87,14 @@
   --pl-map-road-minor: #334155;
   --pl-map-label: #475569;
   --pl-map-stop-label: #CBD5E0;
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-slide-in 0.3s ease-out both;
 }
