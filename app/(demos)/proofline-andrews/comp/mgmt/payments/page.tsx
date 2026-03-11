@@ -63,6 +63,36 @@ const URGENCY_STYLES: Record<string, { bg: string; color: string }> = {
   low: { bg: 'rgba(148,163,184,0.1)', color: '#94A3B8' },
 };
 
+/* ── SOX Compliance Data ────────────────────────── */
+const CHANGE_AUDIT_LOG = [
+  { timestamp: 'Mar 4 09:15', user: 'S. Chen', changeType: 'Rate Change', object: 'RSR Tier 2', before: '1.50%', after: '1.60%', approvedBy: 'Controller (J. Morris)' },
+  { timestamp: 'Mar 3 14:22', user: 'T. Nguyen', changeType: 'Territory Transfer', object: 'DAL-05', before: 'A. Patel', after: 'Reassignment Pending', approvedBy: 'Mgr (S. Chen)' },
+  { timestamp: 'Mar 1 11:00', user: 'System', changeType: 'Auto-Calc', object: 'Q1 Payout', before: '$142,400', after: '$142,800', approvedBy: 'Auto (within tolerance)' },
+  { timestamp: 'Feb 28 16:45', user: 'J. Morris', changeType: 'Quota Adjustment', object: 'DAL District', before: '$2.4M', after: '$2.6M', approvedBy: 'VP Sales (R. Kim)' },
+  { timestamp: 'Feb 27 10:30', user: 'S. Chen', changeType: 'New Hire Setup', object: 'James Park', before: 'N/A', after: 'RSR Tier 1', approvedBy: 'HR (M. Lopez)' },
+];
+
+const SOD_ROLES = [
+  { role: 'Plan Designer', icon: '\u270E', user: 'S. Chen', description: 'Creates and modifies comp plan rules', color: '#3B82F6' },
+  { role: 'Plan Approver', icon: '\u2713', user: 'J. Morris', description: 'Reviews and approves plan changes', color: '#F59E0B' },
+  { role: 'Payment Releaser', icon: '\u2192', user: 'R. Kim', description: 'Authorizes final payout release', color: '#22C55E' },
+];
+
+const APPROVAL_CHAIN = [
+  { step: 'Plan Change', color: '#3B82F6' },
+  { step: 'Manager Review', color: '#F59E0B' },
+  { step: 'Finance Approval', color: '#22C55E' },
+  { step: 'Controller Sign-off', color: '#8B5CF6' },
+];
+
+const SOX_CONTROLS = [
+  { objective: 'Accurate Reporting', feature: 'Immutable ledger, row-level lineage from source to payout', status: 'Active' },
+  { objective: 'Authorized Changes', feature: 'Role-based approval chains, segregation of duties enforcement', status: 'Active' },
+  { objective: 'Timely Processing', feature: 'Automated pay cycle with SLA monitoring and escalation', status: 'Active' },
+  { objective: 'Complete Records', feature: 'Full transaction audit trail — 2.4M events, zero gaps', status: 'Active' },
+  { objective: 'Valid Calculations', feature: 'Version-aware engine with regression test suite', status: 'Active' },
+];
+
 export default function PaymentsPage() {
   const totalThisCycle = PAYMENTS.filter(p => p.date.startsWith('Mar 17')).reduce((s, p) => s + p.amount, 0);
 
@@ -189,6 +219,111 @@ export default function PaymentsPage() {
               </div>
             </div>
           ))}
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ SOX COMPLIANCE — CHANGE AUDIT LOG ═══════ */}
+      <LightSectionCard title="SOX COMPLIANCE \u2014 CHANGE AUDIT LOG">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['Timestamp', 'User', 'Change Type', 'Object', 'Before', 'After', 'Approved By'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {CHANGE_AUDIT_LOG.map((entry, i) => (
+                <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{entry.timestamp}</td>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{entry.user}</td>
+                  <td className="py-1.5 pr-4">
+                    <span className="px-1.5 py-0.5 rounded text-xs font-bold"
+                      style={{ background: 'rgba(139,92,246,0.1)', color: '#8B5CF6' }}>{entry.changeType}</span>
+                  </td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text)' }}>{entry.object}</td>
+                  <td className="py-1.5 pr-4" style={{ color: '#F87171' }}>{entry.before}</td>
+                  <td className="py-1.5 pr-4" style={{ color: '#22C55E' }}>{entry.after}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{entry.approvedBy}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ SEGREGATION OF DUTIES ═══════ */}
+      <LightSectionCard title="SEGREGATION OF DUTIES">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          {SOD_ROLES.map((role, i) => (
+            <div key={role.role} className="flex items-center gap-4">
+              <div className="text-center p-4 rounded-xl min-w-[160px]" style={{
+                background: `${role.color}08`,
+                border: `1px solid ${role.color}20`,
+              }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl mx-auto mb-2"
+                  style={{ background: `${role.color}15`, color: role.color }}>
+                  {role.icon}
+                </div>
+                <div className="text-sm font-bold mb-0.5" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{role.role}</div>
+                <div className="text-xs font-bold font-mono" style={{ color: role.color }}>{role.user}</div>
+                <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{role.description}</div>
+              </div>
+              {i < SOD_ROLES.length - 1 && (
+                <div className="text-2xl font-bold" style={{ color: 'var(--pl-text-faint)' }}>{'\u2260'}</div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Approval Chain Flow */}
+        <div className="mt-4 p-4 rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            APPROVAL CHAIN
+          </div>
+          <div className="flex items-center justify-center gap-0">
+            {APPROVAL_CHAIN.map((step, i) => (
+              <div key={step.step} className="flex items-center">
+                <div className="px-4 py-2 rounded-lg text-xs font-bold font-mono"
+                  style={{ background: `${step.color}15`, color: step.color, border: `1px solid ${step.color}30` }}>
+                  {step.step}
+                </div>
+                {i < APPROVAL_CHAIN.length - 1 && (
+                  <div className="px-2 text-lg font-bold" style={{ color: 'var(--pl-text-faint)' }}>{'\u2192'}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ SOX CONTROL MAPPING ═══════ */}
+      <LightSectionCard title="SOX CONTROL MAPPING">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['Control Objective', 'PROOFLINE Feature', 'Status'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SOX_CONTROLS.map((ctrl, i) => (
+                <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                  <td className="py-2 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{ctrl.objective}</td>
+                  <td className="py-2 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{ctrl.feature}</td>
+                  <td className="py-2">
+                    <span className="px-1.5 py-0.5 rounded text-xs font-bold"
+                      style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>ACTIVE</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </LightSectionCard>
     </>
