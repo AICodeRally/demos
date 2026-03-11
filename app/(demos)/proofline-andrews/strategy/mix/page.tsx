@@ -123,6 +123,26 @@ const ATTAINMENT_BANDS = [
 
 const COMP_TO_REV_TREND = [11.8, 11.5, 11.2, 11.0, 11.0, 10.9, 11.0, 11.0]; // 8 quarters
 
+/* ── Seasonal Planning Calendar ────────────────── */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const SEASONAL_EVENTS = [
+  { label: 'Super Bowl Builds', startMonth: 0, durationMonths: 1, color: '#3B82F6', type: 'display' as const },
+  { label: 'Spring Reset', startMonth: 2, durationMonths: 1, color: '#22C55E', type: 'display' as const },
+  { label: 'Cinco de Mayo', startMonth: 3, durationMonths: 1.5, color: '#F59E0B', type: 'promo' as const },
+  { label: 'Summer Selling Season', startMonth: 4, durationMonths: 4, color: '#F97316', type: 'promo' as const },
+  { label: 'Fall Reset', startMonth: 8, durationMonths: 1, color: '#8B5CF6', type: 'display' as const },
+  { label: 'NFL Season Launch', startMonth: 8, durationMonths: 0.5, color: '#2563EB', type: 'launch' as const },
+  { label: 'Holiday Builds', startMonth: 10, durationMonths: 2, color: '#DC2626', type: 'display' as const },
+  { label: 'New Year Spirits Push', startMonth: 11, durationMonths: 1, color: '#EC4899', type: 'promo' as const },
+];
+
+const EVENT_TYPE_LABELS: Record<string, { label: string; color: string }> = {
+  display: { label: 'Display Build', color: '#3B82F6' },
+  promo: { label: 'Promotion', color: '#F59E0B' },
+  launch: { label: 'Product Launch', color: '#22C55E' },
+};
+
 export default function BrandMixScenariosPage() {
   const [selectedScenario, setSelectedScenario] = useState<number>(1); // default: Stretch
   const scenario = SCENARIOS[selectedScenario];
@@ -562,6 +582,73 @@ export default function BrandMixScenariosPage() {
         Mix targets derived from CEO revenue mandate, supplier incentive structures, and gate alignment.
         Bell curves model expected attainment distribution under each scenario. Wider variance = higher risk/reward.
       </div>
+
+      {/* ═══════ SEASONAL PLANNING CALENDAR ═══════ */}
+      <LightSectionCard title="SEASONAL PLANNING CALENDAR \u2014 FY2026">
+        {/* Legend */}
+        <div className="flex gap-4 mb-4">
+          {Object.entries(EVENT_TYPE_LABELS).map(([key, cfg]) => (
+            <div key={key} className="flex items-center gap-1.5">
+              <div className="w-3 h-3 rounded" style={{ background: cfg.color }} />
+              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{cfg.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Gantt-style calendar */}
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[700px]">
+            {/* Month headers */}
+            <div className="flex mb-2" style={{ paddingLeft: 160 }}>
+              {MONTHS.map((m) => (
+                <div key={m} className="flex-1 text-center text-xs font-mono font-bold"
+                  style={{ color: 'var(--pl-text-faint)' }}>{m}</div>
+              ))}
+            </div>
+
+            {/* Event bars */}
+            <div className="space-y-2">
+              {SEASONAL_EVENTS.map((event, i) => {
+                const leftPct = (event.startMonth / 12) * 100;
+                const widthPct = (event.durationMonths / 12) * 100;
+                return (
+                  <div key={i} className="flex items-center" style={{ height: 28 }}>
+                    <div className="text-xs font-mono font-bold truncate" style={{ width: 160, color: 'var(--pl-text-muted)', paddingRight: 8 }}>
+                      {event.label}
+                    </div>
+                    <div className="flex-1 relative" style={{ height: 20 }}>
+                      {/* Grid lines */}
+                      {MONTHS.map((_, mi) => (
+                        <div key={mi} className="absolute top-0 bottom-0" style={{
+                          left: `${(mi / 12) * 100}%`,
+                          width: 1,
+                          background: 'var(--pl-border)',
+                          opacity: 0.3,
+                        }} />
+                      ))}
+                      {/* Event bar */}
+                      <div className="absolute top-0 h-full rounded" style={{
+                        left: `${leftPct}%`,
+                        width: `${widthPct}%`,
+                        background: event.color,
+                        opacity: 0.7,
+                      }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(198,160,82,0.06)',
+          border: '1px solid rgba(198,160,82,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          Display build windows require 2-week lead time for POS materials and cooler resets. Kicker programs align to promotional windows. Territory-level compliance tracked via field audit.
+        </div>
+      </LightSectionCard>
     </>
   );
 }
