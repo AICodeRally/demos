@@ -22,9 +22,9 @@ const PRODUCT_HIERARCHY = [
   { brand: 'Modelo Especial', category: 'Import Beer', supplierGroup: 'Constellation', gate: 'Import' },
   { brand: 'Heineken', category: 'Import Beer', supplierGroup: 'Heineken', gate: 'Import' },
   { brand: 'Dos Equis', category: 'Import Beer', supplierGroup: 'Heineken', gate: 'Import' },
-  { brand: "Tito's Vodka", category: 'Spirits', supplierGroup: 'Fifth Generation', gate: 'Emerging' },
-  { brand: 'High Noon', category: 'FMB/Seltzer', supplierGroup: 'E&J Gallo', gate: 'Emerging' },
-  { brand: 'White Claw', category: 'FMB/Seltzer', supplierGroup: 'Mark Anthony', gate: 'Emerging' },
+  { brand: 'Buffalo Trace', category: 'Spirits', supplierGroup: 'Sazerac', gate: 'Emerging' },
+  { brand: 'Fireball', category: 'Spirits', supplierGroup: 'Sazerac', gate: 'Emerging' },
+  { brand: 'Truly Hard Seltzer', category: 'FMB/Seltzer', supplierGroup: 'FMB/RTD', gate: 'Emerging' },
 ];
 
 const ACCOUNT_DIST = [
@@ -45,12 +45,12 @@ const CREDIT_RULES = [
 const TRANSACTIONS = [
   { date: 'Mar 8', account: 'HEB Kirby', product: 'Coors Light 24pk', cases: 48, revenue: 1296, rep: 'Marcus Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 8', account: 'Total Wine 183', product: 'Corona Extra 12pk', cases: 72, revenue: 2160, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
-  { date: 'Mar 7', account: 'Whataburger Loop 410', product: 'Bud Light Lime 6pk', cases: 24, revenue: 576, rep: 'James Park / Kenji Morales', rule: 'Split', confidence: 94 },
+  { date: 'Mar 7', account: 'Whataburger Loop 410', product: 'Coors Banquet 6pk', cases: 24, revenue: 576, rep: 'James Park / Kenji Morales', rule: 'Split', confidence: 94 },
   { date: 'Mar 7', account: 'Central Market Bev', product: 'High Noon Variety', cases: 36, revenue: 1188, rep: 'Elena Vargas', rule: 'Primary', confidence: 99 },
   { date: 'Mar 7', account: 'Q Sports Bar Downtown', product: 'Modelo Especial Draft', cases: 18, revenue: 594, rep: 'Diego Santos', rule: 'Primary', confidence: 98 },
   { date: 'Mar 6', account: 'Costco 290', product: 'Heineken 24pk', cases: 120, revenue: 3960, rep: 'Priya Nair', rule: 'Primary', confidence: 99 },
-  { date: 'Mar 6', account: "Spec's Bandera", product: "Tito's Vodka 1.75L", cases: 30, revenue: 2250, rep: 'Raj Patel', rule: 'Primary', confidence: 99 },
-  { date: 'Mar 6', account: 'Twin Peaks Bitters', product: 'White Claw 12pk', cases: 24, revenue: 696, rep: 'Ana Lima / Carlos Reyes', rule: 'Split', confidence: 91 },
+  { date: 'Mar 6', account: "Spec's Bandera", product: 'Buffalo Trace 750mL', cases: 30, revenue: 2250, rep: 'Raj Patel', rule: 'Primary', confidence: 99 },
+  { date: 'Mar 6', account: 'Twin Peaks Bitters', product: 'Truly Hard Seltzer 12pk', cases: 24, revenue: 696, rep: 'Ana Lima / Carlos Reyes', rule: 'Split', confidence: 91 },
   { date: 'Mar 5', account: 'Fiesta Mart Austin', product: 'Coors Banquet 18pk', cases: 60, revenue: 1560, rep: 'Marcus Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 5', account: 'Aloft Hotel SAT', product: 'Blue Moon 6pk', cases: 12, revenue: 384, rep: 'Kenji Morales', rule: 'Primary', confidence: 97 },
   { date: 'Mar 5', account: 'Kroger IH-35', product: 'Dos Equis Lager 24pk', cases: 84, revenue: 2352, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
@@ -209,7 +209,7 @@ export default function DataPage() {
               <div className="text-center">
                 <div className="text-3xl font-bold font-mono" style={{ color: ACCENT }}>6</div>
                 <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Hometowns</div>
-                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>SA / Austin / Laredo / Victoria / Corpus Christi / New Braunfels</div>
+                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>Dallas / Allen / Fort Worth / Ennis / Corpus Christi / Laredo</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold font-mono" style={{ color: ACCENT }}>36</div>
@@ -287,7 +287,7 @@ export default function DataPage() {
 
                 {/* KAM box */}
                 <rect x="430" y="15" width="130" height="50" rx="8" fill="#3B82F610" stroke="#3B82F6" strokeWidth="1.5" />
-                <text x="495" y="35" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold" fontFamily="monospace">Sofia Reyes (KAM)</text>
+                <text x="495" y="35" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold" fontFamily="monospace">Lisa Park (KAM)</text>
                 <text x="495" y="52" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">70% = $1,764</text>
 
                 {/* RSR box */}

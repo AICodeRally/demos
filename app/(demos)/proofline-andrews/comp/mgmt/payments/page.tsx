@@ -23,14 +23,14 @@ const PENDING_APPROVALS = [
 
 const PAYMENTS = [
   { date: 'Mar 3', rep: 'Marcus Reyes', type: 'Variable', amount: 2210, status: 'Deposited' },
-  { date: 'Mar 3', rep: 'Marcus Reyes', type: 'Base', amount: 4333, status: 'Deposited' },
+  { date: 'Mar 3', rep: 'Marcus Reyes', type: 'Base', amount: 1846, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Sofia Reyes', type: 'Variable', amount: 1840, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Sofia Reyes', type: 'Commission', amount: 3760, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Diego Santos', type: 'Variable', amount: 1620, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Priya Nair', type: 'Variable', amount: 2080, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Priya Nair', type: 'Bonus', amount: 500, status: 'Deposited' },
   { date: 'Mar 17', rep: 'Marcus Reyes', type: 'Variable', amount: 2840, status: 'Pending' },
-  { date: 'Mar 17', rep: 'Marcus Reyes', type: 'Base', amount: 4333, status: 'Pending' },
+  { date: 'Mar 17', rep: 'Marcus Reyes', type: 'Base', amount: 1846, status: 'Pending' },
   { date: 'Mar 17', rep: 'Sofia Reyes', type: 'Commission', amount: 3920, status: 'Pending' },
   { date: 'Mar 17', rep: 'Elena Vargas', type: 'Variable', amount: 1780, status: 'Pending' },
   { date: 'Mar 17', rep: 'Elena Vargas', type: 'Bonus', amount: 375, status: 'Approved' },
@@ -41,7 +41,7 @@ const PAYMENTS = [
   { date: 'Mar 17', rep: 'James Park', type: 'Variable', amount: 980, status: 'Pending' },
   { date: 'Mar 28', rep: 'All Eligible Reps', type: 'Bonus', amount: 18400, status: 'Pending' },
   { date: 'Mar 31', rep: 'Marcus Reyes', type: 'Commission', amount: 4280, status: 'Pending' },
-  { date: 'Mar 31', rep: 'Sofia Reyes', type: 'Base', amount: 4333, status: 'Pending' },
+  { date: 'Mar 31', rep: 'Sofia Reyes', type: 'Base', amount: 1846, status: 'Pending' },
 ];
 
 const EXCEPTIONS = [
@@ -65,7 +65,7 @@ const URGENCY_STYLES: Record<string, { bg: string; color: string }> = {
 
 /* ── SOX Compliance Data ────────────────────────── */
 const CHANGE_AUDIT_LOG = [
-  { timestamp: 'Mar 4 09:15', user: 'S. Chen', changeType: 'Rate Change', object: 'RSR Tier 2', before: '1.50%', after: '1.60%', approvedBy: 'Controller (J. Morris)' },
+  { timestamp: 'Mar 4 09:15', user: 'S. Chen', changeType: 'Rate Change', object: 'RSR Tier 2', before: '3.50%', after: '3.60%', approvedBy: 'Controller (J. Morris)' },
   { timestamp: 'Mar 3 14:22', user: 'T. Nguyen', changeType: 'Territory Transfer', object: 'DAL-05', before: 'A. Patel', after: 'Reassignment Pending', approvedBy: 'Mgr (S. Chen)' },
   { timestamp: 'Mar 1 11:00', user: 'System', changeType: 'Auto-Calc', object: 'Q1 Payout', before: '$142,400', after: '$142,800', approvedBy: 'Auto (within tolerance)' },
   { timestamp: 'Feb 28 16:45', user: 'J. Morris', changeType: 'Quota Adjustment', object: 'DAL District', before: '$2.4M', after: '$2.6M', approvedBy: 'VP Sales (R. Kim)' },

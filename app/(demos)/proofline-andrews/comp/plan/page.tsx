@@ -21,7 +21,7 @@ function TierTrack() {
 
   const tiers = [...COMP_TIERS].reverse(); // T4 at left → T1 at right
   const tierColors = ['#94A3B8', '#F59E0B', '#2563EB', '#22C55E'];
-  const marcus = 0.92; // sample position
+  const marcus = 1.01; // Marcus Reyes actual attainment from routes.ts
 
   return (
     <>
@@ -68,7 +68,7 @@ function TierTrack() {
       <circle cx={toX(marcus)} cy={trackY + trackH / 2} r={6} fill="#F87171" stroke="white" strokeWidth="2" />
       <rect x={toX(marcus) - 36} y={trackY - 44} width={72} height={14} rx={4} fill="#F87171" />
       <text x={toX(marcus)} y={trackY - 34} textAnchor="middle" fontSize="12" fontWeight="bold" fill="white" fontFamily="monospace">
-        MARCUS 92%
+        MARCUS 101%
       </text>
 
       <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
@@ -166,21 +166,21 @@ function EarningsComparison() {
   const baseRev = 380000;
   const spiritsRev = 28000;
 
-  const low = estimateQuarterlyEarnings(
-    baseRev, 0.92,
+  const current = estimateQuarterlyEarnings(
+    baseRev, 1.01,
     { core: 0.87, import: 0.81, emerging: 0.71, combined: 0.89 },
-    spiritsRev, 8
+    spiritsRev, 14
   );
 
-  const high = estimateQuarterlyEarnings(
+  const stretch = estimateQuarterlyEarnings(
     baseRev * 1.17, 1.08,
     { core: 0.94, import: 0.86, emerging: 0.82, combined: 0.94 },
-    spiritsRev * 1.5, 12
+    spiritsRev * 1.5, 14
   );
 
   const scenarios = [
-    { label: 'Marcus @ 92%', data: low, color: '#F59E0B' },
-    { label: 'Marcus @ 108%', data: high, color: '#22C55E' },
+    { label: 'Marcus @ 101% (current)', data: current, color: '#2563EB' },
+    { label: 'Marcus @ 108% (stretch)', data: stretch, color: '#22C55E' },
   ];
 
   return (

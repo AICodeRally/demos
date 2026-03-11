@@ -505,7 +505,7 @@ export default function BrandMixScenariosPage() {
         {/* Attainment Distribution Bar Chart */}
         <div className="mb-6">
           <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
-            ATTAINMENT DISTRIBUTION — 43 REPS
+            ATTAINMENT DISTRIBUTION — 43 FTEs (36 RSRs + 6 MANAGERS + 1 DIRECTOR)
           </div>
           <div className="w-full overflow-hidden rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
             <svg viewBox="0 0 600 200" className="w-full" style={{ minHeight: 160 }}>

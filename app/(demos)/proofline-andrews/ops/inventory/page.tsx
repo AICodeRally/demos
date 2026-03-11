@@ -95,8 +95,8 @@ const SPIRITS_CAGE = [
   { brand: 'Buffalo Trace', cases: 420, daysOnHand: 4, status: 'low' as const, note: 'Sazerac allocation limited — lock in Q2 POs' },
   { brand: 'Eagle Rare', cases: 180, daysOnHand: 6, status: 'ok' as const, note: 'Allocated. No reorder until April' },
   { brand: 'Fireball', cases: 650, daysOnHand: 8, status: 'high' as const, note: 'Post-holiday overhang — redistribute to South TX' },
-  { brand: 'Jack Daniel\'s Tennessee', cases: 340, daysOnHand: 5, status: 'ok' as const, note: 'Tracking to plan' },
-  { brand: 'Maker\'s Mark', cases: 210, daysOnHand: 3, status: 'low' as const, note: 'Below safety stock — expedite order' },
+  { brand: 'Southern Comfort', cases: 340, daysOnHand: 5, status: 'ok' as const, note: 'Tracking to plan' },
+  { brand: 'Wheatley Vodka', cases: 210, daysOnHand: 3, status: 'low' as const, note: 'Below safety stock — expedite order' },
   { brand: 'Sazerac Rye', cases: 95, daysOnHand: 7, status: 'ok' as const, note: 'Niche volume. On-premise focus accounts only' },
 ];
 

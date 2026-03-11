@@ -109,8 +109,8 @@ const TIMELINE = [
 
 /* ── Growth vectors ──────────────────────────────────── */
 const GROWTH_VECTORS = [
-  { title: 'South Texas Expansion', desc: 'Laredo + Corpus Christi form a growth corridor. Combined target: 5.5M annual cases.', stat: '5.5M cases', accent: '#F87171', areas: 'Laredo, Corpus Christi' },
-  { title: 'Spirits Integration', desc: 'Sazerac partnership launched 2024. Buffalo Trace leads at 36% margin. Target: grow spirits from 5% to 8%.', stat: '5% → 8%', accent: '#A855F7', areas: 'All territories' },
+  { title: 'South Texas Expansion', desc: 'Laredo + Corpus Christi form a growth corridor. Combined target: 580K annual cases.', stat: '580K cases', accent: '#F87171', areas: 'Laredo, Corpus Christi' },
+  { title: 'Spirits Integration', desc: 'Sazerac partnership launched 2024. Buffalo Trace leads at 38% margin. Target: grow spirits from 5% to 8%.', stat: '5% → 8%', accent: '#A855F7', areas: 'All territories' },
   { title: 'Suburban Growth', desc: 'Allen/Collin County is the fastest-growing market. Population +4.2% YoY drives premium mix.', stat: '+4.2% pop', accent: '#10B981', areas: 'Allen, Collin County' },
 ];
 

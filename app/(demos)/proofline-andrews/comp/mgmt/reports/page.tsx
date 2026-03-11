@@ -9,10 +9,10 @@ const ACCENT = '#0EA5E9';
 const HOMETOWNS_LIST = [
   { id: 'dal', name: 'Dallas HQ', manager: 'Sarah Chen', quota: 3200000, revenue: 3354000, headcount: 8, status: 'on-track' as const },
   { id: 'aln', name: 'Allen', manager: 'Lisa Park', quota: 2400000, revenue: 2462000, headcount: 6, status: 'on-track' as const },
-  { id: 'ftw', name: 'Fort Worth', manager: 'Carlos Mendoza', quota: 2800000, revenue: 2584000, headcount: 8, status: 'watch' as const },
-  { id: 'enn', name: 'Ennis', manager: 'Tommy Nguyen', quota: 1800000, revenue: 1784000, headcount: 4, status: 'watch' as const },
-  { id: 'cc', name: 'Corpus Christi', manager: 'Maria Santos', quota: 2100000, revenue: 2064000, headcount: 6, status: 'behind' as const },
-  { id: 'lar', name: 'Laredo', manager: 'Roberto Garza', quota: 1600000, revenue: 1284000, headcount: 4, status: 'behind' as const },
+  { id: 'ftw', name: 'Fort Worth', manager: 'Tom Bradley', quota: 2800000, revenue: 2584000, headcount: 8, status: 'watch' as const },
+  { id: 'ens', name: 'Ennis', manager: 'Tommy Nguyen', quota: 1800000, revenue: 1784000, headcount: 4, status: 'watch' as const },
+  { id: 'crp', name: 'Corpus Christi', manager: 'Maria Santos', quota: 2100000, revenue: 2064000, headcount: 6, status: 'behind' as const },
+  { id: 'lar', name: 'Laredo', manager: 'Diego Ramirez', quota: 1600000, revenue: 1284000, headcount: 4, status: 'behind' as const },
 ];
 
 const CLUB_TIERS = [
@@ -68,12 +68,12 @@ const LEADERBOARD = [...SELLERS]
   }));
 
 const PAYMENT_HISTORY = [
-  { period: 'Jan 1\u201315', base: 4333, variable: 1680, commission: 3240, bonus: 0 },
-  { period: 'Jan 16\u201331', base: 4333, variable: 1820, commission: 3440, bonus: 0 },
-  { period: 'Feb 1\u201315', base: 4333, variable: 2040, commission: 3600, bonus: 500 },
-  { period: 'Feb 16\u201328', base: 4333, variable: 2100, commission: 3720, bonus: 0 },
-  { period: 'Mar 1\u201315', base: 4333, variable: 2210, commission: 3840, bonus: 0 },
-  { period: 'Mar 16\u201331', base: 4333, variable: 2840, commission: 4280, bonus: 0 },
+  { period: 'Jan 1\u201315', base: 1846, variable: 1680, commission: 3240, bonus: 0 },
+  { period: 'Jan 16\u201331', base: 1846, variable: 1820, commission: 3440, bonus: 0 },
+  { period: 'Feb 1\u201315', base: 1846, variable: 2040, commission: 3600, bonus: 500 },
+  { period: 'Feb 16\u201328', base: 1846, variable: 2100, commission: 3720, bonus: 0 },
+  { period: 'Mar 1\u201315', base: 1846, variable: 2210, commission: 3840, bonus: 0 },
+  { period: 'Mar 16\u201331', base: 1846, variable: 2840, commission: 4280, bonus: 0 },
 ];
 
 /* ---- Inline visual helper components ---- */

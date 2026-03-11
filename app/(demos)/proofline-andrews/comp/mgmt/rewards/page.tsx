@@ -18,10 +18,10 @@ const TIER_COLORS: Record<number, string> = {
 };
 
 const RATE_SCHEDULE = [
-  { tier: 1, label: 'Elite', floor: 110, ceiling: Infinity, ratePerCase: 3.80, range: '110%+' },
-  { tier: 2, label: 'Achiever', floor: 90, ceiling: 110, ratePerCase: 3.20, range: '90\u2013110%' },
-  { tier: 3, label: 'Contributor', floor: 75, ceiling: 90, ratePerCase: 2.60, range: '75\u201390%' },
-  { tier: 4, label: 'Developing', floor: 0, ceiling: 75, ratePerCase: 2.00, range: '<75%' },
+  { tier: 1, label: 'Elite', floor: 105, ceiling: Infinity, ratePerCase: 3.80, range: '105%+' },
+  { tier: 2, label: 'Strong', floor: 90, ceiling: 105, ratePerCase: 3.20, range: '90\u2013105%' },
+  { tier: 3, label: 'Developing', floor: 75, ceiling: 90, ratePerCase: 2.60, range: '75\u201390%' },
+  { tier: 4, label: 'Ramp', floor: 0, ceiling: 75, ratePerCase: 2.00, range: '<75%' },
 ];
 
 const HOMETOWNS_LIST = HOMETOWNS.map(h => ({ id: h.id, name: h.name }));
@@ -34,8 +34,8 @@ const ACTIVE_BONUSES = [
 
 // Build rep rewards data from SELLERS
 const REP_REWARDS = SELLERS.map(seller => {
-  const baseSalary = 52000;
-  const variableTarget = 18000;
+  const baseSalary = 48000;
+  const variableTarget = 16800;
   const attPct = seller.attainment;
   const tierLevel = seller.tier;
   const casesQTD = Math.round(800 + attPct * 400 + Math.sin(seller.id.charCodeAt(0)) * 120);
@@ -466,8 +466,8 @@ export default function RewardsPage() {
                       <tr key={rep.id} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
                         <td className="py-1.5 pr-3 font-bold" style={{ color: 'var(--pl-text)' }}>{rep.name}</td>
                         <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text-muted)' }}>{rep.routeId}</td>
-                        <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text-muted)' }}>$52,000</td>
-                        <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text-muted)' }}>$18,000</td>
+                        <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text-muted)' }}>$48,000</td>
+                        <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text-muted)' }}>$16,800</td>
                         <td className="py-1.5 pr-3 font-bold" style={{ color: ACCENT }}>${rep.variableEarned.toLocaleString()}</td>
                         <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text)' }}>{(ratio * 100).toFixed(0)}%</td>
                         <td className="py-1.5">

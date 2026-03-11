@@ -13,26 +13,25 @@ export function GaugeDial({ score, label, subLabel, size = 120 }: GaugeDialProps
   const radius = size * 0.35;
   const strokeW = size * 0.08;
 
-  // Arc from 180 degrees (left) to 0 degrees (right) = semicircle
-  // score/100 maps to 0..180 degrees
-  const startAngle = Math.PI;       // left
+  // Top-arch gauge: arc from left (π) to right (0) going COUNTER-CLOCKWISE (upward)
+  // score/100 maps to 0..180 degrees of sweep
   const sweepAngle = (score / 100) * Math.PI;
 
-  // Background arc (full semicircle)
+  // Background arc (full top semicircle: left → top → right)
   const bgX1 = cx + radius * Math.cos(Math.PI);
-  const bgY1 = cy + radius * Math.sin(Math.PI);
+  const bgY1 = cy - radius * Math.sin(Math.PI);  // negative Y = upward
   const bgX2 = cx + radius * Math.cos(0);
-  const bgY2 = cy + radius * Math.sin(0);
-  const bgPath = `M ${bgX1} ${bgY1} A ${radius} ${radius} 0 1 1 ${bgX2} ${bgY2}`;
+  const bgY2 = cy - radius * Math.sin(0);
+  const bgPath = `M ${bgX1} ${bgY1} A ${radius} ${radius} 0 1 0 ${bgX2} ${bgY2}`;
 
-  // Value arc
-  const endAngle = startAngle - sweepAngle;
-  const valX1 = cx + radius * Math.cos(startAngle);
-  const valY1 = cy + radius * Math.sin(startAngle);
+  // Value arc: sweeps from left toward right along the top
+  const endAngle = Math.PI - sweepAngle;
+  const valX1 = cx + radius * Math.cos(Math.PI);
+  const valY1 = cy;  // leftmost point
   const valX2 = cx + radius * Math.cos(endAngle);
-  const valY2 = cy + radius * Math.sin(endAngle);
+  const valY2 = cy - radius * Math.sin(endAngle);
   const largeArc = sweepAngle > Math.PI ? 1 : 0;
-  const valPath = `M ${valX1} ${valY1} A ${radius} ${radius} 0 ${largeArc} 1 ${valX2} ${valY2}`;
+  const valPath = `M ${valX1} ${valY1} A ${radius} ${radius} 0 ${largeArc} 0 ${valX2} ${valY2}`;
 
   const color =
     score >= 85 ? '#22C55E' :
