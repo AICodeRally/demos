@@ -37,19 +37,25 @@ const TEXAS_CENTER: [number, number] = [31.0, -98.5];
 const TEXAS_ZOOM = 6;
 const GOLD = '#C6A052';
 
+function detectDarkMode(el: HTMLElement): boolean {
+  return el.closest('.dark') !== null;
+}
+
 export function TexasMap({
   markers,
   connections = [],
   height = 400,
   onMarkerClick,
   interactive = true,
-  isDark = true,
+  isDark,
 }: TexasMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
+
+    const dark = isDark ?? detectDarkMode(containerRef.current);
 
     let cancelled = false;
     (async () => {
@@ -67,7 +73,7 @@ export function TexasMap({
         attributionControl: true,
       });
 
-      L.tileLayer(isDark ? DARK_TILES : LIGHT_TILES, { attribution: ATTRIBUTION }).addTo(map);
+      L.tileLayer(dark ? DARK_TILES : LIGHT_TILES, { attribution: ATTRIBUTION }).addTo(map);
 
       // Connection lines (dashed gold)
       connections.forEach(({ from, to }) => {
@@ -100,7 +106,7 @@ export function TexasMap({
           html: `<div style="
             width: ${size}px; height: ${size}px;
             background: ${GOLD};
-            border: 2px solid #fff;
+            border: 2px solid ${dark ? '#fff' : '#333'};
             border-radius: 50%;
             box-shadow: 0 0 12px rgba(198, 160, 82, 0.5);
             ${m.isNewAcquisition ? 'animation: pulse-ring 2s ease-out infinite;' : ''}
