@@ -23,9 +23,11 @@ export function LightKpiCard({ label, value, accent, delta, sub, sparkline, stag
         style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', boxShadow: 'var(--pl-shadow)' }}
       >
         <div className="absolute top-3 left-0 w-[3px] h-8 rounded-r" style={{ background: accent }} />
-        <div className="text-xs uppercase tracking-[1.5px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
-          {label}
+        {/* Row 1: label — fixed 2-line min-height so values always align */}
+        <div className="text-xs uppercase tracking-[1.5px] font-mono mb-1 flex items-start" style={{ color: 'var(--pl-text-muted)', lineHeight: '1.4', minHeight: 34 }}>
+          <span>{label}</span>
         </div>
+        {/* Row 2: value — always starts at same position */}
         <div className="flex items-baseline gap-2">
           <span className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             {value}
@@ -41,7 +43,8 @@ export function LightKpiCard({ label, value, accent, delta, sub, sparkline, stag
             <Sparkline data={sparkline} color={accent} width={100} height={28} />
           </div>
         )}
-        <div className="mt-auto pt-1.5">
+        {/* Row 3: sub — pushed to bottom, fixed 2-line min-height so cards match */}
+        <div className="mt-auto pt-1.5" style={{ lineHeight: '1.4', minHeight: 38 }}>
           {sub && (
             <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
               {sub}
