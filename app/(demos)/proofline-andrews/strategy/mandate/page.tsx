@@ -33,7 +33,7 @@ const donutData = (Object.keys(SUPPLIER_PORTFOLIO_SHARE) as SupplierGroup[]).map
 
 /* ── YoY Comparison ──────────────────────────────────── */
 const YOY = [
-  { metric: 'Revenue', fy25: '$5.0B', fy26: '$5.2B', delta: '+4.0%', positive: true },
+  { metric: 'Revenue', fy25: '$173M', fy26: '$180M', delta: '+4.0%', positive: true },
   { metric: 'Cases', fy25: `${fmt(BRAND_TOTAL_CASES * 4)}`, fy26: `${fmt(Math.round(BRAND_TOTAL_CASES * 4 * 1.028))}`, delta: '+2.8%', positive: true },
   { metric: 'Spirits Share', fy25: '2%', fy26: '8%', delta: '+6pp', positive: true },
   { metric: 'Routes', fy25: '32', fy26: String(TOTAL_ROUTES), delta: `+${TOTAL_ROUTES - 32}`, positive: true },
@@ -130,10 +130,10 @@ export default function CeoMandatePage() {
             className="text-3xl font-extrabold mb-1"
             style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}
           >
-            $5.2B
+            $180M
           </div>
           <div className="text-[12px] font-semibold" style={{ color: '#C6A052' }}>
-            +4% YoY from ~$5.0B
+            +4% YoY from ~$173M
           </div>
         </div>
 
@@ -296,7 +296,7 @@ export default function CeoMandatePage() {
       >
         <p className="text-[14px] italic leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>
           &ldquo;We need to sell the right product, not just more product. If we hit 8% spirits
-          and get display compliance to 89%, we will blow past $5.2 billion.&rdquo;
+          and get display compliance to 89%, we will blow past $180 million.&rdquo;
         </p>
         <p className="text-[12px] font-semibold mt-2" style={{ color: '#C6A052' }}>
           &mdash; Executive Leadership

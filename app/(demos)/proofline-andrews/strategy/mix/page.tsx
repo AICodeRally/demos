@@ -299,7 +299,7 @@ export default function BrandMixScenariosPage() {
                 dashed: true,
               },
               {
-                label: 'Marcus Webb (DAL-01)',
+                label: 'Marcus Reyes (DAL-03)',
                 values: [0.95, 0.82, 0.70, 0.18, 0.96, 1.0],
                 color: '#3B82F6',
                 filled: true,
@@ -320,7 +320,7 @@ export default function BrandMixScenariosPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm" style={{ background: 'rgba(59,130,246,0.2)', border: '1px solid #3B82F6' }} />
-              <span style={{ color: '#3B82F6' }}>Marcus Webb (DAL-01)</span>
+              <span style={{ color: '#3B82F6' }}>Marcus Reyes (DAL-03)</span>
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm" style={{ background: 'rgba(248,113,113,0.2)', border: '1px solid #F87171' }} />

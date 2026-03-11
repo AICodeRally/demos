@@ -15,22 +15,22 @@ const PAY_CYCLES = [
 ];
 
 const PENDING_APPROVALS = [
-  { id: 'PA-001', rep: 'Marcus Webb', type: 'Q1 Kicker Overage', amount: 2840, reason: 'Variable > $2,500 threshold \u2014 manager sign-off required', urgency: 'high' },
+  { id: 'PA-001', rep: 'Marcus Reyes', type: 'Q1 Kicker Overage', amount: 2840, reason: 'Variable > $2,500 threshold \u2014 manager sign-off required', urgency: 'high' },
   { id: 'PA-002', rep: 'Priya Nair / Sofia Reyes', type: 'Split Credit Resolution', amount: 1260, reason: 'Split credit dispute resolved in both reps favor \u2014 retroactive credit', urgency: 'medium' },
   { id: 'PA-003', rep: 'James Park', type: 'New Hire Proration', amount: 980, reason: 'Feb 10 start date \u2014 proration applied. Controller review needed.', urgency: 'low' },
   { id: 'PA-004', rep: 'Elena Vargas', type: 'Spirits Adder Audit', amount: 375, reason: '15 new spirits accounts \u2014 3 flagged for account age verification', urgency: 'medium' },
 ];
 
 const PAYMENTS = [
-  { date: 'Mar 3', rep: 'Marcus Webb', type: 'Variable', amount: 2210, status: 'Deposited' },
-  { date: 'Mar 3', rep: 'Marcus Webb', type: 'Base', amount: 4333, status: 'Deposited' },
+  { date: 'Mar 3', rep: 'Marcus Reyes', type: 'Variable', amount: 2210, status: 'Deposited' },
+  { date: 'Mar 3', rep: 'Marcus Reyes', type: 'Base', amount: 4333, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Sofia Reyes', type: 'Variable', amount: 1840, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Sofia Reyes', type: 'Commission', amount: 3760, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Diego Santos', type: 'Variable', amount: 1620, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Priya Nair', type: 'Variable', amount: 2080, status: 'Deposited' },
   { date: 'Mar 3', rep: 'Priya Nair', type: 'Bonus', amount: 500, status: 'Deposited' },
-  { date: 'Mar 17', rep: 'Marcus Webb', type: 'Variable', amount: 2840, status: 'Pending' },
-  { date: 'Mar 17', rep: 'Marcus Webb', type: 'Base', amount: 4333, status: 'Pending' },
+  { date: 'Mar 17', rep: 'Marcus Reyes', type: 'Variable', amount: 2840, status: 'Pending' },
+  { date: 'Mar 17', rep: 'Marcus Reyes', type: 'Base', amount: 4333, status: 'Pending' },
   { date: 'Mar 17', rep: 'Sofia Reyes', type: 'Commission', amount: 3920, status: 'Pending' },
   { date: 'Mar 17', rep: 'Elena Vargas', type: 'Variable', amount: 1780, status: 'Pending' },
   { date: 'Mar 17', rep: 'Elena Vargas', type: 'Bonus', amount: 375, status: 'Approved' },
@@ -40,14 +40,14 @@ const PAYMENTS = [
   { date: 'Mar 17', rep: 'Carlos Reyes', type: 'Variable', amount: 1720, status: 'Pending' },
   { date: 'Mar 17', rep: 'James Park', type: 'Variable', amount: 980, status: 'Pending' },
   { date: 'Mar 28', rep: 'All Eligible Reps', type: 'Bonus', amount: 18400, status: 'Pending' },
-  { date: 'Mar 31', rep: 'Marcus Webb', type: 'Commission', amount: 4280, status: 'Pending' },
+  { date: 'Mar 31', rep: 'Marcus Reyes', type: 'Commission', amount: 4280, status: 'Pending' },
   { date: 'Mar 31', rep: 'Sofia Reyes', type: 'Base', amount: 4333, status: 'Pending' },
 ];
 
 const EXCEPTIONS = [
   { id: 'EX-017', rep: 'Tyler Brooks', issue: 'Negative clawback \u2014 account closed mid-quarter', amount: -340, resolution: 'Offset against next cycle' },
   { id: 'EX-018', rep: 'James Park', issue: 'New hire proration \u2014 start date Feb 10', amount: 980, resolution: 'Pending controller sign-off' },
-  { id: 'EX-019', rep: 'Marcus Webb', issue: 'Overpayment flag \u2014 variable exceeded $2,500', amount: 2840, resolution: 'Pending manager approval' },
+  { id: 'EX-019', rep: 'Marcus Reyes', issue: 'Overpayment flag \u2014 variable exceeded $2,500', amount: 2840, resolution: 'Pending manager approval' },
 ];
 
 const STATUS_STYLES: Record<string, { bg: string; color: string }> = {

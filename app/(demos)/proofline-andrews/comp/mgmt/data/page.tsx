@@ -43,7 +43,7 @@ const CREDIT_RULES = [
 ];
 
 const TRANSACTIONS = [
-  { date: 'Mar 8', account: 'HEB Kirby', product: 'Coors Light 24pk', cases: 48, revenue: 1296, rep: 'Marcus Webb', rule: 'Primary', confidence: 99 },
+  { date: 'Mar 8', account: 'HEB Kirby', product: 'Coors Light 24pk', cases: 48, revenue: 1296, rep: 'Marcus Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 8', account: 'Total Wine 183', product: 'Corona Extra 12pk', cases: 72, revenue: 2160, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 7', account: 'Whataburger Loop 410', product: 'Bud Light Lime 6pk', cases: 24, revenue: 576, rep: 'James Park / Kenji Morales', rule: 'Split', confidence: 94 },
   { date: 'Mar 7', account: 'Central Market Bev', product: 'High Noon Variety', cases: 36, revenue: 1188, rep: 'Elena Vargas', rule: 'Primary', confidence: 99 },
@@ -51,7 +51,7 @@ const TRANSACTIONS = [
   { date: 'Mar 6', account: 'Costco 290', product: 'Heineken 24pk', cases: 120, revenue: 3960, rep: 'Priya Nair', rule: 'Primary', confidence: 99 },
   { date: 'Mar 6', account: "Spec's Bandera", product: "Tito's Vodka 1.75L", cases: 30, revenue: 2250, rep: 'Raj Patel', rule: 'Primary', confidence: 99 },
   { date: 'Mar 6', account: 'Twin Peaks Bitters', product: 'White Claw 12pk', cases: 24, revenue: 696, rep: 'Ana Lima / Carlos Reyes', rule: 'Split', confidence: 91 },
-  { date: 'Mar 5', account: 'Fiesta Mart Austin', product: 'Coors Banquet 18pk', cases: 60, revenue: 1560, rep: 'Marcus Webb', rule: 'Primary', confidence: 99 },
+  { date: 'Mar 5', account: 'Fiesta Mart Austin', product: 'Coors Banquet 18pk', cases: 60, revenue: 1560, rep: 'Marcus Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 5', account: 'Aloft Hotel SAT', product: 'Blue Moon 6pk', cases: 12, revenue: 384, rep: 'Kenji Morales', rule: 'Primary', confidence: 97 },
   { date: 'Mar 5', account: 'Kroger IH-35', product: 'Dos Equis Lager 24pk', cases: 84, revenue: 2352, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 4', account: "Chili's Nacogdoches", product: 'Dos Equis Amber Draft', cases: 8, revenue: 280, rep: 'Diego Santos / Ana Lima', rule: 'Split', confidence: 88 },

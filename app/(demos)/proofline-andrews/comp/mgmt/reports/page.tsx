@@ -16,9 +16,9 @@ const HOMETOWNS_LIST = [
 ];
 
 const CLUB_TIERS = [
-  { tier: 'Gold', label: 'Gold Club', threshold: 1.20, color: '#C6A052' },
-  { tier: 'Silver', label: 'Silver Club', threshold: 1.10, color: '#94A3B8' },
-  { tier: 'Bronze', label: 'Bronze Club', threshold: 1.05, color: '#92400E' },
+  { tier: 'Diamond', label: 'Diamond Club', threshold: 1.20, color: '#9F7AEA' },
+  { tier: 'Platinum', label: 'Platinum Club', threshold: 1.10, color: '#B8C5D6' },
+  { tier: 'Gold', label: 'Gold Club', threshold: 1.00, color: '#C6A052' },
 ];
 
 const COACHING_RECS: Record<string, string[]> = {
@@ -64,7 +64,7 @@ const LEADERBOARD = [...SELLERS]
   .map((s, i) => ({
     ...s,
     rank: i + 1,
-    clubTier: s.ytdAttainment >= 1.20 ? 'Gold' : s.ytdAttainment >= 1.10 ? 'Silver' : s.ytdAttainment >= 1.05 ? 'Bronze' : null,
+    clubTier: s.ytdAttainment >= 1.20 ? 'Diamond' : s.ytdAttainment >= 1.10 ? 'Platinum' : s.ytdAttainment >= 1.00 ? 'Gold' : null,
   }));
 
 const PAYMENT_HISTORY = [
@@ -131,7 +131,7 @@ function ProgressRaceBar({ name, value, max, color, tier, rank }: {
   name: string; value: number; max: number; color: string; tier: string | null; rank: number;
 }) {
   const pct = Math.min((value / max) * 100, 100);
-  const tierColors: Record<string, string> = { Gold: '#C6A052', Silver: '#94A3B8', Bronze: '#92400E' };
+  const tierColors: Record<string, string> = { Diamond: '#9F7AEA', Platinum: '#B8C5D6', Gold: '#C6A052' };
   return (
     <div className="flex items-center gap-3 py-1">
       <div className="w-5 text-xs font-bold font-mono text-center flex-shrink-0" style={{ color: ACCENT }}>{rank}</div>
@@ -139,12 +139,12 @@ function ProgressRaceBar({ name, value, max, color, tier, rank }: {
       <div className="flex-1 relative h-5 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
         <div className="absolute top-0 left-0 h-full rounded-full transition-all duration-500"
           style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${color}90, ${color})` }} />
-        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.05 / max) * 100}%`, background: '#92400E80' }} />
-        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.10 / max) * 100}%`, background: '#94A3B880' }} />
-        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.20 / max) * 100}%`, background: '#C6A05280' }} />
+        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.00 / max) * 100}%`, background: '#C6A05280' }} />
+        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.10 / max) * 100}%`, background: '#B8C5D680' }} />
+        <div className="absolute top-0 h-full w-px" style={{ left: `${(1.20 / max) * 100}%`, background: '#9F7AEA80' }} />
       </div>
       <div className="w-12 text-right text-xs font-bold font-mono flex-shrink-0"
-        style={{ color: value >= 1.05 ? '#22C55E' : value >= 0.90 ? '#F59E0B' : '#F87171' }}>
+        style={{ color: value >= 1.00 ? '#22C55E' : value >= 0.90 ? '#F59E0B' : '#F87171' }}>
         {(value * 100).toFixed(1)}%
       </div>
       <div className="w-14 flex-shrink-0">
@@ -430,23 +430,23 @@ export default function ReportsPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <LightKpiCard label="Days Remaining" value="296" accent={ACCENT} sub="in 2026 selling year" stagger={0} />
-            <LightKpiCard label="Current Qualifiers" value={String(LEADERBOARD.filter(s => s.ytdAttainment >= 1.05).length)} accent={ACCENT} delta={2.0} sub="vs last month" stagger={1} />
-            <LightKpiCard label="Projected Qualifiers" value={String(LEADERBOARD.filter(s => s.projectedAnnual >= 1.05).length)} accent={ACCENT} stagger={2} />
-            <LightKpiCard label="Club Threshold" value="105% YTD" accent={ACCENT} stagger={3} />
+            <LightKpiCard label="Current Qualifiers" value={String(LEADERBOARD.filter(s => s.ytdAttainment >= 1.00).length)} accent={ACCENT} delta={2.0} sub="vs last month" stagger={1} />
+            <LightKpiCard label="Projected Qualifiers" value={String(LEADERBOARD.filter(s => s.projectedAnnual >= 1.00).length)} accent={ACCENT} stagger={2} />
+            <LightKpiCard label="Club Threshold" value="100% YTD" accent={ACCENT} stagger={3} />
           </div>
 
           {/* Visual Leaderboard Race */}
           <LightSectionCard title="PRESIDENTS CLUB LEADERBOARD RACE">
             <div className="mb-3 flex gap-4 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#92400E' }} /> Bronze 105%</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#94A3B8' }} /> Silver 110%</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#C6A052' }} /> Gold 120%</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#C6A052' }} /> Gold 100%</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#B8C5D6' }} /> Platinum 110%</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#9F7AEA' }} /> Diamond 120%</span>
             </div>
             <div className="grid gap-0.5">
               {LEADERBOARD.slice(0, 20).map(seller => {
-                const barColor = seller.ytdAttainment >= 1.20 ? '#C6A052'
-                  : seller.ytdAttainment >= 1.10 ? '#94A3B8'
-                  : seller.ytdAttainment >= 1.05 ? '#22C55E'
+                const barColor = seller.ytdAttainment >= 1.20 ? '#9F7AEA'
+                  : seller.ytdAttainment >= 1.10 ? '#B8C5D6'
+                  : seller.ytdAttainment >= 1.00 ? '#C6A052'
                   : seller.ytdAttainment >= 0.90 ? '#F59E0B' : '#F87171';
                 return (
                   <ProgressRaceBar key={seller.id}
@@ -499,7 +499,7 @@ export default function ReportsPage() {
                     <path d="M5 48 L20 44 L35 42 L50 38 L65 34 L75 30" fill="none" stroke="#94A3B860" strokeWidth="2" strokeDasharray="4 2" />
                   </svg>
                 </div>
-                <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>Marcus Webb</div>
+                <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>Marcus Reyes</div>
                 <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>2025 Top Earner &middot; 127.3% <TrendArrow value={4.2} /></div>
               </div>
             </div>
