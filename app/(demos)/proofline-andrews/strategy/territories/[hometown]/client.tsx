@@ -407,15 +407,16 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Routes" value={String(hometown.routes)} accent="#7C3AED" />
-        <LightKpiCard label="Avg Attainment" value={pct(avgAttain)} accent={attainColor(avgAttain)} />
-        <LightKpiCard label="Q Revenue" value={fmtM(totalRev)} accent="#7C3AED" />
-        <LightKpiCard label="Display Compliance" value={pct(avgDisplayCompliance)} accent="#2563EB" />
+        <LightKpiCard label="Routes" value={String(hometown.routes)} accent="#7C3AED" stagger={0} />
+        <LightKpiCard label="Avg Attainment" value={pct(avgAttain)} accent={attainColor(avgAttain)} stagger={1} />
+        <LightKpiCard label="Q Revenue" value={fmtM(totalRev)} accent="#7C3AED" stagger={2} />
+        <LightKpiCard label="Display Compliance" value={pct(avgDisplayCompliance)} accent="#2563EB" stagger={3} />
         <LightKpiCard
           label="Spirits Accounts"
           value={String(totalSpiritsAccts)}
           accent="#F87171"
           sub={atRiskCount > 0 ? `${atRiskCount} rep${atRiskCount > 1 ? 's' : ''} at risk` : undefined}
+          stagger={4}
         />
       </div>
 

@@ -142,11 +142,11 @@ export default function DemandForecastingPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Q Target" value={fmtK(totalTarget)} accent="#2563EB" sub="Total cases" />
-        <LightKpiCard label="Current Pace" value={fmtK(totalPace)} accent={totalPace >= totalTarget ? '#22C55E' : '#F59E0B'} sub={pct(totalPace / totalTarget)} />
-        <LightKpiCard label="Accuracy (MAPE)" value={`${(avgAccuracy * 100).toFixed(1)}%`} accent="#22C55E" sub="Lower is better" />
-        <LightKpiCard label="Active Overlays" value={String(SEASONAL_OVERLAYS.filter(o => o.startWeek <= 9 && o.endWeek >= 9).length)} accent="#F59E0B" />
-        <LightKpiCard label="Weather Factor" value={WEATHER_IMPACTS.find(w => w.week === 9)?.type ?? 'normal'} accent="#3B82F6" />
+        <LightKpiCard label="Q Target" value={fmtK(totalTarget)} accent="#2563EB" sub="Total cases" stagger={0} />
+        <LightKpiCard label="Current Pace" value={fmtK(totalPace)} accent={totalPace >= totalTarget ? '#22C55E' : '#F59E0B'} sub={pct(totalPace / totalTarget)} stagger={1} />
+        <LightKpiCard label="Accuracy (MAPE)" value={`${(avgAccuracy * 100).toFixed(1)}%`} accent="#22C55E" sub="Lower is better" stagger={2} />
+        <LightKpiCard label="Active Overlays" value={String(SEASONAL_OVERLAYS.filter(o => o.startWeek <= 9 && o.endWeek >= 9).length)} accent="#F59E0B" stagger={3} />
+        <LightKpiCard label="Weather Factor" value={WEATHER_IMPACTS.find(w => w.week === 9)?.type ?? 'normal'} accent="#3B82F6" stagger={4} />
       </div>
 
       {/* Brand Selector */}

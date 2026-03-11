@@ -109,11 +109,11 @@ export default function AiIntelligenceHubPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Forecast Accuracy" value={pct(1 - avgAccuracy)} accent="#22C55E" sub={`${(avgAccuracy * 100).toFixed(1)}% MAPE`} />
-        <LightKpiCard label="Trending Up" value={`${upTrends}/${BRAND_FORECASTS.length}`} accent="#22C55E" sub="Brands accelerating" />
-        <LightKpiCard label="Active Overlays" value={String(activeOverlays.length)} accent="#F59E0B" sub={activeOverlays[0]?.eventName ?? 'None'} />
-        <LightKpiCard label="Stock Alerts" value={String(highUrgency)} accent={highUrgency > 0 ? '#F87171' : '#22C55E'} sub="High urgency" />
-        <LightKpiCard label="Route Efficiency" value={pct(avgOnTime)} accent="#2563EB" sub="Avg on-time rate" />
+        <LightKpiCard label="Forecast Accuracy" value={pct(1 - avgAccuracy)} accent="#22C55E" sub={`${(avgAccuracy * 100).toFixed(1)}% MAPE`} stagger={0} />
+        <LightKpiCard label="Trending Up" value={`${upTrends}/${BRAND_FORECASTS.length}`} accent="#22C55E" sub="Brands accelerating" stagger={1} />
+        <LightKpiCard label="Active Overlays" value={String(activeOverlays.length)} accent="#F59E0B" sub={activeOverlays[0]?.eventName ?? 'None'} stagger={2} />
+        <LightKpiCard label="Stock Alerts" value={String(highUrgency)} accent={highUrgency > 0 ? '#F87171' : '#22C55E'} sub="High urgency" stagger={3} />
+        <LightKpiCard label="Route Efficiency" value={pct(avgOnTime)} accent="#2563EB" sub="Avg on-time rate" stagger={4} />
       </div>
 
       {/* 4-Quadrant Grid */}

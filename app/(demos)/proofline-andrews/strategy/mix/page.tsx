@@ -143,11 +143,11 @@ export default function BrandMixTargetsPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Q Revenue" value={fmtM(TOTAL_QUARTERLY_REVENUE)} accent="#7C3AED" sub="All brands" />
-        <LightKpiCard label="Avg Gross Profit" value={pct(avgGP)} accent="#22C55E" sub="Blended margin" />
-        <LightKpiCard label="Emerging Share" value={pct(emergingShare)} accent="#F59E0B" sub={`${BRAND_FAMILIES.filter(b => b.emerging).length} brands`} />
-        <LightKpiCard label="Spirits Revenue" value={fmtM(spiritsRev)} accent="#F87171" sub={`${pct(spiritsRev / TOTAL_QUARTERLY_REVENUE)} of portfolio`} />
-        <LightKpiCard label="Target Scenario" value={scenario.name} accent={scenario.color} sub={scenario.label} />
+        <LightKpiCard label="Q Revenue" value={fmtM(TOTAL_QUARTERLY_REVENUE)} accent="#7C3AED" sub="All brands" stagger={0} />
+        <LightKpiCard label="Avg Gross Profit" value={pct(avgGP)} accent="#22C55E" sub="Blended margin" stagger={1} />
+        <LightKpiCard label="Emerging Share" value={pct(emergingShare)} accent="#F59E0B" sub={`${BRAND_FAMILIES.filter(b => b.emerging).length} brands`} stagger={2} />
+        <LightKpiCard label="Spirits Revenue" value={fmtM(spiritsRev)} accent="#F87171" sub={`${pct(spiritsRev / TOTAL_QUARTERLY_REVENUE)} of portfolio`} stagger={3} />
+        <LightKpiCard label="Target Scenario" value={scenario.name} accent={scenario.color} sub={scenario.label} stagger={4} />
       </div>
 
       {/* Scenario Selector */}

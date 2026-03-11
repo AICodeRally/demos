@@ -170,10 +170,10 @@ export default function KickerModelingPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <LightKpiCard label="Total Kicker Value" value={`$${fmt(totalKickerValue)}`} accent="#10B981" sub="Per qualifying rep/yr" />
-        <LightKpiCard label="Active Kickers" value={String(KICKERS.length)} accent="#2563EB" sub="Q2, Q3, Q4" />
-        <LightKpiCard label="Next Up" value={KICKERS[0].name.split(' ').slice(0, 2).join(' ')} accent="#F59E0B" sub={KICKERS[0].startDate} />
-        <LightKpiCard label="Spirits Kicker" value={`$${fmt(KICKERS[2].reward)}`} accent="#10B981" sub="Holiday Q4 bonus" />
+        <LightKpiCard label="Total Kicker Value" value={`$${fmt(totalKickerValue)}`} accent="#10B981" sub="Per qualifying rep/yr" stagger={0} />
+        <LightKpiCard label="Active Kickers" value={String(KICKERS.length)} accent="#2563EB" sub="Q2, Q3, Q4" stagger={1} />
+        <LightKpiCard label="Next Up" value={KICKERS[0].name.split(' ').slice(0, 2).join(' ')} accent="#F59E0B" sub={KICKERS[0].startDate} stagger={2} />
+        <LightKpiCard label="Spirits Kicker" value={`$${fmt(KICKERS[2].reward)}`} accent="#10B981" sub="Holiday Q4 bonus" stagger={3} />
       </div>
 
       {/* Timeline */}

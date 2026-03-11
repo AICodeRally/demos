@@ -120,11 +120,11 @@ export default function InventoryPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Total On-Hand" value={fmtK(totalCases)} accent="#2563EB" sub="Cases across all WHs" />
-        <LightKpiCard label="Low Stock Alerts" value={String(lowStockCount)} accent={lowStockCount > 0 ? '#F87171' : '#22C55E'} sub="High urgency items" />
-        <LightKpiCard label="Spirits Cage" value={fmt(spiritsTotal)} accent="#F87171" sub="Cases in regulated storage" />
-        <LightKpiCard label="Returns Pending" value={fmt(returnsTotal)} accent="#F59E0B" sub={`${RETURNS_PENDING.length} items`} />
-        <LightKpiCard label="Warehouses" value={String(HOMETOWNS.length)} accent="#2563EB" sub={`${fmtK(HOMETOWNS.reduce((s, h) => s + h.sqft, 0))} sq ft total`} />
+        <LightKpiCard label="Total On-Hand" value={fmtK(totalCases)} accent="#2563EB" sub="Cases across all WHs" stagger={0} />
+        <LightKpiCard label="Low Stock Alerts" value={String(lowStockCount)} accent={lowStockCount > 0 ? '#F87171' : '#22C55E'} sub="High urgency items" stagger={1} />
+        <LightKpiCard label="Spirits Cage" value={fmt(spiritsTotal)} accent="#F87171" sub="Cases in regulated storage" stagger={2} />
+        <LightKpiCard label="Returns Pending" value={fmt(returnsTotal)} accent="#F59E0B" sub={`${RETURNS_PENDING.length} items`} stagger={3} />
+        <LightKpiCard label="Warehouses" value={String(HOMETOWNS.length)} accent="#2563EB" sub={`${fmtK(HOMETOWNS.reduce((s, h) => s + h.sqft, 0))} sq ft total`} stagger={4} />
       </div>
 
       {/* Hometown Filter */}

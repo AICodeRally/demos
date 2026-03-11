@@ -275,11 +275,11 @@ export default function MgmtInquiriesPage() {
 
       {/* KPI Row with color-coded status */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="New" value={String(openCount)} accent={STATUS_COLORS.open} sub="Awaiting review" />
-        <LightKpiCard label="Pending" value={String(reviewCount)} accent={STATUS_COLORS['under-review']} sub="Manager assigned" />
-        <LightKpiCard label="Resolved" value={String(resolvedCount)} accent={STATUS_COLORS.resolved} sub="This quarter" />
-        <LightKpiCard label="Escalated" value={String(escalatedCount)} accent={STATUS_COLORS.escalated} sub="Needs VP review" />
-        <LightKpiCard label="Avg Resolution" value={`${avgResolutionDays}d`} accent="#8B5CF6" sub="Target: <3 days" />
+        <LightKpiCard label="New" value={String(openCount)} accent={STATUS_COLORS.open} sub="Awaiting review" stagger={0} />
+        <LightKpiCard label="Pending" value={String(reviewCount)} accent={STATUS_COLORS['under-review']} sub="Manager assigned" stagger={1} />
+        <LightKpiCard label="Resolved" value={String(resolvedCount)} accent={STATUS_COLORS.resolved} sub="This quarter" stagger={2} />
+        <LightKpiCard label="Escalated" value={String(escalatedCount)} accent={STATUS_COLORS.escalated} sub="Needs VP review" stagger={3} />
+        <LightKpiCard label="Avg Resolution" value={`${avgResolutionDays}d`} accent="#8B5CF6" sub="Target: <3 days" stagger={4} />
       </div>
 
       {/* Dashboard Row: Donut + Stats + Impact */}

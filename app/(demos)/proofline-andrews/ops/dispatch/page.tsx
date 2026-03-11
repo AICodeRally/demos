@@ -173,11 +173,11 @@ export default function DeliveryDispatchPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Routes Active" value={`${activeRoutes.length}/${ROUTES.length}`} accent="#22C55E" sub="En route + delivering" />
-        <LightKpiCard label="Daily Cases" value={fmt(totalCasesToday)} accent="#2563EB" sub="Planned today" />
-        <LightKpiCard label="Daily Revenue" value={fmtM(totalRevToday)} accent="#2563EB" sub="Projected" />
-        <LightKpiCard label="Avg On-Time" value={pct(avgOnTime)} accent={avgOnTime >= 0.93 ? '#22C55E' : '#F59E0B'} sub="Delivery rate" />
-        <LightKpiCard label="Exceptions" value={String(exceptionRoutes.length)} accent="#F87171" sub={exceptionRoutes.length > 0 ? 'Needs attention' : 'All clear'} />
+        <LightKpiCard label="Routes Active" value={`${activeRoutes.length}/${ROUTES.length}`} accent="#22C55E" sub="En route + delivering" stagger={0} />
+        <LightKpiCard label="Daily Cases" value={fmt(totalCasesToday)} accent="#2563EB" sub="Planned today" stagger={1} />
+        <LightKpiCard label="Daily Revenue" value={fmtM(totalRevToday)} accent="#2563EB" sub="Projected" stagger={2} />
+        <LightKpiCard label="Avg On-Time" value={pct(avgOnTime)} accent={avgOnTime >= 0.93 ? '#22C55E' : '#F59E0B'} sub="Delivery rate" stagger={3} />
+        <LightKpiCard label="Exceptions" value={String(exceptionRoutes.length)} accent="#F87171" sub={exceptionRoutes.length > 0 ? 'Needs attention' : 'All clear'} stagger={4} />
       </div>
 
       {/* Exception Alerts */}

@@ -177,12 +177,12 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
 
       {/* KPI Row */}
       <div className="grid grid-cols-6 gap-3 mb-6">
-        <LightKpiCard label="Attainment" value={pct(seller.attainment)} accent={seller.attainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub={`Tier ${seller.tier}`} />
-        <LightKpiCard label="Q Revenue" value={fmtM(route?.rev ?? 0)} accent="#2563EB" sub={`${localFmtK(route?.cases ?? 0)} cases`} />
-        <LightKpiCard label="Spirits Accts" value={String(seller.spiritsAccounts)} accent="#F87171" sub={`of ${route?.accounts ?? 0} total`} />
-        <LightKpiCard label="On-Time" value={pct(route?.onTimeRate ?? 0)} accent={(route?.onTimeRate ?? 0) >= 0.93 ? '#22C55E' : '#F59E0B'} />
-        <LightKpiCard label="Display" value={pct(route?.displayCompliance ?? 0)} accent={(route?.displayCompliance ?? 0) >= 0.90 ? '#22C55E' : '#F59E0B'} />
-        <LightKpiCard label="Gates" value={`${gates.filter(g => g.value >= g.threshold).length}/4`} accent="#2563EB" sub="Unlocked" />
+        <LightKpiCard label="Attainment" value={pct(seller.attainment)} accent={seller.attainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub={`Tier ${seller.tier}`} stagger={0} />
+        <LightKpiCard label="Q Revenue" value={fmtM(route?.rev ?? 0)} accent="#2563EB" sub={`${localFmtK(route?.cases ?? 0)} cases`} stagger={1} />
+        <LightKpiCard label="Spirits Accts" value={String(seller.spiritsAccounts)} accent="#F87171" sub={`of ${route?.accounts ?? 0} total`} stagger={2} />
+        <LightKpiCard label="On-Time" value={pct(route?.onTimeRate ?? 0)} accent={(route?.onTimeRate ?? 0) >= 0.93 ? '#22C55E' : '#F59E0B'} stagger={3} />
+        <LightKpiCard label="Display" value={pct(route?.displayCompliance ?? 0)} accent={(route?.displayCompliance ?? 0) >= 0.90 ? '#22C55E' : '#F59E0B'} stagger={4} />
+        <LightKpiCard label="Gates" value={`${gates.filter(g => g.value >= g.threshold).length}/4`} accent="#2563EB" sub="Unlocked" stagger={5} />
       </div>
 
       {/* 13-Week Attainment Chart */}

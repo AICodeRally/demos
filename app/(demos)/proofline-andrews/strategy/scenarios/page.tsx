@@ -209,28 +209,33 @@ export default function ScenarioModelingPage() {
           value={fmtM(activeScenario.revenueTarget)}
           accent={activeScenario.color}
           sub={`+${pct(activeScenario.yoyGrowth)} YoY`}
+          stagger={0}
         />
         <LightKpiCard
           label="Case Target"
           value={`${(activeScenario.caseTarget / 1e6).toFixed(1)}M`}
           accent="#7C3AED"
+          stagger={1}
         />
         <LightKpiCard
           label="Spirits Target"
           value={pct(activeScenario.spiritsTarget.portfolioShare)}
           accent="#F87171"
           sub={`${activeScenario.spiritsTarget.newSkuCount} new SKUs`}
+          stagger={2}
         />
         <LightKpiCard
           label="Laredo Routes"
           value={String(activeScenario.laredoRamp.yearEndRoutes)}
           accent="#2563EB"
           sub={`${pct(activeScenario.laredoRamp.integrationPct)} integration`}
+          stagger={3}
         />
         <LightKpiCard
           label="Risk Factors"
           value={String(activeScenario.risks.length)}
           accent={activeScenario.risks.length >= 5 ? '#F87171' : '#F59E0B'}
+          stagger={4}
         />
       </div>
 

@@ -290,12 +290,12 @@ export default function ManagerDashboardPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Cases Today" value={fmt(district.totalCasesDelivered)} accent="#2563EB" sub={`of ${fmt(district.totalCasesTarget)} target`} />
-        <LightKpiCard label="Revenue Today" value={fmtM(district.totalRevenue)} accent="#2563EB" sub="Projected" />
-        <LightKpiCard label="Avg On-Time" value={pct(district.avgOnTimeRate)} accent={district.avgOnTimeRate >= 0.90 ? '#22C55E' : '#F59E0B'} sub="Delivery rate" />
-        <LightKpiCard label="Avg Attainment" value={pct(district.avgAttainment)} accent={district.avgAttainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub="Quota progress" />
-        <LightKpiCard label="On Track" value={`${district.onTrackCount}/8`} accent="#22C55E" sub={district.issueCount > 0 ? `${district.issueCount} issue` : 'All clear'} />
-        <LightKpiCard label="Urgent Cards" value={String(urgentCards.length)} accent={urgentCards.length > 0 ? '#F87171' : '#22C55E'} sub="Needs attention" />
+        <LightKpiCard label="Cases Today" value={fmt(district.totalCasesDelivered)} accent="#2563EB" sub={`of ${fmt(district.totalCasesTarget)} target`} stagger={0} />
+        <LightKpiCard label="Revenue Today" value={fmtM(district.totalRevenue)} accent="#2563EB" sub="Projected" stagger={1} />
+        <LightKpiCard label="Avg On-Time" value={pct(district.avgOnTimeRate)} accent={district.avgOnTimeRate >= 0.90 ? '#22C55E' : '#F59E0B'} sub="Delivery rate" stagger={2} />
+        <LightKpiCard label="Avg Attainment" value={pct(district.avgAttainment)} accent={district.avgAttainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub="Quota progress" stagger={3} />
+        <LightKpiCard label="On Track" value={`${district.onTrackCount}/8`} accent="#22C55E" sub={district.issueCount > 0 ? `${district.issueCount} issue` : 'All clear'} stagger={4} />
+        <LightKpiCard label="Urgent Cards" value={String(urgentCards.length)} accent={urgentCards.length > 0 ? '#F87171' : '#22C55E'} sub="Needs attention" stagger={5} />
       </div>
 
       {/* Tab Toggle */}

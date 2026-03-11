@@ -293,11 +293,11 @@ export default function ReportsPage() {
 
           {/* KPI Cards with sparklines and deltas */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-            <LightKpiCard label="Total Revenue" value={`$${(totalRevenue / 1e6).toFixed(2)}M`} accent={ACCENT} delta={3.2} sparkline={revSparkline} />
-            <LightKpiCard label="Overall Attainment" value={`${(overallAttainment * 100).toFixed(1)}%`} accent={ACCENT} delta={1.8} sparkline={attSparkline} />
-            <LightKpiCard label="Total Comp (QTD)" value={`$${(totalCompExpense / 1000).toFixed(0)}K`} accent={ACCENT} sparkline={compSparkline} />
-            <LightKpiCard label="Comp-to-Revenue" value={`${((totalCompExpense / totalRevenue) * 100).toFixed(1)}%`} accent={ACCENT} delta={-0.3} sub="Target: <3.5%" />
-            <LightKpiCard label="Headcount" value="36 reps" accent={ACCENT} sub="6 managers" />
+            <LightKpiCard label="Total Revenue" value={`$${(totalRevenue / 1e6).toFixed(2)}M`} accent={ACCENT} delta={3.2} sparkline={revSparkline} stagger={0} />
+            <LightKpiCard label="Overall Attainment" value={`${(overallAttainment * 100).toFixed(1)}%`} accent={ACCENT} delta={1.8} sparkline={attSparkline} stagger={1} />
+            <LightKpiCard label="Total Comp (QTD)" value={`$${(totalCompExpense / 1000).toFixed(0)}K`} accent={ACCENT} sparkline={compSparkline} stagger={2} />
+            <LightKpiCard label="Comp-to-Revenue" value={`${((totalCompExpense / totalRevenue) * 100).toFixed(1)}%`} accent={ACCENT} delta={-0.3} sub="Target: <3.5%" stagger={3} />
+            <LightKpiCard label="Headcount" value="36 reps" accent={ACCENT} sub="6 managers" stagger={4} />
           </div>
 
           {/* Hometown Performance with trend arrows */}
@@ -429,10 +429,10 @@ export default function ReportsPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <LightKpiCard label="Days Remaining" value="296" accent={ACCENT} sub="in 2026 selling year" />
-            <LightKpiCard label="Current Qualifiers" value={String(LEADERBOARD.filter(s => s.ytdAttainment >= 1.05).length)} accent={ACCENT} delta={2.0} sub="vs last month" />
-            <LightKpiCard label="Projected Qualifiers" value={String(LEADERBOARD.filter(s => s.projectedAnnual >= 1.05).length)} accent={ACCENT} />
-            <LightKpiCard label="Club Threshold" value="105% YTD" accent={ACCENT} />
+            <LightKpiCard label="Days Remaining" value="296" accent={ACCENT} sub="in 2026 selling year" stagger={0} />
+            <LightKpiCard label="Current Qualifiers" value={String(LEADERBOARD.filter(s => s.ytdAttainment >= 1.05).length)} accent={ACCENT} delta={2.0} sub="vs last month" stagger={1} />
+            <LightKpiCard label="Projected Qualifiers" value={String(LEADERBOARD.filter(s => s.projectedAnnual >= 1.05).length)} accent={ACCENT} stagger={2} />
+            <LightKpiCard label="Club Threshold" value="105% YTD" accent={ACCENT} stagger={3} />
           </div>
 
           {/* Visual Leaderboard Race */}
@@ -663,10 +663,10 @@ export default function ReportsPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <LightKpiCard label="Avg Attainment" value={`${(htReps.reduce((s, r) => s + r.attainment, 0) / (htReps.length || 1) * 100).toFixed(1)}%`} accent={ACCENT} delta={1.4} sparkline={htReps.slice(0, 6).map(r => r.attainment * 100)} />
-            <LightKpiCard label="Total Comp Expense" value={`$${(htReps.length * 7020 / 1000).toFixed(0)}K`} accent={ACCENT} />
-            <LightKpiCard label="At-Risk Reps" value={String(htReps.filter(r => r.atRisk).length)} accent={ACCENT} sub={htReps.filter(r => r.atRisk).length > 0 ? 'Needs attention' : 'All clear'} />
-            <LightKpiCard label="Full Gate %" value={`${Math.round(htReps.filter(r => r.bbiGates.combined >= 0.85).length / (htReps.length || 1) * 100)}%`} accent={ACCENT} />
+            <LightKpiCard label="Avg Attainment" value={`${(htReps.reduce((s, r) => s + r.attainment, 0) / (htReps.length || 1) * 100).toFixed(1)}%`} accent={ACCENT} delta={1.4} sparkline={htReps.slice(0, 6).map(r => r.attainment * 100)} stagger={0} />
+            <LightKpiCard label="Total Comp Expense" value={`$${(htReps.length * 7020 / 1000).toFixed(0)}K`} accent={ACCENT} stagger={1} />
+            <LightKpiCard label="At-Risk Reps" value={String(htReps.filter(r => r.atRisk).length)} accent={ACCENT} sub={htReps.filter(r => r.atRisk).length > 0 ? 'Needs attention' : 'All clear'} stagger={2} />
+            <LightKpiCard label="Full Gate %" value={`${Math.round(htReps.filter(r => r.bbiGates.combined >= 0.85).length / (htReps.length || 1) * 100)}%`} accent={ACCENT} stagger={3} />
           </div>
 
           {/* Team visual cards */}

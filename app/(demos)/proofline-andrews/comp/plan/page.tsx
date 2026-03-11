@@ -251,11 +251,11 @@ export default function CompPlanPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Base Salary" value={`$${(plan.baseSalary.median / 1000).toFixed(0)}K`} accent="#2563EB" sub={`$${(plan.baseSalary.min / 1000).toFixed(0)}K\u2013$${(plan.baseSalary.max / 1000).toFixed(0)}K range`} />
-        <LightKpiCard label="Variable Target" value={pct(plan.variableTarget)} accent="#10B981" sub="Of base salary" />
-        <LightKpiCard label="Median OTE" value={`$${(plan.ote.median / 1000).toFixed(1)}K`} accent="#22C55E" sub="On-target earnings" />
-        <LightKpiCard label="Max Multiplier" value={`${maxMultiplier.toFixed(1)}x`} accent="#F59E0B" sub="Combined gate" />
-        <LightKpiCard label="Spirits Adder" value={`+${(SPIRITS_ADDER.rate * 100).toFixed(1)}%`} accent="#10B981" sub={`Min ${SPIRITS_ADDER.minAccounts} accounts`} />
+        <LightKpiCard label="Base Salary" value={`$${(plan.baseSalary.median / 1000).toFixed(0)}K`} accent="#2563EB" sub={`$${(plan.baseSalary.min / 1000).toFixed(0)}K\u2013$${(plan.baseSalary.max / 1000).toFixed(0)}K range`} stagger={0} />
+        <LightKpiCard label="Variable Target" value={pct(plan.variableTarget)} accent="#10B981" sub="Of base salary" stagger={1} />
+        <LightKpiCard label="Median OTE" value={`$${(plan.ote.median / 1000).toFixed(1)}K`} accent="#22C55E" sub="On-target earnings" stagger={2} />
+        <LightKpiCard label="Max Multiplier" value={`${maxMultiplier.toFixed(1)}x`} accent="#F59E0B" sub="Combined gate" stagger={3} />
+        <LightKpiCard label="Spirits Adder" value={`+${(SPIRITS_ADDER.rate * 100).toFixed(1)}%`} accent="#10B981" sub={`Min ${SPIRITS_ADDER.minAccounts} accounts`} stagger={4} />
       </div>
 
       {/* Tier Ladder */}

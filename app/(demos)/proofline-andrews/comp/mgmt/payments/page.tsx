@@ -72,10 +72,10 @@ export default function PaymentsPage() {
 
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <LightKpiCard label="Current Cycle Payroll" value={`$${(totalThisCycle / 1000).toFixed(0)}K`} accent={ACCENT} />
-        <LightKpiCard label="Pending Approvals" value={String(PENDING_APPROVALS.length)} accent={ACCENT} />
-        <LightKpiCard label="Exceptions" value={String(EXCEPTIONS.length)} accent={ACCENT} />
-        <LightKpiCard label="Next Deposit Date" value="Mar 17" accent={ACCENT} />
+        <LightKpiCard label="Current Cycle Payroll" value={`$${(totalThisCycle / 1000).toFixed(0)}K`} accent={ACCENT} stagger={0} />
+        <LightKpiCard label="Pending Approvals" value={String(PENDING_APPROVALS.length)} accent={ACCENT} stagger={1} />
+        <LightKpiCard label="Exceptions" value={String(EXCEPTIONS.length)} accent={ACCENT} stagger={2} />
+        <LightKpiCard label="Next Deposit Date" value="Mar 17" accent={ACCENT} stagger={3} />
       </div>
 
       {/* Pay Cycle Timeline */}

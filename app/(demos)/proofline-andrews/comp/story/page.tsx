@@ -157,10 +157,10 @@ export default function ThirteenWeekStoryPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <LightKpiCard label="Current Week" value="Week 9" accent="#10B981" sub="69% through quarter" />
-        <LightKpiCard label="Marcus Attainment" value={pct(marcus.attainment)} accent="#22C55E" sub="On track for T2" />
-        <LightKpiCard label="Milestones Passed" value="3/5" accent="#2563EB" sub="Mid-Quarter Pivot complete" />
-        <LightKpiCard label="Projected Close" value="101%" accent="#22C55E" sub="Above target" />
+        <LightKpiCard label="Current Week" value="Week 9" accent="#10B981" sub="69% through quarter" stagger={0} />
+        <LightKpiCard label="Marcus Attainment" value={pct(marcus.attainment)} accent="#22C55E" sub="On track for T2" stagger={1} />
+        <LightKpiCard label="Milestones Passed" value="3/5" accent="#2563EB" sub="Mid-Quarter Pivot complete" stagger={2} />
+        <LightKpiCard label="Projected Close" value="101%" accent="#22C55E" sub="Above target" stagger={3} />
       </div>
 
       {/* Main Chart */}

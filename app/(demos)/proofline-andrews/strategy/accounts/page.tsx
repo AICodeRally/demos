@@ -141,15 +141,16 @@ export default function AccountSegmentationPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Total Accounts" value={fmt(TOTAL_ACCOUNTS)} accent="#7C3AED" sub="Company-wide" />
-        <LightKpiCard label="Weekly Revenue" value={fmtM(totalWeeklyRev * 52)} accent="#7C3AED" sub={`${fmtK(totalMonthlyCases * 12)} cases/yr`} />
-        <LightKpiCard label="Spirits Penetration" value={pct(spiritsCount / ACCOUNTS.length)} accent="#F87171" sub={`${spiritsCount} of ${ACCOUNTS.length} sample`} />
-        <LightKpiCard label="Avg Display" value={pct(avgDisplayCompliance)} accent="#2563EB" />
+        <LightKpiCard label="Total Accounts" value={fmt(TOTAL_ACCOUNTS)} accent="#7C3AED" sub="Company-wide" stagger={0} />
+        <LightKpiCard label="Weekly Revenue" value={fmtM(totalWeeklyRev * 52)} accent="#7C3AED" sub={`${fmtK(totalMonthlyCases * 12)} cases/yr`} stagger={1} />
+        <LightKpiCard label="Spirits Penetration" value={pct(spiritsCount / ACCOUNTS.length)} accent="#F87171" sub={`${spiritsCount} of ${ACCOUNTS.length} sample`} stagger={2} />
+        <LightKpiCard label="Avg Display" value={pct(avgDisplayCompliance)} accent="#2563EB" stagger={3} />
         <LightKpiCard
           label="Tier A Revenue Share"
           value={pct(getAccountsByTier('A').reduce((s, a) => s + a.weeklyRevenue, 0) / totalWeeklyRev)}
           accent="#22C55E"
           sub={`${getAccountsByTier('A').length} accounts`}
+          stagger={4}
         />
       </div>
 

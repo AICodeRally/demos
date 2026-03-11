@@ -113,10 +113,10 @@ export default function TerritoryDesignPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <LightKpiCard label="Total Routes" value={String(TOTAL_ROUTES)} accent="#7C3AED" />
-        <LightKpiCard label="Avg Attainment" value={pct(avgCompanyAttain)} accent={avgCompanyAttain >= 1.0 ? '#22C55E' : '#F59E0B'} />
-        <LightKpiCard label="Display Compliance" value={pct(avgDisplayCompliance)} accent="#2563EB" />
-        <LightKpiCard label="Spirits Accounts" value={fmt(totalSpiritsAccounts)} accent="#F87171" sub={`${pct(totalSpiritsAccounts / TOTAL_ACCOUNTS)} penetration`} />
+        <LightKpiCard label="Total Routes" value={String(TOTAL_ROUTES)} accent="#7C3AED" stagger={0} />
+        <LightKpiCard label="Avg Attainment" value={pct(avgCompanyAttain)} accent={avgCompanyAttain >= 1.0 ? '#22C55E' : '#F59E0B'} stagger={1} />
+        <LightKpiCard label="Display Compliance" value={pct(avgDisplayCompliance)} accent="#2563EB" stagger={2} />
+        <LightKpiCard label="Spirits Accounts" value={fmt(totalSpiritsAccounts)} accent="#F87171" sub={`${pct(totalSpiritsAccounts / TOTAL_ACCOUNTS)} penetration`} stagger={3} />
       </div>
 
       {/* ── Hex Territory Grid ────────────────────────── */}

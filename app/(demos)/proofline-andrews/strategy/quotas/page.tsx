@@ -111,24 +111,27 @@ export default function QuotaWaterfallPage() {
 
       {/* Company-level KPIs */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <LightKpiCard label="Company Target" value="$5.2B" accent="#C6A052" sub="+4% YoY" />
+        <LightKpiCard label="Company Target" value="$5.2B" accent="#C6A052" sub="+4% YoY" stagger={0} />
         <LightKpiCard
           label="North Texas"
           value={`$${(northTarget / 1e9).toFixed(2)}B`}
           accent="#7C3AED"
           sub={`${pct(NORTH_TX_SHARE)} share · ${northHometowns.reduce((s, h) => s + h.routes, 0)} routes`}
+          stagger={1}
         />
         <LightKpiCard
           label="South Texas"
           value={`$${(southTarget / 1e9).toFixed(2)}B`}
           accent="#2563EB"
           sub={`${pct(SOUTH_TX_SHARE)} share · ${southHometowns.reduce((s, h) => s + h.routes, 0)} routes`}
+          stagger={2}
         />
         <LightKpiCard
           label="Avg Per Route"
           value={`$${(COMPANY_ANNUAL_TARGET / TOTAL_ROUTES / 1e6).toFixed(1)}M`}
           accent="var(--pl-text-muted)"
           sub={`${fmt(TOTAL_ACCOUNTS)} accounts`}
+          stagger={3}
         />
       </div>
 

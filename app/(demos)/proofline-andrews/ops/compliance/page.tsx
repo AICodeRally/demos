@@ -157,11 +157,11 @@ export default function CompliancePage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Overall Score" value={String(avgScore)} accent={avgScore >= 85 ? '#22C55E' : '#F59E0B'} sub="Avg across hometowns" />
-        <LightKpiCard label="Compliance Rate" value={pct(totalCompliant / totalAccounts)} accent="#22C55E" sub={`${totalCompliant.toLocaleString()} of ${totalAccounts.toLocaleString()}`} />
-        <LightKpiCard label="Cold Vault Share" value={pct(avgColdVault)} accent={avgColdVault >= 0.40 ? '#22C55E' : '#F59E0B'} sub="Avg Lone Star share" />
-        <LightKpiCard label="Accounts with Issues" value={String(ncAccounts.length)} accent={ncAccounts.length > 0 ? '#F87171' : '#22C55E'} sub={`${pct(ncAccounts.length / DISPLAY_COMPLIANCE.length)} of audited`} />
-        <LightKpiCard label="TABC Flags" value={String(totalTABCIssues)} accent={totalTABCIssues > 0 ? '#F87171' : '#22C55E'} sub={`${tabcIssues.expired} expired · ${tabcIssues.suspended} suspended`} />
+        <LightKpiCard label="Overall Score" value={String(avgScore)} accent={avgScore >= 85 ? '#22C55E' : '#F59E0B'} sub="Avg across hometowns" stagger={0} />
+        <LightKpiCard label="Compliance Rate" value={pct(totalCompliant / totalAccounts)} accent="#22C55E" sub={`${totalCompliant.toLocaleString()} of ${totalAccounts.toLocaleString()}`} stagger={1} />
+        <LightKpiCard label="Cold Vault Share" value={pct(avgColdVault)} accent={avgColdVault >= 0.40 ? '#22C55E' : '#F59E0B'} sub="Avg Lone Star share" stagger={2} />
+        <LightKpiCard label="Accounts with Issues" value={String(ncAccounts.length)} accent={ncAccounts.length > 0 ? '#F87171' : '#22C55E'} sub={`${pct(ncAccounts.length / DISPLAY_COMPLIANCE.length)} of audited`} stagger={3} />
+        <LightKpiCard label="TABC Flags" value={String(totalTABCIssues)} accent={totalTABCIssues > 0 ? '#F87171' : '#22C55E'} sub={`${tabcIssues.expired} expired · ${tabcIssues.suspended} suspended`} stagger={4} />
       </div>
 
       {/* Tab Toggle */}

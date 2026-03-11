@@ -147,10 +147,10 @@ export default function DataPage() {
           </LightSectionCard>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <LightKpiCard label="Records Ingested (MTD)" value="2.4M" accent={ACCENT} />
-            <LightKpiCard label="Validation Pass Rate" value="99.3%" accent={ACCENT} />
-            <LightKpiCard label="Avg Processing Time" value="4.2 min" accent={ACCENT} />
-            <LightKpiCard label="Error Count (MTD)" value="18" accent={ACCENT} sub="-12% vs last month" />
+            <LightKpiCard label="Records Ingested (MTD)" value="2.4M" accent={ACCENT} stagger={0} />
+            <LightKpiCard label="Validation Pass Rate" value="99.3%" accent={ACCENT} stagger={1} />
+            <LightKpiCard label="Avg Processing Time" value="4.2 min" accent={ACCENT} stagger={2} />
+            <LightKpiCard label="Error Count (MTD)" value="18" accent={ACCENT} sub="-12% vs last month" stagger={3} />
           </div>
         </>
       )}
@@ -232,10 +232,10 @@ export default function DataPage() {
       {activeTab === 'crediting' && (
         <>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <LightKpiCard label="Credits Processed (MTD)" value="48,218" accent={ACCENT} />
-            <LightKpiCard label="Split Credit %" value="3.1%" accent={ACCENT} />
-            <LightKpiCard label="Disputed Credits" value="7" accent={ACCENT} delta={-3} />
-            <LightKpiCard label="Avg Resolution Time" value="1.4 days" accent={ACCENT} />
+            <LightKpiCard label="Credits Processed (MTD)" value="48,218" accent={ACCENT} stagger={0} />
+            <LightKpiCard label="Split Credit %" value="3.1%" accent={ACCENT} stagger={1} />
+            <LightKpiCard label="Disputed Credits" value="7" accent={ACCENT} delta={-3} stagger={2} />
+            <LightKpiCard label="Avg Resolution Time" value="1.4 days" accent={ACCENT} stagger={3} />
           </div>
 
           <LightSectionCard title="CREDITING RULES">

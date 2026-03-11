@@ -412,10 +412,10 @@ export default function RewardsPage() {
       {activeTab === 'variable' && (
         <>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <LightKpiCard label="Total Variable Paid (QTD)" value={`$${(totalVariable / 1000).toFixed(0)}K`} accent={ACCENT} />
-            <LightKpiCard label="Avg Payout Ratio" value={`${(avgRatio * 100).toFixed(0)}%`} accent={ACCENT} />
-            <LightKpiCard label="Above Target" value={String(aboveCount)} accent={ACCENT} sub="of 36 reps" />
-            <LightKpiCard label="Below Target" value={String(belowCount)} accent={ACCENT} />
+            <LightKpiCard label="Total Variable Paid (QTD)" value={`$${(totalVariable / 1000).toFixed(0)}K`} accent={ACCENT} stagger={0} />
+            <LightKpiCard label="Avg Payout Ratio" value={`${(avgRatio * 100).toFixed(0)}%`} accent={ACCENT} stagger={1} />
+            <LightKpiCard label="Above Target" value={String(aboveCount)} accent={ACCENT} sub="of 36 reps" stagger={2} />
+            <LightKpiCard label="Below Target" value={String(belowCount)} accent={ACCENT} stagger={3} />
           </div>
 
           {/* Hometown Filter */}
@@ -583,10 +583,10 @@ export default function RewardsPage() {
       {activeTab === 'bonus' && (
         <>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <LightKpiCard label="Total Bonus Paid (QTD)" value={`$${REP_REWARDS.reduce((s, r) => s + r.bonusEarned, 0).toLocaleString()}`} accent={ACCENT} />
-            <LightKpiCard label="Q1 Kicker Qualifiers" value={String(REP_REWARDS.filter(r => r.attPct >= 1.0).length)} accent={ACCENT} sub="of 36 reps" />
-            <LightKpiCard label="Spirits Adder Total" value={`$${REP_REWARDS.reduce((s, r) => s + (r.spiritsAccounts >= 3 ? r.spiritsAccounts * 25 : 0), 0).toLocaleString()}`} accent={ACCENT} />
-            <LightKpiCard label="Avg Bonus / Rep" value={`$${Math.round(REP_REWARDS.reduce((s, r) => s + r.bonusEarned, 0) / REP_REWARDS.length).toLocaleString()}`} accent={ACCENT} />
+            <LightKpiCard label="Total Bonus Paid (QTD)" value={`$${REP_REWARDS.reduce((s, r) => s + r.bonusEarned, 0).toLocaleString()}`} accent={ACCENT} stagger={0} />
+            <LightKpiCard label="Q1 Kicker Qualifiers" value={String(REP_REWARDS.filter(r => r.attPct >= 1.0).length)} accent={ACCENT} sub="of 36 reps" stagger={1} />
+            <LightKpiCard label="Spirits Adder Total" value={`$${REP_REWARDS.reduce((s, r) => s + (r.spiritsAccounts >= 3 ? r.spiritsAccounts * 25 : 0), 0).toLocaleString()}`} accent={ACCENT} stagger={2} />
+            <LightKpiCard label="Avg Bonus / Rep" value={`$${Math.round(REP_REWARDS.reduce((s, r) => s + r.bonusEarned, 0) / REP_REWARDS.length).toLocaleString()}`} accent={ACCENT} stagger={3} />
           </div>
 
           <LightSectionCard title="ACTIVE BONUS PROGRAMS">

@@ -262,11 +262,11 @@ export default function FieldIntelPage() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6">
-        <LightKpiCard label="Active Sightings" value={String(COMPETITOR_SIGHTINGS.length)} accent="#F87171" sub={`${highThreats.length} high threat`} />
-        <LightKpiCard label="DFW Avg Share" value={pct(avgLoneStarShareDFW)} accent="#2563EB" sub="Lone Star position" />
-        <LightKpiCard label="Gaining Categories" value={`${gainingCategories}/10`} accent="#22C55E" sub="Across both markets" />
-        <LightKpiCard label="Pipeline Revenue" value={`$${(pipelineRevenue / 1e6).toFixed(1)}M`} accent="#F59E0B" sub={`${fmt(pipelineCases)} cases/yr`} />
-        <LightKpiCard label="Tracked Competitors" value={String(COMPETITORS.length)} accent="#A855F7" sub="Active monitoring" />
+        <LightKpiCard label="Active Sightings" value={String(COMPETITOR_SIGHTINGS.length)} accent="#F87171" sub={`${highThreats.length} high threat`} stagger={0} />
+        <LightKpiCard label="DFW Avg Share" value={pct(avgLoneStarShareDFW)} accent="#2563EB" sub="Lone Star position" stagger={1} />
+        <LightKpiCard label="Gaining Categories" value={`${gainingCategories}/10`} accent="#22C55E" sub="Across both markets" stagger={2} />
+        <LightKpiCard label="Pipeline Revenue" value={`$${(pipelineRevenue / 1e6).toFixed(1)}M`} accent="#F59E0B" sub={`${fmt(pipelineCases)} cases/yr`} stagger={3} />
+        <LightKpiCard label="Tracked Competitors" value={String(COMPETITORS.length)} accent="#A855F7" sub="Active monitoring" stagger={4} />
       </div>
 
       {/* Upcoming Market Events */}
