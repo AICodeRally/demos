@@ -117,6 +117,49 @@ function packBubbles(brands: BrandFamily[]): PackedBubble[] {
   return items;
 }
 
+/* ── Package Type Mix ──────────────────────────── */
+const PACKAGE_MIX = [
+  {
+    brand: 'Miller Lite',
+    packages: [
+      { type: '24pk cans', pct: 45, color: '#60A5FA' },
+      { type: '12pk cans', pct: 25, color: '#3B82F6' },
+      { type: '12pk bottles', pct: 15, color: '#2563EB' },
+      { type: '1/2 bbl keg', pct: 10, color: '#1D4ED8' },
+      { type: '1/6 bbl keg', pct: 5, color: '#1E40AF' },
+    ],
+  },
+  {
+    brand: 'Corona Extra',
+    packages: [
+      { type: '12pk bottles', pct: 40, color: '#FDE68A' },
+      { type: '24pk bottles', pct: 30, color: '#F59E0B' },
+      { type: '24pk cans', pct: 20, color: '#D97706' },
+      { type: '1/6 bbl keg', pct: 10, color: '#B45309' },
+    ],
+  },
+  {
+    brand: 'Coors Light',
+    packages: [
+      { type: '30pk cans', pct: 35, color: '#93C5FD' },
+      { type: '24pk cans', pct: 30, color: '#60A5FA' },
+      { type: '12pk cans', pct: 20, color: '#3B82F6' },
+      { type: '1/2 bbl keg', pct: 10, color: '#2563EB' },
+      { type: '1/6 bbl keg', pct: 5, color: '#1D4ED8' },
+    ],
+  },
+  {
+    brand: 'Modelo Especial',
+    packages: [
+      { type: '24pk cans', pct: 35, color: '#FDE68A' },
+      { type: '12pk bottles', pct: 30, color: '#F59E0B' },
+      { type: '12pk cans', pct: 20, color: '#D97706' },
+      { type: '1/2 bbl keg', pct: 10, color: '#B45309' },
+      { type: '1/6 bbl keg', pct: 5, color: '#92400E' },
+    ],
+  },
+];
+
 /* ── Supplier revenue aggregation ────────────────────── */
 function getSupplierBreakdown(brands: BrandFamily[]) {
   const map = new Map<SupplierGroup, number>();
@@ -522,6 +565,46 @@ export default function BrandPortfolioPage() {
               </div>
             );
           })}
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ PACKAGE TYPE MIX ═══════ */}
+      <LightSectionCard title="PACKAGE TYPE MIX — TOP BRANDS">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {PACKAGE_MIX.map((brand) => (
+            <div key={brand.brand} className="rounded-xl p-4" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+              <div className="text-sm font-bold mb-3" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{brand.brand}</div>
+              {/* Stacked horizontal bar */}
+              <div className="flex rounded-lg overflow-hidden mb-3" style={{ height: 24 }}>
+                {brand.packages.map((pkg) => (
+                  <div key={pkg.type} style={{ width: `${pkg.pct}%`, background: pkg.color }}
+                    className="flex items-center justify-center" title={`${pkg.type}: ${pkg.pct}%`}>
+                    {pkg.pct >= 15 && (
+                      <span className="text-xs font-bold font-mono" style={{ color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+                        {pkg.pct}%
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {/* Legend */}
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                {brand.packages.map((pkg) => (
+                  <div key={pkg.type} className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full" style={{ background: pkg.color }} />
+                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{pkg.type} ({pkg.pct}%)</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(198,160,82,0.06)',
+          border: '1px solid rgba(198,160,82,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          Package type mix drives warehouse slot planning, truck loading sequence, and keg deposit tracking. Commission rates are uniform across package types — only brand gate classification matters for comp calculation.
         </div>
       </LightSectionCard>
 
