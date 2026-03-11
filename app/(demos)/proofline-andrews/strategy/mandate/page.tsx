@@ -35,7 +35,7 @@ const donutData = (Object.keys(SUPPLIER_PORTFOLIO_SHARE) as SupplierGroup[]).map
 const YOY = [
   { metric: 'Revenue', fy25: '$173M', fy26: '$180M', delta: '+4.0%', positive: true },
   { metric: 'Cases', fy25: `${fmt(BRAND_TOTAL_CASES * 4)}`, fy26: `${fmt(Math.round(BRAND_TOTAL_CASES * 4 * 1.028))}`, delta: '+2.8%', positive: true },
-  { metric: 'Spirits Share', fy25: '2%', fy26: '8%', delta: '+6pp', positive: true },
+  { metric: 'Spirits Share', fy25: '5%', fy26: '8%', delta: '+3pp', positive: true },
   { metric: 'Routes', fy25: '32', fy26: String(TOTAL_ROUTES), delta: `+${TOTAL_ROUTES - 32}`, positive: true },
   { metric: 'Accounts', fy25: fmt(10500), fy26: fmt(TOTAL_ACCOUNTS), delta: `+${fmt(TOTAL_ACCOUNTS - 10500)}`, positive: true },
   { metric: 'Display Compliance', fy25: '82%', fy26: '89%', delta: '+7pp', positive: true },
@@ -51,8 +51,8 @@ const PRIORITIES = [
   },
   {
     title: 'South Texas Expansion',
-    desc: 'Laredo (acquired 2024) and Corpus Christi: target 5.5M cases combined. Cross-border growth corridor.',
-    stat: '5.5M cases',
+    desc: 'Laredo (acquired 2024) and Corpus Christi: target 580K cases combined. Cross-border growth corridor.',
+    stat: '580K cases',
     icon: '📍',
   },
   {
@@ -143,16 +143,15 @@ export default function CeoMandatePage() {
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #F87171', boxShadow: 'var(--pl-shadow)' }}
         >
           <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
-            Sazerac Portfolio Share
+            Sazerac Target Share
           </div>
-          <div
-            className="text-3xl font-extrabold mb-1"
-            style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}
-          >
-            8%
+          <div className="flex items-baseline justify-center gap-2 mb-1">
+            <span className="text-lg font-mono" style={{ color: 'var(--pl-text-muted)' }}>5%</span>
+            <span className="text-lg" style={{ color: 'var(--pl-text-faint)' }}>&rarr;</span>
+            <span className="text-3xl font-extrabold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>8%</span>
           </div>
           <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
-            Currently 5% &mdash; 60% growth
+            +3pp growth target
           </div>
         </div>
 
@@ -168,7 +167,7 @@ export default function CeoMandatePage() {
             className="text-3xl font-extrabold mb-1"
             style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}
           >
-            5.5M
+            580K
           </div>
           <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
             Currently {fmtM(southTXCases * 4)} annual
