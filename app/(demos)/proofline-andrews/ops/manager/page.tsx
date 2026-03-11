@@ -27,6 +27,52 @@ const DISTRICT_OOS = {
   ],
 };
 
+/* ── New Product Launch Pipeline ──────────────── */
+const PRODUCT_LAUNCHES = [
+  {
+    product: 'Coors Light Summer Citrus 12pk',
+    supplier: 'Molson Coors',
+    launchDate: 'Mar 15',
+    status: 'Active' as const,
+    placementTarget: 180,
+    placementsAchieved: 142,
+    kickerRate: 1.50,
+    kickerUnit: 'per case first 90 days',
+    territories: [
+      { name: 'Dallas HQ', target: 60, achieved: 52 },
+      { name: 'Fort Worth', target: 50, achieved: 41 },
+      { name: 'Allen', target: 30, achieved: 24 },
+      { name: 'Ennis', target: 15, achieved: 12 },
+      { name: 'Corpus Christi', target: 15, achieved: 9 },
+      { name: 'Laredo', target: 10, achieved: 4 },
+    ],
+  },
+  {
+    product: 'Blue Moon Non-Alc Wheat',
+    supplier: 'Molson Coors',
+    launchDate: 'Apr 1',
+    status: 'Upcoming' as const,
+    placementTarget: 120,
+    placementsAchieved: 0,
+    kickerRate: 2.00,
+    kickerUnit: 'per placement first 60 days',
+    territories: [
+      { name: 'Dallas HQ', target: 40, achieved: 0 },
+      { name: 'Fort Worth', target: 30, achieved: 0 },
+      { name: 'Allen', target: 20, achieved: 0 },
+      { name: 'Ennis', target: 10, achieved: 0 },
+      { name: 'Corpus Christi', target: 12, achieved: 0 },
+      { name: 'Laredo', target: 8, achieved: 0 },
+    ],
+  },
+];
+
+const LAUNCH_STATUS_STYLES: Record<string, { bg: string; text: string; border: string }> = {
+  Active: { bg: 'rgba(34,197,94,0.08)', text: '#22C55E', border: 'rgba(34,197,94,0.2)' },
+  Upcoming: { bg: 'rgba(59,130,246,0.08)', text: '#3B82F6', border: 'rgba(59,130,246,0.2)' },
+  Completed: { bg: 'rgba(139,92,246,0.08)', text: '#8B5CF6', border: 'rgba(139,92,246,0.2)' },
+};
+
 /* ── Priority config ─────────────────────────── */
 const PRIORITY_CONFIG: Record<CoachingPriority, { color: string; bg: string; label: string }> = {
   urgent: { color: '#DC2626', bg: 'rgba(220,38,38,0.08)', label: 'URGENT' },
@@ -523,6 +569,88 @@ export default function ManagerDashboardPage() {
           </LightSectionCard>
         </>
       )}
+
+      {/* ═══════ NEW PRODUCT LAUNCH PIPELINE ═══════ */}
+      <LightSectionCard title="NEW PRODUCT LAUNCH PIPELINE">
+        <div className="space-y-6">
+          {PRODUCT_LAUNCHES.map((launch) => {
+            const pct = launch.placementTarget > 0
+              ? Math.round((launch.placementsAchieved / launch.placementTarget) * 100)
+              : 0;
+            const style = LAUNCH_STATUS_STYLES[launch.status];
+            return (
+              <div key={launch.product} className="p-4 rounded-lg" style={{
+                background: style.bg,
+                border: `1px solid ${style.border}`,
+              }}>
+                {/* Header */}
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="text-sm font-bold font-mono" style={{ color: style.text }}>
+                      {launch.product}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
+                      {launch.supplier} — Launch: {launch.launchDate}
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{
+                    background: style.bg,
+                    color: style.text,
+                    border: `1px solid ${style.border}`,
+                  }}>
+                    {launch.status}
+                  </span>
+                </div>
+
+                {/* Placement progress */}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex-1">
+                    <div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
+                      <div className="h-full rounded-full transition-all" style={{
+                        width: `${pct}%`,
+                        background: style.text,
+                      }} />
+                    </div>
+                  </div>
+                  <span className="text-sm font-bold font-mono" style={{ color: style.text }}>
+                    {launch.placementsAchieved}/{launch.placementTarget} ({pct}%)
+                  </span>
+                </div>
+
+                {/* Kicker info */}
+                <div className="text-xs font-mono mb-3 px-2 py-1 rounded inline-block" style={{
+                  background: 'rgba(198,160,82,0.08)',
+                  border: '1px solid rgba(198,160,82,0.15)',
+                  color: '#C6A052',
+                }}>
+                  Kicker: ${launch.kickerRate.toFixed(2)} {launch.kickerUnit}
+                </div>
+
+                {/* Territory breakdown */}
+                {launch.status === 'Active' && (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+                    {launch.territories.map((t) => {
+                      const tPct = t.target > 0 ? Math.round((t.achieved / t.target) * 100) : 0;
+                      return (
+                        <div key={t.name} className="flex items-center gap-2">
+                          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)', width: 80 }}>{t.name}</span>
+                          <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
+                            <div className="h-full rounded-full" style={{
+                              width: `${tPct}%`,
+                              background: tPct >= 80 ? '#22C55E' : tPct >= 50 ? '#F59E0B' : '#F87171',
+                            }} />
+                          </div>
+                          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{tPct}%</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </LightSectionCard>
 
       {/* Methodology */}
       <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
