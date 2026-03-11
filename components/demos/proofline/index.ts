@@ -14,3 +14,6 @@ export { ActNavigation } from './ActNavigation';
 export { RepSelector } from './RepSelector';
 export { TexasMap } from './TexasMap';
 export type { MapMarker, MapConnection } from './TexasMap';
+export { GaugeDial } from './GaugeDial';
+export { RadarChart } from './RadarChart';
+export { ScatterQuadrant } from './ScatterQuadrant';
