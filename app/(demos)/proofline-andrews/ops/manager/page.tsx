@@ -320,7 +320,7 @@ export default function ManagerDashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           <Link
-            href="/proofline-andrews/proofline-route"
+            href="/proofline-route"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-mono font-bold transition-all hover:opacity-90"
             style={{
               background: 'linear-gradient(135deg, #C6A052, #a8842e)',
