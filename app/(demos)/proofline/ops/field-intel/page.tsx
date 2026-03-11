@@ -40,7 +40,7 @@ function ThreatBadge({ level }: { level: 'high' | 'medium' | 'low' }) {
   }[level];
   return (
     <>
-    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
+    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
       {cfg.label}
     </span>
     </>
@@ -58,7 +58,7 @@ function PermitBadge({ status }: { status: string }) {
   const c = cfg[status] ?? cfg.filed;
   return (
     <>
-    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: c.bg, color: c.color }}>
+    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: c.bg, color: c.color }}>
       {c.label}
     </span>
     </>
@@ -102,7 +102,7 @@ function SightingsMap() {
       {cities.map(c => (
         <g key={c.name}>
           <circle cx={toX(c.lng)} cy={toY(c.lat)} r={3} fill="#CBD5E0" />
-          <text x={toX(c.lng) + 6} y={toY(c.lat) + 3} fontSize="9" fill="#A0AEC0" fontFamily="monospace">
+          <text x={toX(c.lng) + 6} y={toY(c.lat) + 3} fontSize="12" fill="#A0AEC0" fontFamily="monospace">
             {c.name}
           </text>
         </g>
@@ -134,7 +134,7 @@ function SightingsMap() {
             <text
               x={cx + (i % 2 === 0 ? 10 : -10)}
               y={cy - 8}
-              fontSize="8"
+              fontSize="12"
               fill={color}
               fontFamily="monospace"
               fontWeight="bold"
@@ -149,11 +149,11 @@ function SightingsMap() {
       {/* Legend */}
       <g transform={`translate(${mapW - 160}, 12)`}>
         <rect width={150} height={78} fill="white" stroke="#E2E8F0" strokeWidth="0.5" rx="4" opacity="0.95" />
-        <text x={8} y={16} fontSize="8" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">SIGHTING TYPES</text>
+        <text x={8} y={16} fontSize="12" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">SIGHTING TYPES</text>
         {Object.entries(SIGHTING_COLORS).slice(0, 5).map(([type, color], i) => (
           <g key={type} transform={`translate(8, ${24 + i * 11})`}>
             <circle cx={4} cy={0} r={3} fill={color} />
-            <text x={12} y={3} fontSize="7" fill="#718096" fontFamily="monospace">
+            <text x={12} y={3} fontSize="12" fill="#718096" fontFamily="monospace">
               {SIGHTING_LABELS[type]}
             </text>
           </g>
@@ -172,14 +172,14 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
   return (
     <>
     <div>
-      <div className="text-[11px] font-bold font-mono mb-2" style={{ color: '#1A1A2E' }}>{region}</div>
+      <div className="text-[13px] font-bold font-mono mb-2" style={{ color: '#1A1A2E' }}>{region}</div>
       <svg viewBox={`0 0 ${labelW + chartW + 80} ${totalH}`} className="w-full" style={{ height: totalH }}>
         {data.map((seg, i) => {
           const y = i * (barH + gap);
           const shares = [
             { label: 'Lone Star', value: seg.loneStarShare, color: '#2563EB' },
-            { label: 'BEK', value: seg.benEKeithShare, color: '#F87171' },
-            { label: 'SE', value: seg.silverEagleShare, color: '#F59E0B' },
+            { label: 'Redtail', value: seg.redtailShare, color: '#F87171' },
+            { label: 'Iron Creek', value: seg.ironCreekShare, color: '#F59E0B' },
             { label: 'Other', value: seg.otherShare, color: '#CBD5E0' },
           ].filter(s => s.value > 0);
 
@@ -190,7 +190,7 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
           return (
             <g key={seg.category}>
               {/* Category label */}
-              <text x={0} y={y + barH / 2 + 4} fontSize="10" fill="#1A1A2E" fontFamily="monospace" fontWeight="bold">
+              <text x={0} y={y + barH / 2 + 4} fontSize="12" fill="#1A1A2E" fontFamily="monospace" fontWeight="bold">
                 {seg.category}
               </text>
 
@@ -203,7 +203,7 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
                   <g key={s.label}>
                     <rect x={x} y={y} width={w} height={barH} fill={s.color} rx={2} opacity="0.85" />
                     {w > 30 && (
-                      <text x={x + w / 2} y={y + barH / 2 + 4} fontSize="8" fill="white" textAnchor="middle" fontFamily="monospace" fontWeight="bold">
+                      <text x={x + w / 2} y={y + barH / 2 + 4} fontSize="12" fill="white" textAnchor="middle" fontFamily="monospace" fontWeight="bold">
                         {(s.value * 100).toFixed(0)}%
                       </text>
                     )}
@@ -212,10 +212,10 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
               })}
 
               {/* Trend indicator */}
-              <text x={labelW + chartW + 8} y={y + barH / 2 + 4} fontSize="11" fill={trendColor} fontFamily="monospace" fontWeight="bold">
+              <text x={labelW + chartW + 8} y={y + barH / 2 + 4} fontSize="12" fill={trendColor} fontFamily="monospace" fontWeight="bold">
                 {trendArrow}
               </text>
-              <text x={labelW + chartW + 22} y={y + barH / 2 + 3} fontSize="8" fill={trendColor} fontFamily="monospace">
+              <text x={labelW + chartW + 22} y={y + barH / 2 + 3} fontSize="12" fill={trendColor} fontFamily="monospace">
                 {seg.trend.toUpperCase()}
               </text>
             </g>
@@ -249,10 +249,10 @@ export default function FieldIntelPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Field Intelligence &middot; Competitive Ops
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Field Intelligence Center
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -261,7 +261,7 @@ export default function FieldIntelPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Active Sightings" value={String(COMPETITOR_SIGHTINGS.length)} accent="#F87171" sub={`${highThreats.length} high threat`} />
         <LightKpiCard label="DFW Avg Share" value={pct(avgCompanyShareDFW)} accent="#2563EB" sub="Company position" />
         <LightKpiCard label="Gaining Categories" value={`${gainingCategories}/10`} accent="#22C55E" sub="Across both markets" />
@@ -276,19 +276,19 @@ export default function FieldIntelPage() {
           style={{ borderColor: 'rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.03)' }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
+            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
               HIGH IMPACT
             </span>
-            <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>June 14 – July 13, 2026</span>
+            <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>June 14 – July 13, 2026</span>
           </div>
-          <h4 className="text-[14px] font-bold mb-1" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h4 className="text-[14px] font-bold mb-1" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
             FIFA World Cup — AT&amp;T Stadium
           </h4>
-          <p className="text-[11px] mb-2" style={{ color: '#718096' }}>
+          <p className="text-[13px] mb-2" style={{ color: '#718096' }}>
             9 matches in Arlington. Estimated +35% volume surge in DFW metro across all beer categories.
             Corona, Modelo, and Heineken projected highest lift. Pre-positioning starts W18.
           </p>
-          <div className="flex items-center gap-3 text-[10px] font-mono">
+          <div className="flex items-center gap-3 text-xs font-mono">
             <span style={{ color: '#22C55E' }}>+35% projected volume</span>
             <span style={{ color: '#F59E0B' }}>9 match days</span>
             <span style={{ color: '#2563EB' }}>All DFW routes affected</span>
@@ -299,19 +299,19 @@ export default function FieldIntelPage() {
           style={{ borderColor: 'rgba(168,85,247,0.3)', background: 'rgba(168,85,247,0.03)' }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.1)', color: '#A855F7' }}>
+            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.1)', color: '#A855F7' }}>
               MAJOR EVENT
             </span>
-            <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>October 2026</span>
+            <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>October 2026</span>
           </div>
-          <h4 className="text-[14px] font-bold mb-1" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h4 className="text-[14px] font-bold mb-1" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
             F1 Grand Prix — Arlington
           </h4>
-          <p className="text-[11px] mb-2" style={{ color: '#718096' }}>
+          <p className="text-[13px] mb-2" style={{ color: '#718096' }}>
             Premium spirits and import beer surge expected. Texas Live (#1 Miller Lite draft account nationally)
             projects 3x normal volume. VIP hospitality packages drive ultra-premium mix.
           </p>
-          <div className="flex items-center gap-3 text-[10px] font-mono">
+          <div className="flex items-center gap-3 text-xs font-mono">
             <span style={{ color: '#22C55E' }}>+25% premium imports</span>
             <span style={{ color: '#A855F7' }}>Spirits 2x uplift</span>
             <span style={{ color: '#2563EB' }}>Texas Live focal point</span>
@@ -357,27 +357,27 @@ export default function FieldIntelPage() {
                     <div className="flex items-center gap-2">
                       <ThreatBadge level={s.threatLevel} />
                       <span
-                        className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
                         style={{ background: `${SIGHTING_COLORS[s.type]}15`, color: SIGHTING_COLORS[s.type] }}
                       >
                         {SIGHTING_LABELS[s.type]}
                       </span>
                       <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{s.competitorName}</span>
                     </div>
-                    <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{s.date} {s.time}</span>
+                    <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>{s.date} {s.time}</span>
                   </div>
 
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[11px] font-mono" style={{ color: '#718096' }}>{s.accountName}</span>
-                    <span className="text-[10px]" style={{ color: '#A0AEC0' }}>{s.location}</span>
+                    <span className="text-[13px] font-mono" style={{ color: '#718096' }}>{s.accountName}</span>
+                    <span className="text-xs" style={{ color: '#A0AEC0' }}>{s.location}</span>
                   </div>
 
-                  <p className="text-[11px] mb-2" style={{ color: '#4A5568' }}>{s.description}</p>
+                  <p className="text-[13px] mb-2" style={{ color: '#4A5568' }}>{s.description}</p>
 
                   {s.brandsSighted.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">
                       {s.brandsSighted.map(b => (
-                        <span key={b} className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
+                        <span key={b} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
                           {b}
                         </span>
                       ))}
@@ -386,8 +386,8 @@ export default function FieldIntelPage() {
 
                   {s.actionTaken && (
                     <div className="rounded-md px-3 py-2 mt-2" style={{ background: 'rgba(37,99,235,0.04)', borderLeft: '3px solid #2563EB' }}>
-                      <div className="text-[9px] font-bold font-mono mb-0.5" style={{ color: '#2563EB' }}>ACTION TAKEN</div>
-                      <p className="text-[11px]" style={{ color: '#4A5568' }}>{s.actionTaken}</p>
+                      <div className="text-xs font-bold font-mono mb-0.5" style={{ color: '#2563EB' }}>ACTION TAKEN</div>
+                      <p className="text-[13px]" style={{ color: '#4A5568' }}>{s.actionTaken}</p>
                     </div>
                   )}
                 </div>
@@ -404,28 +404,28 @@ export default function FieldIntelPage() {
                     <h4 className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>{c.name}</h4>
                     <ThreatBadge level={c.threat} />
                   </div>
-                  <div className="text-[10px] font-mono mb-2" style={{ color: '#718096' }}>
+                  <div className="text-xs font-mono mb-2" style={{ color: '#718096' }}>
                     {c.type.toUpperCase()} &middot; {c.territory} &middot; ~{(c.estimatedShare * 100).toFixed(0)}% TX share
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 mb-2">
                     <div>
-                      <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#22C55E' }}>STRENGTHS</div>
+                      <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>STRENGTHS</div>
                       {c.strengths.slice(0, 3).map((s, i) => (
-                        <div key={i} className="text-[10px] mb-0.5" style={{ color: '#4A5568' }}>+ {s}</div>
+                        <div key={i} className="text-xs mb-0.5" style={{ color: '#4A5568' }}>+ {s}</div>
                       ))}
                     </div>
                     <div>
-                      <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#F87171' }}>WEAKNESSES</div>
+                      <div className="text-xs font-bold font-mono mb-1" style={{ color: '#F87171' }}>WEAKNESSES</div>
                       {c.weaknesses.slice(0, 3).map((w, i) => (
-                        <div key={i} className="text-[10px] mb-0.5" style={{ color: '#4A5568' }}>- {w}</div>
+                        <div key={i} className="text-xs mb-0.5" style={{ color: '#4A5568' }}>- {w}</div>
                       ))}
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-1">
                     {c.keyBrands.map(b => (
-                      <span key={b} className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
+                      <span key={b} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
                         {b}
                       </span>
                     ))}
@@ -444,13 +444,13 @@ export default function FieldIntelPage() {
           <div className="flex gap-4 mb-4">
             {[
               { label: 'Lone Star', color: '#2563EB' },
-              { label: 'Ben E. Keith', color: '#F87171' },
-              { label: 'Silver Eagle', color: '#F59E0B' },
+              { label: 'Redtail', color: '#F87171' },
+              { label: 'Iron Creek', color: '#F59E0B' },
               { label: 'Other', color: '#CBD5E0' },
             ].map(l => (
               <div key={l.label} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded" style={{ background: l.color }} />
-                <span className="text-[10px] font-mono" style={{ color: '#718096' }}>{l.label}</span>
+                <span className="text-xs font-mono" style={{ color: '#718096' }}>{l.label}</span>
               </div>
             ))}
           </div>
@@ -471,14 +471,14 @@ export default function FieldIntelPage() {
                 const trendColor = seg.trend === 'gaining' ? '#22C55E' : seg.trend === 'losing' ? '#F87171' : '#A0AEC0';
                 return (
                   <div key={`${region}-${seg.category}`} className="flex items-start gap-3 px-3 py-2 rounded-lg" style={{ background: '#F7FAFC' }}>
-                    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5" style={{ background: trendColor + '15', color: trendColor }}>
+                    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5" style={{ background: trendColor + '15', color: trendColor }}>
                       {seg.trend.toUpperCase()}
                     </span>
                     <div>
-                      <span className="text-[11px] font-bold" style={{ color: '#1A1A2E' }}>{seg.category}</span>
-                      <span className="text-[10px] font-mono ml-2" style={{ color: '#A0AEC0' }}>{region}</span>
-                      <span className="text-[10px] font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
-                      <p className="text-[10px] mt-0.5" style={{ color: '#718096' }}>{seg.notes}</p>
+                      <span className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>{seg.category}</span>
+                      <span className="text-xs font-mono ml-2" style={{ color: '#A0AEC0' }}>{region}</span>
+                      <span className="text-xs font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
+                      <p className="text-xs mt-0.5" style={{ color: '#718096' }}>{seg.notes}</p>
                     </div>
                   </div>
                 );
@@ -499,7 +499,7 @@ export default function FieldIntelPage() {
                 <div key={status} className="rounded-lg border p-3 text-center" style={{ borderColor: '#E2E8F0' }}>
                   <PermitBadge status={status} />
                   <div className="text-[20px] font-bold font-mono mt-1" style={{ color: '#1A1A2E' }}>{count}</div>
-                  <div className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>accounts</div>
+                  <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>accounts</div>
                 </div>
               );
             })}
@@ -514,33 +514,33 @@ export default function FieldIntelPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <PermitBadge status={p.permitStatus} />
-                        <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
+                        <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: '#F1F5F9', color: '#718096' }}>
                           {p.type.toUpperCase()}
                         </span>
                       </div>
                       <h4 className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>{p.name}</h4>
-                      <div className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{p.address}</div>
+                      <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>{p.address}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-[16px] font-bold font-mono" style={{ color: '#2563EB' }}>{p.estimatedWeeklyCases}</div>
-                      <div className="text-[9px] font-mono" style={{ color: '#A0AEC0' }}>cases/wk</div>
-                      <div className="text-[11px] font-bold font-mono" style={{ color: '#22C55E' }}>${fmt(p.estimatedWeeklyRevenue)}</div>
-                      <div className="text-[9px] font-mono" style={{ color: '#A0AEC0' }}>revenue/wk</div>
+                      <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>cases/wk</div>
+                      <div className="text-[13px] font-bold font-mono" style={{ color: '#22C55E' }}>${fmt(p.estimatedWeeklyRevenue)}</div>
+                      <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>revenue/wk</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 mb-2 text-[10px] font-mono" style={{ color: '#718096' }}>
+                  <div className="flex items-center gap-4 mb-2 text-xs font-mono" style={{ color: '#718096' }}>
                     <span>Opens: <strong style={{ color: '#1A1A2E' }}>{p.expectedOpenDate}</strong></span>
                     <span>Hometown: <strong style={{ color: '#1A1A2E' }}>{p.hometownId.toUpperCase()}</strong></span>
                     {p.assignedSeller && <span>Seller: <strong style={{ color: '#1A1A2E' }}>{p.assignedSeller}</strong></span>}
                   </div>
 
-                  <p className="text-[11px] mb-2" style={{ color: '#4A5568' }}>{p.notes}</p>
+                  <p className="text-[13px] mb-2" style={{ color: '#4A5568' }}>{p.notes}</p>
 
                   {p.competitorInterest && (
                     <div className="rounded-md px-3 py-2" style={{ background: 'rgba(248,113,113,0.04)', borderLeft: '3px solid #F87171' }}>
-                      <div className="text-[9px] font-bold font-mono mb-0.5" style={{ color: '#F87171' }}>COMPETITOR INTEREST</div>
-                      <p className="text-[11px]" style={{ color: '#4A5568' }}>{p.competitorInterest}</p>
+                      <div className="text-xs font-bold font-mono mb-0.5" style={{ color: '#F87171' }}>COMPETITOR INTEREST</div>
+                      <p className="text-[13px]" style={{ color: '#4A5568' }}>{p.competitorInterest}</p>
                     </div>
                   )}
                 </div>
@@ -552,21 +552,21 @@ export default function FieldIntelPage() {
           <LightSectionCard title="Revenue Projection" className="mb-6">
             <div className="grid grid-cols-3 gap-4">
               <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(37,99,235,0.04)' }}>
-                <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#2563EB' }}>ANNUAL CASES</div>
+                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>ANNUAL CASES</div>
                 <div className="text-[22px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{fmtK(pipelineCases)}</div>
-                <div className="text-[10px] font-mono" style={{ color: '#718096' }}>from {PIPELINE_ACCOUNTS.length} new accounts</div>
+                <div className="text-xs font-mono" style={{ color: '#718096' }}>from {PIPELINE_ACCOUNTS.length} new accounts</div>
               </div>
               <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(34,197,94,0.04)' }}>
-                <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#22C55E' }}>ANNUAL REVENUE</div>
+                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>ANNUAL REVENUE</div>
                 <div className="text-[22px] font-bold font-mono" style={{ color: '#1A1A2E' }}>${(pipelineRevenue / 1e3).toFixed(0)}K</div>
-                <div className="text-[10px] font-mono" style={{ color: '#718096' }}>projected at current pricing</div>
+                <div className="text-xs font-mono" style={{ color: '#718096' }}>projected at current pricing</div>
               </div>
               <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(245,158,11,0.04)' }}>
-                <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#F59E0B' }}>AVG WEEKLY/ACCOUNT</div>
+                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#F59E0B' }}>AVG WEEKLY/ACCOUNT</div>
                 <div className="text-[22px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
                   {(PIPELINE_ACCOUNTS.reduce((s, p) => s + p.estimatedWeeklyCases, 0) / PIPELINE_ACCOUNTS.length).toFixed(0)}
                 </div>
-                <div className="text-[10px] font-mono" style={{ color: '#718096' }}>cases per account</div>
+                <div className="text-xs font-mono" style={{ color: '#718096' }}>cases per account</div>
               </div>
             </div>
           </LightSectionCard>
@@ -574,7 +574,7 @@ export default function FieldIntelPage() {
       )}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         Field intelligence sourced from route sales reps via mobile sighting reports. Competitive market share estimates based on
         IRI/Nielsen syndicated data + company internal shipment analysis. Pipeline accounts tracked from TABC permit filings and
         commercial real estate monitoring. Updated weekly.

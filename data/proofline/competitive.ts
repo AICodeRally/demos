@@ -18,7 +18,7 @@ export interface Competitor {
 export const COMPETITORS: Competitor[] = [
   {
     id: 'bek',
-    name: 'Ben E. Keith Beverages',
+    name: 'Redtail Beverage Co.',
     type: 'distributor',
     territory: 'North Texas, Oklahoma, Arkansas',
     keyBrands: ['AB InBev (Bud Light, Budweiser, Michelob Ultra)', 'Diageo', 'Bacardi', 'Various Craft'],
@@ -28,7 +28,7 @@ export const COMPETITORS: Competitor[] = [
       'Largest beer distributor in Texas by territory',
       'Strong AB InBev relationship — exclusive territories',
       'Deep DFW on-premise penetration',
-      'Legacy food distribution network (Ben E. Keith Foods)',
+      'Legacy food distribution network (Redtail Foods)',
       'Aggressive craft portfolio (120+ craft brands)',
     ],
     weaknesses: [
@@ -40,7 +40,7 @@ export const COMPETITORS: Competitor[] = [
   },
   {
     id: 'se',
-    name: 'Silver Eagle Distributors',
+    name: 'Iron Creek Distributing',
     type: 'distributor',
     territory: 'Houston, San Antonio, South Texas',
     keyBrands: ['AB InBev', 'Mark Anthony (White Claw)', 'Boston Beer (Sam Adams)'],
@@ -61,7 +61,7 @@ export const COMPETITORS: Competitor[] = [
   },
   {
     id: 'glazers',
-    name: 'Glazer\'s Beer & Beverage',
+    name: 'Pecan Valley Spirits',
     type: 'distributor',
     territory: 'Texas statewide (spirits + wine focused)',
     keyBrands: ['Diageo', 'Beam Suntory', 'Brown-Forman', 'Pernod Ricard'],
@@ -82,7 +82,7 @@ export const COMPETITORS: Competitor[] = [
   },
   {
     id: 'republic',
-    name: 'Republic National Distributing Company',
+    name: 'Magnolia Spirits Group',
     type: 'broadline',
     territory: 'Texas statewide (wine & spirits)',
     keyBrands: ['Various wine portfolios', 'Spirits imports'],
@@ -128,12 +128,12 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   // ── Recent Dallas sightings ──
   {
     id: 'CS-001',
-    competitorId: 'bek', competitorName: 'Ben E. Keith',
+    competitorId: 'bek', competitorName: 'Redtail',
     type: 'delivery', date: '2026-02-25', time: '07:15 AM',
     reportedBy: 'SEL-DAL-03', routeId: 'DAL-03',
     accountId: 'ACC-C001', accountName: 'Cedar Springs Tap House',
     location: 'Cedar Springs Rd, Dallas',
-    description: 'Ben E. Keith delivery truck spotted at Cedar Springs Tap House at 7:15 AM. Delivering craft kegs — appeared to be local Dallas craft (Peticolas, Lakewood). Owner said they are considering adding 2 more craft taps.',
+    description: 'Redtail delivery truck spotted at Cedar Springs Tap House at 7:15 AM. Delivering craft kegs — appeared to be local Dallas craft (Peticolas, Lakewood). Owner said they are considering adding 2 more craft taps.',
     brandsSighted: ['Peticolas Velvet Hammer', 'Lakewood Temptress'],
     threatLevel: 'medium',
     actionTaken: 'Marcus pitched Blue Moon Belgian White and Firestone Walker 805 as alternatives. Owner agreed to taste test next visit.',
@@ -141,7 +141,7 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   },
   {
     id: 'CS-002',
-    competitorId: 'bek', competitorName: 'Ben E. Keith',
+    competitorId: 'bek', competitorName: 'Redtail',
     type: 'display', date: '2026-02-24', time: '02:30 PM',
     reportedBy: 'SEL-DAL-05', routeId: 'DAL-05',
     accountId: 'ACC-D001', accountName: '7-Eleven #2847',
@@ -149,17 +149,17 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
     description: 'Bud Light floor display installed in Lone Star cold vault space. 24-pack pricing at $19.99 (below our Miller Lite at $21.49). Display appears to have been placed over the weekend.',
     brandsSighted: ['Bud Light', 'Michelob Ultra'],
     threatLevel: 'high',
-    actionTaken: 'Flagged for immediate reset. Store manager contacted — confirmed Ben E. Keith rep placed without authorization. Display will be removed by Friday.',
+    actionTaken: 'Flagged for immediate reset. Store manager contacted — confirmed Redtail rep placed without authorization. Display will be removed by Friday.',
     lat: 32.7860, lng: -96.7880,
   },
   {
     id: 'CS-003',
-    competitorId: 'bek', competitorName: 'Ben E. Keith',
+    competitorId: 'bek', competitorName: 'Redtail',
     type: 'new-placement', date: '2026-02-22', time: '11:00 AM',
     reportedBy: 'SEL-DAL-01', routeId: 'DAL-01',
     accountId: null, accountName: 'The Henderson (new restaurant)',
     location: 'Henderson Ave, Dallas',
-    description: 'New upscale restaurant opening March 15. Ben E. Keith beer trailer spotted during construction. They appear to be setting up the bar program. This is in Lone Star territory — we should be the primary distributor.',
+    description: 'New upscale restaurant opening March 15. Redtail beer trailer spotted during construction. They appear to be setting up the bar program. This is in Lone Star territory — we should be the primary distributor.',
     brandsSighted: ['AB InBev portfolio'],
     threatLevel: 'high',
     actionTaken: 'Derek submitted new account request. Sales manager Sarah Chen scheduling meet with restaurant group owner. Will pitch full Lone Star portfolio including Sazerac cocktail program.',
@@ -167,7 +167,7 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   },
   {
     id: 'CS-004',
-    competitorId: 'bek', competitorName: 'Ben E. Keith',
+    competitorId: 'bek', competitorName: 'Redtail',
     type: 'pricing', date: '2026-02-20', time: '09:45 AM',
     reportedBy: 'SEL-DAL-07', routeId: 'DAL-07',
     accountId: null, accountName: 'Kroger #4520',
@@ -182,12 +182,12 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   // ── Laredo border sightings ──
   {
     id: 'CS-005',
-    competitorId: 'se', competitorName: 'Silver Eagle',
+    competitorId: 'se', competitorName: 'Iron Creek',
     type: 'delivery', date: '2026-02-23', time: '06:30 AM',
     reportedBy: 'SEL-LAR-02', routeId: 'LAR-02',
     accountId: null, accountName: 'El Mercado #3 — International Bridge',
     location: 'Convent Ave, Laredo',
-    description: 'Silver Eagle truck delivering Bud Light and Modelo (AB InBev licensed) to account near International Bridge. This is contested territory post-Southern Distributing acquisition. Need to verify franchise rights.',
+    description: 'Iron Creek truck delivering Bud Light and Modelo (AB InBev licensed) to account near International Bridge. This is contested territory post-Southern Distributing acquisition. Need to verify franchise rights.',
     brandsSighted: ['Bud Light', 'Budweiser'],
     threatLevel: 'high',
     actionTaken: 'Rosa flagged for legal review. Territory rights for this ZIP code are under dispute from Southern Distributing transition. Manager Roberto Garza escalating to regional VP.',
@@ -195,12 +195,12 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   },
   {
     id: 'CS-006',
-    competitorId: 'glazers', competitorName: 'Glazer\'s',
+    competitorId: 'glazers', competitorName: 'Pecan Valley',
     type: 'sampling', date: '2026-02-21', time: '05:00 PM',
     reportedBy: 'SEL-LAR-01', routeId: 'LAR-01',
     accountId: null, accountName: 'Border Town Bar & Grill',
     location: 'San Bernardo Ave, Laredo',
-    description: 'Glazer\'s spirits rep doing Jack Daniel\'s tasting event at Border Town. 50+ attendees. Counter-programming our Sazerac push. Owner said Glazer\'s offered 20% case discount for Q1 commitments.',
+    description: 'Pecan Valley spirits rep doing Jack Daniel\'s tasting event at Border Town. 50+ attendees. Counter-programming our Sazerac push. Owner said Pecan Valley offered 20% case discount for Q1 commitments.',
     brandsSighted: ['Jack Daniel\'s', 'Woodford Reserve', 'Gentleman Jack'],
     threatLevel: 'medium',
     actionTaken: 'Scheduled Buffalo Trace tasting event for March 8. Rosa coordinating with Sazerac territory manager for co-funded sampling.',
@@ -210,12 +210,12 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
   // ── Fort Worth sightings ──
   {
     id: 'CS-007',
-    competitorId: 'bek', competitorName: 'Ben E. Keith',
+    competitorId: 'bek', competitorName: 'Redtail',
     type: 'promo', date: '2026-02-24', time: '10:00 AM',
     reportedBy: 'SEL-FTW-05', routeId: 'FTW-05',
     accountId: null, accountName: 'Stockyards Entertainment District',
     location: 'E Exchange Ave, Fort Worth',
-    description: 'Ben E. Keith sponsoring "Stockyards Brews" weekend event March 8-9. Sampling stations for Michelob Ultra, Bud Light, and 6 craft brands. Banner ads around the district. Lone Star was not invited to co-sponsor.',
+    description: 'Redtail sponsoring "Stockyards Brews" weekend event March 8-9. Sampling stations for Michelob Ultra, Bud Light, and 6 craft brands. Banner ads around the district. Lone Star was not invited to co-sponsor.',
     brandsSighted: ['Michelob Ultra', 'Bud Light', 'Various Craft'],
     threatLevel: 'medium',
     actionTaken: 'Jake coordinating with Fort Worth events team. Planning Coors Light + Blue Moon counter-event at nearby Billy Bob\'s Texas for same weekend.',
@@ -228,27 +228,27 @@ export const COMPETITOR_SIGHTINGS: CompetitorSighting[] = [
 export interface MarketShareSegment {
   category: string;
   loneStarShare: number;
-  benEKeithShare: number;
-  silverEagleShare: number;
+  redtailShare: number;
+  ironCreekShare: number;
   otherShare: number;
   trend: 'gaining' | 'stable' | 'losing';
   notes: string;
 }
 
 export const MARKET_SHARE_DFW: MarketShareSegment[] = [
-  { category: 'Domestic Beer', loneStarShare: 0.42, benEKeithShare: 0.45, silverEagleShare: 0.0, otherShare: 0.13, trend: 'stable', notes: 'Miller Lite and Coors Light hold steady vs Bud Light recovery. Lone Star gaining in convenience channel.' },
-  { category: 'Import Beer', loneStarShare: 0.58, benEKeithShare: 0.30, silverEagleShare: 0.0, otherShare: 0.12, trend: 'gaining', notes: 'Corona + Modelo dominance. Gaining 1.2% annually. Laredo acquisition adds import volume.' },
-  { category: 'Craft Beer', loneStarShare: 0.35, benEKeithShare: 0.48, silverEagleShare: 0.0, otherShare: 0.17, trend: 'losing', notes: 'Ben E. Keith has 120+ craft brands vs Lone Star 30+. Local craft (Deep Ellum, Peticolas) going BEK.' },
-  { category: 'Spirits', loneStarShare: 0.08, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.92, trend: 'gaining', notes: 'New category for Lone Star (Sazerac 2024). Glazer\'s dominates. Lone Star spirits share up from 0% to 8% in 18 months.' },
-  { category: 'FMB/RTD', loneStarShare: 0.38, benEKeithShare: 0.42, silverEagleShare: 0.0, otherShare: 0.20, trend: 'stable', notes: 'Truly and Twisted Tea vs White Claw (BEK exclusive). Category declining 8% YoY.' },
+  { category: 'Domestic Beer', loneStarShare: 0.42, redtailShare: 0.45, ironCreekShare: 0.0, otherShare: 0.13, trend: 'stable', notes: 'Miller Lite and Coors Light hold steady vs Bud Light recovery. Lone Star gaining in convenience channel.' },
+  { category: 'Import Beer', loneStarShare: 0.58, redtailShare: 0.30, ironCreekShare: 0.0, otherShare: 0.12, trend: 'gaining', notes: 'Corona + Modelo dominance. Gaining 1.2% annually. Laredo acquisition adds import volume.' },
+  { category: 'Craft Beer', loneStarShare: 0.35, redtailShare: 0.48, ironCreekShare: 0.0, otherShare: 0.17, trend: 'losing', notes: 'Redtail has 120+ craft brands vs Lone Star 30+. Local craft (Deep Ellum, Peticolas) going Redtail.' },
+  { category: 'Spirits', loneStarShare: 0.08, redtailShare: 0.0, ironCreekShare: 0.0, otherShare: 0.92, trend: 'gaining', notes: 'New category for Lone Star (Sazerac 2024). Pecan Valley dominates. Lone Star spirits share up from 0% to 8% in 18 months.' },
+  { category: 'FMB/RTD', loneStarShare: 0.38, redtailShare: 0.42, ironCreekShare: 0.0, otherShare: 0.20, trend: 'stable', notes: 'Truly and Twisted Tea vs White Claw (Redtail exclusive). Category declining 8% YoY.' },
 ];
 
 export const MARKET_SHARE_SOUTH_TX: MarketShareSegment[] = [
-  { category: 'Domestic Beer', loneStarShare: 0.38, benEKeithShare: 0.0, silverEagleShare: 0.42, otherShare: 0.20, trend: 'gaining', notes: 'Corpus Christi heritage territory. Laredo acquisition growing Lone Star presence.' },
-  { category: 'Import Beer', loneStarShare: 0.62, benEKeithShare: 0.0, silverEagleShare: 0.25, otherShare: 0.13, trend: 'gaining', notes: 'Corona/Modelo/Tecate dominant in border market. Lone Star has natural advantage with Hispanic consumer base.' },
-  { category: 'Craft Beer', loneStarShare: 0.28, benEKeithShare: 0.0, silverEagleShare: 0.35, otherShare: 0.37, trend: 'stable', notes: 'Smaller craft market in South TX. Shiner Bock is dominant regional brand (Lone Star exclusive).' },
-  { category: 'Spirits', loneStarShare: 0.05, benEKeithShare: 0.0, silverEagleShare: 0.0, otherShare: 0.95, trend: 'gaining', notes: 'Sazerac just entering South TX market. Tequila and mezcal competition from established importers.' },
-  { category: 'FMB/RTD', loneStarShare: 0.32, benEKeithShare: 0.0, silverEagleShare: 0.45, otherShare: 0.23, trend: 'losing', notes: 'White Claw (Silver Eagle) strong in South TX convenience. Category overall declining.' },
+  { category: 'Domestic Beer', loneStarShare: 0.38, redtailShare: 0.0, ironCreekShare: 0.42, otherShare: 0.20, trend: 'gaining', notes: 'Corpus Christi heritage territory. Laredo acquisition growing Lone Star presence.' },
+  { category: 'Import Beer', loneStarShare: 0.62, redtailShare: 0.0, ironCreekShare: 0.25, otherShare: 0.13, trend: 'gaining', notes: 'Corona/Modelo/Tecate dominant in border market. Lone Star has natural advantage with Hispanic consumer base.' },
+  { category: 'Craft Beer', loneStarShare: 0.28, redtailShare: 0.0, ironCreekShare: 0.35, otherShare: 0.37, trend: 'stable', notes: 'Smaller craft market in South TX. Shiner Bock is dominant regional brand (Lone Star exclusive).' },
+  { category: 'Spirits', loneStarShare: 0.05, redtailShare: 0.0, ironCreekShare: 0.0, otherShare: 0.95, trend: 'gaining', notes: 'Sazerac just entering South TX market. Tequila and mezcal competition from established importers.' },
+  { category: 'FMB/RTD', loneStarShare: 0.32, redtailShare: 0.0, ironCreekShare: 0.45, otherShare: 0.23, trend: 'losing', notes: 'White Claw (Iron Creek) strong in South TX convenience. Category overall declining.' },
 ];
 
 // ─── New Account Pipeline ───────────────────────
@@ -276,7 +276,7 @@ export const PIPELINE_ACCOUNTS: PipelineAccount[] = [
     hometownId: 'dal', address: '2428 Henderson Ave, Dallas, TX 75206',
     expectedOpenDate: '2026-03-15', permitStatus: 'approved',
     estimatedWeeklyCases: 35, estimatedWeeklyRevenue: 2800,
-    competitorInterest: 'Ben E. Keith spotted delivering during construction',
+    competitorInterest: 'Redtail Beverage spotted delivering during construction',
     assignedSeller: 'SEL-DAL-01', notes: 'Upscale dining. Target for full portfolio including Sazerac cocktail program. Owner is James Whitfield (JW Restaurant Group, 4 locations).',
     lat: 32.8215, lng: -96.7785,
   },
@@ -294,7 +294,7 @@ export const PIPELINE_ACCOUNTS: PipelineAccount[] = [
     hometownId: 'ftw', address: '405 Main St, Fort Worth, TX 76102',
     expectedOpenDate: '2026-05-15', permitStatus: 'filed',
     estimatedWeeklyCases: 25, estimatedWeeklyRevenue: 3200,
-    competitorInterest: 'Glazer\'s pitching Diageo spirits program',
+    competitorInterest: 'Pecan Valley pitching Diageo spirits program',
     assignedSeller: 'SEL-FTW-05', notes: 'Boutique hotel rooftop bar. Premium on-premise. Jake Williams pitching Blue Moon + Peroni + Sazerac cocktail menu.',
     lat: 32.7541, lng: -97.3329,
   },

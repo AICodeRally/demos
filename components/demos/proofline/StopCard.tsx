@@ -55,18 +55,18 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span
-              className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+              className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
               style={{ background: `${borderColor}20`, color: borderColor }}
             >
               {stop.type.replace(/-/g, ' ')}
             </span>
             {stop.tabcStatus === 'expiring' && (
-              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600">
+              <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600">
                 TABC Expiring
               </span>
             )}
             {stop.tabcStatus === 'flagged' && (
-              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-500/20 text-red-500">
+              <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-500/20 text-red-500">
                 TABC Flagged
               </span>
             )}
@@ -75,7 +75,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
             {stop.accountName}
           </div>
           <div className="flex items-center gap-3 mt-0.5">
-            <span className="text-[11px] flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
+            <span className="text-[13px] flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
               <MapPin size={10} />
               {stop.address.split(',')[0]}
             </span>
@@ -104,7 +104,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
           {/* Delivery manifest preview */}
           {firstManifest.length > 0 && (
             <div className="mb-2">
-              <div className="text-[9px] uppercase tracking-wider font-mono mb-1 flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
+              <div className="text-xs uppercase tracking-wider font-mono mb-1 flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
                 <Package size={9} />
                 Delivery Manifest
               </div>
@@ -112,7 +112,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
                 {firstManifest.map((item) => (
                   <span
                     key={item.sku}
-                    className="text-[10px] px-1.5 py-0.5 rounded"
+                    className="text-xs px-1.5 py-0.5 rounded"
                     style={{ background: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}
                   >
                     {item.brand} ({item.cases}cs)
@@ -122,7 +122,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
                   </span>
                 ))}
                 {stop.deliveryManifest.length > 3 && (
-                  <span className="text-[10px]" style={{ color: 'var(--pl-text-faint)' }}>
+                  <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                     +{stop.deliveryManifest.length - 3} more
                   </span>
                 )}
@@ -133,7 +133,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
           {/* First AI insight */}
           {firstInsight && (
             <div
-              className="rounded-md p-2 text-[11px]"
+              className="rounded-md p-2 text-[13px]"
               style={{
                 background: firstInsight.priority === 'high'
                   ? 'rgba(239, 68, 68, 0.08)'
@@ -150,7 +150,7 @@ export function StopCard({ stop, isActive, onClick }: StopCardProps) {
               }}
             >
               <span style={{ color: 'var(--pl-text-secondary)' }}>{firstInsight.insight}</span>
-              <span className="text-[9px] ml-1.5 uppercase" style={{ color: 'var(--pl-text-faint)' }}>
+              <span className="text-xs ml-1.5 uppercase" style={{ color: 'var(--pl-text-faint)' }}>
                 via {firstInsight.source}
               </span>
             </div>

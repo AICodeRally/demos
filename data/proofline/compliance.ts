@@ -71,7 +71,7 @@ export const DISPLAY_COMPLIANCE: DisplayCompliance[] = [
     coldVaultShare: 0.38, coldVaultTarget: 0.40, endcapCount: 2, endcapTarget: 2,
     posDisplays: 3, posTarget: 3, shelfCompliance: 0.88, photoVerified: true, lastPhotoDate: '2026-02-24',
     issues: [
-      { type: 'cold-vault', severity: 'warning', description: 'Cold vault share 38% vs 40% target. Ben E. Keith craft taking 2 facings.', dueDate: '2026-03-04' },
+      { type: 'cold-vault', severity: 'warning', description: 'Cold vault share 38% vs 40% target. Redtail craft taking 2 facings.', dueDate: '2026-03-04' },
       { type: 'shelf', severity: 'info', description: 'Modelo Negra out of stock — shelf tag present but empty. Restock needed.', dueDate: null },
     ],
   },

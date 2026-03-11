@@ -15,11 +15,11 @@ interface Milestone {
 }
 
 const MILESTONES: Milestone[] = [
-  { week: 1, label: 'Quarter Kickoff', description: 'New targets loaded. EMCO gates reset. Reps see fresh plan in mobile app. Manager 1:1 meetings set.', color: '#2563EB', icon: '\u{1F3AF}' },
+  { week: 1, label: 'Quarter Kickoff', description: 'New targets loaded. gates reset. Reps see fresh plan in mobile app. Manager 1:1 meetings set.', color: '#2563EB', icon: '\u{1F3AF}' },
   { week: 4, label: 'First Gate Check', description: 'Week 4 = 30% through quarter. Core gate trending visible. AI coaching cards generated for at-risk reps. Manager dashboard shows first red/yellow/green signals.', color: '#F59E0B', icon: '\u26A0' },
   { week: 7, label: 'Mid-Quarter Pivot', description: 'Mid-quarter visibility report published. Gate unlock actions assigned. Kicker eligibility projected. Territory adjustments applied. This is the "last chance to change trajectory" moment.', color: '#10B981', icon: '\u{1F504}' },
   { week: 10, label: 'Sprint to Close', description: 'Kicker windows open. Cinco de Mayo/Football/Holiday seasonals in play. High-frequency coaching for reps within 5pp of tier boundary. "Every case counts" messaging.', color: '#22C55E', icon: '\u{1F3C3}' },
-  { week: 13, label: 'Quarter Close', description: 'Final attainment calculated. EMCO gates finalized. Tier assignments locked. Kicker payouts processed. True-up completed. Manager scorecards published. Next quarter preview loaded.', color: '#A855F7', icon: '\u2713' },
+  { week: 13, label: 'Quarter Close', description: 'Final attainment calculated. gates finalized. Tier assignments locked. Kicker payouts processed. True-up completed. Manager scorecards published. Next quarter preview loaded.', color: '#A855F7', icon: '\u2713' },
 ];
 
 /* ── 13-Week Area Chart with Milestones (SVG) ── */
@@ -53,7 +53,7 @@ function StoryChart({ activeMilestone, onSelectMilestone }: { activeMilestone: n
       {[0.25, 0.50, 0.75, 1.00].map(val => (
         <g key={val}>
           <line x1={padL} y1={toY(val)} x2={w - padR} y2={toY(val)} stroke="#F1F5F9" strokeWidth="1" />
-          <text x={padL - 6} y={toY(val) + 3} textAnchor="end" fontSize="8" fill="#A0AEC0" fontFamily="monospace">
+          <text x={padL - 6} y={toY(val) + 3} textAnchor="end" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
             {(val * 100).toFixed(0)}%
           </text>
         </g>
@@ -61,7 +61,7 @@ function StoryChart({ activeMilestone, onSelectMilestone }: { activeMilestone: n
 
       {/* Target line at 100% */}
       <line x1={padL} y1={toY(1.0)} x2={w - padR} y2={toY(1.0)} stroke="#22C55E" strokeWidth="1.5" strokeDasharray="6 3" />
-      <text x={w - padR + 4} y={toY(1.0) + 3} fontSize="8" fill="#22C55E" fontFamily="monospace">TARGET</text>
+      <text x={w - padR + 4} y={toY(1.0) + 3} fontSize="12" fill="#22C55E" fontFamily="monospace">TARGET</text>
 
       {/* Before PROOFLINE area (gray) */}
       <path d={beforePath + ` L${toX(data.length - 1)},${toY(0)} L${toX(0)},${toY(0)} Z`} fill="rgba(160,174,192,0.08)" />
@@ -94,10 +94,10 @@ function StoryChart({ activeMilestone, onSelectMilestone }: { activeMilestone: n
             />
 
             {/* Label */}
-            <text x={x} y={h - padB + 14} textAnchor="middle" fontSize="7" fontWeight="bold" fill={m.color} fontFamily="monospace">
+            <text x={x} y={h - padB + 14} textAnchor="middle" fontSize="12" fontWeight="bold" fill={m.color} fontFamily="monospace">
               W{m.week}
             </text>
-            <text x={x} y={h - padB + 24} textAnchor="middle" fontSize="6" fill="#718096" fontFamily="monospace">
+            <text x={x} y={h - padB + 24} textAnchor="middle" fontSize="12" fill="#718096" fontFamily="monospace">
               {m.label.split(' ')[0]}
             </text>
           </g>
@@ -107,14 +107,14 @@ function StoryChart({ activeMilestone, onSelectMilestone }: { activeMilestone: n
       {/* Legend */}
       <g transform={`translate(${padL + 10}, ${padT + 8})`}>
         <line x1={0} y1={0} x2={20} y2={0} stroke="#10B981" strokeWidth="2" />
-        <text x={24} y={3} fontSize="8" fill="#10B981" fontFamily="monospace">With PROOFLINE</text>
+        <text x={24} y={3} fontSize="12" fill="#10B981" fontFamily="monospace">With PROOFLINE</text>
         <line x1={0} y1={14} x2={20} y2={14} stroke="#CBD5E0" strokeWidth="1.5" strokeDasharray="4 2" />
-        <text x={24} y={17} fontSize="8" fill="#A0AEC0" fontFamily="monospace">Before PROOFLINE</text>
+        <text x={24} y={17} fontSize="12" fill="#A0AEC0" fontFamily="monospace">Before PROOFLINE</text>
       </g>
 
       {/* Week axis labels */}
       {data.map((_, i) => (
-        <text key={i} x={toX(i)} y={h - padB + 8} textAnchor="middle" fontSize="7" fill="#CBD5E0" fontFamily="monospace">
+        <text key={i} x={toX(i)} y={h - padB + 8} textAnchor="middle" fontSize="12" fill="#CBD5E0" fontFamily="monospace">
           {i + 1}
         </text>
       ))}
@@ -144,10 +144,10 @@ export default function ThirteenWeekStoryPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           The Narrative &middot; One Quarter in PROOFLINE
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           The 13-Week Story
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -156,7 +156,7 @@ export default function ThirteenWeekStoryPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-4 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Current Week" value="Week 9" accent="#10B981" sub="69% through quarter" />
         <LightKpiCard label="Marcus Attainment" value={pct(marcus.attainment)} accent="#22C55E" sub="On track for T2" />
         <LightKpiCard label="Milestones Passed" value="3/5" accent="#2563EB" sub="Mid-Quarter Pivot complete" />
@@ -183,7 +183,7 @@ export default function ThirteenWeekStoryPage() {
                 <button
                   key={m.week}
                   onClick={() => setActiveMilestone(i)}
-                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-mono font-bold transition-all"
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all"
                   style={{
                     background: activeMilestone === i ? m.color : '#F1F5F9',
                     color: activeMilestone === i ? 'white' : '#718096',
@@ -202,37 +202,37 @@ export default function ThirteenWeekStoryPage() {
         <div className="grid grid-cols-2 gap-4">
           {/* Before */}
           <div className="rounded-lg p-4" style={{ background: '#F7FAFC', border: '1px solid #E2E8F0' }}>
-            <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#A0AEC0' }}>BEFORE PROOFLINE</div>
+            <div className="text-xs font-bold font-mono mb-3" style={{ color: '#A0AEC0' }}>BEFORE PROOFLINE</div>
             <div className="space-y-3">
               {beforeAfter.map(item => (
                 <div key={item.label} className="flex justify-between items-center">
-                  <span className="text-[11px]" style={{ color: '#718096' }}>{item.label}</span>
+                  <span className="text-[13px]" style={{ color: '#718096' }}>{item.label}</span>
                   <span className="text-[13px] font-bold font-mono" style={{ color: '#A0AEC0' }}>{item.before}</span>
                 </div>
               ))}
             </div>
-            <div className="mt-3 text-[10px] italic" style={{ color: '#A0AEC0' }}>
+            <div className="mt-3 text-xs italic" style={{ color: '#A0AEC0' }}>
               Spreadsheet-based tracking. Monthly coaching. No real-time gate visibility. Reps discover attainment at quarter close.
             </div>
           </div>
 
           {/* After */}
           <div className="rounded-lg p-4" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.2)' }}>
-            <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#10B981' }}>WITH PROOFLINE</div>
+            <div className="text-xs font-bold font-mono mb-3" style={{ color: '#10B981' }}>WITH PROOFLINE</div>
             <div className="space-y-3">
               {beforeAfter.map(item => (
                 <div key={item.label} className="flex justify-between items-center">
-                  <span className="text-[11px]" style={{ color: '#718096' }}>{item.label}</span>
+                  <span className="text-[13px]" style={{ color: '#718096' }}>{item.label}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-[13px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{item.after}</span>
-                    <span className="text-[9px] font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
+                    <span className="text-xs font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
                       {item.improvement}
                     </span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-3 text-[10px] italic" style={{ color: '#10B981' }}>
+            <div className="mt-3 text-xs italic" style={{ color: '#10B981' }}>
               Real-time dashboard. AI coaching cards weekly. Gate visibility from day 1. Reps can self-correct at any milestone.
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function ThirteenWeekStoryPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         The 13-Week Story follows Marcus Reyes (DAL-03) as a representative example. &quot;Before PROOFLINE&quot; estimates are based on
         industry benchmarks for spreadsheet-managed comp programs. 5 milestone check-ins align with Lone Star Beverage&apos;s management rhythm.
       </div>

@@ -56,7 +56,7 @@ export default defineDemo({
       color: '#10B981',
       items: [
         { label: 'Comp Plan', href: '/proofline/comp/plan', icon: 'Trophy' },
-        { label: 'EMCO Gates', href: '/proofline/comp/emco', icon: 'ShieldCheck' },
+        { label: 'Gates', href: '/proofline/comp/emco', icon: 'ShieldCheck' },
         { label: 'Kickers', href: '/proofline/comp/kickers', icon: 'Zap' },
         { label: 'Calculator', href: '/proofline/comp/calculator', icon: 'Calculator' },
         { label: 'Visibility', href: '/proofline/comp/visibility', icon: 'TrendingUp' },

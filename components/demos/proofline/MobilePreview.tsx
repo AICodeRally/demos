@@ -40,18 +40,18 @@ export function MobilePreview({ currentStop, repName, time }: MobilePreviewProps
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] bg-black rounded-b-2xl z-10" />
 
         {/* Status bar */}
-        <div className="flex items-center justify-between px-6 pt-[8px] pb-1 text-[10px] text-white/60 relative z-0">
+        <div className="flex items-center justify-between px-6 pt-[8px] pb-1 text-xs text-white/60 relative z-0">
           <span className="font-medium">{time}</span>
           <div className="flex items-center gap-1">
             <Signal size={10} />
-            <span className="text-[9px]">5G</span>
+            <span className="text-xs">5G</span>
             <BatteryFull size={12} />
           </div>
         </div>
 
         {/* App header */}
         <div className="px-4 pt-4 pb-2">
-          <div className="text-[10px] uppercase tracking-wider text-white/40 font-mono">
+          <div className="text-xs uppercase tracking-wider text-white/40 font-mono">
             PROOFLINE Mobile
           </div>
           <div className="text-sm font-semibold text-white mt-0.5">{repName}</div>
@@ -67,7 +67,7 @@ export function MobilePreview({ currentStop, repName, time }: MobilePreviewProps
               {/* Type badge */}
               <div className="flex items-center gap-2 mb-2">
                 <span
-                  className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                  className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
                   style={{
                     background: `${TYPE_COLORS[currentStop.type] ?? '#6B7280'}20`,
                     color: TYPE_COLORS[currentStop.type] ?? '#6B7280',
@@ -75,7 +75,7 @@ export function MobilePreview({ currentStop, repName, time }: MobilePreviewProps
                 >
                   {currentStop.type.replace(/-/g, ' ')}
                 </span>
-                <span className="text-[10px] text-white/40">{currentStop.arrivalTime}</span>
+                <span className="text-xs text-white/40">{currentStop.arrivalTime}</span>
               </div>
 
               {/* Account name */}
@@ -84,14 +84,14 @@ export function MobilePreview({ currentStop, repName, time }: MobilePreviewProps
               {/* Talking points */}
               {currentStop.talkingPoints.length > 0 && (
                 <div>
-                  <div className="text-[9px] uppercase tracking-wider text-white/40 mb-1.5 font-mono">
+                  <div className="text-xs uppercase tracking-wider text-white/40 mb-1.5 font-mono">
                     Talking Points
                   </div>
                   <ul className="space-y-1.5">
                     {currentStop.talkingPoints.slice(0, 2).map((tp, i) => (
                       <li
                         key={i}
-                        className="text-[11px] text-white/70 flex items-start gap-1.5"
+                        className="text-[13px] text-white/70 flex items-start gap-1.5"
                       >
                         <span className="text-[#C6A052] mt-px shrink-0">&bull;</span>
                         <span className="leading-snug">{tp}</span>
@@ -107,7 +107,7 @@ export function MobilePreview({ currentStop, repName, time }: MobilePreviewProps
                 <span className="text-2xl opacity-30">&#128205;</span>
               </div>
               <div className="text-sm text-white/30">Select a stop</div>
-              <div className="text-[11px] text-white/20 mt-1">
+              <div className="text-[13px] text-white/20 mt-1">
                 Tap a pin on the map to preview
               </div>
             </div>

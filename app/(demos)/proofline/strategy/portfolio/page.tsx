@@ -167,12 +167,12 @@ export default function BrandPortfolioPage() {
 
       {/* Page Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#C6A052' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#C6A052' }}>
           Act 1 &middot; Corporate Strategy
         </div>
         <h1
           className="text-2xl font-extrabold mb-1"
-          style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+          style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
         >
           Brand Portfolio Command
         </h1>
@@ -187,34 +187,34 @@ export default function BrandPortfolioPage() {
         style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
       >
         <div className="text-center">
-          <div className="text-[10px] uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
             Total Brands
           </div>
-          <div className="text-xl font-bold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <div className="text-xl font-bold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
             {filtered.length}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-[10px] uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
             Quarterly Revenue
           </div>
-          <div className="text-xl font-bold" style={{ color: '#C6A052', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <div className="text-xl font-bold" style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}>
             {fmtM(totalRev)}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-[10px] uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
             Avg Margin
           </div>
-          <div className="text-xl font-bold" style={{ color: '#2563EB', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <div className="text-xl font-bold" style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}>
             {pct(avgMargin)}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-[10px] uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
             Spirits Brands
           </div>
-          <div className="text-xl font-bold" style={{ color: '#F87171', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <div className="text-xl font-bold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>
             {spiritsCount}
           </div>
         </div>
@@ -229,7 +229,7 @@ export default function BrandPortfolioPage() {
             <button
               key={f.key}
               onClick={() => { setFilter(f.key); setSelected(null); }}
-              className="text-[11px] font-bold font-mono px-3 py-1.5 rounded-lg transition-all"
+              className="text-[13px] font-bold font-mono px-3 py-1.5 rounded-lg transition-all"
               style={{
                 background: isActive ? tabColor : '#F1F5F9',
                 color: isActive ? '#fff' : '#718096',
@@ -320,7 +320,7 @@ export default function BrandPortfolioPage() {
                       fill="#1A1A2E"
                       fontSize={b.r >= 40 ? 11 : b.r >= 30 ? 10 : 9}
                       fontWeight="700"
-                      fontFamily="'Space Grotesk', sans-serif"
+                      fontFamily="var(--pl-font)"
                     >
                       {b.brand.name.length > 14 && b.r < 40
                         ? b.brand.name.slice(0, 12) + '...'
@@ -335,7 +335,7 @@ export default function BrandPortfolioPage() {
                       textAnchor="middle"
                       dominantBaseline="central"
                       fill="#718096"
-                      fontSize="9"
+                      fontSize="12"
                       fontFamily="monospace"
                     >
                       {fmtM(b.brand.revQ)}
@@ -367,9 +367,9 @@ export default function BrandPortfolioPage() {
                     y={b.y - b.r - 25}
                     textAnchor="middle"
                     fill="#1A1A2E"
-                    fontSize="10"
+                    fontSize="12"
                     fontWeight="700"
-                    fontFamily="'Space Grotesk', sans-serif"
+                    fontFamily="var(--pl-font)"
                   >
                     {b.brand.name}
                   </text>
@@ -378,7 +378,7 @@ export default function BrandPortfolioPage() {
                     y={b.y - b.r - 13}
                     textAnchor="middle"
                     fill="#718096"
-                    fontSize="9"
+                    fontSize="12"
                     fontFamily="monospace"
                   >
                     {fmtM(b.brand.revQ)} &middot; {pct(b.brand.gp)}
@@ -393,7 +393,7 @@ export default function BrandPortfolioPage() {
             {supplierBreakdown.map((s) => (
               <div key={s.supplier} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full" style={{ background: s.color }} />
-                <span className="text-[10px] font-mono" style={{ color: '#718096' }}>
+                <span className="text-xs font-mono" style={{ color: '#718096' }}>
                   {s.label} ({pct(s.pct)})
                 </span>
               </div>
@@ -413,7 +413,7 @@ export default function BrandPortfolioPage() {
           >
             {/* Close button */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] uppercase tracking-[1.5px] font-mono" style={{ color: '#718096' }}>
+              <span className="text-xs uppercase tracking-[1.5px] font-mono" style={{ color: '#718096' }}>
                 Brand Detail
               </span>
               <button
@@ -430,19 +430,19 @@ export default function BrandPortfolioPage() {
 
             <h3
               className="text-lg font-bold mb-1"
-              style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}
+              style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
             >
               {selected.name}
             </h3>
             <div className="flex items-center gap-2 mb-4">
               <span
-                className="text-[10px] font-bold px-2 py-0.5 rounded"
+                className="text-xs font-bold px-2 py-0.5 rounded"
                 style={{ background: `${SUPPLIER_COLORS[selected.supplier]}15`, color: SUPPLIER_COLORS[selected.supplier] }}
               >
                 {SUPPLIER_LABELS[selected.supplier]}
               </span>
               <span
-                className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                className="text-xs font-bold px-2 py-0.5 rounded-full"
                 style={{
                   background: selected.tier === 'Core' ? 'rgba(198,160,82,0.10)' : selected.tier === 'Emerging' ? 'rgba(245,158,11,0.10)' : 'rgba(168,85,247,0.10)',
                   color: selected.tier === 'Core' ? '#C6A052' : selected.tier === 'Emerging' ? '#F59E0B' : '#A855F7',
@@ -461,8 +461,8 @@ export default function BrandPortfolioPage() {
                 { label: 'Rev/Case', value: `$${selected.revenuePerCase}`, color: '#1A1A2E' },
               ].map((s) => (
                 <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#F8FAFC' }}>
-                  <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>{s.label}</div>
-                  <div className="text-[16px] font-bold" style={{ color: s.color, fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <div className="text-xs font-mono uppercase" style={{ color: '#A0AEC0' }}>{s.label}</div>
+                  <div className="text-[16px] font-bold" style={{ color: s.color, fontFamily: 'var(--pl-font)' }}>
                     {s.value}
                   </div>
                 </div>
@@ -471,7 +471,7 @@ export default function BrandPortfolioPage() {
 
             {/* Margin vs target */}
             <div className="mb-5">
-              <div className="flex items-center justify-between text-[11px] mb-1">
+              <div className="flex items-center justify-between text-[13px] mb-1">
                 <span style={{ color: '#718096' }}>Margin vs Target</span>
                 <span
                   className="font-bold font-mono"
@@ -493,7 +493,7 @@ export default function BrandPortfolioPage() {
             </div>
 
             {/* Seasonal Revenue */}
-            <div className="text-[10px] uppercase tracking-[1px] font-mono mb-2" style={{ color: '#718096' }}>
+            <div className="text-xs uppercase tracking-[1px] font-mono mb-2" style={{ color: '#718096' }}>
               Seasonal Revenue
             </div>
             <LightBarChart
@@ -511,11 +511,11 @@ export default function BrandPortfolioPage() {
             const barH = (s.pct / supplierBreakdown[0].pct) * 100;
             return (
               <div key={s.supplier} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[10px] font-bold font-mono" style={{ color: s.color }}>
+                <span className="text-xs font-bold font-mono" style={{ color: s.color }}>
                   {pct(s.pct)}
                 </span>
                 <div className="w-full rounded-t-lg" style={{ height: barH, background: s.color, opacity: 0.7 }} />
-                <span className="text-[9px] font-mono text-center leading-tight" style={{ color: '#718096' }}>
+                <span className="text-xs font-mono text-center leading-tight" style={{ color: '#718096' }}>
                   {s.label}
                 </span>
               </div>

@@ -26,7 +26,7 @@ export function RepSelector({ reps, selected, onChange }: RepSelectorProps) {
             <div className="text-sm font-semibold truncate" style={{ color: 'var(--pl-text)' }}>
               {selectedRep.name}
             </div>
-            <div className="flex items-center gap-2 text-[10px]" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
               <span className="flex items-center gap-0.5">
                 <Route size={9} />
                 {selectedRep.route}

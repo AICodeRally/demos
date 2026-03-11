@@ -93,10 +93,10 @@ export default function InventoryPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Inventory &middot; Warehouse Operations
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Inventory Management
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -105,7 +105,7 @@ export default function InventoryPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Total On-Hand" value={fmtK(totalCases)} accent="#2563EB" sub="Cases across all WHs" />
         <LightKpiCard label="Low Stock Alerts" value={String(lowStockCount)} accent={lowStockCount > 0 ? '#F87171' : '#22C55E'} sub="High urgency items" />
         <LightKpiCard label="Spirits Cage" value={fmt(spiritsTotal)} accent="#F87171" sub="Cases in regulated storage" />
@@ -115,10 +115,10 @@ export default function InventoryPage() {
 
       {/* Hometown Filter */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[11px] font-mono" style={{ color: '#718096' }}>Warehouse:</span>
+        <span className="text-[13px] font-mono" style={{ color: '#718096' }}>Warehouse:</span>
         <button
           onClick={() => setSelectedHometown('all')}
-          className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
+          className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
           style={{
             borderColor: selectedHometown === 'all' ? '#2563EB' : '#E2E8F0',
             background: selectedHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'white',
@@ -132,7 +132,7 @@ export default function InventoryPage() {
           <button
             key={h.id}
             onClick={() => setSelectedHometown(h.id)}
-            className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
+            className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
             style={{
               borderColor: selectedHometown === h.id ? '#2563EB' : '#E2E8F0',
               background: selectedHometown === h.id ? 'rgba(37,99,235,0.08)' : 'white',
@@ -155,7 +155,7 @@ export default function InventoryPage() {
                   <span className="text-[13px] font-bold" style={{ color: '#1A1A2E' }}>
                     {hometown.name}
                   </span>
-                  <span className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+                  <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>
                     {fmtK(hometown.sqft)} sq ft
                   </span>
                 </div>
@@ -185,7 +185,7 @@ export default function InventoryPage() {
                 {suppliers.filter(s => s.cases > 0).map(s => (
                   <div key={s.supplier} className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full" style={{ background: SUPPLIER_COLORS[s.supplier] }} />
-                    <span className="text-[9px] font-mono" style={{ color: '#A0AEC0' }}>
+                    <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>
                       {SUPPLIER_NAMES[s.supplier].split(' ')[0]} {fmtK(s.cases)}
                     </span>
                   </div>
@@ -207,7 +207,7 @@ export default function InventoryPage() {
               <div key={rec.brandId} className="flex items-start gap-4 px-4 py-3 rounded-lg border" style={{ borderColor: '#E2E8F0' }}>
                 <div className="flex-shrink-0 mt-0.5">
                   <span
-                    className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
+                    className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
                     style={{ background: urg.bg, color: urg.color }}
                   >
                     {rec.urgency.toUpperCase()}
@@ -218,18 +218,18 @@ export default function InventoryPage() {
                     <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>
                       {brand?.name ?? rec.brandId}
                     </span>
-                    <span className="text-[10px] font-bold font-mono" style={{ color: act.color }}>
+                    <span className="text-xs font-bold font-mono" style={{ color: act.color }}>
                       {act.label}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 mb-1 text-[10px] font-mono" style={{ color: '#718096' }}>
+                  <div className="flex items-center gap-4 mb-1 text-xs font-mono" style={{ color: '#718096' }}>
                     <span>Current: <strong>{rec.currentDaysOnHand}d</strong> on-hand</span>
                     <span>Target: <strong>{rec.recommendedDaysOnHand}d</strong></span>
                     <span className="font-bold" style={{ color: rec.currentDaysOnHand < rec.recommendedDaysOnHand ? '#F87171' : '#22C55E' }}>
                       {rec.currentDaysOnHand < rec.recommendedDaysOnHand ? '↓' : '↑'} {Math.abs(rec.currentDaysOnHand - rec.recommendedDaysOnHand)}d gap
                     </span>
                   </div>
-                  <p className="text-[11px]" style={{ color: '#718096' }}>{rec.reason}</p>
+                  <p className="text-[13px]" style={{ color: '#718096' }}>{rec.reason}</p>
                 </div>
               </div>
             );
@@ -262,7 +262,7 @@ export default function InventoryPage() {
                     </td>
                     <td className="py-2">
                       <span
-                        className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded uppercase"
+                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded uppercase"
                         style={{
                           background: item.status === 'low' ? 'rgba(248,113,113,0.08)' : item.status === 'high' ? 'rgba(245,158,11,0.08)' : 'rgba(34,197,94,0.08)',
                           color: statusColor,
@@ -271,14 +271,14 @@ export default function InventoryPage() {
                         {item.status}
                       </span>
                     </td>
-                    <td className="py-2 pr-2 text-[11px]" style={{ color: '#718096' }}>{item.note}</td>
+                    <td className="py-2 pr-2 text-[13px]" style={{ color: '#718096' }}>{item.note}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-        <div className="mt-3 text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+        <div className="mt-3 text-xs font-mono" style={{ color: '#A0AEC0' }}>
           Spirits stored in TABC-compliant locked cage. Separate regulatory tracking required. W-permit and P-permit accounts only.
         </div>
       </LightSectionCard>
@@ -302,7 +302,7 @@ export default function InventoryPage() {
                   <td className="py-2 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>{ret.hometown}</td>
                   <td className="py-2 font-mono" style={{ color: '#718096' }}>{ret.brand}</td>
                   <td className="py-2 text-right font-mono font-bold" style={{ color: '#1A1A2E' }}>{ret.cases}</td>
-                  <td className="py-2 text-[11px]" style={{ color: '#718096' }}>{ret.reason}</td>
+                  <td className="py-2 text-[13px]" style={{ color: '#718096' }}>{ret.reason}</td>
                   <td className="py-2 text-right pr-2 font-mono" style={{ color: ret.daysPending >= 5 ? '#F87171' : '#718096' }}>
                     {ret.daysPending}d
                   </td>
@@ -314,7 +314,7 @@ export default function InventoryPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         Inventory levels simulated from quarterly case data. AI recommendations based on seasonal forecast, velocity trends, and supplier allocation constraints.
         Spirits cage tracked separately per TABC regulatory requirements. Days on-hand = current stock &divide; weekly run rate.
       </div>

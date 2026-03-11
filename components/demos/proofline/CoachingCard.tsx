@@ -31,10 +31,10 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
         <div className="flex items-center gap-2">
           <User size={14} style={{ color: 'var(--pl-text-faint)' }} />
           <span className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>{repName}</span>
-          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{route}</span>
+          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{route}</span>
         </div>
         <span
-          className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1"
+          className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1"
           style={{ background: bg, color }}
         >
           <Icon size={10} />
@@ -46,7 +46,7 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
       <div className="px-4 py-3 space-y-2.5">
         {/* Insight */}
         <div>
-          <div className="text-[9px] uppercase tracking-wider font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="text-xs uppercase tracking-wider font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>
             Insight
           </div>
           <p className="text-[13px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{insight}</p>
@@ -57,7 +57,7 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
           className="rounded-lg p-2.5"
           style={{ background: 'rgba(198, 160, 82, 0.06)', borderLeft: '2px solid #C6A052' }}
         >
-          <div className="text-[9px] uppercase tracking-wider text-[#C6A052]/60 font-mono mb-1">
+          <div className="text-xs uppercase tracking-wider text-[#C6A052]/60 font-mono mb-1">
             Suggested Action
           </div>
           <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{action}</p>
@@ -66,7 +66,7 @@ export function CoachingCard({ repName, route, insight, action, priority, catego
 
       {/* Footer */}
       <div className="px-4 py-2 border-t" style={{ borderColor: 'var(--pl-border)' }}>
-        <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
+        <span className="text-xs flex items-center gap-1" style={{ color: 'var(--pl-text-faint)' }}>
           <Tag size={9} />
           {category}
         </span>

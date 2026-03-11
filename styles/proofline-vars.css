@@ -5,11 +5,14 @@
 
 /* ── Light mode (default) ─────────────────────── */
 :root {
-  /* Text */
-  --pl-text: #1A1A2E;
-  --pl-text-secondary: #4A5568;
-  --pl-text-muted: #718096;
-  --pl-text-faint: #A0AEC0;
+  /* Font — stronger system stack */
+  --pl-font: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Text — darker for readability */
+  --pl-text: #0F172A;
+  --pl-text-secondary: #1E293B;
+  --pl-text-muted: #334155;
+  --pl-text-faint: #64748B;
 
   /* Surfaces */
   --pl-bg: #F8FAFC;

@@ -18,7 +18,7 @@ export function BarChart({ data, valueKey, labelKey, color = '#C6A052', maxVal }
         const val = Number(d[valueKey]);
         return (
           <div key={i} className="flex items-center gap-2.5">
-            <div className="w-[90px] text-[11px] text-right font-mono shrink-0" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="w-[90px] text-[13px] text-right font-mono shrink-0" style={{ color: 'var(--pl-text-muted)' }}>
               {String(d[labelKey])}
             </div>
             <div className="flex-1 h-[18px] overflow-hidden rounded" style={{ background: 'var(--pl-chart-bar-track)' }}>
@@ -29,7 +29,7 @@ export function BarChart({ data, valueKey, labelKey, color = '#C6A052', maxVal }
                   background: `linear-gradient(90deg, ${color}88, ${color})`,
                 }}
               >
-                <span className="text-[9px] font-semibold font-mono text-white">
+                <span className="text-xs font-semibold font-mono text-white">
                   {val > 10000 ? fmtK(val) : fmt(val)}
                 </span>
               </div>

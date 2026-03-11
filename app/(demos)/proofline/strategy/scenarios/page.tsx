@@ -37,32 +37,32 @@ function ScenarioCard({
     >
       <div className="flex items-center gap-2 mb-2">
         <div className="w-3 h-3 rounded-full" style={{ background: scenario.color }} />
-        <span className="text-[15px] font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <span className="text-[15px] font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           {scenario.name}
         </span>
         <span
-          className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded-full"
+          className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
           style={{ background: `${scenario.color}15`, color: scenario.color }}
         >
           {scenario.label}
         </span>
       </div>
-      <p className="text-[11px] mb-3" style={{ color: '#718096' }}>
+      <p className="text-[13px] mb-3" style={{ color: '#718096' }}>
         {scenario.description.slice(0, 100)}{scenario.description.length > 100 ? '...' : ''}
       </p>
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Revenue</div>
+          <div className="text-xs font-mono uppercase" style={{ color: '#A0AEC0' }}>Revenue</div>
           <div className="text-[15px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{fmtM(scenario.revenueTarget)}</div>
         </div>
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Growth</div>
+          <div className="text-xs font-mono uppercase" style={{ color: '#A0AEC0' }}>Growth</div>
           <div className="text-[15px] font-bold font-mono" style={{ color: scenario.color }}>
             +{pct(scenario.yoyGrowth)}
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-mono uppercase" style={{ color: '#A0AEC0' }}>Risks</div>
+          <div className="text-xs font-mono uppercase" style={{ color: '#A0AEC0' }}>Risks</div>
           <div className="text-[15px] font-bold font-mono" style={{ color: scenario.risks.length >= 5 ? '#F87171' : '#718096' }}>
             {scenario.risks.length}
           </div>
@@ -87,7 +87,7 @@ function QuarterlyProjection({ scenario }: { scenario: Scenario }) {
           const heightPct = (val / maxQ) * 100;
           return (
             <div key={quarters[i]} className="flex-1 flex flex-col items-center justify-end h-full">
-              <span className="text-[10px] font-mono font-bold mb-1" style={{ color: scenario.color }}>
+              <span className="text-xs font-mono font-bold mb-1" style={{ color: scenario.color }}>
                 {fmtM(val)}
               </span>
               <div
@@ -101,12 +101,12 @@ function QuarterlyProjection({ scenario }: { scenario: Scenario }) {
       <div className="flex gap-3">
         {quarters.map((q, i) => (
           <div key={q} className="flex-1 text-center">
-            <span className="text-[11px] font-mono font-bold" style={{ color: '#1A1A2E' }}>{q}</span>
+            <span className="text-[13px] font-mono font-bold" style={{ color: '#1A1A2E' }}>{q}</span>
           </div>
         ))}
       </div>
       <div className="text-center mt-2">
-        <span className="text-[11px] font-mono" style={{ color: '#718096' }}>
+        <span className="text-[13px] font-mono" style={{ color: '#718096' }}>
           Annual total: <strong style={{ color: scenario.color }}>{fmtM(total)}</strong>
           {total !== scenario.revenueTarget && (
             <span style={{ color: '#A0AEC0' }}> (vs {fmtM(scenario.revenueTarget)} target)</span>
@@ -118,7 +118,7 @@ function QuarterlyProjection({ scenario }: { scenario: Scenario }) {
   );
 }
 
-/* ── EMCO Threshold Comparison ─────────────────── */
+/* ── Gate Threshold Comparison ─────────────────── */
 function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
   const gates = ['core', 'import', 'emerging', 'combined'] as const;
   const gateLabels = { core: 'Core', import: 'Import', emerging: 'Emerging', combined: 'Combined' };
@@ -143,7 +143,7 @@ function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
                         style={{ width: `${val * 100}%`, background: s.color, opacity: 0.7 }}
                       />
                     </div>
-                    <span className="text-[10px] font-mono font-bold w-10 text-right" style={{ color: s.color }}>
+                    <span className="text-xs font-mono font-bold w-10 text-right" style={{ color: s.color }}>
                       {pct(val)}
                     </span>
                   </div>
@@ -158,7 +158,7 @@ function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
         <div className="flex-1 flex gap-2">
           {scenarios.map(s => (
             <div key={s.id} className="flex-1 text-center">
-              <span className="text-[10px] font-mono font-bold" style={{ color: s.color }}>{s.name}</span>
+              <span className="text-xs font-mono font-bold" style={{ color: s.color }}>{s.name}</span>
             </div>
           ))}
         </div>
@@ -179,10 +179,10 @@ export default function ScenarioModelingPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Scenario Modeling &middot; FY2026 Planning
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Strategic Scenario Comparison
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -240,7 +240,7 @@ export default function ScenarioModelingPage() {
           <QuarterlyProjection scenario={activeScenario} />
         </LightSectionCard>
 
-        <LightSectionCard title="EMCO Gate Thresholds — All Scenarios">
+        <LightSectionCard title="Gate Thresholds — All Scenarios">
           <EMCOComparison scenarios={SCENARIOS} />
         </LightSectionCard>
       </div>
@@ -300,7 +300,7 @@ export default function ScenarioModelingPage() {
               <div key={item.label}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[12px] font-semibold" style={{ color: '#1A1A2E' }}>{item.label}</span>
-                  <span className="text-[11px] font-mono" style={{ color: activeScenario.color }}>
+                  <span className="text-[13px] font-mono" style={{ color: activeScenario.color }}>
                     {item.unit === '%' ? pct(item.target) : fmt(item.target)}
                   </span>
                 </div>
@@ -314,7 +314,7 @@ export default function ScenarioModelingPage() {
                     }}
                   />
                 </div>
-                <div className="text-[9px] font-mono mt-0.5" style={{ color: '#A0AEC0' }}>
+                <div className="text-xs font-mono mt-0.5" style={{ color: '#A0AEC0' }}>
                   Current: {item.unit === '%' ? pct(item.current) : fmt(item.current)}
                 </div>
               </div>
@@ -345,7 +345,7 @@ export default function ScenarioModelingPage() {
           {activeScenario.risks.map((risk, i) => (
             <div key={i} className="flex items-start gap-3 py-2">
               <span
-                className="text-[10px] font-bold font-mono w-6 h-6 flex items-center justify-center rounded-full shrink-0"
+                className="text-xs font-bold font-mono w-6 h-6 flex items-center justify-center rounded-full shrink-0"
                 style={{
                   background: i < 3 ? 'rgba(248,113,113,0.08)' : 'rgba(245,158,11,0.08)',
                   color: i < 3 ? '#F87171' : '#F59E0B',
@@ -397,7 +397,7 @@ export default function ScenarioModelingPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         Scenarios model FY2026 outcomes under three risk profiles. Conservative protects base; Stretch meets CEO mandate ($5.2B);
         Aggressive pushes beyond with route expansion and maximum spirits ramp. All scenarios assume Molson Coors house alignment.
       </div>

@@ -55,11 +55,11 @@ function MixTargetBar({
           <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>
             {SUPPLIER_NAMES[supplier]}
           </span>
-          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
             {brands.length} brands · {fmtM(supplierRev)}/Q · {pct(supplierGP)} GP
           </span>
         </div>
-        <div className="flex items-center gap-3 text-[11px] font-mono">
+        <div className="flex items-center gap-3 text-[13px] font-mono">
           <span style={{ color: 'var(--pl-text-muted)' }}>Current: <strong style={{ color }}>{pct(current)}</strong></span>
           <span style={{ color: 'var(--pl-text-muted)' }}>Target: <strong style={{ color }}>{pct(target)}</strong></span>
           <span
@@ -92,7 +92,7 @@ function MixTargetBar({
           style={{ left: `${(current / maxPct) * 100}%`, background: color }}
         />
       </div>
-      <div className="flex items-center gap-4 mt-1.5 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="flex items-center gap-4 mt-1.5 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         <span>■ filled = current</span>
         <span>□ outline = target</span>
       </div>
@@ -130,10 +130,10 @@ export default function BrandMixTargetsPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Brand Mix Targets &middot; Portfolio Optimization
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Supplier Mix Strategy
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -152,7 +152,7 @@ export default function BrandMixTargetsPage() {
 
       {/* Scenario Selector */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Scenario:</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Scenario:</span>
         {SCENARIOS.map((s, i) => (
           <button
             key={s.id}
@@ -168,7 +168,7 @@ export default function BrandMixTargetsPage() {
             {s.name}
           </button>
         ))}
-        <span className="text-[11px] font-mono ml-2" style={{ color: 'var(--pl-text-faint)' }}>
+        <span className="text-[13px] font-mono ml-2" style={{ color: 'var(--pl-text-faint)' }}>
           {scenario.description.slice(0, 80)}...
         </span>
       </div>
@@ -189,7 +189,7 @@ export default function BrandMixTargetsPage() {
 
         {/* Summary delta */}
         <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--pl-chart-bar-track)' }}>
-          <div className="flex items-center gap-6 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-6 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
             <span>
               Revenue target: <strong style={{ color: 'var(--pl-text)' }}>{fmtM(scenario.revenueTarget)}</strong>
               ({scenario.yoyGrowth > 0 ? '+' : ''}{pct(scenario.yoyGrowth)} YoY)
@@ -198,7 +198,7 @@ export default function BrandMixTargetsPage() {
               Spirits target: <strong style={{ color: '#F87171' }}>{pct(scenario.spiritsTarget.portfolioShare)}</strong> portfolio
             </span>
             <span>
-              EMCO combined: <strong style={{ color: 'var(--pl-text)' }}>≥{pct(scenario.emcoThresholds.combined)}</strong>
+              Gate combined: <strong style={{ color: 'var(--pl-text)' }}>≥{pct(scenario.emcoThresholds.combined)}</strong>
             </span>
           </div>
         </div>
@@ -230,21 +230,21 @@ export default function BrandMixTargetsPage() {
 
                 return (
                   <tr key={brand.id} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
-                    <td className="py-2 pl-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{i + 1}</td>
+                    <td className="py-2 pl-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{i + 1}</td>
                     <td className="py-2">
                       <div className="flex items-center gap-2">
                         <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{brand.name}</span>
                         {brand.emerging && (
-                          <span className="text-[9px] font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.08)', color: '#F59E0B' }}>
+                          <span className="text-xs font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.08)', color: '#F59E0B' }}>
                             {brand.tier === 'New Launch' ? 'NEW' : 'EMG'}
                           </span>
                         )}
                       </div>
                     </td>
                     <td className="py-2">
-                      <span className="text-[11px] font-mono" style={{ color: supplierColor }}>{SUPPLIER_NAMES[brand.supplier]}</span>
+                      <span className="text-[13px] font-mono" style={{ color: supplierColor }}>{SUPPLIER_NAMES[brand.supplier]}</span>
                     </td>
-                    <td className="py-2 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{brand.tier}</td>
+                    <td className="py-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{brand.tier}</td>
                     <td className="py-2 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{fmtM(brand.revQ)}</td>
                     <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>{fmt(brand.casesQ)}</td>
                     <td className="py-2 text-right font-mono" style={{ color: brand.gp >= 0.28 ? '#22C55E' : brand.gp >= 0.22 ? '#3B82F6' : 'var(--pl-text-muted)' }}>
@@ -255,7 +255,7 @@ export default function BrandMixTargetsPage() {
                       {(share * 100).toFixed(1)}%
                     </td>
                     <td className="py-2 text-right pr-2">
-                      <span className="text-[10px] font-mono" style={{ color: q2Trend >= 1.1 ? '#22C55E' : q2Trend >= 1.0 ? 'var(--pl-text-muted)' : '#F87171' }}>
+                      <span className="text-xs font-mono" style={{ color: q2Trend >= 1.1 ? '#22C55E' : q2Trend >= 1.0 ? 'var(--pl-text-muted)' : '#F87171' }}>
                         Q2: {q2Trend >= 1.0 ? '+' : ''}{((q2Trend - 1) * 100).toFixed(0)}%
                       </span>
                     </td>
@@ -280,13 +280,13 @@ export default function BrandMixTargetsPage() {
                     {SUPPLIER_NAMES[adj.supplier]}
                   </span>
                   <span
-                    className="text-[10px] font-mono font-bold"
+                    className="text-xs font-mono font-bold"
                     style={{ color: adj.growthRate >= 0.05 ? '#22C55E' : adj.growthRate >= 0 ? '#3B82F6' : '#F87171' }}
                   >
                     {adj.growthRate >= 0 ? '+' : ''}{pct(adj.growthRate)} growth
                   </span>
                 </div>
-                <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>{adj.notes}</p>
+                <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{adj.notes}</p>
               </div>
             );
           })}
@@ -294,8 +294,8 @@ export default function BrandMixTargetsPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
-        Mix targets derived from CEO revenue mandate, supplier incentive structures, and EMCO gate alignment.
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        Mix targets derived from CEO revenue mandate, supplier incentive structures, and gate alignment.
         Filled bar = current portfolio share. Outline = target under selected scenario. GP = gross profit margin.
       </div>
     

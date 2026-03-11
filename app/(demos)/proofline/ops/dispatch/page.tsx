@@ -52,7 +52,7 @@ function ExceptionAlert({ route }: { route: Route }) {
     <div className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: 'rgba(248,113,113,0.3)', background: 'rgba(248,113,113,0.04)' }}>
       <span className="text-[12px] font-bold font-mono" style={{ color: '#F87171' }}>{route.id}</span>
       <span className="text-[12px]" style={{ color: '#1A1A2E' }}>{seller?.name ?? 'Unknown'}</span>
-      <span className="text-[11px] font-mono" style={{ color: '#F87171' }}>{reasons.join(' · ')}</span>
+      <span className="text-[13px] font-mono" style={{ color: '#F87171' }}>{reasons.join(' · ')}</span>
     </div>
     </>
   );
@@ -73,7 +73,7 @@ function RouteCard({ route }: { route: Route }) {
         <div className="flex items-center gap-2">
           <span className="text-[13px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{route.id}</span>
           <span
-            className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
+            className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
             style={{ background: cfg.bg, color: cfg.color }}
           >
             {cfg.label}
@@ -85,13 +85,13 @@ function RouteCard({ route }: { route: Route }) {
       </div>
 
       <div className="text-[12px] mb-1" style={{ color: '#1A1A2E' }}>{seller?.name ?? '—'}</div>
-      <div className="text-[10px] font-mono mb-2" style={{ color: '#A0AEC0' }}>
+      <div className="text-xs font-mono mb-2" style={{ color: '#A0AEC0' }}>
         {route.stopsPerDay} stops · {route.accounts} accts · {route.channel}
       </div>
 
       {/* Cases delivered progress */}
       <div className="mb-1">
-        <div className="flex items-center justify-between text-[10px] font-mono mb-0.5">
+        <div className="flex items-center justify-between text-xs font-mono mb-0.5">
           <span style={{ color: '#718096' }}>Cases</span>
           <span style={{ color: deliveredPct >= 0.8 ? '#22C55E' : deliveredPct >= 0.6 ? '#F59E0B' : '#F87171' }}>
             {fmt(delivered)}/{fmt(planned)}
@@ -109,7 +109,7 @@ function RouteCard({ route }: { route: Route }) {
       </div>
 
       {/* On-time rate */}
-      <div className="flex items-center justify-between text-[10px] font-mono">
+      <div className="flex items-center justify-between text-xs font-mono">
         <span style={{ color: '#718096' }}>On-time</span>
         <span
           className="font-bold"
@@ -146,10 +146,10 @@ export default function DeliveryDispatchPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Delivery Dispatch &middot; Real-Time Operations
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Route Dispatch Board
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -158,7 +158,7 @@ export default function DeliveryDispatchPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Routes Active" value={`${activeRoutes.length}/${ROUTES.length}`} accent="#22C55E" sub="En route + delivering" />
         <LightKpiCard label="Daily Cases" value={fmt(totalCasesToday)} accent="#2563EB" sub="Planned today" />
         <LightKpiCard label="Daily Revenue" value={fmtM(totalRevToday)} accent="#2563EB" sub="Projected" />
@@ -181,10 +181,10 @@ export default function DeliveryDispatchPage() {
             { id: 'EXC-005', type: 'Delivery Delay', route: 'LAR-01', rep: 'Diego Ramirez', detail: 'Warehouse loading backup — ETA pushed 25 min', color: '#F97316' },
           ].map(alert => (
             <div key={alert.id} className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: `${alert.color}30`, background: `${alert.color}06` }}>
-              <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${alert.color}15`, color: alert.color }}>{alert.type.toUpperCase()}</span>
+              <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${alert.color}15`, color: alert.color }}>{alert.type.toUpperCase()}</span>
               <span className="text-[12px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{alert.route}</span>
               <span className="text-[12px]" style={{ color: '#1A1A2E' }}>{alert.rep}</span>
-              <span className="text-[11px] font-mono flex-1" style={{ color: '#718096' }}>{alert.detail}</span>
+              <span className="text-[13px] font-mono flex-1" style={{ color: '#718096' }}>{alert.detail}</span>
             </div>
           ))}
         </div>
@@ -192,10 +192,10 @@ export default function DeliveryDispatchPage() {
 
       {/* Hometown Filter */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[11px] font-mono" style={{ color: '#718096' }}>Hometown:</span>
+        <span className="text-[13px] font-mono" style={{ color: '#718096' }}>Hometown:</span>
         <button
           onClick={() => setFilterHometown('all')}
-          className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
+          className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
           style={{
             borderColor: filterHometown === 'all' ? '#2563EB' : '#E2E8F0',
             background: filterHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'white',
@@ -211,7 +211,7 @@ export default function DeliveryDispatchPage() {
             <button
               key={h.id}
               onClick={() => setFilterHometown(h.id)}
-              className="text-[11px] font-mono px-3 py-1 rounded-lg border transition-colors"
+              className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
               style={{
                 borderColor: filterHometown === h.id ? '#2563EB' : '#E2E8F0',
                 background: filterHometown === h.id ? 'rgba(37,99,235,0.08)' : 'white',
@@ -229,7 +229,7 @@ export default function DeliveryDispatchPage() {
       <div className="flex items-center gap-4 mb-4">
         {(Object.entries(STATUS_CONFIG) as [DeliveryStatus, typeof STATUS_CONFIG[DeliveryStatus]][]).map(([key, cfg]) => (
           <div key={key} className="flex items-center gap-1.5">
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
+            <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
               {cfg.label}
             </span>
           </div>
@@ -249,7 +249,7 @@ export default function DeliveryDispatchPage() {
             className="mb-6"
           >
             {/* Hometown summary bar */}
-            <div className="flex items-center gap-6 mb-4 text-[11px] font-mono" style={{ color: '#718096' }}>
+            <div className="flex items-center gap-6 mb-4 text-[13px] font-mono" style={{ color: '#718096' }}>
               <span>Manager: <strong style={{ color: '#1A1A2E' }}>{hometown.manager}</strong></span>
               <span>Avg on-time: <strong style={{ color: htAvgOnTime >= 0.93 ? '#22C55E' : '#F59E0B' }}>{pct(htAvgOnTime)}</strong></span>
               <span>Cases/day: <strong style={{ color: '#1A1A2E' }}>{fmt(routes.reduce((s, r) => s + Math.round(r.cases / 65), 0))}</strong></span>
@@ -271,7 +271,7 @@ export default function DeliveryDispatchPage() {
       })}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         Status reflects simulated real-time delivery tracking. Cases = daily plan based on quarterly target &divide; 65 working days.
         On-time rate sourced from route performance data. Exception threshold: shrinkage &gt;2%, on-time &lt;90%, or display compliance &lt;80%.
       </div>

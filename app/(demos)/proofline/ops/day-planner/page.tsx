@@ -28,7 +28,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg transition-colors"
+            className="text-[13px] font-mono px-3 py-1.5 rounded-lg transition-colors"
             style={{
               background: tab === t.id ? '#2563EB' : '#F1F5F9',
               color: tab === t.id ? 'white' : '#718096',
@@ -46,7 +46,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Delivery Manifest */}
           {stop.deliveryManifest.length > 0 && (
             <div>
-              <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+              <div className="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">
                 Delivery Manifest ({stop.deliveryManifest.reduce((s, m) => s + m.cases, 0)} cases)
               </div>
               <div className="space-y-1">
@@ -55,12 +55,12 @@ function DetailPanel({ stop }: { stop: Stop }) {
                     <div className="flex items-center gap-2">
                       <span className="text-[12px] text-slate-800">{item.brand}</span>
                       {item.promo && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">
+                        <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">
                           {item.promo}
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-[11px] font-mono">
+                    <div className="flex items-center gap-3 text-[13px] font-mono">
                       <span style={{ color: '#718096' }}>{item.sku}</span>
                       <span className="text-slate-800 font-bold">{item.cases}cs</span>
                     </div>
@@ -73,7 +73,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Talking Points */}
           {stop.talkingPoints.length > 0 && (
             <div>
-              <div className="text-[9px] uppercase tracking-wider text-slate-400 font-mono mb-2">Talking Points</div>
+              <div className="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">Talking Points</div>
               <ul className="space-y-1.5">
                 {stop.talkingPoints.map((tp, i) => (
                   <li key={i} className="flex items-start gap-2 text-[12px] text-slate-600">
@@ -88,16 +88,16 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Display Instructions */}
           {stop.displayInstructions && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.08)', borderLeft: '2px solid #2563EB' }}>
-              <div className="text-[9px] uppercase tracking-wider text-blue-400 font-mono mb-1">Display Instructions</div>
-              <div className="text-[11px] text-slate-600">{stop.displayInstructions}</div>
+              <div className="text-xs uppercase tracking-wider text-blue-400 font-mono mb-1">Display Instructions</div>
+              <div className="text-[13px] text-slate-600">{stop.displayInstructions}</div>
               {stop.photoRequired && (
-                <div className="mt-1.5 text-[10px] font-bold text-amber-400">📸 Photo Required</div>
+                <div className="mt-1.5 text-xs font-bold text-amber-400">📸 Photo Required</div>
               )}
             </div>
           )}
 
           {/* Contact */}
-          <div className="flex items-center gap-4 text-[11px]" style={{ color: '#718096' }}>
+          <div className="flex items-center gap-4 text-[13px]" style={{ color: '#718096' }}>
             <span>Contact: <strong className="text-slate-600">{stop.contactName}</strong></span>
             <span className="font-mono">{stop.contactPhone}</span>
           </div>
@@ -107,7 +107,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
       {/* History Tab */}
       {tab === 'history' && (
         <div className="space-y-3">
-          <div className="text-[11px] mb-3" style={{ color: '#718096' }}>Last 4 deliveries to this account</div>
+          <div className="text-[13px] mb-3" style={{ color: '#718096' }}>Last 4 deliveries to this account</div>
           {[
             { date: 'Feb 25', cases: 128, rev: 15400, notes: 'Standard delivery. Corona facing at 8 (target 12).' },
             { date: 'Feb 18', cases: 134, rev: 16100, notes: 'Added Modelo Negra. Robert requested spirits tasting info.' },
@@ -115,13 +115,13 @@ function DetailPanel({ stop }: { stop: Stop }) {
             { date: 'Feb 4', cases: 115, rev: 13800, notes: 'Routine. Pacifico trial 6cs — sold through in 5 days.' },
           ].map((visit, i) => (
             <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-100">
-              <span className="text-[10px] font-mono text-slate-400 w-14 shrink-0">{visit.date}</span>
+              <span className="text-xs font-mono text-slate-400 w-14 shrink-0">{visit.date}</span>
               <div className="flex-1">
-                <div className="flex items-center gap-3 text-[11px]">
+                <div className="flex items-center gap-3 text-[13px]">
                   <span className="text-slate-600 font-mono">{visit.cases}cs</span>
                   <span className="text-emerald-500 font-mono">${fmt(visit.rev)}</span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-0.5">{visit.notes}</div>
+                <div className="text-[13px] text-slate-400 mt-0.5">{visit.notes}</div>
               </div>
             </div>
           ))}
@@ -145,7 +145,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
                 }`,
               }}
             >
-              <div className="text-[11px] text-slate-600 leading-snug">{insight.insight}</div>
+              <div className="text-[13px] text-slate-600 leading-snug">{insight.insight}</div>
               <div className="mt-1.5">
                 <DataSourceBadge source={insight.source} synced="2m ago" />
               </div>
@@ -155,14 +155,14 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Competitive Intel */}
           {stop.competitiveIntel && (
             <div className="rounded-lg p-3" style={{ background: 'rgba(168,85,247,0.06)', borderLeft: '2px solid #A855F7' }}>
-              <div className="text-[9px] uppercase tracking-wider text-purple-400 font-mono mb-1">Competitive Intel</div>
-              <div className="text-[11px] text-slate-600">{stop.competitiveIntel}</div>
+              <div className="text-xs uppercase tracking-wider text-purple-400 font-mono mb-1">Competitive Intel</div>
+              <div className="text-[13px] text-slate-600">{stop.competitiveIntel}</div>
             </div>
           )}
 
           {/* TABC */}
           {stop.tabcStatus && (
-            <div className="flex items-center gap-2 text-[11px]">
+            <div className="flex items-center gap-2 text-[13px]">
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
@@ -221,10 +221,10 @@ export default function DayPlannerPage() {
       {/* Header Row */}
       <div className="mt-4 mb-4 flex items-start justify-between">
         <div>
-          <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+          <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
             Day-in-the-Life &middot; Route Planner
           </div>
-          <h1 className="text-xl font-extrabold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#1A1A2E' }}>
+          <h1 className="text-xl font-extrabold" style={{ fontFamily: 'var(--pl-font)', color: '#1A1A2E' }}>
             {plan.repName} — {plan.route}
           </h1>
           <p className="text-[12px] mt-0.5" style={{ color: '#718096' }}>
@@ -245,12 +245,12 @@ export default function DayPlannerPage() {
       >
         <div className="flex items-center gap-3">
           <span className="text-[12px] font-bold text-emerald-500">Route Optimized</span>
-          <span className="text-[11px]" style={{ color: '#718096' }}>
+          <span className="text-[13px]" style={{ color: '#718096' }}>
             Saves <strong className="text-emerald-500">{plan.optimizationSavings.miles} miles</strong> and{' '}
             <strong className="text-emerald-500">{plan.optimizationSavings.minutes} min</strong> vs standard sequence
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[11px] font-mono" style={{ color: '#718096' }}>
+        <div className="flex items-center gap-4 text-[13px] font-mono" style={{ color: '#718096' }}>
           <span>{plan.truckNumber}</span>
           <span>{fmt(plan.totalCases)} cases</span>
           <span className="text-emerald-500 font-bold">${fmt(plan.totalRevenue)}</span>
@@ -265,7 +265,7 @@ export default function DayPlannerPage() {
             className="rounded-xl p-3 sticky top-4"
             style={{ background: 'white', border: '1px solid #E2E8F0' }}
           >
-            <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+            <div className="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">
               Route Map &middot; {plan.hometownName}
             </div>
             <RouteMap
@@ -279,7 +279,7 @@ export default function DayPlannerPage() {
 
         {/* Center: Stop List */}
         <div className="col-span-4">
-          <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+          <div className="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">
             Stops ({plan.stops.length})
           </div>
           <div className="space-y-2 max-h-[680px] overflow-y-auto pr-1">
@@ -294,7 +294,7 @@ export default function DayPlannerPage() {
                 {activeStopId === stop.id && (
                   <Link
                     href={`/proofline/ops/day-planner/stop/${stop.id}`}
-                    className="block mt-1 text-center text-[10px] font-mono py-1.5 rounded-lg transition-colors hover:bg-slate-50"
+                    className="block mt-1 text-center text-xs font-mono py-1.5 rounded-lg transition-colors hover:bg-slate-50"
                     style={{ color: '#2563EB' }}
                   >
                     Full Stop Detail &rarr;
@@ -309,7 +309,7 @@ export default function DayPlannerPage() {
         <div className="col-span-4">
           {activeStop ? (
             <div>
-              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-mono mb-2">
+              <div className="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">
                 Stop Detail
               </div>
               <div
@@ -319,7 +319,7 @@ export default function DayPlannerPage() {
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-[15px] font-bold" style={{ color: '#1A1A2E' }}>{activeStop.accountName}</span>
                 </div>
-                <div className="flex items-center gap-3 mb-4 text-[11px]" style={{ color: '#718096' }}>
+                <div className="flex items-center gap-3 mb-4 text-[13px]" style={{ color: '#718096' }}>
                   <span>{activeStop.arrivalTime}</span>
                   <span>{activeStop.duration} min</span>
                   {activeStop.revenueOpportunity > 0 && (
@@ -332,7 +332,7 @@ export default function DayPlannerPage() {
               {/* Mobile Preview Button */}
               <button
                 onClick={() => setShowMobile(true)}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[11px] font-mono transition-all hover:bg-slate-50"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-mono transition-all hover:bg-slate-50"
                 style={{ border: '1px solid #E2E8F0', color: '#718096' }}
               >
                 <span className="text-base">📱</span>
@@ -345,7 +345,7 @@ export default function DayPlannerPage() {
                 <span className="text-3xl opacity-30">📍</span>
               </div>
               <div className="text-sm" style={{ color: '#A0AEC0' }}>Select a stop</div>
-              <div className="text-[11px] mt-1" style={{ color: '#CBD5E0' }}>
+              <div className="text-[13px] mt-1" style={{ color: '#CBD5E0' }}>
                 Click any stop on the map or list to view details
               </div>
             </div>

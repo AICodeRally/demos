@@ -57,7 +57,7 @@ function WaterfallLevel({
     <div className="flex items-center gap-3 py-1.5" style={{ paddingLeft: indent * 20 }}>
       <div className="w-40 shrink-0 text-right">
         <div className="text-[12px] font-semibold truncate" style={{ color: '#1A1A2E' }}>{label}</div>
-        {sub && <div className="text-[10px] font-mono" style={{ color: '#A0AEC0' }}>{sub}</div>}
+        {sub && <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>{sub}</div>}
       </div>
       <div className="flex-1 flex items-center gap-2">
         <div className="flex-1 h-6 rounded-md relative" style={{ background: '#F1F5F9' }}>
@@ -98,10 +98,10 @@ export default function QuotaWaterfallPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Quota Waterfall &middot; FY2026
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Revenue Target Cascade
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -110,7 +110,7 @@ export default function QuotaWaterfallPage() {
       </div>
 
       {/* Company-level KPIs */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-4 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Company Target" value="$5.2B" accent="#C6A052" sub="+4% YoY" />
         <LightKpiCard
           label="North Texas"
@@ -218,7 +218,7 @@ export default function QuotaWaterfallPage() {
                   <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>{h.name}</td>
                   <td className="py-2.5">
                     <span
-                      className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded"
+                      className="text-xs font-mono font-bold px-1.5 py-0.5 rounded"
                       style={{
                         background: isNorth ? 'rgba(124,58,237,0.08)' : 'rgba(37,99,235,0.08)',
                         color: isNorth ? '#7C3AED' : '#2563EB',
@@ -248,12 +248,12 @@ export default function QuotaWaterfallPage() {
           <div className="space-y-2">
             {[...ROUTES].sort((a, b) => b.attain - a.attain).slice(0, 10).map((r, i) => (
               <div key={r.id} className="flex items-center gap-3">
-                <span className="text-[10px] font-mono w-4 text-right" style={{ color: '#A0AEC0' }}>{i + 1}</span>
+                <span className="text-xs font-mono w-4 text-right" style={{ color: '#A0AEC0' }}>{i + 1}</span>
                 <span className="text-[12px] font-bold font-mono w-16" style={{ color: '#1A1A2E' }}>{r.id}</span>
                 <div className="flex-1 h-2 rounded-full" style={{ background: '#F1F5F9' }}>
                   <div className="h-full rounded-full" style={{ width: `${Math.min(r.attain * 100, 110)}%`, background: '#22C55E' }} />
                 </div>
-                <span className="text-[11px] font-mono font-bold w-12 text-right" style={{ color: '#22C55E' }}>{pct(r.attain)}</span>
+                <span className="text-[13px] font-mono font-bold w-12 text-right" style={{ color: '#22C55E' }}>{pct(r.attain)}</span>
               </div>
             ))}
           </div>
@@ -268,13 +268,13 @@ export default function QuotaWaterfallPage() {
               const gap = rQuota - r.rev;
               return (
                 <div key={r.id} className="flex items-center gap-3">
-                  <span className="text-[10px] font-mono w-4 text-right" style={{ color: '#A0AEC0' }}>{i + 1}</span>
+                  <span className="text-xs font-mono w-4 text-right" style={{ color: '#A0AEC0' }}>{i + 1}</span>
                   <span className="text-[12px] font-bold font-mono w-16" style={{ color: '#1A1A2E' }}>{r.id}</span>
                   <div className="flex-1 h-2 rounded-full" style={{ background: '#F1F5F9' }}>
                     <div className="h-full rounded-full" style={{ width: `${r.attain * 100}%`, background: '#F87171' }} />
                   </div>
-                  <span className="text-[11px] font-mono font-bold w-12 text-right" style={{ color: '#F87171' }}>{pct(r.attain)}</span>
-                  <span className="text-[10px] font-mono w-16 text-right" style={{ color: '#F87171' }}>-{fmtM(Math.abs(gap))}</span>
+                  <span className="text-[13px] font-mono font-bold w-12 text-right" style={{ color: '#F87171' }}>{pct(r.attain)}</span>
+                  <span className="text-xs font-mono w-16 text-right" style={{ color: '#F87171' }}>-{fmtM(Math.abs(gap))}</span>
                 </div>
               );
             })}
@@ -283,7 +283,7 @@ export default function QuotaWaterfallPage() {
       </div>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
         Quota allocation: Company target → 73/27 North/South split → hometown share by revenue contribution → route share within hometown.
       </div>
     

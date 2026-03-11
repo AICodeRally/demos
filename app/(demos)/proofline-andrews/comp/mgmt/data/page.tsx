@@ -106,11 +106,11 @@ export default function DataPage() {
                 <div key={step} className="flex items-center flex-1 min-w-[100px]">
                   <div className="flex-1 flex flex-col items-center gap-2 px-3 py-4 rounded-lg"
                     style={{ background: `${ACCENT}12`, border: `1px solid ${ACCENT}30` }}>
-                    <div className="text-[10px] font-mono font-bold uppercase tracking-widest" style={{ color: ACCENT }}>
+                    <div className="text-xs font-mono font-bold uppercase tracking-widest" style={{ color: ACCENT }}>
                       STEP {i + 1}
                     </div>
                     <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{step}</div>
-                    <div className="text-[10px] font-mono text-center" style={{ color: 'var(--pl-text-muted)' }}>
+                    <div className="text-xs font-mono text-center" style={{ color: 'var(--pl-text-muted)' }}>
                       {step === 'Source' && 'Pull from ERP/CRM/HR/Territories'}
                       {step === 'Validate' && 'Schema check, null guard, dedup'}
                       {step === 'Stage' && 'Normalize, enrich, classify'}
@@ -131,16 +131,16 @@ export default function DataPage() {
                 <div key={feed.name} className="p-3 rounded-lg" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-bold font-mono uppercase" style={{ color: 'var(--pl-text)' }}>{feed.name}</span>
-                    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+                    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
                       style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
                       {feed.health}
                     </span>
                   </div>
-                  <div className="text-[10px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>{feed.source}</div>
+                  <div className="text-xs font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>{feed.source}</div>
                   <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>
                     {feed.records.toLocaleString()}
                   </div>
-                  <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>records &middot; synced {feed.lastSync}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>records &middot; synced {feed.lastSync}</div>
                 </div>
               ))}
             </div>
@@ -164,7 +164,7 @@ export default function DataPage() {
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Brand', 'Category', 'Supplier Group', 'Gate'].map(h => (
-                      <th key={h} className="text-left pb-2 pr-4 text-[10px] uppercase tracking-wider font-bold"
+                      <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
                         style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                     ))}
                   </tr>
@@ -176,7 +176,7 @@ export default function DataPage() {
                       <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{row.category}</td>
                       <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{row.supplierGroup}</td>
                       <td className="py-1.5">
-                        <span className="px-2 py-0.5 rounded text-[9px] font-bold"
+                        <span className="px-2 py-0.5 rounded text-xs font-bold"
                           style={{ background: `${GATE_COLORS[row.gate]}18`, color: GATE_COLORS[row.gate] }}>
                           {row.gate}
                         </span>
@@ -194,7 +194,7 @@ export default function DataPage() {
                 <div key={a.type} className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
                   <div className="text-2xl font-bold font-mono mb-1" style={{ color: ACCENT }}>{a.count.toLocaleString()}</div>
                   <div className="text-xs font-bold font-mono mb-1" style={{ color: 'var(--pl-text)' }}>{a.type}</div>
-                  <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{a.pct}% of accounts</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{a.pct}% of accounts</div>
                   <div className="mt-2 rounded-full overflow-hidden" style={{ height: 4, background: 'var(--pl-chart-bar-track)' }}>
                     <div className="h-full rounded-full" style={{ width: `${a.pct}%`, background: ACCENT }} />
                   </div>
@@ -208,20 +208,20 @@ export default function DataPage() {
               <div className="text-center">
                 <div className="text-3xl font-bold font-mono" style={{ color: ACCENT }}>6</div>
                 <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Hometowns</div>
-                <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>SA / Austin / Laredo / Victoria / Corpus Christi / New Braunfels</div>
+                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>SA / Austin / Laredo / Victoria / Corpus Christi / New Braunfels</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold font-mono" style={{ color: ACCENT }}>36</div>
                 <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Routes</div>
-                <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>6 routes per hometown average</div>
+                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>6 routes per hometown average</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold font-mono" style={{ color: ACCENT }}>36</div>
                 <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Sales Reps</div>
-                <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>1 rep per route, no overlap</div>
+                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>1 rep per route, no overlap</div>
               </div>
             </div>
-            <div className="mt-4 p-3 rounded-lg text-[10px] font-mono" style={{ background: `${ACCENT}0A`, border: `1px solid ${ACCENT}20`, color: 'var(--pl-text-muted)' }}>
+            <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{ background: `${ACCENT}0A`, border: `1px solid ${ACCENT}20`, color: 'var(--pl-text-muted)' }}>
               Assignment logic: Account ZIP &rarr; Route boundary lookup &rarr; Primary rep assignment. Multi-route accounts resolved by highest historical volume rep. Territory changes take effect on the first of the following month.
             </div>
           </LightSectionCard>
@@ -243,13 +243,13 @@ export default function DataPage() {
               {CREDIT_RULES.map(rule => (
                 <div key={rule.rule} className="flex items-start gap-3 p-3 rounded-lg"
                   style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                  <div className="flex-shrink-0 px-2 py-0.5 rounded text-[9px] font-bold font-mono"
+                  <div className="flex-shrink-0 px-2 py-0.5 rounded text-xs font-bold font-mono"
                     style={{ background: `${ACCENT}18`, color: ACCENT, whiteSpace: 'nowrap' }}>
                     {rule.rule}
                   </div>
                   <div className="flex-1">
                     <div className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>{rule.description}</div>
-                    <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>Applied: {rule.frequency}</div>
+                    <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>Applied: {rule.frequency}</div>
                   </div>
                 </div>
               ))}
@@ -262,7 +262,7 @@ export default function DataPage() {
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Date', 'Account', 'Product', 'Cases', 'Revenue', 'Credited Rep', 'Rule', 'Conf.'].map(h => (
-                      <th key={h} className="text-left pb-2 pr-3 text-[10px] uppercase tracking-wider font-bold"
+                      <th key={h} className="text-left pb-2 pr-3 text-xs uppercase tracking-wider font-bold"
                         style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                     ))}
                   </tr>
@@ -277,7 +277,7 @@ export default function DataPage() {
                       <td className="py-1.5 pr-3 text-right" style={{ color: ACCENT }}>${tx.revenue.toLocaleString()}</td>
                       <td className="py-1.5 pr-3" style={{ color: 'var(--pl-text)' }}>{tx.rep}</td>
                       <td className="py-1.5 pr-3">
-                        <span className="px-1.5 py-0.5 rounded text-[9px] font-bold"
+                        <span className="px-1.5 py-0.5 rounded text-xs font-bold"
                           style={{
                             background: tx.rule === 'Split' ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)',
                             color: tx.rule === 'Split' ? '#F59E0B' : '#22C55E',

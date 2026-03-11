@@ -7,7 +7,7 @@ export default function DemoGroupLayout({
     <>
       <a
         href="/"
-        className="fixed left-4 top-4 z-[60] rounded-full bg-black/80 px-3 py-1.5 text-sm text-white backdrop-blur-sm transition-colors hover:bg-black"
+        className="fixed right-4 bottom-4 z-[60] rounded-full bg-black/60 px-2.5 py-1 text-xs text-white/80 backdrop-blur-sm transition-colors hover:bg-black hover:text-white"
       >
         &larr; All Demos
       </a>

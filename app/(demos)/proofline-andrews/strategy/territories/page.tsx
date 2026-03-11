@@ -100,10 +100,10 @@ export default function TerritoryDesignPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
           Territory Design &middot; 6 Hometowns
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           North &amp; South Texas Coverage
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -133,10 +133,10 @@ export default function TerritoryDesignPage() {
           </defs>
 
           {/* Region labels */}
-          <text x={HEX_W / 2} y={22} textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600" fontFamily="monospace" opacity="0.5">
+          <text x={HEX_W / 2} y={22} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.5">
             NORTH TEXAS
           </text>
-          <text x={HEX_W / 2} y={HEX_H - 8} textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600" fontFamily="monospace" opacity="0.5">
+          <text x={HEX_W / 2} y={HEX_H - 8} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.5">
             SOUTH TEXAS
           </text>
 
@@ -202,7 +202,7 @@ export default function TerritoryDesignPage() {
                     fill="var(--pl-text)"
                     fontSize="14"
                     fontWeight="800"
-                    fontFamily="'Space Grotesk', sans-serif"
+                    fontFamily="var(--pl-font)"
                   >
                     {hometown.name.replace(' HQ', '')}
                   </text>
@@ -222,7 +222,7 @@ export default function TerritoryDesignPage() {
                     y={hex.cy - 11}
                     textAnchor="middle"
                     fill={grad.stroke}
-                    fontSize="9"
+                    fontSize="12"
                     fontWeight="700"
                     fontFamily="monospace"
                   >
@@ -237,7 +237,7 @@ export default function TerritoryDesignPage() {
                     fill={grad.stroke}
                     fontSize="22"
                     fontWeight="800"
-                    fontFamily="'Space Grotesk', sans-serif"
+                    fontFamily="var(--pl-font)"
                   >
                     {pct(avgAttain)}
                   </text>
@@ -248,7 +248,7 @@ export default function TerritoryDesignPage() {
                     y={hex.cy + 30}
                     textAnchor="middle"
                     fill="var(--pl-text-muted)"
-                    fontSize="9"
+                    fontSize="12"
                     fontFamily="monospace"
                   >
                     {hometown.routes} routes · {fmtM(hometown.rev)} · {fmt(hometown.accounts)} accts
@@ -263,7 +263,7 @@ export default function TerritoryDesignPage() {
                         y={hex.cy + 49}
                         textAnchor="middle"
                         fill="#F87171"
-                        fontSize="9"
+                        fontSize="12"
                         fontWeight="700"
                         fontFamily="monospace"
                       >
@@ -273,7 +273,7 @@ export default function TerritoryDesignPage() {
                         x={hex.cx + 14}
                         y={hex.cy + 49}
                         fill="#F87171"
-                        fontSize="8"
+                        fontSize="12"
                         fontFamily="monospace"
                       >
                         at risk
@@ -287,7 +287,7 @@ export default function TerritoryDesignPage() {
                     y={hex.cy + 62}
                     textAnchor="middle"
                     fill="var(--pl-text-faint)"
-                    fontSize="8"
+                    fontSize="12"
                     fontFamily="monospace"
                   >
                     Mgr: {hometown.manager}
@@ -320,7 +320,7 @@ export default function TerritoryDesignPage() {
         </svg>
 
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+        <div className="flex items-center justify-center gap-6 mt-2 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
           <div className="flex items-center gap-1.5">
             <div className="w-6 h-3 rounded" style={{ background: '#22C55E', opacity: 0.25 }} />
             On Track (≥100%)
@@ -363,17 +363,17 @@ export default function TerritoryDesignPage() {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-[15px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                      <h3 className="text-[15px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                         {h.name}
                       </h3>
                       <span
-                        className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded-full"
+                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
                         style={{ background: tier.bg, color: tier.color }}
                       >
                         {tier.label}
                       </span>
                     </div>
-                    <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                    <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                       {h.profile} &middot; {h.acquired.split(' — ')[0]}
                     </div>
                   </div>
@@ -382,19 +382,19 @@ export default function TerritoryDesignPage() {
 
                 <div className="grid grid-cols-4 gap-3 mb-3">
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Routes</div>
+                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Routes</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{h.routes}</div>
                   </div>
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Attainment</div>
+                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Attainment</div>
                     <div className="text-[15px] font-bold" style={{ color: tier.color }}>{pct(avgAttain)}</div>
                   </div>
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Revenue</div>
+                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Revenue</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{fmtM(h.rev * 4)}</div>
                   </div>
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Cases</div>
+                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Cases</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{fmtK(h.cases)}</div>
                   </div>
                 </div>
@@ -404,13 +404,13 @@ export default function TerritoryDesignPage() {
                     <span className="font-semibold" style={{ color: 'var(--pl-text-secondary)' }}>{h.manager}</span> &middot; {h.accounts} accounts
                   </div>
                   {atRiskCount > 0 && (
-                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
+                    <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
                       {atRiskCount} at risk
                     </span>
                   )}
                 </div>
 
-                <div className="text-[11px] font-mono mt-2" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-[13px] font-mono mt-2" style={{ color: 'var(--pl-text-faint)' }}>
                   {fmt(h.sqft)} sq ft warehouse
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default function TerritoryDesignPage() {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-6 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+      <div className="flex items-center gap-6 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#22C55E' }} />
           On Track (≥100%)

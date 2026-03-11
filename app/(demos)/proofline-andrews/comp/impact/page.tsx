@@ -40,7 +40,7 @@ const IMPACT_METRICS: ImpactMetric[] = [
     description: 'Real-time comp visibility and transparent inquiry resolution reduced frustration-driven departures. Avg tenure up 8 months.',
   },
   {
-    label: 'EMCO Gate Pass Rate',
+    label: 'Gate Pass Rate',
     category: 'Compensation',
     before: '1.2/4', after: '2.8/4', delta: '+133%', deltaColor: '#2563EB',
     description: 'Clear gate visibility and weekly coaching cards helping reps understand exactly what to focus on to unlock multipliers.',
@@ -72,7 +72,7 @@ function ImpactCard({ metric }: { metric: ImpactMetric }) {
     <div className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
       <div className="flex items-center justify-between mb-2">
         <div>
-          <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded mr-2" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
+          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded mr-2" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
             {metric.category.toUpperCase()}
           </span>
           <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{metric.label}</span>
@@ -85,17 +85,17 @@ function ImpactCard({ metric }: { metric: ImpactMetric }) {
       {/* Before → After bar */}
       <div className="flex items-center gap-3 mb-2">
         <div className="flex-1 text-center rounded-lg py-2" style={{ background: 'var(--pl-card-alt)' }}>
-          <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>BEFORE</div>
+          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>BEFORE</div>
           <div className="text-[18px] font-bold font-mono" style={{ color: 'var(--pl-text-faint)' }}>{metric.before}</div>
         </div>
         <div className="text-[16px]" style={{ color: '#CBD5E0' }}>{'\u2192'}</div>
         <div className="flex-1 text-center rounded-lg py-2" style={{ background: 'rgba(16,185,129,0.04)' }}>
-          <div className="text-[9px] font-mono" style={{ color: '#10B981' }}>AFTER</div>
+          <div className="text-xs font-mono" style={{ color: '#10B981' }}>AFTER</div>
           <div className="text-[18px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{metric.after}</div>
         </div>
       </div>
 
-      <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{metric.description}</p>
+      <p className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{metric.description}</p>
     </div>
     </>
   );
@@ -147,13 +147,13 @@ function ImpactSummary() {
 
             {/* Label lines */}
             {item.label.split('\n').map((line, j) => (
-              <text key={j} x={cx} y={cy + 18 + j * 12} textAnchor="middle" fontSize="9" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
+              <text key={j} x={cx} y={cy + 18 + j * 12} textAnchor="middle" fontSize="12" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
                 {line}
               </text>
             ))}
 
             {/* Sub description */}
-            <text x={cx} y={cy + r + 18} textAnchor="middle" fontSize="7" fill="var(--pl-text-faint)" fontFamily="monospace">
+            <text x={cx} y={cy + r + 18} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
               {item.sub}
             </text>
 
@@ -176,7 +176,7 @@ function ImpactSummary() {
 
       {/* Bottom summary bar */}
       <rect x={40} y={h - 42} width={w - 80} height={32} rx={8} fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.25)" strokeWidth="1" />
-      <text x={w / 2} y={h - 22} textAnchor="middle" fontSize="11" fontWeight="bold" fill="#10B981" fontFamily="monospace">
+      <text x={w / 2} y={h - 22} textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10B981" fontFamily="monospace">
         PROOFLINE pays for itself in 106 days {'\u2014'} Full deployment ROI: 340% Year 1
       </text>
     </svg>
@@ -192,10 +192,10 @@ export default function CeoImpactPage() {
 
       {/* Header */}
       <div className="mt-6 mb-8">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Executive Summary &middot; The PROOFLINE Impact
         </div>
-        <h1 className="text-[28px] font-extrabold leading-tight" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-[28px] font-extrabold leading-tight" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           From Spreadsheets to Revenue Operating System
         </h1>
         <p className="text-[14px] mt-2" style={{ color: 'var(--pl-text-muted)' }}>
@@ -220,7 +220,7 @@ export default function CeoImpactPage() {
         <div className="grid grid-cols-2 gap-6">
           {/* Investment */}
           <div>
-            <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#F87171' }}>YEAR 1 INVESTMENT</div>
+            <div className="text-xs font-bold font-mono mb-3" style={{ color: '#F87171' }}>YEAR 1 INVESTMENT</div>
             <div className="space-y-2">
               {[
                 { item: 'PROOFLINE platform license', cost: '$480,000', note: '36 reps × $1,111/mo' },
@@ -231,8 +231,8 @@ export default function CeoImpactPage() {
               ].map(row => (
                 <div key={row.item} className="flex items-center justify-between px-3 py-2 rounded" style={{ background: 'var(--pl-card-alt)' }}>
                   <div>
-                    <div className="text-[11px] font-bold" style={{ color: 'var(--pl-text)' }}>{row.item}</div>
-                    <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{row.note}</div>
+                    <div className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{row.item}</div>
+                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{row.note}</div>
                   </div>
                   <span className="text-[12px] font-bold font-mono" style={{ color: '#F87171' }}>{row.cost}</span>
                 </div>
@@ -246,7 +246,7 @@ export default function CeoImpactPage() {
 
           {/* Returns */}
           <div>
-            <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#22C55E' }}>YEAR 1 RETURNS</div>
+            <div className="text-xs font-bold font-mono mb-3" style={{ color: '#22C55E' }}>YEAR 1 RETURNS</div>
             <div className="space-y-2">
               {[
                 { item: 'Incremental revenue (4% growth)', value: '$47,200,000', note: 'CEO mandate achievement' },
@@ -257,8 +257,8 @@ export default function CeoImpactPage() {
               ].map(row => (
                 <div key={row.item} className="flex items-center justify-between px-3 py-2 rounded" style={{ background: 'rgba(34,197,94,0.03)' }}>
                   <div>
-                    <div className="text-[11px] font-bold" style={{ color: 'var(--pl-text)' }}>{row.item}</div>
-                    <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{row.note}</div>
+                    <div className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{row.item}</div>
+                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{row.note}</div>
                   </div>
                   <span className="text-[12px] font-bold font-mono" style={{ color: '#22C55E' }}>{row.value}</span>
                 </div>
@@ -274,26 +274,26 @@ export default function CeoImpactPage() {
 
       {/* CEO Quote / CTA */}
       <div className="rounded-lg p-6 mb-6" style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(37,99,235,0.04) 100%)', border: '1px solid rgba(16,185,129,0.2)' }}>
-        <div className="text-[10px] font-bold font-mono mb-3" style={{ color: '#10B981' }}>THE BOTTOM LINE</div>
-        <p className="text-[16px] font-bold leading-relaxed mb-4" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <div className="text-xs font-bold font-mono mb-3" style={{ color: '#10B981' }}>THE BOTTOM LINE</div>
+        <p className="text-[16px] font-bold leading-relaxed mb-4" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           PROOFLINE transforms Lone Star Distribution from a company that discovers results at quarter-close into one that
           shapes outcomes in real-time. Every rep, every route, every case — visible, optimized, and aligned to the CEO mandate.
         </p>
         <div className="flex gap-4">
           <div className="rounded-lg px-4 py-2" style={{ background: 'rgba(16,185,129,0.1)' }}>
-            <span className="text-[11px] font-bold font-mono" style={{ color: '#10B981' }}>Payback: 106 days</span>
+            <span className="text-[13px] font-bold font-mono" style={{ color: '#10B981' }}>Payback: 106 days</span>
           </div>
           <div className="rounded-lg px-4 py-2" style={{ background: 'rgba(34,197,94,0.1)' }}>
-            <span className="text-[11px] font-bold font-mono" style={{ color: '#22C55E' }}>ROI: 340% Year 1</span>
+            <span className="text-[13px] font-bold font-mono" style={{ color: '#22C55E' }}>ROI: 340% Year 1</span>
           </div>
           <div className="rounded-lg px-4 py-2" style={{ background: 'rgba(37,99,235,0.1)' }}>
-            <span className="text-[11px] font-bold font-mono" style={{ color: '#2563EB' }}>Deploy: 8 weeks</span>
+            <span className="text-[13px] font-bold font-mono" style={{ color: '#2563EB' }}>Deploy: 8 weeks</span>
           </div>
         </div>
       </div>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Impact projections based on industry benchmarks for SPM platform deployments in beverage distribution (Aberdeen Group, Gartner).
         Revenue uplift calculated from historical Lone Star growth rate (1.4%) vs. PROOFLINE-enabled rate (4%). Turnover savings use
         SHRM replacement cost methodology ($36K per route sales rep). Spirits revenue is additive new category.

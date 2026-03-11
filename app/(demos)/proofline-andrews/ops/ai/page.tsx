@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demos/proofline';
 import {
   BRAND_FORECASTS,
@@ -12,6 +13,12 @@ import {
 } from '@/data/proofline';
 import { fmt, fmtK, pct } from '@/lib/utils';
 
+function useBasePrefix(): string {
+  const pathname = usePathname();
+  const match = pathname.match(/^\/([^/]+)/);
+  return match ? `/${match[1]}` : '';
+}
+
 /* ── Quadrant Card ───────────────────────────── */
 function QuadrantCard({
   title, subtitle, metric, metricLabel, insight, link, color, miniChartData,
@@ -20,6 +27,7 @@ function QuadrantCard({
   insight: string; link: string; color: string;
   miniChartData: number[];
 }) {
+  const prefix = useBasePrefix();
   // Simple sparkline
   const max = Math.max(...miniChartData);
   const min = Math.min(...miniChartData);
@@ -32,20 +40,20 @@ function QuadrantCard({
   return (
     <>
     <Link
-      href={link}
+      href={`${prefix}${link}`}
       className="block rounded-lg border p-5 hover:shadow-md transition-shadow group"
       style={{ borderColor: 'var(--pl-border)' }}
     >
       <div className="flex items-start justify-between mb-3">
         <div>
-          <div className="text-[10px] tracking-[2px] uppercase font-mono mb-1" style={{ color }}>
+          <div className="text-xs tracking-[2px] uppercase font-mono mb-1" style={{ color }}>
             {subtitle}
           </div>
           <h3 className="text-[16px] font-bold" style={{ color: 'var(--pl-text)' }}>{title}</h3>
         </div>
         <div className="text-right">
           <div className="text-[22px] font-bold font-mono" style={{ color }}>{metric}</div>
-          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{metricLabel}</div>
+          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{metricLabel}</div>
         </div>
       </div>
 
@@ -54,9 +62,9 @@ function QuadrantCard({
         <path d={path} fill="none" stroke={color} strokeWidth="2" />
       </svg>
 
-      <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>{insight}</p>
+      <p className="text-[13px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>{insight}</p>
 
-      <div className="text-[11px] font-mono group-hover:underline" style={{ color }}>
+      <div className="text-[13px] font-mono group-hover:underline" style={{ color }}>
         Explore &rarr;
       </div>
     </Link>
@@ -88,10 +96,10 @@ export default function AiIntelligenceHubPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           AI Intelligence Hub &middot; Powered by PROOFLINE AI
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           AI-Powered Intelligence
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -161,7 +169,7 @@ export default function AiIntelligenceHubPage() {
             return (
               <div key={overlay.eventName} className="flex items-start gap-4 px-4 py-3 rounded-lg border" style={{ borderColor: isActive ? 'rgba(37,99,235,0.3)' : 'var(--pl-border)' }}>
                 <span
-                  className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5"
+                  className="text-xs font-bold font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5"
                   style={{
                     background: isActive ? 'rgba(37,99,235,0.08)' : isPast ? 'rgba(113,128,150,0.08)' : 'rgba(245,158,11,0.08)',
                     color: isActive ? '#2563EB' : isPast ? 'var(--pl-text-faint)' : '#F59E0B',
@@ -172,10 +180,10 @@ export default function AiIntelligenceHubPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{overlay.eventName}</span>
-                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>W{overlay.startWeek}–W{overlay.endWeek}</span>
-                    <span className="text-[10px] font-bold font-mono" style={{ color: '#22C55E' }}>+{(overlay.impactPct * 100).toFixed(0)}%</span>
+                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>W{overlay.startWeek}–W{overlay.endWeek}</span>
+                    <span className="text-xs font-bold font-mono" style={{ color: '#22C55E' }}>+{(overlay.impactPct * 100).toFixed(0)}%</span>
                   </div>
-                  <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>{overlay.description}</p>
+                  <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{overlay.description}</p>
                 </div>
               </div>
             );
@@ -189,29 +197,29 @@ export default function AiIntelligenceHubPage() {
         style={{ borderColor: 'var(--pl-border)', background: 'rgba(37,99,235,0.02)' }}
       >
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
+          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
             ENTERPRISE GOVERNANCE
           </span>
         </div>
-        <h4 className="text-[14px] font-bold mb-2" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h4 className="text-[14px] font-bold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           AI Governance &amp; Data Security
         </h4>
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#22C55E' }}>DATA OWNERSHIP</div>
-            <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>DATA OWNERSHIP</div>
+            <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
               All data remains on your infrastructure. No training on client data. Outputs are auditable with full provenance trail.
             </p>
           </div>
           <div>
-            <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#2563EB' }}>HALLUCINATION PREVENTION</div>
-            <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>HALLUCINATION PREVENTION</div>
+            <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
               Every AI recommendation is grounded in your transactional data — IRI/Nielsen syndicated + internal shipment history. No fabricated insights.
             </p>
           </div>
           <div>
-            <div className="text-[10px] font-bold font-mono mb-1" style={{ color: '#A855F7' }}>STACK AGNOSTIC</div>
-            <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold font-mono mb-1" style={{ color: '#A855F7' }}>STACK AGNOSTIC</div>
+            <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
               Deploys alongside existing systems (Snowflake, route accounting, tablets). No rip-and-replace. Iterative rollout with IT oversight at every stage.
             </p>
           </div>
@@ -219,7 +227,7 @@ export default function AiIntelligenceHubPage() {
       </div>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         PROOFLINE AI combines time-series forecasting (ARIMA + gradient boosting), seasonal decomposition, weather API integration,
         and competitive intelligence signals. Model retrained weekly on rolling 52-week data. MAPE = Mean Absolute Percentage Error.
       </div>

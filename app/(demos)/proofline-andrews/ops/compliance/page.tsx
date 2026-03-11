@@ -41,7 +41,7 @@ function ColdVaultBar({ label, share, target }: { label: string; share: number; 
     <div className="py-2">
       <div className="flex items-center justify-between mb-1">
         <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{label}</span>
-        <div className="flex items-center gap-3 text-[11px] font-mono">
+        <div className="flex items-center gap-3 text-[13px] font-mono">
           <span style={{ color: 'var(--pl-text-muted)' }}>Share: <strong style={{ color: onTarget ? '#22C55E' : '#F87171' }}>{pct(share)}</strong></span>
           <span style={{ color: 'var(--pl-text-faint)' }}>Target: {pct(target)}</span>
         </div>
@@ -91,7 +91,7 @@ function HometownCard({ summary }: { summary: HometownComplianceSummary }) {
         <div style={{ width: `${ncPct * 100}%`, background: '#F87171' }} />
       </div>
 
-      <div className="grid grid-cols-3 gap-1 text-[10px] font-mono mb-2">
+      <div className="grid grid-cols-3 gap-1 text-xs font-mono mb-2">
         <div className="text-center">
           <span style={{ color: '#22C55E' }}>{pct(compPct)}</span>
           <br /><span style={{ color: 'var(--pl-text-faint)' }}>Compliant</span>
@@ -106,13 +106,13 @@ function HometownCard({ summary }: { summary: HometownComplianceSummary }) {
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="flex items-center justify-between text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         <span>Vault: {pct(summary.avgColdVaultShare)}</span>
         <span>TABC issues: <strong style={{ color: summary.tabcIssues > 10 ? '#F87171' : 'var(--pl-text-muted)' }}>{summary.tabcIssues}</strong></span>
         <span>Audit: {summary.lastFullAudit}</span>
       </div>
 
-      <div className="mt-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
+      <div className="mt-2 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
         {summary.topIssue}
       </div>
     </div>
@@ -144,10 +144,10 @@ export default function CompliancePage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Compliance &middot; Display &amp; TABC
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Compliance Dashboard
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -156,12 +156,12 @@ export default function CompliancePage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
         <LightKpiCard label="Overall Score" value={String(avgScore)} accent={avgScore >= 85 ? '#22C55E' : '#F59E0B'} sub="Avg across hometowns" />
         <LightKpiCard label="Compliance Rate" value={pct(totalCompliant / totalAccounts)} accent="#22C55E" sub={`${totalCompliant.toLocaleString()} of ${totalAccounts.toLocaleString()}`} />
         <LightKpiCard label="Cold Vault Share" value={pct(avgColdVault)} accent={avgColdVault >= 0.40 ? '#22C55E' : '#F59E0B'} sub="Avg Lone Star share" />
+        <LightKpiCard label="Accounts with Issues" value={String(ncAccounts.length)} accent={ncAccounts.length > 0 ? '#F87171' : '#22C55E'} sub={`${pct(ncAccounts.length / DISPLAY_COMPLIANCE.length)} of audited`} />
         <LightKpiCard label="TABC Flags" value={String(totalTABCIssues)} accent={totalTABCIssues > 0 ? '#F87171' : '#22C55E'} sub={`${tabcIssues.expired} expired · ${tabcIssues.suspended} suspended`} />
-        <LightKpiCard label="Photo Verified" value={pct(DISPLAY_COMPLIANCE.filter(d => d.photoVerified).length / DISPLAY_COMPLIANCE.length)} accent="#3B82F6" sub="Of sample audits" />
       </div>
 
       {/* Tab Toggle */}
@@ -207,7 +207,7 @@ export default function CompliancePage() {
                 />
               );
             })}
-            <div className="flex items-center gap-4 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="flex items-center gap-4 mt-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
               <span>■ bar = current share</span>
               <span>│ marker = 40% target</span>
               <span>Cold vault = cooler/refrigerator door facings allocated to Lone Star brands</span>
@@ -238,7 +238,7 @@ export default function CompliancePage() {
                         <td className="py-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{d.routeId}</td>
                         <td className="py-2 text-right font-mono font-bold" style={{ color: sc.color }}>{d.overallScore}</td>
                         <td className="py-2">
-                          <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: sc.bg, color: sc.color }}>
+                          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: sc.bg, color: sc.color }}>
                             {d.status}
                           </span>
                         </td>
@@ -248,7 +248,7 @@ export default function CompliancePage() {
                         <td className="py-2 text-right font-mono" style={{ color: d.shelfCompliance >= 0.85 ? '#22C55E' : '#F59E0B' }}>
                           {pct(d.shelfCompliance)}
                         </td>
-                        <td className="py-2 pr-2 text-[11px] max-w-[200px] truncate" style={{ color: 'var(--pl-text-muted)' }}>
+                        <td className="py-2 pr-2 text-[13px] max-w-[200px] truncate" style={{ color: 'var(--pl-text-muted)' }}>
                           {d.issues[0]?.description ?? '—'}
                         </td>
                       </tr>
@@ -268,7 +268,7 @@ export default function CompliancePage() {
                 <div key={lic.code} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                   <div className="flex items-center gap-2 mb-1">
                     <span
-                      className="text-[11px] font-bold font-mono px-1.5 py-0.5 rounded"
+                      className="text-[13px] font-bold font-mono px-1.5 py-0.5 rounded"
                       style={{
                         background: lic.allowsSpirits ? 'rgba(248,113,113,0.08)' : 'rgba(113,128,150,0.08)',
                         color: lic.allowsSpirits ? '#F87171' : 'var(--pl-text-muted)',
@@ -278,9 +278,9 @@ export default function CompliancePage() {
                     </span>
                     <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{lic.label}</span>
                   </div>
-                  <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{lic.description}</p>
+                  <p className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{lic.description}</p>
                   {lic.allowsSpirits && (
-                    <div className="mt-1 text-[9px] font-bold font-mono" style={{ color: '#F87171' }}>SPIRITS ELIGIBLE</div>
+                    <div className="mt-1 text-xs font-bold font-mono" style={{ color: '#F87171' }}>SPIRITS ELIGIBLE</div>
                   )}
                 </div>
               ))}
@@ -296,14 +296,14 @@ export default function CompliancePage() {
                   <div key={a.accountId} className="flex items-center gap-4 px-4 py-3 rounded-lg border" style={{ borderColor: sc.color + '30' }}>
                     <span className="text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{a.accountId}</span>
                     <span
-                      className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded uppercase"
+                      className="text-xs font-bold font-mono px-1.5 py-0.5 rounded uppercase"
                       style={{ background: sc.bg, color: sc.color }}
                     >
                       {a.status}
                     </span>
-                    <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{a.licenseCode} · #{a.licenseNumber}</span>
-                    <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Exp: {a.expirationDate}</span>
-                    <span className="text-[11px] flex-1" style={{ color: sc.color }}>{a.notes}</span>
+                    <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{a.licenseCode} · #{a.licenseNumber}</span>
+                    <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Exp: {a.expirationDate}</span>
+                    <span className="text-[13px] flex-1" style={{ color: sc.color }}>{a.notes}</span>
                   </div>
                 );
               })}
@@ -335,7 +335,7 @@ export default function CompliancePage() {
       )}
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Display compliance scored 0-100 based on cold vault share, endcap placement, POS materials, and shelf planogram adherence.
         TABC license status verified quarterly. Cold vault target: 40% of cooler facings for Lone Star brands.
       </div>

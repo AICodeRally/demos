@@ -63,7 +63,7 @@ const PRIORITIES = [
   },
   {
     title: 'Display Compliance to 89%',
-    desc: 'Reinstate EMCO-style gate system. Enforce cooler planograms and shelf standards across all accounts.',
+    desc: 'Reinstate gate system. Enforce cooler planograms and shelf standards across all accounts.',
     stat: '82% → 89%',
     icon: '📊',
   },
@@ -99,14 +99,14 @@ export default function CeoMandatePage() {
         </div>
         <div>
           <div
-            className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+            className="text-xs tracking-[3px] uppercase font-mono mb-1"
             style={{ color: '#C6A052' }}
           >
             Corporate Strategy &middot; FY2026
           </div>
           <h1
             className="text-2xl font-extrabold mb-1"
-            style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}
+            style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
           >
             FY2026 Corporate Strategy
           </h1>
@@ -123,12 +123,12 @@ export default function CeoMandatePage() {
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Revenue Target
           </div>
           <div
             className="text-3xl font-extrabold mb-1"
-            style={{ color: '#C6A052', fontFamily: "'Space Grotesk', sans-serif" }}
+            style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}
           >
             $5.2B
           </div>
@@ -142,12 +142,12 @@ export default function CeoMandatePage() {
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #F87171', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Sazerac Portfolio Share
           </div>
           <div
             className="text-3xl font-extrabold mb-1"
-            style={{ color: '#F87171', fontFamily: "'Space Grotesk', sans-serif" }}
+            style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}
           >
             8%
           </div>
@@ -161,12 +161,12 @@ export default function CeoMandatePage() {
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #2563EB', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             South TX Cases
           </div>
           <div
             className="text-3xl font-extrabold mb-1"
-            style={{ color: '#2563EB', fontFamily: "'Space Grotesk', sans-serif" }}
+            style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}
           >
             5.5M
           </div>
@@ -196,7 +196,7 @@ export default function CeoMandatePage() {
                   <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                     {d.name}
                   </div>
-                  <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                     {pct(d.value)} share
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export default function CeoMandatePage() {
       {/* ── Strategic Priorities ──────────────────────── */}
       <div className="mb-4">
         <div
-          className="text-[11px] uppercase tracking-[1.5px] font-mono mb-4"
+          className="text-[13px] uppercase tracking-[1.5px] font-mono mb-4"
           style={{ color: 'var(--pl-text-muted)' }}
         >
           Strategic Priorities
@@ -268,7 +268,7 @@ export default function CeoMandatePage() {
                   <div className="flex items-center justify-between mb-1">
                     <span
                       className="text-[14px] font-bold"
-                      style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}
+                      style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
                     >
                       {p.title}
                     </span>

@@ -45,13 +45,13 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
 
       {/* Breadcrumb */}
       <div className="mt-4 flex items-center gap-2 mb-4">
-        <Link href="/proofline-andrews/ops/day-planner" className="text-[11px] font-mono hover:underline" style={{ color: '#2563EB' }}>
+        <Link href="/proofline-andrews/ops/day-planner" className="text-[13px] font-mono hover:underline" style={{ color: '#2563EB' }}>
           Day Planner
         </Link>
-        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
-        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{plan.repName} &mdash; {plan.route}</span>
-        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
-        <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>Stop {stop.sequence}</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{plan.repName} &mdash; {plan.route}</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>Stop {stop.sequence}</span>
       </div>
 
       {/* Header */}
@@ -65,14 +65,14 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
               {stop.sequence}
             </span>
             <span
-              className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+              className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded"
               style={{ background: `${color}20`, color }}
             >
               {stop.type.replace(/-/g, ' ')}
             </span>
             {stop.tabcStatus && (
               <span
-                className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+                className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded"
                 style={{
                   background: stop.tabcStatus === 'verified' ? 'rgba(34,197,94,0.1)' :
                     stop.tabcStatus === 'expiring' ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)',
@@ -84,21 +84,21 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
               </span>
             )}
             {stop.photoRequired && (
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+              <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded"
                 style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
                 Photo Required
               </span>
             )}
           </div>
-          <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             {stop.accountName}
           </h1>
           <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>{stop.address}</p>
         </div>
         <div className="text-right">
-          <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>Arrival</div>
+          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Arrival</div>
           <div className="text-xl font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{stop.arrivalTime}</div>
-          <div className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>{stop.duration} min &middot; {stop.contactName}</div>
+          <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{stop.duration} min &middot; {stop.contactName}</div>
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
           { label: 'AI Insights', value: String(stop.aiInsights.length), color: '#A855F7' },
         ].map(kpi => (
           <div key={kpi.label} className="rounded-lg border p-3" style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)' }}>
-            <div className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-faint)' }}>{kpi.label}</div>
+            <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-faint)' }}>{kpi.label}</div>
             <div className="text-lg font-bold font-mono mt-1" style={{ color: kpi.color }}>{kpi.value}</div>
           </div>
         ))}
@@ -143,7 +143,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
       {tab === 'visit' && (
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-[10px] uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="text-xs uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>
               Delivery Manifest &mdash; {totalCases} cases, {stop.deliveryManifest.length} SKUs
             </div>
             <div className="space-y-1">
@@ -152,11 +152,11 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
                   <div className="flex items-center gap-2">
                     <span className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{item.brand}</span>
                     {item.promo && (
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                      <span className="text-xs font-bold px-1.5 py-0.5 rounded"
                         style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>{item.promo}</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-4 text-[11px] font-mono">
+                  <div className="flex items-center gap-4 text-[13px] font-mono">
                     <span style={{ color: 'var(--pl-text-faint)' }}>{item.sku}</span>
                     <span className="font-bold w-10 text-right" style={{ color: 'var(--pl-text)' }}>{item.cases}cs</span>
                   </div>
@@ -167,7 +167,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
 
           <div className="space-y-4">
             <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-              <div className="text-[10px] uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
+              <div className="text-xs uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
               <ul className="space-y-2">
                 {stop.talkingPoints.map((tp, i) => (
                   <li key={i} className="flex items-start gap-2 text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>
@@ -180,10 +180,10 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
 
             {stop.displayInstructions && (
               <div className="rounded-xl p-5" style={{ background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.15)' }}>
-                <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: '#2563EB' }}>Display Instructions</div>
+                <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: '#2563EB' }}>Display Instructions</div>
                 <div className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{stop.displayInstructions}</div>
                 {stop.photoRequired && (
-                  <button className="mt-3 text-[11px] font-bold px-4 py-2 rounded-lg transition-colors"
+                  <button className="mt-3 text-[13px] font-bold px-4 py-2 rounded-lg transition-colors"
                     style={{ background: 'rgba(37,99,235,0.2)', color: '#2563EB' }}>
                     Capture Photo
                   </button>
@@ -197,7 +197,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
       {/* Account History Tab */}
       {tab === 'history' && (
         <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-          <div className="text-[10px] uppercase tracking-wider font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>Last 12 Visits</div>
+          <div className="text-xs uppercase tracking-wider font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>Last 12 Visits</div>
           <div className="space-y-0">
             {[
               { date: 'Feb 25', cases: 128, rev: 15400, type: 'Delivery', note: 'Standard. Corona facing at 8.' },
@@ -214,9 +214,9 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
               { date: 'Dec 10', cases: 120, rev: 14400, type: 'Delivery', note: 'Standard. Began spirits section expansion.' },
             ].map((visit, i) => (
               <div key={i} className="flex items-start gap-4 py-3 border-b" style={{ borderColor: 'var(--pl-border)' }}>
-                <span className="text-[10px] font-mono w-14 shrink-0" style={{ color: 'var(--pl-text-faint)' }}>{visit.date}</span>
+                <span className="text-xs font-mono w-14 shrink-0" style={{ color: 'var(--pl-text-faint)' }}>{visit.date}</span>
                 <span
-                  className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded shrink-0"
+                  className="text-xs font-bold uppercase px-1.5 py-0.5 rounded shrink-0"
                   style={{
                     background: visit.type === 'Presell' ? 'rgba(184,115,51,0.1)' : 'rgba(37,99,235,0.1)',
                     color: visit.type === 'Presell' ? '#7C3AED' : '#2563EB',
@@ -225,11 +225,11 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
                   {visit.type}
                 </span>
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 text-[11px] font-mono">
+                  <div className="flex items-center gap-3 text-[13px] font-mono">
                     <span style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
                     <span style={{ color: '#22C55E' }}>${fmt(visit.rev)}</span>
                   </div>
-                  <div className="text-[11px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.note}</div>
+                  <div className="text-[13px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.note}</div>
                 </div>
               </div>
             ))}
@@ -241,7 +241,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
       {tab === 'intel' && (
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-[10px] uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>AI Insights</div>
+            <div className="text-xs uppercase tracking-wider font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>AI Insights</div>
             <div className="space-y-3">
               {stop.aiInsights.map((insight, i) => (
                 <div
@@ -265,14 +265,14 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
           <div className="space-y-4">
             {stop.competitiveIntel && (
               <div className="rounded-xl p-5" style={{ background: 'rgba(168,85,247,0.04)', border: '1px solid rgba(168,85,247,0.15)' }}>
-                <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: '#A855F7' }}>Competitive Intel</div>
+                <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: '#A855F7' }}>Competitive Intel</div>
                 <div className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{stop.competitiveIntel}</div>
               </div>
             )}
 
             {stop.tabcStatus && (
               <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-                <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>TABC Compliance</div>
+                <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>TABC Compliance</div>
                 <div className="flex items-center gap-2 text-[13px]">
                   <span
                     className="w-2.5 h-2.5 rounded-full"
@@ -283,16 +283,16 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
                   />
                   <span className="font-semibold capitalize" style={{ color: 'var(--pl-text)' }}>{stop.tabcStatus}</span>
                 </div>
-                <div className="text-[11px] mt-2" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-[13px] mt-2" style={{ color: 'var(--pl-text-faint)' }}>
                   License verified against TABC database. Next audit scheduled March 15.
                 </div>
               </div>
             )}
 
             <div className="rounded-xl p-5" style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}>
-              <div className="text-[10px] uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>Contact</div>
+              <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>Contact</div>
               <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{stop.contactName}</div>
-              <div className="text-[11px] font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>{stop.contactPhone}</div>
+              <div className="text-[13px] font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>{stop.contactPhone}</div>
             </div>
           </div>
         </div>
@@ -303,7 +303,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
         {prevStop ? (
           <Link
             href={`/proofline-andrews/ops/day-planner/stop/${prevStop.id}`}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+            className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
             style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-secondary)' }}
           >
             &larr; Stop {prevStop.sequence}: {prevStop.accountName.split(' \u2014 ')[0].split(' #')[0]}
@@ -312,7 +312,7 @@ export default function StopDetailClient({ params }: { params: Promise<{ id: str
         {nextStop ? (
           <Link
             href={`/proofline-andrews/ops/day-planner/stop/${nextStop.id}`}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+            className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
             style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-secondary)' }}
           >
             Stop {nextStop.sequence}: {nextStop.accountName.split(' \u2014 ')[0].split(' #')[0]} &rarr;

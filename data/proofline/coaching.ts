@@ -46,7 +46,7 @@ export const COACHING_CARDS: CoachingCard[] = [
     dataPoints: [
       'Blue Moon pitch success: 67% (2/3 visits)',
       'Account has 8 taps — Lone Star holds 3, target is 5',
-      'Ben E. Keith craft delivery spotted Tuesday AM',
+      'Redtail craft delivery spotted Tuesday AM',
       'Seasonal keg pricing available through March 31',
     ],
     suggestedAction: 'Suggest leading with Blue Moon seasonal keg pricing ($89 vs standard $109). Pair with Firestone Walker 805 for craft credibility. If tap conversation stalls, pivot to Sazerac cocktail — owner expressed interest in Old Fashioned program.',
@@ -254,7 +254,7 @@ export const COACHING_HISTORY_DAL_03: CoachingHistoryEntry[] = [
   },
   {
     id: 'CH-003', sellerId: 'SEL-DAL-03', date: '2026-01-31', type: 'team-meeting',
-    summary: 'January team huddle. Marcus shared Cedar Springs Tap House success story — gained 2 tap handles from Ben E. Keith competitor.',
+    summary: 'January team huddle. Marcus shared Cedar Springs Tap House success story — gained 2 tap handles from Redtail competitor.',
     outcomes: ['Team learned presell + seasonal pricing combo technique', 'Three other reps committed to trying same approach'],
     nextSteps: ['Marcus to present at district-wide meeting in February'],
     managerNotes: null,

@@ -102,9 +102,9 @@ function RadarChart({ routes, selectedRouteId }: { routes: Route[]; selectedRout
               y={ly + 4}
               textAnchor="middle"
               fill="var(--pl-text-muted)"
-              fontSize="10"
+              fontSize="12"
               fontWeight="600"
-              fontFamily="'Space Grotesk', sans-serif"
+              fontFamily="var(--pl-font)"
             >
               {axis.label}
             </text>
@@ -180,19 +180,19 @@ function SlopeChart({ routes, selectedRouteId }: { routes: Route[]; selectedRout
       {[0.25, 0.5, 0.75, 1.0].map((v) => (
         <g key={v}>
           <line x1={SLOPE_PAD.left} y1={toY(v)} x2={SLOPE_PAD.left + SLOPE_INNER_W} y2={toY(v)} stroke="var(--pl-chart-grid)" strokeWidth="0.5" />
-          <text x={SLOPE_PAD.left - 6} y={toY(v) + 4} textAnchor="end" fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace">
+          <text x={SLOPE_PAD.left - 6} y={toY(v) + 4} textAnchor="end" fill="var(--pl-text-faint)" fontSize="12" fontFamily="monospace">
             {pct(v)}
           </text>
         </g>
       ))}
 
       <line x1={SLOPE_PAD.left} y1={toY(1.0)} x2={SLOPE_PAD.left + SLOPE_INNER_W} y2={toY(1.0)} stroke="#7C3AED" strokeWidth="1" strokeDasharray="4 3" opacity="0.4" />
-      <text x={SLOPE_PAD.left + SLOPE_INNER_W + 4} y={toY(1.0) + 3} fill="#7C3AED" fontSize="8" fontFamily="monospace" opacity="0.6">
+      <text x={SLOPE_PAD.left + SLOPE_INNER_W + 4} y={toY(1.0) + 3} fill="#7C3AED" fontSize="12" fontFamily="monospace" opacity="0.6">
         100%
       </text>
 
       {[0, 3, 6, 9, 12].map((w) => (
-        <text key={w} x={toX(w)} y={SLOPE_H - 6} textAnchor="middle" fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace">
+        <text key={w} x={toX(w)} y={SLOPE_H - 6} textAnchor="middle" fill="var(--pl-text-faint)" fontSize="12" fontFamily="monospace">
           W{w + 1}
         </text>
       ))}
@@ -233,7 +233,7 @@ function SlopeChart({ routes, selectedRouteId }: { routes: Route[]; selectedRout
         const color = attainColor(route.attain);
         const endVal = route.weeklyAttainment[12];
         return (
-          <text x={toX(12) + 8} y={toY(endVal) + 4} fill={color} fontSize="10" fontWeight="700" fontFamily="monospace">
+          <text x={toX(12) + 8} y={toY(endVal) + 4} fill={color} fontSize="12" fontWeight="700" fontFamily="monospace">
             {route.id}: {pct(endVal)}
           </text>
         );
@@ -269,12 +269,12 @@ function RouteRow({ route, seller, idx, isSelected, onSelect }: {
         <div className="flex items-center gap-2">
           <span className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? '\u2014'}</span>
           {tb && (
-            <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: tb.bg, color: tb.color }}>
+            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: tb.bg, color: tb.color }}>
               {tb.label}
             </span>
           )}
           {seller?.atRisk && (
-            <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
+            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
               AT RISK
             </span>
           )}
@@ -347,16 +347,16 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
       {/* Breadcrumb + Header */}
       <div className="mt-6 mb-6">
         <div className="flex items-center gap-2 mb-2">
-          <Link href="/proofline-andrews/strategy/territories" className="text-[11px] font-mono hover:underline" style={{ color: '#7C3AED' }}>
+          <Link href="/proofline-andrews/strategy/territories" className="text-[13px] font-mono hover:underline" style={{ color: '#7C3AED' }}>
             Territory Design
           </Link>
-          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
-          <span className="text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{hometown.name}</span>
+          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
+          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{hometown.name}</span>
         </div>
 
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
               {hometown.name}
             </h1>
             <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -367,7 +367,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {prevHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${prevHometown.id}`}
-                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+                className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 &larr; {prevHometown.name.replace(' HQ', '')}
@@ -376,7 +376,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {nextHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${nextHometown.id}`}
-                className="text-[11px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+                className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 {nextHometown.name.replace(' HQ', '')} &rarr;
@@ -398,7 +398,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
               District Manager &middot; {Math.floor(manager.tenure / 12)}y {manager.tenure % 12}m tenure
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[11px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-4 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
             <span>{manager.directReports.length} direct reports</span>
             <span>Spirits: {pct(manager.districtKPIs.spiritsPenetration)}</span>
           </div>
@@ -422,14 +422,14 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
       {/* Radar + Slope Charts */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <LightSectionCard title={`Route KPI Radar${selectedRoute ? ` \u2014 ${selectedRoute}` : ''}`}>
-          <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+          <p className="text-[13px] mb-2" style={{ color: 'var(--pl-text-faint)' }}>
             Click a route in the table to highlight &middot; All routes overlaid for comparison
           </p>
           <RadarChart routes={routes} selectedRouteId={selectedRoute} />
         </LightSectionCard>
 
         <LightSectionCard title={`13-Week Attainment Trend${selectedRoute ? ` \u2014 ${selectedRoute}` : ''}`}>
-          <p className="text-[11px] mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+          <p className="text-[13px] mb-2" style={{ color: 'var(--pl-text-faint)' }}>
             Cumulative attainment trajectory &middot; Dashed line = 100% target
           </p>
           <SlopeChart routes={routes} selectedRouteId={selectedRoute} />
@@ -482,8 +482,8 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
         </div>
       </LightSectionCard>
 
-      {/* EMCO Gate Summary */}
-      <LightSectionCard title="EMCO Gate Performance by Rep" className="mb-6">
+      {/* Gate Summary */}
+      <LightSectionCard title="Gate Performance by Rep" className="mb-6">
         <div className="grid grid-cols-1 gap-2">
           {sellers.map((seller: Seller) => {
             const gates = seller.emcoGates;
@@ -497,7 +497,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
               >
                 <div className="w-32 shrink-0">
                   <div className="text-[12px] font-semibold" style={{ color: isSelected ? '#7C3AED' : 'var(--pl-text)' }}>{seller.name}</div>
-                  <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.routeId}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.routeId}</div>
                 </div>
                 {[
                   { label: 'Core', val: gates.core, target: 0.85 },
@@ -509,8 +509,8 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
                   return (
                     <div key={g.label} className="flex-1">
                       <div className="flex items-center justify-between mb-0.5">
-                        <span className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{g.label}</span>
-                        <span className="text-[10px] font-mono font-bold" style={{ color: passed ? '#22C55E' : '#F87171' }}>
+                        <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{g.label}</span>
+                        <span className="text-xs font-mono font-bold" style={{ color: passed ? '#22C55E' : '#F87171' }}>
                           {pct(g.val)}
                         </span>
                       </div>
@@ -538,7 +538,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
           <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>
             See these routes in action
           </div>
-          <div className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             Jump to the Day Planner to view stop-level detail for any rep in {hometown.name.replace(' HQ', '')}
           </div>
         </div>

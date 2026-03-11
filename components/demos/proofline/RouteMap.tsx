@@ -146,7 +146,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
     <svg
       viewBox="0 0 600 500"
       className="w-full h-auto rounded-xl"
-      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+      style={{ fontFamily: 'var(--pl-font)' }}
     >
       <defs>
         <style>{`
@@ -190,7 +190,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
               <text
                 x={x1 < 100 ? x1 + 4 : x2 - 4}
                 y={y1 < 100 ? y1 + 14 : y2 - 6}
-                fontSize="8"
+                fontSize="12"
                 fill="var(--pl-map-road)"
                 fontFamily="monospace"
                 textAnchor={x1 < 100 ? 'start' : 'end'}
@@ -212,7 +212,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
             />
             <text
               x={300} y={road.label === 'I-30' ? (region === 'dallas' ? 405 : 125) : 75}
-              fontSize="8"
+              fontSize="12"
               fill="var(--pl-map-road)"
               fontFamily="monospace"
               textAnchor="middle"
@@ -351,7 +351,7 @@ export function RouteMap({ stops, activeStop, onStopClick, onStopHover }: RouteM
       {Array.from(new Set(stops.map(s => s.type))).map((type, i) => (
         <g key={type} transform={`translate(16, ${430 + i * 14})`}>
           <circle cx="5" cy="-2" r="3.5" fill={STOP_COLORS[type] ?? '#6B7280'} />
-          <text x="14" y="1" fontSize="8" fill="var(--pl-map-road)" fontFamily="monospace">
+          <text x="14" y="1" fontSize="12" fill="var(--pl-map-road)" fontFamily="monospace">
             {type.replace(/-/g, ' ')}
           </text>
         </g>

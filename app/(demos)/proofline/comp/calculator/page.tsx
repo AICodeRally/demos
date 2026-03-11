@@ -50,11 +50,11 @@ function GateRing({ gate, value, onChange }: {
         <text x={size / 2} y={size / 2 - 2} textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
           {(value * 100).toFixed(0)}%
         </text>
-        <text x={size / 2} y={size / 2 + 11} textAnchor="middle" fontSize="7" fill={color} fontFamily="monospace" fontWeight="bold">
+        <text x={size / 2} y={size / 2 + 11} textAnchor="middle" fontSize="12" fill={color} fontFamily="monospace" fontWeight="bold">
           {isUnlocked ? `${'\u2713'} ${gate.multiplier.toFixed(2)}x` : `${'\u2265'}${(gate.threshold * 100).toFixed(0)}%`}
         </text>
       </svg>
-      <div className="text-[8px] font-mono font-bold mt-0.5" style={{ color: gate.color }}>
+      <div className="text-xs font-mono font-bold mt-0.5" style={{ color: gate.color }}>
         {gate.name.toUpperCase()}
       </div>
       <input
@@ -87,10 +87,10 @@ function TierSteps({ attainment }: { attainment: number }) {
               background: isActive ? color : `${color}15`,
               border: isActive ? `2px solid ${color}` : '1px solid transparent',
             }} />
-            <div className="text-[7px] font-mono font-bold" style={{ color: isActive ? color : '#A0AEC0' }}>
+            <div className="text-xs font-mono font-bold" style={{ color: isActive ? color : '#A0AEC0' }}>
               T{tier.level}
             </div>
-            <div className="text-[6px] font-mono" style={{ color: isActive ? color : '#CBD5E0' }}>
+            <div className="text-xs font-mono" style={{ color: isActive ? color : '#CBD5E0' }}>
               {(tier.rate * 100).toFixed(1)}%
             </div>
           </div>
@@ -176,10 +176,10 @@ export default function RtccCalculatorPage() {
 
       {/* Header */}
       <div className="mt-6 mb-4">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           What-If Calculator &middot; Real-Time Comp Modeling
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
           Real-Time What-If Calculator
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
@@ -193,7 +193,7 @@ export default function RtccCalculatorPage() {
           <button
             key={s.id}
             onClick={() => handleSellerChange(s)}
-            className="px-2 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors"
+            className="px-2 py-1 rounded-lg text-xs font-mono font-bold transition-colors"
             style={{
               background: selectedSeller.id === s.id ? '#10B981' : '#F1F5F9',
               color: selectedSeller.id === s.id ? 'white' : '#718096',
@@ -202,7 +202,7 @@ export default function RtccCalculatorPage() {
             {s.name.split(' ')[0]} ({s.routeId})
           </button>
         ))}
-        <span className="px-2 py-1 text-[10px] font-mono" style={{ color: '#A0AEC0' }}>
+        <span className="px-2 py-1 text-xs font-mono" style={{ color: '#A0AEC0' }}>
           +{SELLERS.length - 12} more
         </span>
       </div>
@@ -215,13 +215,13 @@ export default function RtccCalculatorPage() {
           <LightSectionCard title="Brand / Deal Builder">
             {/* Brand selector */}
             <div className="mb-3">
-              <label className="text-[9px] font-mono font-bold block mb-1" style={{ color: '#718096' }}>
+              <label className="text-xs font-mono font-bold block mb-1" style={{ color: '#718096' }}>
                 SELECT BRAND
               </label>
               <select
                 value={selectedBrand}
                 onChange={e => setSelectedBrand(e.target.value)}
-                className="w-full text-[11px] font-mono rounded-lg border px-2 py-1.5"
+                className="w-full text-[13px] font-mono rounded-lg border px-2 py-1.5"
                 style={{ borderColor: '#E2E8F0', color: '#1A1A2E' }}
               >
                 {BRAND_FAMILIES.map(b => (
@@ -234,7 +234,7 @@ export default function RtccCalculatorPage() {
 
             {/* Cases input + Add button */}
             <div className="mb-3">
-              <label className="text-[9px] font-mono font-bold block mb-1" style={{ color: '#718096' }}>
+              <label className="text-xs font-mono font-bold block mb-1" style={{ color: '#718096' }}>
                 CASES
               </label>
               <div className="flex gap-2">
@@ -247,7 +247,7 @@ export default function RtccCalculatorPage() {
                 />
                 <button
                   onClick={addDeal}
-                  className="px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold text-white"
+                  className="px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-white"
                   style={{ background: '#10B981' }}
                 >
                   + Add
@@ -258,17 +258,17 @@ export default function RtccCalculatorPage() {
             {/* Deal items list */}
             {dealItems.length > 0 && (
               <div className="space-y-1.5 mb-3">
-                <div className="text-[9px] font-mono font-bold" style={{ color: '#718096' }}>DEAL ITEMS</div>
+                <div className="text-xs font-mono font-bold" style={{ color: '#718096' }}>DEAL ITEMS</div>
                 {dealItems.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between px-2 py-1.5 rounded-lg" style={{ background: '#F7FAFC' }}>
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] font-bold truncate" style={{ color: '#1A1A2E' }}>{item.brand.name}</div>
-                      <div className="text-[8px] font-mono" style={{ color: '#A0AEC0' }}>
+                      <div className="text-xs font-bold truncate" style={{ color: '#1A1A2E' }}>{item.brand.name}</div>
+                      <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>
                         {fmt(item.cases)} cases {'\u00D7'} ${item.brand.revenuePerCase.toFixed(2)}
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                      <span className="text-[10px] font-bold font-mono" style={{ color: '#10B981' }}>
+                      <span className="text-xs font-bold font-mono" style={{ color: '#10B981' }}>
                         ${fmt(Math.round(item.cases * item.brand.revenuePerCase))}
                       </span>
                       <button onClick={() => removeDeal(idx)} className="text-[14px] leading-none" style={{ color: '#F87171' }}>
@@ -285,13 +285,13 @@ export default function RtccCalculatorPage() {
               background: dealItems.length > 0 ? 'rgba(16,185,129,0.06)' : '#F7FAFC',
               border: '1px solid rgba(16,185,129,0.2)',
             }}>
-              <div className="flex justify-between text-[11px]">
+              <div className="flex justify-between text-[13px]">
                 <span className="font-mono" style={{ color: '#718096' }}>Deal Revenue</span>
                 <span className="font-bold font-mono" style={{ color: dealRevenue > 0 ? '#10B981' : '#A0AEC0' }}>
                   +${fmt(dealRevenue)}
                 </span>
               </div>
-              <div className="flex justify-between text-[11px] mt-1">
+              <div className="flex justify-between text-[13px] mt-1">
                 <span className="font-mono" style={{ color: '#718096' }}>Total Q Revenue</span>
                 <span className="font-bold font-mono" style={{ color: '#1A1A2E' }}>${fmt(totalRevenue)}</span>
               </div>
@@ -308,7 +308,7 @@ export default function RtccCalculatorPage() {
           }}>
             {/* Hero number */}
             <div className="text-center mb-4">
-              <div className="text-[10px] font-mono font-bold mb-2" style={{ color: '#718096' }}>
+              <div className="text-xs font-mono font-bold mb-2" style={{ color: '#718096' }}>
                 PROJECTED QUARTERLY COMMISSION
               </div>
               <div className="text-[48px] font-bold font-mono leading-none" style={{ color: '#1A1A2E' }}>
@@ -328,20 +328,20 @@ export default function RtccCalculatorPage() {
                 <span className="text-[14px] font-bold font-mono" style={{ color: deltaColor }}>
                   {delta >= 0 ? '+' : ''}{'\u0024'}{fmt(Math.abs(Math.round(delta)))}
                 </span>
-                <span className="text-[10px] font-mono" style={{ color: '#718096' }}>vs baseline</span>
+                <span className="text-xs font-mono" style={{ color: '#718096' }}>vs baseline</span>
               </div>
             </div>
 
             {/* Earnings breakdown grid */}
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.6)' }}>
-                <div className="text-[8px] font-mono font-bold" style={{ color: '#A0AEC0' }}>BASE SALARY</div>
+                <div className="text-xs font-mono font-bold" style={{ color: '#A0AEC0' }}>BASE SALARY</div>
                 <div className="text-[16px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
                   ${fmt(Math.round(projected.baseEarnings))}
                 </div>
               </div>
               <div className="rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.6)' }}>
-                <div className="text-[8px] font-mono font-bold" style={{ color: '#A0AEC0' }}>
+                <div className="text-xs font-mono font-bold" style={{ color: '#A0AEC0' }}>
                   VARIABLE ({projected.tier.label.split(' \u2014 ')[1]})
                 </div>
                 <div className="text-[16px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
@@ -351,20 +351,20 @@ export default function RtccCalculatorPage() {
               <div className="rounded-lg px-3 py-2" style={{
                 background: projected.emcoMultiplier > 1 ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.6)',
               }}>
-                <div className="text-[8px] font-mono font-bold" style={{ color: '#A0AEC0' }}>EMCO MULTIPLIER</div>
+                <div className="text-xs font-mono font-bold" style={{ color: '#A0AEC0' }}>GATE MULTIPLIER</div>
                 <div className="text-[16px] font-bold font-mono" style={{ color: projected.emcoMultiplier > 1 ? '#22C55E' : '#A0AEC0' }}>
                   {projected.emcoMultiplier.toFixed(2)}x
                 </div>
-                <div className="text-[8px] font-mono" style={{ color: '#718096' }}>{projected.unlockedGates}/4 gates</div>
+                <div className="text-xs font-mono" style={{ color: '#718096' }}>{projected.unlockedGates}/4 gates</div>
               </div>
               <div className="rounded-lg px-3 py-2" style={{
                 background: projected.spiritsBonus > 0 ? 'rgba(16,185,129,0.06)' : 'rgba(255,255,255,0.6)',
               }}>
-                <div className="text-[8px] font-mono font-bold" style={{ color: '#A0AEC0' }}>SPIRITS ADDER</div>
+                <div className="text-xs font-mono font-bold" style={{ color: '#A0AEC0' }}>SPIRITS ADDER</div>
                 <div className="text-[16px] font-bold font-mono" style={{ color: projected.spiritsBonus > 0 ? '#10B981' : '#A0AEC0' }}>
                   {projected.spiritsBonus > 0 ? `+$${fmt(Math.round(projected.spiritsBonus))}` : 'N/A'}
                 </div>
-                <div className="text-[8px] font-mono" style={{ color: '#718096' }}>
+                <div className="text-xs font-mono" style={{ color: '#718096' }}>
                   {spiritsAccounts}/{SPIRITS_ADDER.minAccounts} accts
                 </div>
               </div>
@@ -386,7 +386,7 @@ export default function RtccCalculatorPage() {
                 {(attainment * 100).toFixed(0)}%
               </span>
             </div>
-            <div className="flex justify-between text-[8px] font-mono mt-1" style={{ color: '#A0AEC0' }}>
+            <div className="flex justify-between text-xs font-mono mt-1" style={{ color: '#A0AEC0' }}>
               <span>50%</span><span>75%</span><span>90%</span><span>100%</span><span>105%</span><span>130%</span>
             </div>
           </LightSectionCard>
@@ -394,20 +394,20 @@ export default function RtccCalculatorPage() {
           {/* Baseline vs Projected comparison */}
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
-              <div className="text-[9px] font-mono font-bold mb-2" style={{ color: '#A0AEC0' }}>BASELINE (CURRENT)</div>
+              <div className="text-xs font-mono font-bold mb-2" style={{ color: '#A0AEC0' }}>BASELINE (CURRENT)</div>
               <div className="text-[20px] font-bold font-mono" style={{ color: '#718096' }}>
                 ${fmt(Math.round(baseline.totalEstimate))}
               </div>
-              <div className="text-[9px] font-mono" style={{ color: '#A0AEC0' }}>
+              <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>
                 T{baseline.tier.level} &middot; {baseline.unlockedGates}/4 gates &middot; {baseline.emcoMultiplier.toFixed(2)}x
               </div>
             </div>
             <div className="rounded-lg border p-3" style={{ borderColor: `${deltaColor}40` }}>
-              <div className="text-[9px] font-mono font-bold mb-2" style={{ color: deltaColor }}>PROJECTED (WITH DEAL)</div>
+              <div className="text-xs font-mono font-bold mb-2" style={{ color: deltaColor }}>PROJECTED (WITH DEAL)</div>
               <div className="text-[20px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
                 ${fmt(Math.round(projected.totalEstimate))}
               </div>
-              <div className="text-[9px] font-mono" style={{ color: '#718096' }}>
+              <div className="text-xs font-mono" style={{ color: '#718096' }}>
                 T{projected.tier.level} &middot; {projected.unlockedGates}/4 gates &middot; {projected.emcoMultiplier.toFixed(2)}x
               </div>
             </div>
@@ -416,8 +416,8 @@ export default function RtccCalculatorPage() {
 
         {/* ─── RIGHT: Gate Progress + Tier (col-span-4) ─── */}
         <div className="col-span-4 space-y-3">
-          {/* EMCO Gate Rings */}
-          <LightSectionCard title="EMCO Gate Progress">
+          {/* Gate Rings */}
+          <LightSectionCard title="Gate Progress">
             <div className="grid grid-cols-2 gap-3">
               <GateRing gate={EMCO_GATES[0]} value={coreGate} onChange={setCoreGate} />
               <GateRing gate={EMCO_GATES[1]} value={importGate} onChange={setImportGate} />
@@ -425,7 +425,7 @@ export default function RtccCalculatorPage() {
               <GateRing gate={EMCO_GATES[3]} value={combinedGate} onChange={setCombinedGate} />
             </div>
             <div className="mt-3 text-center">
-              <span className="text-[10px] font-mono px-3 py-1 rounded-full" style={{
+              <span className="text-xs font-mono px-3 py-1 rounded-full" style={{
                 background: projected.emcoMultiplier >= 1.5 ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
                 color: projected.emcoMultiplier >= 1.5 ? '#22C55E' : '#F59E0B',
               }}>
@@ -438,10 +438,10 @@ export default function RtccCalculatorPage() {
           <LightSectionCard title="Tier Progression">
             <TierSteps attainment={attainment} />
             <div className="text-center mt-2">
-              <span className="text-[11px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
+              <span className="text-[13px] font-bold font-mono" style={{ color: '#1A1A2E' }}>
                 {projected.tier.label}
               </span>
-              <span className="text-[10px] font-mono ml-2" style={{ color: '#718096' }}>
+              <span className="text-xs font-mono ml-2" style={{ color: '#718096' }}>
                 @ {(projected.tier.rate * 100).toFixed(1)}% rate
               </span>
             </div>
@@ -462,7 +462,7 @@ export default function RtccCalculatorPage() {
                 {spiritsAccounts}
               </span>
             </div>
-            <div className="text-[9px] font-mono mt-1" style={{ color: '#718096' }}>
+            <div className="text-xs font-mono mt-1" style={{ color: '#718096' }}>
               {spiritsAccounts >= SPIRITS_ADDER.minAccounts
                 ? `${'\u2713'} Qualified \u2014 +${(SPIRITS_ADDER.rate * 100).toFixed(1)}% on $${fmt(totalSpiritsRev)} spirits rev`
                 : `Need ${SPIRITS_ADDER.minAccounts - spiritsAccounts} more accounts to qualify`}
@@ -471,7 +471,7 @@ export default function RtccCalculatorPage() {
 
           {/* Quick Presets */}
           <div className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
-            <div className="text-[9px] font-mono font-bold mb-2" style={{ color: '#718096' }}>QUICK PRESETS</div>
+            <div className="text-xs font-mono font-bold mb-2" style={{ color: '#718096' }}>QUICK PRESETS</div>
             {[
               { label: 'All gates open', action: () => { setCoreGate(0.92); setImportGate(0.85); setEmergingGate(0.75); setCombinedGate(0.92); } },
               { label: 'Elite tier (110%)', action: () => setAttainment(1.10) },
@@ -485,7 +485,7 @@ export default function RtccCalculatorPage() {
               <button
                 key={s.label}
                 onClick={s.action}
-                className="block w-full text-left text-[10px] font-mono px-2 py-1.5 rounded hover:bg-slate-50 transition-colors"
+                className="block w-full text-left text-xs font-mono px-2 py-1.5 rounded hover:bg-slate-50 transition-colors"
                 style={{ color: '#2563EB' }}
               >
                 {s.label} {'\u2192'}
@@ -496,8 +496,8 @@ export default function RtccCalculatorPage() {
       </div>
 
       {/* Methodology */}
-      <div className="mt-4 text-[11px] font-mono" style={{ color: '#A0AEC0' }}>
-        RTWC = Real-Time What-If Calculator. Variable = Revenue {'\u00D7'} Tier Rate {'\u00D7'} EMCO Multiplier.
+      <div className="mt-4 text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
+        RTWC = Real-Time What-If Calculator. Variable = Revenue {'\u00D7'} Tier Rate {'\u00D7'} Gate Multiplier.
         Spirits adder requires {'\u2265'}{SPIRITS_ADDER.minAccounts} accounts. Deal items add to baseline Q revenue of ${fmt(baselineRevenue)}.
         All calculations follow the FY2026 comp plan exactly.
       </div>

@@ -42,7 +42,7 @@ export function ProofDonutChart({ data, size = 180, label, labelColor }: ProofDo
               dominantBaseline="central"
               fill={labelColor ?? 'var(--pl-text-muted)'}
               fontSize={13}
-              fontFamily="'Space Grotesk', sans-serif"
+              fontFamily="var(--pl-font)"
               fontWeight={600}
             >
               {label}

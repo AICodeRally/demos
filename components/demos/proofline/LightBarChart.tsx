@@ -27,7 +27,7 @@ export function LightBarChart({ data, maxVal, formatValue }: LightBarChartProps)
                 background: d.color,
               }}
             >
-              <span className="text-[10px] font-bold font-mono text-white">
+              <span className="text-xs font-bold font-mono text-white">
                 {format(d.value)}
               </span>
             </div>

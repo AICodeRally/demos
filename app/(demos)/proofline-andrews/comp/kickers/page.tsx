@@ -29,7 +29,7 @@ function KickerTimeline() {
         const x = 60 + (i / months.length) * (w - 80);
         return (
           <g key={m}>
-            <text x={x} y={14} fontSize="9" fill="var(--pl-text-faint)" fontFamily="monospace">{m}</text>
+            <text x={x} y={14} fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">{m}</text>
             <line x1={x} y1={20} x2={x} y2={h - 10} stroke="var(--pl-stripe)" strokeWidth="1" />
           </g>
         );
@@ -51,10 +51,10 @@ function KickerTimeline() {
             <rect x={x1} y={y} width={x2 - x1} height={30} rx={6} fill={`${color}20`} stroke={color} strokeWidth="1.5" />
 
             {/* Label */}
-            <text x={(x1 + x2) / 2} y={y + 13} textAnchor="middle" fontSize="8" fontWeight="bold" fill={color} fontFamily="monospace">
+            <text x={(x1 + x2) / 2} y={y + 13} textAnchor="middle" fontSize="12" fontWeight="bold" fill={color} fontFamily="monospace">
               {k.name.length > 25 ? k.name.slice(0, 22) + '...' : k.name}
             </text>
-            <text x={(x1 + x2) / 2} y={y + 24} textAnchor="middle" fontSize="8" fill="var(--pl-text-muted)" fontFamily="monospace">
+            <text x={(x1 + x2) / 2} y={y + 24} textAnchor="middle" fontSize="12" fill="var(--pl-text-muted)" fontFamily="monospace">
               ${fmt(k.reward)} bonus
             </text>
 
@@ -68,7 +68,7 @@ function KickerTimeline() {
       {/* "Now" marker */}
       <g>
         <line x1={toX('2026-03-01')} y1={20} x2={toX('2026-03-01')} y2={h - 10} stroke="#F87171" strokeWidth="1.5" strokeDasharray="4 2" />
-        <text x={toX('2026-03-01')} y={h - 2} textAnchor="middle" fontSize="8" fill="#F87171" fontWeight="bold" fontFamily="monospace">NOW</text>
+        <text x={toX('2026-03-01')} y={h - 2} textAnchor="middle" fontSize="12" fill="#F87171" fontWeight="bold" fontFamily="monospace">NOW</text>
       </g>
     </svg>
     </>
@@ -103,11 +103,11 @@ function ProjectionChart({ kicker, color }: { kicker: typeof KICKERS[0]; color: 
       {/* Kicker window highlight */}
       <rect x={toSvgX(kickerStart)} y={0} width={toSvgX(12) - toSvgX(kickerStart)} height={h}
         fill={`${color}08`} stroke={`${color}30`} strokeWidth="1" strokeDasharray="3 2" />
-      <text x={toSvgX(kickerStart) + 2} y={10} fontSize="6" fill={color} fontFamily="monospace" fontWeight="bold">KICKER WINDOW</text>
+      <text x={toSvgX(kickerStart) + 2} y={10} fontSize="12" fill={color} fontFamily="monospace" fontWeight="bold">KICKER WINDOW</text>
 
       {/* Target line */}
       <line x1={0} y1={toSvgY(target)} x2={w} y2={toSvgY(target)} stroke="#22C55E" strokeWidth="1" strokeDasharray="4 2" />
-      <text x={w - 2} y={toSvgY(target) - 3} textAnchor="end" fontSize="6" fill="#22C55E" fontFamily="monospace">TARGET</text>
+      <text x={w - 2} y={toSvgY(target) - 3} textAnchor="end" fontSize="12" fill="#22C55E" fontFamily="monospace">TARGET</text>
 
       {/* Confidence band */}
       <path d={bandPath} fill={`${color}08`} />
@@ -121,7 +121,7 @@ function ProjectionChart({ kicker, color }: { kicker: typeof KICKERS[0]; color: 
       {/* Delta annotation at week 13 */}
       <line x1={toSvgX(12) + 4} y1={toSvgY(baseline[12])} x2={toSvgX(12) + 4} y2={toSvgY(withKick[12])} stroke="#22C55E" strokeWidth="1.5" />
       <text x={toSvgX(12) + 8} y={(toSvgY(baseline[12]) + toSvgY(withKick[12])) / 2 + 3}
-        fontSize="7" fontWeight="bold" fill="#22C55E" fontFamily="monospace">
+        fontSize="12" fontWeight="bold" fill="#22C55E" fontFamily="monospace">
         +{((withKick[12] - baseline[12]) * 100).toFixed(0)}pp
       </text>
 
@@ -131,14 +131,14 @@ function ProjectionChart({ kicker, color }: { kicker: typeof KICKERS[0]; color: 
 
       {/* Week labels */}
       {[0, 3, 6, 9, 12].map(i => (
-        <text key={i} x={toSvgX(i)} y={h + 10} textAnchor="middle" fontSize="6" fill="var(--pl-text-faint)" fontFamily="monospace">W{i + 1}</text>
+        <text key={i} x={toSvgX(i)} y={h + 10} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">W{i + 1}</text>
       ))}
 
       {/* Legend */}
       <line x1={0} y1={h + 14} x2={12} y2={h + 14} stroke={color} strokeWidth="1.5" />
-      <text x={14} y={h + 14} fontSize="5" fill="var(--pl-text-muted)" fontFamily="monospace" dominantBaseline="middle">w/ kicker</text>
+      <text x={14} y={h + 14} fontSize="12" fill="var(--pl-text-muted)" fontFamily="monospace" dominantBaseline="middle">w/ kicker</text>
       <line x1={60} y1={h + 14} x2={72} y2={h + 14} stroke="#CBD5E0" strokeWidth="1.5" strokeDasharray="3 2" />
-      <text x={74} y={h + 14} fontSize="5" fill="var(--pl-text-faint)" fontFamily="monospace" dominantBaseline="middle">baseline</text>
+      <text x={74} y={h + 14} fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace" dominantBaseline="middle">baseline</text>
     </svg>
     </>
   );
@@ -157,10 +157,10 @@ export default function KickerModelingPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-[10px] tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
+        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Quarterly Kickers &middot; Bonus Incentives
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Kicker Modeling
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -193,10 +193,10 @@ export default function KickerModelingPage() {
                 {/* Left: Details */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[9px] font-bold font-mono px-2 py-0.5 rounded" style={{ background: `${color}15`, color }}>
+                    <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{ background: `${color}15`, color }}>
                       {kicker.quarter}
                     </span>
-                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                       {kicker.startDate} → {kicker.endDate}
                     </span>
                   </div>
@@ -204,14 +204,14 @@ export default function KickerModelingPage() {
                   <p className="text-[12px] mb-3" style={{ color: 'var(--pl-text-secondary)' }}>{kicker.description}</p>
 
                   <div className="rounded-md px-3 py-2 mb-3" style={{ background: 'var(--pl-card-alt)' }}>
-                    <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#2563EB' }}>TARGET</div>
-                    <p className="text-[11px] font-mono" style={{ color: 'var(--pl-text)' }}>{kicker.target}</p>
+                    <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>TARGET</div>
+                    <p className="text-[13px] font-mono" style={{ color: 'var(--pl-text)' }}>{kicker.target}</p>
                   </div>
 
                   {/* Brand focus badges */}
                   <div className="flex flex-wrap gap-1 mb-3">
                     {kicker.brandFocus.map(b => (
-                      <span key={b} className="text-[9px] font-mono px-2 py-0.5 rounded" style={{ background: `${color}10`, color }}>
+                      <span key={b} className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: `${color}10`, color }}>
                         {b.replace(/-/g, ' ')}
                       </span>
                     ))}
@@ -219,11 +219,11 @@ export default function KickerModelingPage() {
 
                   {/* Eligibility bar */}
                   <div className="flex items-center gap-2">
-                    <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Eligibility:</div>
+                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Eligibility:</div>
                     <div className="flex-1 rounded-full overflow-hidden" style={{ height: 8, background: 'var(--pl-chart-bar-track)' }}>
                       <div className="h-full rounded-full" style={{ width: `${qualifyRate * 100}%`, background: color }} />
                     </div>
-                    <div className="text-[10px] font-bold font-mono" style={{ color }}>
+                    <div className="text-xs font-bold font-mono" style={{ color }}>
                       {kicker.eligibleReps}/{SELLERS.length} reps ({(qualifyRate * 100).toFixed(0)}%)
                     </div>
                   </div>
@@ -232,12 +232,12 @@ export default function KickerModelingPage() {
                 {/* Right: Reward + Projection */}
                 <div className="flex-shrink-0 text-right" style={{ width: 320 }}>
                   <div className="text-[32px] font-bold font-mono mb-1" style={{ color }}>${fmt(kicker.reward)}</div>
-                  <div className="text-[10px] font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>bonus per qualifying rep</div>
+                  <div className="text-xs font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>bonus per qualifying rep</div>
 
-                  <div className="text-[9px] font-bold font-mono mb-1 text-left" style={{ color: 'var(--pl-text-muted)' }}>PACING PROJECTION</div>
+                  <div className="text-xs font-bold font-mono mb-1 text-left" style={{ color: 'var(--pl-text-muted)' }}>PACING PROJECTION</div>
                   <ProjectionChart kicker={kicker} color={color} />
 
-                  <div className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>
+                  <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>
                     Total payout if {kicker.eligibleReps} qualify: ${fmt(kicker.reward * kicker.eligibleReps)}
                   </div>
                 </div>
@@ -253,33 +253,33 @@ export default function KickerModelingPage() {
           <div className="text-[13px] font-bold mb-2" style={{ color: 'var(--pl-text)' }}>
             How Spirits Bonuses Stack
           </div>
-          <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-[13px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>
             A rep who qualifies for the Holiday Spirits Showcase kicker AND maintains the 1.5% Sazerac adder earns from both:
           </p>
           <div className="grid grid-cols-3 gap-4">
             <div className="rounded-lg p-3 text-center" style={{ background: 'var(--pl-card-alt)' }}>
-              <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#10B981' }}>SPIRITS ADDER</div>
+              <div className="text-xs font-bold font-mono mb-1" style={{ color: '#10B981' }}>SPIRITS ADDER</div>
               <div className="text-[18px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>+{(SPIRITS_ADDER.rate * 100).toFixed(1)}%</div>
-              <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>on all Sazerac revenue</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>on all Sazerac revenue</div>
             </div>
             <div className="rounded-lg p-3 text-center" style={{ background: 'var(--pl-card-alt)' }}>
-              <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#10B981' }}>HOLIDAY KICKER</div>
+              <div className="text-xs font-bold font-mono mb-1" style={{ color: '#10B981' }}>HOLIDAY KICKER</div>
               <div className="text-[18px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>${fmt(KICKERS[2].reward)}</div>
-              <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Q4 bonus</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Q4 bonus</div>
             </div>
             <div className="rounded-lg p-3 text-center" style={{ background: 'rgba(34,197,94,0.04)' }}>
-              <div className="text-[9px] font-bold font-mono mb-1" style={{ color: '#22C55E' }}>COMBINED IMPACT</div>
+              <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>COMBINED IMPACT</div>
               <div className="text-[18px] font-bold font-mono" style={{ color: '#22C55E' }}>$2,920+</div>
-              <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>adder + kicker per Q4</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>adder + kicker per Q4</div>
             </div>
           </div>
         </div>
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         Kickers are time-bound bonus incentives tied to seasonal events and supplier priorities. Eligibility is based on hitting
-        specific volume or placement targets during the kicker window. Kicker bonuses are additive to base + variable + EMCO + spirits adder.
+        specific volume or placement targets during the kicker window. Kicker bonuses are additive to base + variable + gate + spirits adder.
         Pacing projections use 4-week rolling averages within the kicker period.
       </div>
     

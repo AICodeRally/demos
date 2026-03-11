@@ -87,12 +87,12 @@ export default function PaymentsPage() {
                 background: cycle.current ? `${ACCENT}18` : 'var(--pl-card-alt)',
                 border: `1px solid ${cycle.current ? ACCENT : 'var(--pl-border)'}`,
               }}>
-              <div className="text-[9px] font-mono font-bold uppercase"
+              <div className="text-xs font-mono font-bold uppercase"
                 style={{ color: cycle.current ? ACCENT : 'var(--pl-text-faint)' }}>
                 {cycle.status === 'current' ? '\u25B6 CURRENT' : cycle.status === 'deposited' ? '\u2713 PAID' : 'UPCOMING'}
               </div>
-              <div className="text-[10px] font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{cycle.label}</div>
-              <div className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Dep. {cycle.date}</div>
+              <div className="text-xs font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{cycle.label}</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Dep. {cycle.date}</div>
             </div>
           ))}
         </div>
@@ -106,7 +106,7 @@ export default function PaymentsPage() {
             return (
               <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg"
                 style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                <div className="flex-shrink-0 text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+                <div className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
                   style={{ background: urg.bg, color: urg.color }}>
                   {item.urgency.toUpperCase()}
                 </div>
@@ -115,15 +115,15 @@ export default function PaymentsPage() {
                     <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{item.rep}</span>
                     <span className="text-xs font-bold font-mono" style={{ color: ACCENT }}>${item.amount.toLocaleString()}</span>
                   </div>
-                  <div className="text-[10px] font-mono font-bold mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{item.type}</div>
-                  <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>{item.reason}</div>
+                  <div className="text-xs font-mono font-bold mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{item.type}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{item.reason}</div>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
-                  <button className="px-2 py-1 rounded text-[9px] font-bold font-mono"
+                  <button className="px-2 py-1 rounded text-xs font-bold font-mono"
                     style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
                     APPROVE
                   </button>
-                  <button className="px-2 py-1 rounded text-[9px] font-bold font-mono"
+                  <button className="px-2 py-1 rounded text-xs font-bold font-mono"
                     style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>
                     FLAG
                   </button>
@@ -141,7 +141,7 @@ export default function PaymentsPage() {
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Date', 'Rep', 'Type', 'Amount', 'Status'].map(h => (
-                  <th key={h} className="text-left pb-2 pr-4 text-[10px] uppercase tracking-wider font-bold"
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
                     style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
                 ))}
               </tr>
@@ -156,7 +156,7 @@ export default function PaymentsPage() {
                     <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{payment.type}</td>
                     <td className="py-1.5 pr-4 text-right font-bold" style={{ color: ACCENT }}>${payment.amount.toLocaleString()}</td>
                     <td className="py-1.5">
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold"
+                      <span className="px-1.5 py-0.5 rounded text-xs font-bold"
                         style={{ background: s.bg, color: s.color }}>{payment.status.toUpperCase()}</span>
                     </td>
                   </tr>
@@ -173,7 +173,7 @@ export default function PaymentsPage() {
           {EXCEPTIONS.map(ex => (
             <div key={ex.id} className="flex items-start gap-3 p-3 rounded-lg"
               style={{ background: 'rgba(248,113,113,0.05)', border: '1px solid rgba(248,113,113,0.2)' }}>
-              <div className="flex-shrink-0 text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+              <div className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
                 style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>
                 {ex.id}
               </div>
@@ -184,8 +184,8 @@ export default function PaymentsPage() {
                     {ex.amount < 0 ? '-' : ''}${Math.abs(ex.amount).toLocaleString()}
                   </span>
                 </div>
-                <div className="text-[10px] font-mono mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{ex.issue}</div>
-                <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>Resolution: {ex.resolution}</div>
+                <div className="text-xs font-mono mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{ex.issue}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Resolution: {ex.resolution}</div>
               </div>
             </div>
           ))}

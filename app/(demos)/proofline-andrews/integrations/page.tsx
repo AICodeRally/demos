@@ -1,296 +1,706 @@
 'use client';
 
-import { useState } from 'react';
-import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demos/proofline';
+import { useState, useEffect } from 'react';
+import { ActNavigation, LightSectionCard, LightKpiCard, Sparkline } from '@/components/demos/proofline';
 
 const ACCENT = '#F97316';
+const GREEN = '#22C55E';
+const BLUE = '#2563EB';
+const CYAN = '#0EA5E9';
+const PURPLE = '#8B5CF6';
+const SLATE = '#94A3B8';
 
 /* ── Connector definitions ─────────────────────── */
 interface Connector {
   name: string;
-  category: 'erp' | 'crm' | 'analytics' | 'hr' | 'data' | 'bi';
+  layer: 'ingestion' | 'engine' | 'workflow';
   description: string;
   status: 'live' | 'configured' | 'available';
   lastSync?: string;
   records?: number;
   direction: 'inbound' | 'outbound' | 'bidirectional';
+  icon: string;
+  throughput?: string;
+  latency?: number;
 }
 
 const CONNECTORS: Connector[] = [
-  // ERP / Back Office
-  { name: 'SAP ERP', category: 'erp', description: 'Order management, invoicing, product master data', status: 'live', lastSync: '2h ago', records: 48200, direction: 'inbound' },
-  { name: 'Oracle NetSuite', category: 'erp', description: 'Financial ledger, GL posting, accruals', status: 'configured', direction: 'outbound' },
-
-  // CRM
-  { name: 'Salesforce', category: 'crm', description: 'Account hierarchy, opportunity pipeline, contact data', status: 'live', lastSync: '6h ago', records: 4847, direction: 'bidirectional' },
-  { name: 'HubSpot', category: 'crm', description: 'Marketing attribution, lead scoring, campaign data', status: 'available', direction: 'inbound' },
-
-  // Data Platform
-  { name: 'Snowflake', category: 'data', description: 'Data warehouse — centralized sales & comp analytics', status: 'live', lastSync: '1h ago', records: 2400000, direction: 'bidirectional' },
-  { name: 'Alteryx', category: 'data', description: 'ETL workflows — data blending, cleansing, territory mapping', status: 'live', lastSync: '4h ago', records: 186000, direction: 'inbound' },
-  { name: 'Databricks', category: 'data', description: 'ML pipelines — attainment forecasting, anomaly detection', status: 'configured', direction: 'bidirectional' },
-
-  // HR / Payroll
-  { name: 'ADP Workforce', category: 'hr', description: 'Payroll integration — variable pay export, tax withholding', status: 'live', lastSync: '24h ago', records: 36, direction: 'outbound' },
-  { name: 'Workday', category: 'hr', description: 'HRIS — org chart, job levels, compensation bands', status: 'available', direction: 'inbound' },
-
-  // Analytics / BI
-  { name: 'Tableau', category: 'bi', description: 'Executive dashboards — comp expense, attainment heatmaps', status: 'live', lastSync: '30m ago', records: 12400, direction: 'outbound' },
-  { name: 'Power BI', category: 'bi', description: 'Self-service analytics — territory deep-dives, what-if models', status: 'configured', direction: 'outbound' },
-  { name: 'Looker', category: 'bi', description: 'Embedded analytics — rep-facing performance scorecards', status: 'available', direction: 'outbound' },
+  // Layer 1 — Ingestion
+  { name: 'SAP ERP', layer: 'ingestion', description: 'Order management, invoicing, product master data', status: 'live', lastSync: '2h ago', records: 48200, direction: 'inbound', icon: 'S', throughput: '1.2K/hr', latency: 42 },
+  { name: 'Oracle NetSuite', layer: 'ingestion', description: 'Financial ledger, GL posting, accruals', status: 'configured', direction: 'inbound', icon: 'O', latency: 89 },
+  { name: 'Salesforce', layer: 'ingestion', description: 'Account hierarchy, opportunity pipeline, contact data', status: 'live', lastSync: '6h ago', records: 4847, direction: 'inbound', icon: 'SF', throughput: '320/hr', latency: 38 },
+  { name: 'HubSpot', layer: 'ingestion', description: 'Marketing attribution, lead scoring, campaign data', status: 'available', direction: 'inbound', icon: 'H', latency: 65 },
+  { name: 'ADP Workforce', layer: 'ingestion', description: 'HRIS data — org chart, job levels, compensation bands', status: 'live', lastSync: '24h ago', records: 36, direction: 'inbound', icon: '$', throughput: '36/day', latency: 210 },
+  { name: 'Workday', layer: 'ingestion', description: 'HRIS — headcount, role changes, comp band updates', status: 'available', direction: 'inbound', icon: 'W', latency: 78 },
+  { name: 'Snowflake', layer: 'ingestion', description: 'Data warehouse — centralized sales & comp analytics', status: 'live', lastSync: '1h ago', records: 2400000, direction: 'bidirectional', icon: '\u2744', throughput: '48K/hr', latency: 124 },
+  { name: 'Alteryx', layer: 'ingestion', description: 'Legacy ETL workflows — territory mapping, data blending (being replaced)', status: 'live', lastSync: '4h ago', records: 186000, direction: 'inbound', icon: 'A', throughput: '8.4K/hr', latency: 56 },
+  // Layer 2 — Engine (Databricks feeds models into the engine)
+  { name: 'Databricks', layer: 'engine', description: 'ML pipelines — attainment forecasting, anomaly detection', status: 'configured', direction: 'bidirectional', icon: 'D', latency: 890 },
+  // Layer 3 — Workflow / Outbound
+  { name: 'Tableau', layer: 'workflow', description: 'Executive dashboards — comp expense, attainment heatmaps', status: 'live', lastSync: '30m ago', records: 12400, direction: 'outbound', icon: 'T', throughput: '2.1K/hr', latency: 34 },
+  { name: 'Power BI', layer: 'workflow', description: 'Self-service analytics — territory deep-dives, what-if models', status: 'configured', direction: 'outbound', icon: 'P', latency: 67 },
+  { name: 'Looker', layer: 'workflow', description: 'Embedded analytics — rep-facing performance scorecards', status: 'available', direction: 'outbound', icon: 'L', latency: 45 },
 ];
 
-const CATEGORY_LABELS: Record<string, string> = {
-  erp: 'ERP / Back Office',
-  crm: 'CRM',
-  data: 'Data Platform',
-  hr: 'HR & Payroll',
-  bi: 'Analytics & BI',
-  analytics: 'Analytics',
+const LAYER_META: Record<string, { label: string; color: string; description: string }> = {
+  ingestion: { label: 'Ingestion + Data Layer', color: '#3B82F6', description: 'Source connectors feeding event-driven data into PROOFLINE' },
+  engine: { label: 'Calculation Engine', color: ACCENT, description: 'ML and analytics powering the computation core' },
+  workflow: { label: 'Workflow + Finalization', color: '#10B981', description: 'Outbound to BI tools, payroll, and rep-facing portals' },
 };
 
-const CATEGORY_ORDER = ['erp', 'crm', 'data', 'hr', 'bi'] as const;
+const LAYER_ORDER: Array<'ingestion' | 'engine' | 'workflow'> = ['ingestion', 'engine', 'workflow'];
 
-const STATUS_STYLES: Record<string, { bg: string; color: string; label: string }> = {
-  live: { bg: 'rgba(34,197,94,0.1)', color: '#22C55E', label: 'LIVE' },
-  configured: { bg: 'rgba(37,99,235,0.1)', color: '#2563EB', label: 'CONFIGURED' },
-  available: { bg: 'rgba(148,163,184,0.1)', color: '#94A3B8', label: 'AVAILABLE' },
+const STATUS_STYLES: Record<string, { bg: string; color: string; label: string; pulse: boolean }> = {
+  live: { bg: 'rgba(34,197,94,0.12)', color: GREEN, label: 'LIVE', pulse: true },
+  configured: { bg: 'rgba(37,99,235,0.12)', color: BLUE, label: 'CONFIGURED', pulse: false },
+  available: { bg: 'rgba(148,163,184,0.10)', color: SLATE, label: 'AVAILABLE', pulse: false },
 };
 
-const DIRECTION_LABELS: Record<string, string> = {
-  inbound: '← Inbound',
-  outbound: 'Outbound →',
-  bidirectional: '↔ Bidirectional',
+const DIRECTION_LABELS: Record<string, { label: string; color: string }> = {
+  inbound: { label: '\u2190 Inbound', color: '#3B82F6' },
+  outbound: { label: 'Outbound \u2192', color: '#10B981' },
+  bidirectional: { label: '\u2194 Bidirectional', color: '#8B5CF6' },
 };
-
-/* ── Data Flow Architecture ─────────────────────── */
-const FLOW_LAYERS = [
-  { label: 'Source Systems', items: ['SAP ERP', 'Salesforce', 'ADP', 'Alteryx'], color: '#94A3B8' },
-  { label: 'Integration Hub', items: ['API Gateway', 'ETL Engine', 'Event Bus', 'Schema Registry'], color: ACCENT },
-  { label: 'PROOFLINE Core', items: ['Data Layer', 'Measurements', 'Rewards', 'Payments'], color: '#0EA5E9' },
-  { label: 'Outbound', items: ['Snowflake', 'Tableau', 'Power BI', 'ADP Payroll'], color: '#10B981' },
-];
-
-/* ── Recent Sync Events ─────────────────────────── */
-const SYNC_EVENTS = [
-  { time: '10:14 AM', source: 'SAP ERP', event: 'Order batch ingested', records: 1247, status: 'success' },
-  { time: '10:02 AM', source: 'Salesforce', event: 'Account sync completed', records: 23, status: 'success' },
-  { time: '9:45 AM', source: 'Alteryx', event: 'Territory mapping refreshed', records: 4847, status: 'success' },
-  { time: '9:30 AM', source: 'Snowflake', event: 'Comp analytics push', records: 186000, status: 'success' },
-  { time: '9:15 AM', source: 'Tableau', event: 'Dashboard data export', records: 12400, status: 'success' },
-  { time: '8:00 AM', source: 'ADP Workforce', event: 'Payroll file generated', records: 36, status: 'success' },
-  { time: '7:30 AM', source: 'Databricks', event: 'Forecast model retrain', records: 48200, status: 'warning' },
-];
 
 /* ── API Metrics ────────────────────────────────── */
 const API_METRICS = [
-  { endpoint: '/api/orders', calls24h: 12480, avgMs: 42, errorRate: 0.02 },
-  { endpoint: '/api/accounts', calls24h: 3200, avgMs: 38, errorRate: 0.0 },
-  { endpoint: '/api/comp/credits', calls24h: 8640, avgMs: 56, errorRate: 0.05 },
-  { endpoint: '/api/comp/payments', calls24h: 720, avgMs: 124, errorRate: 0.0 },
-  { endpoint: '/api/analytics/push', calls24h: 480, avgMs: 890, errorRate: 0.1 },
+  { endpoint: '/api/orders', calls24h: 12480, avgMs: 42, errorRate: 0.02, p99: 128 },
+  { endpoint: '/api/accounts', calls24h: 3200, avgMs: 38, errorRate: 0.0, p99: 95 },
+  { endpoint: '/api/comp/credits', calls24h: 8640, avgMs: 56, errorRate: 0.05, p99: 180 },
+  { endpoint: '/api/comp/payments', calls24h: 720, avgMs: 124, errorRate: 0.0, p99: 340 },
+  { endpoint: '/api/analytics/push', calls24h: 480, avgMs: 890, errorRate: 0.1, p99: 2400 },
 ];
 
+/* ── Platform Capabilities ─────────────────────── */
+const PLATFORM_CAPABILITIES = [
+  {
+    name: 'GOCC',
+    title: 'Governance',
+    description: 'Policy enforcement, approval guardrails, compliance rules. Every comp plan change goes through configurable approval gates.',
+    color: '#8B5CF6',
+    icon: '\u229A',
+    stats: '14 active policies',
+  },
+  {
+    name: 'Spine',
+    title: 'Audit Trail',
+    description: 'Immutable audit log. Every calculation traced, every change recorded. Row-level lineage from source data to payout.',
+    color: '#0EA5E9',
+    icon: '\u29C9',
+    stats: '2.4M audit events',
+  },
+  {
+    name: 'AICC',
+    title: 'AI Agents',
+    description: 'AI-powered forecasting, coaching recommendations, anomaly detection. Proactive alerts before problems become disputes.',
+    color: '#F97316',
+    icon: '\u269B',
+    stats: '6 active agents',
+  },
+  {
+    name: 'Pulse',
+    title: 'Telemetry',
+    description: 'Real-time change intelligence and drift detection. Know when comp plans, territories, or quotas shift before reps notice.',
+    color: '#10B981',
+    icon: '\u2261',
+    stats: '99.97% uptime',
+  },
+  {
+    name: 'Edge',
+    title: 'Runtime',
+    description: 'Multi-tenant deployment with client isolation. Custom configuration per distributor — separate plans, rules, and branding.',
+    color: '#2563EB',
+    icon: '\u25C8',
+    stats: 'Tenant-isolated',
+  },
+];
+
+/* ── Alteryx Comparison Data ───────────────────── */
+const COMPARISON = [
+  { dimension: 'Data Processing', alteryx: 'Batch ETL workflows\u200A\u2014\u200Ahourly or daily runs', proofline: 'Event-driven ingestion\u200A\u2014\u200Areal-time, sub-second', icon: '\u23F1' },
+  { dimension: 'Recalculation', alteryx: 'Full rerun on any change\u200A\u2014\u200A45 min per cycle', proofline: 'Selective recompute\u200A\u2014\u200Aonly affected rows, seconds', icon: '\u21BB' },
+  { dimension: 'Audit Trail', alteryx: 'Workflow-level logs\u200A\u2014\u200A"this workflow ran"', proofline: 'Row-level lineage\u200A\u2014\u200Aevery number traced to source', icon: '\u2690' },
+  { dimension: 'Version Control', alteryx: 'Manual file versions\u200A\u2014\u200Ahope you saved the right one', proofline: 'Built-in versioning\u200A\u2014\u200Aeffective-dated plan rules, rollback', icon: '\u2637' },
+];
+
+/* ── Animated Pulse Dot ─────────────────────────── */
+function PulseDot({ color, size = 8 }: { color: string; size?: number }) {
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <div className="absolute inset-0 rounded-full" style={{
+        background: color,
+        animation: 'pulse-ring 2s ease-out infinite',
+      }} />
+      <div className="absolute inset-0 rounded-full" style={{ background: color }} />
+      <style>{`
+        @keyframes pulse-ring {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(2.5); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ── Latency Bar ────────────────────────────────── */
+function LatencyBar({ ms, max = 1000 }: { ms: number; max?: number }) {
+  const pct = Math.min((ms / max) * 100, 100);
+  const color = ms < 100 ? GREEN : ms < 500 ? '#F59E0B' : '#EF4444';
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--pl-hover)', maxWidth: 80 }}>
+        <div className="h-full rounded-full" style={{
+          width: `${pct}%`,
+          background: color,
+          transition: 'width 0.6s ease',
+        }} />
+      </div>
+      <span className="text-xs font-mono font-bold" style={{ color }}>{ms}ms</span>
+    </div>
+  );
+}
+
+/* ── Three-Layer Architecture SVG ─────────────── */
+function ArchitectureDiagram({ mounted }: { mounted: boolean }) {
+  const layerColors = ['#3B82F6', ACCENT, '#10B981'];
+  const layerLabels = ['Ingestion + Data', 'Calculation Engine', 'Workflow + Finalization'];
+  const layerDescLines = [
+    ['CRM, ERP, HR/Payroll', 'Event-driven ingestion', 'Idempotent processing'],
+    ['Rule interpreter', 'Version-aware plans', 'Selective recompute'],
+    ['Approval workflows', 'Immutable payouts', 'Rep portal, BI export'],
+  ];
+
+  return (
+    <div className="w-full overflow-hidden rounded-xl" style={{
+      background: 'var(--pl-card)',
+      border: '1px solid var(--pl-border)',
+    }}>
+      <svg viewBox="0 0 900 320" className="w-full" style={{ minHeight: 240 }}>
+        <defs>
+          {/* Animated flow gradient */}
+          <linearGradient id="flow-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1" />
+            <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.8">
+              <animate attributeName="offset" values="0;1;0" dur="3s" repeatCount="indefinite" />
+            </stop>
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.1" />
+          </linearGradient>
+          <linearGradient id="flow-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={ACCENT} stopOpacity="0.1" />
+            <stop offset="50%" stopColor={ACCENT} stopOpacity="0.8">
+              <animate attributeName="offset" values="0;1;0" dur="3s" begin="1s" repeatCount="indefinite" />
+            </stop>
+            <stop offset="100%" stopColor={ACCENT} stopOpacity="0.1" />
+          </linearGradient>
+          {/* Glow filters */}
+          {layerColors.map((c, i) => (
+            <filter key={i} id={`glow-${i}`}>
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feFlood floodColor={c} floodOpacity="0.3" />
+              <feComposite in2="blur" operator="in" />
+              <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          ))}
+        </defs>
+
+        {/* Background grid */}
+        <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="var(--pl-border)" strokeWidth="0.3" opacity="0.3" />
+        </pattern>
+        <rect width="900" height="320" fill="url(#grid)" />
+
+        {/* Three layer boxes */}
+        {[0, 1, 2].map((i) => {
+          const x = 40 + i * 290;
+          const color = layerColors[i];
+          return (
+            <g key={i} style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+              transition: `all 0.6s ease ${i * 200}ms`,
+            }}>
+              {/* Box background */}
+              <rect x={x} y={30} width={240} height={260} rx={12}
+                fill={`${color}08`} stroke={color} strokeWidth="1.5" strokeOpacity="0.3" />
+              {/* Top accent bar */}
+              <rect x={x} y={30} width={240} height={4} rx={2} fill={color} opacity="0.6">
+                <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin={`${i * 0.5}s`} repeatCount="indefinite" />
+              </rect>
+              {/* Layer number */}
+              <circle cx={x + 24} cy={60} r={14} fill={`${color}20`} stroke={color} strokeWidth="1" />
+              <text x={x + 24} y={65} textAnchor="middle" fill={color} fontSize="14" fontWeight="bold" fontFamily="monospace">{i + 1}</text>
+              {/* Title */}
+              <text x={x + 48} y={64} fill={color} fontSize="13" fontWeight="bold" fontFamily="monospace" letterSpacing="1.5">
+                {layerLabels[i].toUpperCase()}
+              </text>
+              {/* Description items */}
+              {layerDescLines[i].map((line, li) => (
+                <g key={li}>
+                  <rect x={x + 16} y={88 + li * 56} width={208} height={42} rx={8}
+                    fill={`${color}10`} stroke={`${color}20`} strokeWidth="1" />
+                  <circle cx={x + 32} cy={109 + li * 56} r={3} fill={color} opacity="0.7">
+                    {li === 0 && (
+                      <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite" />
+                    )}
+                  </circle>
+                  <text x={x + 44} y={113 + li * 56} fill="var(--pl-text)" fontSize="12" fontFamily="monospace">
+                    {line}
+                  </text>
+                </g>
+              ))}
+            </g>
+          );
+        })}
+
+        {/* Animated flow arrows between layers */}
+        {[0, 1].map((i) => {
+          const x1 = 280 + i * 290;
+          const x2 = x1 + 50;
+          return (
+            <g key={`arrow-${i}`}>
+              <line x1={x1} y1={160} x2={x2} y2={160}
+                stroke={`url(#flow-grad-${i + 1})`} strokeWidth="3" strokeLinecap="round" />
+              {/* Arrow head */}
+              <polygon points={`${x2 - 2},153 ${x2 + 8},160 ${x2 - 2},167`}
+                fill={layerColors[i + 1]} opacity="0.7">
+                <animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.5s" begin={`${i * 0.5}s`} repeatCount="indefinite" />
+              </polygon>
+              {/* Data particles */}
+              <circle r="2.5" fill={layerColors[i + 1]}>
+                <animateMotion dur="1.5s" begin={`${i * 0.3}s`} repeatCount="indefinite"
+                  path={`M${x1},160 L${x2 + 8},160`} />
+                <animate attributeName="opacity" values="0;1;0" dur="1.5s" begin={`${i * 0.3}s`} repeatCount="indefinite" />
+              </circle>
+              <circle r="2" fill={layerColors[i + 1]} opacity="0.5">
+                <animateMotion dur="1.5s" begin={`${i * 0.3 + 0.7}s`} repeatCount="indefinite"
+                  path={`M${x1},160 L${x2 + 8},160`} />
+                <animate attributeName="opacity" values="0;0.7;0" dur="1.5s" begin={`${i * 0.3 + 0.7}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+/* ── Page ──────────────────────────────────────────  */
 export default function IntegrationsPage() {
-  const [filter, setFilter] = useState<string>('all');
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   const liveCount = CONNECTORS.filter(c => c.status === 'live').length;
-  const configuredCount = CONNECTORS.filter(c => c.status === 'configured').length;
   const totalRecords = CONNECTORS.filter(c => c.records).reduce((s, c) => s + c.records!, 0);
-
-  const filtered = filter === 'all' ? CONNECTORS : CONNECTORS.filter(c => c.category === filter);
-  const grouped = CATEGORY_ORDER
-    .filter(cat => filter === 'all' || cat === filter)
-    .map(cat => ({ category: cat, connectors: filtered.filter(c => c.category === cat) }))
-    .filter(g => g.connectors.length > 0);
 
   return (
     <>
       <ActNavigation currentAct={6} />
 
-      {/* KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <LightKpiCard label="Live Connectors" value={String(liveCount)} accent={ACCENT} sub={`of ${CONNECTORS.length} total`} />
-        <LightKpiCard label="Configured" value={String(configuredCount)} accent={ACCENT} sub="ready to activate" />
-        <LightKpiCard label="Records Synced (24h)" value={totalRecords >= 1000000 ? `${(totalRecords / 1000000).toFixed(1)}M` : `${(totalRecords / 1000).toFixed(0)}K`} accent={ACCENT} />
-        <LightKpiCard label="Uptime (30d)" value="99.97%" accent={ACCENT} />
+      {/* ═══════ HERO ═══════ */}
+      <div className="rounded-xl overflow-hidden mb-8 relative" style={{
+        background: `linear-gradient(135deg, rgba(249,115,22,0.12), rgba(14,165,233,0.06), rgba(16,185,129,0.04))`,
+        border: '1px solid rgba(249,115,22,0.25)',
+      }}>
+        <div className="p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"
+              style={{ background: `${ACCENT}18`, color: ACCENT }}>
+              {'\u26A1'}
+            </div>
+            <div>
+              <div className="text-xs tracking-[4px] uppercase font-mono font-bold" style={{ color: ACCENT }}>
+                Act 6 \u00B7 Platform Architecture
+              </div>
+              <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+                How PROOFLINE Connects, Calculates, and Delivers
+              </h1>
+            </div>
+          </div>
+          <p className="text-sm font-mono leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
+            PROOFLINE replaces batch-driven Alteryx workflows with an event-driven architecture across three layers:
+            real-time data ingestion, a version-aware calculation engine, and automated approval workflows.
+            Every number is traced from source to payout.
+          </p>
+        </div>
+        {/* Decorative bottom accent */}
+        <div className="h-1 w-full" style={{
+          background: `linear-gradient(90deg, #3B82F6, ${ACCENT}, #10B981)`,
+          opacity: 0.5,
+        }} />
       </div>
 
-      {/* Architecture Diagram */}
-      <LightSectionCard title="DATA FLOW ARCHITECTURE">
-        <div className="flex gap-0 overflow-x-auto pb-2">
-          {FLOW_LAYERS.map((layer, li) => (
-            <div key={layer.label} className="flex items-center flex-1 min-w-[140px]">
-              <div className="flex-1 flex flex-col gap-2 p-3 rounded-lg"
-                style={{ background: `${layer.color}0A`, border: `1px solid ${layer.color}30` }}>
-                <div className="text-[9px] font-mono font-bold uppercase tracking-widest text-center"
-                  style={{ color: layer.color }}>
-                  {layer.label}
+      {/* ═══════ KPIs ═══════ */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <LightKpiCard
+          label="Live Connectors"
+          value={String(liveCount)}
+          accent={GREEN}
+          sub={`of ${CONNECTORS.length} total`}
+          sparkline={[4, 5, 5, 6, 6, 7, 7, 7]}
+          stagger={0}
+        />
+        <LightKpiCard
+          label="Records / 24h"
+          value={totalRecords >= 1000000 ? `${(totalRecords / 1000000).toFixed(1)}M` : `${(totalRecords / 1000).toFixed(0)}K`}
+          accent={ACCENT}
+          delta={12.4}
+          sub="synced records"
+          sparkline={[180, 210, 195, 240, 220, 260, 245, 265]}
+          stagger={1}
+        />
+        <LightKpiCard
+          label="Avg Latency"
+          value="67ms"
+          accent={CYAN}
+          delta={-8.2}
+          sub="across all endpoints"
+          sparkline={[89, 82, 74, 78, 71, 68, 65, 67]}
+          stagger={2}
+        />
+        <LightKpiCard
+          label="System Uptime"
+          value="99.97%"
+          accent={GREEN}
+          sub="zero incidents (30d)"
+          sparkline={[99.9, 99.95, 99.97, 99.96, 99.98, 99.97, 99.97, 99.97]}
+          stagger={3}
+        />
+      </div>
+
+      {/* ═══════ THREE-LAYER ARCHITECTURE DIAGRAM ═══════ */}
+      <LightSectionCard title="THREE-LAYER ARCHITECTURE">
+        <ArchitectureDiagram mounted={mounted} />
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Layer summaries beneath the diagram */}
+          {[
+            {
+              num: '1',
+              title: 'Ingestion + Data',
+              color: '#3B82F6',
+              points: [
+                'Event-driven, not batch \u2014 changes propagate in real-time',
+                'Idempotent processing \u2014 deals split, backdate, or change safely',
+                'Replaces Alteryx input/output workflows entirely',
+              ],
+            },
+            {
+              num: '2',
+              title: 'Calculation Engine',
+              color: ACCENT,
+              points: [
+                'Rule-based comp plan interpreter with gate cascades',
+                'Version-aware \u2014 plan rules tied to effective dates',
+                'Selective recompute, not full Alteryx-style reruns',
+              ],
+            },
+            {
+              num: '3',
+              title: 'Workflow + Finalization',
+              color: '#10B981',
+              points: [
+                'Manager \u2192 Finance \u2192 Payroll approval chain',
+                'Immutable payout records at approval (ledger pattern)',
+                'Rep portal for live attainment + outbound to payroll & BI',
+              ],
+            },
+          ].map((layer, i) => (
+            <div key={i} className="rounded-xl p-4" style={{
+              background: `${layer.color}06`,
+              border: `1px solid ${layer.color}20`,
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+              transition: `all 0.5s ease ${(i + 3) * 150}ms`,
+            }}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono"
+                  style={{ background: `${layer.color}20`, color: layer.color }}>
+                  {layer.num}
                 </div>
-                {layer.items.map(item => (
-                  <div key={item} className="text-[10px] font-mono text-center py-1 rounded"
-                    style={{ background: `${layer.color}12`, color: 'var(--pl-text)' }}>
-                    {item}
-                  </div>
-                ))}
+                <span className="text-sm font-bold font-mono uppercase tracking-wider" style={{ color: layer.color }}>
+                  {layer.title}
+                </span>
               </div>
-              {li < FLOW_LAYERS.length - 1 && (
-                <div className="flex-shrink-0 px-1.5 text-lg font-bold" style={{ color: ACCENT }}>&rarr;</div>
-              )}
+              <ul className="space-y-2">
+                {layer.points.map((pt, pi) => (
+                  <li key={pi} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: layer.color, opacity: 0.6 }} />
+                    <span className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{pt}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
-        <div className="mt-3 p-3 rounded-lg text-[10px] font-mono"
-          style={{ background: `${ACCENT}08`, border: `1px solid ${ACCENT}20`, color: 'var(--pl-text-muted)' }}>
-          All data flows through the Integration Hub — a centralized API gateway with schema validation, rate limiting, and full audit trail. Source systems push via webhooks or scheduled ETL; outbound systems pull via REST/GraphQL or receive event-driven pushes.
+      </LightSectionCard>
+
+      {/* ═══════ CONNECTORS BY LAYER ═══════ */}
+      {LAYER_ORDER.map((layerKey) => {
+        const meta = LAYER_META[layerKey];
+        const layerConnectors = CONNECTORS.filter(c => c.layer === layerKey);
+        if (layerConnectors.length === 0) return null;
+        return (
+          <LightSectionCard key={layerKey} title={`LAYER: ${meta.label.toUpperCase()}`}>
+            <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>{meta.description}</p>
+            <div className="grid gap-3">
+              {layerConnectors.map((conn, ci) => {
+                const s = STATUS_STYLES[conn.status];
+                const dir = DIRECTION_LABELS[conn.direction];
+                return (
+                  <div key={conn.name} className="rounded-xl p-4 transition-all"
+                    style={{
+                      background: conn.status === 'live' ? `${s.color}04` : 'var(--pl-card)',
+                      border: `1px solid ${conn.status === 'live' ? s.color + '20' : 'var(--pl-border)'}`,
+                      opacity: mounted ? 1 : 0,
+                      transform: mounted ? 'translateX(0)' : 'translateX(-8px)',
+                      transition: `all 0.3s ease ${ci * 60}ms`,
+                    }}>
+                    <div className="flex items-start gap-3">
+                      {/* Icon + Status */}
+                      <div className="flex flex-col items-center gap-1.5 min-w-[48px]">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold"
+                          style={{ background: s.bg, color: s.color }}>
+                          {conn.icon}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {s.pulse && <PulseDot color={s.color} size={5} />}
+                          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
+                            style={{ background: s.bg, color: s.color }}>{s.label}</span>
+                        </div>
+                      </div>
+                      {/* Details */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+                            {conn.name}
+                          </span>
+                          <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-full"
+                            style={{ background: `${dir.color}12`, color: dir.color }}>
+                            {dir.label}
+                          </span>
+                        </div>
+                        <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>{conn.description}</div>
+                        {/* Metrics row */}
+                        <div className="flex items-center gap-4 flex-wrap">
+                          {conn.records !== undefined && (
+                            <div className="flex items-center gap-1">
+                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Records:</span>
+                              <span className="text-xs font-bold font-mono" style={{ color: meta.color }}>
+                                {conn.records >= 1000000 ? `${(conn.records / 1000000).toFixed(1)}M`
+                                  : conn.records >= 1000 ? `${(conn.records / 1000).toFixed(0)}K`
+                                  : String(conn.records)}
+                              </span>
+                            </div>
+                          )}
+                          {conn.throughput && (
+                            <div className="flex items-center gap-1">
+                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Throughput:</span>
+                              <span className="text-xs font-bold font-mono" style={{ color: GREEN }}>{conn.throughput}</span>
+                            </div>
+                          )}
+                          {conn.lastSync && (
+                            <div className="flex items-center gap-1">
+                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Last sync:</span>
+                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{conn.lastSync}</span>
+                            </div>
+                          )}
+                          {conn.latency !== undefined && (
+                            <LatencyBar ms={conn.latency} />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </LightSectionCard>
+        );
+      })}
+
+      {/* ═══════ WHY NOT ALTERYX? ═══════ */}
+      <LightSectionCard title="WHY NOT ALTERYX?">
+        <div className="mb-4 p-4 rounded-xl" style={{
+          background: `${ACCENT}06`,
+          border: `1px solid ${ACCENT}15`,
+        }}>
+          <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+            Alteryx is a powerful data-blending tool, but it was never designed for incentive compensation.
+            PROOFLINE is purpose-built for ICM \u2014 event-driven, version-aware, and auditable at the row level.
+          </p>
+        </div>
+        <div className="grid gap-4">
+          {/* Header row */}
+          <div className="grid grid-cols-[auto_1fr_1fr] gap-4 items-center px-4">
+            <div className="w-10" />
+            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: SLATE }}>
+              Alteryx Approach
+            </div>
+            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: ACCENT }}>
+              PROOFLINE
+            </div>
+          </div>
+          {/* Comparison rows */}
+          {COMPARISON.map((row, i) => (
+            <div key={i} className="grid grid-cols-[auto_1fr_1fr] gap-4 items-start rounded-xl p-4"
+              style={{
+                background: i % 2 === 0 ? 'var(--pl-card)' : 'var(--pl-hover)',
+                border: '1px solid var(--pl-border)',
+                opacity: mounted ? 1 : 0,
+                transition: `opacity 0.4s ease ${i * 100}ms`,
+              }}>
+              {/* Dimension icon & label */}
+              <div className="flex flex-col items-center gap-1 min-w-[40px]">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg"
+                  style={{ background: `${ACCENT}10`, color: ACCENT }}>
+                  {row.icon}
+                </div>
+                <span className="text-xs font-bold font-mono text-center leading-tight" style={{ color: 'var(--pl-text)' }}>
+                  {row.dimension}
+                </span>
+              </div>
+              {/* Alteryx side */}
+              <div className="rounded-lg p-3" style={{ background: 'rgba(148,163,184,0.06)', border: '1px solid rgba(148,163,184,0.12)' }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-2 h-2 rounded-full" style={{ background: '#EF4444', opacity: 0.7 }} />
+                  <span className="text-xs font-bold font-mono" style={{ color: SLATE }}>Legacy</span>
+                </div>
+                <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-faint)' }}>{row.alteryx}</p>
+              </div>
+              {/* PROOFLINE side */}
+              <div className="rounded-lg p-3" style={{ background: `${ACCENT}06`, border: `1px solid ${ACCENT}15` }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-2 h-2 rounded-full" style={{ background: GREEN }} />
+                  <span className="text-xs font-bold font-mono" style={{ color: ACCENT }}>PROOFLINE</span>
+                </div>
+                <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{row.proofline}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </LightSectionCard>
 
-      {/* Filter Bar */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        <button onClick={() => setFilter('all')}
-          className="px-3 py-1.5 rounded-lg text-[10px] font-bold font-mono uppercase tracking-wider transition-colors"
-          style={{
-            background: filter === 'all' ? `${ACCENT}18` : 'var(--pl-card-alt)',
-            color: filter === 'all' ? ACCENT : 'var(--pl-text-muted)',
-            border: `1px solid ${filter === 'all' ? ACCENT : 'var(--pl-border)'}`,
-          }}>
-          All ({CONNECTORS.length})
-        </button>
-        {CATEGORY_ORDER.map(cat => {
-          const count = CONNECTORS.filter(c => c.category === cat).length;
-          return (
-            <button key={cat} onClick={() => setFilter(cat)}
-              className="px-3 py-1.5 rounded-lg text-[10px] font-bold font-mono uppercase tracking-wider transition-colors whitespace-nowrap"
-              style={{
-                background: filter === cat ? `${ACCENT}18` : 'var(--pl-card-alt)',
-                color: filter === cat ? ACCENT : 'var(--pl-text-muted)',
-                border: `1px solid ${filter === cat ? ACCENT : 'var(--pl-border)'}`,
-              }}>
-              {CATEGORY_LABELS[cat]} ({count})
-            </button>
-          );
-        })}
+      {/* ═══════ PLATFORM — POWERED BY AICR ═══════ */}
+      <div className="rounded-xl overflow-hidden mb-6" style={{
+        background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(14,165,233,0.04), rgba(249,115,22,0.04))',
+        border: '1px solid rgba(139,92,246,0.15)',
+        boxShadow: 'var(--pl-shadow)',
+      }}>
+        <div className="p-6 pb-2">
+          <div className="text-xs tracking-[4px] uppercase font-mono font-bold mb-2" style={{ color: PURPLE }}>
+            Enterprise Platform
+          </div>
+          <h2 className="text-xl font-extrabold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+            PROOFLINE Is Powered by the AICR Platform
+          </h2>
+          <p className="text-sm font-mono leading-relaxed mb-6" style={{ color: 'var(--pl-text-muted)' }}>
+            Enterprise governance, AI intelligence, and immutable audit trail \u2014 built in from day one, not bolted on.
+            Every PROOFLINE deployment includes these platform capabilities.
+          </p>
+        </div>
+        <div className="px-6 pb-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+            {PLATFORM_CAPABILITIES.map((cap, i) => (
+              <div key={cap.name} className="rounded-xl p-4 transition-all hover:scale-[1.02]"
+                style={{
+                  background: `${cap.color}06`,
+                  border: `1px solid ${cap.color}18`,
+                  opacity: mounted ? 1 : 0,
+                  transform: mounted ? 'translateY(0)' : 'translateY(16px)',
+                  transition: `all 0.5s ease ${i * 100 + 400}ms`,
+                }}>
+                {/* Icon */}
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl mb-3"
+                  style={{ background: `${cap.color}15`, color: cap.color }}>
+                  {cap.icon}
+                </div>
+                {/* Name tag */}
+                <div className="text-xs font-bold font-mono uppercase tracking-widest mb-1" style={{ color: cap.color }}>
+                  {cap.name}
+                </div>
+                <div className="text-sm font-bold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+                  {cap.title}
+                </div>
+                <p className="text-xs font-mono leading-relaxed mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                  {cap.description}
+                </p>
+                {/* Stat */}
+                <div className="flex items-center gap-1.5">
+                  <PulseDot color={cap.color} size={5} />
+                  <span className="text-xs font-bold font-mono" style={{ color: cap.color }}>{cap.stats}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Bottom accent */}
+        <div className="h-0.5 w-full" style={{
+          background: `linear-gradient(90deg, ${PURPLE}, ${CYAN}, ${ACCENT}, ${GREEN}, ${BLUE})`,
+          opacity: 0.4,
+        }} />
       </div>
 
-      {/* Connector Cards */}
-      {grouped.map(group => (
-        <LightSectionCard key={group.category} title={CATEGORY_LABELS[group.category]?.toUpperCase() ?? group.category.toUpperCase()}>
-          <div className="grid gap-3">
-            {group.connectors.map(conn => {
-              const s = STATUS_STYLES[conn.status];
-              return (
-                <div key={conn.name} className="flex items-start gap-3 p-3 rounded-lg"
-                  style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                  <div className="flex-shrink-0 flex flex-col items-center gap-1 min-w-[60px]">
-                    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
-                      style={{ background: s.bg, color: s.color }}>{s.label}</span>
-                    <span className="text-[9px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
-                      {DIRECTION_LABELS[conn.direction]}
-                    </span>
+      {/* ═══════ API HEALTH ═══════ */}
+      <LightSectionCard title="API HEALTH \u2014 LAST 24H">
+        <div className="space-y-3">
+          {API_METRICS.map((api, i) => {
+            const healthColor = api.errorRate === 0 ? GREEN : api.errorRate < 0.1 ? '#F59E0B' : '#EF4444';
+            return (
+              <div key={i} className="rounded-lg p-3" style={{
+                background: `${healthColor}04`,
+                border: `1px solid ${healthColor}15`,
+              }}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <PulseDot color={healthColor} size={6} />
+                    <span className="text-sm font-bold font-mono" style={{ color: ACCENT }}>{api.endpoint}</span>
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{conn.name}</span>
-                      {conn.records && (
-                        <span className="text-xs font-bold font-mono" style={{ color: ACCENT }}>
-                          {conn.records >= 1000000
-                            ? `${(conn.records / 1000000).toFixed(1)}M`
-                            : conn.records >= 1000
-                              ? `${(conn.records / 1000).toFixed(0)}K`
-                              : String(conn.records)} records
-                        </span>
-                      )}
+                  <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                    {api.calls24h.toLocaleString()} calls
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Avg Latency</div>
+                    <LatencyBar ms={api.avgMs} />
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>P99 Latency</div>
+                    <LatencyBar ms={api.p99} max={3000} />
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Error Rate</div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--pl-hover)', maxWidth: 80 }}>
+                        <div className="h-full rounded-full" style={{
+                          width: `${Math.max(api.errorRate * 10, 1)}%`,
+                          background: healthColor,
+                        }} />
+                      </div>
+                      <span className="text-xs font-mono font-bold" style={{ color: healthColor }}>{api.errorRate}%</span>
                     </div>
-                    <div className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{conn.description}</div>
-                    {conn.lastSync && (
-                      <div className="text-[9px] font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>Last sync: {conn.lastSync}</div>
-                    )}
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </LightSectionCard>
-      ))}
-
-      {/* Sync Activity Log */}
-      <LightSectionCard title="SYNC ACTIVITY LOG — TODAY">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
-                {['Time', 'Source', 'Event', 'Records', 'Status'].map(h => (
-                  <th key={h} className="text-left pb-2 pr-4 text-[10px] uppercase tracking-wider font-bold"
-                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {SYNC_EVENTS.map((evt, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
-                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{evt.time}</td>
-                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{evt.source}</td>
-                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{evt.event}</td>
-                  <td className="py-1.5 pr-4 text-right" style={{ color: ACCENT }}>{evt.records.toLocaleString()}</td>
-                  <td className="py-1.5">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold"
-                      style={{
-                        background: evt.status === 'success' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
-                        color: evt.status === 'success' ? '#22C55E' : '#F59E0B',
-                      }}>
-                      {evt.status.toUpperCase()}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </div>
+            );
+          })}
         </div>
-      </LightSectionCard>
 
-      {/* API Health */}
-      <LightSectionCard title="API HEALTH — LAST 24H">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
-                {['Endpoint', 'Calls', 'Avg Latency', 'Error Rate'].map(h => (
-                  <th key={h} className="text-left pb-2 pr-4 text-[10px] uppercase tracking-wider font-bold"
-                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {API_METRICS.map((api, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
-                  <td className="py-1.5 pr-4 font-bold" style={{ color: ACCENT }}>{api.endpoint}</td>
-                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text)' }}>{api.calls24h.toLocaleString()}</td>
-                  <td className="py-1.5 pr-4" style={{ color: api.avgMs < 100 ? '#22C55E' : api.avgMs < 500 ? '#F59E0B' : '#F87171' }}>
-                    {api.avgMs}ms
-                  </td>
-                  <td className="py-1.5">
-                    <span style={{ color: api.errorRate === 0 ? '#22C55E' : api.errorRate < 0.1 ? '#F59E0B' : '#F87171' }}>
-                      {api.errorRate}%
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          <div className="text-center p-3 rounded-lg" style={{ background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.2)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#22C55E' }}>25,520</div>
-            <div className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total API Calls (24h)</div>
+        {/* Summary Stats */}
+        <div className="mt-4 grid grid-cols-3 gap-3">
+          <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>25,520</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total API Calls (24h)</div>
           </div>
-          <div className="text-center p-3 rounded-lg" style={{ background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.2)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#22C55E' }}>67ms</div>
-            <div className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Avg Response Time</div>
+          <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>67ms</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Avg Response Time</div>
           </div>
-          <div className="text-center p-3 rounded-lg" style={{ background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.2)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#22C55E' }}>0.03%</div>
-            <div className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Error Rate</div>
+          <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>0.03%</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Error Rate</div>
           </div>
         </div>
       </LightSectionCard>
