@@ -35,10 +35,11 @@ const ACCOUNT_DIST = [
 ];
 
 const CREDIT_RULES = [
-  { rule: 'Primary Rep', description: 'Single rep owns account — 100% credit', frequency: 'Most common' },
-  { rule: 'Split Credit', description: 'Two reps share account — 50/50 default, adjustable', frequency: 'Multi-route accounts' },
-  { rule: 'Territory Overlap', description: 'Route boundary conflict — resolved by seniority + volume', frequency: 'Rare, ~2% of txns' },
-  { rule: 'New Rep Proration', description: 'Mid-period hire — credit prorated to start date', frequency: 'Hire events' },
+  { rule: 'Primary Credit', description: '100% credit to route owner — single rep owns account. Default for all accounts.', frequency: '~85% of transactions', color: '#22C55E' },
+  { rule: 'Split Credit (KAM/RSR)', description: 'KAM 70% / RSR 30% for chain accounts with dedicated key account manager overlay.', frequency: 'Chain accounts (~12%)', color: '#3B82F6' },
+  { rule: 'Territory Override', description: '90-day trailing credit on territory transfers. Outgoing rep retains credit for accounts serviced in prior period.', frequency: 'Territory changes (~2%)', color: '#F59E0B' },
+  { rule: 'Manager Roll-Up', description: 'Manager receives credit-based reporting roll-up across district. Not payment-eligible — used for leaderboards and coaching.', frequency: 'All transactions', color: '#8B5CF6' },
+  { rule: 'New Rep Proration', description: 'Mid-period hire credit prorated to start date. Partial credit for first period only.', frequency: 'New hires (~1%)', color: '#0EA5E9' },
 ];
 
 const TRANSACTIONS = [
@@ -244,7 +245,7 @@ export default function DataPage() {
                 <div key={rule.rule} className="flex items-start gap-3 p-3 rounded-lg"
                   style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
                   <div className="flex-shrink-0 px-2 py-0.5 rounded text-xs font-bold font-mono"
-                    style={{ background: `${ACCENT}18`, color: ACCENT, whiteSpace: 'nowrap' }}>
+                    style={{ background: `${rule.color}18`, color: rule.color, whiteSpace: 'nowrap' }}>
                     {rule.rule}
                   </div>
                   <div className="flex-1">
@@ -253,6 +254,50 @@ export default function DataPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </LightSectionCard>
+
+          {/* Credit Flow Diagram */}
+          <LightSectionCard title="CREDIT FLOW — CHAIN ACCOUNT EXAMPLE">
+            <div className="w-full overflow-hidden rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+              <svg viewBox="0 0 700 160" className="w-full" style={{ minHeight: 120 }}>
+                {/* Kroger Order box */}
+                <rect x="20" y="50" width="130" height="60" rx="8" fill="#3B82F610" stroke="#3B82F6" strokeWidth="1.5" />
+                <text x="85" y="72" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold" fontFamily="monospace">Kroger PO #48201</text>
+                <text x="85" y="90" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">84cs Corona 12pk</text>
+
+                {/* Arrow 1 */}
+                <line x1="155" y1="80" x2="210" y2="80" stroke="var(--pl-text-faint)" strokeWidth="1.5" />
+                <polygon points="208,75 218,80 208,85" fill="var(--pl-text-faint)" />
+                <text x="185" y="70" textAnchor="middle" fill="var(--pl-text-faint)" fontSize="9" fontFamily="monospace">credit engine</text>
+
+                {/* Split box */}
+                <rect x="220" y="40" width="120" height="80" rx="8" fill="#F59E0B10" stroke="#F59E0B" strokeWidth="1.5" />
+                <text x="280" y="62" textAnchor="middle" fill="#F59E0B" fontSize="11" fontWeight="bold" fontFamily="monospace">Split Credit</text>
+                <text x="280" y="80" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">KAM / RSR</text>
+                <text x="280" y="96" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">70% / 30%</text>
+
+                {/* Arrow to KAM */}
+                <line x1="345" y1="60" x2="420" y2="40" stroke="#3B82F6" strokeWidth="1.5" />
+                <polygon points="418,35 428,40 418,45" fill="#3B82F6" />
+
+                {/* Arrow to RSR */}
+                <line x1="345" y1="100" x2="420" y2="120" stroke="#22C55E" strokeWidth="1.5" />
+                <polygon points="418,115 428,120 418,125" fill="#22C55E" />
+
+                {/* KAM box */}
+                <rect x="430" y="15" width="130" height="50" rx="8" fill="#3B82F610" stroke="#3B82F6" strokeWidth="1.5" />
+                <text x="495" y="35" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold" fontFamily="monospace">Sofia Reyes (KAM)</text>
+                <text x="495" y="52" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">70% = $1,764</text>
+
+                {/* RSR box */}
+                <rect x="430" y="95" width="130" height="50" rx="8" fill="#22C55E10" stroke="#22C55E" strokeWidth="1.5" />
+                <text x="495" y="115" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold" fontFamily="monospace">Diego Santos (RSR)</text>
+                <text x="495" y="132" textAnchor="middle" fill="var(--pl-text-muted)" fontSize="10" fontFamily="monospace">30% = $756</text>
+
+                {/* Total label */}
+                <text x="620" y="80" textAnchor="middle" fill="var(--pl-text-faint)" fontSize="10" fontFamily="monospace">Total: $2,520</text>
+              </svg>
             </div>
           </LightSectionCard>
 
