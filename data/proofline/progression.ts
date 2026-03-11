@@ -39,7 +39,7 @@ export const PROGRESSION: WeekSnapshot[] = [
     totalPayout: 380000,
     topPerformer: 'T. Washington',
     milestone: 'Early Leaders',
-    milestoneDetail: 'Top performers emerge. EMCO gates starting to differentiate seller behavior.',
+    milestoneDetail: 'Top performers emerge. BBI gates starting to differentiate seller behavior.',
   },
   {
     week: 5,

@@ -486,7 +486,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
       <LightSectionCard title="Gate Performance by Rep" className="mb-6">
         <div className="grid grid-cols-1 gap-2">
           {sellers.map((seller: Seller) => {
-            const gates = seller.emcoGates;
+            const gates = seller.bbiGates;
             const isSelected = selectedRoute === seller.routeId;
             return (
               <div

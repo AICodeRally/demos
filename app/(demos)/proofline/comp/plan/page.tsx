@@ -4,7 +4,7 @@ import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demo
 import {
   COMP_PLAN,
   COMP_TIERS,
-  EMCO_GATES,
+  BBI_GATES,
   SPIRITS_ADDER,
   estimateQuarterlyEarnings,
 } from '@/data/proofline';
@@ -80,9 +80,9 @@ function TierTrack() {
 }
 
 /* ── Gate Rings ──────────────────────────── */
-function EmcoGateRings() {
+function BBIGateRings() {
   const w = 700, h = 200;
-  const spacing = w / (EMCO_GATES.length + 1);
+  const spacing = w / (BBI_GATES.length + 1);
   const r = 40;
 
   return (
@@ -93,7 +93,7 @@ function EmcoGateRings() {
       </text>
 
       <defs>
-        {EMCO_GATES.map(gate => (
+        {BBI_GATES.map(gate => (
           <linearGradient key={gate.name} id={`gr-${gate.name}`} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor={gate.color} stopOpacity="0.9" />
             <stop offset="100%" stopColor={gate.color} stopOpacity="0.4" />
@@ -101,7 +101,7 @@ function EmcoGateRings() {
         ))}
       </defs>
 
-      {EMCO_GATES.map((gate, i) => {
+      {BBI_GATES.map((gate, i) => {
         const cx = spacing * (i + 1);
         const cy = 100;
         const circ = 2 * Math.PI * r;
@@ -137,7 +137,7 @@ function EmcoGateRings() {
             </text>
 
             {/* Flowing arrow connector */}
-            {i < EMCO_GATES.length - 1 && (
+            {i < BBI_GATES.length - 1 && (
               <g>
                 <path
                   d={`M${cx + r + 6},${cy} Q${cx + spacing / 2},${cy - 12} ${cx + spacing - r - 6},${cy}`}
@@ -205,8 +205,8 @@ function EarningsComparison() {
             </div>
             <div className="flex justify-between text-[13px]">
               <span style={{ color: '#718096' }}>Gate multiplier</span>
-              <span className="font-mono font-bold" style={{ color: s.data.emcoMultiplier > 1 ? '#22C55E' : '#A0AEC0' }}>
-                {s.data.emcoMultiplier.toFixed(2)}x ({s.data.unlockedGates}/4 gates)
+              <span className="font-mono font-bold" style={{ color: s.data.bbiMultiplier > 1 ? '#22C55E' : '#A0AEC0' }}>
+                {s.data.bbiMultiplier.toFixed(2)}x ({s.data.unlockedGates}/4 gates)
               </span>
             </div>
             <div className="flex justify-between text-[13px]">
@@ -229,7 +229,7 @@ function EarningsComparison() {
 
 export default function CompPlanPage() {
   const plan = COMP_PLAN;
-  const maxMultiplier = Math.max(...EMCO_GATES.map(g => g.multiplier));
+  const maxMultiplier = Math.max(...BBI_GATES.map(g => g.multiplier));
 
   return (
     <>
@@ -245,7 +245,7 @@ export default function CompPlanPage() {
           {plan.planName}
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
-          {COMP_TIERS.length} tiers &middot; {EMCO_GATES.length} gates &middot; {plan.kickers.length} quarterly kickers &middot; Spirits {(SPIRITS_ADDER.rate * 100).toFixed(1)}% adder
+          {COMP_TIERS.length} tiers &middot; {BBI_GATES.length} gates &middot; {plan.kickers.length} quarterly kickers &middot; Spirits {(SPIRITS_ADDER.rate * 100).toFixed(1)}% adder
         </p>
       </div>
 
@@ -273,7 +273,7 @@ export default function CompPlanPage() {
 
       {/* Gate System */}
       <LightSectionCard title="Gate Cascade" className="mb-4">
-        <EmcoGateRings />
+        <BBIGateRings />
       </LightSectionCard>
 
       {/* Spirits Adder Card */}
@@ -319,7 +319,7 @@ export default function CompPlanPage() {
             <div>Pay frequency: <strong className="font-mono">{plan.payFrequency}</strong></div>
             <div>True-up frequency: <strong className="font-mono">{plan.trueUpFrequency}</strong></div>
             <div>Plan year: <strong className="font-mono">FY{plan.planYear}</strong></div>
-            <div>gates: <strong className="font-mono">{plan.emcoGates.length} gates</strong></div>
+            <div>gates: <strong className="font-mono">{plan.bbiGates.length} gates</strong></div>
             <div>Kickers: <strong className="font-mono">{plan.kickers.length} quarterly</strong></div>
           </div>
         </div>

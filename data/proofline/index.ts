@@ -74,7 +74,7 @@ export {
 
 // ── Compensation ───────────────────────────────
 export {
-  EMCO_GATES,
+  BBI_GATES,
   COMP_TIERS,
   COMP_PLAN,
   SPIRITS_ADDER,
@@ -85,7 +85,7 @@ export {
   estimateQuarterlyEarnings,
   getGateByName,
   getTierByLevel,
-  type EmcoGate,
+  type BBIGate,
   type GateName,
   type GateStatus,
   type CompTier,

@@ -16,7 +16,7 @@ import {
   getCoachingHistory,
   getCoachingCardsBySeller,
   getAgendaForSeller,
-  EMCO_GATES,
+  BBI_GATES,
   COMP_TIERS,
   getGateStatus,
   type SupplierGroup,
@@ -123,10 +123,10 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
   });
 
   const gates = [
-    { name: 'Core', value: seller.emcoGates.core, threshold: EMCO_GATES[0]?.threshold ?? 0.85 },
-    { name: 'Import', value: seller.emcoGates.import, threshold: EMCO_GATES[1]?.threshold ?? 0.80 },
-    { name: 'Emerging', value: seller.emcoGates.emerging, threshold: EMCO_GATES[2]?.threshold ?? 0.70 },
-    { name: 'Combined', value: seller.emcoGates.combined, threshold: EMCO_GATES[3]?.threshold ?? 0.90 },
+    { name: 'Core', value: seller.bbiGates.core, threshold: BBI_GATES[0]?.threshold ?? 0.85 },
+    { name: 'Import', value: seller.bbiGates.import, threshold: BBI_GATES[1]?.threshold ?? 0.80 },
+    { name: 'Emerging', value: seller.bbiGates.emerging, threshold: BBI_GATES[2]?.threshold ?? 0.70 },
+    { name: 'Combined', value: seller.bbiGates.combined, threshold: BBI_GATES[3]?.threshold ?? 0.90 },
   ];
 
   return (

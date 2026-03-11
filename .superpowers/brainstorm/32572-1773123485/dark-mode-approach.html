@@ -1,0 +1,65 @@
+<h2>Dark Mode Strategy for PROOFLINE Demo</h2>
+<p class="subtitle">The demo currently uses hardcoded light colors (#1A1A2E text, bg-white cards, #718096 muted). How should dark mode work?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Theme-Aware CSS Variables (Recommended)</h3>
+      <p>Add a <code>dark</code> class toggle to DemoShell. All 30 pages already use inline styles with hardcoded hex colors &mdash; replace those with CSS custom properties that flip between light/dark values. The toggle lives in the DemoShell header bar next to the "Interactive Demo" badge.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>One toggle controls everything</li>
+          <li>Matches the iPad PROOFLINE demo pattern</li>
+          <li>CSS vars cascade automatically</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Must touch all ~30 pages to replace inline styles</li>
+          <li>Barrel-brass theme preset needs a dark companion</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Dual Theme Presets</h3>
+      <p>Create a <code>barrel-brass-dark</code> theme preset alongside the existing <code>barrel-brass</code>. The DemoShell toggles between presets, swapping all CSS variables at once. Pages don't change at all &mdash; but they still have hardcoded inline colors that won't respond to the swap.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Clean theme architecture</li>
+          <li>Minimal DemoShell changes</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Still must fix all 30 pages' inline styles</li>
+          <li>Two presets to maintain in sync</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>CSS <code>filter: invert()</code> Quick Hack</h3>
+      <p>Apply a CSS filter to invert colors on the content area. Fast to implement, zero page changes needed. But inverted colors look awful on charts, SVGs, and branded elements.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Zero page changes</li>
+          <li>5-minute implementation</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Charts and SVGs look broken</li>
+          <li>Brand colors get inverted</li>
+          <li>Unprofessional appearance</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top: 2rem;">Click your preference, then respond in the terminal.</p>
+</div>
+</content>
+</invoke>

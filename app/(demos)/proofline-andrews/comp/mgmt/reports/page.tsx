@@ -581,10 +581,10 @@ export default function ReportsPage() {
           <LightSectionCard title="GATE STATUS">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { name: 'Core', value: rep.emcoGates.core, threshold: 0.75, color: '#2563EB' },
-                { name: 'Import', value: rep.emcoGates.import, threshold: 0.80, color: '#7C3AED' },
-                { name: 'Emerging', value: rep.emcoGates.emerging, threshold: 0.70, color: '#F59E0B' },
-                { name: 'Combined', value: rep.emcoGates.combined, threshold: 0.85, color: ACCENT },
+                { name: 'Core', value: rep.bbiGates.core, threshold: 0.75, color: '#2563EB' },
+                { name: 'Import', value: rep.bbiGates.import, threshold: 0.80, color: '#7C3AED' },
+                { name: 'Emerging', value: rep.bbiGates.emerging, threshold: 0.70, color: '#F59E0B' },
+                { name: 'Combined', value: rep.bbiGates.combined, threshold: 0.85, color: ACCENT },
               ].map(gate => {
                 const unlocked = gate.value >= gate.threshold;
                 const gateColor = unlocked ? '#22C55E' : gate.value >= gate.threshold * 0.9 ? '#F59E0B' : '#F87171';
@@ -666,14 +666,14 @@ export default function ReportsPage() {
             <LightKpiCard label="Avg Attainment" value={`${(htReps.reduce((s, r) => s + r.attainment, 0) / (htReps.length || 1) * 100).toFixed(1)}%`} accent={ACCENT} delta={1.4} sparkline={htReps.slice(0, 6).map(r => r.attainment * 100)} />
             <LightKpiCard label="Total Comp Expense" value={`$${(htReps.length * 7020 / 1000).toFixed(0)}K`} accent={ACCENT} />
             <LightKpiCard label="At-Risk Reps" value={String(htReps.filter(r => r.atRisk).length)} accent={ACCENT} sub={htReps.filter(r => r.atRisk).length > 0 ? 'Needs attention' : 'All clear'} />
-            <LightKpiCard label="Full Gate %" value={`${Math.round(htReps.filter(r => r.emcoGates.combined >= 0.85).length / (htReps.length || 1) * 100)}%`} accent={ACCENT} />
+            <LightKpiCard label="Full Gate %" value={`${Math.round(htReps.filter(r => r.bbiGates.combined >= 0.85).length / (htReps.length || 1) * 100)}%`} accent={ACCENT} />
           </div>
 
           {/* Team visual cards */}
           <LightSectionCard title={`${ht.name.toUpperCase()} TEAM \u2014 MANAGER: ${ht.manager.toUpperCase()}`}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {htReps.map(r => {
-                const gatesUnlocked = [r.emcoGates.core >= 0.75, r.emcoGates.import >= 0.80, r.emcoGates.emerging >= 0.70, r.emcoGates.combined >= 0.85].filter(Boolean).length;
+                const gatesUnlocked = [r.bbiGates.core >= 0.75, r.bbiGates.import >= 0.80, r.bbiGates.emerging >= 0.70, r.bbiGates.combined >= 0.85].filter(Boolean).length;
                 const statusColor = r.attainment >= 1.0 ? '#22C55E' : r.attainment >= 0.85 ? '#F59E0B' : '#F87171';
                 const statusLabel = r.attainment >= 1.0 ? 'ON TARGET' : r.attainment >= 0.85 ? 'AT RISK' : 'BELOW';
                 return (
@@ -694,7 +694,7 @@ export default function ReportsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex gap-1">
                         {['C', 'I', 'E', 'X'].map((g, idx) => {
-                          const vals = [r.emcoGates.core >= 0.75, r.emcoGates.import >= 0.80, r.emcoGates.emerging >= 0.70, r.emcoGates.combined >= 0.85];
+                          const vals = [r.bbiGates.core >= 0.75, r.bbiGates.import >= 0.80, r.bbiGates.emerging >= 0.70, r.bbiGates.combined >= 0.85];
                           return (
                             <span key={g} className="w-5 h-5 rounded text-xs font-bold font-mono flex items-center justify-center"
                               style={{ background: vals[idx] ? 'rgba(34,197,94,0.15)' : 'rgba(248,113,113,0.1)', color: vals[idx] ? '#22C55E' : '#F87171' }}>{g}</span>

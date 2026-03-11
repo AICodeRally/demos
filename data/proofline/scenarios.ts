@@ -1,6 +1,6 @@
 // Lone Star Distribution — Scenario Modeling Presets
 // 3 pre-built scenarios for the Scenario Modeling page (/strategy/scenarios)
-// Each scenario adjusts growth rates, EMCO thresholds, Laredo ramp, and spirits targets
+// Each scenario adjusts growth rates, BBI thresholds, Laredo ramp, and spirits targets
 
 import type { SupplierGroup } from './brands';
 
@@ -33,8 +33,8 @@ export interface Scenario {
   caseTarget: number;        // annual case target
   yoyGrowth: number;         // overall YoY growth %
 
-  // EMCO adjustments
-  emcoThresholds: {
+  // BBI adjustments
+  bbiThresholds: {
     core: number;
     import: number;
     emerging: number;
@@ -85,7 +85,7 @@ export const SCENARIOS: Scenario[] = [
     caseTarget: 41200000,
     yoyGrowth: 0.014,
 
-    emcoThresholds: {
+    bbiThresholds: {
       core: 0.85,
       import: 0.80,
       emerging: 0.65,      // relaxed from 0.70
@@ -147,7 +147,7 @@ export const SCENARIOS: Scenario[] = [
     caseTarget: 42500000,
     yoyGrowth: 0.04,
 
-    emcoThresholds: {
+    bbiThresholds: {
       core: 0.85,
       import: 0.80,
       emerging: 0.70,
@@ -210,7 +210,7 @@ export const SCENARIOS: Scenario[] = [
     caseTarget: 44000000,
     yoyGrowth: 0.10,
 
-    emcoThresholds: {
+    bbiThresholds: {
       core: 0.87,        // tightened
       import: 0.83,      // tightened
       emerging: 0.75,    // tightened

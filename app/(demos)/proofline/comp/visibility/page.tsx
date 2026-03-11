@@ -5,7 +5,7 @@ import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demo
 import {
   SELLERS,
   HOMETOWNS,
-  EMCO_GATES,
+  BBI_GATES,
   COMP_TIERS,
   getGateStatus,
   countUnlockedGates,
@@ -26,8 +26,8 @@ function AttainmentRing({ seller }: { seller: Seller }) {
 
   // Tier info
   const tier = COMP_TIERS.find(t => seller.attainment >= t.floor && seller.attainment < t.ceiling) ?? COMP_TIERS[3];
-  const gates = countUnlockedGates(seller.emcoGates);
-  const mult = getEffectiveMultiplier(seller.emcoGates);
+  const gates = countUnlockedGates(seller.bbiGates);
+  const mult = getEffectiveMultiplier(seller.bbiGates);
 
   return (
     <>
@@ -146,7 +146,7 @@ function AttainmentCurve({ seller }: { seller: Seller }) {
 }
 
 /* ── Gate Progress Card ──────────────────────── */
-function GateProgress({ gate, value }: { gate: typeof EMCO_GATES[0]; value: number }) {
+function GateProgress({ gate, value }: { gate: typeof BBI_GATES[0]; value: number }) {
   const status = getGateStatus(gate.threshold, value);
   const gap = gate.threshold - value;
   const isUnlocked = status === 'unlocked';
@@ -264,8 +264,8 @@ export default function MidQuarterVisibilityPage() {
           {/* Gate Progress */}
           <LightSectionCard title="Gate Progress — Actions to Unlock" className="mb-6">
             <div className="grid grid-cols-2 gap-3">
-              {EMCO_GATES.map(gate => (
-                <GateProgress key={gate.name} gate={gate} value={selectedSeller.emcoGates[gate.name]} />
+              {BBI_GATES.map(gate => (
+                <GateProgress key={gate.name} gate={gate} value={selectedSeller.bbiGates[gate.name]} />
               ))}
             </div>
           </LightSectionCard>
@@ -299,7 +299,7 @@ export default function MidQuarterVisibilityPage() {
             <LightKpiCard label="Avg Attainment" value={pct(avgAttainment)} accent={avgAttainment >= 0.95 ? '#22C55E' : '#F59E0B'} sub={`${hometownSellers.length} reps`} />
             <LightKpiCard label="At Risk Reps" value={String(atRiskCount)} accent={atRiskCount > 0 ? '#F87171' : '#22C55E'} sub="Need intervention" />
             <LightKpiCard label="Above Target" value={String(hometownSellers.filter(s => s.attainment >= 1).length)} accent="#22C55E" sub={`of ${hometownSellers.length}`} />
-            <LightKpiCard label="Full 4-Gate" value={String(hometownSellers.filter(s => countUnlockedGates(s.emcoGates) === 4).length)} accent="#2563EB" sub="All gates open" />
+            <LightKpiCard label="Full 4-Gate" value={String(hometownSellers.filter(s => countUnlockedGates(s.bbiGates) === 4).length)} accent="#2563EB" sub="All gates open" />
           </div>
 
           {/* Rep status cards */}
@@ -307,7 +307,7 @@ export default function MidQuarterVisibilityPage() {
             <div className="space-y-2">
               {hometownSellers.map(seller => {
                 const sTier = COMP_TIERS.find(t => seller.attainment >= t.floor && seller.attainment < t.ceiling) ?? COMP_TIERS[3];
-                const sGates = countUnlockedGates(seller.emcoGates);
+                const sGates = countUnlockedGates(seller.bbiGates);
                 const tierColors = ['#22C55E', '#2563EB', '#F59E0B', '#A0AEC0'];
 
                 return (

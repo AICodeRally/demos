@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demos/proofline';
 import {
-  EMCO_GATES,
+  BBI_GATES,
   SELLERS,
   HOMETOWNS,
   getGateStatus,
@@ -70,21 +70,21 @@ function GateBar({ value, threshold, color }: { value: number; threshold: number
   );
 }
 
-export default function EmcoGatesPage() {
+export default function BBIGatesPage() {
   const [selectedHometown, setSelectedHometown] = useState<string | null>(null);
   const sellers = SELLERS.filter(s => !selectedHometown || s.hometown === selectedHometown);
 
   // Aggregate stats
   const allSellers = SELLERS;
-  const gateStats = EMCO_GATES.map(gate => {
-    const unlocked = allSellers.filter(s => getGateStatus(gate.threshold, s.emcoGates[gate.name]) === 'unlocked').length;
-    const atRisk = allSellers.filter(s => getGateStatus(gate.threshold, s.emcoGates[gate.name]) === 'at-risk').length;
+  const gateStats = BBI_GATES.map(gate => {
+    const unlocked = allSellers.filter(s => getGateStatus(gate.threshold, s.bbiGates[gate.name]) === 'unlocked').length;
+    const atRisk = allSellers.filter(s => getGateStatus(gate.threshold, s.bbiGates[gate.name]) === 'at-risk').length;
     return { gate, unlocked, atRisk, locked: allSellers.length - unlocked - atRisk };
   });
 
-  const avgGatesUnlocked = allSellers.reduce((s, sel) => s + countUnlockedGates(sel.emcoGates), 0) / allSellers.length;
-  const full4Gate = allSellers.filter(s => countUnlockedGates(s.emcoGates) === 4).length;
-  const zeroGate = allSellers.filter(s => countUnlockedGates(s.emcoGates) === 0).length;
+  const avgGatesUnlocked = allSellers.reduce((s, sel) => s + countUnlockedGates(sel.bbiGates), 0) / allSellers.length;
+  const full4Gate = allSellers.filter(s => countUnlockedGates(s.bbiGates) === 4).length;
+  const zeroGate = allSellers.filter(s => countUnlockedGates(s.bbiGates) === 0).length;
 
   return (
     <>
@@ -100,13 +100,13 @@ export default function EmcoGatesPage() {
           Gate Performance
         </h1>
         <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
-          {allSellers.length} reps &middot; {EMCO_GATES.length} gates &middot; {full4Gate} with all 4 unlocked
+          {allSellers.length} reps &middot; {BBI_GATES.length} gates &middot; {full4Gate} with all 4 unlocked
         </p>
       </div>
 
       {/* KPI Row */}
       <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Avg Gates Unlocked" value={avgGatesUnlocked.toFixed(1)} accent="#22C55E" sub={`of ${EMCO_GATES.length} gates`} />
+        <LightKpiCard label="Avg Gates Unlocked" value={avgGatesUnlocked.toFixed(1)} accent="#22C55E" sub={`of ${BBI_GATES.length} gates`} />
         <LightKpiCard label="Full 4-Gate" value={String(full4Gate)} accent="#22C55E" sub={`${((full4Gate / allSellers.length) * 100).toFixed(0)}% of reps`} />
         <LightKpiCard label="Zero Gates" value={String(zeroGate)} accent={zeroGate > 0 ? '#F87171' : '#22C55E'} sub="Need coaching" />
         <LightKpiCard label="Core Gate Pass" value={pct(gateStats[0].unlocked / allSellers.length)} accent="#60A5FA" sub={`${gateStats[0].unlocked}/${allSellers.length} reps`} />
@@ -180,16 +180,16 @@ export default function EmcoGatesPage() {
             </thead>
             <tbody>
               {sellers.map(seller => {
-                const unlocked = countUnlockedGates(seller.emcoGates);
-                const mult = getEffectiveMultiplier(seller.emcoGates);
+                const unlocked = countUnlockedGates(seller.bbiGates);
+                const mult = getEffectiveMultiplier(seller.bbiGates);
 
                 return (
                   <tr key={seller.id} className="hover:bg-slate-50 transition-colors" style={{ borderBottom: '1px solid #F1F5F9' }}>
                     <td className="py-2 px-2 font-bold" style={{ color: '#1A1A2E' }}>{seller.name}</td>
                     <td className="py-2 px-2 font-mono" style={{ color: '#718096' }}>{seller.routeId}</td>
 
-                    {EMCO_GATES.map(gate => {
-                      const val = seller.emcoGates[gate.name];
+                    {BBI_GATES.map(gate => {
+                      const val = seller.bbiGates[gate.name];
                       const status = getGateStatus(gate.threshold, val);
                       return (
                         <td key={gate.name} className="py-2 px-2 text-center">

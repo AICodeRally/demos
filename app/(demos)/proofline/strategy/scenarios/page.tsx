@@ -119,7 +119,7 @@ function QuarterlyProjection({ scenario }: { scenario: Scenario }) {
 }
 
 /* ── Gate Threshold Comparison ─────────────────── */
-function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
+function BBIComparison({ scenarios }: { scenarios: Scenario[] }) {
   const gates = ['core', 'import', 'emerging', 'combined'] as const;
   const gateLabels = { core: 'Core', import: 'Import', emerging: 'Emerging', combined: 'Combined' };
 
@@ -133,7 +133,7 @@ function EMCOComparison({ scenarios }: { scenarios: Scenario[] }) {
           </span>
           <div className="flex-1 flex items-center gap-2">
             {scenarios.map(s => {
-              const val = s.emcoThresholds[gate];
+              const val = s.bbiThresholds[gate];
               return (
                 <div key={s.id} className="flex-1">
                   <div className="flex items-center gap-1.5">
@@ -234,14 +234,14 @@ export default function ScenarioModelingPage() {
         />
       </div>
 
-      {/* Two-column: Quarterly Projection + EMCO Comparison */}
+      {/* Two-column: Quarterly Projection + BBI Comparison */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <LightSectionCard title={`${activeScenario.name} — Quarterly Revenue Projection`}>
           <QuarterlyProjection scenario={activeScenario} />
         </LightSectionCard>
 
         <LightSectionCard title="Gate Thresholds — All Scenarios">
-          <EMCOComparison scenarios={SCENARIOS} />
+          <BBIComparison scenarios={SCENARIOS} />
         </LightSectionCard>
       </div>
 
@@ -377,7 +377,7 @@ export default function ScenarioModelingPage() {
               { label: 'Revenue Target', values: SCENARIOS.map(s => fmtM(s.revenueTarget)) },
               { label: 'YoY Growth', values: SCENARIOS.map(s => `+${pct(s.yoyGrowth)}`) },
               { label: 'Case Target', values: SCENARIOS.map(s => `${(s.caseTarget / 1e6).toFixed(1)}M`) },
-              { label: 'EMCO Combined', values: SCENARIOS.map(s => `≥${pct(s.emcoThresholds.combined)}`) },
+              { label: 'BBI Combined', values: SCENARIOS.map(s => `≥${pct(s.bbiThresholds.combined)}`) },
               { label: 'Spirits Share', values: SCENARIOS.map(s => pct(s.spiritsTarget.portfolioShare)) },
               { label: 'Laredo Routes', values: SCENARIOS.map(s => String(s.laredoRamp.yearEndRoutes)) },
               { label: 'New Accounts', values: SCENARIOS.map(s => String(s.hometownProjections.reduce((sum, h) => sum + h.newAccounts, 0))) },

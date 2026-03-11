@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { ActNavigation, LightSectionCard, LightKpiCard } from '@/components/demos/proofline';
 import {
-  EMCO_GATES,
+  BBI_GATES,
   SELLERS,
   HOMETOWNS,
   COMP_TIERS,
@@ -213,8 +213,8 @@ function AttainmentRing({ seller }: { seller: Seller }) {
   const size = 170;
   const color = seller.attainment >= 1.0 ? '#22C55E' : seller.attainment >= 0.85 ? '#F59E0B' : '#F87171';
   const tier = COMP_TIERS.find(t => seller.attainment >= t.floor && seller.attainment < t.ceiling) ?? COMP_TIERS[3];
-  const gates = countUnlockedGates(seller.emcoGates);
-  const mult = getEffectiveMultiplier(seller.emcoGates);
+  const gates = countUnlockedGates(seller.bbiGates);
+  const mult = getEffectiveMultiplier(seller.bbiGates);
   const cx = size / 2, cy = size / 2;
 
   return (
@@ -249,9 +249,9 @@ function AttainmentRing({ seller }: { seller: Seller }) {
 }
 
 // ── Gate Card (enhanced with progress bar + breakdown) ──
-function GateCard({ gate, filteredSellers, delay }: { gate: typeof EMCO_GATES[number]; filteredSellers: Seller[]; delay: number }) {
-  const unlocked = filteredSellers.filter(s => getGateStatus(s.emcoGates, gate.name) === 'unlocked').length;
-  const atRiskCount = filteredSellers.filter(s => getGateStatus(s.emcoGates, gate.name) === 'at-risk').length;
+function GateCard({ gate, filteredSellers, delay }: { gate: typeof BBI_GATES[number]; filteredSellers: Seller[]; delay: number }) {
+  const unlocked = filteredSellers.filter(s => getGateStatus(s.bbiGates, gate.name) === 'unlocked').length;
+  const atRiskCount = filteredSellers.filter(s => getGateStatus(s.bbiGates, gate.name) === 'at-risk').length;
   const locked = filteredSellers.length - unlocked - atRiskCount;
   const unlockedPct = filteredSellers.length > 0 ? unlocked / filteredSellers.length : 0;
 
@@ -316,7 +316,7 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
     : SELLERS.filter(s => s.hometown === hometownFilter);
 
   const avgAttainment = filteredSellers.reduce((s, r) => s + r.attainment, 0) / filteredSellers.length;
-  const unlocked4 = filteredSellers.filter(s => countUnlockedGates(s.emcoGates) === 4).length;
+  const unlocked4 = filteredSellers.filter(s => countUnlockedGates(s.bbiGates) === 4).length;
   const atRisk = filteredSellers.filter(s => s.attainment >= 0.80 && s.attainment < 0.85).length;
 
   return (
@@ -331,7 +331,7 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
 
       {/* Gate Summary Cards (enhanced) */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        {EMCO_GATES.map((gate, i) => (
+        {BBI_GATES.map((gate, i) => (
           <GateCard key={gate.name} gate={gate} filteredSellers={filteredSellers} delay={i * 80} />
         ))}
       </div>
@@ -384,7 +384,7 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
                     </td>
                     {(['core', 'import', 'emerging', 'combined'] as const).map(gate => (
                       <td key={gate} className="py-2.5 text-center">
-                        <GateStatusBadge status={getGateStatus(seller.emcoGates, gate)} />
+                        <GateStatusBadge status={getGateStatus(seller.bbiGates, gate)} />
                       </td>
                     ))}
                     <td className="py-2.5 text-right">
@@ -466,9 +466,9 @@ function VisibilityTab() {
             {/* Gate progress bars */}
             <div className="mt-5 space-y-1">
               <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-faint)' }}>Gate Progress</div>
-              {EMCO_GATES.map((gate, i) => {
-                const val = selectedSeller.emcoGates[gate.name];
-                const status = getGateStatus(selectedSeller.emcoGates, gate.name);
+              {BBI_GATES.map((gate, i) => {
+                const val = selectedSeller.bbiGates[gate.name];
+                const status = getGateStatus(selectedSeller.bbiGates, gate.name);
                 return (
                   <div key={gate.name} className="flex items-center gap-3">
                     <StatusDot status={status} size={7} />
@@ -482,8 +482,8 @@ function VisibilityTab() {
 
             {/* Gate cards grid */}
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {EMCO_GATES.map(gate => {
-                const status = getGateStatus(selectedSeller.emcoGates, gate.name);
+              {BBI_GATES.map(gate => {
+                const status = getGateStatus(selectedSeller.bbiGates, gate.name);
                 return (
                   <div key={gate.name} className="rounded-xl border p-3 text-center transition-all hover:shadow-md"
                     style={{
@@ -529,7 +529,7 @@ function VisibilityTab() {
           <div className="grid grid-cols-3 gap-3 mb-4">
             <LightKpiCard label="Avg Attainment" value={pct(avgAtt)} accent={ACT5_ACCENT} sub={`${hometownSellers.length} reps`} stagger={0} />
             <LightKpiCard label="All Gates Unlocked"
-              value={String(hometownSellers.filter(s => countUnlockedGates(s.emcoGates) === 4).length)}
+              value={String(hometownSellers.filter(s => countUnlockedGates(s.bbiGates) === 4).length)}
               accent="#22C55E" sub="Full bonus eligible" stagger={1} />
             <LightKpiCard label="At-Risk"
               value={String(hometownSellers.filter(s => s.attainment < 0.85 && s.attainment >= 0.75).length)}
@@ -540,7 +540,7 @@ function VisibilityTab() {
             <div className="space-y-1.5">
               {hometownSellers.map((seller, idx) => {
                 const color = seller.attainment >= 1.0 ? '#22C55E' : seller.attainment >= 0.85 ? '#F59E0B' : '#F87171';
-                const gates = countUnlockedGates(seller.emcoGates);
+                const gates = countUnlockedGates(seller.bbiGates);
                 const barPct = Math.min(seller.attainment / 1.2, 1);
                 return (
                   <div key={seller.id}
@@ -574,7 +574,7 @@ function VisibilityTab() {
                     {/* Gate dots */}
                     <div className="flex gap-1.5">
                       {(['core', 'import', 'emerging', 'combined'] as const).map(gate => {
-                        const s = getGateStatus(seller.emcoGates, gate);
+                        const s = getGateStatus(seller.bbiGates, gate);
                         return (
                           <div key={gate} className="w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold transition-transform hover:scale-125"
                             style={{

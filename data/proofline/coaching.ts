@@ -139,7 +139,7 @@ export const COACHING_CARDS: CoachingCard[] = [
     dataPoints: [
       '4-week rolling attainment: 91% (Tier 2 threshold: 90%)',
       'Spirits accounts: 6 → 9 in last quarter',
-      'EMCO gates: Core 86%, Import 81%, Emerging 72% — all unlocked',
+      'BBI gates: Core 86%, Import 81%, Emerging 72% — all unlocked',
       'Display compliance: 85% (up from 78%)',
       'Zero missed stops in February',
     ],
@@ -243,7 +243,7 @@ export const COACHING_HISTORY_DAL_03: CoachingHistoryEntry[] = [
     summary: 'Quarterly review — strong Q1 performance. Import mix leading district. Spirits pioneer recognition.',
     outcomes: ['Attainment at 101% — on track for Tier 1', 'Import mix at 30% (target 28%)', 'Spirits accounts grew from 10 to 14'],
     nextSteps: ['Target 2 more spirits accounts in Deep Ellum corridor', 'Prepare for Cinco de Mayo Corona kicker', 'Consider mentor pairing with Andre (DAL-05)'],
-    managerNotes: 'Marcus is consistently our most balanced performer. Strong across all EMCO gates. Could be ready for district trainer role.',
+    managerNotes: 'Marcus is consistently our most balanced performer. Strong across all BBI gates. Could be ready for district trainer role.',
   },
   {
     id: 'CH-002', sellerId: 'SEL-DAL-03', date: '2026-02-14', type: 'ride-along',

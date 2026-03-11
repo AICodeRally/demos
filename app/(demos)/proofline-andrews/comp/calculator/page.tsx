@@ -5,7 +5,7 @@ import { ActNavigation, LightSectionCard } from '@/components/demos/proofline';
 import {
   BRAND_FAMILIES,
   SELLERS,
-  EMCO_GATES,
+  BBI_GATES,
   COMP_TIERS,
   SPIRITS_ADDER,
   estimateQuarterlyEarnings,
@@ -22,7 +22,7 @@ interface DealItem {
 
 /* ── Gate Ring (radial progress with slider) ─── */
 function GateRing({ gate, value, onChange }: {
-  gate: typeof EMCO_GATES[0]; value: number; onChange: (v: number) => void;
+  gate: typeof BBI_GATES[0]; value: number; onChange: (v: number) => void;
 }) {
   const status = getGateStatus(gate.threshold, value);
   const isUnlocked = status === 'unlocked';
@@ -112,10 +112,10 @@ export default function RtccCalculatorPage() {
 
   // Comp model state (initialized from seller)
   const [attainment, setAttainment] = useState(selectedSeller.attainment);
-  const [coreGate, setCoreGate] = useState(selectedSeller.emcoGates.core);
-  const [importGate, setImportGate] = useState(selectedSeller.emcoGates.import);
-  const [emergingGate, setEmergingGate] = useState(selectedSeller.emcoGates.emerging);
-  const [combinedGate, setCombinedGate] = useState(selectedSeller.emcoGates.combined);
+  const [coreGate, setCoreGate] = useState(selectedSeller.bbiGates.core);
+  const [importGate, setImportGate] = useState(selectedSeller.bbiGates.import);
+  const [emergingGate, setEmergingGate] = useState(selectedSeller.bbiGates.emerging);
+  const [combinedGate, setCombinedGate] = useState(selectedSeller.bbiGates.combined);
   const [spiritsAccounts, setSpiritsAccounts] = useState(selectedSeller.spiritsAccounts);
 
   // Derived revenue
@@ -131,7 +131,7 @@ export default function RtccCalculatorPage() {
   const baseline = useMemo(() =>
     estimateQuarterlyEarnings(
       baselineRevenue, selectedSeller.attainment,
-      selectedSeller.emcoGates, 28000, selectedSeller.spiritsAccounts
+      selectedSeller.bbiGates, 28000, selectedSeller.spiritsAccounts
     ), [selectedSeller]
   );
 
@@ -150,10 +150,10 @@ export default function RtccCalculatorPage() {
   const handleSellerChange = (seller: typeof SELLERS[0]) => {
     setSelectedSeller(seller);
     setAttainment(seller.attainment);
-    setCoreGate(seller.emcoGates.core);
-    setImportGate(seller.emcoGates.import);
-    setEmergingGate(seller.emcoGates.emerging);
-    setCombinedGate(seller.emcoGates.combined);
+    setCoreGate(seller.bbiGates.core);
+    setImportGate(seller.bbiGates.import);
+    setEmergingGate(seller.bbiGates.emerging);
+    setCombinedGate(seller.bbiGates.combined);
     setSpiritsAccounts(seller.spiritsAccounts);
     setDealItems([]);
   };
@@ -349,11 +349,11 @@ export default function RtccCalculatorPage() {
                 </div>
               </div>
               <div className="rounded-lg px-3 py-2" style={{
-                background: projected.emcoMultiplier > 1 ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.6)',
+                background: projected.bbiMultiplier > 1 ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.6)',
               }}>
                 <div className="text-xs font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>GATE MULTIPLIER</div>
-                <div className="text-[16px] font-bold font-mono" style={{ color: projected.emcoMultiplier > 1 ? '#22C55E' : 'var(--pl-text-faint)' }}>
-                  {projected.emcoMultiplier.toFixed(2)}x
+                <div className="text-[16px] font-bold font-mono" style={{ color: projected.bbiMultiplier > 1 ? '#22C55E' : 'var(--pl-text-faint)' }}>
+                  {projected.bbiMultiplier.toFixed(2)}x
                 </div>
                 <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{projected.unlockedGates}/4 gates</div>
               </div>
@@ -399,7 +399,7 @@ export default function RtccCalculatorPage() {
                 ${fmt(Math.round(baseline.totalEstimate))}
               </div>
               <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
-                T{baseline.tier.level} &middot; {baseline.unlockedGates}/4 gates &middot; {baseline.emcoMultiplier.toFixed(2)}x
+                T{baseline.tier.level} &middot; {baseline.unlockedGates}/4 gates &middot; {baseline.bbiMultiplier.toFixed(2)}x
               </div>
             </div>
             <div className="rounded-lg border p-3" style={{ borderColor: `${deltaColor}40` }}>
@@ -408,7 +408,7 @@ export default function RtccCalculatorPage() {
                 ${fmt(Math.round(projected.totalEstimate))}
               </div>
               <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
-                T{projected.tier.level} &middot; {projected.unlockedGates}/4 gates &middot; {projected.emcoMultiplier.toFixed(2)}x
+                T{projected.tier.level} &middot; {projected.unlockedGates}/4 gates &middot; {projected.bbiMultiplier.toFixed(2)}x
               </div>
             </div>
           </div>
@@ -419,17 +419,17 @@ export default function RtccCalculatorPage() {
           {/* Gate Rings */}
           <LightSectionCard title="Gate Progress">
             <div className="grid grid-cols-2 gap-3">
-              <GateRing gate={EMCO_GATES[0]} value={coreGate} onChange={setCoreGate} />
-              <GateRing gate={EMCO_GATES[1]} value={importGate} onChange={setImportGate} />
-              <GateRing gate={EMCO_GATES[2]} value={emergingGate} onChange={setEmergingGate} />
-              <GateRing gate={EMCO_GATES[3]} value={combinedGate} onChange={setCombinedGate} />
+              <GateRing gate={BBI_GATES[0]} value={coreGate} onChange={setCoreGate} />
+              <GateRing gate={BBI_GATES[1]} value={importGate} onChange={setImportGate} />
+              <GateRing gate={BBI_GATES[2]} value={emergingGate} onChange={setEmergingGate} />
+              <GateRing gate={BBI_GATES[3]} value={combinedGate} onChange={setCombinedGate} />
             </div>
             <div className="mt-3 text-center">
               <span className="text-xs font-mono px-3 py-1 rounded-full" style={{
-                background: projected.emcoMultiplier >= 1.5 ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
-                color: projected.emcoMultiplier >= 1.5 ? '#22C55E' : '#F59E0B',
+                background: projected.bbiMultiplier >= 1.5 ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
+                color: projected.bbiMultiplier >= 1.5 ? '#22C55E' : '#F59E0B',
               }}>
-                Effective: {projected.emcoMultiplier.toFixed(2)}x multiplier
+                Effective: {projected.bbiMultiplier.toFixed(2)}x multiplier
               </span>
             </div>
           </LightSectionCard>

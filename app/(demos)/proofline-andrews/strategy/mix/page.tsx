@@ -198,7 +198,7 @@ export default function BrandMixTargetsPage() {
               Spirits target: <strong style={{ color: '#F87171' }}>{pct(scenario.spiritsTarget.portfolioShare)}</strong> portfolio
             </span>
             <span>
-              Gate combined: <strong style={{ color: 'var(--pl-text)' }}>≥{pct(scenario.emcoThresholds.combined)}</strong>
+              Gate combined: <strong style={{ color: 'var(--pl-text)' }}>≥{pct(scenario.bbiThresholds.combined)}</strong>
             </span>
           </div>
         </div>
