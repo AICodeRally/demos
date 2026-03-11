@@ -134,7 +134,7 @@ export default function AiIntelligenceHubPage() {
           metric={`$${priceSpark[priceSpark.length - 1].toFixed(1)}`}
           metricLabel="Avg $/case"
           insight={`Revenue per case trending +2.4% QoQ. Premium mix shift driving margin expansion. Modelo Especial and Corona commanding higher price points in suburban routes.`}
-          link="/ops/ai/forecasting"
+          link="/ops/ai/pricing"
           color="#2563EB"
           miniChartData={priceSpark}
         />
