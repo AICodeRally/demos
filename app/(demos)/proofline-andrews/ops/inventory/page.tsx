@@ -13,6 +13,19 @@ import {
 } from '@/data/proofline';
 import { fmt, fmtM, fmtK, pct } from '@/lib/utils';
 
+/** Seeded pseudo-random: deterministic per string seed */
+const seededRandom = (seed: string) => {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = Math.imul(31, h) + seed.charCodeAt(i) | 0;
+  }
+  return () => {
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+};
+
 /* ── Supplier display names ──────────────────── */
 const SUPPLIER_NAMES: Record<SupplierGroup, string> = {
   'molson-coors': 'Molson Coors',
@@ -34,7 +47,8 @@ function getWarehouseInventory(hometown: Hometown) {
     const supplierCases = brands.reduce((sum, b) => sum + b.casesQ, 0);
     const totalCases = BRAND_FAMILIES.reduce((sum, b) => sum + b.casesQ, 0);
     const share = supplierCases / totalCases;
-    const cases = Math.round(baseFactor * share * (0.8 + Math.random() * 0.4));
+    const rng = seededRandom(s + hometown.id)();
+    const cases = Math.round(baseFactor * share * (0.8 + rng * 0.4));
     return { supplier: s, cases, share };
   });
   const total = suppliers.reduce((s, x) => s + x.cases, 0);

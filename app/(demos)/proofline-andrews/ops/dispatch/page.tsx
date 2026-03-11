@@ -11,6 +11,19 @@ import {
 } from '@/data/proofline';
 import { fmt, fmtM, pct } from '@/lib/utils';
 
+/** Seeded pseudo-random: deterministic per string seed */
+const seededRandom = (seed: string) => {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = Math.imul(31, h) + seed.charCodeAt(i) | 0;
+  }
+  return () => {
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+};
+
 /* ── Delivery status simulation ──────────────── */
 type DeliveryStatus = 'loaded' | 'en-route' | 'delivering' | 'returning' | 'exception';
 
@@ -32,7 +45,8 @@ function getRouteStatus(routeId: string): DeliveryStatus {
 // Simulated cases delivered (based on attainment * quarterly target / 65 working days)
 function getCasesDelivered(route: Route): { delivered: number; planned: number } {
   const dailyPlan = Math.round(route.cases / 65);
-  const progress = route.attain >= 1.0 ? 0.85 + Math.random() * 0.15 : 0.5 + Math.random() * 0.35;
+  const rng = seededRandom(route.id + '2026-03-04')();
+  const progress = route.attain >= 1.0 ? 0.85 + rng * 0.15 : 0.5 + rng * 0.35;
   return { delivered: Math.round(dailyPlan * progress), planned: dailyPlan };
 }
 
