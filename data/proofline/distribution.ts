@@ -47,21 +47,17 @@ export const ROUTE_EFFICIENCY: RouteEfficiency[] = [
   { routeId: 'LAR-02', stopsCompleted: 169, casesDelivered: 1584, onTimeRate: 0.92, shrinkage: 0.013, merchandisingScore: 85 },
   { routeId: 'LAR-03', stopsCompleted: 143, casesDelivered: 1156, onTimeRate: 0.90, shrinkage: 0.018, merchandisingScore: 80 },
   { routeId: 'LAR-04', stopsCompleted: 208, casesDelivered: 1956, onTimeRate: 0.96, shrinkage: 0.006, merchandisingScore: 93 },
-  { routeId: 'LAR-05', stopsCompleted: 156, casesDelivered: 1424, onTimeRate: 0.91, shrinkage: 0.016, merchandisingScore: 82 },
-  { routeId: 'LAR-06', stopsCompleted: 130, casesDelivered: 1284, onTimeRate: 0.89, shrinkage: 0.021, merchandisingScore: 78 },
-  { routeId: 'LAR-07', stopsCompleted: 117, casesDelivered: 1024, onTimeRate: 0.87, shrinkage: 0.026, merchandisingScore: 75 },
-  { routeId: 'LAR-08', stopsCompleted: 104, casesDelivered: 984, onTimeRate: 0.86, shrinkage: 0.028, merchandisingScore: 76 },
 ];
 
 export const INVENTORY_POSITIONS: InventoryPosition[] = [
-  { brandId: 'bud', brandName: 'Bud Light', onHand: 48200, forecastDemand: 10900, daysOfSupply: 31 },
-  { brandId: 'mic', brandName: 'Michelob Ultra', onHand: 32800, forecastDemand: 7500, daysOfSupply: 31 },
+  { brandId: 'coors', brandName: 'Coors Light', onHand: 48200, forecastDemand: 10900, daysOfSupply: 31 },
+  { brandId: 'miller', brandName: 'Miller Lite', onHand: 32800, forecastDemand: 7500, daysOfSupply: 31 },
   { brandId: 'mod', brandName: 'Modelo Especial', onHand: 38500, forecastDemand: 8800, daysOfSupply: 31 },
-  { brandId: 'stel', brandName: 'Stella Artois', onHand: 27600, forecastDemand: 6500, daysOfSupply: 30 },
+  { brandId: 'hein', brandName: 'Heineken', onHand: 27600, forecastDemand: 6500, daysOfSupply: 30 },
   { brandId: 'shi', brandName: 'Shiner Spirits', onHand: 6200, forecastDemand: 1400, daysOfSupply: 31 },
-  { brandId: 'topo', brandName: 'Topo Chico Hard Seltzer', onHand: 9400, forecastDemand: 2100, daysOfSupply: 32 },
-  { brandId: 'kona', brandName: 'Kona Big Wave', onHand: 14200, forecastDemand: 3200, daysOfSupply: 31 },
-  { brandId: 'kar', brandName: 'Karbach Brewing', onHand: 3800, forecastDemand: 840, daysOfSupply: 32 },
+  { brandId: 'vizzy', brandName: 'Vizzy Hard Seltzer', onHand: 9400, forecastDemand: 2100, daysOfSupply: 32 },
+  { brandId: 'bluemoon', brandName: 'Blue Moon', onHand: 14200, forecastDemand: 3200, daysOfSupply: 31 },
+  { brandId: 'rahr', brandName: 'Rahr & Sons', onHand: 3800, forecastDemand: 840, daysOfSupply: 32 },
 ];
 
 export const DELIVERY_CALENDAR: DeliveryDay[] = [
