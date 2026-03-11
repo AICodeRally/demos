@@ -244,7 +244,7 @@ export default function RewardsPage() {
         <div className="relative z-10 p-6 text-center">
           <div className="text-4xl mb-2">{'\u2606'}</div>
           <div className="text-xs tracking-[4px] uppercase font-mono mb-2" style={{ color: GOLD }}>
-            Andrews Distributing
+            Lone Star Distribution
           </div>
           <h1 className="text-2xl font-extrabold mb-1" style={{
             color: 'var(--pl-text)',
