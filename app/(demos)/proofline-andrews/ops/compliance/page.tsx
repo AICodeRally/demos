@@ -32,6 +32,20 @@ const TABC_STATUS_COLORS: Record<string, { color: string; bg: string }> = {
   pending:   { color: 'var(--pl-text-muted)', bg: 'rgba(113,128,150,0.08)' },
 };
 
+/* ── Retailer Credit Holds ─────────────────────── */
+const AR_AGING = [
+  { bucket: 'Current', amount: 2840000, pct: 78.2, color: '#22C55E' },
+  { bucket: '30 days', amount: 480000, pct: 13.2, color: '#F59E0B' },
+  { bucket: '60 days', amount: 210000, pct: 5.8, color: '#F87171' },
+  { bucket: '90+ days', amount: 102000, pct: 2.8, color: '#DC2626' },
+];
+
+const CREDIT_HOLD_ACCOUNTS = [
+  { account: 'Q Sports Bar Downtown', route: 'DAL-01', balance: 4200, daysOverdue: 67, action: 'COD Only', rep: 'Derek Thompson' },
+  { account: 'Riverside Grill Ennis', route: 'ENS-03', balance: 2800, daysOverdue: 45, action: 'Credit Hold', rep: 'Kevin Mills' },
+  { account: 'El Mercado #5', route: 'LAR-02', balance: 1600, daysOverdue: 38, action: 'COD Only', rep: 'Rosa Gutierrez' },
+];
+
 /* ── Cold Vault Bar ──────────────────────────── */
 function ColdVaultBar({ label, share, target }: { label: string; share: number; target: number }) {
   const maxPct = 0.55;
@@ -339,6 +353,76 @@ export default function CompliancePage() {
         Display compliance scored 0-100 based on cold vault share, endcap placement, POS materials, and shelf planogram adherence.
         TABC license status verified quarterly. Cold vault target: 40% of cooler facings for Lone Star brands.
       </div>
+
+      {/* ═══════ RETAILER CREDIT HOLDS ═══════ */}
+      <LightSectionCard title="ACCOUNTS RECEIVABLE & CREDIT HOLDS">
+        {/* AR Aging Summary */}
+        <div className="mb-6">
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            AR AGING — $3.63M TOTAL RECEIVABLES
+          </div>
+          <div className="flex rounded-xl overflow-hidden mb-3" style={{ height: 32, border: '1px solid var(--pl-border)' }}>
+            {AR_AGING.map((bucket) => (
+              <div key={bucket.bucket} className="flex items-center justify-center" style={{
+                width: `${bucket.pct}%`,
+                background: `${bucket.color}20`,
+              }}>
+                {bucket.pct > 10 && (
+                  <span className="text-xs font-bold font-mono" style={{ color: bucket.color }}>{bucket.pct}%</span>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-4 gap-3">
+            {AR_AGING.map((bucket) => (
+              <div key={bucket.bucket} className="p-3 rounded-lg text-center" style={{
+                background: `${bucket.color}06`,
+                border: `1px solid ${bucket.color}15`,
+              }}>
+                <div className="text-lg font-bold font-mono" style={{ color: bucket.color }}>
+                  ${(bucket.amount / 1000).toFixed(0)}K
+                </div>
+                <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{bucket.bucket}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Credit Hold Accounts */}
+        <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: '#F87171' }}>
+          ACCOUNTS ON HOLD / COD ({CREDIT_HOLD_ACCOUNTS.length})
+        </div>
+        <div className="grid gap-3">
+          {CREDIT_HOLD_ACCOUNTS.map((acct) => (
+            <div key={acct.account} className="flex items-center justify-between p-3 rounded-lg"
+              style={{ background: 'rgba(248,113,113,0.04)', border: '1px solid rgba(248,113,113,0.15)' }}>
+              <div>
+                <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{acct.account}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  {acct.route} &middot; {acct.rep} &middot; {acct.daysOverdue} days overdue
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <div className="text-sm font-bold font-mono" style={{ color: '#F87171' }}>${acct.balance.toLocaleString()}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>outstanding</div>
+                </div>
+                <span className="px-2 py-1 rounded text-xs font-bold font-mono"
+                  style={{
+                    background: acct.action === 'Credit Hold' ? 'rgba(220,38,38,0.1)' : 'rgba(245,158,11,0.1)',
+                    color: acct.action === 'Credit Hold' ? '#DC2626' : '#F59E0B',
+                  }}>
+                  {acct.action.toUpperCase()}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          Credit holds enforced at 60 days overdue. COD enforced at 30 days. Route reps notified via day planner. Commission on COD accounts credited only upon payment confirmation from GreatPlains/D365.
+        </div>
+      </LightSectionCard>
 
     </>
   );
