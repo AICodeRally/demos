@@ -79,6 +79,8 @@ export default defineDemo({
       color: '#F97316',
       items: [
         { label: 'Integrations', href: '/proofline-andrews/integrations', icon: 'Cable' },
+        { label: 'Product Architecture', href: '/proofline-andrews/integrations/product-architecture', icon: 'Layers' },
+        { label: 'Platform Architecture', href: '/proofline-andrews/integrations/platform-architecture', icon: 'Shield' },
       ],
     },
   ],
