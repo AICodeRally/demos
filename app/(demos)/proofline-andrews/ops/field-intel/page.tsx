@@ -13,6 +13,23 @@ import {
 import { fmt, fmtK, pct } from '@/lib/utils';
 import { useState } from 'react';
 
+/* ── Chain Pricing & Scan Data ─────────────────── */
+const SCAN_DATA_VELOCITY = [
+  { sku: 'Miller Lite 24pk', store: 'Kroger IH-35', unitsWeek: 84, velocityRank: 1, categoryShare: 18.2, trend: 'up' as const },
+  { sku: 'Corona Extra 12pk', store: 'H-E-B Plus Allen', unitsWeek: 72, velocityRank: 2, categoryShare: 15.4, trend: 'up' as const },
+  { sku: 'Modelo Especial 24pk', store: 'Walmart Supercenter 78', unitsWeek: 68, velocityRank: 3, categoryShare: 14.8, trend: 'flat' as const },
+  { sku: 'Coors Light 30pk', store: 'Total Wine Richardson', unitsWeek: 56, velocityRank: 4, categoryShare: 12.1, trend: 'down' as const },
+  { sku: 'Blue Moon 6pk', store: 'Central Market Bev', unitsWeek: 42, velocityRank: 5, categoryShare: 9.1, trend: 'up' as const },
+];
+
+const PRICE_COMPLIANCE = [
+  { product: 'Corona Extra 12pk', store: 'CVS Preston', authorizedPrice: 15.99, actualPrice: 16.99, variance: 1.00, status: 'violation' as const },
+  { product: 'Modelo Especial 24pk', store: 'Walmart 78', authorizedPrice: 24.99, actualPrice: 24.99, variance: 0, status: 'compliant' as const },
+  { product: 'Miller Lite 24pk', store: '7-Eleven LBJ', authorizedPrice: 22.49, actualPrice: 23.99, variance: 1.50, status: 'violation' as const },
+  { product: 'Blue Moon 6pk', store: 'Kroger IH-35', authorizedPrice: 10.99, actualPrice: 10.99, variance: 0, status: 'compliant' as const },
+  { product: 'Heineken 12pk', store: 'Target Allen', authorizedPrice: 17.99, actualPrice: 17.49, variance: -0.50, status: 'below' as const },
+];
+
 /* ── Sighting type config ────────────────────── */
 const SIGHTING_COLORS: Record<string, string> = {
   delivery: '#F87171',
@@ -579,6 +596,82 @@ export default function FieldIntelPage() {
         IRI/Nielsen syndicated data + Lone Star internal shipment analysis. Pipeline accounts tracked from TABC permit filings and
         commercial real estate monitoring. Updated weekly.
       </div>
+
+      {/* ═══════ SCAN DATA — IRI/NIELSEN VELOCITY ═══════ */}
+      <LightSectionCard title="SCAN DATA — IRI/NIELSEN VELOCITY">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['Rank', 'SKU', 'Store', 'Units/Wk', 'Category Share', 'Trend'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SCAN_DATA_VELOCITY.map((row) => (
+                <tr key={`${row.sku}-${row.store}`} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: '#F59E0B' }}>#{row.velocityRank}</td>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{row.sku}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{row.store}</td>
+                  <td className="py-1.5 pr-4 font-bold" style={{ color: '#3B82F6' }}>{row.unitsWeek}</td>
+                  <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text)' }}>{row.categoryShare}%</td>
+                  <td className="py-1.5 pr-4">
+                    <span className="text-xs font-bold" style={{
+                      color: row.trend === 'up' ? '#22C55E' : row.trend === 'down' ? '#F87171' : 'var(--pl-text-faint)',
+                    }}>
+                      {row.trend === 'up' ? '▲' : row.trend === 'down' ? '▼' : '—'} {row.trend.toUpperCase()}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ PRICE COMPLIANCE ═══════ */}
+      <LightSectionCard title="PRICE COMPLIANCE — RETAIL AUDIT">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                {['Product', 'Store', 'Authorized', 'Actual', 'Variance', 'Status'].map(h => (
+                  <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                    style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PRICE_COMPLIANCE.map((row, i) => {
+                const statusCfg = {
+                  compliant: { bg: 'rgba(34,197,94,0.1)', color: '#22C55E', label: 'COMPLIANT' },
+                  violation: { bg: 'rgba(248,113,113,0.1)', color: '#F87171', label: 'VIOLATION' },
+                  below: { bg: 'rgba(245,158,11,0.1)', color: '#F59E0B', label: 'BELOW AUTH' },
+                }[row.status];
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                    <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{row.product}</td>
+                    <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>{row.store}</td>
+                    <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>${row.authorizedPrice.toFixed(2)}</td>
+                    <td className="py-1.5 pr-4 font-bold" style={{ color: row.status === 'compliant' ? '#22C55E' : '#F87171' }}>
+                      ${row.actualPrice.toFixed(2)}
+                    </td>
+                    <td className="py-1.5 pr-4" style={{ color: row.variance > 0 ? '#F87171' : row.variance < 0 ? '#F59E0B' : '#22C55E' }}>
+                      {row.variance > 0 ? '+' : ''}{row.variance === 0 ? '—' : `$${row.variance.toFixed(2)}`}
+                    </td>
+                    <td className="py-1.5">
+                      <span className="px-1.5 py-0.5 rounded text-xs font-bold"
+                        style={{ background: statusCfg.bg, color: statusCfg.color }}>{statusCfg.label}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </LightSectionCard>
 
     </>
   );
