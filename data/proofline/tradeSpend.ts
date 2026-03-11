@@ -32,13 +32,13 @@ export interface CashDiscipline {
 }
 
 export const PROMO_BUDGETS: PromoBudget[] = [
-  { brandId: 'bud', brandName: 'Bud Light', allocated: 820000, spent: 645000, remaining: 175000, program: 'Summer Dominance — cooler placements, endcap resets, POS materials' },
-  { brandId: 'mic', brandName: 'Michelob Ultra', allocated: 540000, spent: 412000, remaining: 128000, program: 'Fitness & Lifestyle — gym partnerships, 5K sponsorships, wellness events' },
+  { brandId: 'coors', brandName: 'Coors Light', allocated: 820000, spent: 645000, remaining: 175000, program: 'Summer Dominance — cooler placements, endcap resets, POS materials' },
+  { brandId: 'miller', brandName: 'Miller Lite', allocated: 540000, spent: 412000, remaining: 128000, program: 'Fitness & Lifestyle — gym partnerships, 5K sponsorships, wellness events' },
   { brandId: 'mod', brandName: 'Modelo Especial', allocated: 680000, spent: 520000, remaining: 160000, program: 'Fighting Spirit — cultural events, soccer sponsorships, mural campaigns' },
-  { brandId: 'stel', brandName: 'Stella Artois', allocated: 380000, spent: 285000, remaining: 95000, program: 'Premium Dining — white-tablecloth placements, restaurant week sponsorships' },
+  { brandId: 'hein', brandName: 'Heineken', allocated: 380000, spent: 285000, remaining: 95000, program: 'Premium Occasions — white-tablecloth placements, restaurant week sponsorships' },
   { brandId: 'shi', brandName: 'Shiner Spirits', allocated: 420000, spent: 310000, remaining: 110000, program: 'Texas Proud — local bar activations, rodeo sponsorships, tasting events' },
-  { brandId: 'topo', brandName: 'Topo Chico Hard Seltzer', allocated: 350000, spent: 228000, remaining: 122000, program: 'Summer Refresh — pool party events, convenience store cooler resets' },
-  { brandId: 'kar', brandName: 'Karbach Brewing', allocated: 280000, spent: 195000, remaining: 85000, program: 'Craft Curious — taproom partnerships, seasonal flight programs' },
+  { brandId: 'vizzy', brandName: 'Vizzy Hard Seltzer', allocated: 350000, spent: 228000, remaining: 122000, program: 'Summer Refresh — pool party events, convenience store cooler resets' },
+  { brandId: 'rahr', brandName: 'Rahr & Sons', allocated: 280000, spent: 195000, remaining: 85000, program: 'Craft Curious — taproom partnerships, seasonal flight programs' },
   { brandId: 'cut', brandName: 'Cutwater Spirits', allocated: 220000, spent: 142000, remaining: 78000, program: 'Ready-to-Drink Revolution — liquor store displays, sampling events' },
 ];
 
@@ -81,9 +81,9 @@ export const TABC_CHECKLIST: TABCCheckItem[] = [
 ];
 
 export const SUPPLIER_PROGRAMS: SupplierProgram[] = [
-  { supplier: 'AB InBev', tier: 'Gold', targetPct: 0.90, currentPct: 0.92, incentiveValue: 840000 },
+  { supplier: 'Molson Coors', tier: 'Gold', targetPct: 0.90, currentPct: 0.92, incentiveValue: 840000 },
   { supplier: 'Constellation', tier: 'Silver', targetPct: 0.80, currentPct: 0.78, incentiveValue: 320000 },
-  { supplier: 'Molson Coors', tier: 'Bronze', targetPct: 0.70, currentPct: 0.65, incentiveValue: 180000 },
+  { supplier: 'Heineken', tier: 'Bronze', targetPct: 0.70, currentPct: 0.65, incentiveValue: 180000 },
 ];
 
 export const CASH_DISCIPLINE: CashDiscipline = {
