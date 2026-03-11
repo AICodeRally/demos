@@ -81,8 +81,8 @@ export const SCENARIOS: Scenario[] = [
     description: 'Protect core Molson Coors and import business. Moderate spirits ramp. Laredo integration at natural pace. Focus on margin improvement over volume growth.',
     color: '#34D399',  // green — safe
 
-    revenueTarget: 5070000000,   // $5.07B (+1.4% YoY)
-    caseTarget: 41200000,
+    revenueTarget: 175000000,    // $175M (+1.4% YoY)
+    caseTarget: 1420000,
     yoyGrowth: 0.014,
 
     bbiThresholds: {
@@ -130,7 +130,7 @@ export const SCENARIOS: Scenario[] = [
       'Miller Lite share pressure from regional craft surge',
     ],
 
-    quarterlyProjection: [1218000000, 1293000000, 1356000000, 1203000000],
+    quarterlyProjection: [42000000, 44500000, 46700000, 41800000],
   },
 
   // ═══════════════════════════════════════════
@@ -143,8 +143,8 @@ export const SCENARIOS: Scenario[] = [
     description: 'CEO mandate target. Push all supplier groups. Accelerate Laredo. Sazerac to 8% portfolio. Balance volume growth with margin improvement.',
     color: '#F59E0B',  // amber — moderate risk
 
-    revenueTarget: 5200000000,   // $5.2B (+4% YoY, CEO mandate)
-    caseTarget: 42500000,
+    revenueTarget: 180000000,    // $180M (+4% YoY, CEO mandate)
+    caseTarget: 1460000,
     yoyGrowth: 0.04,
 
     bbiThresholds: {
@@ -193,7 +193,7 @@ export const SCENARIOS: Scenario[] = [
       'Route density in Allen may require 7th route by Q3',
     ],
 
-    quarterlyProjection: [1248000000, 1326000000, 1404000000, 1222000000],
+    quarterlyProjection: [43000000, 45700000, 48400000, 42900000],
   },
 
   // ═══════════════════════════════════════════
@@ -206,8 +206,8 @@ export const SCENARIOS: Scenario[] = [
     description: 'Push beyond CEO mandate. Add routes in growth markets. Sazerac to 10% portfolio. Open 5th Laredo route. Maximum new account acquisition. Trade spend up 15%.',
     color: '#F87171',  // red — high risk
 
-    revenueTarget: 5500000000,   // $5.5B (+10% YoY)
-    caseTarget: 44000000,
+    revenueTarget: 190000000,    // $190M (+10% YoY)
+    caseTarget: 1520000,
     yoyGrowth: 0.10,
 
     bbiThresholds: {
@@ -258,7 +258,7 @@ export const SCENARIOS: Scenario[] = [
       'Allen 8-route expansion requires zoning adjustment with Plano market',
     ],
 
-    quarterlyProjection: [1298000000, 1408000000, 1518000000, 1276000000],
+    quarterlyProjection: [44800000, 48600000, 52400000, 44200000],
   },
 ];
 

@@ -8,14 +8,14 @@ import { pct } from '@/lib/utils';
 
 /* ── Price Elasticity Data ──────────────────── */
 const PRICE_TIERS = [
-  { brand: 'Coors Light', supplier: 'molsonCoors' as SupplierGroup, currentPrice: 21.49, optimalPrice: 22.29, elasticity: -1.8, margin: 0.242, optMargin: 0.268, lift: '+$0.80/cs', risk: 'low' },
-  { brand: 'Miller Lite', supplier: 'molsonCoors' as SupplierGroup, currentPrice: 21.49, optimalPrice: 21.99, elasticity: -2.1, margin: 0.238, optMargin: 0.254, lift: '+$0.50/cs', risk: 'low' },
+  { brand: 'Coors Light', supplier: 'molson-coors' as SupplierGroup, currentPrice: 21.49, optimalPrice: 22.29, elasticity: -1.8, margin: 0.242, optMargin: 0.268, lift: '+$0.80/cs', risk: 'low' },
+  { brand: 'Miller Lite', supplier: 'molson-coors' as SupplierGroup, currentPrice: 21.49, optimalPrice: 21.99, elasticity: -2.1, margin: 0.238, optMargin: 0.254, lift: '+$0.50/cs', risk: 'low' },
   { brand: 'Corona Extra', supplier: 'constellation' as SupplierGroup, currentPrice: 28.99, optimalPrice: 29.49, elasticity: -1.2, margin: 0.312, optMargin: 0.328, lift: '+$0.50/cs', risk: 'low' },
   { brand: 'Modelo Especial', supplier: 'constellation' as SupplierGroup, currentPrice: 27.49, optimalPrice: 28.99, elasticity: -0.9, margin: 0.298, optMargin: 0.332, lift: '+$1.50/cs', risk: 'medium' },
-  { brand: 'Blue Moon', supplier: 'molsonCoors' as SupplierGroup, currentPrice: 17.99, optimalPrice: 18.49, elasticity: -1.5, margin: 0.262, optMargin: 0.278, lift: '+$0.50/cs', risk: 'low' },
-  { brand: 'Shiner Bock', supplier: 'heineken' as SupplierGroup, currentPrice: 16.99, optimalPrice: 17.99, elasticity: -1.3, margin: 0.248, optMargin: 0.282, lift: '+$1.00/cs', risk: 'low' },
+  { brand: 'Blue Moon', supplier: 'molson-coors' as SupplierGroup, currentPrice: 17.99, optimalPrice: 18.49, elasticity: -1.5, margin: 0.262, optMargin: 0.278, lift: '+$0.50/cs', risk: 'low' },
+  { brand: 'Shiner Bock', supplier: 'craft' as SupplierGroup, currentPrice: 16.99, optimalPrice: 17.99, elasticity: -1.3, margin: 0.248, optMargin: 0.282, lift: '+$1.00/cs', risk: 'low' },
   { brand: 'Sazerac Buffalo Trace', supplier: 'sazerac' as SupplierGroup, currentPrice: 42.99, optimalPrice: 44.99, elasticity: -0.6, margin: 0.385, optMargin: 0.412, lift: '+$2.00/cs', risk: 'low' },
-  { brand: 'White Claw', supplier: 'other' as SupplierGroup, currentPrice: 18.99, optimalPrice: 18.49, elasticity: -3.2, margin: 0.218, optMargin: 0.205, lift: '-$0.50/cs', risk: 'high' },
+  { brand: 'White Claw', supplier: 'fmb-rtd' as SupplierGroup, currentPrice: 18.99, optimalPrice: 18.49, elasticity: -3.2, margin: 0.218, optMargin: 0.205, lift: '-$0.50/cs', risk: 'high' },
 ];
 
 const CHANNEL_PRICING = [
