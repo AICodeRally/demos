@@ -1,9 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { ActNavigation, LightSectionCard } from '@/components/demos/proofline';
-import { HOMETOWNS } from '@/data/proofline';
+import { HOMETOWNS, getRoutesByHometown } from '@/data/proofline';
 import { fmt, fmtM, pct } from '@/lib/utils';
+
+const TexasMap = dynamic(
+  () => import('@/components/demos/proofline/TexasMap').then(m => m.TexasMap),
+  { ssr: false, loading: () => <div style={{ height: 480, background: 'var(--pl-card)' }} /> }
+);
 
 /* ── Market participants (Lone Star + competitors) ─────── */
 interface MarketPlayer {
@@ -304,70 +310,32 @@ export default function MarketPositionPage() {
 
       {/* ── Territory Coverage Map ──────────────────── */}
       <LightSectionCard title="Territory Coverage — Texas Operations" className="mb-8">
-        <div className="relative mx-auto" style={{ width: '100%', maxWidth: 680 }}>
-          <svg viewBox="0 0 680 520" className="w-full" style={{ height: 520 }}>
-            <defs>
-              <filter id="glow-gold" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-              <filter id="glow-blue" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-              <radialGradient id="dfw-zone" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#C6A052" stopOpacity="0.12" /><stop offset="100%" stopColor="#C6A052" stopOpacity="0.02" /></radialGradient>
-              <radialGradient id="central-zone" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#F59E0B" stopOpacity="0.10" /><stop offset="100%" stopColor="#F59E0B" stopOpacity="0.01" /></radialGradient>
-              <radialGradient id="south-zone" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#F87171" stopOpacity="0.10" /><stop offset="100%" stopColor="#F87171" stopOpacity="0.01" /></radialGradient>
-            </defs>
-
-            {/* Texas state outline — simplified but recognizable */}
-            <path
-              d="M 198 18 L 440 18 L 440 42 L 468 42 L 468 18 L 510 18 L 510 56 L 540 56 L 540 90 L 556 90 L 556 114 L 574 114 L 574 142 L 590 160 L 602 186 L 610 214 L 612 244 L 608 270 L 598 296 L 582 320 L 560 344 L 534 368 L 506 388 L 480 404 L 452 418 L 420 432 L 384 446 L 346 460 L 308 472 L 272 480 L 238 484 L 206 486 L 178 482 L 148 470 L 130 454 L 118 436 L 108 414 L 100 388 L 94 360 L 90 330 L 88 296 L 88 262 L 90 228 L 94 196 L 100 166 L 108 140 L 118 118 L 130 98 L 144 80 L 160 62 L 176 46 L 190 32 L 198 18 Z"
-              fill="var(--pl-map-bg)"
-              stroke="var(--pl-border)"
-              strokeWidth="2"
-            />
-
-            {/* Territory coverage zones */}
-            <ellipse cx="430" cy="130" rx="100" ry="65" fill="url(#dfw-zone)" stroke="#C6A052" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.7" />
-            <ellipse cx="380" cy="250" rx="60" ry="45" fill="url(#central-zone)" stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
-            <ellipse cx="280" cy="420" rx="90" ry="45" fill="url(#south-zone)" stroke="#F87171" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
-
-            {/* Connection routes between territories */}
-            <path d="M 430 180 Q 410 220 380 240" fill="none" stroke="var(--pl-border)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.4" />
-            <path d="M 380 280 Q 340 340 280 400" fill="none" stroke="var(--pl-border)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.4" />
-
-            {/* Zone labels */}
-            <text x="430" y="80" textAnchor="middle" fill="#C6A052" fontSize="13" fontWeight="700" fontFamily="var(--pl-font)" letterSpacing="2">DFW METRO</text>
-            <text x="380" y="218" textAnchor="middle" fill="#F59E0B" fontSize="12" fontWeight="600" fontFamily="var(--pl-font)" letterSpacing="1">CENTRAL</text>
-            <text x="280" y="388" textAnchor="middle" fill="#F87171" fontSize="12" fontWeight="600" fontFamily="var(--pl-font)" letterSpacing="1">SOUTH TEXAS</text>
-
-            {/* City markers with labels */}
-            {([
-              { id: 'dal', label: 'Dallas', sub: 'HQ', x: 460, y: 118, color: '#C6A052', r: 8 },
-              { id: 'ftw', label: 'Fort Worth', sub: null, x: 380, y: 130, color: '#2563EB', r: 6 },
-              { id: 'aln', label: 'Allen', sub: null, x: 470, y: 96, color: '#2563EB', r: 5 },
-              { id: 'ens', label: 'Ennis', sub: 'ACQ', x: 400, y: 248, color: '#F59E0B', r: 6 },
-              { id: 'crp', label: 'Corpus Christi', sub: null, x: 340, y: 440, color: '#2563EB', r: 6 },
-              { id: 'lar', label: 'Laredo', sub: 'ACQ', x: 210, y: 430, color: '#F59E0B', r: 6 },
-            ] as const).map((city) => {
-              const ht = HOMETOWNS.find(h => h.id === city.id);
-              return (
-                <g key={city.id}>
-                  {/* Pulse ring for HQ */}
-                  {city.sub === 'HQ' && <circle cx={city.x} cy={city.y} r={16} fill={city.color} opacity="0.15" />}
-                  {/* Marker */}
-                  <circle cx={city.x} cy={city.y} r={city.r} fill={city.color} stroke="var(--pl-card)" strokeWidth="2" filter={city.sub === 'HQ' ? 'url(#glow-gold)' : 'url(#glow-blue)'} />
-                  {/* Label card */}
-                  <rect x={city.x + 14} y={city.y - 18} width={city.label.length * 8 + (city.sub ? 36 : 8)} height="36" rx="6" fill="var(--pl-card)" stroke="var(--pl-border)" strokeWidth="1" />
-                  <text x={city.x + 20} y={city.y - 2} fill="var(--pl-text)" fontSize="13" fontWeight="700" fontFamily="var(--pl-font)">{city.label}</text>
-                  {city.sub && <text x={city.x + 22 + city.label.length * 8} y={city.y - 2} fill={city.color} fontSize="12" fontWeight="800">{city.sub}</text>}
-                  {ht && <text x={city.x + 20} y={city.y + 12} fill="var(--pl-text-muted)" fontSize="12" fontFamily="monospace">{ht.routes} routes · {fmt(ht.accounts)} accts</text>}
-                </g>
-              );
-            })}
-
-            {/* Legend */}
-            <rect x="16" y="470" width="280" height="34" rx="8" fill="var(--pl-card)" stroke="var(--pl-border)" strokeWidth="1" />
-            <circle cx="36" cy="487" r="5" fill="#C6A052" /><text x="48" y="491" fill="var(--pl-text-muted)" fontSize="12">HQ</text>
-            <circle cx="86" cy="487" r="5" fill="#2563EB" /><text x="98" y="491" fill="var(--pl-text-muted)" fontSize="12">Established</text>
-            <circle cx="186" cy="487" r="5" fill="#F59E0B" /><text x="198" y="491" fill="var(--pl-text-muted)" fontSize="12">Acquired</text>
-          </svg>
-        </div>
+        <TexasMap
+          markers={HOMETOWNS.map((h) => {
+            const routes = getRoutesByHometown(h.id);
+            const avgAttain = routes.length > 0
+              ? routes.reduce((s, r) => s + r.attain, 0) / routes.length
+              : 0.95;
+            return {
+              id: h.id,
+              name: h.name,
+              lat: h.lat,
+              lng: h.lng,
+              routes: h.routes,
+              accounts: h.accounts,
+              attainment: avgAttain,
+              isNewAcquisition: h.id === 'lar',
+            };
+          })}
+          connections={[
+            { from: [32.7767, -96.7970], to: [33.1032, -96.6706] },
+            { from: [32.7767, -96.7970], to: [32.7555, -97.3308] },
+            { from: [32.7767, -96.7970], to: [32.3293, -96.6253] },
+            { from: [32.3293, -96.6253], to: [27.8006, -97.3964] },
+            { from: [27.8006, -97.3964], to: [27.5036, -99.5076] },
+          ]}
+          height={480}
+        />
       </LightSectionCard>
 
       {/* ── Acquisition Timeline ─────────────────────── */}

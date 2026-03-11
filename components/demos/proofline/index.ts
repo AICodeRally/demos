@@ -12,3 +12,5 @@ export { CoachingCard } from './CoachingCard';
 export { DataSourceBadge } from './DataSourceBadge';
 export { ActNavigation } from './ActNavigation';
 export { RepSelector } from './RepSelector';
+export { TexasMap } from './TexasMap';
+export type { MapMarker, MapConnection } from './TexasMap';

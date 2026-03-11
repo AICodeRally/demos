@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { ActNavigation, LightSectionCard, LightKpiCard, Sparkline } from '@/components/demos/proofline';
 import {
   HOMETOWNS,
@@ -12,6 +13,11 @@ import {
   type Hometown,
 } from '@/data/proofline';
 import { fmt, fmtM, fmtK, pct } from '@/lib/utils';
+
+const TexasMap = dynamic(
+  () => import('@/components/demos/proofline/TexasMap').then(m => m.TexasMap),
+  { ssr: false, loading: () => <div style={{ height: 360, background: 'var(--pl-card)' }} /> }
+);
 
 /* ── Performance Tiers ──────────────────────── */
 function getPerformanceTier(hometown: Hometown): { label: string; color: string; bg: string } {
@@ -118,6 +124,36 @@ export default function TerritoryDesignPage() {
         <LightKpiCard label="Display Compliance" value={pct(avgDisplayCompliance)} accent="#2563EB" stagger={2} />
         <LightKpiCard label="Spirits Accounts" value={fmt(totalSpiritsAccounts)} accent="#F87171" sub={`${pct(totalSpiritsAccounts / TOTAL_ACCOUNTS)} penetration`} stagger={3} />
       </div>
+
+      {/* ── Interactive Territory Map ─────────────────── */}
+      <LightSectionCard title="Geographic Coverage — Interactive Map" className="mb-6">
+        <TexasMap
+          markers={HOMETOWNS.map((h) => {
+            const routes = getRoutesByHometown(h.id);
+            const avgAttain = routes.length > 0
+              ? routes.reduce((s, r) => s + r.attain, 0) / routes.length
+              : 0.95;
+            return {
+              id: h.id,
+              name: h.name,
+              lat: h.lat,
+              lng: h.lng,
+              routes: h.routes,
+              accounts: h.accounts,
+              attainment: avgAttain,
+              isNewAcquisition: h.id === 'lar',
+            };
+          })}
+          connections={[
+            { from: [32.7767, -96.7970], to: [33.1032, -96.6706] },
+            { from: [32.7767, -96.7970], to: [32.7555, -97.3308] },
+            { from: [32.7767, -96.7970], to: [32.3293, -96.6253] },
+            { from: [32.3293, -96.6253], to: [27.8006, -97.3964] },
+            { from: [27.8006, -97.3964], to: [27.5036, -99.5076] },
+          ]}
+          height={360}
+        />
+      </LightSectionCard>
 
       {/* ── Hex Territory Grid ────────────────────────── */}
       <LightSectionCard title="Territory Heatmap — Attainment by Hometown" className="mb-6">
