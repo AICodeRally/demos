@@ -21,17 +21,17 @@ function TierTrack() {
 
   const tiers = [...COMP_TIERS].reverse(); // T4 at left → T1 at right
   const tierColors = ['#94A3B8', '#F59E0B', '#2563EB', '#22C55E'];
-  const marcus = 0.92; // sample position
+  const marcus = 1.01; // Marcus Reyes actual attainment from routes.ts
 
   return (
     <>
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
-      <text x={w / 2} y={20} textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+      <text x={w / 2} y={20} textAnchor="middle" fontSize="12" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
         ATTAINMENT PROGRESSION → TIER → COMMISSION RATE
       </text>
 
       {/* Background track */}
-      <rect x={pad} y={trackY} width={trackW} height={trackH} rx={8} fill="#F1F5F9" />
+      <rect x={pad} y={trackY} width={trackW} height={trackH} rx={8} fill="var(--pl-chart-bar-track)" />
 
       {/* Tier bands */}
       {tiers.map((tier, i) => {
@@ -56,7 +56,7 @@ function TierTrack() {
             </text>
 
             {/* Attainment range below */}
-            <text x={(x1 + x2) / 2} y={trackY + trackH + 14} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+            <text x={(x1 + x2) / 2} y={trackY + trackH + 14} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
               {tier.floor === 0 ? '0' : (tier.floor * 100).toFixed(0)}{'\u2013'}{tier.ceiling === 999 ? '\u221E' : (tier.ceiling * 100).toFixed(0)}%
             </text>
           </g>
@@ -68,10 +68,10 @@ function TierTrack() {
       <circle cx={toX(marcus)} cy={trackY + trackH / 2} r={6} fill="#F87171" stroke="white" strokeWidth="2" />
       <rect x={toX(marcus) - 36} y={trackY - 44} width={72} height={14} rx={4} fill="#F87171" />
       <text x={toX(marcus)} y={trackY - 34} textAnchor="middle" fontSize="12" fontWeight="bold" fill="white" fontFamily="monospace">
-        MARCUS 92%
+        MARCUS 101%
       </text>
 
-      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
         Higher tiers = lower rate but higher absolute earnings (volume {'\u00D7'} rate). Inverted rates protect floor earnings.
       </text>
     </svg>
@@ -88,7 +88,7 @@ function BBIGateRings() {
   return (
     <>
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
-      <text x={w / 2} y={18} textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+      <text x={w / 2} y={18} textAnchor="middle" fontSize="12" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
         GATE CASCADE — Multiplier Progression
       </text>
 
@@ -109,7 +109,7 @@ function BBIGateRings() {
         return (
           <g key={gate.name}>
             {/* Background ring */}
-            <circle cx={cx} cy={cy} r={r} fill="none" stroke="#F1F5F9" strokeWidth="8" />
+            <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--pl-chart-bar-track)" strokeWidth="8" />
 
             {/* Progress arc (fills to threshold %) */}
             <circle cx={cx} cy={cy} r={r} fill="none"
@@ -119,7 +119,7 @@ function BBIGateRings() {
             />
 
             {/* Multiplier value */}
-            <text x={cx} y={cy - 6} textAnchor="middle" fontSize="16" fontWeight="bold" fill="#1A1A2E" fontFamily="monospace">
+            <text x={cx} y={cy - 6} textAnchor="middle" fontSize="16" fontWeight="bold" fill="var(--pl-text)" fontFamily="monospace">
               {gate.multiplier.toFixed(2)}x
             </text>
             <text x={cx} y={cy + 10} textAnchor="middle" fontSize="12" fontWeight="bold" fill={gate.color} fontFamily="monospace">
@@ -132,7 +132,7 @@ function BBIGateRings() {
             </text>
 
             {/* Supplier groups below ring */}
-            <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+            <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
               {gate.supplierGroups.join(' + ')}
             </text>
 
@@ -153,7 +153,7 @@ function BBIGateRings() {
         );
       })}
 
-      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="12" fill="#718096" fontFamily="monospace">
+      <text x={w / 2} y={h - 8} textAnchor="middle" fontSize="12" fill="var(--pl-text-muted)" fontFamily="monospace">
         Cascade: Core {'\u2192'} Import {'\u2192'} Emerging {'\u2192'} Combined. Only highest unlocked multiplier applies.
       </text>
     </svg>
@@ -166,21 +166,21 @@ function EarningsComparison() {
   const baseRev = 380000;
   const spiritsRev = 28000;
 
-  const low = estimateQuarterlyEarnings(
-    baseRev, 0.92,
+  const current = estimateQuarterlyEarnings(
+    baseRev, 1.01,
     { core: 0.87, import: 0.81, emerging: 0.71, combined: 0.89 },
-    spiritsRev, 8
+    spiritsRev, 14
   );
 
-  const high = estimateQuarterlyEarnings(
+  const stretch = estimateQuarterlyEarnings(
     baseRev * 1.17, 1.08,
     { core: 0.94, import: 0.86, emerging: 0.82, combined: 0.94 },
-    spiritsRev * 1.5, 12
+    spiritsRev * 1.5, 14
   );
 
   const scenarios = [
-    { label: 'Marcus @ 92%', data: low, color: '#F59E0B' },
-    { label: 'Marcus @ 108%', data: high, color: '#22C55E' },
+    { label: 'Marcus @ 101% (current)', data: current, color: '#2563EB' },
+    { label: 'Marcus @ 108% (stretch)', data: stretch, color: '#22C55E' },
   ];
 
   return (
@@ -190,33 +190,33 @@ function EarningsComparison() {
         <div key={s.label} className="rounded-lg border p-4" style={{ borderColor: `${s.color}40` }}>
           <div className="text-xs font-bold font-mono mb-2" style={{ color: s.color }}>{s.label}</div>
 
-          <div className="text-[28px] font-bold font-mono mb-3" style={{ color: '#1A1A2E' }}>
+          <div className="text-[28px] font-bold font-mono mb-3" style={{ color: 'var(--pl-text)' }}>
             ${fmt(Math.round(s.data.totalEstimate))}
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-[13px]">
-              <span style={{ color: '#718096' }}>Base (quarterly)</span>
-              <span className="font-mono font-bold" style={{ color: '#1A1A2E' }}>${fmt(Math.round(s.data.baseEarnings))}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Base (quarterly)</span>
+              <span className="font-mono font-bold" style={{ color: 'var(--pl-text)' }}>${fmt(Math.round(s.data.baseEarnings))}</span>
             </div>
             <div className="flex justify-between text-[13px]">
-              <span style={{ color: '#718096' }}>Variable ({s.data.tier.label})</span>
-              <span className="font-mono font-bold" style={{ color: '#1A1A2E' }}>${fmt(Math.round(s.data.variableEarnings))}</span>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Variable ({s.data.tier.label})</span>
+              <span className="font-mono font-bold" style={{ color: 'var(--pl-text)' }}>${fmt(Math.round(s.data.variableEarnings))}</span>
             </div>
             <div className="flex justify-between text-[13px]">
-              <span style={{ color: '#718096' }}>Gate multiplier</span>
-              <span className="font-mono font-bold" style={{ color: s.data.bbiMultiplier > 1 ? '#22C55E' : '#A0AEC0' }}>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Gate multiplier</span>
+              <span className="font-mono font-bold" style={{ color: s.data.bbiMultiplier > 1 ? '#22C55E' : 'var(--pl-text-faint)' }}>
                 {s.data.bbiMultiplier.toFixed(2)}x ({s.data.unlockedGates}/4 gates)
               </span>
             </div>
             <div className="flex justify-between text-[13px]">
-              <span style={{ color: '#718096' }}>Spirits adder</span>
-              <span className="font-mono font-bold" style={{ color: s.data.spiritsBonus > 0 ? '#10B981' : '#A0AEC0' }}>
+              <span style={{ color: 'var(--pl-text-muted)' }}>Spirits adder</span>
+              <span className="font-mono font-bold" style={{ color: s.data.spiritsBonus > 0 ? '#10B981' : 'var(--pl-text-faint)' }}>
                 {s.data.spiritsBonus > 0 ? `+$${fmt(Math.round(s.data.spiritsBonus))}` : 'Not qualified'}
               </span>
             </div>
-            <div className="border-t pt-2 mt-2 flex justify-between text-[13px]" style={{ borderColor: '#E2E8F0' }}>
-              <span className="font-bold" style={{ color: '#1A1A2E' }}>Annualized OTE</span>
+            <div className="border-t pt-2 mt-2 flex justify-between text-[13px]" style={{ borderColor: 'var(--pl-border)' }}>
+              <span className="font-bold" style={{ color: 'var(--pl-text)' }}>Annualized OTE</span>
               <span className="font-mono font-bold" style={{ color: s.color }}>${fmt(Math.round(s.data.totalEstimate * 4))}</span>
             </div>
           </div>
@@ -226,6 +226,60 @@ function EarningsComparison() {
     </>
   );
 }
+
+/* ── Draw / Guarantee Program ──────────────────── */
+const DRAW_PROGRAM = {
+  amount: 3200,
+  frequency: 'biweekly',
+  durationMonths: 6,
+  recoveryPct: 0.25,
+  recoveryDescription: '25% of earned commission above guarantee floor applied to draw balance',
+};
+
+const DRAW_TIMELINE = [
+  { phase: 'Guarantee', months: '1-6', description: '$3,200 biweekly minimum guaranteed', color: '#3B82F6', pct: 50 },
+  { phase: 'Partial Ramp', months: '7-12', description: 'Draw tapers, recoverable against earned', color: '#F59E0B', pct: 33 },
+  { phase: 'Full Plan', months: '13+', description: 'Standard comp plan, no draw', color: '#22C55E', pct: 17 },
+];
+
+const CURRENT_DRAW_BALANCES = [
+  { rep: 'Nathan Chowdhury', route: 'DAL-08', hireDate: 'Jan 15, 2026', balance: 4800, phase: 'Guarantee', monthsRemaining: 4 },
+  { rep: 'Jackie Hernandez', route: 'DAL-07', hireDate: 'Feb 1, 2026', balance: 1200, phase: 'Guarantee', monthsRemaining: 5 },
+];
+
+/* ── On/Off-Premise Channel Comp ─────────────── */
+const CHANNEL_COMP = [
+  {
+    channel: 'Off-Premise',
+    description: 'Retail, grocery, convenience, package stores',
+    basePct: 60,
+    variablePct: 40,
+    variableComponents: [
+      { name: 'Volume (cases delivered)', weight: 50 },
+      { name: 'Distribution (new SKU placements)', weight: 25 },
+      { name: 'BBI Compliance', weight: 15 },
+      { name: 'Display Execution', weight: 10 },
+    ],
+    avgOTE: 72000,
+    avgAttainment: 104,
+    color: '#3B82F6',
+  },
+  {
+    channel: 'On-Premise',
+    description: 'Bars, restaurants, hotels, venues, stadiums',
+    basePct: 55,
+    variablePct: 45,
+    variableComponents: [
+      { name: 'Draft Line Pours (keg volume)', weight: 40 },
+      { name: 'New Tap Handle Placements', weight: 25 },
+      { name: 'Menu Presence (bottles/cans)', weight: 20 },
+      { name: 'Event Sponsorship Activation', weight: 15 },
+    ],
+    avgOTE: 78000,
+    avgAttainment: 97,
+    color: '#8B5CF6',
+  },
+];
 
 export default function CompPlanPage() {
   const plan = COMP_PLAN;
@@ -241,21 +295,21 @@ export default function CompPlanPage() {
         <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
           Compensation Architecture &middot; FY{plan.planYear}
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           {plan.planName}
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {COMP_TIERS.length} tiers &middot; {BBI_GATES.length} gates &middot; {plan.kickers.length} quarterly kickers &middot; Spirits {(SPIRITS_ADDER.rate * 100).toFixed(1)}% adder
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Base Salary" value={`$${(plan.baseSalary.median / 1000).toFixed(0)}K`} accent="#2563EB" sub={`$${(plan.baseSalary.min / 1000).toFixed(0)}K\u2013$${(plan.baseSalary.max / 1000).toFixed(0)}K range`} />
-        <LightKpiCard label="Variable Target" value={pct(plan.variableTarget)} accent="#10B981" sub="Of base salary" />
-        <LightKpiCard label="Median OTE" value={`$${(plan.ote.median / 1000).toFixed(1)}K`} accent="#22C55E" sub="On-target earnings" />
-        <LightKpiCard label="Max Multiplier" value={`${maxMultiplier.toFixed(1)}x`} accent="#F59E0B" sub="Combined gate" />
-        <LightKpiCard label="Spirits Adder" value={`+${(SPIRITS_ADDER.rate * 100).toFixed(1)}%`} accent="#10B981" sub={`Min ${SPIRITS_ADDER.minAccounts} accounts`} />
+      <div className="grid grid-cols-5 gap-3 mb-6">
+        <LightKpiCard label="Base Salary" value={`$${(plan.baseSalary.median / 1000).toFixed(0)}K`} accent="#2563EB" sub={`$${(plan.baseSalary.min / 1000).toFixed(0)}K\u2013$${(plan.baseSalary.max / 1000).toFixed(0)}K range`} stagger={0} />
+        <LightKpiCard label="Variable Target" value={pct(plan.variableTarget)} accent="#10B981" sub="Of base salary" stagger={1} />
+        <LightKpiCard label="Median OTE" value={`$${(plan.ote.median / 1000).toFixed(1)}K`} accent="#22C55E" sub="On-target earnings" stagger={2} />
+        <LightKpiCard label="Max Multiplier" value={`${maxMultiplier.toFixed(1)}x`} accent="#F59E0B" sub="Combined gate" stagger={3} />
+        <LightKpiCard label="Spirits Adder" value={`+${(SPIRITS_ADDER.rate * 100).toFixed(1)}%`} accent="#10B981" sub={`Min ${SPIRITS_ADDER.minAccounts} accounts`} stagger={4} />
       </div>
 
       {/* Tier Ladder */}
@@ -263,7 +317,7 @@ export default function CompPlanPage() {
         <TierTrack />
         <div className="mt-3 rounded-md px-4 py-3" style={{ background: 'rgba(16,185,129,0.04)', borderLeft: '3px solid #10B981' }}>
           <div className="text-xs font-bold font-mono mb-1" style={{ color: '#10B981' }}>WHY INVERSE RATES?</div>
-          <p className="text-[13px]" style={{ color: '#4A5568' }}>
+          <p className="text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>
             Lower-tier reps get higher commission rates to ensure livable earnings while they develop. Higher-tier reps earn more in absolute dollars
             because their volume is larger. A T1 rep at 2.5% on $450K revenue earns more than a T4 rep at 6.5% on $180K revenue.
             This &quot;inverted rate&quot; design incentivizes upward mobility without floor earnings risk.
@@ -281,8 +335,8 @@ export default function CompPlanPage() {
         <div className="rounded-lg p-5" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.2)' }}>
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-[16px] font-bold" style={{ color: '#1A1A2E' }}>Sazerac Portfolio Adder</div>
-              <p className="text-[12px] mt-1" style={{ color: '#718096' }}>{SPIRITS_ADDER.description}</p>
+              <div className="text-[16px] font-bold" style={{ color: 'var(--pl-text)' }}>Sazerac Portfolio Adder</div>
+              <p className="text-[12px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>{SPIRITS_ADDER.description}</p>
               <div className="mt-3">
                 <div className="text-xs font-bold font-mono" style={{ color: '#10B981' }}>QUALIFYING BRANDS</div>
                 <div className="flex flex-wrap gap-1 mt-1">
@@ -296,8 +350,8 @@ export default function CompPlanPage() {
             </div>
             <div className="text-right flex-shrink-0 ml-4">
               <div className="text-[32px] font-bold font-mono" style={{ color: '#10B981' }}>+{(SPIRITS_ADDER.rate * 100).toFixed(1)}%</div>
-              <div className="text-xs font-mono" style={{ color: '#718096' }}>on all Sazerac revenue</div>
-              <div className="text-xs font-mono mt-1" style={{ color: '#A0AEC0' }}>Min {SPIRITS_ADDER.minAccounts} spirits accounts</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>on all Sazerac revenue</div>
+              <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>Min {SPIRITS_ADDER.minAccounts} spirits accounts</div>
             </div>
           </div>
         </div>
@@ -305,7 +359,7 @@ export default function CompPlanPage() {
 
       {/* Earnings Comparison */}
       <LightSectionCard title="Earnings Scenario: Marcus Reyes (DAL-03)" className="mb-4">
-        <div className="text-[13px] mb-3" style={{ color: '#718096' }}>
+        <div className="text-[13px] mb-3" style={{ color: 'var(--pl-text-muted)' }}>
           Side-by-side quarterly earnings comparison showing how attainment, gate status, and spirits accounts compound.
         </div>
         <EarningsComparison />
@@ -313,9 +367,9 @@ export default function CompPlanPage() {
 
       {/* Plan details grid */}
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="rounded-lg border p-4" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-xs font-bold font-mono mb-2" style={{ color: '#2563EB' }}>PLAN MECHANICS</div>
-          <div className="space-y-1.5 text-[13px]" style={{ color: '#4A5568' }}>
+          <div className="space-y-1.5 text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>
             <div>Pay frequency: <strong className="font-mono">{plan.payFrequency}</strong></div>
             <div>True-up frequency: <strong className="font-mono">{plan.trueUpFrequency}</strong></div>
             <div>Plan year: <strong className="font-mono">FY{plan.planYear}</strong></div>
@@ -323,9 +377,9 @@ export default function CompPlanPage() {
             <div>Kickers: <strong className="font-mono">{plan.kickers.length} quarterly</strong></div>
           </div>
         </div>
-        <div className="rounded-lg border p-4" style={{ borderColor: '#E2E8F0' }}>
+        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
           <div className="text-xs font-bold font-mono mb-2" style={{ color: '#22C55E' }}>OTE RANGES</div>
-          <div className="space-y-1.5 text-[13px]" style={{ color: '#4A5568' }}>
+          <div className="space-y-1.5 text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>
             <div>Minimum OTE: <strong className="font-mono">${fmt(plan.ote.min)}</strong></div>
             <div>Median OTE: <strong className="font-mono">${fmt(plan.ote.median)}</strong></div>
             <div>Maximum OTE: <strong className="font-mono">${fmt(plan.ote.max)}</strong></div>
@@ -335,13 +389,147 @@ export default function CompPlanPage() {
         </div>
       </div>
 
+      {/* ═══════ DRAW / GUARANTEE PROGRAM ═══════ */}
+      <LightSectionCard title="NEW HIRE DRAW / GUARANTEE PROGRAM">
+        {/* Program summary */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#3B82F6' }}>${DRAW_PROGRAM.amount.toLocaleString()}</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Biweekly guarantee</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#F59E0B' }}>{DRAW_PROGRAM.durationMonths} months</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Guarantee period</div>
+          </div>
+          <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="text-2xl font-bold font-mono" style={{ color: '#22C55E' }}>{(DRAW_PROGRAM.recoveryPct * 100).toFixed(0)}%</div>
+            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Recovery rate above floor</div>
+          </div>
+        </div>
+
+        {/* Transition Timeline SVG */}
+        <div className="mb-6">
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            TRANSITION TIMELINE
+          </div>
+          <div className="flex rounded-xl overflow-hidden" style={{ height: 48, border: '1px solid var(--pl-border)' }}>
+            {DRAW_TIMELINE.map((phase) => (
+              <div key={phase.phase} className="flex items-center justify-center px-3" style={{
+                width: `${phase.pct}%`,
+                background: `${phase.color}15`,
+                borderRight: '1px solid var(--pl-border)',
+              }}>
+                <div className="text-center">
+                  <div className="text-xs font-bold font-mono" style={{ color: phase.color }}>{phase.phase}</div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Mo {phase.months}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-4">
+            {DRAW_TIMELINE.map((phase) => (
+              <div key={phase.phase} className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <span className="font-bold" style={{ color: phase.color }}>{phase.phase}:</span> {phase.description}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Current Draw Balances */}
+        <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          CURRENT DRAW BALANCES
+        </div>
+        <div className="grid gap-3">
+          {CURRENT_DRAW_BALANCES.map((rep) => (
+            <div key={rep.rep} className="flex items-center justify-between p-3 rounded-lg"
+              style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+              <div>
+                <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{rep.rep}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  {rep.route} &middot; Hired {rep.hireDate} &middot; {rep.monthsRemaining} months remaining
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-lg font-bold font-mono" style={{ color: '#F59E0B' }}>${rep.balance.toLocaleString()}</div>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>outstanding draw</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ ON/OFF-PREMISE CHANNEL COMP ═══════ */}
+      <LightSectionCard title="CHANNEL-SPECIFIC COMPENSATION STRUCTURE">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {CHANNEL_COMP.map((ch) => (
+            <div key={ch.channel} className="p-4 rounded-lg" style={{
+              background: 'var(--pl-card-alt)',
+              border: `1px solid ${ch.color}33`,
+            }}>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full" style={{ background: ch.color }} />
+                <span className="text-sm font-bold font-mono" style={{ color: ch.color }}>
+                  {ch.channel}
+                </span>
+              </div>
+              <div className="text-xs mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                {ch.description}
+              </div>
+
+              {/* Base/Variable split bar */}
+              <div className="flex h-3 rounded-full overflow-hidden mb-3">
+                <div style={{ width: `${ch.basePct}%`, background: ch.color, opacity: 0.4 }} />
+                <div style={{ width: `${ch.variablePct}%`, background: ch.color }} />
+              </div>
+              <div className="flex justify-between text-xs font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                <span>Base {ch.basePct}%</span>
+                <span>Variable {ch.variablePct}%</span>
+              </div>
+
+              {/* Variable components */}
+              <div className="space-y-1.5">
+                {ch.variableComponents.map((vc) => (
+                  <div key={vc.name} className="flex items-center gap-2">
+                    <div className="flex-1 h-2 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${vc.weight}%`, background: ch.color, opacity: 0.7 }} />
+                    </div>
+                    <span className="text-xs font-mono w-8 text-right" style={{ color: ch.color }}>{vc.weight}%</span>
+                    <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--pl-text-muted)', width: 200 }}>{vc.name}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* KPIs */}
+              <div className="flex gap-4 mt-3 pt-3" style={{ borderTop: '1px solid var(--pl-border)' }}>
+                <div className="text-center">
+                  <div className="text-lg font-bold font-mono" style={{ color: ch.color }}>${(ch.avgOTE / 1000).toFixed(0)}K</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Avg OTE</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold font-mono" style={{ color: ch.avgAttainment >= 100 ? '#22C55E' : '#F59E0B' }}>{ch.avgAttainment}%</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Avg Attainment</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(198,160,82,0.06)',
+          border: '1px solid rgba(198,160,82,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          On-premise reps carry higher variable mix (45%) due to relationship-driven sales and tap handle volatility. Off-premise reps carry heavier base (60%) for route consistency. BBI compliance applies to off-premise only; on-premise uses draft line pours as primary volume metric.
+        </div>
+      </LightSectionCard>
+
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
-        Compensation plan designed by PROOFLINE for Lone Star Beverage Co. FY2026. Tier rates are inverse to attainment to protect floor earnings.
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        Compensation plan designed by PROOFLINE for Lone Star Distribution FY2026. Tier rates are inverse to attainment to protect floor earnings.
         gates cascade from Core → Import → Emerging → Combined. Spirits adder stacks on top of gate-adjusted variable.
         Kickers are quarterly bonus opportunities tied to seasonal events and supplier priorities.
       </div>
-    
+
     </>
   );
 }

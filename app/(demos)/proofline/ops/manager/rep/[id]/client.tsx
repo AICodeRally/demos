@@ -64,8 +64,8 @@ function AttainmentChart({ weekly, peerAvg }: { weekly: number[]; peerAvg: numbe
         const y = py + plotH - (v / maxVal) * plotH;
         return (
           <g key={v}>
-            <line x1={px} y1={y} x2={w - px} y2={y} stroke="#E2E8F0" strokeWidth="0.5" />
-            <text x={px - 4} y={y + 3} textAnchor="end" fontSize="12" fill="#A0AEC0" fontFamily="monospace">{(v * 100).toFixed(0)}%</text>
+            <line x1={px} y1={y} x2={w - px} y2={y} stroke="var(--pl-chart-grid)" strokeWidth="0.5" />
+            <text x={px - 4} y={y + 3} textAnchor="end" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">{(v * 100).toFixed(0)}%</text>
           </g>
         );
       })}
@@ -73,7 +73,7 @@ function AttainmentChart({ weekly, peerAvg }: { weekly: number[]; peerAvg: numbe
       <line x1={px} y1={targetY} x2={w - px} y2={targetY} stroke="#2563EB" strokeWidth="1" strokeDasharray="4 2" />
       <text x={w - px + 4} y={targetY + 3} fontSize="12" fill="#2563EB" fontFamily="monospace">100%</text>
 
-      <path d={peerPath} fill="none" stroke="#A0AEC0" strokeWidth="1" strokeDasharray="3 3" />
+      <path d={peerPath} fill="none" stroke="var(--pl-text-faint)" strokeWidth="1" strokeDasharray="3 3" />
 
       <path d={repArea} fill="rgba(37,99,235,0.08)" />
       <path d={repPath} fill="none" stroke="#2563EB" strokeWidth="2" />
@@ -83,7 +83,7 @@ function AttainmentChart({ weekly, peerAvg }: { weekly: number[]; peerAvg: numbe
       ))}
 
       {weekly.map((_, i) => (
-        <text key={i} x={px + (i / 12) * plotW} y={h - 2} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+        <text key={i} x={px + (i / 12) * plotW} y={h - 2} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
           W{i + 1}
         </text>
       ))}
@@ -102,7 +102,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       <>
         <ActNavigation currentAct={3} />
         <div className="mt-6 p-8 text-center">
-          <h1 className="text-xl font-bold" style={{ color: '#1A1A2E' }}>Rep not found: {id}</h1>
+          <h1 className="text-xl font-bold" style={{ color: 'var(--pl-text)' }}>Rep not found: {id}</h1>
           <Link href="/proofline/ops/manager" className="text-[13px] mt-2" style={{ color: '#2563EB' }}>Back to Manager Dashboard</Link>
         </div>
       </>
@@ -134,7 +134,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       <ActNavigation currentAct={3} />
 
       {/* Breadcrumb */}
-      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         <Link href="/proofline/ops/manager" style={{ color: '#2563EB' }}>Manager Dashboard</Link>
         <span>/</span>
         <span>{seller.name}</span>
@@ -143,7 +143,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       {/* Header */}
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
+          <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             {seller.name}
           </h1>
           <span className="text-[13px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
@@ -170,19 +170,19 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
             </span>
           )}
         </div>
-        <p className="text-[13px]" style={{ color: '#718096' }}>
+        <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
           {seller.tenure} months tenure &middot; {route?.accounts ?? '\u2014'} accounts &middot; {seller.spiritsAccounts} spirits &middot; {route?.channel ?? '\u2014'}
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-6 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Attainment" value={pct(seller.attainment)} accent={seller.attainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub={`Tier ${seller.tier}`} />
-        <LightKpiCard label="Q Revenue" value={fmtM(route?.rev ?? 0)} accent="#2563EB" sub={`${localFmtK(route?.cases ?? 0)} cases`} />
-        <LightKpiCard label="Spirits Accts" value={String(seller.spiritsAccounts)} accent="#F87171" sub={`of ${route?.accounts ?? 0} total`} />
-        <LightKpiCard label="On-Time" value={pct(route?.onTimeRate ?? 0)} accent={(route?.onTimeRate ?? 0) >= 0.93 ? '#22C55E' : '#F59E0B'} />
-        <LightKpiCard label="Display" value={pct(route?.displayCompliance ?? 0)} accent={(route?.displayCompliance ?? 0) >= 0.90 ? '#22C55E' : '#F59E0B'} />
-        <LightKpiCard label="Gates" value={`${gates.filter(g => g.value >= g.threshold).length}/4`} accent="#2563EB" sub="Unlocked" />
+      <div className="grid grid-cols-6 gap-3 mb-6">
+        <LightKpiCard label="Attainment" value={pct(seller.attainment)} accent={seller.attainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub={`Tier ${seller.tier}`} stagger={0} />
+        <LightKpiCard label="Q Revenue" value={fmtM(route?.rev ?? 0)} accent="#2563EB" sub={`${localFmtK(route?.cases ?? 0)} cases`} stagger={1} />
+        <LightKpiCard label="Spirits Accts" value={String(seller.spiritsAccounts)} accent="#F87171" sub={`of ${route?.accounts ?? 0} total`} stagger={2} />
+        <LightKpiCard label="On-Time" value={pct(route?.onTimeRate ?? 0)} accent={(route?.onTimeRate ?? 0) >= 0.93 ? '#22C55E' : '#F59E0B'} stagger={3} />
+        <LightKpiCard label="Display" value={pct(route?.displayCompliance ?? 0)} accent={(route?.displayCompliance ?? 0) >= 0.90 ? '#22C55E' : '#F59E0B'} stagger={4} />
+        <LightKpiCard label="Gates" value={`${gates.filter(g => g.value >= g.threshold).length}/4`} accent="#2563EB" sub="Unlocked" stagger={5} />
       </div>
 
       {/* 13-Week Attainment Chart */}
@@ -192,14 +192,14 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
             onClick={() => setShowPeerCompare(!showPeerCompare)}
             className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
             style={{
-              borderColor: showPeerCompare ? '#2563EB' : '#E2E8F0',
-              background: showPeerCompare ? 'rgba(37,99,235,0.08)' : 'white',
-              color: showPeerCompare ? '#2563EB' : '#718096',
+              borderColor: showPeerCompare ? '#2563EB' : 'var(--pl-border)',
+              background: showPeerCompare ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
+              color: showPeerCompare ? '#2563EB' : 'var(--pl-text-muted)',
             }}
           >
             {showPeerCompare ? 'Hide' : 'Show'} Peer Comparison
           </button>
-          <span className="text-xs font-mono" style={{ color: '#A0AEC0' }}>
+          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
             Blue = {seller.name.split(' ')[0]} &middot; {showPeerCompare ? 'Dashed = district avg' : 'Dashed line = 100% target'}
           </span>
         </div>
@@ -222,19 +222,19 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
-                    <span className="text-[12px] font-semibold" style={{ color: '#1A1A2E' }}>{SUPPLIER_NAMES[s]}</span>
+                    <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{SUPPLIER_NAMES[s]}</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs font-mono">
-                    <span style={{ color: '#718096' }}>Current: <strong style={{ color }}>{pct(current)}</strong></span>
-                    <span style={{ color: '#A0AEC0' }}>Target: {pct(target)}</span>
+                    <span style={{ color: 'var(--pl-text-muted)' }}>Current: <strong style={{ color }}>{pct(current)}</strong></span>
+                    <span style={{ color: 'var(--pl-text-faint)' }}>Target: {pct(target)}</span>
                     <span style={{ color: current >= target ? '#22C55E' : '#F87171' }}>
                       {current >= target ? '+' : ''}{((current - target) * 100).toFixed(1)}pp
                     </span>
                   </div>
                 </div>
-                <div className="relative h-3 rounded-full" style={{ background: '#F1F5F9' }}>
+                <div className="relative h-3 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
                   <div className="absolute top-0 h-full rounded-full" style={{ width: `${current * 200}%`, background: color, opacity: 0.6, maxWidth: '100%' }} />
-                  <div className="absolute top-0 h-full w-0.5" style={{ left: `${target * 200}%`, background: '#1A1A2E' }} />
+                  <div className="absolute top-0 h-full w-0.5" style={{ left: `${target * 200}%`, background: 'var(--pl-text)' }} />
                 </div>
               </div>
             );
@@ -251,21 +251,21 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
               <div
                 key={g.name}
                 className="rounded-lg border p-4 text-center"
-                style={{ borderColor: unlocked ? '#22C55E' : '#E2E8F0', background: unlocked ? 'rgba(34,197,94,0.04)' : 'white' }}
+                style={{ borderColor: unlocked ? '#22C55E' : 'var(--pl-border)', background: unlocked ? 'rgba(34,197,94,0.04)' : 'var(--pl-card)' }}
               >
-                <div className="text-xs font-mono mb-1" style={{ color: '#A0AEC0' }}>{g.name} Gate</div>
+                <div className="text-xs font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>{g.name} Gate</div>
                 <div className="text-[22px] font-bold font-mono" style={{ color: unlocked ? '#22C55E' : '#F87171' }}>
                   {pct(g.value)}
                 </div>
-                <div className="text-xs font-mono" style={{ color: '#718096' }}>
+                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                   Threshold: {pct(g.threshold)} {unlocked ? '\u2713' : '\u2717'}
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="mt-3 text-xs font-mono" style={{ color: '#A0AEC0' }}>
-          Comp tier: <strong style={{ color: '#1A1A2E' }}>Tier {seller.tier}</strong>
+        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          Comp tier: <strong style={{ color: 'var(--pl-text)' }}>Tier {seller.tier}</strong>
           {tier && <> &middot; Rate: {pct(tier.rate)}</>}
           &middot; {gates.filter(g => g.value >= g.threshold).length} of 4 gates unlocked
         </div>
@@ -279,25 +279,25 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
               <div key={entry.id} className="flex gap-4">
                 <div className="flex flex-col items-center">
                   <div className="w-3 h-3 rounded-full" style={{ background: '#2563EB' }} />
-                  <div className="w-0.5 flex-1" style={{ background: '#E2E8F0' }} />
+                  <div className="w-0.5 flex-1" style={{ background: 'var(--pl-border)' }} />
                 </div>
                 <div className="pb-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{entry.summary}</span>
+                    <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{entry.summary}</span>
                   </div>
-                  <div className="flex items-center gap-2 mb-2 text-xs font-mono" style={{ color: '#A0AEC0' }}>
+                  <div className="flex items-center gap-2 mb-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
                     <span>{entry.date}</span>
                     <span className="px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>{entry.type}</span>
                   </div>
                   <ul className="space-y-0.5 mb-1">
                     {entry.outcomes.map((o, i) => (
-                      <li key={i} className="text-[13px] flex items-start gap-1.5" style={{ color: '#718096' }}>
+                      <li key={i} className="text-[13px] flex items-start gap-1.5" style={{ color: 'var(--pl-text-muted)' }}>
                         <span style={{ color: '#22C55E' }}>&#x2022;</span> {o}
                       </li>
                     ))}
                   </ul>
                   {entry.managerNotes && (
-                    <p className="text-xs italic" style={{ color: '#A0AEC0' }}>&mdash; {entry.managerNotes}</p>
+                    <p className="text-xs italic" style={{ color: 'var(--pl-text-faint)' }}>&mdash; {entry.managerNotes}</p>
                   )}
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
         <LightSectionCard title={`Active Coaching Cards \u2014 ${coachingCards.length}`} className="mb-6">
           <div className="space-y-2">
             {coachingCards.map(card => (
-              <div key={card.id} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
+              <div key={card.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <span
                     className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
@@ -322,9 +322,9 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
                   >
                     {card.priority.toUpperCase()}
                   </span>
-                  <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{card.title}</span>
+                  <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{card.title}</span>
                 </div>
-                <p className="text-[13px]" style={{ color: '#718096' }}>{card.suggestedAction}</p>
+                <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{card.suggestedAction}</p>
               </div>
             ))}
           </div>
@@ -332,7 +332,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Manager note */}
-      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         {seller.coachingNote}
       </div>
     </>

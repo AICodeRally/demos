@@ -117,6 +117,49 @@ function packBubbles(brands: BrandFamily[]): PackedBubble[] {
   return items;
 }
 
+/* ── Package Type Mix ──────────────────────────── */
+const PACKAGE_MIX = [
+  {
+    brand: 'Miller Lite',
+    packages: [
+      { type: '24pk cans', pct: 45, color: '#60A5FA' },
+      { type: '12pk cans', pct: 25, color: '#3B82F6' },
+      { type: '12pk bottles', pct: 15, color: '#2563EB' },
+      { type: '1/2 bbl keg', pct: 10, color: '#1D4ED8' },
+      { type: '1/6 bbl keg', pct: 5, color: '#1E40AF' },
+    ],
+  },
+  {
+    brand: 'Corona Extra',
+    packages: [
+      { type: '12pk bottles', pct: 40, color: '#FDE68A' },
+      { type: '24pk bottles', pct: 30, color: '#F59E0B' },
+      { type: '24pk cans', pct: 20, color: '#D97706' },
+      { type: '1/6 bbl keg', pct: 10, color: '#B45309' },
+    ],
+  },
+  {
+    brand: 'Coors Light',
+    packages: [
+      { type: '30pk cans', pct: 35, color: '#93C5FD' },
+      { type: '24pk cans', pct: 30, color: '#60A5FA' },
+      { type: '12pk cans', pct: 20, color: '#3B82F6' },
+      { type: '1/2 bbl keg', pct: 10, color: '#2563EB' },
+      { type: '1/6 bbl keg', pct: 5, color: '#1D4ED8' },
+    ],
+  },
+  {
+    brand: 'Modelo Especial',
+    packages: [
+      { type: '24pk cans', pct: 35, color: '#FDE68A' },
+      { type: '12pk bottles', pct: 30, color: '#F59E0B' },
+      { type: '12pk cans', pct: 20, color: '#D97706' },
+      { type: '1/2 bbl keg', pct: 10, color: '#B45309' },
+      { type: '1/6 bbl keg', pct: 5, color: '#92400E' },
+    ],
+  },
+];
+
 /* ── Supplier revenue aggregation ────────────────────── */
 function getSupplierBreakdown(brands: BrandFamily[]) {
   const map = new Map<SupplierGroup, number>();
@@ -162,7 +205,7 @@ export default function BrandPortfolioPage() {
 
   return (
     <>
-    
+
       <ActNavigation currentAct={1} />
 
       {/* Page Header */}
@@ -172,30 +215,30 @@ export default function BrandPortfolioPage() {
         </div>
         <h1
           className="text-2xl font-extrabold mb-1"
-          style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
+          style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
         >
           Brand Portfolio Command
         </h1>
-        <p className="text-[13px]" style={{ color: '#718096' }}>
+        <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
           {BRAND_FAMILIES.length} brand families across 6 supplier groups &middot; Bubble size = quarterly revenue
         </p>
       </div>
 
       {/* ── Summary Bar ──────────────────────────────── */}
       <div
-        className="grid grid-cols-4 gap-4 mb-6 rounded-xl border bg-white p-4"
-        style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+        className="grid grid-cols-4 gap-4 mb-6 rounded-xl border p-4"
+        style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', boxShadow: 'var(--pl-shadow)' }}
       >
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Total Brands
           </div>
-          <div className="text-xl font-bold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
+          <div className="text-xl font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             {filtered.length}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Quarterly Revenue
           </div>
           <div className="text-xl font-bold" style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}>
@@ -203,7 +246,7 @@ export default function BrandPortfolioPage() {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Avg Margin
           </div>
           <div className="text-xl font-bold" style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}>
@@ -211,7 +254,7 @@ export default function BrandPortfolioPage() {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Spirits Brands
           </div>
           <div className="text-xl font-bold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>
@@ -231,8 +274,8 @@ export default function BrandPortfolioPage() {
               onClick={() => { setFilter(f.key); setSelected(null); }}
               className="text-[13px] font-bold font-mono px-3 py-1.5 rounded-lg transition-all"
               style={{
-                background: isActive ? tabColor : '#F1F5F9',
-                color: isActive ? '#fff' : '#718096',
+                background: isActive ? tabColor : 'var(--pl-chart-bar-track)',
+                color: isActive ? '#fff' : 'var(--pl-text-muted)',
               }}
             >
               {f.label}
@@ -253,7 +296,7 @@ export default function BrandPortfolioPage() {
             {/* Background grid */}
             <defs>
               <pattern id="bubbleGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F1F5F9" strokeWidth="0.5" />
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--pl-chart-bar-track)" strokeWidth="0.5" />
               </pattern>
               {/* Glow filter for hover/selection */}
               <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -317,7 +360,7 @@ export default function BrandPortfolioPage() {
                       y={b.y - (b.r >= 32 ? 5 : 0)}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      fill="#1A1A2E"
+                      fill="var(--pl-text)"
                       fontSize={b.r >= 40 ? 11 : b.r >= 30 ? 10 : 9}
                       fontWeight="700"
                       fontFamily="var(--pl-font)"
@@ -334,7 +377,7 @@ export default function BrandPortfolioPage() {
                       y={b.y + 10}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      fill="#718096"
+                      fill="var(--pl-text-muted)"
                       fontSize="12"
                       fontFamily="monospace"
                     >
@@ -357,8 +400,8 @@ export default function BrandPortfolioPage() {
                     width={110}
                     height={28}
                     rx={6}
-                    fill="white"
-                    stroke="#E2E8F0"
+                    fill="var(--pl-chart-tooltip-bg)"
+                    stroke="var(--pl-chart-tooltip-border)"
                     strokeWidth={1}
                     filter="url(#glow)"
                   />
@@ -366,7 +409,7 @@ export default function BrandPortfolioPage() {
                     x={b.x}
                     y={b.y - b.r - 25}
                     textAnchor="middle"
-                    fill="#1A1A2E"
+                    fill="var(--pl-text)"
                     fontSize="12"
                     fontWeight="700"
                     fontFamily="var(--pl-font)"
@@ -377,7 +420,7 @@ export default function BrandPortfolioPage() {
                     x={b.x}
                     y={b.y - b.r - 13}
                     textAnchor="middle"
-                    fill="#718096"
+                    fill="var(--pl-text-muted)"
                     fontSize="12"
                     fontFamily="monospace"
                   >
@@ -393,7 +436,7 @@ export default function BrandPortfolioPage() {
             {supplierBreakdown.map((s) => (
               <div key={s.supplier} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full" style={{ background: s.color }} />
-                <span className="text-xs font-mono" style={{ color: '#718096' }}>
+                <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                   {s.label} ({pct(s.pct)})
                 </span>
               </div>
@@ -404,22 +447,23 @@ export default function BrandPortfolioPage() {
         {/* ── Detail Panel ─────────────────────────────── */}
         {selected && (
           <div
-            className="w-[320px] shrink-0 rounded-xl border bg-white p-5 self-start sticky top-4"
+            className="w-[320px] shrink-0 rounded-xl border p-5 self-start sticky top-4"
             style={{
-              borderColor: '#E2E8F0',
+              background: 'var(--pl-card)',
+              borderColor: 'var(--pl-border)',
               borderTop: `3px solid ${SUPPLIER_COLORS[selected.supplier]}`,
               boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
             }}
           >
             {/* Close button */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs uppercase tracking-[1.5px] font-mono" style={{ color: '#718096' }}>
+              <span className="text-xs uppercase tracking-[1.5px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                 Brand Detail
               </span>
               <button
                 onClick={() => setSelected(null)}
-                className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#F1F5F9] transition-colors"
-                style={{ color: '#718096' }}
+                className="w-6 h-6 rounded-full flex items-center justify-center transition-colors"
+                style={{ color: 'var(--pl-text-muted)', background: 'var(--pl-chart-bar-track)' }}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="18" y1="6" x2="6" y2="18" />
@@ -430,7 +474,7 @@ export default function BrandPortfolioPage() {
 
             <h3
               className="text-lg font-bold mb-1"
-              style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
+              style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
             >
               {selected.name}
             </h3>
@@ -455,13 +499,13 @@ export default function BrandPortfolioPage() {
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3 mb-5">
               {[
-                { label: 'Cases/Qtr', value: fmt(selected.casesQ), color: '#1A1A2E' },
-                { label: 'Revenue/Qtr', value: fmtM(selected.revQ), color: '#1A1A2E' },
+                { label: 'Cases/Qtr', value: fmt(selected.casesQ), color: 'var(--pl-text)' },
+                { label: 'Revenue/Qtr', value: fmtM(selected.revQ), color: 'var(--pl-text)' },
                 { label: 'Market Share', value: pct(selected.marketSharePct), color: '#2563EB' },
-                { label: 'Rev/Case', value: `$${selected.revenuePerCase}`, color: '#1A1A2E' },
+                { label: 'Rev/Case', value: `$${selected.revenuePerCase}`, color: 'var(--pl-text)' },
               ].map((s) => (
-                <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#F8FAFC' }}>
-                  <div className="text-xs font-mono uppercase" style={{ color: '#A0AEC0' }}>{s.label}</div>
+                <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
+                  <div className="text-xs font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>{s.label}</div>
                   <div className="text-[16px] font-bold" style={{ color: s.color, fontFamily: 'var(--pl-font)' }}>
                     {s.value}
                   </div>
@@ -472,7 +516,7 @@ export default function BrandPortfolioPage() {
             {/* Margin vs target */}
             <div className="mb-5">
               <div className="flex items-center justify-between text-[13px] mb-1">
-                <span style={{ color: '#718096' }}>Margin vs Target</span>
+                <span style={{ color: 'var(--pl-text-muted)' }}>Margin vs Target</span>
                 <span
                   className="font-bold font-mono"
                   style={{ color: selected.gp >= selected.marginTarget ? '#C6A052' : '#F87171' }}
@@ -480,7 +524,7 @@ export default function BrandPortfolioPage() {
                   {pct(selected.gp)} / {pct(selected.marginTarget)}
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full relative" style={{ background: '#F1F5F9' }}>
+              <div className="w-full h-2 rounded-full relative" style={{ background: 'var(--pl-chart-bar-track)' }}>
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -488,12 +532,12 @@ export default function BrandPortfolioPage() {
                     background: selected.gp >= selected.marginTarget ? '#C6A052' : '#F87171',
                   }}
                 />
-                <div className="absolute top-[-2px] w-[2px] h-[12px]" style={{ left: '100%', background: '#1A1A2E' }} />
+                <div className="absolute top-[-2px] w-[2px] h-[12px]" style={{ left: '100%', background: 'var(--pl-text)' }} />
               </div>
             </div>
 
             {/* Seasonal Revenue */}
-            <div className="text-xs uppercase tracking-[1px] font-mono mb-2" style={{ color: '#718096' }}>
+            <div className="text-xs uppercase tracking-[1px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
               Seasonal Revenue
             </div>
             <LightBarChart
@@ -515,7 +559,7 @@ export default function BrandPortfolioPage() {
                   {pct(s.pct)}
                 </span>
                 <div className="w-full rounded-t-lg" style={{ height: barH, background: s.color, opacity: 0.7 }} />
-                <span className="text-xs font-mono text-center leading-tight" style={{ color: '#718096' }}>
+                <span className="text-xs font-mono text-center leading-tight" style={{ color: 'var(--pl-text-muted)' }}>
                   {s.label}
                 </span>
               </div>
@@ -523,7 +567,47 @@ export default function BrandPortfolioPage() {
           })}
         </div>
       </LightSectionCard>
-    
+
+      {/* ═══════ PACKAGE TYPE MIX ═══════ */}
+      <LightSectionCard title="PACKAGE TYPE MIX — TOP BRANDS">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {PACKAGE_MIX.map((brand) => (
+            <div key={brand.brand} className="rounded-xl p-4" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+              <div className="text-sm font-bold mb-3" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{brand.brand}</div>
+              {/* Stacked horizontal bar */}
+              <div className="flex rounded-lg overflow-hidden mb-3" style={{ height: 24 }}>
+                {brand.packages.map((pkg) => (
+                  <div key={pkg.type} style={{ width: `${pkg.pct}%`, background: pkg.color }}
+                    className="flex items-center justify-center" title={`${pkg.type}: ${pkg.pct}%`}>
+                    {pkg.pct >= 15 && (
+                      <span className="text-xs font-bold font-mono" style={{ color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+                        {pkg.pct}%
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {/* Legend */}
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                {brand.packages.map((pkg) => (
+                  <div key={pkg.type} className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full" style={{ background: pkg.color }} />
+                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{pkg.type} ({pkg.pct}%)</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(198,160,82,0.06)',
+          border: '1px solid rgba(198,160,82,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          Package type mix drives warehouse slot planning, truck loading sequence, and keg deposit tracking. Commission rates are uniform across package types — only brand gate classification matters for comp calculation.
+        </div>
+      </LightSectionCard>
+
     </>
   );
 }

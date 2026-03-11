@@ -33,9 +33,9 @@ const donutData = (Object.keys(SUPPLIER_PORTFOLIO_SHARE) as SupplierGroup[]).map
 
 /* ── YoY Comparison ──────────────────────────────────── */
 const YOY = [
-  { metric: 'Revenue', fy25: '$5.0B', fy26: '$5.2B', delta: '+4.0%', positive: true },
+  { metric: 'Revenue', fy25: '$173M', fy26: '$180M', delta: '+4.0%', positive: true },
   { metric: 'Cases', fy25: `${fmt(BRAND_TOTAL_CASES * 4)}`, fy26: `${fmt(Math.round(BRAND_TOTAL_CASES * 4 * 1.028))}`, delta: '+2.8%', positive: true },
-  { metric: 'Spirits Share', fy25: '2%', fy26: '8%', delta: '+6pp', positive: true },
+  { metric: 'Spirits Share', fy25: '5%', fy26: '8%', delta: '+3pp', positive: true },
   { metric: 'Routes', fy25: '32', fy26: String(TOTAL_ROUTES), delta: `+${TOTAL_ROUTES - 32}`, positive: true },
   { metric: 'Accounts', fy25: fmt(10500), fy26: fmt(TOTAL_ACCOUNTS), delta: `+${fmt(TOTAL_ACCOUNTS - 10500)}`, positive: true },
   { metric: 'Display Compliance', fy25: '82%', fy26: '89%', delta: '+7pp', positive: true },
@@ -51,8 +51,8 @@ const PRIORITIES = [
   },
   {
     title: 'South Texas Expansion',
-    desc: 'Laredo (acquired 2024) and Corpus Christi: target 5.5M cases combined. Cross-border growth corridor.',
-    stat: '5.5M cases',
+    desc: 'Laredo (acquired 2024) and Corpus Christi: target 580K cases combined. Cross-border growth corridor.',
+    stat: '580K cases',
     icon: '📍',
   },
   {
@@ -102,16 +102,16 @@ export default function CeoMandatePage() {
             className="text-xs tracking-[3px] uppercase font-mono mb-1"
             style={{ color: '#C6A052' }}
           >
-            Corporate Strategy &middot; FY2026
+            Act 1 &middot; Corporate Strategy
           </div>
           <h1
             className="text-2xl font-extrabold mb-1"
-            style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
+            style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
           >
-            FY2026 Corporate Strategy
+            FY2026 CEO Mandate
           </h1>
-          <p className="text-[13px]" style={{ color: '#718096' }}>
-            Lone Star Beverage Co. &middot; Texas &amp; Southwest
+          <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
+            Lone Star Distribution &middot; North &amp; South Texas
           </p>
         </div>
       </div>
@@ -120,57 +120,56 @@ export default function CeoMandatePage() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         {/* Revenue Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Revenue Target
           </div>
           <div
             className="text-3xl font-extrabold mb-1"
             style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}
           >
-            $5.2B
+            $180M
           </div>
           <div className="text-[12px] font-semibold" style={{ color: '#C6A052' }}>
-            +4% YoY from ~$5.0B
+            +4% YoY from ~$173M
           </div>
         </div>
 
         {/* Sazerac Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #F87171', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #F87171', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
-            Sazerac Portfolio Share
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+            Sazerac Target Share
           </div>
-          <div
-            className="text-3xl font-extrabold mb-1"
-            style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}
-          >
-            8%
+          <div className="flex items-baseline justify-center gap-2 mb-1">
+            <span className="text-lg font-mono" style={{ color: 'var(--pl-text-muted)' }}>5%</span>
+            <span className="text-lg" style={{ color: 'var(--pl-text-faint)' }}>&rarr;</span>
+            <span className="text-3xl font-extrabold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>8%</span>
           </div>
-          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
-            Currently 5% &mdash; 60% growth
+          <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
+            +3pp growth target
           </div>
         </div>
 
         {/* South TX Target */}
         <div
-          className="rounded-xl border bg-white p-5 text-center"
-          style={{ borderColor: '#E2E8F0', borderTop: '3px solid #2563EB', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+          className="rounded-xl border p-5 text-center"
+          style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #2563EB', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: '#718096' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             South TX Cases
           </div>
           <div
             className="text-3xl font-extrabold mb-1"
             style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}
           >
-            5.5M
+            580K
           </div>
-          <div className="text-[12px] font-semibold" style={{ color: '#718096' }}>
+          <div className="text-[12px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
             Currently {fmtM(southTXCases * 4)} annual
           </div>
         </div>
@@ -183,7 +182,7 @@ export default function CeoMandatePage() {
             data={donutData}
             size={200}
             label={`${BRAND_FAMILIES.length} brands`}
-            labelColor="#1A1A2E"
+            labelColor="var(--pl-text)"
           />
           <div className="flex-1 grid grid-cols-2 gap-3">
             {donutData.map((d) => (
@@ -193,10 +192,10 @@ export default function CeoMandatePage() {
                   style={{ background: d.color }}
                 />
                 <div>
-                  <div className="text-[13px] font-semibold" style={{ color: '#1A1A2E' }}>
+                  <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                     {d.name}
                   </div>
-                  <div className="text-[13px] font-mono" style={{ color: '#718096' }}>
+                  <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                     {pct(d.value)} share
                   </div>
                 </div>
@@ -210,7 +209,7 @@ export default function CeoMandatePage() {
       <LightSectionCard title="FY2025 vs FY2026 Targets" className="mb-8">
         <table className="w-full text-[13px]">
           <thead>
-            <tr style={{ color: '#718096' }}>
+            <tr style={{ color: 'var(--pl-text-muted)' }}>
               <th className="text-left font-medium pb-3 pl-2">Metric</th>
               <th className="text-right font-medium pb-3">FY2025</th>
               <th className="text-right font-medium pb-3">FY2026 Target</th>
@@ -221,17 +220,17 @@ export default function CeoMandatePage() {
             {YOY.map((row, i) => (
               <tr
                 key={row.metric}
-                className={i % 2 === 0 ? 'bg-[#F8FAFC]' : ''}
+                style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}
               >
-                <td className="py-2.5 pl-2 font-semibold" style={{ color: '#1A1A2E' }}>
+                <td className="py-2.5 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {row.metric}
                 </td>
-                <td className="py-2.5 text-right font-mono" style={{ color: '#718096' }}>
+                <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>
                   {row.fy25}
                 </td>
                 <td
                   className="py-2.5 text-right font-mono font-bold"
-                  style={{ color: '#1A1A2E' }}
+                  style={{ color: 'var(--pl-text)' }}
                 >
                   {row.fy26}
                 </td>
@@ -251,7 +250,7 @@ export default function CeoMandatePage() {
       <div className="mb-4">
         <div
           className="text-[13px] uppercase tracking-[1.5px] font-mono mb-4"
-          style={{ color: '#718096' }}
+          style={{ color: 'var(--pl-text-muted)' }}
         >
           Strategic Priorities
         </div>
@@ -259,8 +258,8 @@ export default function CeoMandatePage() {
           {PRIORITIES.map((p) => (
             <div
               key={p.title}
-              className="rounded-xl border bg-white p-5 hover:shadow-md transition-shadow"
-              style={{ borderColor: '#E2E8F0', borderLeft: '3px solid #C6A052', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+              className="rounded-xl border p-5 hover:shadow-md transition-shadow"
+              style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderLeft: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl shrink-0">{p.icon}</span>
@@ -268,7 +267,7 @@ export default function CeoMandatePage() {
                   <div className="flex items-center justify-between mb-1">
                     <span
                       className="text-[14px] font-bold"
-                      style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}
+                      style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
                     >
                       {p.title}
                     </span>
@@ -279,7 +278,7 @@ export default function CeoMandatePage() {
                       {p.stat}
                     </span>
                   </div>
-                  <p className="text-[12px] leading-relaxed" style={{ color: '#718096' }}>
+                  <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                     {p.desc}
                   </p>
                 </div>
@@ -294,9 +293,9 @@ export default function CeoMandatePage() {
         className="rounded-lg px-6 py-4 mt-6"
         style={{ background: 'rgba(198,160,82,0.06)', borderLeft: '3px solid #C6A052' }}
       >
-        <p className="text-[14px] italic leading-relaxed" style={{ color: '#4A5568' }}>
+        <p className="text-[14px] italic leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>
           &ldquo;We need to sell the right product, not just more product. If we hit 8% spirits
-          and get display compliance to 89%, we will blow past $5.2 billion.&rdquo;
+          and get display compliance to 89%, we will blow past $180 million.&rdquo;
         </p>
         <p className="text-[12px] font-semibold mt-2" style={{ color: '#C6A052' }}>
           &mdash; Executive Leadership

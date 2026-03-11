@@ -51,8 +51,8 @@ function ForecastChart({ forecast }: { forecast: BrandForecast }) {
         const y = toY(val);
         return (
           <g key={frac}>
-            <line x1={px} y1={y} x2={w - px} y2={y} stroke="#E2E8F0" strokeWidth="0.5" />
-            <text x={px - 4} y={y + 3} textAnchor="end" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+            <line x1={px} y1={y} x2={w - px} y2={y} stroke="var(--pl-chart-grid)" strokeWidth="0.5" />
+            <text x={px - 4} y={y + 3} textAnchor="end" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
               {fmtK(val)}
             </text>
           </g>
@@ -63,8 +63,8 @@ function ForecastChart({ forecast }: { forecast: BrandForecast }) {
       <polygon points={bandPoly} fill={color} opacity={0.08} />
 
       {/* Forecast/actual separator */}
-      <line x1={toX(7.5)} y1={py} x2={toX(7.5)} y2={py + plotH} stroke="#A0AEC0" strokeWidth="0.5" strokeDasharray="3 2" />
-      <text x={toX(7.5)} y={py - 4} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">Now</text>
+      <line x1={toX(7.5)} y1={py} x2={toX(7.5)} y2={py + plotH} stroke="var(--pl-text-faint)" strokeWidth="0.5" strokeDasharray="3 2" />
+      <text x={toX(7.5)} y={py - 4} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">Now</text>
 
       {/* Forecast line */}
       <path d={forecastPath} fill="none" stroke={color} strokeWidth="1.5" strokeDasharray="4 2" />
@@ -84,7 +84,7 @@ function ForecastChart({ forecast }: { forecast: BrandForecast }) {
 
       {/* Week labels */}
       {weeks.map((wk, i) => (
-        <text key={i} x={toX(i)} y={h - 2} textAnchor="middle" fontSize="12" fill="#A0AEC0" fontFamily="monospace">
+        <text key={i} x={toX(i)} y={h - 2} textAnchor="middle" fontSize="12" fill="var(--pl-text-faint)" fontFamily="monospace">
           W{wk.week}
         </text>
       ))}
@@ -121,7 +121,7 @@ export default function DemandForecastingPage() {
       <ActNavigation currentAct={3} />
 
       {/* Breadcrumb */}
-      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         <Link href="/proofline/ops/ai" style={{ color: '#2563EB' }}>AI Intelligence Hub</Link>
         <span>/</span>
         <span>Demand Forecasting</span>
@@ -132,37 +132,37 @@ export default function DemandForecastingPage() {
         <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
           Demand Forecasting &middot; 13-Week Outlook
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#1A1A2E', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Brand-Level Forecast
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: '#718096' }}>
+        <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
           {BRAND_FORECASTS.length} brands &middot; Week 9 of 13 &middot; 80% confidence bands &middot; {pct(1 - avgAccuracy)} accuracy
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6 items-stretch">
-        <LightKpiCard label="Q Target" value={fmtK(totalTarget)} accent="#2563EB" sub="Total cases" />
-        <LightKpiCard label="Current Pace" value={fmtK(totalPace)} accent={totalPace >= totalTarget ? '#22C55E' : '#F59E0B'} sub={pct(totalPace / totalTarget)} />
-        <LightKpiCard label="Accuracy (MAPE)" value={`${(avgAccuracy * 100).toFixed(1)}%`} accent="#22C55E" sub="Lower is better" />
-        <LightKpiCard label="Active Overlays" value={String(SEASONAL_OVERLAYS.filter(o => o.startWeek <= 9 && o.endWeek >= 9).length)} accent="#F59E0B" />
-        <LightKpiCard label="Weather Factor" value={WEATHER_IMPACTS.find(w => w.week === 9)?.type ?? 'normal'} accent="#3B82F6" />
+      <div className="grid grid-cols-5 gap-3 mb-6">
+        <LightKpiCard label="Q Target" value={fmtK(totalTarget)} accent="#2563EB" sub="Total cases" stagger={0} />
+        <LightKpiCard label="Current Pace" value={fmtK(totalPace)} accent={totalPace >= totalTarget ? '#22C55E' : '#F59E0B'} sub={pct(totalPace / totalTarget)} stagger={1} />
+        <LightKpiCard label="Accuracy (MAPE)" value={`${(avgAccuracy * 100).toFixed(1)}%`} accent="#22C55E" sub="Lower is better" stagger={2} />
+        <LightKpiCard label="Active Overlays" value={String(SEASONAL_OVERLAYS.filter(o => o.startWeek <= 9 && o.endWeek >= 9).length)} accent="#F59E0B" stagger={3} />
+        <LightKpiCard label="Weather Factor" value={WEATHER_IMPACTS.find(w => w.week === 9)?.type ?? 'normal'} accent="#3B82F6" stagger={4} />
       </div>
 
       {/* Brand Selector */}
       <div className="flex items-center gap-2 mb-6 flex-wrap">
-        <span className="text-[13px] font-mono" style={{ color: '#718096' }}>Brand:</span>
+        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Brand:</span>
         {BRAND_FORECASTS.map(b => {
-          const color = SUPPLIER_COLORS[b.supplier] ?? '#718096';
+          const color = SUPPLIER_COLORS[b.supplier] ?? 'var(--pl-text-muted)';
           return (
             <button
               key={b.brandId}
               onClick={() => setSelectedBrand(b.brandId)}
               className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
               style={{
-                borderColor: selectedBrand === b.brandId ? color : '#E2E8F0',
-                background: selectedBrand === b.brandId ? `${color}12` : 'white',
-                color: selectedBrand === b.brandId ? color : '#718096',
+                borderColor: selectedBrand === b.brandId ? color : 'var(--pl-border)',
+                background: selectedBrand === b.brandId ? `${color}12` : 'var(--pl-card)',
+                color: selectedBrand === b.brandId ? color : 'var(--pl-text-muted)',
                 fontWeight: selectedBrand === b.brandId ? 700 : 400,
               }}
             >
@@ -174,14 +174,14 @@ export default function DemandForecastingPage() {
 
       {/* Forecast Chart */}
       <LightSectionCard title={`${brand.brandName} — 13-Week Forecast`} className="mb-6">
-        <div className="flex items-center gap-4 mb-2 text-xs font-mono" style={{ color: '#A0AEC0' }}>
+        <div className="flex items-center gap-4 mb-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
           <span>Solid = actual · Dashed = forecast · Shaded = 80% confidence · Yellow = seasonal overlay</span>
           <button
             onClick={() => setShowOverlays(!showOverlays)}
             className="px-2 py-0.5 rounded border transition-colors"
             style={{
-              borderColor: showOverlays ? '#F59E0B' : '#E2E8F0',
-              color: showOverlays ? '#F59E0B' : '#A0AEC0',
+              borderColor: showOverlays ? '#F59E0B' : 'var(--pl-border)',
+              color: showOverlays ? '#F59E0B' : 'var(--pl-text-faint)',
             }}
           >
             Overlays: {showOverlays ? 'ON' : 'OFF'}
@@ -190,26 +190,26 @@ export default function DemandForecastingPage() {
         <ForecastChart forecast={brand} />
 
         {/* Brand metrics */}
-        <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t" style={{ borderColor: '#F1F5F9' }}>
+        <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t" style={{ borderColor: 'var(--pl-border)' }}>
           <div>
-            <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>Quarter Target</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: '#1A1A2E' }}>{fmtK(brand.quarterTarget)}</div>
+            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Quarter Target</div>
+            <div className="text-[16px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(brand.quarterTarget)}</div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>Current Pace</div>
+            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Current Pace</div>
             <div className="text-[16px] font-bold font-mono" style={{ color: brand.currentPace >= brand.quarterTarget ? '#22C55E' : '#F59E0B' }}>
               {fmtK(brand.currentPace)}
             </div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>Accuracy (MAPE)</div>
+            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Accuracy (MAPE)</div>
             <div className="text-[16px] font-bold font-mono" style={{ color: brand.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
               {(brand.forecastAccuracy * 100).toFixed(1)}%
             </div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: '#A0AEC0' }}>Trend</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: brand.trend === 'up' ? '#22C55E' : brand.trend === 'down' ? '#F87171' : '#718096' }}>
+            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Trend</div>
+            <div className="text-[16px] font-bold font-mono" style={{ color: brand.trend === 'up' ? '#22C55E' : brand.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
               {brand.trend === 'up' ? '↑ Up' : brand.trend === 'down' ? '↓ Down' : '→ Flat'}
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function DemandForecastingPage() {
         {/* AI Recommendation */}
         <div className="mt-4 rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.1)' }}>
           <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>AI RECOMMENDATION</div>
-          <p className="text-[13px]" style={{ color: '#1A1A2E' }}>{brand.aiRecommendation}</p>
+          <p className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{brand.aiRecommendation}</p>
         </div>
       </LightSectionCard>
 
@@ -226,14 +226,14 @@ export default function DemandForecastingPage() {
       <LightSectionCard title="Weather Impact Projections" className="mb-6">
         <div className="grid grid-cols-2 gap-3">
           {WEATHER_IMPACTS.map(wi => {
-            const typeColor = wi.type === 'heat-wave' ? '#F87171' : wi.type === 'cold-snap' ? '#3B82F6' : wi.type === 'storm' ? '#718096' : '#22C55E';
+            const typeColor = wi.type === 'heat-wave' ? '#F87171' : wi.type === 'cold-snap' ? '#3B82F6' : wi.type === 'storm' ? 'var(--pl-text-muted)' : '#22C55E';
             return (
-              <div key={wi.week} className="rounded-lg border p-3" style={{ borderColor: '#E2E8F0' }}>
+              <div key={wi.week} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${typeColor}12`, color: typeColor }}>
                     W{wi.week}
                   </span>
-                  <span className="text-[12px] font-bold" style={{ color: '#1A1A2E' }}>{wi.type.replace('-', ' ')}</span>
+                  <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{wi.type.replace('-', ' ')}</span>
                   <span className="text-xs font-mono" style={{ color: wi.tempDelta > 0 ? '#F87171' : '#3B82F6' }}>
                     {wi.tempDelta > 0 ? '+' : ''}{wi.tempDelta}°F
                   </span>
@@ -241,7 +241,7 @@ export default function DemandForecastingPage() {
                     {wi.volumeImpact > 0 ? '+' : ''}{(wi.volumeImpact * 100).toFixed(0)}% vol
                   </span>
                 </div>
-                <p className="text-xs" style={{ color: '#718096' }}>{wi.description}</p>
+                <p className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{wi.description}</p>
               </div>
             );
           })}
@@ -253,7 +253,7 @@ export default function DemandForecastingPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-[12px]">
             <thead>
-              <tr style={{ color: '#718096' }}>
+              <tr style={{ color: 'var(--pl-text-muted)' }}>
                 <th className="text-left font-medium pb-3 pl-2">Brand</th>
                 <th className="text-right font-medium pb-3">Q Target</th>
                 <th className="text-right font-medium pb-3">Pace</th>
@@ -268,26 +268,27 @@ export default function DemandForecastingPage() {
                 return (
                   <tr
                     key={b.brandId}
-                    className={`cursor-pointer ${i % 2 === 0 ? 'bg-[#F8FAFC]' : ''} ${selectedBrand === b.brandId ? 'ring-1 ring-blue-200' : ''}`}
+                    className={`cursor-pointer ${selectedBrand === b.brandId ? 'ring-1 ring-blue-200' : ''}`}
+                    style={{ background: i % 2 === 0 ? 'var(--pl-stripe)' : undefined }}
                     onClick={() => setSelectedBrand(b.brandId)}
                   >
                     <td className="py-2 pl-2">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full" style={{ background: color }} />
-                        <span className="font-semibold" style={{ color: '#1A1A2E' }}>{b.brandName}</span>
+                        <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>{b.brandName}</span>
                       </div>
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#1A1A2E' }}>{fmtK(b.quarterTarget)}</td>
+                    <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(b.quarterTarget)}</td>
                     <td className="py-2 text-right font-mono" style={{ color: b.currentPace >= b.quarterTarget ? '#22C55E' : '#F59E0B' }}>
                       {fmtK(b.currentPace)} ({pct(b.currentPace / b.quarterTarget)})
                     </td>
                     <td className="py-2 text-right font-mono" style={{ color: b.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
                       {(b.forecastAccuracy * 100).toFixed(1)}%
                     </td>
-                    <td className="py-2 font-mono font-bold" style={{ color: b.trend === 'up' ? '#22C55E' : b.trend === 'down' ? '#F87171' : '#718096' }}>
+                    <td className="py-2 font-mono font-bold" style={{ color: b.trend === 'up' ? '#22C55E' : b.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
                       {b.trend === 'up' ? '↑' : b.trend === 'down' ? '↓' : '→'}
                     </td>
-                    <td className="py-2 pr-2 text-xs max-w-[200px] truncate" style={{ color: '#718096' }}>
+                    <td className="py-2 pr-2 text-xs max-w-[200px] truncate" style={{ color: 'var(--pl-text-muted)' }}>
                       {b.aiRecommendation.slice(0, 60)}...
                     </td>
                   </tr>
@@ -299,7 +300,7 @@ export default function DemandForecastingPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: '#A0AEC0' }}>
+      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
         ARIMA + XGBoost ensemble model. 80% confidence bands from 1000 simulation runs. Seasonal decomposition using X-13ARIMA-SEATS.
         Weather data from NOAA API (DFW, Corpus Christi, Laredo stations). Retrained weekly.
       </div>
