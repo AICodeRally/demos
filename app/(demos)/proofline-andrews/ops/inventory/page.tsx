@@ -55,6 +55,28 @@ function getWarehouseInventory(hometown: Hometown) {
   return { suppliers, total };
 }
 
+/* ── Keg Tracking Data ─────────────────────────── */
+const KEG_SUMMARY = {
+  totalOut: 842,
+  totalReturned: 714,
+  depositValue: 42100,
+  aging30Plus: 48,
+  agingValue: 2400,
+};
+
+const KEG_BY_SIZE = [
+  { size: '1/2 bbl', out: 340, returned: 295, aging: 18, depositPer: 50 },
+  { size: '1/4 bbl', out: 210, returned: 185, aging: 12, depositPer: 40 },
+  { size: '1/6 bbl', out: 292, returned: 234, aging: 18, depositPer: 30 },
+];
+
+const KEG_AGING_BUCKETS = [
+  { label: '0-14 days', count: 580, color: '#22C55E' },
+  { label: '15-30 days', count: 214, color: '#F59E0B' },
+  { label: '31-60 days', count: 36, color: '#F87171' },
+  { label: '60+ days', count: 12, color: '#DC2626' },
+];
+
 /* ── Urgency config ──────────────────────────── */
 const URGENCY_COLORS: Record<string, { color: string; bg: string }> = {
   high:   { color: '#F87171', bg: 'rgba(248,113,113,0.08)' },
@@ -332,7 +354,71 @@ export default function InventoryPage() {
         Inventory levels simulated from quarterly case data. AI recommendations based on seasonal forecast, velocity trends, and supplier allocation constraints.
         Spirits cage tracked separately per TABC regulatory requirements. Days on-hand = current stock &divide; weekly run rate.
       </div>
-    
+
+      {/* ═══════ KEG TRACKING ═══════ */}
+      <LightSectionCard title="KEG TRACKING — DEPOSIT MANAGEMENT" className="mt-6">
+        {/* KPIs */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+          <LightKpiCard label="Kegs Out" value={String(KEG_SUMMARY.totalOut)} accent="#3B82F6" />
+          <LightKpiCard label="Kegs Returned" value={String(KEG_SUMMARY.totalReturned)} accent="#22C55E" />
+          <LightKpiCard label="Deposit Value" value={`$${(KEG_SUMMARY.depositValue / 1000).toFixed(1)}K`} accent="#F59E0B" />
+          <LightKpiCard label="Aging >30d" value={String(KEG_SUMMARY.aging30Plus)} accent="#F87171" sub={`$${KEG_SUMMARY.agingValue.toLocaleString()} at risk`} />
+          <LightKpiCard label="Return Rate" value={`${((KEG_SUMMARY.totalReturned / KEG_SUMMARY.totalOut) * 100).toFixed(0)}%`} accent="#22C55E" />
+        </div>
+
+        {/* Keg by size table */}
+        <div className="mb-6">
+          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            BY KEG SIZE
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs font-mono">
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
+                  {['Keg Size', 'Out', 'Returned', 'Outstanding', 'Aging >30d', 'Deposit/Unit', 'Deposit Exposure'].map(h => (
+                    <th key={h} className="text-left pb-2 pr-4 text-xs uppercase tracking-wider font-bold"
+                      style={{ color: 'var(--pl-text-muted)' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {KEG_BY_SIZE.map((keg) => {
+                  const outstanding = keg.out - keg.returned;
+                  const exposure = outstanding * keg.depositPer;
+                  return (
+                    <tr key={keg.size} style={{ borderBottom: '1px solid var(--pl-border-faint)' }}>
+                      <td className="py-1.5 pr-4 font-bold" style={{ color: 'var(--pl-text)' }}>{keg.size}</td>
+                      <td className="py-1.5 pr-4" style={{ color: '#3B82F6' }}>{keg.out}</td>
+                      <td className="py-1.5 pr-4" style={{ color: '#22C55E' }}>{keg.returned}</td>
+                      <td className="py-1.5 pr-4 font-bold" style={{ color: '#F59E0B' }}>{outstanding}</td>
+                      <td className="py-1.5 pr-4" style={{ color: '#F87171' }}>{keg.aging}</td>
+                      <td className="py-1.5 pr-4" style={{ color: 'var(--pl-text-muted)' }}>${keg.depositPer}</td>
+                      <td className="py-1.5 pr-4 font-bold" style={{ color: '#F59E0B' }}>${exposure.toLocaleString()}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Aging Distribution */}
+        <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          AGING DISTRIBUTION
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          {KEG_AGING_BUCKETS.map((bucket) => (
+            <div key={bucket.label} className="p-3 rounded-lg text-center" style={{
+              background: `${bucket.color}08`,
+              border: `1px solid ${bucket.color}20`,
+            }}>
+              <div className="text-2xl font-bold font-mono" style={{ color: bucket.color }}>{bucket.count}</div>
+              <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{bucket.label}</div>
+            </div>
+          ))}
+        </div>
+      </LightSectionCard>
+
     </>
   );
 }
