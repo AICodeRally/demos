@@ -19,7 +19,7 @@ export function LightKpiCard({ label, value, accent, delta, sub, sparkline, stag
       style={stagger != null ? { animationDelay: `${stagger * 60}ms` } : undefined}
     >
       <div
-        className="relative rounded-xl border p-4 transition-shadow hover:shadow-md"
+        className="relative rounded-xl border p-4 transition-shadow hover:shadow-md h-full flex flex-col"
         style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', boxShadow: 'var(--pl-shadow)' }}
       >
         <div className="absolute top-3 left-0 w-[3px] h-8 rounded-r" style={{ background: accent }} />
@@ -41,11 +41,13 @@ export function LightKpiCard({ label, value, accent, delta, sub, sparkline, stag
             <Sparkline data={sparkline} color={accent} width={100} height={28} />
           </div>
         )}
-        {sub && (
-          <div className="text-[13px] mt-1.5" style={{ color: 'var(--pl-text-muted)' }}>
-            {sub}
-          </div>
-        )}
+        <div className="mt-auto pt-1.5">
+          {sub && (
+            <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
+              {sub}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
