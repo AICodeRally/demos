@@ -16,7 +16,7 @@ export interface Seller {
   spiritsAccounts: number;
   atRisk: boolean;
   coachingNote: string;
-  emcoGates: {
+  bbiGates: {
     core: number;         // Molson Coors domestic %
     import: number;       // Constellation + Heineken %
     emerging: number;     // Craft + spirits + FMB %
@@ -51,7 +51,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.40, 'constellation': 0.26, 'heineken': 0.14, 'craft': 0.10, 'sazerac': 0.07, 'fmb-rtd': 0.03 },
     spiritsAccounts: 12, atRisk: false,
     coachingNote: 'Consistent top performer. Strong spirits adoption. Candidate for mentor pairing.',
-    emcoGates: { core: 0.92, import: 0.84, emerging: 0.78, combined: 0.93 },
+    bbiGates: { core: 0.92, import: 0.84, emerging: 0.78, combined: 0.93 },
   },
   {
     id: 'SEL-DAL-02', name: 'Kim Tran', routeId: 'DAL-02', hometown: 'dal', tenure: 36, tier: 2,
@@ -60,7 +60,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.42, 'constellation': 0.25, 'heineken': 0.15, 'craft': 0.09, 'sazerac': 0.05, 'fmb-rtd': 0.04 },
     spiritsAccounts: 8, atRisk: false,
     coachingNote: 'Solid performer. Opportunity to grow spirits accounts in Uptown off-premise.',
-    emcoGates: { core: 0.88, import: 0.82, emerging: 0.72, combined: 0.91 },
+    bbiGates: { core: 0.88, import: 0.82, emerging: 0.72, combined: 0.91 },
   },
   {
     id: 'SEL-DAL-03', name: 'Marcus Reyes', routeId: 'DAL-03', hometown: 'dal', tenure: 42, tier: 2,
@@ -69,7 +69,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.36, 'constellation': 0.30, 'heineken': 0.14, 'craft': 0.10, 'sazerac': 0.07, 'fmb-rtd': 0.03 },
     spiritsAccounts: 14, atRisk: false,
     coachingNote: 'Day planner showcase rep. Strong import mix and spirits pioneer. Deep Ellum territory is key growth area.',
-    emcoGates: { core: 0.87, import: 0.86, emerging: 0.76, combined: 0.92 },
+    bbiGates: { core: 0.87, import: 0.86, emerging: 0.76, combined: 0.92 },
   },
   {
     id: 'SEL-DAL-04', name: 'Monica Davis', routeId: 'DAL-04', hometown: 'dal', tenure: 60, tier: 1,
@@ -78,7 +78,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.41, 'constellation': 0.27, 'heineken': 0.14, 'craft': 0.09, 'sazerac': 0.06, 'fmb-rtd': 0.03 },
     spiritsAccounts: 10, atRisk: false,
     coachingNote: 'Top seller company-wide. 5 years tenure. Best display compliance in district.',
-    emcoGates: { core: 0.94, import: 0.85, emerging: 0.75, combined: 0.95 },
+    bbiGates: { core: 0.94, import: 0.85, emerging: 0.75, combined: 0.95 },
   },
   {
     id: 'SEL-DAL-05', name: 'Andre Patel', routeId: 'DAL-05', hometown: 'dal', tenure: 14, tier: 3,
@@ -87,7 +87,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.44, 'constellation': 0.24, 'heineken': 0.13, 'craft': 0.08, 'sazerac': 0.04, 'fmb-rtd': 0.07 },
     spiritsAccounts: 6, atRisk: true,
     coachingNote: 'Below target at week 7, recommend territory review. Struggling with Emerging portfolio placement in Deep Ellum accounts.',
-    emcoGates: { core: 0.86, import: 0.78, emerging: 0.64, combined: 0.88 },
+    bbiGates: { core: 0.86, import: 0.78, emerging: 0.64, combined: 0.88 },
   },
   {
     id: 'SEL-DAL-06', name: 'Ana Washington', routeId: 'DAL-06', hometown: 'dal', tenure: 54, tier: 1,
@@ -96,7 +96,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.39, 'constellation': 0.28, 'heineken': 0.15, 'craft': 0.10, 'sazerac': 0.05, 'fmb-rtd': 0.03 },
     spiritsAccounts: 11, atRisk: false,
     coachingNote: 'Highest attainment in Dallas district. Excellent relationship with key accounts.',
-    emcoGates: { core: 0.93, import: 0.87, emerging: 0.74, combined: 0.94 },
+    bbiGates: { core: 0.93, import: 0.87, emerging: 0.74, combined: 0.94 },
   },
   {
     id: 'SEL-DAL-07', name: 'Jackie Hernandez', routeId: 'DAL-07', hometown: 'dal', tenure: 8, tier: 4,
@@ -105,7 +105,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.46, 'constellation': 0.22, 'heineken': 0.12, 'craft': 0.08, 'sazerac': 0.03, 'fmb-rtd': 0.09 },
     spiritsAccounts: 4, atRisk: true,
     coachingNote: 'New hire ramp — needs mentoring on Emerging portfolio. Pair with Ana Washington for ride-alongs. Missed 2 key account stops this month.',
-    emcoGates: { core: 0.85, import: 0.74, emerging: 0.58, combined: 0.85 },
+    bbiGates: { core: 0.85, import: 0.74, emerging: 0.58, combined: 0.85 },
   },
   {
     id: 'SEL-DAL-08', name: 'Nathan Chowdhury', routeId: 'DAL-08', hometown: 'dal', tenure: 3, tier: 4,
@@ -114,7 +114,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.48, 'constellation': 0.20, 'heineken': 0.12, 'craft': 0.07, 'sazerac': 0.02, 'fmb-rtd': 0.11 },
     spiritsAccounts: 3, atRisk: true,
     coachingNote: 'Newest hire on the team. Underperforming on stops per day. Recommend structured onboarding plan with daily check-ins.',
-    emcoGates: { core: 0.83, import: 0.70, emerging: 0.52, combined: 0.82 },
+    bbiGates: { core: 0.83, import: 0.70, emerging: 0.52, combined: 0.82 },
   },
 
   // ═══════════════════════════════════════════════════
@@ -128,7 +128,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.34, 'constellation': 0.24, 'heineken': 0.13, 'craft': 0.18, 'sazerac': 0.06, 'fmb-rtd': 0.05 },
     spiritsAccounts: 9, atRisk: false,
     coachingNote: 'Strong craft portfolio. Leading the Allen craft-forward initiative.',
-    emcoGates: { core: 0.87, import: 0.81, emerging: 0.80, combined: 0.91 },
+    bbiGates: { core: 0.87, import: 0.81, emerging: 0.80, combined: 0.91 },
   },
   {
     id: 'SEL-ALN-02', name: 'Tyler Pham', routeId: 'ALN-02', hometown: 'aln', tenure: 18, tier: 2,
@@ -137,7 +137,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.35, 'constellation': 0.25, 'heineken': 0.14, 'craft': 0.16, 'sazerac': 0.05, 'fmb-rtd': 0.05 },
     spiritsAccounts: 7, atRisk: false,
     coachingNote: 'Good suburban territory management. Growing import accounts.',
-    emcoGates: { core: 0.86, import: 0.82, emerging: 0.76, combined: 0.90 },
+    bbiGates: { core: 0.86, import: 0.82, emerging: 0.76, combined: 0.90 },
   },
   {
     id: 'SEL-ALN-03', name: 'Lauren Foster', routeId: 'ALN-03', hometown: 'aln', tenure: 44, tier: 1,
@@ -146,7 +146,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.33, 'constellation': 0.23, 'heineken': 0.13, 'craft': 0.20, 'sazerac': 0.07, 'fmb-rtd': 0.04 },
     spiritsAccounts: 11, atRisk: false,
     coachingNote: 'Top Allen performer. Highest craft mix in company. Spirits adoption leader in suburban markets.',
-    emcoGates: { core: 0.90, import: 0.83, emerging: 0.84, combined: 0.93 },
+    bbiGates: { core: 0.90, import: 0.83, emerging: 0.84, combined: 0.93 },
   },
   {
     id: 'SEL-ALN-04', name: 'Jason Owens', routeId: 'ALN-04', hometown: 'aln', tenure: 8, tier: 3,
@@ -155,7 +155,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.38, 'constellation': 0.24, 'heineken': 0.14, 'craft': 0.14, 'sazerac': 0.04, 'fmb-rtd': 0.06 },
     spiritsAccounts: 5, atRisk: true,
     coachingNote: 'New hire, needs display training. Strong personality but needs mentoring on route efficiency.',
-    emcoGates: { core: 0.85, import: 0.79, emerging: 0.70, combined: 0.88 },
+    bbiGates: { core: 0.85, import: 0.79, emerging: 0.70, combined: 0.88 },
   },
   {
     id: 'SEL-ALN-05', name: 'Rachel Kim', routeId: 'ALN-05', hometown: 'aln', tenure: 26, tier: 2,
@@ -164,7 +164,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.35, 'constellation': 0.25, 'heineken': 0.14, 'craft': 0.16, 'sazerac': 0.06, 'fmb-rtd': 0.04 },
     spiritsAccounts: 8, atRisk: false,
     coachingNote: 'Reliable performer. Good balance across all categories.',
-    emcoGates: { core: 0.88, import: 0.82, emerging: 0.76, combined: 0.91 },
+    bbiGates: { core: 0.88, import: 0.82, emerging: 0.76, combined: 0.91 },
   },
   {
     id: 'SEL-ALN-06', name: 'Brandon Cooper', routeId: 'ALN-06', hometown: 'aln', tenure: 10, tier: 3,
@@ -173,7 +173,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.40, 'constellation': 0.23, 'heineken': 0.13, 'craft': 0.13, 'sazerac': 0.04, 'fmb-rtd': 0.07 },
     spiritsAccounts: 4, atRisk: false,
     coachingNote: 'Growing into territory. Needs to improve craft placement in new Frisco accounts.',
-    emcoGates: { core: 0.85, import: 0.78, emerging: 0.68, combined: 0.87 },
+    bbiGates: { core: 0.85, import: 0.78, emerging: 0.68, combined: 0.87 },
   },
 
   // ═══════════════════════════════════════════════════
@@ -186,7 +186,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.40, 'constellation': 0.26, 'heineken': 0.15, 'craft': 0.10, 'sazerac': 0.06, 'fmb-rtd': 0.03 },
     spiritsAccounts: 10, atRisk: false,
     coachingNote: 'Solid mid-tier performer. Growing spirits in Sundance Square accounts.',
-    emcoGates: { core: 0.89, import: 0.83, emerging: 0.74, combined: 0.91 },
+    bbiGates: { core: 0.89, import: 0.83, emerging: 0.74, combined: 0.91 },
   },
   {
     id: 'SEL-FTW-02', name: 'Luis Garcia', routeId: 'FTW-02', hometown: 'ftw', tenure: 30, tier: 2,
@@ -195,7 +195,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.39, 'constellation': 0.27, 'heineken': 0.15, 'craft': 0.10, 'sazerac': 0.05, 'fmb-rtd': 0.04 },
     spiritsAccounts: 7, atRisk: false,
     coachingNote: 'Good import balance. Opportunity to push spirits in West 7th District.',
-    emcoGates: { core: 0.87, import: 0.84, emerging: 0.72, combined: 0.90 },
+    bbiGates: { core: 0.87, import: 0.84, emerging: 0.72, combined: 0.90 },
   },
   {
     id: 'SEL-FTW-03', name: 'Chris Brown', routeId: 'FTW-03', hometown: 'ftw', tenure: 22, tier: 3,
@@ -204,7 +204,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.42, 'constellation': 0.25, 'heineken': 0.14, 'craft': 0.09, 'sazerac': 0.04, 'fmb-rtd': 0.06 },
     spiritsAccounts: 6, atRisk: false,
     coachingNote: 'Improving. Needs to focus on display compliance in suburban grocery.',
-    emcoGates: { core: 0.87, import: 0.80, emerging: 0.66, combined: 0.89 },
+    bbiGates: { core: 0.87, import: 0.80, emerging: 0.66, combined: 0.89 },
   },
   {
     id: 'SEL-FTW-04', name: 'Daniel Lee', routeId: 'FTW-04', hometown: 'ftw', tenure: 28, tier: 2,
@@ -213,7 +213,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.38, 'constellation': 0.27, 'heineken': 0.15, 'craft': 0.11, 'sazerac': 0.05, 'fmb-rtd': 0.04 },
     spiritsAccounts: 8, atRisk: false,
     coachingNote: 'Right at target. Consistent. Could push to Tier 1 with stronger spirits focus.',
-    emcoGates: { core: 0.88, import: 0.83, emerging: 0.73, combined: 0.91 },
+    bbiGates: { core: 0.88, import: 0.83, emerging: 0.73, combined: 0.91 },
   },
   {
     id: 'SEL-FTW-05', name: 'Jake Williams', routeId: 'FTW-05', hometown: 'ftw', tenure: 45, tier: 1,
@@ -222,7 +222,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.34, 'constellation': 0.24, 'heineken': 0.13, 'craft': 0.16, 'sazerac': 0.09, 'fmb-rtd': 0.04 },
     spiritsAccounts: 16, atRisk: false,
     coachingNote: 'Day planner showcase rep. Craft + spirits pioneer. Highest spirits account count in company. Leading Sazerac placement initiative.',
-    emcoGates: { core: 0.90, import: 0.82, emerging: 0.82, combined: 0.93 },
+    bbiGates: { core: 0.90, import: 0.82, emerging: 0.82, combined: 0.93 },
   },
   {
     id: 'SEL-FTW-06', name: 'Eduardo Ramirez', routeId: 'FTW-06', hometown: 'ftw', tenure: 18, tier: 3,
@@ -231,7 +231,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.43, 'constellation': 0.25, 'heineken': 0.14, 'craft': 0.08, 'sazerac': 0.04, 'fmb-rtd': 0.06 },
     spiritsAccounts: 5, atRisk: false,
     coachingNote: 'Mid-range performer. Strong domestic core but needs craft and spirits development.',
-    emcoGates: { core: 0.88, import: 0.80, emerging: 0.64, combined: 0.89 },
+    bbiGates: { core: 0.88, import: 0.80, emerging: 0.64, combined: 0.89 },
   },
   {
     id: 'SEL-FTW-07', name: 'Will Kim', routeId: 'FTW-07', hometown: 'ftw', tenure: 10, tier: 3,
@@ -240,7 +240,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.44, 'constellation': 0.24, 'heineken': 0.13, 'craft': 0.09, 'sazerac': 0.03, 'fmb-rtd': 0.07 },
     spiritsAccounts: 4, atRisk: true,
     coachingNote: 'Inconsistent stop cadence — missing 2-3 accounts per day. Recommend route optimization review and time management coaching.',
-    emcoGates: { core: 0.86, import: 0.78, emerging: 0.60, combined: 0.87 },
+    bbiGates: { core: 0.86, import: 0.78, emerging: 0.60, combined: 0.87 },
   },
   {
     id: 'SEL-FTW-08', name: 'Victor Okafor', routeId: 'FTW-08', hometown: 'ftw', tenure: 6, tier: 4,
@@ -249,7 +249,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.46, 'constellation': 0.22, 'heineken': 0.12, 'craft': 0.07, 'sazerac': 0.02, 'fmb-rtd': 0.11 },
     spiritsAccounts: 2, atRisk: true,
     coachingNote: 'New to Fort Worth market. High cases-per-stop shows selling ability, but low stop count indicates route unfamiliarity. GPS ride-along scheduled.',
-    emcoGates: { core: 0.84, import: 0.72, emerging: 0.54, combined: 0.83 },
+    bbiGates: { core: 0.84, import: 0.72, emerging: 0.54, combined: 0.83 },
   },
 
   // ═══════════════════════════════════════════════════
@@ -262,7 +262,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.42, 'constellation': 0.24, 'heineken': 0.13, 'craft': 0.10, 'sazerac': 0.05, 'fmb-rtd': 0.06 },
     spiritsAccounts: 5, atRisk: false,
     coachingNote: 'Reliable rural route coverage. Good relationship with independent accounts.',
-    emcoGates: { core: 0.88, import: 0.80, emerging: 0.72, combined: 0.90 },
+    bbiGates: { core: 0.88, import: 0.80, emerging: 0.72, combined: 0.90 },
   },
   {
     id: 'SEL-ENS-02', name: 'Sandra Ortiz', routeId: 'ENS-02', hometown: 'ens', tenure: 14, tier: 3,
@@ -271,7 +271,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.44, 'constellation': 0.23, 'heineken': 0.13, 'craft': 0.09, 'sazerac': 0.04, 'fmb-rtd': 0.07 },
     spiritsAccounts: 3, atRisk: false,
     coachingNote: 'Good improvement trajectory. Building import presence in Waxahachie corridor.',
-    emcoGates: { core: 0.87, import: 0.78, emerging: 0.66, combined: 0.88 },
+    bbiGates: { core: 0.87, import: 0.78, emerging: 0.66, combined: 0.88 },
   },
   {
     id: 'SEL-ENS-03', name: 'Kevin Mills', routeId: 'ENS-03', hometown: 'ens', tenure: 10, tier: 3,
@@ -280,7 +280,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.46, 'constellation': 0.22, 'heineken': 0.12, 'craft': 0.08, 'sazerac': 0.03, 'fmb-rtd': 0.09 },
     spiritsAccounts: 2, atRisk: true,
     coachingNote: 'Below target 3 consecutive weeks. Rural territory coverage needs route optimization.',
-    emcoGates: { core: 0.86, import: 0.76, emerging: 0.58, combined: 0.86 },
+    bbiGates: { core: 0.86, import: 0.76, emerging: 0.58, combined: 0.86 },
   },
   {
     id: 'SEL-ENS-04', name: 'Maria Flores', routeId: 'ENS-04', hometown: 'ens', tenure: 7, tier: 4,
@@ -289,7 +289,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.47, 'constellation': 0.21, 'heineken': 0.12, 'craft': 0.07, 'sazerac': 0.03, 'fmb-rtd': 0.10 },
     spiritsAccounts: 2, atRisk: true,
     coachingNote: 'New to distribution. Solid work ethic but needs training on import and craft selling.',
-    emcoGates: { core: 0.84, import: 0.73, emerging: 0.54, combined: 0.84 },
+    bbiGates: { core: 0.84, import: 0.73, emerging: 0.54, combined: 0.84 },
   },
 
   // ═══════════════════════════════════════════════════
@@ -303,7 +303,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.36, 'constellation': 0.30, 'heineken': 0.16, 'craft': 0.08, 'sazerac': 0.06, 'fmb-rtd': 0.04 },
     spiritsAccounts: 8, atRisk: false,
     coachingNote: 'Veteran Corpus rep. Strong import presence in coastal accounts. Growing spirits in hotel/resort channel.',
-    emcoGates: { core: 0.88, import: 0.86, emerging: 0.72, combined: 0.91 },
+    bbiGates: { core: 0.88, import: 0.86, emerging: 0.72, combined: 0.91 },
   },
   {
     id: 'SEL-CRP-02', name: 'Angela Rivera', routeId: 'CRP-02', hometown: 'crp', tenure: 22, tier: 2,
@@ -312,7 +312,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.37, 'constellation': 0.29, 'heineken': 0.15, 'craft': 0.09, 'sazerac': 0.05, 'fmb-rtd': 0.05 },
     spiritsAccounts: 6, atRisk: false,
     coachingNote: 'Reliable performer. Strong chain relationships. Growing import portfolio.',
-    emcoGates: { core: 0.87, import: 0.84, emerging: 0.70, combined: 0.90 },
+    bbiGates: { core: 0.87, import: 0.84, emerging: 0.70, combined: 0.90 },
   },
   {
     id: 'SEL-CRP-03', name: 'Pedro Santos Jr.', routeId: 'CRP-03', hometown: 'crp', tenure: 30, tier: 2,
@@ -321,7 +321,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.38, 'constellation': 0.28, 'heineken': 0.15, 'craft': 0.09, 'sazerac': 0.06, 'fmb-rtd': 0.04 },
     spiritsAccounts: 7, atRisk: false,
     coachingNote: 'Consistent at target. Good spirits adoption in on-premise. Family legacy in the business.',
-    emcoGates: { core: 0.88, import: 0.84, emerging: 0.74, combined: 0.91 },
+    bbiGates: { core: 0.88, import: 0.84, emerging: 0.74, combined: 0.91 },
   },
   {
     id: 'SEL-CRP-04', name: 'Elena Luna', routeId: 'CRP-04', hometown: 'crp', tenure: 12, tier: 3,
@@ -330,7 +330,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.40, 'constellation': 0.27, 'heineken': 0.14, 'craft': 0.08, 'sazerac': 0.04, 'fmb-rtd': 0.07 },
     spiritsAccounts: 4, atRisk: false,
     coachingNote: 'Progressing well. Good on-premise selling skills. Needs to build craft and spirits presence.',
-    emcoGates: { core: 0.86, import: 0.82, emerging: 0.66, combined: 0.88 },
+    bbiGates: { core: 0.86, import: 0.82, emerging: 0.66, combined: 0.88 },
   },
   {
     id: 'SEL-CRP-05', name: 'James Herrera', routeId: 'CRP-05', hometown: 'crp', tenure: 6, tier: 3,
@@ -339,7 +339,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.43, 'constellation': 0.26, 'heineken': 0.13, 'craft': 0.07, 'sazerac': 0.03, 'fmb-rtd': 0.08 },
     spiritsAccounts: 3, atRisk: true,
     coachingNote: 'Coastal territory, high travel time between stops. Needs route efficiency improvement.',
-    emcoGates: { core: 0.85, import: 0.80, emerging: 0.60, combined: 0.86 },
+    bbiGates: { core: 0.85, import: 0.80, emerging: 0.60, combined: 0.86 },
   },
   {
     id: 'SEL-CRP-06', name: 'Vanessa Moreno', routeId: 'CRP-06', hometown: 'crp', tenure: 9, tier: 3,
@@ -348,7 +348,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.44, 'constellation': 0.25, 'heineken': 0.13, 'craft': 0.07, 'sazerac': 0.03, 'fmb-rtd': 0.08 },
     spiritsAccounts: 2, atRisk: true,
     coachingNote: 'Struggling with volume in rural coastal accounts. Consider territory realignment.',
-    emcoGates: { core: 0.85, import: 0.79, emerging: 0.58, combined: 0.85 },
+    bbiGates: { core: 0.85, import: 0.79, emerging: 0.58, combined: 0.85 },
   },
 
   // ═══════════════════════════════════════════════════
@@ -362,7 +362,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.28, 'constellation': 0.38, 'heineken': 0.18, 'craft': 0.06, 'sazerac': 0.05, 'fmb-rtd': 0.05 },
     spiritsAccounts: 6, atRisk: false,
     coachingNote: 'Veteran border market seller. Highest import mix in company. Key for Laredo integration.',
-    emcoGates: { core: 0.86, import: 0.90, emerging: 0.68, combined: 0.91 },
+    bbiGates: { core: 0.86, import: 0.90, emerging: 0.68, combined: 0.91 },
   },
   {
     id: 'SEL-LAR-02', name: 'Rosa Gutierrez', routeId: 'LAR-02', hometown: 'lar', tenure: 24, tier: 2,
@@ -371,7 +371,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.26, 'constellation': 0.40, 'heineken': 0.18, 'craft': 0.06, 'sazerac': 0.05, 'fmb-rtd': 0.05 },
     spiritsAccounts: 5, atRisk: false,
     coachingNote: 'Day planner showcase rep. Bilingual (English/Spanish). Corona/Modelo specialist. Strongest import relationships in border market.',
-    emcoGates: { core: 0.85, import: 0.92, emerging: 0.66, combined: 0.90 },
+    bbiGates: { core: 0.85, import: 0.92, emerging: 0.66, combined: 0.90 },
   },
   {
     id: 'SEL-LAR-03', name: 'Hugo Morales', routeId: 'LAR-03', hometown: 'lar', tenure: 16, tier: 3,
@@ -380,7 +380,7 @@ export const SELLERS: Seller[] = [
     brandMix: { 'molson-coors': 0.30, 'constellation': 0.36, 'heineken': 0.17, 'craft': 0.06, 'sazerac': 0.04, 'fmb-rtd': 0.07 },
     spiritsAccounts: 3, atRisk: false,
     coachingNote: 'Building into border market from Southern Distributing integration. Needs core brand development.',
-    emcoGates: { core: 0.82, import: 0.88, emerging: 0.60, combined: 0.87 },
+    bbiGates: { core: 0.82, import: 0.88, emerging: 0.60, combined: 0.87 },
   },
   {
     id: 'SEL-LAR-04', name: 'Carlos Trevino', routeId: 'LAR-04', hometown: 'lar', tenure: 40, tier: 1,
@@ -388,8 +388,8 @@ export const SELLERS: Seller[] = [
     weeklyAttainment: [0.09, 0.17, 0.26, 0.35, 0.45, 0.55, 0.65, 0.74, 0.83, 0.91, 0.98, 1.03, 1.06],
     brandMix: { 'molson-coors': 0.30, 'constellation': 0.36, 'heineken': 0.17, 'craft': 0.07, 'sazerac': 0.06, 'fmb-rtd': 0.04 },
     spiritsAccounts: 7, atRisk: false,
-    coachingNote: 'Top Laredo performer. Best combined EMCO gate in border district. Strong spirits pipeline.',
-    emcoGates: { core: 0.88, import: 0.90, emerging: 0.72, combined: 0.93 },
+    coachingNote: 'Top Laredo performer. Best combined BBI gate in border district. Strong spirits pipeline.',
+    bbiGates: { core: 0.88, import: 0.90, emerging: 0.72, combined: 0.93 },
   },
 ];
 
