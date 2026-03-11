@@ -98,8 +98,9 @@ export function DemoShell({ config, children }: DemoShellProps) {
   );
   const sectionColor = currentNav?.color ?? primaryColor;
 
-  // Logo icon
+  // Logo icon & home path (link logo to demo root, not site index)
   const LogoIcon = config.client.logo ?? LucideIcons.Circle;
+  const demoBase = pathname?.match(/^\/[^/]+/)?.[0] ?? '/';
 
   return (
     <div className={`h-screen flex overflow-hidden${config.darkMode && isDark ? ' dark' : ''}`} style={themeVars as React.CSSProperties}>
@@ -124,7 +125,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
       >
         {/* Logo */}
         <Link
-          href="/"
+          href={demoBase}
           className="flex flex-col px-6 py-5 hover:bg-white/[0.02] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
