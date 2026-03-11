@@ -27,6 +27,33 @@ const PRIORITY_COLORS: Record<string, { bg: string; border: string; icon: string
   resolved: { bg: 'rgba(34,197,94,0.04)', border: 'rgba(34,197,94,0.15)', icon: '\u2713' },
 };
 
+/* ── Dispute SLA Data ──────────────────────────── */
+const SLA_TARGETS = {
+  standardDays: 5,
+  highValueDays: 2,
+  highValueThreshold: 500,
+};
+
+const AGING_BUCKETS = [
+  { label: '0-2 days', count: 8, color: '#22C55E' },
+  { label: '3-5 days', count: 5, color: '#F59E0B' },
+  { label: '6-10 days', count: 2, color: '#F87171' },
+  { label: '10+ days', count: 1, color: '#DC2626' },
+];
+
+const SLA_METRICS = {
+  avgResolutionDays: 3.2,
+  slaComplianceRate: 0.94,
+  repeatDisputeRate: 0.08,
+};
+
+const ROOT_CAUSE_DATA = [
+  { name: 'Data Errors', value: 42, color: '#3B82F6' },
+  { name: 'Territory Credit', value: 28, color: '#F59E0B' },
+  { name: 'Gate Disputes', value: 18, color: '#8B5CF6' },
+  { name: 'Kicker Eligibility', value: 12, color: '#22C55E' },
+];
+
 /* ── Animated Timeline ──────────────────────────── */
 function InquiryTimeline({ inquiry, animate }: { inquiry: Inquiry; animate: boolean }) {
   const [step, setStep] = useState(0);
@@ -562,6 +589,73 @@ export default function MgmtInquiriesPage() {
           );
         })}
       </div>
+
+      {/* ═══════ DISPUTE SLA TRACKING ═══════ */}
+      <LightSectionCard title="DISPUTE SLA TRACKING">
+        {/* SLA KPIs */}
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          <LightKpiCard label="Avg Resolution" value={`${SLA_METRICS.avgResolutionDays}d`} accent="#3B82F6" sub={`Target: <${SLA_TARGETS.standardDays}d`} />
+          <LightKpiCard label="SLA Compliance" value={`${(SLA_METRICS.slaComplianceRate * 100).toFixed(0)}%`} accent="#22C55E" sub="within SLA target" />
+          <LightKpiCard label="Repeat Rate" value={`${(SLA_METRICS.repeatDisputeRate * 100).toFixed(0)}%`} accent="#F59E0B" sub="same rep, same issue type" />
+          <LightKpiCard label="High-Value SLA" value={`${SLA_TARGETS.highValueDays}d`} accent="#EF4444" sub={`disputes >$${SLA_TARGETS.highValueThreshold}`} />
+        </div>
+
+        {/* Aging Buckets Bar Chart */}
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+              AGING DISTRIBUTION
+            </div>
+            <div className="space-y-3">
+              {AGING_BUCKETS.map((bucket) => {
+                const maxCount = Math.max(...AGING_BUCKETS.map(b => b.count));
+                return (
+                  <div key={bucket.label}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{bucket.label}</span>
+                      <span className="text-xs font-bold font-mono" style={{ color: bucket.color }}>{bucket.count}</span>
+                    </div>
+                    <div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
+                      <div className="h-full rounded-full transition-all" style={{
+                        width: `${(bucket.count / maxCount) * 100}%`,
+                        background: bucket.color,
+                      }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Root Cause Donut */}
+          <div>
+            <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+              ROOT CAUSE ANALYSIS
+            </div>
+            <div className="flex items-center gap-4">
+              <ProofDonutChart data={ROOT_CAUSE_DATA} size={120} label="100%" labelColor="var(--pl-text)" />
+              <div className="space-y-2">
+                {ROOT_CAUSE_DATA.map((item) => (
+                  <div key={item.name} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: item.color }} />
+                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item.name}</span>
+                    <span className="text-xs font-bold font-mono" style={{ color: item.color }}>{item.value}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SLA rules callout */}
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(59,130,246,0.06)',
+          border: '1px solid rgba(59,130,246,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          SLA policy: Standard disputes resolved within {SLA_TARGETS.standardDays} business days. Disputes exceeding ${SLA_TARGETS.highValueThreshold} escalated to {SLA_TARGETS.highValueDays}-day fast track. Auto-escalation at day 5. VP notification at day 8.
+        </div>
+      </LightSectionCard>
 
       {/* Methodology */}
       <div className="rounded-xl p-4 text-[13px] font-mono" style={{
