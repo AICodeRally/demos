@@ -11,7 +11,7 @@ const ACTS = [
   { act: 1, label: 'Corporate Strategy', pages: 3, color: '#C6A052', path: '/strategy/mandate' },
   { act: 2, label: 'Sales Strategy', pages: 4, color: '#7C3AED', path: '/strategy/territories' },
   { act: 3, label: 'Sales Operations', pages: 7, color: '#2563EB', path: '/ops/manager' },
-  { act: 4, label: 'Sales Comp Planning', pages: 5, color: '#10B981', path: '/comp/plan' },
+  { act: 4, label: 'Sales Comp Planning', pages: 6, color: '#10B981', path: '/comp/plan' },
   { act: 5, label: 'Sales Comp Management', pages: 6, color: '#0EA5E9', path: '/comp/mgmt/data' },
   { act: 6, label: 'Platform & Integrations', pages: 3, color: '#F97316', path: '/integrations' },
 ] as const;
