@@ -7,12 +7,12 @@ import { SELLERS } from '@/data/proofline';
 const ACCENT = '#0EA5E9';
 
 const HOMETOWNS_LIST = [
-  { id: 'sa', name: 'San Antonio', manager: 'Laura Mendez', quota: 2200000, revenue: 2354000, headcount: 6, status: 'on-track' },
-  { id: 'austin', name: 'Austin', manager: 'Derek Walsh', quota: 1900000, revenue: 1862000, headcount: 6, status: 'watch' },
-  { id: 'laredo', name: 'Laredo', manager: 'Carmen Torres', quota: 1600000, revenue: 1584000, headcount: 6, status: 'watch' },
-  { id: 'victoria', name: 'Victoria', manager: 'Sam Patel', quota: 1400000, revenue: 1498000, headcount: 6, status: 'on-track' },
-  { id: 'corpus', name: 'Corpus Christi', manager: 'Tanya Nguyen', quota: 1700000, revenue: 1564000, headcount: 6, status: 'behind' },
-  { id: 'nb', name: 'New Braunfels', manager: 'Joe Castillo', quota: 1500000, revenue: 1545000, headcount: 6, status: 'on-track' },
+  { id: 'dal', name: 'Dallas HQ', manager: 'Sarah Chen', quota: 3200000, revenue: 3354000, headcount: 8, status: 'on-track' as const },
+  { id: 'aln', name: 'Allen', manager: 'Lisa Park', quota: 2400000, revenue: 2462000, headcount: 6, status: 'on-track' as const },
+  { id: 'ftw', name: 'Fort Worth', manager: 'Carlos Mendoza', quota: 2800000, revenue: 2584000, headcount: 8, status: 'watch' as const },
+  { id: 'enn', name: 'Ennis', manager: 'Tommy Nguyen', quota: 1800000, revenue: 1784000, headcount: 4, status: 'watch' as const },
+  { id: 'cc', name: 'Corpus Christi', manager: 'Maria Santos', quota: 2100000, revenue: 2064000, headcount: 6, status: 'behind' as const },
+  { id: 'lar', name: 'Laredo', manager: 'Roberto Garza', quota: 1600000, revenue: 1284000, headcount: 4, status: 'behind' as const },
 ];
 
 const CLUB_TIERS = [
@@ -22,29 +22,29 @@ const CLUB_TIERS = [
 ];
 
 const COACHING_RECS: Record<string, string[]> = {
-  sa: [
-    'Marcus is 4pp from T3 threshold \u2014 focus next 2 weeks on Corona display compliance in convenience accounts.',
-    "SA Route 3 showing declining spirits penetration \u2014 push Tito's and High Noon bundle in on-premise chain accounts.",
+  dal: [
+    'Nathan Chowdhury (DAL-08) display compliance at 71% — schedule ride-along and photo verification training this week.',
+    'Jackie Hernandez (DAL-07) missed 2 key accounts in February — 1:1 to explore root cause and route optimization.',
   ],
-  austin: [
-    'Austin-2 rep at 87% \u2014 Modelo push in 3 remaining Whataburger accounts could close the gap.',
-    'Import gate at 78% territory-wide \u2014 schedule joint sales call with Constellation rep for HEB chain accounts.',
+  aln: [
+    'Jason Owens (ALN-04) at 96% — close to Tier 2 threshold, push craft placement in new Frisco accounts.',
+    'Brandon Cooper (ALN-06) needs craft portfolio development — pair with Lauren Foster for mentoring.',
   ],
-  laredo: [
-    'Territory is 1pp below gate threshold \u2014 4 accounts close to ordering Heineken. Coordinate with brand rep.',
-    "Spirits adder opportunity: 6 on-premise independents not yet carrying Tito's.",
+  ftw: [
+    'Victor Okafor (FTW-08) at 88% — new hire needs route familiarization. GPS ride-along scheduled.',
+    'Will Kim (FTW-07) inconsistent stop cadence — missing 2-3 accounts per day. Time management coaching priority.',
   ],
-  victoria: [
-    "Victoria-4 is top T1 rep \u2014 consider nominating for Presidents Club pace board.",
-    'Combined gate at 94% \u2014 strong momentum, maintain Corona + spirits mix.',
+  enn: [
+    'Kevin Mills (ENS-03) below target 3 weeks running — rural route optimization needed.',
+    'Maria Flores (ENS-04) new to distribution — structured onboarding with daily check-ins.',
   ],
-  corpus: [
-    'Territory 8pp below quota \u2014 identify 5 chain accounts for immediate outreach.',
-    'Core gate at 71% \u2014 below threshold. Priority: Miller Lite and Coors Light in convenience channel.',
+  cc: [
+    'Vanessa Moreno (CRP-06) struggling with volume in rural coastal accounts — consider territory realignment.',
+    'James Herrera (CRP-05) high travel time between stops — route efficiency improvement needed.',
   ],
-  nb: [
-    'New Braunfels on track \u2014 maintain current mix and focus on Presidents Club positioning.',
-    'Spirits adder opportunity in 4 tourist corridor accounts near River Walk.',
+  lar: [
+    'Laredo integration on track — Fernando Reyes and Carlos Trevino above quota. Hugo Morales needs core brand development.',
+    'Border market import mix is highest in company — leverage for Cinco de Mayo kicker positioning.',
   ],
 };
 
@@ -712,7 +712,7 @@ export default function ReportsPage() {
 
           <LightSectionCard title="COACHING RECOMMENDATIONS">
             <div className="grid gap-3">
-              {(COACHING_RECS[selectedHometown] ?? COACHING_RECS['sa']).map((rec, i) => (
+              {(COACHING_RECS[selectedHometown] ?? COACHING_RECS['dal']).map((rec, i) => (
                 <div key={i} className="flex gap-3 p-3 rounded-lg" style={{ background: `${ACCENT}08`, border: `1px solid ${ACCENT}20` }}>
                   <div className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${ACCENT}15` }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
