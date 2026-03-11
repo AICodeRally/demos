@@ -247,6 +247,40 @@ const CURRENT_DRAW_BALANCES = [
   { rep: 'Jackie Hernandez', route: 'DAL-07', hireDate: 'Feb 1, 2026', balance: 1200, phase: 'Guarantee', monthsRemaining: 5 },
 ];
 
+/* ── On/Off-Premise Channel Comp ─────────────── */
+const CHANNEL_COMP = [
+  {
+    channel: 'Off-Premise',
+    description: 'Retail, grocery, convenience, package stores',
+    basePct: 60,
+    variablePct: 40,
+    variableComponents: [
+      { name: 'Volume (cases delivered)', weight: 50 },
+      { name: 'Distribution (new SKU placements)', weight: 25 },
+      { name: 'BBI Compliance', weight: 15 },
+      { name: 'Display Execution', weight: 10 },
+    ],
+    avgOTE: 72000,
+    avgAttainment: 104,
+    color: '#3B82F6',
+  },
+  {
+    channel: 'On-Premise',
+    description: 'Bars, restaurants, hotels, venues, stadiums',
+    basePct: 55,
+    variablePct: 45,
+    variableComponents: [
+      { name: 'Draft Line Pours (keg volume)', weight: 40 },
+      { name: 'New Tap Handle Placements', weight: 25 },
+      { name: 'Menu Presence (bottles/cans)', weight: 20 },
+      { name: 'Event Sponsorship Activation', weight: 15 },
+    ],
+    avgOTE: 78000,
+    avgAttainment: 97,
+    color: '#8B5CF6',
+  },
+];
+
 export default function CompPlanPage() {
   const plan = COMP_PLAN;
   const maxMultiplier = Math.max(...BBI_GATES.map(g => g.multiplier));
@@ -421,6 +455,71 @@ export default function CompPlanPage() {
               </div>
             </div>
           ))}
+        </div>
+      </LightSectionCard>
+
+      {/* ═══════ ON/OFF-PREMISE CHANNEL COMP ═══════ */}
+      <LightSectionCard title="CHANNEL-SPECIFIC COMPENSATION STRUCTURE">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {CHANNEL_COMP.map((ch) => (
+            <div key={ch.channel} className="p-4 rounded-lg" style={{
+              background: 'var(--pl-card-alt)',
+              border: `1px solid ${ch.color}33`,
+            }}>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full" style={{ background: ch.color }} />
+                <span className="text-sm font-bold font-mono" style={{ color: ch.color }}>
+                  {ch.channel}
+                </span>
+              </div>
+              <div className="text-xs mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                {ch.description}
+              </div>
+
+              {/* Base/Variable split bar */}
+              <div className="flex h-3 rounded-full overflow-hidden mb-3">
+                <div style={{ width: `${ch.basePct}%`, background: ch.color, opacity: 0.4 }} />
+                <div style={{ width: `${ch.variablePct}%`, background: ch.color }} />
+              </div>
+              <div className="flex justify-between text-xs font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                <span>Base {ch.basePct}%</span>
+                <span>Variable {ch.variablePct}%</span>
+              </div>
+
+              {/* Variable components */}
+              <div className="space-y-1.5">
+                {ch.variableComponents.map((vc) => (
+                  <div key={vc.name} className="flex items-center gap-2">
+                    <div className="flex-1 h-2 rounded-full" style={{ background: 'var(--pl-chart-bar-track)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${vc.weight}%`, background: ch.color, opacity: 0.7 }} />
+                    </div>
+                    <span className="text-xs font-mono w-8 text-right" style={{ color: ch.color }}>{vc.weight}%</span>
+                    <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--pl-text-muted)', width: 200 }}>{vc.name}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* KPIs */}
+              <div className="flex gap-4 mt-3 pt-3" style={{ borderTop: '1px solid var(--pl-border)' }}>
+                <div className="text-center">
+                  <div className="text-lg font-bold font-mono" style={{ color: ch.color }}>${(ch.avgOTE / 1000).toFixed(0)}K</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Avg OTE</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold font-mono" style={{ color: ch.avgAttainment >= 100 ? '#22C55E' : '#F59E0B' }}>{ch.avgAttainment}%</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Avg Attainment</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+          background: 'rgba(198,160,82,0.06)',
+          border: '1px solid rgba(198,160,82,0.15)',
+          color: 'var(--pl-text-muted)',
+        }}>
+          On-premise reps carry higher variable mix (45%) due to relationship-driven sales and tap handle volatility. Off-premise reps carry heavier base (60%) for route consistency. BBI compliance applies to off-premise only; on-premise uses draft line pours as primary volume metric.
         </div>
       </LightSectionCard>
 
