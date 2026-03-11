@@ -133,10 +133,10 @@ export default function TerritoryDesignPage() {
           </defs>
 
           {/* Region labels */}
-          <text x={HEX_W / 2} y={22} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.5">
+          <text x={HEX_W / 2} y={22} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.7">
             NORTH TEXAS
           </text>
-          <text x={HEX_W / 2} y={HEX_H - 8} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.5">
+          <text x={HEX_W / 2} y={HEX_H - 8} textAnchor="middle" fill="#7C3AED" fontSize="12" fontWeight="600" fontFamily="monospace" opacity="0.7">
             SOUTH TEXAS
           </text>
 
