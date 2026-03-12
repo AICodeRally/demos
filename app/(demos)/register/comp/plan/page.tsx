@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FormatSelector, StatCard, BarChart, WaterfallChart, HeatMap } from '@/components/demos/register';
 import { COMP_PLANS, type FormatId } from '@/data/register/store-data';
+import { COMP_TIERS, SPIFF_CALENDAR } from '@/data/register/comp-data';
 
 /* ── Tier definitions by format ──────────────────────────── */
 
@@ -202,6 +203,137 @@ export default function CompPlan() {
             colorScale={{ low: '#F1F5F9', mid: '#10B981', high: '#059669' }}
           />
         </div>
+      </div>
+
+      {/* ── Commission Tiers ─────────────────────────────── */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <p className="text-sm font-semibold mb-5" style={{ color: '#0F172A' }}>Commission Tiers</p>
+        <div className="space-y-3">
+          {COMP_TIERS.map((tier) => {
+            const currentRevenue = 42000;
+            const isCurrent = currentRevenue >= tier.minRevenue && currentRevenue <= tier.maxRevenue;
+            const rangeLabel =
+              tier.maxRevenue === Infinity
+                ? `$${tier.minRevenue.toLocaleString()}+`
+                : `$${tier.minRevenue.toLocaleString()} – $${tier.maxRevenue.toLocaleString()}`;
+
+            return (
+              <div
+                key={tier.tier}
+                className="flex items-center gap-4 rounded-xl px-5 py-4 transition-all"
+                style={{
+                  backgroundColor: isCurrent ? `${tier.color}18` : '#F8FAFC',
+                  borderLeft: `4px solid ${isCurrent ? tier.color : '#E2E8F0'}`,
+                  borderTop: '1px solid',
+                  borderRight: '1px solid',
+                  borderBottom: '1px solid',
+                  borderTopColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
+                  borderRightColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
+                  borderBottomColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: tier.color, opacity: isCurrent ? 1 : 0.5 }}
+                >
+                  <span className="text-[11px] font-bold" style={{ color: '#FFFFFF' }}>
+                    {tier.tier[0]}
+                  </span>
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[13px] font-bold" style={{ color: '#0F172A' }}>{tier.tier}</span>
+                    {isCurrent && (
+                      <span
+                        className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                        style={{ backgroundColor: tier.color, color: '#FFFFFF' }}
+                      >
+                        CURRENT
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px]" style={{ color: '#94A3B8' }}>{rangeLabel}</span>
+                </div>
+
+                <span className="text-[16px] font-bold" style={{ color: isCurrent ? tier.color : '#94A3B8' }}>
+                  {(tier.rate * 100).toFixed(1)}%
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div
+          className="mt-4 px-4 py-3 rounded-lg flex items-center gap-2"
+          style={{ backgroundColor: '#FEF3C7' }}
+        >
+          <span className="text-[12px]">📍</span>
+          <span className="text-[12px] font-medium" style={{ color: '#92400E' }}>
+            Current: $42,000 MTD Revenue — <strong>Silver Tier (4.5%)</strong>. $8,000 more to reach Gold (5.0%).
+          </span>
+        </div>
+      </div>
+
+      {/* ── SPIFF Calendar ────────────────────────────────── */}
+      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
+        <p className="text-sm font-semibold mb-5" style={{ color: '#0F172A' }}>Active SPIFFs</p>
+        <div className="grid grid-cols-3 gap-4">
+          {SPIFF_CALENDAR.map((spiff, i) => (
+            <div
+              key={i}
+              className="rounded-xl p-4 border transition-all"
+              style={{
+                backgroundColor: spiff.active ? '#F0FDF4' : '#FAFAFA',
+                borderColor: spiff.active ? '#10B981' : '#E2E8F0',
+                borderWidth: spiff.active ? 2 : 1,
+              }}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: '#94A3B8' }}>
+                  {spiff.month}
+                </span>
+                {spiff.active && (
+                  <span
+                    className="px-2 py-0.5 rounded-full text-[9px] font-bold"
+                    style={{ backgroundColor: '#10B981', color: '#FFFFFF' }}
+                  >
+                    ACTIVE
+                  </span>
+                )}
+              </div>
+              <p className="text-[12px] font-bold mb-1" style={{ color: '#0F172A' }}>{spiff.name}</p>
+              <p className="text-[11px] mb-3" style={{ color: '#475569' }}>{spiff.product}</p>
+              <div className="flex items-center justify-between">
+                <span
+                  className="text-[13px] font-bold"
+                  style={{ color: spiff.active ? '#10B981' : '#94A3B8' }}
+                >
+                  {spiff.bonus}
+                </span>
+                <span className="text-[10px]" style={{ color: '#94A3B8' }}>
+                  {spiff.startDate.slice(5)} – {spiff.endDate.slice(5)}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Plan Metadata ─────────────────────────────────── */}
+      <div className="flex items-center gap-3 mb-8">
+        <span
+          className="px-4 py-2 rounded-lg text-[12px] font-semibold border"
+          style={{ backgroundColor: '#F1F5F9', borderColor: '#E2E8F0', color: '#475569' }}
+        >
+          Plan Version: v2.1 — Effective Jan 1, 2026
+        </span>
+        <span
+          className="px-4 py-2 rounded-lg text-[12px] font-semibold border"
+          style={{ backgroundColor: '#F0FDF4', borderColor: '#BBF7D0', color: '#16A34A' }}
+        >
+          Acknowledged: Mar 1, 2026 ✓
+        </span>
       </div>
 
       {/* Comparison Table */}
