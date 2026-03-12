@@ -1,6 +1,9 @@
 'use client';
 
+import Link from 'next/link';
+import { ChevronRight, Tablet } from 'lucide-react';
 import { StatCard, BarChart, AreaChart, KanbanBoard } from '@/components/demos/register';
+import { REPS } from '@/data/register/coaching-data';
 
 /* ── Rep performance data ────────────────────────────────── */
 
@@ -83,6 +86,7 @@ const EXCEPTIONS = [
 const COACHING = [
   {
     rep: 'Casey (new hire)',
+    repId: 'casey',
     area: 'Attach rate 12%',
     benchmark: 'store avg 42%',
     action: 'Shadow Sarah J. for next 3 sales',
@@ -90,6 +94,7 @@ const COACHING = [
   },
   {
     rep: 'Raj P.',
+    repId: 'raj',
     area: 'Financing pitch 28%',
     benchmark: 'store avg 55%',
     action: 'Practice 3-payment breakdown script',
@@ -97,6 +102,7 @@ const COACHING = [
   },
   {
     rep: 'James T.',
+    repId: 'james',
     area: 'ASP $1,420',
     benchmark: 'store avg $1,893',
     action: 'Focus on premium tier during next ups',
@@ -243,31 +249,61 @@ export default function ManagerConsole() {
           Coaching Queue
         </p>
         <div className="grid grid-cols-3 gap-4">
-          {COACHING.map((coach, i) => (
-            <div
-              key={i}
-              className="rounded-lg border-l-4 p-4"
-              style={{ borderLeftColor: coach.color, backgroundColor: '#F8FAFC' }}
-            >
-              <p className="text-[13px] font-bold mb-1" style={{ color: '#0F172A' }}>
-                {coach.rep}
-              </p>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-mono" style={{ color: coach.color }}>
-                  {coach.area}
-                </span>
-                <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-                  ({coach.benchmark})
-                </span>
+          {COACHING.map((coach, i) => {
+            const rep = REPS.find((r) => r.id === coach.repId);
+            return (
+              <div key={i} className="relative group">
+                <Link
+                  href={`/register/ops/manager/coaching/${coach.repId}`}
+                  className="block rounded-lg border-l-4 p-4 transition-all duration-150 hover:shadow-md hover:-translate-y-0.5"
+                  style={{ borderLeftColor: coach.color, backgroundColor: '#F8FAFC' }}
+                >
+                  <div className="flex items-start justify-between mb-1">
+                    <div>
+                      <p className="text-[13px] font-bold" style={{ color: '#0F172A' }}>
+                        {coach.rep}
+                      </p>
+                      {rep && (
+                        <p className="text-[10px]" style={{ color: '#94A3B8' }}>
+                          {rep.role}
+                        </p>
+                      )}
+                    </div>
+                    <ChevronRight
+                      className="w-4 h-4 shrink-0 mt-0.5 opacity-40 group-hover:opacity-100 transition-opacity"
+                      style={{ color: coach.color }}
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[11px] font-mono" style={{ color: coach.color }}>
+                      {coach.area}
+                    </span>
+                    <span className="text-[10px]" style={{ color: '#94A3B8' }}>
+                      ({coach.benchmark})
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-1.5">
+                    <span className="text-[10px] font-medium shrink-0 mt-px" style={{ color: '#10B981' }}>Action:</span>
+                    <p className="text-[11px]" style={{ color: '#475569' }}>
+                      {coach.action}
+                    </p>
+                  </div>
+                </Link>
+                <a
+                  href={`/register/ops/manager/coaching/${coach.repId}?view=ipad`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Open on iPad"
+                  className="absolute top-2 right-8 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity px-1.5 py-0.5 rounded text-[10px] font-medium"
+                  style={{ backgroundColor: '#EFF6FF', color: '#3B82F6', border: '1px solid #BFDBFE' }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Tablet className="w-3 h-3" />
+                  iPad
+                </a>
               </div>
-              <div className="flex items-start gap-1.5">
-                <span className="text-[10px] font-medium shrink-0 mt-px" style={{ color: '#10B981' }}>Action:</span>
-                <p className="text-[11px]" style={{ color: '#475569' }}>
-                  {coach.action}
-                </p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { StatCard, AreaChart, DonutChart, BarChart, ConfidenceBand } from '@/components/demos/register';
+import { COMMISSION_LOG, STATEMENTS } from '@/data/register/comp-data';
 
 /* ── 12-month earnings trend (stacked components) ────────── */
 
@@ -228,6 +228,99 @@ export default function PayoutAnalytics() {
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* ── Commission Detail Log ─────────────────────────── */}
+      <div className="rounded-xl bg-white border p-6 mt-8" style={{ borderColor: '#E2E8F0' }}>
+        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>Commission Detail</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-[12px]">
+            <thead>
+              <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
+                <th className="text-left py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Date</th>
+                <th className="text-left py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Transaction</th>
+                <th className="text-left py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Items</th>
+                <th className="text-right py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Sale Total</th>
+                <th className="text-left py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Tier</th>
+                <th className="text-right py-2 pr-3 font-semibold" style={{ color: '#94A3B8' }}>Rate</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Commission</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMMISSION_LOG.map((entry, i) => {
+                const tierColor =
+                  entry.tierApplied === 'Platinum' ? '#E5E4E2' :
+                  entry.tierApplied === 'Gold' ? '#FFD700' :
+                  entry.tierApplied === 'Silver' ? '#C0C0C0' : '#CD7F32';
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                    <td className="py-2.5 pr-3" style={{ color: '#475569' }}>{entry.date}</td>
+                    <td className="py-2.5 pr-3 font-mono" style={{ color: '#1E3A5F' }}>{entry.transactionId}</td>
+                    <td className="py-2.5 pr-3" style={{ color: '#475569' }}>{entry.items}</td>
+                    <td className="py-2.5 pr-3 text-right font-mono" style={{ color: '#0F172A' }}>
+                      ${entry.saleTotal.toLocaleString()}
+                    </td>
+                    <td className="py-2.5 pr-3">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: tierColor }} />
+                        <span style={{ color: '#475569' }}>{entry.tierApplied}</span>
+                      </div>
+                    </td>
+                    <td className="py-2.5 pr-3 text-right font-mono" style={{ color: '#10B981' }}>
+                      {(entry.rate * 100).toFixed(1)}%
+                    </td>
+                    <td className="py-2.5 text-right font-mono font-bold" style={{ color: '#10B981' }}>
+                      ${entry.commission.toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
+              {/* Running total */}
+              <tr style={{ borderTop: '2px solid #E2E8F0', backgroundColor: '#F8FAFC' }}>
+                <td colSpan={6} className="py-3 pr-3 text-right text-[12px] font-semibold" style={{ color: '#475569' }}>
+                  Running Total
+                </td>
+                <td className="py-3 text-right font-mono font-bold text-[13px]" style={{ color: '#10B981' }}>
+                  ${COMMISSION_LOG.reduce((sum, e) => sum + e.commission, 0).toFixed(2)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ── YTD Earnings + Projection ────────────────────── */}
+      <div className="grid grid-cols-2 gap-6 mt-6">
+        <div
+          className="rounded-xl border p-5 flex items-center justify-between"
+          style={{ backgroundColor: '#F0FDF4', borderColor: '#BBF7D0' }}
+        >
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: '#16A34A' }}>
+              YTD Earnings
+            </p>
+            <p className="text-[11px] mt-0.5" style={{ color: '#475569' }}>Across all pay periods</p>
+          </div>
+          <p className="text-2xl font-bold" style={{ color: '#10B981' }}>
+            ${STATEMENTS.reduce((sum, s) => sum + s.netPayout, 0).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </p>
+        </div>
+
+        <div
+          className="rounded-xl border p-5 flex items-center justify-between"
+          style={{ backgroundColor: '#EFF6FF', borderColor: '#BFDBFE' }}
+        >
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: '#1D4ED8' }}>
+              Projected This Period
+            </p>
+            <p className="text-[11px] mt-0.5" style={{ color: '#475569' }}>Based on current pace</p>
+          </div>
+          <p className="text-2xl font-bold" style={{ color: '#1D4ED8' }}>~$4,120</p>
         </div>
       </div>
     </>
