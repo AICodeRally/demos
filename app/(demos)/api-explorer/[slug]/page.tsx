@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import manifest from '../../../../data/services-manifest.json';
 import { TryItPanel } from '../../../../components/api-explorer/TryItPanel';
 import { playgrounds } from '../../../../components/api-explorer/playgrounds';
+import { GatewayHealth } from '../../../../components/api-explorer/GatewayHealth';
 
 const GATEWAY_URL = 'https://api.aicoderally.com';
 
@@ -126,6 +127,8 @@ export default function ServiceDetailPage() {
     );
   }
 
+  const [authToken, setAuthToken] = useState('');
+  const [showAuth, setShowAuth] = useState(false);
   const rpcs = service.rpcs ?? [];
   const messages = service.messages ?? [];
   const domainMessages = messages.filter(m => !m.name.endsWith('Request') && !m.name.endsWith('Response'));
@@ -156,10 +159,11 @@ export default function ServiceDetailPage() {
               </span>
             </div>
           </div>
-          <div className="mt-4 flex gap-6 text-sm text-[#888]">
+          <div className="mt-4 flex items-center gap-6 text-sm text-[#888]">
             <span>{rpcs.length} RPCs</span>
             <span>{messages.length} Messages</span>
             <span className="font-mono text-[#555]">{service.package}</span>
+            <GatewayHealth />
           </div>
         </div>
       </div>
@@ -175,6 +179,33 @@ const client = createServiceClient();
             lang="typescript"
           />
         </div>
+
+        {/* Auth Token (for Live mode) */}
+        {playgrounds[slug] && (
+          <div className="mb-6">
+            <button
+              onClick={() => setShowAuth(!showAuth)}
+              className="flex items-center gap-2 text-xs text-[#555] hover:text-[#888] transition-colors"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+              </svg>
+              {showAuth ? 'Hide' : 'Set'} Auth Token (for Live mode)
+            </button>
+            {showAuth && (
+              <div className="mt-2">
+                <input
+                  type="password"
+                  value={authToken}
+                  onChange={(e) => setAuthToken(e.target.value)}
+                  placeholder="Bearer token for live API calls..."
+                  className="w-full rounded-lg border border-[#1a2a2e] bg-[#0a1012] px-3 py-2 font-mono text-sm text-[#ccc] placeholder:text-[#333] focus:border-[#06b6d4]/50 focus:outline-none"
+                />
+                <p className="mt-1 text-[10px] text-[#444]">Token is stored in memory only, never sent to our servers. Used only for direct gateway calls in Live mode.</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Interactive Playground */}
         {playgrounds[slug] && (
@@ -194,6 +225,7 @@ const client = createServiceClient();
                     rpcName={pg.rpcName}
                     defaultBody={pg.defaultBody}
                     description={pg.description}
+                    authToken={authToken || undefined}
                   />
                 );
               })}
