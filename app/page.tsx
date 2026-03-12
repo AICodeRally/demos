@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import manifest from '../data/services-manifest.json';
 
-const demos = [
+const productDemos = [
   {
     name: 'AEGIS',
     slug: 'aegis',
@@ -66,19 +67,92 @@ const demos = [
   },
 ];
 
+// Service categories with a teal/cyan color scheme to contrast with orange product demos
+const SERVICE_COLOR = '#06b6d4';
+
+const serviceCategoryOrder = [
+  'AI & Intelligence',
+  'Core Platform',
+  'Domain Services',
+  'Infrastructure',
+];
+
+function getServicesByCategory() {
+  const grouped: Record<string, typeof manifest.services> = {};
+  for (const svc of manifest.services) {
+    const cat = svc.category || 'Other';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(svc);
+  }
+  return grouped;
+}
+
+function DemoCard({ demo }: { demo: typeof productDemos[0] }) {
+  return (
+    <Link
+      href={`/${demo.slug}`}
+      className="group overflow-hidden rounded-2xl border border-[#222] bg-[#111] transition-all duration-300 hover:border-[#333] hover:bg-[#141414]"
+    >
+      <div
+        className="relative flex items-center justify-center px-6 py-8"
+        style={{
+          background: `linear-gradient(135deg, ${demo.color}20 0%, ${demo.color}05 100%)`,
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage: `linear-gradient(${demo.color} 1px, transparent 1px), linear-gradient(90deg, ${demo.color} 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <span
+          className="relative text-3xl font-extrabold tracking-wider transition-transform duration-300 group-hover:scale-110"
+          style={{ color: demo.color }}
+        >
+          {demo.name}
+        </span>
+      </div>
+      <div className="p-6">
+        <p
+          className="mb-2 text-sm font-semibold uppercase tracking-wider"
+          style={{ color: demo.color }}
+        >
+          {demo.industry}
+        </p>
+        <p className="mb-5 text-lg leading-relaxed text-[#e0e0e0]">
+          {demo.tagline}
+        </p>
+        <div
+          className="flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-base font-semibold text-white transition-all group-hover:brightness-110"
+          style={{
+            background: `linear-gradient(135deg, ${demo.color}, ${demo.color}cc)`,
+          }}
+        >
+          Launch Demo
+          <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function PortfolioPage() {
+  const byCategory = getServicesByCategory();
+  const totalRpcs = manifest.services.reduce((sum, s) => sum + (s.rpcs?.length ?? 0), 0);
+
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       {/* Hero */}
       <section className="relative flex items-center justify-center overflow-hidden pt-20 pb-12">
-        {/* Bottom-to-top orange gradient */}
         <div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(to top, #f9731620 0%, #f9731608 30%, transparent 60%)',
           }}
         />
-        {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -87,7 +161,6 @@ export default function PortfolioPage() {
             backgroundSize: '80px 80px',
           }}
         />
-
         <div className="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
           <h1 className="mb-4 text-5xl font-extrabold tracking-tight text-white lg:text-7xl">
             <span className="bg-gradient-to-b from-[#fbbf24] to-[#f97316] bg-clip-text text-transparent">
@@ -96,9 +169,8 @@ export default function PortfolioPage() {
             Showcase
           </h1>
           <p className="mx-auto max-w-2xl text-xl text-[#ccc] font-light leading-relaxed sm:text-2xl">
-            Interactive product demos &mdash; click any card to launch a full experience
+            Product demos &amp; API explorer &mdash; click any card to launch
           </p>
-          {/* Orange divider */}
           <div
             className="mx-auto mt-8 h-[1px] w-64"
             style={{
@@ -109,83 +181,89 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Demo Cards */}
+      {/* ═══════════════ Product & Industry Demos ═══════════════ */}
       <section className="px-6 pb-16 pt-4 lg:px-12">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-8 text-sm font-semibold uppercase tracking-[0.3em] text-[#ccc]">
-            Products
-          </p>
+          <div className="mb-8 flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#f97316] to-[#fbbf24]">
+              <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">Product Demos</h2>
+              <p className="text-sm text-[#888]">{productDemos.length} industry solutions</p>
+            </div>
+          </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {demos.map((demo) => (
-              <Link
-                key={demo.slug}
-                href={`/${demo.slug}`}
-                className="group overflow-hidden rounded-2xl border border-[#222] bg-[#111] transition-all duration-300 hover:border-[#333] hover:bg-[#141414]"
-              >
-                {/* Gradient placeholder area */}
-                <div
-                  className="relative flex items-center justify-center px-6 py-8"
-                  style={{
-                    background: `linear-gradient(135deg, ${demo.color}20 0%, ${demo.color}05 100%)`,
-                  }}
-                >
-                  {/* Grid pattern */}
-                  <div
-                    className="absolute inset-0 opacity-[0.06]"
-                    style={{
-                      backgroundImage: `linear-gradient(${demo.color} 1px, transparent 1px), linear-gradient(90deg, ${demo.color} 1px, transparent 1px)`,
-                      backgroundSize: '24px 24px',
-                    }}
-                  />
-                  {/* Name large */}
-                  <span
-                    className="relative text-3xl font-extrabold tracking-wider transition-transform duration-300 group-hover:scale-110"
-                    style={{ color: demo.color }}
-                  >
-                    {demo.name}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <p
-                    className="mb-2 text-sm font-semibold uppercase tracking-wider"
-                    style={{ color: demo.color }}
-                  >
-                    {demo.industry}
-                  </p>
-                  <p className="mb-5 text-lg leading-relaxed text-[#e0e0e0]">
-                    {demo.tagline}
-                  </p>
-                  <div
-                    className="flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-base font-semibold text-white transition-all group-hover:brightness-110"
-                    style={{
-                      background: `linear-gradient(135deg, ${demo.color}, ${demo.color}cc)`,
-                    }}
-                  >
-                    Launch Demo
-                    <svg
-                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
+            {productDemos.map((demo) => (
+              <DemoCard key={demo.slug} demo={demo} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer — matches website */}
+      {/* ═══════════════ API Explorer ═══════════════ */}
+      <section className="px-6 pb-16 pt-4 lg:px-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-8 flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#06b6d4] to-[#0891b2]">
+              <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">API Explorer</h2>
+              <p className="text-sm text-[#888]">{manifest.services.length} microservices &middot; {totalRpcs} RPCs &middot; gRPC + REST</p>
+            </div>
+          </div>
+
+          {serviceCategoryOrder.map((category) => {
+            const services = byCategory[category];
+            if (!services?.length) return null;
+            return (
+              <div key={category} className="mb-10">
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#06b6d4]">
+                  {category}
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {services.map((svc) => (
+                    <Link
+                      key={svc.slug}
+                      href={`/api-explorer/${svc.slug}`}
+                      className="group overflow-hidden rounded-xl border border-[#1a2a2e] bg-[#0d1517] transition-all duration-300 hover:border-[#06b6d4]/40 hover:bg-[#0f1a1d]"
+                    >
+                      <div className="p-5">
+                        <div className="mb-3 flex items-center justify-between">
+                          <h4 className="text-lg font-bold text-white group-hover:text-[#06b6d4] transition-colors">
+                            {svc.name.replace('Service', '')}
+                          </h4>
+                          <span className="rounded-full bg-[#06b6d4]/10 px-2.5 py-0.5 text-xs font-mono text-[#06b6d4]">
+                            :{svc.port}
+                          </span>
+                        </div>
+                        <p className="mb-3 text-sm text-[#888] leading-relaxed">
+                          {svc.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-[#555]">
+                            {svc.rpcs?.length ?? 0} RPCs
+                          </span>
+                          <span className="text-xs text-[#06b6d4] opacity-0 transition-opacity group-hover:opacity-100">
+                            Explore &rarr;
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Footer */}
       <footer className="relative pt-12 pb-8 bg-[#0a0a0a]">
         <div
           className="absolute top-0 left-0 right-0 h-[2px]"
@@ -193,7 +271,6 @@ export default function PortfolioPage() {
         />
         <div className="mx-auto max-w-5xl px-6 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-10">
-            {/* Brand */}
             <div>
               <span className="text-xl font-extrabold block mb-3">
                 <span className="bg-gradient-to-b from-[#fbbf24] to-[#f97316] bg-clip-text text-transparent">AI</span>
@@ -204,7 +281,6 @@ export default function PortfolioPage() {
                 Custom tools powered by AI. Built for your business. You own everything.
               </p>
             </div>
-            {/* Product */}
             <div>
               <p className="text-base uppercase tracking-wider text-[#ccc] font-semibold mb-3">Product</p>
               <nav className="flex flex-col gap-2 text-lg text-[#ccc]">
@@ -214,7 +290,6 @@ export default function PortfolioPage() {
                 <a href="https://aicoderally.com/pricing" className="hover:text-white transition-colors">Pricing</a>
               </nav>
             </div>
-            {/* Company */}
             <div>
               <p className="text-base uppercase tracking-wider text-[#ccc] font-semibold mb-3">Company</p>
               <nav className="flex flex-col gap-2 text-lg text-[#ccc]">
@@ -225,7 +300,6 @@ export default function PortfolioPage() {
               </nav>
             </div>
           </div>
-          {/* Bottom row */}
           <div className="border-t border-[#222] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-base text-[#ccc]">
               &copy; {new Date().getFullYear()} AI Code Rally &middot; Powered by{' '}
