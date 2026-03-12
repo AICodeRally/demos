@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import manifest from '../../../../data/services-manifest.json';
+import { TryItPanel } from '../../../../components/api-explorer/TryItPanel';
+import { playgrounds } from '../../../../components/api-explorer/playgrounds';
 
 const GATEWAY_URL = 'https://api.aicoderally.com';
 
@@ -173,6 +175,31 @@ const client = createServiceClient();
             lang="typescript"
           />
         </div>
+
+        {/* Interactive Playground */}
+        {playgrounds[slug] && (
+          <div className="mb-8">
+            <div className="mb-4 flex items-center gap-3">
+              <h2 className="text-lg font-bold text-white">Playground</h2>
+              <span className="rounded-full bg-[#06b6d4]/10 px-2.5 py-0.5 text-xs font-medium text-[#06b6d4]">Interactive</span>
+            </div>
+            <div className="space-y-4">
+              {playgrounds[slug].map((pg) => {
+                const rpc = rpcs.find(r => r.name === pg.rpcName);
+                return (
+                  <TryItPanel
+                    key={pg.rpcName}
+                    method={rpc?.httpMethod ?? 'POST'}
+                    path={rpc?.httpPath ?? ''}
+                    rpcName={pg.rpcName}
+                    defaultBody={pg.defaultBody}
+                    description={pg.description}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* RPC Methods */}
         {rpcs.length > 0 && (
