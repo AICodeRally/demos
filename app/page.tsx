@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import manifest from '../data/services-manifest.json';
+import { playgrounds } from '../components/api-explorer/playgrounds';
 
 const productDemos = [
   {
@@ -249,9 +250,16 @@ export default function PortfolioPage() {
                           <span className="text-xs text-[#555]">
                             {svc.rpcs?.length ?? 0} RPCs
                           </span>
-                          <span className="text-xs text-[#06b6d4] opacity-0 transition-opacity group-hover:opacity-100">
-                            Explore &rarr;
-                          </span>
+                          <div className="flex items-center gap-2">
+                            {playgrounds[svc.slug] && (
+                              <span className="rounded bg-[#06b6d4]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#06b6d4]">
+                                Playground
+                              </span>
+                            )}
+                            <span className="text-xs text-[#06b6d4] opacity-0 transition-opacity group-hover:opacity-100">
+                              Explore &rarr;
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </Link>
