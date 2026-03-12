@@ -10,9 +10,10 @@ interface TryItPanelProps {
   rpcName: string;
   defaultBody?: string;
   description?: string;
+  authToken?: string;
 }
 
-export function TryItPanel({ method, path, rpcName, defaultBody, description }: TryItPanelProps) {
+export function TryItPanel({ method, path, rpcName, defaultBody, description, authToken }: TryItPanelProps) {
   const [body, setBody] = useState(defaultBody ?? '{}');
   const [response, setResponse] = useState<string | null>(null);
   const [status, setStatus] = useState<number | null>(null);
@@ -95,6 +96,229 @@ export function TryItPanel({ method, path, rpcName, defaultBody, description }: 
       ],
       checkedAt: new Date().toISOString(),
     },
+    // audit-svc
+    RecordEvent: {
+      eventId: 'evt_20260312_001',
+      recorded: true,
+      immutable: true,
+      timestamp: new Date().toISOString(),
+      hash: 'sha256:a1b2c3d4e5f6...',
+    },
+    // pulse-svc
+    CreateCoachingCard: {
+      cardId: 'card_001',
+      status: 'created',
+      severity: 'high',
+      assignedTo: 'manager:sales_director',
+      expiresAt: new Date(Date.now() + 7 * 86400000).toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+    // document-svc
+    AnalyzeDocument: {
+      documentId: 'doc_001',
+      structure: {
+        sections: 4,
+        tables: 1,
+        lists: 3,
+      },
+      entities: [
+        { type: 'currency', value: '$125,000', label: 'Base Salary' },
+        { type: 'currency', value: '$250,000', label: 'OTE' },
+        { type: 'currency', value: '$2,000,000', label: 'Quota' },
+        { type: 'percentage', value: '6.25%', label: 'Commission Rate' },
+      ],
+      gaps: [
+        'No cap on accelerator payouts — consider adding a maximum multiplier',
+        'Clawback window (90 days) is below industry standard (180 days)',
+      ],
+      analysisTimeMs: 340,
+    },
+    // knowledge-svc Ingest
+    Ingest: {
+      documentId: 'doc_demo_001',
+      chunksCreated: 3,
+      embeddingsGenerated: 3,
+      totalTokens: 412,
+      status: 'indexed',
+      ingestedAt: new Date().toISOString(),
+    },
+    // identity-svc
+    ValidateToken: {
+      valid: true,
+      claims: {
+        sub: 'user_001',
+        tenant_id: 'demo-tenant',
+        roles: ['admin', 'analyst'],
+        permissions: ['read:plans', 'write:plans', 'read:reports'],
+        iat: Math.floor(Date.now() / 1000) - 3600,
+        exp: Math.floor(Date.now() / 1000) + 3600,
+      },
+    },
+    ResolvePermissions: {
+      userId: 'user_001',
+      tenantId: 'demo-tenant',
+      resource: 'compensation_plan',
+      effectivePermissions: ['read', 'write', 'approve', 'export'],
+      sources: [
+        { permission: 'read', source: 'role:admin', type: 'role' },
+        { permission: 'write', source: 'role:admin', type: 'role' },
+        { permission: 'approve', source: 'direct_grant', type: 'direct' },
+        { permission: 'export', source: 'role:analyst', type: 'role' },
+      ],
+    },
+    // usage-svc
+    Record: {
+      eventId: 'usage_evt_001',
+      recorded: true,
+      metric: 'ai.tokens',
+      value: 1500,
+      bucketKey: '2026-03-12',
+      runningTotal: 45230,
+    },
+    // oversight-svc
+    CreateApproval: {
+      approvalId: 'apr_001',
+      status: 'pending',
+      requester: 'agent:healing-chief',
+      approvers: ['user:ops_lead', 'user:platform_admin'],
+      slaDeadline: new Date(Date.now() + 15 * 60000).toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+    ListApprovals: {
+      approvals: [
+        { id: 'apr_001', action: 'deploy.production', status: 'pending', requester: 'agent:healing-chief', severity: 'high', createdAt: new Date(Date.now() - 300000).toISOString() },
+        { id: 'apr_002', action: 'schema.migrate', status: 'approved', requester: 'user:dev_lead', severity: 'medium', resolvedAt: new Date(Date.now() - 7200000).toISOString() },
+      ],
+      total: 2,
+    },
+    // dispute-svc
+    CreateCase: {
+      caseId: 'case_001',
+      status: 'open',
+      title: 'Q1 Accelerator Calculation Dispute',
+      category: 'commission_calculation',
+      amountDisputed: 4250.00,
+      assignedTo: 'manager:comp_admin',
+      sla: { responseBy: new Date(Date.now() + 48 * 3600000).toISOString() },
+      createdAt: new Date().toISOString(),
+    },
+    // scoping-svc
+    Estimate: {
+      estimateId: 'est_001',
+      clientName: 'Acme Corp',
+      engagementType: 'spm_implementation',
+      modules: ['compensation', 'territory', 'quota', 'analytics'],
+      complexity: 'medium',
+      estimates: {
+        totalWeeks: 12,
+        totalHours: 480,
+        phases: [
+          { name: 'Discovery', weeks: 2, hours: 80 },
+          { name: 'Configuration', weeks: 4, hours: 160 },
+          { name: 'Integration', weeks: 3, hours: 120 },
+          { name: 'UAT & Go-Live', weeks: 3, hours: 120 },
+        ],
+      },
+      pricing: { low: 96000, mid: 120000, high: 144000, currency: 'USD' },
+    },
+    // deploy-svc
+    Lookup: {
+      path: 'apps/aicr',
+      found: true,
+      config: {
+        vercelProject: 'aicr-platform',
+        domain: 'app.aicoderally.com',
+        deployPolicy: 'pr-merge',
+        framework: 'nextjs',
+        category: 'platform',
+      },
+    },
+    ValidateManifest: {
+      valid: true,
+      entries: 24,
+      warnings: [
+        { path: 'sandbox/tendr', message: 'No recent deployment detected' },
+      ],
+      duplicateDomains: [],
+      missingProjects: [],
+      checkedAt: new Date().toISOString(),
+    },
+    // storage-svc
+    Upload: {
+      fileId: 'file_001',
+      signedUrl: 'https://storage.aicoderally.com/demo-tenant/file_001?token=demo...',
+      expiresAt: new Date(Date.now() + 3600000).toISOString(),
+      metadata: { filename: 'q1-comp-plan.pdf', contentType: 'application/pdf', sizeBytes: 245000 },
+    },
+    // email-svc
+    Send: {
+      messageId: 'msg_001',
+      status: 'queued',
+      template: 'approval_request',
+      to: 'manager@example.com',
+      estimatedDelivery: new Date(Date.now() + 30000).toISOString(),
+    },
+    // prizym-svc
+    ValidateFormula: {
+      valid: true,
+      parsedTokens: 12,
+      variables: ['attainment', 'base_rate'],
+      complexity: 'medium',
+      estimatedEvalTimeMs: 0.3,
+      warnings: [],
+    },
+    ExecuteBehavior: {
+      behaviorId: 'beh_accelerator_001',
+      result: {
+        commission: 9375,
+        effectiveRate: 1.5,
+        tierApplied: 'accelerator_tier_2',
+        breakdown: {
+          baseCommission: 6250,
+          acceleratorBonus: 3125,
+          attainmentMultiplier: 1.15,
+        },
+      },
+      executionTimeMs: 2.1,
+    },
+    // eval-svc
+    CreateSuite: {
+      suiteId: 'suite_001',
+      name: 'Comp Plan Analysis Suite',
+      testCaseCount: 2,
+      model: 'claude-sonnet-4-5-20250514',
+      status: 'created',
+      createdAt: new Date().toISOString(),
+    },
+    // research-svc
+    GeneratePrompt: {
+      promptId: 'prompt_001',
+      template: 'gap_analysis',
+      pack: 'sparcc',
+      generatedPrompt: 'You are an expert compensation analyst. Analyze the following compensation plan document for gaps in: accelerators, clawbacks, and quota methodology. Compare against industry best practices for the technology sector...',
+      tokenEstimate: 340,
+      variables: { document_type: 'compensation_plan', industry: 'technology' },
+    },
+    // demo-svc
+    Analyze: {
+      scaffoldId: 'scaffold_001',
+      industry: 'pharmaceutical',
+      recommendations: {
+        modules: ['territory_management', 'quota_planning', 'incentive_compensation', 'field_analytics'],
+        dataModels: ['medical_rep', 'district', 'product_line', 'prescription_data'],
+        compComponents: ['base_salary', 'target_bonus', 'contest_spiff', 'managed_care_override'],
+      },
+      complexity: 'high',
+      estimatedPages: 18,
+    },
+    // eventbus-svc
+    Publish: {
+      messageId: 'nats_msg_001',
+      subject: 'aicr.deal.stage_changed',
+      stream: 'AICR_EVENTS',
+      sequence: 42847,
+      publishedAt: new Date().toISOString(),
+    },
   };
 
   const execute = useCallback(async () => {
@@ -119,7 +343,10 @@ export function TryItPanel({ method, path, rpcName, defaultBody, description }: 
       const url = `${GATEWAY_URL}${path}`;
       const opts: RequestInit = {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}),
+        },
       };
       if (method !== 'GET' && body.trim() !== '{}') {
         opts.body = body;
@@ -138,7 +365,7 @@ export function TryItPanel({ method, path, rpcName, defaultBody, description }: 
     }
     setLatency(Date.now() - start);
     setLoading(false);
-  }, [mode, method, path, body, rpcName]);
+  }, [mode, method, path, body, rpcName, authToken]);
 
   return (
     <div className="rounded-xl border border-[#1a2a2e] bg-[#0d1517] overflow-hidden">
