@@ -10,6 +10,10 @@ import { GatewayHealth } from '../../../../components/api-explorer/GatewayHealth
 
 const GATEWAY_URL = 'https://api.aicoderally.com';
 
+export function generateStaticParams() {
+  return manifest.services.map((s) => ({ slug: s.slug }));
+}
+
 type Rpc = (typeof manifest.services)[0]['rpcs'][0];
 
 function HttpBadge({ method }: { method: string }) {
