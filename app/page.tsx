@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import manifest from '../data/services-manifest.json';
 import { playgrounds } from '../components/api-explorer/playgrounds';
+import { GatewayHealth } from '../components/api-explorer/GatewayHealth';
 
 const productDemos = [
   {
@@ -205,7 +206,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* ═══════════════ API Explorer ═══════════════ */}
-      <section className="px-6 pb-16 pt-4 lg:px-12">
+      <section id="api-explorer" className="px-6 pb-16 pt-4 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <div className="mb-8 flex items-center gap-4">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#06b6d4] to-[#0891b2]">
@@ -215,7 +216,10 @@ export default function PortfolioPage() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white">API Explorer</h2>
-              <p className="text-sm text-[#888]">{manifest.services.length} microservices &middot; {totalRpcs} RPCs &middot; gRPC + REST</p>
+              <div className="flex items-center gap-3">
+                <p className="text-sm text-[#888]">{manifest.services.length} microservices &middot; {totalRpcs} RPCs &middot; gRPC + REST</p>
+                <GatewayHealth />
+              </div>
             </div>
           </div>
 
