@@ -1,7 +1,7 @@
 'use client';
 
-import { ActNavigation, SectionCard, KpiCard } from '@/components/demos/meridian';
-import { FUND_PERFORMANCE, PORTFOLIO, FUND } from '@/data/meridian';
+import { ActNavigation, SectionCard, KpiCard, SignalStrip, ThesisSpotlight } from '@/components/demos/meridian';
+import { FUND_PERFORMANCE, FUND } from '@/data/meridian';
 
 const JCURVE = [
   { year: 0, irr: 0 },
@@ -28,31 +28,52 @@ export default function FundAnalyticsPage() {
     <>
       <ActNavigation currentAct={6} />
 
-      <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#F97316' }}>
+      {/* Signal Strip */}
+      <SignalStrip
+        signals={[
+          { label: 'Net IRR', value: '18.6%', status: 'green', detail: 'Top quartile (Q1)' },
+          { label: 'J-Curve', value: 'Inflected', status: 'green', detail: 'Positive since Year 2' },
+          { label: 'Peer Rank', value: 'Top 15%', status: 'green', detail: 'Vintage 2022 cohort' },
+          { label: 'Benchmark', value: '+5.4%', status: 'green', detail: 'PME alpha vs S&P 500' },
+        ]}
+      />
+
+      <div className="mt-2 mb-6 animate-mr-fade-in">
+        <div className="text-[11px] tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#F97316' }}>
           Act 6 &middot; Analytics &amp; Platform
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--mr-text)', fontFamily: 'var(--mr-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--mr-text)', fontFamily: 'var(--mr-font)' }}>
           Fund Analytics Dashboard
         </h1>
       </div>
 
-      <div className="grid grid-cols-5 gap-3 mb-8">
-        <KpiCard label="Net IRR" value={`${(FUND_PERFORMANCE.netIRR * 100).toFixed(1)}%`} accent="#10B981" sub="Top quartile" stagger={0} />
-        <KpiCard label="Net TVPI" value={`${FUND_PERFORMANCE.netTVPI.toFixed(2)}x`} accent="#3B82F6" sub="Total value / paid-in" stagger={1} />
+      {/* Thesis Spotlight */}
+      <ThesisSpotlight
+        headline="Outperformance Through Operational Alpha"
+        insight="Fund IV's top-quartile positioning is driven by EBITDA expansion at the portfolio level, not financial engineering. Early J-curve inflection at Year 2 (vs. typical Year 3-4) reflects faster value creation from our operational playbook and bolt-on acquisition strategy."
+        accentColor="#F97316"
+        implications={[
+          'PME alpha of +5.4% over S&P 500 demonstrates genuine skill premium — net of fees, Fund IV is generating 1.4x the public market equivalent.',
+          'DPI of 0.55x at Year 3.5 is well ahead of median (0.32x) — driven by early exits of Apex Logistics and partial realizations.',
+        ]}
+      />
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+        <KpiCard label="Net IRR" value={`${(FUND_PERFORMANCE.netIRR * 100).toFixed(1)}%`} accent="#10B981" sub="Top quartile" variant="primary" delta="+3.2%" deltaDirection="up" stagger={0} />
+        <KpiCard label="Net TVPI" value={`${FUND_PERFORMANCE.netTVPI.toFixed(2)}x`} accent="#3B82F6" sub="Total value / paid-in" variant="primary" stagger={1} />
         <KpiCard label="DPI" value={`${FUND_PERFORMANCE.netDPI.toFixed(2)}x`} accent="#8B5CF6" sub="Distributions / paid-in" stagger={2} />
         <KpiCard label="PME Alpha" value={`+${(FUND_PERFORMANCE.pmeAlpha * 100).toFixed(1)}%`} accent="#D4A847" sub="vs S&P 500" stagger={3} />
         <KpiCard label="Quartile" value="Q1" accent="#F97316" sub={`Vintage ${FUND.vintage}`} stagger={4} />
       </div>
 
       {/* J-Curve */}
-      <SectionCard title="J-Curve — Net IRR Progression">
+      <SectionCard title="J-Curve — Net IRR Progression" variant="hero" accentColor="#F97316">
         <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
           {/* Grid */}
           {[-0.1, 0, 0.1, 0.2].map((v) => (
             <g key={v}>
               <line x1={pad.left} y1={toY(v)} x2={w - pad.right} y2={toY(v)} stroke="var(--mr-chart-grid)" strokeWidth="1" strokeDasharray={v === 0 ? 'none' : '4 4'} />
-              <text x={pad.left - 8} y={toY(v) + 4} textAnchor="end" fontSize="10" fill="var(--mr-text-faint)" fontFamily="monospace">{(v * 100).toFixed(0)}%</text>
+              <text x={pad.left - 8} y={toY(v) + 4} textAnchor="end" fontSize="10" fill="var(--mr-text-faint)" fontFamily="var(--mr-font)">{(v * 100).toFixed(0)}%</text>
             </g>
           ))}
 
@@ -82,20 +103,20 @@ export default function FundAnalyticsPage() {
           ))}
 
           {/* Current position */}
-          <text x={toX(3.5) + 8} y={toY(0.186) + 4} fontSize="11" fontWeight="bold" fill="#D4A847" fontFamily="monospace">18.6% Net IRR</text>
+          <text x={toX(3.5) + 8} y={toY(0.186) + 4} fontSize="11" fontWeight="bold" fill="#D4A847" fontFamily="var(--mr-font)">18.6% Net IRR</text>
 
           {/* X axis */}
           {[0, 1, 2, 3].map((yr) => (
-            <text key={yr} x={toX(yr)} y={h - 8} textAnchor="middle" fontSize="10" fill="var(--mr-text-faint)" fontFamily="monospace">Year {yr}</text>
+            <text key={yr} x={toX(yr)} y={h - 8} textAnchor="middle" fontSize="10" fill="var(--mr-text-faint)" fontFamily="var(--mr-font)">Year {yr}</text>
           ))}
         </svg>
-        <div className="text-xs font-mono mt-1" style={{ color: 'var(--mr-text-faint)' }}>
+        <div className="text-[12px] mt-2" style={{ color: 'var(--mr-text-faint)' }}>
           Typical PE J-curve: negative IRR in early years due to management fees and unrealized investments. Fund IV crossed positive IRR at year 2.
         </div>
       </SectionCard>
 
       {/* Peer Comparison */}
-      <SectionCard title="Vintage 2022 Peer Comparison">
+      <SectionCard title="Vintage 2022 Peer Comparison" meta="Cambridge Associates benchmark">
         <div className="space-y-2">
           {[
             { fund: 'Granite Peak IV', irr: 18.6, tvpi: 1.62, dpi: 0.55, quartile: 'Q1', highlight: true },
@@ -105,22 +126,24 @@ export default function FundAnalyticsPage() {
           ].map((p) => (
             <div
               key={p.fund}
-              className="flex items-center gap-4 p-3 rounded-lg"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 rounded-xl transition-all hover:shadow-md animate-mr-fade-in"
               style={{
                 background: p.highlight ? 'rgba(212,168,71,0.08)' : 'var(--mr-card-alt)',
                 border: `1px solid ${p.highlight ? '#D4A847' : 'var(--mr-border)'}`,
               }}
             >
               <div className="flex-1">
-                <span className="text-[13px] font-bold" style={{ color: p.highlight ? '#D4A847' : 'var(--mr-text)' }}>{p.fund}</span>
+                <span className="text-[14px] font-bold" style={{ color: p.highlight ? '#D4A847' : 'var(--mr-text)', fontFamily: 'var(--mr-font)' }}>{p.fund}</span>
               </div>
-              <div className="text-center w-20"><div className="text-xs font-mono" style={{ color: 'var(--mr-text-faint)' }}>Net IRR</div><div className="text-sm font-bold font-mono" style={{ color: 'var(--mr-text)' }}>{p.irr}%</div></div>
-              <div className="text-center w-20"><div className="text-xs font-mono" style={{ color: 'var(--mr-text-faint)' }}>TVPI</div><div className="text-sm font-bold font-mono" style={{ color: 'var(--mr-text)' }}>{p.tvpi}x</div></div>
-              <div className="text-center w-20"><div className="text-xs font-mono" style={{ color: 'var(--mr-text-faint)' }}>DPI</div><div className="text-sm font-bold font-mono" style={{ color: 'var(--mr-text)' }}>{p.dpi}x</div></div>
-              <div className="w-12 text-center">
-                <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{ background: p.quartile === 'Q1' ? '#10B98115' : '#6B728015', color: p.quartile === 'Q1' ? '#10B981' : '#6B7280' }}>
-                  {p.quartile}
-                </span>
+              <div className="flex gap-4">
+                <div className="text-center w-20"><div className="text-[10px] uppercase tracking-[1px] font-semibold" style={{ color: 'var(--mr-text-faint)' }}>Net IRR</div><div className="text-[14px] font-bold tabular-nums" style={{ color: 'var(--mr-text)' }}>{p.irr}%</div></div>
+                <div className="text-center w-20"><div className="text-[10px] uppercase tracking-[1px] font-semibold" style={{ color: 'var(--mr-text-faint)' }}>TVPI</div><div className="text-[14px] font-bold tabular-nums" style={{ color: 'var(--mr-text)' }}>{p.tvpi}x</div></div>
+                <div className="text-center w-20"><div className="text-[10px] uppercase tracking-[1px] font-semibold" style={{ color: 'var(--mr-text-faint)' }}>DPI</div><div className="text-[14px] font-bold tabular-nums" style={{ color: 'var(--mr-text)' }}>{p.dpi}x</div></div>
+                <div className="w-12 flex items-center justify-center">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: p.quartile === 'Q1' ? '#10B98115' : '#6B728015', color: p.quartile === 'Q1' ? '#10B981' : '#6B7280' }}>
+                    {p.quartile}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
