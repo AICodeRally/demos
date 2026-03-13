@@ -67,7 +67,7 @@ export function SpmShell({ config, children }: SpmShellProps) {
           <div className="flex flex-col items-center">
             <span
               className="text-2xl font-bold bg-clip-text text-transparent tracking-tight"
-              style={{ backgroundImage: gradientCss, fontFamily: "'Space Grotesk', sans-serif" }}
+              style={{ backgroundImage: gradientCss, fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif" }}
             >
               {config.suite.name}
             </span>
@@ -86,7 +86,7 @@ export function SpmShell({ config, children }: SpmShellProps) {
           >
             <span
               className="text-white font-bold text-lg"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              style={{ fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif" }}
             >
               {config.module.code}
             </span>
@@ -96,7 +96,7 @@ export function SpmShell({ config, children }: SpmShellProps) {
           <div className="border-l border-white/10 pl-4">
             <h1
               className="text-lg font-bold bg-clip-text text-transparent"
-              style={{ backgroundImage: gradientCss, fontFamily: "'Space Grotesk', sans-serif" }}
+              style={{ backgroundImage: gradientCss, fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif" }}
             >
               {config.module.name}
             </h1>

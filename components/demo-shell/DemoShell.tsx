@@ -145,7 +145,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
               <div
                 className={cn("text-[19px] font-bold tracking-wide", !config.darkMode && "text-white")}
                 style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
                   ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
                 }}
               >
@@ -266,7 +266,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
                 <div
                   className={cn("text-[13px] font-semibold", !config.darkMode && "text-white/90")}
                   style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
                     ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
                   }}
                 >
@@ -323,7 +323,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
               </div>
               <span
                 className="text-[13px] font-bold"
-                style={{ color: config.darkMode ? 'var(--pl-text)' : 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}
+                style={{ color: config.darkMode ? 'var(--pl-text)' : 'var(--prizym-text-primary)', fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif" }}
               >
                 {config.client.name.toUpperCase()}
               </span>
@@ -373,7 +373,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
           className="flex-1 overflow-y-auto min-h-0 p-6 lg:p-8"
           style={{ background: config.darkMode ? 'var(--pl-bg)' : 'var(--prizym-bg-content)' }}
         >
-          <div className="mx-auto max-w-[1200px]">{children}</div>
+          <div className="mx-auto max-w-[1200px]" style={{ fontSize: '15px' }}>{children}</div>
         </main>
 
         {/* Footer — fixed at bottom */}
@@ -381,33 +381,62 @@ export function DemoShell({ config, children }: DemoShellProps) {
           className="shrink-0"
           style={{
             background: config.darkMode ? 'var(--pl-footer-bg)' : 'var(--prizym-bg-content)',
-            borderTop: config.darkMode ? `1px solid var(--pl-border)` : `1px solid var(--prizym-border-default)`,
           }}
         >
-          <div className="px-6 lg:px-8 py-3">
-            <div className="flex items-center justify-center gap-5">
-              {config.nav.map((section, idx) => (
-                <span
-                  key={`${idx}-${section.section}`}
-                  className="text-[11px] font-semibold"
-                  style={{ color: section.color ?? primaryColor }}
+          {/* Gradient divider */}
+          <div
+            className="h-[2px]"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${primaryColor} 20%, ${resolved.colors.accent} 80%, transparent)`,
+            }}
+          />
+          <div className="px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex h-7 w-7 items-center justify-center rounded-lg"
+                  style={{
+                    background: `linear-gradient(135deg, ${primaryColor}, ${resolved.colors.accent})`,
+                  }}
                 >
-                  {section.section}
+                  <LogoIcon className="h-3.5 w-3.5 text-white" />
+                </div>
+                <div>
+                  <span
+                    className="text-[13px] font-bold tracking-wide"
+                    style={{
+                      color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)',
+                      fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
+                    }}
+                  >
+                    {config.product.name.toUpperCase()}
+                  </span>
+                  <span
+                    className="text-[11px] ml-2"
+                    style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.6 }}
+                  >
+                    {config.client.tagline}
+                  </span>
+                </div>
+              </div>
+              <div
+                className="flex items-center gap-3 text-[11px] tracking-[0.08em]"
+                style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.6 }}
+              >
+                <span>{config.footer.copyright}</span>
+                <span>&middot;</span>
+                <span>
+                  Powered by{' '}
+                  <span
+                    className="font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(90deg, ${primaryColor}, ${resolved.colors.accent})`,
+                    }}
+                  >
+                    {config.footer.poweredBy.toUpperCase()}
+                  </span>
                 </span>
-              ))}
-            </div>
-            <div
-              className="mt-2 flex items-center justify-center gap-3 text-[10px] tracking-[0.1em] uppercase"
-              style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.5 }}
-            >
-              <span>{config.footer.copyright}</span>
-              <span style={{ opacity: 0.5 }}>&bull;</span>
-              <span>
-                Powered by{' '}
-                <span className="font-bold" style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)' }}>
-                  {config.footer.poweredBy.toUpperCase()}
-                </span>
-              </span>
+              </div>
             </div>
           </div>
         </footer>
