@@ -297,7 +297,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
             background: config.darkMode
               ? `var(--pl-header-bg)`
               : `color-mix(in srgb, var(--prizym-bg-content) 95%, transparent)`,
-            borderBottom: `1px solid var(--prizym-border-default)`,
+            borderBottom: config.darkMode ? `1px solid var(--pl-border)` : `1px solid var(--prizym-border-default)`,
           }}
         >
           <div className="flex items-center gap-4">
@@ -306,9 +306,9 @@ export function DemoShell({ config, children }: DemoShellProps) {
               className="rounded-lg p-2 transition-colors hover:bg-white/[0.08] lg:hidden"
             >
               {sidebarOpen ? (
-                <LucideIcons.X className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
+                <LucideIcons.X className="h-5 w-5" style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)' }} />
               ) : (
-                <LucideIcons.Menu className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
+                <LucideIcons.Menu className="h-5 w-5" style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)' }} />
               )}
             </button>
             <div className="flex items-center gap-2.5">
@@ -323,13 +323,13 @@ export function DemoShell({ config, children }: DemoShellProps) {
               </div>
               <span
                 className="text-[13px] font-bold"
-                style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}
+                style={{ color: config.darkMode ? 'var(--pl-text)' : 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 {config.client.name.toUpperCase()}
               </span>
               <span
                 className="text-[11px] hidden sm:inline"
-                style={{ color: 'var(--prizym-text-muted)' }}
+                style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-muted)', letterSpacing: '0.04em' }}
               >
                 {config.client.tagline}
               </span>
@@ -381,7 +381,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
           className="shrink-0"
           style={{
             background: config.darkMode ? 'var(--pl-footer-bg)' : 'var(--prizym-bg-content)',
-            borderTop: `1px solid var(--prizym-border-default)`,
+            borderTop: config.darkMode ? `1px solid var(--pl-border)` : `1px solid var(--prizym-border-default)`,
           }}
         >
           <div className="px-6 lg:px-8 py-3">
@@ -398,13 +398,13 @@ export function DemoShell({ config, children }: DemoShellProps) {
             </div>
             <div
               className="mt-2 flex items-center justify-center gap-3 text-[10px] tracking-[0.1em] uppercase"
-              style={{ color: 'var(--prizym-text-muted)', opacity: 0.5 }}
+              style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.5 }}
             >
               <span>{config.footer.copyright}</span>
               <span style={{ opacity: 0.5 }}>&bull;</span>
               <span>
                 Powered by{' '}
-                <span className="font-bold" style={{ color: 'var(--prizym-text-secondary)' }}>
+                <span className="font-bold" style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)' }}>
                   {config.footer.poweredBy.toUpperCase()}
                 </span>
               </span>

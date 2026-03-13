@@ -38,6 +38,8 @@ const LIGHT_TOKENS: Record<string, string> = {
   '--register-text': '#0F172A',
   '--register-text-muted': '#64748B',
   '--register-text-dim': '#94A3B8',
+  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06)',
 };
 
 const DARK_TOKENS: Record<string, string> = {
@@ -48,6 +50,8 @@ const DARK_TOKENS: Record<string, string> = {
   '--register-text': '#E2E8F0',
   '--register-text-muted': '#94A3B8',
   '--register-text-dim': '#64748B',
+  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15)',
+  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.2)',
 };
 
 const SHARED_TOKENS: Record<string, string> = {
