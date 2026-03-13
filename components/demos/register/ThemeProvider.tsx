@@ -41,10 +41,10 @@ const LIGHT_TOKENS: Record<string, string> = {
 };
 
 const DARK_TOKENS: Record<string, string> = {
-  '--register-bg': '#0F0E1A',
-  '--register-bg-elevated': '#1A1830',
-  '--register-bg-surface': '#1E1B4B',
-  '--register-border': '#312E5C',
+  '--register-bg': '#0B1220',
+  '--register-bg-elevated': '#111B2E',
+  '--register-bg-surface': '#18263B',
+  '--register-border': '#1E3A5F40',
   '--register-text': '#E2E8F0',
   '--register-text-muted': '#94A3B8',
   '--register-text-dim': '#64748B',

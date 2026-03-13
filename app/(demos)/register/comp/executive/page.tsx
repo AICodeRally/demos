@@ -128,7 +128,7 @@ function SankeyColumn({ items, side }: { items: typeof SANKEY_LEFT; side: 'left'
         >
           <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text)' }}>{item.label}</span>
           {'value' in item && (
-            <span style={{ fontSize: '0.65rem', fontWeight: 700, color: item.color, fontFamily: 'monospace' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, color: item.color, fontVariantNumeric: 'tabular-nums' }}>
               {(item as typeof SANKEY_LEFT[0]).value}
             </span>
           )}
@@ -174,10 +174,9 @@ export default function ExecutiveViewPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ marginBottom: 28 }}>
         {/* Total Comp Spend MTD */}
         <div
-          className="rounded-xl"
+          className="register-card"
           style={{
             background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(30,58,95,0.15))',
-            border: '1px solid var(--register-border)',
             padding: '24px 28px',
             position: 'relative',
             overflow: 'hidden',
@@ -186,10 +185,10 @@ export default function ExecutiveViewPage() {
           <div style={{ position: 'absolute', top: 14, right: 16, opacity: 0.15 }}>
             <DollarSign size={48} color="#1E3A5F" />
           </div>
-          <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--register-text-muted)', marginBottom: 6 }}>
+          <p className="register-meta-label">
             Total Comp Spend MTD
           </p>
-          <p style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0, lineHeight: 1.1 }}>
+          <p className="register-kpi-value" style={{ color: 'var(--register-text)' }}>
             ${compSpend.toLocaleString()}
           </p>
           <p style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', marginTop: 4 }}>
@@ -199,10 +198,9 @@ export default function ExecutiveViewPage() {
 
         {/* Budget Utilization — Radial Gauge */}
         <div
-          className="rounded-xl"
+          className="register-card"
           style={{
             background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(16,185,129,0.06))',
-            border: '1px solid var(--register-border)',
             padding: '24px 28px',
             display: 'flex',
             alignItems: 'center',
@@ -211,10 +209,10 @@ export default function ExecutiveViewPage() {
         >
           <RadialGauge pct={68} />
           <div>
-            <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--register-text-muted)', marginBottom: 6 }}>
+            <p className="register-meta-label">
               Budget Utilization
             </p>
-            <p style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'monospace', color: '#10B981', margin: 0, lineHeight: 1.1 }}>
+            <p className="register-kpi-value" style={{ color: '#10B981' }}>
               {budgetPct}%
             </p>
             <p style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', marginTop: 4 }}>
@@ -225,10 +223,9 @@ export default function ExecutiveViewPage() {
 
         {/* Comp-to-Revenue Ratio */}
         <div
-          className="rounded-xl"
+          className="register-card"
           style={{
             background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(245,158,11,0.06))',
-            border: '1px solid var(--register-border)',
             padding: '24px 28px',
             position: 'relative',
             overflow: 'hidden',
@@ -237,11 +234,11 @@ export default function ExecutiveViewPage() {
           <div style={{ position: 'absolute', top: 14, right: 16, opacity: 0.15 }}>
             <Target size={48} color="#F59E0B" />
           </div>
-          <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--register-text-muted)', marginBottom: 6 }}>
+          <p className="register-meta-label">
             Comp-to-Revenue Ratio
           </p>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-            <p style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'monospace', color: '#F59E0B', margin: 0, lineHeight: 1.1 }}>
+            <p className="register-kpi-value" style={{ color: '#F59E0B' }}>
               {compRatio}%
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
@@ -257,17 +254,15 @@ export default function ExecutiveViewPage() {
 
       {/* ── Budget Burn Bar ──────────────────────────── */}
       <div
-        className="rounded-xl"
+        className="register-section"
         style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
           padding: '24px 28px',
           marginBottom: 28,
         }}
       >
         <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
           <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Budget Burn Rate</h2>
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)', fontFamily: 'monospace' }}>
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
             March 2026
           </span>
         </div>
@@ -349,10 +344,8 @@ export default function ExecutiveViewPage() {
 
       {/* ── Format Breakdown Table ───────────────────── */}
       <div
-        className="rounded-xl"
+        className="register-section"
         style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
           padding: '24px 28px',
           marginBottom: 28,
           overflowX: 'auto',
@@ -405,10 +398,10 @@ export default function ExecutiveViewPage() {
                       <span style={{ fontWeight: 600, color: 'var(--register-text)' }}>{row.format}</span>
                     </div>
                   </td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--register-text)' }}>{row.reps}</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--register-text)' }}>${(row.revenue / 1000000).toFixed(1)}M</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'monospace', fontWeight: 700, color: 'var(--register-text)' }}>${(row.compSpend / 1000).toFixed(0)}K</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>{row.compPct.toFixed(1)}%</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>{row.reps}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>${(row.revenue / 1000000).toFixed(1)}M</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: 'var(--register-text)' }}>${(row.compSpend / 1000).toFixed(0)}K</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)' }}>{row.compPct.toFixed(1)}%</td>
                   <td style={{ padding: '12px 14px', textAlign: 'right', fontWeight: 600, color: varColor }}>
                     {varLabel}
                   </td>
@@ -421,10 +414,8 @@ export default function ExecutiveViewPage() {
 
       {/* ── Sankey-style Flow ────────────────────────── */}
       <div
-        className="rounded-xl"
+        className="register-section"
         style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
           padding: '24px 28px',
           marginBottom: 28,
         }}

@@ -12,9 +12,9 @@ interface StatCardProps {
 }
 
 const trendConfig = {
-  up: { arrow: '\u2191', color: '#059669' },
-  down: { arrow: '\u2193', color: '#DC2626' },
-  flat: { arrow: '\u2192', color: '#A8A29E' },
+  up: { arrow: '\u2191', color: 'var(--register-success, #10B981)' },
+  down: { arrow: '\u2193', color: 'var(--register-danger, #EF4444)' },
+  flat: { arrow: '\u2192', color: 'var(--register-text-muted, #94A3B8)' },
 } as const;
 
 export function StatCard({
@@ -22,23 +22,15 @@ export function StatCard({
   value,
   trend,
   trendValue,
-  color = '#8B7355',
+  color = 'var(--register-accent)',
   sparkline,
 }: StatCardProps) {
   return (
-    <div
-      className="relative overflow-hidden rounded-xl border p-5"
-      style={{ backgroundColor: 'var(--pl-card, #FFFFFF)', borderColor: 'var(--pl-border, #E7E5E4)' }}
-    >
+    <div className="register-card register-card-hover relative overflow-hidden p-5">
+      <p className="register-meta-label">{label}</p>
       <p
-        className="text-xs font-medium uppercase tracking-wider"
-        style={{ color: 'var(--pl-text-muted, #A8A29E)' }}
-      >
-        {label}
-      </p>
-      <p
-        className="mt-1 text-2xl font-bold"
-        style={{ color: 'var(--pl-text, #1C1917)' }}
+        className="register-kpi-value mt-1"
+        style={{ color: 'var(--register-text)' }}
       >
         {value}
       </p>

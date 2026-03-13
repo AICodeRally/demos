@@ -52,7 +52,7 @@ function StoreFloorPlan() {
         position: 'relative',
         width: '100%',
         height: 300,
-        borderRadius: 12,
+        borderRadius: 14,
         background: 'var(--register-bg-surface)',
         border: '1px solid var(--register-border)',
         overflow: 'hidden',
@@ -275,20 +275,17 @@ export default function FloorDashboard() {
       )}
 
       {/* Stat Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+      <div className="register-kpi-strip">
         {stats.map((stat) => (
           <div
             key={stat.label}
-            style={{
-              padding: '16px 18px', borderRadius: 12,
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
-            }}
+            className="register-card"
+            style={{ padding: '16px 18px' }}
           >
-            <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-dim)', margin: 0 }}>
+            <p className="register-meta-label" style={{ margin: 0 }}>
               {stat.label}
             </p>
-            <p style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'monospace', color: stat.color, margin: '4px 0 0' }}>
+            <p className="register-kpi-value" style={{ color: stat.color, margin: '4px 0 0' }}>
               {stat.value}
             </p>
           </div>
@@ -299,15 +296,8 @@ export default function FloorDashboard() {
       <StoreFloorPlan />
 
       {/* Shift Sales Table */}
-      <div
-        style={{
-          padding: 18, borderRadius: 12,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          marginBottom: 24,
-        }}
-      >
-        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 12 }}>
+      <div className="register-section">
+        <p className="register-section-header">
           Shift Sales
         </p>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -332,7 +322,7 @@ export default function FloorDashboard() {
           <tbody>
             {SHIFT_SALES.map((sale, i) => (
               <tr key={sale.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--register-bg-surface)' }}>
-                <td style={{ padding: '8px 10px', fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-accent)' }}>
+                <td style={{ padding: '8px 10px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-accent)' }}>
                   {sale.id}
                 </td>
                 <td style={{ padding: '8px 10px', fontSize: '0.75rem', color: 'var(--register-text-muted)' }}>
@@ -341,7 +331,7 @@ export default function FloorDashboard() {
                 <td style={{ padding: '8px 10px', fontSize: '0.75rem', color: 'var(--register-text)' }}>
                   {sale.items.map((it) => it.name).join(', ')}
                 </td>
-                <td style={{ padding: '8px 10px', fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 700, color: 'var(--register-text)', textAlign: 'right' }}>
+                <td style={{ padding: '8px 10px', fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text)', textAlign: 'right' }}>
                   ${sale.total.toLocaleString()}
                 </td>
                 <td style={{ padding: '8px 10px', fontSize: '0.75rem', fontWeight: 600, textAlign: 'right', color: sale.attachRate >= 50 ? '#10B981' : '#EF4444' }}>
@@ -368,10 +358,9 @@ export default function FloorDashboard() {
             return (
               <div
                 key={rep.id}
+                className="register-card register-card-hover"
                 style={{
-                  padding: 14, borderRadius: 12,
-                  background: 'var(--register-bg-elevated)',
-                  border: '1px solid var(--register-border)',
+                  padding: 14,
                   display: 'flex', alignItems: 'center', gap: 12,
                 }}
               >
@@ -383,7 +372,7 @@ export default function FloorDashboard() {
                   </p>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                  <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
                     ${rep.metrics.shiftRevenue.toLocaleString()}
                   </p>
                   <p style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>shift revenue</p>

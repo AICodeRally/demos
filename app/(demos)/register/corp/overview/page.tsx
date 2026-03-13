@@ -79,10 +79,8 @@ export default function CorpOverview() {
           return (
             <div
               key={s.label}
+              className="register-card"
               style={{
-                background: 'var(--register-bg-elevated)',
-                border: '1px solid var(--register-border)',
-                borderRadius: 12,
                 padding: '20px 20px 16px',
                 borderTop: `3px solid ${s.color}`,
                 opacity: mounted ? 1 : 0,
@@ -108,7 +106,7 @@ export default function CorpOverview() {
                   <Icon size={16} color={s.color} />
                 </div>
               </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--register-text)', lineHeight: 1 }}>
+              <div className="register-kpi-value">
                 {s.prefix || ''}{Math.round(countVals[i])}{s.suffix || ''}
               </div>
               <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)', marginTop: 4 }}>
@@ -124,19 +122,15 @@ export default function CorpOverview() {
 
       {/* Store Format Breakdown */}
       <div
+        className="register-section"
         style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          borderRadius: 12,
-          padding: 24,
-          marginBottom: 24,
           opacity: mounted ? 1 : 0,
           transform: mounted ? 'translateY(0)' : 'translateY(12px)',
           transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
           transitionDelay: '0.35s',
         }}
       >
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 16 }}>
+        <h2 className="register-section-header">
           Store Format Breakdown
         </h2>
 
@@ -164,11 +158,8 @@ export default function CorpOverview() {
           {STORE_FORMATS.map((f, i) => (
             <div
               key={f.name}
-              className="register-card-hover"
+              className="register-card register-card-hover"
               style={{
-                background: 'var(--register-bg-surface)',
-                border: '1px solid var(--register-border)',
-                borderRadius: 10,
                 padding: '16px',
                 borderLeft: `4px solid ${f.color}`,
                 opacity: mounted ? 1 : 0,
@@ -178,13 +169,13 @@ export default function CorpOverview() {
                 cursor: 'default',
               }}
             >
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, color: f.color, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <div className="register-meta-label" style={{ color: f.color }}>
                 {f.tag}
               </div>
               <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 6 }}>
                 {f.name}
               </div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 4 }}>
+              <div className="register-kpi-value" style={{ fontSize: '1.6rem', marginTop: 4 }}>
                 {f.stores}
                 <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--register-text-muted)', marginLeft: 4 }}>
                   stores
@@ -208,28 +199,23 @@ export default function CorpOverview() {
 
       {/* Quick Metrics Grid */}
       <div
+        className="register-section"
         style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          borderRadius: 12,
-          padding: 24,
-          marginBottom: 24,
           opacity: mounted ? 1 : 0,
           transform: mounted ? 'translateY(0)' : 'translateY(12px)',
           transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
           transitionDelay: '0.5s',
         }}
       >
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 16 }}>
+        <h2 className="register-section-header">
           Quick Metrics
         </h2>
         <div className="grid grid-cols-3 gap-4">
           {QUICK_METRICS.map((m, i) => (
             <div
               key={m.label}
+              className="register-card"
               style={{
-                background: 'var(--register-bg-surface)',
-                borderRadius: 10,
                 padding: '20px 20px',
                 textAlign: 'center',
                 opacity: mounted ? 1 : 0,
@@ -245,7 +231,7 @@ export default function CorpOverview() {
                 background: `linear-gradient(90deg, #1E3A5F, #06B6D4)`,
                 opacity: 0.6,
               }} />
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--register-text)' }}>
+              <div className="register-kpi-value" style={{ fontSize: '1.75rem' }}>
                 {m.value}
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--register-text-muted)', marginTop: 4 }}>
@@ -258,16 +244,6 @@ export default function CorpOverview() {
 
       {/* AI Insight */}
       {insight && <AIInsightCard>{insight.text}</AIInsightCard>}
-
-      <style>{`
-        .register-card-hover {
-          transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-        }
-        .register-card-hover:hover {
-          transform: translateY(-2px) !important;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-      `}</style>
     </RegisterPage>
   );
 }
