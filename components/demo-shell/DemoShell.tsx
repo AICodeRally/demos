@@ -205,21 +205,28 @@ export function DemoShell({ config, children }: DemoShellProps) {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all duration-150',
+                        'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all duration-150 relative',
                         config.darkMode
                           ? isActive
                             ? 'shadow-sm'
-                            : ''
+                            : 'hover:bg-white/[0.03]'
                           : isActive
                           ? 'bg-white/[0.10] text-white shadow-sm'
                           : 'text-white/65 hover:bg-white/[0.04] hover:text-white/80'
                       )}
                       style={config.darkMode ? {
-                        background: isActive ? 'var(--pl-sidebar-active-bg)' : undefined,
+                        background: isActive ? `${itemColor}15` : undefined,
                         color: isActive ? 'var(--pl-sidebar-text)' : 'var(--pl-sidebar-text-muted)',
                       } : undefined}
                       onClick={() => setSidebarOpen(false)}
                     >
+                      {/* Active accent rail */}
+                      {isActive && (
+                        <span
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r"
+                          style={{ height: '60%', background: itemColor }}
+                        />
+                      )}
                       <Icon
                         className={cn(
                           'h-[18px] w-[18px] shrink-0 transition-colors',
@@ -296,7 +303,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="rounded-lg p-1.5 transition-colors hover:bg-white/[0.06] lg:hidden"
+              className="rounded-lg p-2 transition-colors hover:bg-white/[0.08] lg:hidden"
             >
               {sidebarOpen ? (
                 <LucideIcons.X className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
@@ -321,7 +328,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
                 {config.client.name.toUpperCase()}
               </span>
               <span
-                className="text-[11px] font-mono hidden sm:inline"
+                className="text-[11px] hidden sm:inline"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {config.client.tagline}
@@ -382,7 +389,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
               {config.nav.map((section, idx) => (
                 <span
                   key={`${idx}-${section.section}`}
-                  className="text-[11px] font-semibold font-mono"
+                  className="text-[11px] font-semibold"
                   style={{ color: section.color ?? primaryColor }}
                 >
                   {section.section}
