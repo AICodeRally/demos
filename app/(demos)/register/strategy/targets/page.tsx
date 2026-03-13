@@ -1,6 +1,34 @@
 'use client';
 
+import { useState, useEffect, useRef } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
+import { Target, ArrowUp } from 'lucide-react';
+
+/* ── Animated count-up hook ─────────────────────────────── */
+function useCountUp(target: number, duration = 1400, decimals = 0) {
+  const [value, setValue] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const rafRef = useRef<number>(0);
+  const startRef = useRef<number | null>(null);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    startRef.current = null;
+    const step = (ts: number) => {
+      if (!startRef.current) startRef.current = ts;
+      const progress = Math.min((ts - startRef.current) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(parseFloat((eased * target).toFixed(decimals)));
+      if (progress < 1) rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [mounted, target, duration, decimals]);
+
+  return value;
+}
 
 const FORMAT_TARGETS = [
   { format: 'Flagship', target: '$280K', current: '$248K', pct: 89, stores: 12, color: '#1E3A5F' },
@@ -17,15 +45,37 @@ const VARIANCE = [
 ];
 
 export default function StoreTargets() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  const pcts = [
+    useCountUp(89, 1600),
+    useCountUp(89, 1600),
+    useCountUp(93, 1600),
+    useCountUp(93, 1600),
+  ];
+
   return (
     <RegisterPage title="Store Targets" subtitle="FY26 Target Allocation" accentColor="#06B6D4">
       {/* Target Allocation by Format */}
-      <div style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', borderRadius: 12, padding: 24, marginBottom: 24 }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 20 }}>
-          Target Allocation by Format (per store/month)
-        </h2>
+      <div style={{
+        background: 'var(--register-bg-elevated)',
+        border: '1px solid var(--register-border)',
+        borderRadius: 12,
+        padding: 24,
+        marginBottom: 24,
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}>
+        <div className="flex items-center gap-2" style={{ marginBottom: 20 }}>
+          <Target size={16} color="#06B6D4" />
+          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+            Target Allocation by Format (per store/month)
+          </h2>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {FORMAT_TARGETS.map((f) => (
+          {FORMAT_TARGETS.map((f, i) => (
             <div
               key={f.format}
               style={{
@@ -33,12 +83,23 @@ export default function StoreTargets() {
                 borderRadius: 10,
                 padding: '16px 18px',
                 borderLeft: `4px solid ${f.color}`,
+                position: 'relative',
+                overflow: 'hidden',
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? 'translateY(0)' : 'translateY(8px)',
+                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                transitionDelay: `${i * 0.08}s`,
               }}
             >
+              <div style={{
+                position: 'absolute', top: 0, right: 0, width: 60, height: 60,
+                background: `radial-gradient(circle at top right, ${f.color}10, transparent 70%)`,
+                pointerEvents: 'none',
+              }} />
               <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 {f.format} ({f.stores} stores)
               </div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 6 }}>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 6 }}>
                 {f.target}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2 }}>
@@ -50,36 +111,67 @@ export default function StoreTargets() {
       </div>
 
       {/* Current vs Target Progress Bars */}
-      <div style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+      <div style={{
+        background: 'var(--register-bg-elevated)',
+        border: '1px solid var(--register-border)',
+        borderRadius: 12,
+        padding: 24,
+        marginBottom: 24,
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        transitionDelay: '0.2s',
+      }}>
         <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 20 }}>
           Current vs. Target (MTD)
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {FORMAT_TARGETS.map((f) => (
-            <div key={f.format}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          {FORMAT_TARGETS.map((f, i) => (
+            <div
+              key={f.format}
+              style={{
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? 'translateX(0)' : 'translateX(-6px)',
+                transition: 'all 0.4s ease',
+                transitionDelay: `${0.3 + i * 0.08}s`,
+              }}
+            >
               <div className="flex justify-between items-center" style={{ marginBottom: 6 }}>
                 <div className="flex items-center gap-2">
-                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: f.color, display: 'inline-block' }} />
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: f.color, display: 'inline-block', boxShadow: `0 0 6px ${f.color}40` }} />
                   <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--register-text)' }}>{f.format}</span>
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--register-text-muted)' }}>
                   {f.current} / {f.target}
-                  <span style={{ fontWeight: 700, color: f.pct >= 90 ? '#10B981' : '#F59E0B', marginLeft: 8 }}>
-                    {f.pct}%
+                  <span style={{
+                    fontWeight: 700,
+                    color: f.pct >= 90 ? '#10B981' : '#F59E0B',
+                    marginLeft: 8,
+                    fontSize: '0.9rem',
+                  }}>
+                    {Math.round(pcts[i])}%
                   </span>
                 </div>
               </div>
               {/* Progress bar */}
-              <div style={{ height: 10, borderRadius: 5, background: 'var(--register-bg-surface)', overflow: 'hidden' }}>
+              <div style={{ height: 12, borderRadius: 6, background: 'var(--register-bg-surface)', overflow: 'hidden', position: 'relative' }}>
                 <div
                   style={{
                     height: '100%',
-                    width: `${f.pct}%`,
-                    borderRadius: 5,
-                    background: f.color,
-                    transition: 'width 0.4s ease',
+                    width: mounted ? `${f.pct}%` : '0%',
+                    borderRadius: 6,
+                    background: `linear-gradient(90deg, ${f.color}, ${f.color}CC)`,
+                    transition: 'width 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transitionDelay: `${0.4 + i * 0.1}s`,
+                    boxShadow: `0 0 8px ${f.color}30`,
                   }}
                 />
+                {/* 100% marker */}
+                <div style={{
+                  position: 'absolute', top: 0, bottom: 0, right: 0, width: 2,
+                  background: 'var(--register-text-dim)',
+                  opacity: 0.3,
+                }} />
               </div>
             </div>
           ))}
@@ -87,53 +179,57 @@ export default function StoreTargets() {
       </div>
 
       {/* Variance Analysis */}
-      <div style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', borderRadius: 12, overflow: 'hidden' }}>
-        <div style={{ padding: '16px 20px' }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Variance Analysis</h2>
+      <div style={{
+        background: 'var(--register-bg-elevated)',
+        border: '1px solid var(--register-border)',
+        borderRadius: 12,
+        padding: 24,
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        transitionDelay: '0.4s',
+      }}>
+        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 16 }}>Variance Analysis</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {VARIANCE.map((v, i) => (
+            <div
+              key={v.format}
+              style={{
+                background: 'var(--register-bg-surface)',
+                borderRadius: 10,
+                padding: '14px 18px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 16,
+                borderLeft: `4px solid ${v.statusColor}`,
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? 'translateX(0)' : 'translateX(-6px)',
+                transition: 'all 0.4s ease',
+                transitionDelay: `${0.5 + i * 0.08}s`,
+              }}
+            >
+              <div style={{ minWidth: 80 }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{v.format}</div>
+              </div>
+              <div style={{
+                fontSize: '1rem', fontWeight: 800, color: '#EF4444',
+                minWidth: 60, textAlign: 'center',
+              }}>
+                {v.variance}
+              </div>
+              <span style={{
+                fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px', borderRadius: 4,
+                background: `${v.statusColor}18`, color: v.statusColor,
+                textTransform: 'uppercase', whiteSpace: 'nowrap',
+              }}>
+                {v.status}
+              </span>
+              <div style={{ fontSize: '0.8rem', color: 'var(--register-text-muted)', flex: 1 }}>
+                {v.note}
+              </div>
+            </div>
+          ))}
         </div>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ background: 'var(--register-bg-surface)' }}>
-              {['Format', 'Variance', 'Status', 'Notes'].map((h) => (
-                <th
-                  key={h}
-                  style={{
-                    padding: '10px 20px',
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    color: 'var(--register-text-muted)',
-                    textAlign: 'left',
-                    borderBottom: '1px solid var(--register-border)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {VARIANCE.map((v) => (
-              <tr key={v.format}>
-                <td style={{ padding: '12px 20px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--register-text)', borderBottom: '1px solid var(--register-border)' }}>
-                  {v.format}
-                </td>
-                <td style={{ padding: '12px 20px', fontSize: '0.85rem', fontWeight: 700, color: '#EF4444', borderBottom: '1px solid var(--register-border)' }}>
-                  {v.variance}
-                </td>
-                <td style={{ padding: '12px 20px', borderBottom: '1px solid var(--register-border)' }}>
-                  <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px', borderRadius: 4, background: `${v.statusColor}18`, color: v.statusColor, textTransform: 'uppercase' }}>
-                    {v.status}
-                  </span>
-                </td>
-                <td style={{ padding: '12px 20px', fontSize: '0.8rem', color: 'var(--register-text-muted)', borderBottom: '1px solid var(--register-border)' }}>
-                  {v.note}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </RegisterPage>
   );
