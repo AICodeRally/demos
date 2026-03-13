@@ -151,7 +151,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
               </div>
               <div
                 className="text-[10px] font-semibold tracking-[0.12em] uppercase"
-                style={{ color: `${primaryColor}AA` }}
+                style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}AA` }}
               >
                 {config.client.tagline}
               </div>
@@ -302,13 +302,16 @@ export function DemoShell({ config, children }: DemoShellProps) {
                 <LucideIcons.Menu className="h-5 w-5" style={{ color: 'var(--prizym-text-secondary)' }} />
               )}
             </button>
-            <div className="flex items-center gap-2">
-              <span
-                className="text-lg font-bold"
-                style={{ color: sectionColor, fontFamily: "'Space Grotesk', sans-serif" }}
+            <div className="flex items-center gap-2.5">
+              <div
+                className="flex h-8 w-8 items-center justify-center rounded-lg"
+                style={{
+                  background: `linear-gradient(135deg, ${primaryColor} 0%, ${resolved.colors.accent} 100%)`,
+                  boxShadow: `0 2px 8px ${primaryColor}30`,
+                }}
               >
-                {'\u25C6'}
-              </span>
+                <LogoIcon className="h-4 w-4 text-white" />
+              </div>
               <span
                 className="text-[13px] font-bold"
                 style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}
@@ -316,7 +319,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
                 {config.client.name.toUpperCase()}
               </span>
               <span
-                className="text-[11px] font-mono"
+                className="text-[11px] font-mono hidden sm:inline"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {config.client.tagline}

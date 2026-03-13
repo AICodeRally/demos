@@ -20,7 +20,7 @@ export default defineDemo({
   nav: [
     {
       section: 'Act 1 — Corporate Strategy',
-      color: '#1E3A5F',
+      color: '#5B9BD5',
       items: [
         { label: 'Company Overview', href: '/register/corp/overview', icon: 'Building2' },
         { label: 'Store Portfolio', href: '/register/corp/portfolio', icon: 'Map' },
