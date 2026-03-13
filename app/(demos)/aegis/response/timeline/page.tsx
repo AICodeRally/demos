@@ -47,14 +47,14 @@ export default function IncidentTimeline() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Incident Timeline</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Incident Timeline</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Chronological event log &mdash; Meridian Dynamics response
         </p>
       </div>
 
       {/* 3 StatCards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard label="Total Events" value="20" color="#8B7355" />
         <StatCard label="Hours Elapsed" value="48+" color="#7C3AED" />
         <StatCard label="Current Phase" value="Active Response" color="#7C3AED" />
@@ -128,7 +128,7 @@ export default function IncidentTimeline() {
               >
                 {/* Left: time */}
                 <div className="w-[72px] shrink-0 pt-[2px] text-right">
-                  <span className="text-[11px] font-mono leading-tight" style={{ color: '#57534E' }}>
+                  <span className="text-[11px] leading-tight" style={{ color: '#57534E' }}>
                     {event.time}
                   </span>
                 </div>
@@ -162,7 +162,7 @@ export default function IncidentTimeline() {
                 <div className="flex-1 pb-5 pt-[1px]">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span
-                      className="text-[13px] font-semibold leading-tight"
+                      className="text-[14px] font-semibold leading-tight"
                       style={{ color: '#1C1917' }}
                     >
                       {event.title}

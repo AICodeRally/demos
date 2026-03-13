@@ -61,7 +61,7 @@ export default function ClientReport() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Client Report</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Client Report</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Board-ready executive summary — Meridian Dynamics incident
         </p>
@@ -75,7 +75,7 @@ export default function ClientReport() {
             className="rounded-xl bg-white border border-l-4 p-5"
             style={{ borderColor: '#E7E5E4', borderLeftColor: card.borderColor }}
           >
-            <h3 className="text-[13px] font-bold mb-2" style={{ color: '#1C1917' }}>{card.title}</h3>
+            <h3 className="text-[14px] font-bold mb-2" style={{ color: '#1C1917' }}>{card.title}</h3>
             <p className="text-[11px] leading-relaxed" style={{ color: '#57534E' }}>{card.body}</p>
           </div>
         ))}
@@ -96,7 +96,7 @@ export default function ClientReport() {
                 <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: m.color }} />
               </div>
               <span className="text-[11px] font-semibold mt-2" style={{ color: '#1C1917' }}>{m.label}</span>
-              <span className="text-[10px] font-mono" style={{ color: '#A8A29E' }}>{m.time}</span>
+              <span className="text-[10px]" style={{ color: '#A8A29E' }}>{m.time}</span>
             </div>
           ))}
         </div>
@@ -149,7 +149,7 @@ export default function ClientReport() {
           {NEXT_STEPS.map((step) => (
             <div
               key={step.label}
-              className="rounded-lg border border-l-4 p-3"
+              className="rounded-xl border border-l-4 p-3"
               style={{ borderColor: '#E7E5E4', borderLeftColor: step.color }}
             >
               <span

@@ -107,7 +107,7 @@ export default function BrandPartners() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Brand Partners</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Brand Partners</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           5 selling departments, 20 key brand partnerships driving $2.8B in revenue
         </p>

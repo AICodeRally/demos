@@ -59,7 +59,7 @@ export default function PipelineManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Pipeline Management</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Pipeline Management</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Visualize, track, and manage your sales pipeline from prospecting through close.
           </p>
@@ -79,7 +79,7 @@ export default function PipelineManagementPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -208,11 +208,11 @@ export default function PipelineManagementPage() {
                       <span className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{p.stage}</span>
                     </div>
                   </td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{p.deals}</td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(p.value)}</td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{p.avgDays > 0 ? `${p.avgDays}d` : '--'}</td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{fmtPct((stageProb[p.stage] ?? 0) * 100)}</td>
-                  <td className="py-3 text-right font-semibold text-amber-400 font-mono text-xs">
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{p.deals}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(p.value)}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{p.avgDays > 0 ? `${p.avgDays}d` : '--'}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtPct((stageProb[p.stage] ?? 0) * 100)}</td>
+                  <td className="py-3 text-right font-semibold text-amber-400 tabular-nums text-xs">
                     {fmtDollar(Math.round(p.value * (stageProb[p.stage] ?? 0)))}
                   </td>
                 </tr>
@@ -221,11 +221,11 @@ export default function PipelineManagementPage() {
             <tfoot>
               <tr style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
                 <td className="py-3 font-semibold">Total</td>
-                <td className="py-3 pr-4 text-right font-mono">{totalDeals}</td>
-                <td className="py-3 pr-4 text-right font-mono">{fmtDollar(totalPipeline)}</td>
-                <td className="py-3 pr-4 text-right font-mono">{Math.round(avgCycle)}d</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{totalDeals}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{fmtDollar(totalPipeline)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{Math.round(avgCycle)}d</td>
                 <td className="py-3 pr-4" />
-                <td className="py-3 text-right font-bold text-amber-400 font-mono">{fmtDollar(Math.round(weightedValue))}</td>
+                <td className="py-3 text-right font-bold text-amber-400 tabular-nums">{fmtDollar(Math.round(weightedValue))}</td>
               </tr>
             </tfoot>
           </table>
@@ -249,7 +249,7 @@ export default function PipelineManagementPage() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="font-mono text-sm font-semibold">{fmtDollar(d.value)}</span>
+                <span className="tabular-nums text-sm font-semibold">{fmtDollar(d.value)}</span>
                 <div className="text-xs text-red-600">{d.days} days stalled</div>
               </div>
             </div>

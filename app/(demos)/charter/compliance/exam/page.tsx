@@ -41,7 +41,7 @@ export default function NCUAExamReadiness() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>NCUA Exam Readiness</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>NCUA Exam Readiness</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           CAMEL rating analysis, exam preparedness &amp; remediation tracking
         </p>

@@ -77,7 +77,7 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp, accent }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className={`h-4 w-4 ${accent ?? 'text-amber-400'}`} />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -111,7 +111,7 @@ export default function ExecutiveAlertsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Executive Alerts</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Executive Alerts</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Critical notifications for quota risks, pipeline gaps, and performance anomalies.
           </p>
@@ -194,7 +194,7 @@ export default function ExecutiveAlertsPage() {
                 style={{ border: '1px solid var(--prizym-border-default)', borderLeftWidth: '4px', borderLeftColor: undefined }}
               >
                 <div className="flex items-start gap-3">
-                  <div className={`mt-0.5 rounded-lg p-2 ${cfg.bg}`}>
+                  <div className={`mt-0.5 rounded-xl p-2 ${cfg.bg}`}>
                     <Icon className={`h-4 w-4 ${cfg.text}`} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -324,11 +324,11 @@ export default function ExecutiveAlertsPage() {
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  className="w-full text-left rounded-lg p-3 hover:opacity-90 transition group"
+                  className="w-full text-left rounded-xl p-3 hover:opacity-90 transition group"
                   style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`rounded-lg p-2 ${action.bg}`}>
+                    <div className={`rounded-xl p-2 ${action.bg}`}>
                       <action.icon className={`h-4 w-4 ${action.color}`} />
                     </div>
                     <div className="flex-1">
@@ -350,12 +350,12 @@ export default function ExecutiveAlertsPage() {
           <ShieldAlert className="h-4 w-4 text-red-600" />
           <h2 className="text-sm font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Reps Requiring Attention</h2>
         </div>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {REPS.filter(r => r.actual / r.quota < 0.92).map(rep => {
             const att = (rep.actual / rep.quota) * 100;
             const gap = rep.quota - rep.actual;
             return (
-              <div key={rep.id} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+              <div key={rep.id} className="rounded-xl p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{rep.name}</p>
                   <span className={`text-xs font-bold ${att >= 85 ? 'text-amber-400' : 'text-red-600'}`}>

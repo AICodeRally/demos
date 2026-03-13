@@ -48,7 +48,7 @@ export default function CompanyOverview() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Company Overview</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Company Overview</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Crestline Department Stores — {BRAND.stores} stores across {BRAND.formats} formats
         </p>
@@ -175,7 +175,7 @@ export default function CompanyOverview() {
             return (
               <div
                 key={d.name}
-                className="rounded-lg border p-3.5"
+                className="rounded-xl border p-3.5"
                 style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-card)' }}
               >
                 <p className="text-xs font-semibold truncate" style={{ color: 'var(--pl-text)' }}>{d.name}</p>

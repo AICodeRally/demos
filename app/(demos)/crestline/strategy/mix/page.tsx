@@ -60,7 +60,7 @@ export default function ProductMix() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Product Mix</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Product Mix</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Category allocation, margin analysis, and department performance across 5 selling departments
         </p>
@@ -108,11 +108,11 @@ export default function ProductMix() {
                       <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.department}</span>
                     </div>
                   </td>
-                  <td className="py-2 px-3 font-mono font-semibold" style={{ color: COLORS.accent }}>{row.margin}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{row.revenue}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.contribution}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.baseRate}</td>
-                  <td className="py-2 px-3 font-mono font-semibold" style={{ color: '#10B981' }}>{row.premiumRate}</td>
+                  <td className="py-2 px-3 tabular-nums font-semibold" style={{ color: COLORS.accent }}>{row.margin}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: 'var(--pl-text)' }}>{row.revenue}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{row.contribution}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{row.baseRate}</td>
+                  <td className="py-2 px-3 tabular-nums font-semibold" style={{ color: '#10B981' }}>{row.premiumRate}</td>
                 </tr>
               ))}
             </tbody>
@@ -133,12 +133,12 @@ export default function ProductMix() {
           {PRODUCTS.map((p) => {
             const dept = SELLING_DEPTS.find((d) => d.id === p.department);
             return (
-              <div key={p.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)', borderLeftWidth: 3, borderLeftColor: dept?.color ?? '#94A3B8' }}>
+              <div key={p.id} className="rounded-xl border p-3" style={{ borderColor: 'var(--pl-border)', borderLeftWidth: 3, borderLeftColor: dept?.color ?? '#94A3B8' }}>
                 <p className="text-xs font-medium truncate" style={{ color: 'var(--pl-text)' }}>{p.name}</p>
                 <p className="text-[10px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{p.category}</p>
                 <div className="mt-2 flex justify-between text-[11px]">
-                  <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>${p.price}</span>
-                  <span className="font-mono" style={{ color: '#10B981' }}>{Math.round(p.margin * 100)}% margin</span>
+                  <span className="tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>${p.price}</span>
+                  <span className="tabular-nums" style={{ color: '#10B981' }}>{Math.round(p.margin * 100)}% margin</span>
                 </div>
                 {p.tags.length > 0 && (
                   <div className="mt-1.5 flex gap-1 flex-wrap">

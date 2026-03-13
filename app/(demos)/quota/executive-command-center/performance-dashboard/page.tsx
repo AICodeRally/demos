@@ -45,7 +45,7 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -85,7 +85,7 @@ export default function PerformanceDashboardPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Dashboard</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Dashboard</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Real-time view of sales performance across all teams and quota attainment metrics.
           </p>
@@ -174,14 +174,14 @@ export default function PerformanceDashboardPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="pb-3 text-xs font-medium w-10" style={{ color: 'var(--prizym-text-muted)' }}>#</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Rep</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Territory</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Quota</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Actual</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
-                <th className="pb-3 text-xs font-medium w-24" style={{ color: 'var(--prizym-text-muted)' }}>Progress</th>
+                <th className="pb-3 text-xs font-semibold w-10" style={{ color: 'var(--prizym-text-muted)' }}>#</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Rep</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Territory</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Quota</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Actual</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
+                <th className="pb-3 text-xs font-semibold w-24" style={{ color: 'var(--prizym-text-muted)' }}>Progress</th>
               </tr>
             </thead>
             <tbody>

@@ -35,14 +35,14 @@ export default function CardServices() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Card Services</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Card Services</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Card portfolio performance, merchant spend, and interchange revenue
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Portfolio" value="89K Cards" trend="up" trendValue="+3.2%" color="#475569" />
         <StatCard label="Activation Rate" value="82%" trend="up" trendValue="+1.8%" color="#6B8F71" />
         <StatCard label="Fraud Rate" value="0.04%" trend="down" trendValue="-0.01%" color="#B91C1C" />

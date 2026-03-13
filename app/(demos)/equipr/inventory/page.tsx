@@ -40,7 +40,7 @@ const CATEGORY_TAB_LABELS: Record<string, string> = {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -88,7 +88,7 @@ export default function InventoryPage() {
           Fleet Inventory
         </h1>
         <span
-          className="text-[12px] font-mono font-semibold px-2.5 py-1 rounded-lg"
+          className="text-[12px] font-semibold px-2.5 py-1 rounded-lg"
           style={{
             background: 'rgba(37,99,235,0.12)',
             color: '#2563EB',
@@ -111,7 +111,7 @@ export default function InventoryPage() {
         {/* Location dropdown */}
         <div className="flex items-center gap-2">
           <label
-            className="text-[11px] uppercase tracking-[1px] font-mono font-semibold"
+            className="text-[11px] uppercase tracking-[1px] font-semibold font-semibold"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Location
@@ -153,7 +153,7 @@ export default function InventoryPage() {
               >
                 {CATEGORY_TAB_LABELS[cat]}{' '}
                 <span
-                  className="text-[10px] font-mono"
+                  className="text-[10px]"
                   style={{ opacity: 0.7 }}
                 >
                   {categoryCounts[cat]}
@@ -185,7 +185,7 @@ export default function InventoryPage() {
                 {['Asset ID', 'Name', 'Category', 'Location', 'Status', 'Daily Rate', 'Utilization', 'Last Inspection'].map((h) => (
                   <th
                     key={h}
-                    className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                    className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     {h}
@@ -277,7 +277,7 @@ export default function InventoryPage() {
                     {/* Daily Rate */}
                     <td className="px-4 py-3">
                       <span
-                        className="font-mono font-medium"
+                        className="font-semibold"
                         style={{ color: 'var(--prizym-text-primary)' }}
                       >
                         {fmtDollar(asset.dailyRate)}
@@ -300,7 +300,7 @@ export default function InventoryPage() {
                           />
                         </div>
                         <span
-                          className="text-[11px] font-mono"
+                          className="text-[11px]"
                           style={{ color: utilColor }}
                         >
                           {asset.utilizationPct}%

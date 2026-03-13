@@ -470,7 +470,7 @@ export default function BuildVsBuyPage() {
             { icon: Shield, label: 'Governance & Compliance', desc: 'Policy engine, approval workflows, SOX-ready audit trails, continuous compliance monitoring', color: C.green },
             { icon: Bot, label: 'AI-Powered Insights', desc: 'Anomaly detection, predictive dispute resolution, auto-classification, proactive compliance alerts', color: C.blue },
           ].map((cap) => (
-            <div key={cap.label} className="rounded-lg p-4" style={{ backgroundColor: C.bg, border: `1px solid ${C.border}` }}>
+            <div key={cap.label} className="rounded-xl p-4" style={{ backgroundColor: C.bg, border: `1px solid ${C.border}` }}>
               <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-2" style={{ backgroundColor: `${cap.color}15` }}>
                 <cap.icon size={16} style={{ color: cap.color }} />
               </div>
@@ -479,7 +479,7 @@ export default function BuildVsBuyPage() {
             </div>
           ))}
         </div>
-        <div className="mt-4 rounded-lg p-3" style={{ backgroundColor: `${C.purple}08`, border: `1px solid ${C.purple}20` }}>
+        <div className="mt-4 rounded-xl p-3" style={{ backgroundColor: `${C.purple}08`, border: `1px solid ${C.purple}20` }}>
           <p className="text-[11px] leading-snug" style={{ color: C.body }}>
             <span className="font-semibold" style={{ color: C.purple }}>Key distinction:</span> Traditional Build delivers only the commission engine. Buy delivers commission + limited analytics. AI-Accelerated delivers the full platform — corporate strategy, sales operations, real-time POS, commission engine, dispute resolution, governance, and AI-powered insights — all in the same timeline.
           </p>
@@ -609,14 +609,14 @@ export default function BuildVsBuyPage() {
             </div>
 
             {/* AI Bonus callout */}
-            <div className="rounded-lg p-2.5 mb-3" style={{ backgroundColor: `${C.purple}06`, border: `1px solid ${C.purple}15` }}>
+            <div className="rounded-xl p-2.5 mb-3" style={{ backgroundColor: `${C.purple}06`, border: `1px solid ${C.purple}15` }}>
               <p className="text-[10px] leading-snug" style={{ color: C.body }}>
                 <span className="font-semibold" style={{ color: C.purple }}>AI advantage:</span> {c.aiBonus}
               </p>
             </div>
 
             {/* Insight callout */}
-            <div className="rounded-lg p-2.5" style={{ backgroundColor: C.bg, borderLeft: `3px solid ${C.muted}` }}>
+            <div className="rounded-xl p-2.5" style={{ backgroundColor: C.bg, borderLeft: `3px solid ${C.muted}` }}>
               <p className="text-[10px] leading-snug italic" style={{ color: C.body }}>{c.insight}</p>
             </div>
           </div>
@@ -629,7 +629,7 @@ export default function BuildVsBuyPage() {
           Side-by-Side Summary
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.red}06`, border: `1px solid ${C.red}15` }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: `${C.red}06`, border: `1px solid ${C.red}15` }}>
             <div className="flex items-center gap-2 mb-2">
               <Hammer size={14} style={{ color: C.red }} />
               <span className="text-xs font-bold" style={{ color: C.red }}>Traditional Build</span>
@@ -640,7 +640,7 @@ export default function BuildVsBuyPage() {
             <p className="text-xs mt-1 font-semibold" style={{ color: C.red }}>5 of 10 components rated Critical risk</p>
             <p className="text-xs mt-2" style={{ color: C.muted }}>Delivers: commission engine only</p>
           </div>
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.green}06`, border: `1px solid ${C.green}15` }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: `${C.green}06`, border: `1px solid ${C.green}15` }}>
             <div className="flex items-center gap-2 mb-2">
               <ShoppingCart size={14} style={{ color: C.green }} />
               <span className="text-xs font-bold" style={{ color: C.green }}>Buy (Off-the-Shelf)</span>
@@ -651,7 +651,7 @@ export default function BuildVsBuyPage() {
             <p className="text-xs mt-1 font-semibold" style={{ color: C.amber }}>Vendor lock-in, limited customization</p>
             <p className="text-xs mt-2" style={{ color: C.muted }}>Delivers: commission + basic analytics</p>
           </div>
-          <div className="rounded-lg p-4" style={{ backgroundColor: `${C.purple}06`, border: `2px solid ${C.purple}30` }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: `${C.purple}06`, border: `2px solid ${C.purple}30` }}>
             <div className="flex items-center gap-2 mb-2">
               <Sparkles size={14} style={{ color: C.purple }} />
               <span className="text-xs font-bold" style={{ color: C.purple }}>AI-Accelerated Build</span>

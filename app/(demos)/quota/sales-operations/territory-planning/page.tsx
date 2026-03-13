@@ -53,7 +53,7 @@ export default function TerritoryPlanningPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Territory Planning</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Territory Planning</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Design, balance, and optimize sales territories for maximum coverage and revenue.
           </p>
@@ -73,7 +73,7 @@ export default function TerritoryPlanningPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -107,11 +107,11 @@ export default function TerritoryPlanningPage() {
               <div className="space-y-2 text-xs mb-3">
                 <div className="flex justify-between">
                   <span style={{ color: 'var(--prizym-text-muted)' }}>Revenue</span>
-                  <span className="font-mono">{fmtDollar(t.revenue)}</span>
+                  <span className="tabular-nums">{fmtDollar(t.revenue)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span style={{ color: 'var(--prizym-text-muted)' }}>Quota</span>
-                  <span className="font-mono">{fmtDollar(t.quota)}</span>
+                  <span className="tabular-nums">{fmtDollar(t.quota)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span style={{ color: 'var(--prizym-text-muted)' }}>Accounts</span>
@@ -229,15 +229,15 @@ export default function TerritoryPlanningPage() {
                         <span className="font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{t.name}</span>
                       </div>
                     </td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{t.accounts}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{t.reps}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{Math.round(t.accounts / t.reps)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.revenue)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.quota)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{t.accounts}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{t.reps}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{Math.round(t.accounts / t.reps)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(t.revenue)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(t.quota)}</td>
                     <td className={`py-3 pr-4 text-right font-semibold ${trend.color}`}>
                       {fmtPct(att * 100)}
                     </td>
-                    <td className="py-3 text-right font-mono text-xs">{fmtDollar(Math.round(t.revenue / t.accounts))}</td>
+                    <td className="py-3 text-right tabular-nums text-xs">{fmtDollar(Math.round(t.revenue / t.accounts))}</td>
                   </tr>
                 );
               })}
@@ -245,15 +245,15 @@ export default function TerritoryPlanningPage() {
             <tfoot>
               <tr className="text-xs" style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
                 <td className="py-3 font-semibold">Total / Avg</td>
-                <td className="py-3 pr-4 text-right font-mono">{totalAccounts}</td>
-                <td className="py-3 pr-4 text-right font-mono">{totalReps}</td>
-                <td className="py-3 pr-4 text-right font-mono">{Math.round(totalAccounts / totalReps)}</td>
-                <td className="py-3 pr-4 text-right font-mono">{fmtDollar(totalRevenue)}</td>
-                <td className="py-3 pr-4 text-right font-mono">{fmtDollar(TERRITORIES.reduce((s, t) => s + t.quota, 0))}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{totalAccounts}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{totalReps}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{Math.round(totalAccounts / totalReps)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{fmtDollar(totalRevenue)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{fmtDollar(TERRITORIES.reduce((s, t) => s + t.quota, 0))}</td>
                 <td className="py-3 pr-4 text-right font-semibold text-amber-400">
                   {fmtPct((totalRevenue / TERRITORIES.reduce((s, t) => s + t.quota, 0)) * 100)}
                 </td>
-                <td className="py-3 text-right font-mono">{fmtDollar(Math.round(totalRevenue / totalAccounts))}</td>
+                <td className="py-3 text-right tabular-nums">{fmtDollar(Math.round(totalRevenue / totalAccounts))}</td>
               </tr>
             </tfoot>
           </table>

@@ -95,7 +95,7 @@ export default function ARALandingPage() {
 
       {/* ── Pillar Cards ───────────────────────────────────── */}
       <section className="px-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-5 gap-5">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
           {PILLARS.map((pillar) => {
             const Icon = pillar.icon;
             const isFeatured = 'featured' in pillar && pillar.featured;

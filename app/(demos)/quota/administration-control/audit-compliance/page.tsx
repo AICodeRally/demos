@@ -68,7 +68,7 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -117,7 +117,7 @@ export default function AuditCompliancePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Audit & Compliance</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Audit & Compliance</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Track every change, enforce policies, and maintain regulatory compliance.
           </p>
@@ -164,15 +164,15 @@ export default function AuditCompliancePage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Timestamp</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Action</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Entity</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Old Value</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>New Value</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Severity</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>IP</th>
-                <th className="pb-3 text-xs font-medium w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Timestamp</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Action</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Entity</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Old Value</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>New Value</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Severity</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>IP</th>
+                <th className="pb-3 text-xs font-semibold w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
               </tr>
             </thead>
             <tbody>
@@ -181,7 +181,7 @@ export default function AuditCompliancePage() {
                   <td className="py-2.5">
                     <div className="flex items-center gap-1.5" style={{ color: 'var(--prizym-text-muted)' }}>
                       <Clock className="h-3 w-3 shrink-0" />
-                      <span className="text-xs font-mono whitespace-nowrap">{e.timestamp}</span>
+                      <span className="text-xs whitespace-nowrap">{e.timestamp}</span>
                     </div>
                   </td>
                   <td className="py-2.5">
@@ -192,13 +192,13 @@ export default function AuditCompliancePage() {
                   </td>
                   <td className="py-2.5 text-xs font-medium whitespace-nowrap" style={{ color: 'var(--prizym-text-primary)' }}>{e.action}</td>
                   <td className="py-2.5 text-xs max-w-[180px] truncate" style={{ color: 'var(--prizym-text-secondary)' }}>{e.entity}</td>
-                  <td className="py-2.5 text-xs font-mono whitespace-nowrap" style={{ color: 'var(--prizym-text-muted)' }}>{e.oldValue}</td>
-                  <td className="py-2.5 text-xs font-mono whitespace-nowrap" style={{ color: 'var(--prizym-text-secondary)' }}>{e.newValue}</td>
+                  <td className="py-2.5 text-xs whitespace-nowrap" style={{ color: 'var(--prizym-text-muted)' }}>{e.oldValue}</td>
+                  <td className="py-2.5 text-xs whitespace-nowrap" style={{ color: 'var(--prizym-text-secondary)' }}>{e.newValue}</td>
                   <td className="py-2.5"><SeverityBadge severity={e.severity} /></td>
                   <td className="py-2.5">
                     <div className="flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}>
                       <Globe className="h-3 w-3 shrink-0" />
-                      <span className="text-[10px] font-mono">{e.ip}</span>
+                      <span className="text-[10px]">{e.ip}</span>
                     </div>
                   </td>
                   <td className="py-2.5">

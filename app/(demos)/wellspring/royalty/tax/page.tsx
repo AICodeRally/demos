@@ -121,12 +121,12 @@ export default function RoyaltyTaxPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase font-semibold mb-1"
           style={{ color: '#7C3AED' }}
         >
           Act 6 &middot; Royalty Accountant
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Tax &amp; Compliance
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -209,19 +209,19 @@ export default function RoyaltyTaxPage() {
                 return (
                   <tr key={i} style={{ borderBottom: '1px solid #252B36' }}>
                     <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{lt.lease}</td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                       {lt.oilVol.toLocaleString()}
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                       {lt.gasVol.toLocaleString()}
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#B45309' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#B45309' }}>
                       ${lt.oilTax.toLocaleString()}
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#6B7280' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#6B7280' }}>
                       ${lt.gasTax.toLocaleString()}
                     </td>
-                    <td className="py-2 text-right font-mono font-bold" style={{ color: '#7C3AED' }}>
+                    <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#7C3AED' }}>
                       ${lt.total.toLocaleString()}
                     </td>
                     <td className="py-2 text-right">
@@ -238,19 +238,19 @@ export default function RoyaltyTaxPage() {
               {/* Totals row */}
               <tr style={{ borderTop: '2px solid #334155' }}>
                 <td className="py-2 font-bold" style={{ color: '#F1F5F9' }}>Total</td>
-                <td className="py-2 text-right font-mono font-bold" style={{ color: '#CBD5E1' }}>
+                <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#CBD5E1' }}>
                   {LEASE_TAXES.reduce((s, l) => s + l.oilVol, 0).toLocaleString()}
                 </td>
-                <td className="py-2 text-right font-mono font-bold" style={{ color: '#CBD5E1' }}>
+                <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#CBD5E1' }}>
                   {LEASE_TAXES.reduce((s, l) => s + l.gasVol, 0).toLocaleString()}
                 </td>
-                <td className="py-2 text-right font-mono font-bold" style={{ color: '#B45309' }}>
+                <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#B45309' }}>
                   ${LEASE_TAXES.reduce((s, l) => s + l.oilTax, 0).toLocaleString()}
                 </td>
-                <td className="py-2 text-right font-mono font-bold" style={{ color: '#6B7280' }}>
+                <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#6B7280' }}>
                   ${LEASE_TAXES.reduce((s, l) => s + l.gasTax, 0).toLocaleString()}
                 </td>
-                <td className="py-2 text-right font-mono font-bold" style={{ color: '#7C3AED' }}>
+                <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#7C3AED' }}>
                   ${LEASE_TAXES.reduce((s, l) => s + l.total, 0).toLocaleString()}
                 </td>
                 <td />

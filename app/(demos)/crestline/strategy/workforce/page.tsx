@@ -128,7 +128,7 @@ export default function WorkforceModel() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Workforce Model</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Workforce Model</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Staffing, scheduling, workforce health, and turnover analysis across {totalAssociates.toLocaleString()} associates
         </p>
@@ -208,7 +208,7 @@ export default function WorkforceModel() {
             <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Labor % of Revenue</p>
             <div className="flex justify-between text-xs mt-2">
               <span style={{ color: 'var(--pl-text-muted)' }}>Headcount</span>
-              <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{c.total.toLocaleString()}</span>
+              <span className="font-medium tabular-nums" style={{ color: 'var(--pl-text)' }}>{c.total.toLocaleString()}</span>
             </div>
             <p className="text-[10px] mt-2 italic" style={{ color: 'var(--pl-text-secondary)' }}>{c.note}</p>
           </div>

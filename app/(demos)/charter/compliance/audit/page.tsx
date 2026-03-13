@@ -50,14 +50,14 @@ export default function AuditTrail() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Audit Trail</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Audit Trail</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Event log, policy changes &amp; access monitoring
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Events" value="12,847" trend="up" trendValue="+1,240" color="#475569" sparkline={SPARKLINE_EVENTS} />
         <StatCard label="Policy Changes" value="34" trend="up" trendValue="+8" color="#B91C1C" sparkline={SPARKLINE_POLICY} />
         <StatCard label="Access Reviews" value="142" trend="up" trendValue="+18" color="#B87333" sparkline={SPARKLINE_ACCESS} />
@@ -84,7 +84,7 @@ export default function AuditTrail() {
 
                 {/* Event details */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-semibold leading-tight" style={{ color: '#1C1917' }}>
+                  <p className="text-[14px] font-semibold leading-tight" style={{ color: '#1C1917' }}>
                     {event.title}
                   </p>
                   <p className="text-[11px] mt-0.5 truncate" style={{ color: '#57534E' }}>

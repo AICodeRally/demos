@@ -195,7 +195,7 @@ export default function QuotaForcesPage() {
     <div className="space-y-10 pb-12">
       {/* ── Header ────────────────────────────────────────── */}
       <div>
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
           Quota Forces Model
         </h1>
         <p className="text-sm mt-1 max-w-2xl" style={{ color: 'var(--prizym-text-muted)' }}>
@@ -289,7 +289,7 @@ export default function QuotaForcesPage() {
           ].map((pillar, i) => (
             <div key={pillar.label} className="flex items-center gap-3">
               <div
-                className="rounded-lg p-4 w-[200px] text-center"
+                className="rounded-xl p-4 w-[200px] text-center"
                 style={{
                   background: '#fffbeb',
                   border: '1px solid #fde68a',
@@ -313,7 +313,7 @@ export default function QuotaForcesPage() {
           <div className="flex items-center gap-3">
             <span className="text-xl font-bold text-amber-500">=</span>
             <div
-              className="rounded-lg p-4 w-[200px] text-center"
+              className="rounded-xl p-4 w-[200px] text-center"
               style={{
                 background: 'linear-gradient(135deg, #f59e0b, #d97706)',
               }}

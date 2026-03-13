@@ -126,14 +126,14 @@ export default function CustomerJourney() {
                     style={{ width: `${widthPct}%`, backgroundColor: stage.color, minWidth: '80px' }}
                   >
                     <span className="text-white text-[13px] font-bold">{stage.count.toLocaleString()}</span>
-                    <span className="text-white/80 text-[11px] font-mono">
+                    <span className="text-white/80 text-[11px]">
                       {i > 0 ? `${convPct}%` : ''}
                     </span>
                   </div>
                 </div>
                 {i > 0 && (
                   <span
-                    className="text-[11px] font-mono shrink-0 w-[48px]"
+                    className="text-[11px] shrink-0 w-[48px]"
                     style={{ color: parseInt(convPct) >= 60 ? '#10B981' : parseInt(convPct) >= 45 ? '#F59E0B' : '#EF4444' }}
                   >
                     {convPct}% cvr
@@ -197,12 +197,12 @@ export default function CustomerJourney() {
             {SEGMENTS.map((seg) => (
               <div
                 key={seg.name}
-                className="rounded-lg p-4 border-l-4"
+                className="rounded-xl p-4 border-l-4"
                 style={{ borderLeftColor: seg.color, backgroundColor: 'var(--pl-bg)' }}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.name}</span>
-                  <span className="text-[12px] font-bold font-mono" style={{ color: seg.color }}>{seg.pct}% of traffic</span>
+                  <span className="text-[12px] font-bold tabular-nums" style={{ color: seg.color }}>{seg.pct}% of traffic</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div>
@@ -252,14 +252,14 @@ export default function CustomerJourney() {
           {ABANDONMENT.map((item, i) => (
             <div
               key={i}
-              className="rounded-lg border-l-4 p-4"
+              className="rounded-xl border-l-4 p-4"
               style={{ borderLeftColor: item.color, backgroundColor: 'var(--pl-bg)' }}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                   Drop-off: {item.transition}
                 </span>
-                <span className="text-[13px] font-bold font-mono" style={{ color: item.color }}>
+                <span className="text-[13px] font-bold tabular-nums" style={{ color: item.color }}>
                   {item.dropPct}
                 </span>
               </div>

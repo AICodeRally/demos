@@ -53,14 +53,14 @@ export default function ComplianceDashboard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Compliance Dashboard</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Compliance Dashboard</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           BSA/AML monitoring, filing activity &amp; alert disposition
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="SARs Filed YTD" value="47" trend="up" trendValue="+12%" color="#B91C1C" sparkline={SPARKLINE_SARS} />
         <StatCard label="CTRs Processed" value="1,284" trend="up" trendValue="+8.3%" color="#475569" sparkline={SPARKLINE_CTRS} />
         <StatCard label="Training Completion" value="94%" trend="up" trendValue="+6%" color="#6B8F71" sparkline={SPARKLINE_TRAINING} />

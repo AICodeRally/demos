@@ -50,14 +50,14 @@ export default function UnderwritingAnalytics() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Underwriting Analytics</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Underwriting Analytics</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Decision engine performance, risk factor analysis, and approval patterns
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Applications Processed" value="1,240" trend="up" trendValue="+6% MoM" color="#475569" />
         <StatCard label="Auto-Approved" value="42%" trend="up" trendValue="+3.5%" color="#6B8F71" />
         <StatCard label="Manual Review" value="38%" trend="down" trendValue="-2.1%" color="#B87333" />

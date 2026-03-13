@@ -23,13 +23,13 @@ export default function WellProgramPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#6B7280' }}
         >
           Act 2 &middot; Drilling Superintendent
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           Well Program
@@ -117,7 +117,7 @@ export default function WellProgramPage() {
                     {item.label}
                   </span>
                   <span
-                    className="text-[12px] font-bold font-mono"
+                    className="text-[12px] font-bold tabular-nums"
                     style={{ color: '#F1F5F9' }}
                   >
                     {item.value}

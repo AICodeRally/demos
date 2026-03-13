@@ -59,7 +59,7 @@ export default function DistrictPlanning() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>District Planning</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>District Planning</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           8-district performance analysis across {totalStores} stores — revenue, growth, and quota attainment
         </p>
@@ -175,7 +175,7 @@ export default function DistrictPlanning() {
                       className="h-full rounded-full flex items-center justify-end pr-2 transition-all duration-500"
                       style={{ width: `${d.attainment}%`, backgroundColor: barColor }}
                     >
-                      <span className="text-[10px] font-mono text-white">{d.attainment}%</span>
+                      <span className="text-[10px] tabular-nums text-white">{d.attainment}%</span>
                     </div>
                   </div>
                 </div>

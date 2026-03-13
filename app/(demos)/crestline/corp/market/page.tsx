@@ -86,7 +86,7 @@ export default function MarketPosition() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Market Position</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Market Position</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Competitive landscape analysis for the $120B U.S. department store market
         </p>

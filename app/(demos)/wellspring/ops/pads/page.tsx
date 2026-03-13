@@ -45,12 +45,12 @@ export default function OpsPadsPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#0D9488' }}
         >
           Act 4 &middot; Operations Manager
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Pad Comparison
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -129,25 +129,25 @@ export default function OpsPadsPage() {
                       {pad.name}
                     </span>
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {pad.activeWells}/{pad.wellCount}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {pad.avgOilBpd} bpd
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {Math.round(pad.avgOilBpd * 2.1)} Mcfd
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: pad.avgWaterCut > 0.4 ? '#DC2626' : '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: pad.avgWaterCut > 0.4 ? '#DC2626' : '#CBD5E1' }}>
                     {(pad.avgWaterCut * 100).toFixed(0)}%
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     ${pad.loeBoe.toFixed(2)}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: pad.uptime >= 0.95 ? '#059669' : '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: pad.uptime >= 0.95 ? '#059669' : '#CBD5E1' }}>
                     {(pad.uptime * 100).toFixed(1)}%
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: pad.safety >= 1.0 ? '#059669' : '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: pad.safety >= 1.0 ? '#059669' : '#CBD5E1' }}>
                     {(pad.safety * 100).toFixed(0)}%
                   </td>
                 </tr>

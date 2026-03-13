@@ -253,7 +253,7 @@ export default function Statements() {
           <select
             value={selectedRepId}
             onChange={e => setSelectedRepId(e.target.value)}
-            className="appearance-none rounded-lg border pl-4 pr-10 py-2.5 text-sm font-medium cursor-pointer"
+            className="appearance-none rounded-xl border pl-4 pr-10 py-2.5 text-sm font-medium cursor-pointer"
             style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text)', backgroundColor: 'var(--pl-card)' }}
           >
             {selectableReps.map(a => (
@@ -264,7 +264,7 @@ export default function Statements() {
         </div>
 
         {/* Period tabs */}
-        <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--pl-stripe)' }}>
+        <div className="flex gap-1 rounded-xl p-1" style={{ backgroundColor: 'var(--pl-stripe)' }}>
           {PERIODS.map(p => (
             <button
               key={p.id}
@@ -298,7 +298,7 @@ export default function Statements() {
             </div>
             <div className="flex items-center gap-2">
               <Printer size={14} style={{ color: 'var(--pl-text-muted)' }} />
-              <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>print-ready</span>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>print-ready</span>
             </div>
           </div>
 
@@ -352,7 +352,7 @@ export default function Statements() {
                     {row.label}
                   </span>
                   <span
-                    className={`text-xs font-mono ${row.bold ? 'font-bold' : ''}`}
+                    className={`text-xs ${row.bold ? 'font-bold' : ''}`}
                     style={{ color: row.value < 0 ? '#DC2626' : 'var(--pl-text)' }}
                   >
                     {row.value < 0 ? `-${fmt(Math.abs(row.value))}` : fmt(row.value)}
@@ -396,9 +396,9 @@ export default function Statements() {
                         <td className="py-2">
                           <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{comp.label}</span>
                         </td>
-                        <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{rate}</td>
-                        <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{fmt(sales.net)}</td>
-                        <td className="py-2 text-right font-mono font-semibold" style={{ color: comp.amount > 0 ? 'var(--pl-text)' : 'var(--pl-text-muted)' }}>
+                        <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{rate}</td>
+                        <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{fmt(sales.net)}</td>
+                        <td className="py-2 text-right tabular-nums font-semibold" style={{ color: comp.amount > 0 ? 'var(--pl-text)' : 'var(--pl-text-muted)' }}>
                           {fmt(comp.amount)}
                         </td>
                       </tr>
@@ -420,7 +420,7 @@ export default function Statements() {
                 {spiffs.map((sp, i) => (
                   <div key={i} className="flex items-center justify-between py-1.5 px-3 rounded" style={{ backgroundColor: '#ecfdf5' }}>
                     <span className="text-xs font-medium" style={{ color: '#059669' }}>{sp.label}</span>
-                    <span className="text-xs font-mono font-semibold" style={{ color: '#059669' }}>+{fmt(sp.amount)}</span>
+                    <span className="text-xs font-semibold" style={{ color: '#059669' }}>+{fmt(sp.amount)}</span>
                   </div>
                 ))}
               </div>
@@ -437,11 +437,11 @@ export default function Statements() {
             <div className="space-y-1">
               <div className="flex items-center justify-between py-1.5 px-3">
                 <span className="text-xs font-medium" style={{ color: 'var(--pl-text-secondary)' }}>Gross Commission</span>
-                <span className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>{snapshot ? fmt(snapshot.total) : '--'}</span>
+                <span className="text-xs" style={{ color: 'var(--pl-text)' }}>{snapshot ? fmt(snapshot.total) : '--'}</span>
               </div>
               <div className="flex items-center justify-between py-1.5 px-3">
                 <span className="text-xs font-medium" style={{ color: 'var(--pl-text-secondary)' }}>SPIFFs</span>
-                <span className="text-xs font-mono" style={{ color: spiffTotal > 0 ? '#059669' : 'var(--pl-text-muted)' }}>
+                <span className="text-xs" style={{ color: spiffTotal > 0 ? '#059669' : 'var(--pl-text-muted)' }}>
                   {spiffTotal > 0 ? `+${fmt(spiffTotal)}` : '$0'}
                 </span>
               </div>
@@ -450,7 +450,7 @@ export default function Statements() {
                 style={{ backgroundColor: COLORS.primary }}
               >
                 <span className="text-sm font-bold text-white">Net Payout</span>
-                <span className="text-xl font-bold font-mono" style={{ color: COLORS.accent }}>
+                <span className="text-xl font-bold tabular-nums" style={{ color: COLORS.accent }}>
                   {snapshot ? fmt(snapshot.total + spiffTotal) : '--'}
                 </span>
               </div>
@@ -461,12 +461,12 @@ export default function Statements() {
           <div className="mt-6 pt-4 border-t flex items-center justify-between" style={{ borderColor: 'var(--pl-stripe)' }}>
             <div className="flex items-center gap-2">
               <FileText size={12} style={{ color: 'var(--pl-text-muted)' }} />
-              <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
                 Statement generated {snapshot ? fmtDate(snapshot.frozenAt) : '--'} — Immutable record
               </span>
             </div>
             <span
-              className="text-[9px] font-mono px-2 py-0.5 rounded-full"
+              className="text-[9px] px-2 py-0.5 rounded-full"
               style={{ backgroundColor: '#ecfdf5', color: '#059669' }}
             >
               FROZEN
@@ -499,14 +499,14 @@ export default function Statements() {
                           {delta < 0 && <ArrowDown size={10} style={{ color: '#DC2626' }} />}
                           {delta === 0 && <Minus size={10} style={{ color: 'var(--pl-text-muted)' }} />}
                           <span
-                            className="text-[10px] font-mono font-semibold"
+                            className="text-[10px] font-semibold"
                             style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : 'var(--pl-text-muted)' }}
                           >
                             {delta > 0 ? '+' : ''}{pct}%
                           </span>
                         </div>
                       </div>
-                      <div className="flex gap-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
+                      <div className="flex gap-2 text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>
                         <span>{prevSnapshot.periodId}: {fmt(prevAmt)}</span>
                         <span style={{ color: '#CBD5E1' }}>|</span>
                         <span>{snapshot.periodId}: {fmt(comp.amount)}</span>
@@ -523,7 +523,7 @@ export default function Statements() {
                       {snapshot.total > prevSnapshot.total && <ArrowUp size={12} style={{ color: '#059669' }} />}
                       {snapshot.total < prevSnapshot.total && <ArrowDown size={12} style={{ color: '#DC2626' }} />}
                       <span
-                        className="text-xs font-bold font-mono"
+                        className="text-xs font-bold tabular-nums"
                         style={{ color: snapshot.total >= prevSnapshot.total ? '#059669' : '#DC2626' }}
                       >
                         {snapshot.total >= prevSnapshot.total ? '+' : ''}
@@ -531,7 +531,7 @@ export default function Statements() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex gap-2 text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
+                  <div className="flex gap-2 text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
                     <span>{prevSnapshot.periodId}: {fmt(prevSnapshot.total)}</span>
                     <span style={{ color: '#CBD5E1' }}>|</span>
                     <span className="font-semibold">{snapshot.periodId}: {fmt(snapshot.total)}</span>

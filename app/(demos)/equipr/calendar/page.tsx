@@ -259,7 +259,7 @@ function buildBars(
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -393,7 +393,7 @@ export default function CalendarPage() {
           <SourceBadge source="Wynne Systems ERP" synced="Live" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg shrink-0"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg shrink-0"
           style={{
             background: 'rgba(37,99,235,0.12)',
             color: '#2563EB',
@@ -470,7 +470,7 @@ export default function CalendarPage() {
           >
             {/* ── Column Headers ──────────────────────────── */}
             <div
-              className="sticky left-0 z-20 px-3 py-2 text-[10px] uppercase tracking-[1.5px] font-mono font-bold"
+              className="sticky left-0 z-20 px-3 py-2 text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums"
               style={{
                 background: 'var(--prizym-card-bg)',
                 color: 'var(--prizym-text-muted)',
@@ -485,7 +485,7 @@ export default function CalendarPage() {
               return (
                 <div
                   key={i}
-                  className="px-1 py-2 text-center text-[10px] font-mono"
+                  className="px-1 py-2 text-center text-[10px]"
                   style={{
                     background: weekend
                       ? 'rgba(0,0,0,0.02)'
@@ -723,7 +723,7 @@ export default function CalendarPage() {
         }}
       >
         <div
-          className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold mb-3"
+          className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums mb-3"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           Reservation Status
@@ -827,7 +827,7 @@ function SummaryCard({
         style={{ background: accent }}
       />
       <div
-        className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+        className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
         style={{ color: 'var(--prizym-text-muted)' }}
       >
         {label}

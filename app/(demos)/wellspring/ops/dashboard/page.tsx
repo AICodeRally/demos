@@ -49,12 +49,12 @@ export default function OpsDashboardPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#0D9488' }}
         >
           Act 4 &middot; Operations Manager
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Field Dashboard
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -142,23 +142,23 @@ export default function OpsDashboardPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #334155' }}>
-                <th className="text-left py-2 font-medium" style={{ color: '#94A3B8' }}>#</th>
-                <th className="text-left py-2 font-medium" style={{ color: '#94A3B8' }}>Well</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Oil (bpd)</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Gas (Mcfd)</th>
+                <th className="text-left py-2 font-semibold" style={{ color: '#94A3B8' }}>#</th>
+                <th className="text-left py-2 font-semibold" style={{ color: '#94A3B8' }}>Well</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Oil (bpd)</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Gas (Mcfd)</th>
                 <th className="text-left py-2 font-medium pl-4" style={{ color: '#94A3B8' }}>Pad</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Trend</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Trend</th>
               </tr>
             </thead>
             <tbody>
               {TOP_WELLS.map((w, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #252B36' }}>
-                  <td className="py-2 font-mono" style={{ color: '#64748B' }}>{i + 1}</td>
+                  <td className="py-2 tabular-nums" style={{ color: '#64748B' }}>{i + 1}</td>
                   <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{w.name}</td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: '#0D9488' }}>
+                  <td className="py-2 text-right tabular-nums font-bold" style={{ color: '#0D9488' }}>
                     {w.oil}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {w.gas}
                   </td>
                   <td className="py-2 pl-4" style={{ color: '#94A3B8' }}>{w.pad}</td>

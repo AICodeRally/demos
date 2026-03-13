@@ -353,7 +353,8 @@ export default function ExecutiveViewPage() {
       >
         <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: '0 0 16px' }}>Format Breakdown</h2>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
+        <div className="overflow-x-auto -mx-1">
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', minWidth: 600 }}>
           <thead>
             <tr style={{ borderBottom: '2px solid var(--register-border)' }}>
               {['Format', 'Reps', 'Revenue', 'Comp Spend', 'Comp %', 'Variance'].map((h) => (
@@ -410,6 +411,7 @@ export default function ExecutiveViewPage() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* ── Sankey-style Flow ────────────────────────── */}

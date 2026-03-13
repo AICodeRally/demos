@@ -100,7 +100,7 @@ const OUR_AI = { excavator: 1020, scissorLift: 440, generator: 345 };
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>•</span>
@@ -137,7 +137,7 @@ export default function AiPricingPage() {
           <SourceBadge source="Rouse Analytics + Wynne Systems" synced="Live market data" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(16,185,129,0.12)',
             color: '#059669',
@@ -168,7 +168,7 @@ export default function AiPricingPage() {
           <div className="flex items-center gap-2 mb-1">
             <TrendingUp size={14} style={{ color: '#10B981' }} />
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Revenue Uplift
@@ -207,7 +207,7 @@ export default function AiPricingPage() {
           <div className="flex items-center gap-2 mb-1">
             <DollarSign size={14} style={{ color: '#2563EB' }} />
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               AI Revenue Gain
@@ -246,7 +246,7 @@ export default function AiPricingPage() {
           <div className="flex items-center gap-2 mb-1">
             <Zap size={14} style={{ color: '#7C3AED' }} />
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Rates Optimized
@@ -285,7 +285,7 @@ export default function AiPricingPage() {
           <div className="flex items-center gap-2 mb-1">
             <UserCheck size={14} style={{ color: '#9CA3AF' }} />
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Manual Overrides
@@ -417,7 +417,7 @@ export default function AiPricingPage() {
             {['Morning', 'Afternoon', 'Evening'].map((label) => (
               <div
                 key={label}
-                className="text-[10px] uppercase tracking-[1.5px] font-mono text-center"
+                className="text-[10px] uppercase tracking-[1.5px] tabular-nums text-center"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {label}
@@ -434,7 +434,7 @@ export default function AiPricingPage() {
                 style={{ gridTemplateColumns: '56px 1fr 1fr 1fr' }}
               >
                 <div
-                  className="text-[12px] font-mono font-medium"
+                  className="text-[12px] font-medium"
                   style={{ color: 'var(--prizym-text-secondary)' }}
                 >
                   {row.day}
@@ -444,7 +444,7 @@ export default function AiPricingPage() {
                   return (
                     <div
                       key={i}
-                      className="flex items-center justify-center rounded-lg py-3 text-[12px] font-mono font-semibold"
+                      className="flex items-center justify-center rounded-lg py-3 text-[12px] font-semibold"
                       style={{
                         background: heat.background,
                         color: heat.color,
@@ -462,7 +462,7 @@ export default function AiPricingPage() {
           {/* Legend */}
           <div className="flex items-center gap-3 mt-4 pt-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
             <span
-              className="text-[10px] font-mono uppercase tracking-wider"
+              className="text-[10px] uppercase tracking-wider"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Intensity:
@@ -479,7 +479,7 @@ export default function AiPricingPage() {
                   style={{ background: item.bg }}
                 />
                 <span
-                  className="text-[10px] font-mono"
+                  className="text-[10px]"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   {item.label}
@@ -519,7 +519,7 @@ export default function AiPricingPage() {
             Active Price Recommendations
           </h3>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Sort: Revenue Impact {'\u25BE'}
@@ -560,7 +560,7 @@ export default function AiPricingPage() {
             Competitor Rate Comparison
           </h3>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Daily rates
@@ -569,7 +569,7 @@ export default function AiPricingPage() {
 
         {/* Table Header */}
         <div
-          className="grid gap-2 px-5 py-2.5 text-[10px] uppercase tracking-[1.5px] font-mono"
+          className="grid gap-2 px-5 py-2.5 text-[10px] uppercase tracking-[1.5px] font-semibold"
           style={{
             gridTemplateColumns: '2fr 1fr 1fr 1fr',
             color: 'var(--prizym-text-muted)',
@@ -600,19 +600,19 @@ export default function AiPricingPage() {
               Blue Horizons
             </span>
             <span
-              className="text-[10px] font-mono ml-2 px-1.5 py-0.5 rounded"
+              className="text-[10px] ml-2 px-1.5 py-0.5 rounded"
               style={{ background: 'rgba(37,99,235,0.12)', color: '#2563EB' }}
             >
               CURRENT
             </span>
           </div>
-          <div className="text-right font-mono" style={{ color: 'var(--prizym-text-primary)' }}>
+          <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-primary)' }}>
             ${OUR_CURRENT.excavator}
           </div>
-          <div className="text-right font-mono" style={{ color: 'var(--prizym-text-primary)' }}>
+          <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-primary)' }}>
             ${OUR_CURRENT.scissorLift}
           </div>
-          <div className="text-right font-mono" style={{ color: 'var(--prizym-text-primary)' }}>
+          <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-primary)' }}>
             ${OUR_CURRENT.generator}
           </div>
         </div>
@@ -635,19 +635,19 @@ export default function AiPricingPage() {
               Blue Horizons
             </span>
             <span
-              className="text-[10px] font-mono ml-2 px-1.5 py-0.5 rounded"
+              className="text-[10px] ml-2 px-1.5 py-0.5 rounded"
               style={{ background: 'rgba(16,185,129,0.12)', color: '#059669' }}
             >
               AI REC
             </span>
           </div>
-          <div className="text-right font-mono font-semibold" style={{ color: '#059669' }}>
+          <div className="text-right tabular-nums font-semibold" style={{ color: '#059669' }}>
             ${OUR_AI.excavator}
           </div>
-          <div className="text-right font-mono font-semibold" style={{ color: '#059669' }}>
+          <div className="text-right tabular-nums font-semibold" style={{ color: '#059669' }}>
             ${OUR_AI.scissorLift}
           </div>
-          <div className="text-right font-mono font-semibold" style={{ color: '#059669' }}>
+          <div className="text-right tabular-nums font-semibold" style={{ color: '#059669' }}>
             ${OUR_AI.generator}
           </div>
         </div>
@@ -672,13 +672,13 @@ export default function AiPricingPage() {
             >
               {comp.competitor}
             </div>
-            <div className="text-right font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>
+            <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-secondary)' }}>
               ${comp.excavator}
             </div>
-            <div className="text-right font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>
+            <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-secondary)' }}>
               ${comp.scissorLift}
             </div>
-            <div className="text-right font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>
+            <div className="text-right tabular-nums" style={{ color: 'var(--prizym-text-secondary)' }}>
               ${comp.generator}
             </div>
           </div>
@@ -693,7 +693,7 @@ export default function AiPricingPage() {
           }}
         >
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             AI Uplift by Category
@@ -715,7 +715,7 @@ export default function AiPricingPage() {
                   {cat.category}
                 </span>
                 <span
-                  className="text-[11px] font-bold font-mono"
+                  className="text-[11px] font-bold tabular-nums"
                   style={{ color: '#059669' }}
                 >
                   +{cat.uplift}%
@@ -824,7 +824,7 @@ function RecommendationRow({
 
         {/* Confidence */}
         <span
-          className="text-[10px] font-mono ml-auto"
+          className="text-[10px] ml-auto"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           {(rec.confidence * 100).toFixed(0)}% confidence
@@ -835,7 +835,7 @@ function RecommendationRow({
       <div className="flex items-center gap-2 mt-2 flex-wrap">
         {/* Current rate */}
         <span
-          className="text-[12px] font-mono"
+          className="text-[12px]"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           ${rec.currentRate}/day
@@ -853,7 +853,7 @@ function RecommendationRow({
 
         {/* Recommended rate */}
         <span
-          className="text-[13px] font-mono font-bold"
+          className="text-[13px] font-bold tabular-nums"
           style={{
             color: isPositive ? '#10B981' : rec.changePercent < 0 ? '#6B7280' : 'var(--prizym-text-secondary)',
           }}
@@ -864,7 +864,7 @@ function RecommendationRow({
         {/* Change percent badge */}
         {rec.changePercent !== 0 && (
           <span
-            className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
+            className="text-[10px] font-bold tabular-nums px-1.5 py-0.5 rounded"
             style={{
               background: isPositive
                 ? 'rgba(16,185,129,0.12)'
@@ -883,7 +883,7 @@ function RecommendationRow({
 
         {/* Projected revenue impact */}
         <span
-          className="text-[12px] font-bold font-mono"
+          className="text-[12px] font-bold tabular-nums"
           style={{
             color: rec.projectedRevenueImpact > 0
               ? '#10B981'

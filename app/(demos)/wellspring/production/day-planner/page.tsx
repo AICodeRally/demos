@@ -73,7 +73,7 @@ function DetailPanel({
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-lg transition-colors"
+            className="text-[11px] px-3 py-1.5 rounded-lg transition-colors"
             style={{
               background: activeTab === t.id ? '#B45309' : '#252B36',
               color: activeTab === t.id ? 'white' : '#94A3B8',
@@ -96,7 +96,7 @@ function DetailPanel({
           {stop.scadaReadings && (
             <div>
               <div
-                className="text-[9px] uppercase tracking-wider font-mono mb-2 flex items-center gap-1"
+                className="text-[9px] uppercase tracking-wider font-semibold mb-2 flex items-center gap-1"
                 style={{ color: '#64748B' }}
               >
                 <span style={{ color: '#16A34A' }}>&#9679;</span> SCADA
@@ -212,7 +212,7 @@ function DetailPanel({
           {stop.productionData && (
             <div>
               <div
-                className="text-[9px] uppercase tracking-wider font-mono mb-2"
+                className="text-[9px] uppercase tracking-wider font-semibold mb-2"
                 style={{ color: '#64748B' }}
               >
                 Production
@@ -274,7 +274,7 @@ function DetailPanel({
           {stop.fieldActions.length > 0 && (
             <div>
               <div
-                className="text-[9px] uppercase tracking-wider font-mono mb-2"
+                className="text-[9px] uppercase tracking-wider font-semibold mb-2"
                 style={{ color: '#64748B' }}
               >
                 Field Actions ({stop.fieldActions.length})
@@ -342,7 +342,7 @@ function DetailPanel({
             <>
               <div>
                 <div
-                  className="text-[9px] uppercase tracking-wider font-mono mb-2"
+                  className="text-[9px] uppercase tracking-wider font-semibold mb-2"
                   style={{ color: '#64748B' }}
                 >
                   30-Day Oil Production (bopd)
@@ -461,7 +461,7 @@ function DetailPanel({
             stop.aiInsights.map((insight, i) => (
               <div
                 key={i}
-                className="rounded-lg p-3"
+                className="rounded-xl p-3"
                 style={{
                   background:
                     insight.priority === 'high'
@@ -570,13 +570,13 @@ export default function DayPlannerPage() {
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <div
-              className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+              className="text-[10px] tracking-[3px] uppercase mb-1"
               style={{ color: '#B45309' }}
             >
               Act 3 &middot; Production Operations
             </div>
             <h1
-              className="text-2xl font-extrabold"
+              className="text-3xl font-extrabold"
               style={{ color: '#F1F5F9' }}
             >
               Field Route Planner
@@ -603,7 +603,7 @@ export default function DayPlannerPage() {
           style={{ background: '#1E2530', border: '1px solid #334155' }}
         >
           <div
-            className="text-[9px] uppercase tracking-wider font-mono"
+            className="text-[9px] uppercase tracking-wider font-semibold"
             style={{ color: '#94A3B8' }}
           >
             Total Miles
@@ -626,7 +626,7 @@ export default function DayPlannerPage() {
           style={{ background: '#1E2530', border: '1px solid #334155' }}
         >
           <div
-            className="text-[9px] uppercase tracking-wider font-mono"
+            className="text-[9px] uppercase tracking-wider font-semibold"
             style={{ color: '#94A3B8' }}
           >
             Duration
@@ -643,7 +643,7 @@ export default function DayPlannerPage() {
           style={{ background: '#1E2530', border: '1px solid #334155' }}
         >
           <div
-            className="text-[9px] uppercase tracking-wider font-mono"
+            className="text-[9px] uppercase tracking-wider font-semibold"
             style={{ color: '#94A3B8' }}
           >
             Stops
@@ -671,13 +671,13 @@ export default function DayPlannerPage() {
           style={{ background: '#1E2530', border: '1px solid #334155' }}
         >
           <div
-            className="text-[9px] uppercase tracking-wider font-mono"
+            className="text-[9px] uppercase tracking-wider font-semibold"
             style={{ color: '#94A3B8' }}
           >
             Truck #
           </div>
           <div
-            className="text-xl font-bold mt-0.5 font-mono"
+            className="text-xl font-bold mt-0.5"
             style={{ color: '#F1F5F9' }}
           >
             {plan.truckNumber}
@@ -702,7 +702,7 @@ export default function DayPlannerPage() {
           </span>
         </div>
         <div
-          className="flex items-center gap-3 text-[11px] font-mono"
+          className="flex items-center gap-3 text-[11px]"
           style={{ color: '#64748B' }}
         >
           <span>{plan.route}</span>
@@ -722,7 +722,7 @@ export default function DayPlannerPage() {
             style={{ background: '#1E2530', border: '1px solid #334155' }}
           >
             <div
-              className="text-[10px] uppercase tracking-wider font-mono mb-2"
+              className="text-[10px] uppercase tracking-wider font-semibold mb-2"
               style={{ color: '#64748B' }}
             >
               Route Map &middot; {plan.regionName.split('(')[0].trim()}
@@ -738,7 +738,7 @@ export default function DayPlannerPage() {
           {/* Mobile Preview Toggle */}
           <button
             onClick={() => setShowMobile(true)}
-            className="w-full mt-3 flex items-center justify-center gap-2 py-3 rounded-xl text-[11px] font-mono transition-all hover:border-amber-700/40"
+            className="w-full mt-3 flex items-center justify-center gap-2 py-3 rounded-xl text-[11px] transition-all hover:border-amber-700/40"
             style={{
               background: '#1E2530',
               border: '1px solid #334155',
@@ -753,7 +753,7 @@ export default function DayPlannerPage() {
         {/* Center: Stop Cards */}
         <div className="lg:col-span-4 xl:col-span-4">
           <div
-            className="text-[10px] uppercase tracking-wider font-mono mb-2"
+            className="text-[10px] uppercase tracking-wider font-semibold mb-2"
             style={{ color: '#64748B' }}
           >
             Stops ({plan.stops.length})
@@ -775,7 +775,7 @@ export default function DayPlannerPage() {
           {activeStop ? (
             <div>
               <div
-                className="text-[10px] uppercase tracking-wider font-mono mb-2"
+                className="text-[10px] uppercase tracking-wider font-semibold mb-2"
                 style={{ color: '#64748B' }}
               >
                 Stop Detail
@@ -835,7 +835,7 @@ export default function DayPlannerPage() {
 
                 {/* Address */}
                 <div
-                  className="text-[10px] font-mono mb-4 pl-11"
+                  className="text-[10px] mb-4 pl-11"
                   style={{ color: '#64748B' }}
                 >
                   {activeStop.address}

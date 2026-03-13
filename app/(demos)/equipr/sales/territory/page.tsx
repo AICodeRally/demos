@@ -68,7 +68,7 @@ const PIN_POSITIONS: Record<number, { x: number; y: number }> = {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -612,7 +612,7 @@ function TerritoryDayContent() {
           <SourceBadge source="Dodge + CRM + Telematics + Permits + Maps" synced="Optimized 6:15 AM" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(37,99,235,0.12)',
             color: '#2563EB',
@@ -641,7 +641,7 @@ function TerritoryDayContent() {
             style={{ background: '#2563EB' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Total Stops
@@ -679,7 +679,7 @@ function TerritoryDayContent() {
             style={{ background: '#10B981' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Revenue Potential
@@ -717,7 +717,7 @@ function TerritoryDayContent() {
             style={{ background: '#8B5CF6' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Total Drive Time
@@ -755,7 +755,7 @@ function TerritoryDayContent() {
             style={{ background: '#0891B2' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Route Optimization
@@ -811,7 +811,7 @@ function TerritoryDayContent() {
             {ROUTE_DATA_SOURCES.map((src) => (
               <div
                 key={src.name}
-                className="flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded-md"
+                className="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-md"
                 style={{
                   background: 'rgba(37,99,235,0.06)',
                   color: '#2563EB',
@@ -887,7 +887,7 @@ function TerritoryDayContent() {
                           style={{ background: 'var(--prizym-border-default)' }}
                         />
                         <div
-                          className="ml-4 flex items-center gap-2 text-[11px] font-mono py-1"
+                          className="ml-4 flex items-center gap-2 text-[11px] py-1"
                           style={{ color: 'var(--prizym-text-muted)' }}
                         >
                           <Clock size={10} />
@@ -966,7 +966,7 @@ function TerritoryDayContent() {
                           {stop.tags?.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[9px] font-mono font-semibold uppercase tracking-wider px-2 py-0.5 rounded"
+                              className="text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded"
                               style={{
                                 background: 'rgba(0,0,0,0.04)',
                                 color: 'var(--prizym-text-muted)',
@@ -1032,7 +1032,7 @@ function TerritoryDayContent() {
                               <Sparkles size={14} style={{ color: '#2563EB', marginTop: 2, flexShrink: 0 }} />
                               <div>
                                 <div
-                                  className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold mb-1"
+                                  className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums mb-1"
                                   style={{ color: '#2563EB' }}
                                 >
                                   AI Insight
@@ -1061,7 +1061,7 @@ function TerritoryDayContent() {
                               <CalendarClock size={14} style={{ color: '#F59E0B', marginTop: 2, flexShrink: 0 }} />
                               <div>
                                 <div
-                                  className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold mb-1"
+                                  className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums mb-1"
                                   style={{ color: '#D97706' }}
                                 >
                                   Last Visit &mdash; {stop.lastVisit}
@@ -1083,13 +1083,13 @@ function TerritoryDayContent() {
                           {stop.revenuePotential !== undefined && stop.revenuePotential > 0 && (
                             <div>
                               <div
-                                className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+                                className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
                                 style={{ color: 'var(--prizym-text-muted)' }}
                               >
                                 Revenue Potential
                               </div>
                               <span
-                                className="text-[18px] font-bold font-mono"
+                                className="text-[18px] font-bold tabular-nums"
                                 style={{ color: '#10B981' }}
                               >
                                 {fmtDollar(stop.revenuePotential)}
@@ -1109,7 +1109,7 @@ function TerritoryDayContent() {
                           {stop.contactName && (
                             <div>
                               <div
-                                className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+                                className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
                                 style={{ color: 'var(--prizym-text-muted)' }}
                               >
                                 Contact
@@ -1139,7 +1139,7 @@ function TerritoryDayContent() {
                             <div className="flex items-center gap-1.5 mb-1.5">
                               <Wrench size={11} style={{ color: 'var(--prizym-text-muted)' }} />
                               <span
-                                className="text-[10px] uppercase tracking-[1px] font-mono"
+                                className="text-[10px] uppercase tracking-[1px] font-semibold"
                                 style={{ color: 'var(--prizym-text-muted)' }}
                               >
                                 Equipment Needs
@@ -1149,7 +1149,7 @@ function TerritoryDayContent() {
                               {stop.equipmentNeeds.map((eq) => (
                                 <span
                                   key={eq}
-                                  className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-md"
+                                  className="text-[10px] font-semibold px-2.5 py-1 rounded-md"
                                   style={{
                                     background: `${meta.color}10`,
                                     color: meta.color,
@@ -1288,13 +1288,13 @@ function SummaryStatCard({
       style={{ background: `${color}08`, border: `1px solid ${color}20` }}
     >
       <div
-        className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+        className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
         style={{ color: 'var(--prizym-text-muted)' }}
       >
         {label}
       </div>
       <span
-        className="text-[18px] font-bold font-mono"
+        className="text-[18px] font-bold tabular-nums"
         style={{ color }}
       >
         {value}

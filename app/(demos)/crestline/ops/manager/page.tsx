@@ -128,7 +128,7 @@ export default function ManagerConsole() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="relative">
           <StatCard label="Today's Revenue" value="$98.4K" color={COLORS.primary} />
-          <span className="absolute top-3 right-3 text-[10px] font-mono" style={{ color: '#059669' }}>
+          <span className="absolute top-3 right-3 text-[10px]" style={{ color: '#059669' }}>
             vs $95K target (+$3.4K)
           </span>
         </div>
@@ -159,7 +159,7 @@ export default function ManagerConsole() {
           </p>
           <AreaChart data={HOURLY_ACTUAL} color={COLORS.primary} />
           <div className="mt-2 text-center">
-            <span className="text-[10px] font-mono" style={{ color: '#059669' }}>
+            <span className="text-[10px]" style={{ color: '#059669' }}>
               Pacing: 103.6% of daily target &mdash; $3.4K ahead
             </span>
           </div>
@@ -175,7 +175,7 @@ export default function ManagerConsole() {
           {DEPT_VS_TARGET.map((dept) => (
             <div
               key={dept.id}
-              className="rounded-lg p-4 text-center"
+              className="rounded-xl p-4 text-center"
               style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}
             >
               <p className="text-[11px] font-semibold mb-2" style={{ color: dept.color }}>{dept.name}</p>
@@ -189,7 +189,7 @@ export default function ManagerConsole() {
                 />
               </div>
               <p className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>${dept.actual}K</p>
-              <p className="text-[10px] font-mono" style={{ color: dept.pct >= 100 ? '#059669' : '#EF4444' }}>
+              <p className="text-[10px]" style={{ color: dept.pct >= 100 ? '#059669' : '#EF4444' }}>
                 {dept.pct}% of ${dept.target}K
               </p>
             </div>
@@ -225,7 +225,7 @@ export default function ManagerConsole() {
                 const tierStyle = TIER_COLORS[rep.tier];
                 return (
                   <tr key={i} className="border-b last:border-0" style={{ borderColor: 'var(--pl-stripe)' }}>
-                    <td className="py-2.5 text-center text-[13px] font-bold font-mono" style={{ color: i < 3 ? COLORS.accent : 'var(--pl-text-muted)' }}>
+                    <td className="py-2.5 text-center text-[13px] font-bold tabular-nums" style={{ color: i < 3 ? COLORS.accent : 'var(--pl-text-muted)' }}>
                       {i + 1}
                     </td>
                     <td className="py-2.5 text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{rep.name}</td>
@@ -238,10 +238,10 @@ export default function ManagerConsole() {
                         {rep.tier === 'none' ? 'N/A' : rep.tier.charAt(0).toUpperCase() + rep.tier.slice(1)}
                       </span>
                     </td>
-                    <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: '#059669' }}>
+                    <td className="py-2.5 text-[13px] font-bold tabular-nums text-right" style={{ color: '#059669' }}>
                       ${rep.todayComm.toLocaleString()}
                     </td>
-                    <td className="py-2.5 text-[12px] font-mono text-right" style={{ color: 'var(--pl-text-secondary)' }}>
+                    <td className="py-2.5 text-[12px] text-right" style={{ color: 'var(--pl-text-secondary)' }}>
                       ${(rep.mtd / 1000).toFixed(0)}K
                     </td>
                   </tr>
@@ -316,7 +316,7 @@ export default function ManagerConsole() {
                   const netSales = rep.mtdSales - rep.mtdReturns;
                   return (
                     <tr key={rep.id} className="border-b last:border-0" style={{ borderColor: 'var(--pl-stripe)' }}>
-                      <td className="py-2.5 text-center text-[13px] font-bold font-mono" style={{ color: i < 3 ? COLORS.accent : 'var(--pl-text-muted)' }}>
+                      <td className="py-2.5 text-center text-[13px] font-bold tabular-nums" style={{ color: i < 3 ? COLORS.accent : 'var(--pl-text-muted)' }}>
                         {i + 1}
                       </td>
                       <td className="py-2.5">
@@ -324,11 +324,11 @@ export default function ManagerConsole() {
                         <span className="ml-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{rep.department}</span>
                       </td>
                       <td className="py-2.5 text-right">
-                        <span className="text-[14px] font-bold font-mono" style={{ color: makingCommission ? '#059669' : '#EF4444' }}>
+                        <span className="text-[14px] font-bold tabular-nums" style={{ color: makingCommission ? '#059669' : '#EF4444' }}>
                           ${rep.sph}
                         </span>
                       </td>
-                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                      <td className="py-2.5 text-right text-[12px]" style={{ color: 'var(--pl-text-muted)' }}>
                         ${rep.hourlyDraw}/hr
                       </td>
                       <td className="py-2.5 text-center">
@@ -342,13 +342,13 @@ export default function ManagerConsole() {
                           {makingCommission ? 'COMMISSION' : 'ON DRAW'}
                         </span>
                       </td>
-                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
+                      <td className="py-2.5 text-right text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>
                         {rep.sellingHours}h / {rep.scheduledHours}h
                       </td>
-                      <td className="py-2.5 text-right text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
+                      <td className="py-2.5 text-right text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>
                         ${(netSales / 1000).toFixed(0)}K
                       </td>
-                      <td className="py-2.5 text-right text-[12px] font-mono" style={{ color: '#EF4444' }}>
+                      <td className="py-2.5 text-right text-[12px]" style={{ color: '#EF4444' }}>
                         -${(rep.mtdReturns / 1000).toFixed(1)}K
                       </td>
                     </tr>
@@ -391,7 +391,7 @@ export default function ManagerConsole() {
                     <span className="text-[9px] font-bold" style={{ color: 'var(--pl-text-secondary)' }}>{Math.round(f.nonSellingPct * 100)}%</span>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono w-16 text-right" style={{ color: 'var(--pl-text-secondary)' }}>
+                <span className="text-[10px] w-16 text-right" style={{ color: 'var(--pl-text-secondary)' }}>
                   ${f.avgSph} SPH
                 </span>
               </div>
@@ -417,17 +417,17 @@ export default function ManagerConsole() {
             Secondary metric — influences coaching, perception, and schedule preference
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+            <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
               <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>MTD Sign-ups</span>
               <p className="text-xl font-bold" style={{ color: COLORS.primary }}>{LOYALTY_METRICS.mtdSignups}</p>
-              <p className="text-[10px] font-mono" style={{ color: LOYALTY_METRICS.mtdSignups >= LOYALTY_METRICS.targetSignups ? '#059669' : '#c9a84c' }}>
+              <p className="text-[10px]" style={{ color: LOYALTY_METRICS.mtdSignups >= LOYALTY_METRICS.targetSignups ? '#059669' : '#c9a84c' }}>
                 {Math.round((LOYALTY_METRICS.mtdSignups / LOYALTY_METRICS.targetSignups) * 100)}% of {LOYALTY_METRICS.targetSignups} target
               </p>
             </div>
-            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
+            <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--pl-bg)', border: '1px solid var(--pl-border)' }}>
               <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>Loyalty Lift</span>
               <p className="text-xl font-bold" style={{ color: '#059669' }}>+74%</p>
-              <p className="text-[10px] font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
+              <p className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>
                 ${LOYALTY_METRICS.avgSpendLoyalty} vs ${LOYALTY_METRICS.avgSpendNonLoyalty} avg
               </p>
             </div>
@@ -439,7 +439,7 @@ export default function ManagerConsole() {
                   <span className="font-mono w-5 text-center" style={{ color: i < 3 ? COLORS.accent : 'var(--pl-text-muted)' }}>#{i + 1}</span>
                   <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{p.name}</span>
                 </div>
-                <span className="font-bold font-mono" style={{ color: COLORS.primary }}>{p.signups} sign-ups</span>
+                <span className="font-bold tabular-nums" style={{ color: COLORS.primary }}>{p.signups} sign-ups</span>
               </div>
             ))}
           </div>
@@ -455,14 +455,14 @@ export default function ManagerConsole() {
           {COACHING.map((coach, i) => (
             <div
               key={i}
-              className="rounded-lg border-l-4 p-4"
+              className="rounded-xl border-l-4 p-4"
               style={{ borderLeftColor: coach.color, backgroundColor: 'var(--pl-bg)' }}
             >
               <p className="text-[13px] font-bold mb-1" style={{ color: 'var(--pl-text)' }}>
                 {coach.rep}
               </p>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-mono" style={{ color: coach.color }}>
+                <span className="text-[11px]" style={{ color: coach.color }}>
                   {coach.area}
                 </span>
                 <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>

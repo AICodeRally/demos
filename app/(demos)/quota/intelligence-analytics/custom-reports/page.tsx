@@ -21,7 +21,7 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
       <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -150,7 +150,7 @@ export default function CustomReportsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Custom Reports</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Custom Reports</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Build and schedule custom reports with flexible data connections and visualizations.
           </p>
@@ -310,7 +310,7 @@ export default function CustomReportsPage() {
             { name: 'From Existing', desc: 'Clone and modify an existing report template', icon: FileText },
             { name: 'AI Generated', desc: 'Describe what you need and AI builds the report', icon: Star },
           ].map(t => (
-            <button key={t.name} className="p-4 rounded-lg border border-dashed hover:border-amber-500/50 transition-colors text-left group" style={{ borderColor: 'var(--prizym-border-default)' }}>
+            <button key={t.name} className="p-4 rounded-xl border border-dashed hover:border-amber-500/50 transition-colors text-left group" style={{ borderColor: 'var(--prizym-border-default)' }}>
               <t.icon className="h-5 w-5 group-hover:text-amber-500 transition-colors mb-2" style={{ color: 'var(--prizym-text-muted)' }} />
               <h3 className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{t.name}</h3>
               <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>{t.desc}</p>

@@ -64,14 +64,14 @@ export default function FinancialImpact() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Financial Impact</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Financial Impact</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Cost analysis, insurance recovery, and ROI of rapid response
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Losses" value="$14.5M" color="#DC2626" />
         <StatCard label="Net Exposure" value="$5.1M" color="#EA580C" />
         <StatCard label="Insurance Recovery" value="$4.2M" color="#059669" />
@@ -92,12 +92,12 @@ export default function FinancialImpact() {
           Estimated <span className="font-bold" style={{ color: '#059669' }}>$8.2M saved</span> vs. unmanaged crisis
         </p>
         <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-lg p-4" style={{ backgroundColor: '#ECFDF5' }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: '#ECFDF5' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#059669' }}>Managed Response</p>
             <p className="text-xl font-bold" style={{ color: '#1C1917' }}>$5.1M</p>
             <p className="text-[10px]" style={{ color: '#57534E' }}>Net exposure after insurance</p>
           </div>
-          <div className="rounded-lg p-4" style={{ backgroundColor: '#FEF2F2' }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: '#FEF2F2' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#DC2626' }}>Unmanaged Estimate</p>
             <p className="text-xl font-bold" style={{ color: '#1C1917' }}>$13.3M</p>
             <p className="text-[10px]" style={{ color: '#57534E' }}>Projected without Ironclad</p>
@@ -136,13 +136,13 @@ export default function FinancialImpact() {
             {BILLING.map((b) => (
               <div key={b.item} className="flex items-center justify-between">
                 <span className="text-[12px]" style={{ color: '#57534E' }}>{b.item}</span>
-                <span className="text-[12px] font-mono font-semibold" style={{ color: '#1C1917' }}>${b.amount}K</span>
+                <span className="text-[12px] tabular-nums font-semibold" style={{ color: '#1C1917' }}>${b.amount}K</span>
               </div>
             ))}
             <div className="pt-2" style={{ borderTop: '2px solid #8B7355' }}>
               <div className="flex items-center justify-between">
                 <span className="text-[12px] font-bold" style={{ color: '#8B7355' }}>Total</span>
-                <span className="text-lg font-mono font-bold" style={{ color: '#8B7355' }}>$900K</span>
+                <span className="text-lg tabular-nums font-bold" style={{ color: '#8B7355' }}>$900K</span>
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function FinancialImpact() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Cost Breakdown</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Category', 'Actual ($K)', 'Budgeted ($K)', 'Variance ($K)'].map((h) => (
@@ -167,9 +167,9 @@ export default function FinancialImpact() {
               {COST_BREAKDOWN.map((row) => (
                 <tr key={row.category} style={{ borderBottom: '1px solid #F5F5F4' }}>
                   <td className="py-2 px-2 font-semibold" style={{ color: '#1C1917' }}>{row.category}</td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#57534E' }}>{row.actual.toLocaleString()}</td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#57534E' }}>{row.budgeted.toLocaleString()}</td>
-                  <td className="py-2 px-2 font-mono font-semibold" style={{ color: row.variance >= 0 ? '#059669' : '#DC2626' }}>
+                  <td className="py-2 px-2 tabular-nums" style={{ color: '#57534E' }}>{row.actual.toLocaleString()}</td>
+                  <td className="py-2 px-2 tabular-nums" style={{ color: '#57534E' }}>{row.budgeted.toLocaleString()}</td>
+                  <td className="py-2 px-2 tabular-nums font-semibold" style={{ color: row.variance >= 0 ? '#059669' : '#DC2626' }}>
                     {row.variance >= 0 ? '+' : ''}{row.variance.toLocaleString()}
                   </td>
                 </tr>

@@ -124,7 +124,7 @@ export default function AllocationFrameworksPage() {
             <Sparkles className="h-5 w-5 text-amber-500" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+            <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
               Allocation Frameworks
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>
@@ -252,7 +252,7 @@ export default function AllocationFrameworksPage() {
               Based on your data maturity and territory model, QUOTA recommends:
             </p>
             <div
-              className="rounded-lg p-4 mb-3"
+              className="rounded-xl p-4 mb-3"
               style={{ background: 'rgba(255,255,255,0.7)', border: '1px solid #fbbf24' }}
             >
               <div className="flex items-center gap-2 mb-2">

@@ -48,12 +48,12 @@ export default function OpsResourcesPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#0D9488' }}
         >
           Act 4 &middot; Operations Manager
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Resource Planning
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -124,9 +124,9 @@ export default function OpsResourcesPage() {
                   <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{crew.name}</td>
                   <td className="py-2" style={{ color: '#0D9488' }}>{crew.role}</td>
                   <td className="py-2" style={{ color: '#CBD5E1' }}>{crew.assignment}</td>
-                  <td className="py-2 font-mono" style={{ color: '#94A3B8' }}>{crew.location}</td>
-                  <td className="py-2 font-mono" style={{ color: '#CBD5E1' }}>{crew.start}</td>
-                  <td className="py-2 font-mono" style={{ color: '#CBD5E1' }}>{crew.end}</td>
+                  <td className="py-2 tabular-nums" style={{ color: '#94A3B8' }}>{crew.location}</td>
+                  <td className="py-2 tabular-nums" style={{ color: '#CBD5E1' }}>{crew.start}</td>
+                  <td className="py-2 tabular-nums" style={{ color: '#CBD5E1' }}>{crew.end}</td>
                 </tr>
               ))}
             </tbody>

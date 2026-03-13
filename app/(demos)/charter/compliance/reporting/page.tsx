@@ -68,14 +68,14 @@ export default function RegulatoryReporting() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Regulatory Reporting</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Regulatory Reporting</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Filing status, report workflow &amp; regulatory calendar management
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Call Report Due" value="18 days" trend="down" trendValue="Apr 30" color="#B87333" sparkline={SPARKLINE_CALL} />
         <StatCard label="HMDA Status" value="Submitted" trend="up" trendValue="On time" color="#6B8F71" sparkline={SPARKLINE_HMDA} />
         <StatCard label="CRA Rating" value="Satisfactory" trend="flat" trendValue="Maintained" color="#475569" sparkline={SPARKLINE_CRA} />

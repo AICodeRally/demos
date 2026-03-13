@@ -71,7 +71,7 @@ function MetricCard({ label, value, icon: Icon }: { label: string; value: string
     >
       <div className="flex items-center justify-between">
         <span
-          className="text-xs font-medium uppercase tracking-wider"
+          className="text-[11px] font-medium uppercase tracking-wider"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           {label}
@@ -177,7 +177,7 @@ export default function QuotaDesignCenterPage() {
     >
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
           Quota Design Center
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>

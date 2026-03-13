@@ -58,14 +58,14 @@ export default function FraudDetection() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Fraud Detection</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Fraud Detection</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Real-time fraud monitoring, alert analysis, and resolution tracking
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Alerts This Month" value="847" trend="up" trendValue="+4.6%" color="#B91C1C" />
         <StatCard label="Confirmed Fraud" value="12%" trend="down" trendValue="-1.8%" color="#475569" />
         <StatCard label="False Positive Rate" value="68%" trend="down" trendValue="-3.2%" color="#B87333" />

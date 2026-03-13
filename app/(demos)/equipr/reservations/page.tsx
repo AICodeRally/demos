@@ -48,7 +48,7 @@ const ALL_STATUSES: (ReservationStatus | 'all')[] = [
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -105,7 +105,7 @@ export default function ReservationsPage() {
           Reservations
         </h1>
         <span
-          className="text-[12px] font-mono font-semibold px-2.5 py-1 rounded-lg"
+          className="text-[12px] font-semibold px-2.5 py-1 rounded-lg"
           style={{
             background: 'rgba(8,145,178,0.12)',
             color: '#0891B2',
@@ -141,7 +141,7 @@ export default function ReservationsPage() {
               }}
             >
               {label}{' '}
-              <span className="font-mono text-[10px]" style={{ opacity: 0.7 }}>
+              <span className="text-[10px]" style={{ opacity: 0.7 }}>
                 ({count})
               </span>
               {isActive && (
@@ -249,7 +249,7 @@ export default function ReservationsPage() {
                         {res.lines.length} item{res.lines.length !== 1 ? 's' : ''}
                       </span>
                       <span
-                        className="text-[12px] font-mono font-semibold"
+                        className="text-[12px] font-semibold"
                         style={{ color: 'var(--prizym-text-primary)' }}
                       >
                         {fmtDollar(res.total)}
@@ -334,7 +334,7 @@ export default function ReservationsPage() {
                   }}
                 >
                   <div
-                    className="text-[10px] uppercase tracking-[1px] font-mono font-semibold mb-2"
+                    className="text-[10px] uppercase tracking-[1px] font-semibold font-semibold mb-2"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Customer Info
@@ -380,7 +380,7 @@ export default function ReservationsPage() {
                         Lifetime
                       </span>
                       <span
-                        className="float-right font-mono font-medium"
+                        className="float-right font-semibold"
                         style={{ color: 'var(--prizym-text-primary)' }}
                       >
                         {fmtDollar(selectedCustomer.lifetimeValue)}
@@ -424,7 +424,7 @@ export default function ReservationsPage() {
                 }}
               >
                 <div
-                  className="text-[10px] uppercase tracking-[1px] font-mono font-semibold mb-2"
+                  className="text-[10px] uppercase tracking-[1px] font-semibold font-semibold mb-2"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Line Items
@@ -433,25 +433,25 @@ export default function ReservationsPage() {
                   <thead>
                     <tr>
                       <th
-                        className="text-left pb-2 text-[10px] uppercase tracking-[0.5px] font-mono"
+                        className="text-left pb-2 text-[10px] uppercase tracking-[0.5px] font-semibold"
                         style={{ color: 'var(--prizym-text-muted)' }}
                       >
                         Asset
                       </th>
                       <th
-                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-mono"
+                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-semibold"
                         style={{ color: 'var(--prizym-text-muted)' }}
                       >
                         Rate
                       </th>
                       <th
-                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-mono"
+                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-semibold"
                         style={{ color: 'var(--prizym-text-muted)' }}
                       >
                         Days
                       </th>
                       <th
-                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-mono"
+                        className="text-right pb-2 text-[10px] uppercase tracking-[0.5px] font-semibold"
                         style={{ color: 'var(--prizym-text-muted)' }}
                       >
                         Total
@@ -474,26 +474,26 @@ export default function ReservationsPage() {
                             {line.assetName}
                           </div>
                           <div
-                            className="font-mono text-[10px]"
+                            className="text-[10px]"
                             style={{ color: 'var(--prizym-text-muted)' }}
                           >
                             {line.assetId}
                           </div>
                         </td>
                         <td
-                          className="py-2 text-right font-mono"
+                          className="py-2 text-right tabular-nums"
                           style={{ color: 'var(--prizym-text-secondary)' }}
                         >
                           {fmtDollar(line.dailyRate)}
                         </td>
                         <td
-                          className="py-2 text-right font-mono"
+                          className="py-2 text-right tabular-nums"
                           style={{ color: 'var(--prizym-text-secondary)' }}
                         >
                           {line.days}
                         </td>
                         <td
-                          className="py-2 text-right font-mono font-semibold"
+                          className="py-2 text-right tabular-nums font-semibold"
                           style={{ color: 'var(--prizym-text-primary)' }}
                         >
                           {fmtDollar(line.lineTotal)}
@@ -515,7 +515,7 @@ export default function ReservationsPage() {
                         Total
                       </td>
                       <td
-                        className="py-2 text-right font-mono font-bold text-[14px]"
+                        className="py-2 text-right font-bold tabular-nums text-[14px]"
                         style={{ color: 'var(--prizym-text-primary)' }}
                       >
                         {fmtDollar(selectedRes.total)}
@@ -535,14 +535,14 @@ export default function ReservationsPage() {
                 }}
               >
                 <div
-                  className="text-[10px] uppercase tracking-[1px] font-mono font-semibold mb-2"
+                  className="text-[10px] uppercase tracking-[1px] font-semibold font-semibold mb-2"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Deposit
                 </div>
                 <div className="flex items-center gap-3">
                   <span
-                    className="text-[14px] font-mono font-bold"
+                    className="text-[14px] font-bold tabular-nums"
                     style={{ color: 'var(--prizym-text-primary)' }}
                   >
                     {fmtDollar(selectedRes.depositAmount)}
@@ -564,7 +564,7 @@ export default function ReservationsPage() {
               {selectedRes.notes && (
                 <div className="px-5 py-3">
                   <div
-                    className="text-[10px] uppercase tracking-[1px] font-mono font-semibold mb-2"
+                    className="text-[10px] uppercase tracking-[1px] font-semibold font-semibold mb-2"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Notes

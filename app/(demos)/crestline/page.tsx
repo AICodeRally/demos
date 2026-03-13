@@ -78,7 +78,7 @@ export default function CrestlineHome() {
             <Link
               key={act.href}
               href={act.href}
-              className="group block rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              className="group block rounded-xl transition-all duration-200 hover:scale-[1.02]"
               style={{ backgroundColor: 'var(--pl-card)', border: '1px solid var(--pl-border)', borderTop: `4px solid ${act.color}` }}
             >
               <div className="p-6">

@@ -60,7 +60,7 @@ export default function ProductOverviewPage() {
           style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #06B6D4 100%)' }}
         >
           <div className="relative z-10">
-            <p className="text-2xl font-black tracking-tight text-white mb-2">
+            <p className="text-3xl font-black tracking-tight text-white mb-2">
               REGISTER
             </p>
             <p className="text-base font-semibold text-white mb-1">
@@ -72,7 +72,7 @@ export default function ProductOverviewPage() {
               that pushes plan changes to every POS tablet instantly.
             </p>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { stat: '200', label: 'Stores', sub: 'Across 4 formats' },
                 { stat: '850', label: 'Sales Reps', sub: 'Active headcount' },
@@ -102,7 +102,7 @@ export default function ProductOverviewPage() {
         <p className="register-section-header">
           Five-Act Platform
         </p>
-        <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
+        <p className="text-[11px] mb-5" style={{ color: 'var(--register-text-muted)' }}>
           Each act addresses a layer of the retail revenue stack
         </p>
 
@@ -114,13 +114,13 @@ export default function ProductOverviewPage() {
             >
               <div className="flex items-center gap-3 mb-3">
                 <div
-                  className="flex items-center justify-center w-8 h-8 rounded-lg text-[12px] font-bold text-white"
+                  className="flex items-center justify-center w-8 h-8 rounded-xl text-[12px] font-bold text-white"
                   style={{ backgroundColor: mod.color }}
                 >
                   {mod.act}
                 </div>
                 <div>
-                  <p className="text-[13px] font-bold" style={{ color: 'var(--register-text)' }}>
+                  <p className="text-[14px] font-bold" style={{ color: 'var(--register-text)' }}>
                     {mod.name}
                   </p>
                   <p className="register-meta-label" style={{ color: mod.color }}>
@@ -132,7 +132,7 @@ export default function ProductOverviewPage() {
                 {mod.items.map((item) => (
                   <div
                     key={item}
-                    className="flex items-start gap-2 rounded-lg px-3 py-2"
+                    className="flex items-start gap-2 rounded-xl px-3 py-2"
                     style={{ backgroundColor: `${mod.color}10` }}
                   >
                     <span
@@ -155,7 +155,7 @@ export default function ProductOverviewPage() {
         <p className="register-section-header">
           Technology Highlights
         </p>
-        <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
+        <p className="text-[11px] mb-5" style={{ color: 'var(--register-text-muted)' }}>
           Built for real-time retail at scale
         </p>
 

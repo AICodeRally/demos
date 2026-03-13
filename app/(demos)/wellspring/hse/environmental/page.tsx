@@ -43,12 +43,12 @@ export default function HseEnvironmentalPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#DC2626' }}
         >
           Act 5 &middot; HSE Officer
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Environmental
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -154,18 +154,18 @@ export default function HseEnvironmentalPage() {
                 <tr key={i} style={{ borderBottom: '1px solid #252B36' }}>
                   <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{well.name}</td>
                   <td className="py-2" style={{ color: '#CBD5E1' }}>{well.type}</td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {well.capacity.toLocaleString()}
                   </td>
                   <td className="py-2 text-right">
                     <span
-                      className="font-mono font-bold"
+                      className="font-bold tabular-nums"
                       style={{ color: well.utilization > 85 ? '#DC2626' : well.utilization > 70 ? '#EAB308' : '#059669' }}
                     >
                       {well.utilization}%
                     </span>
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#94A3B8' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#94A3B8' }}>
                     {well.lastInspection}
                   </td>
                 </tr>

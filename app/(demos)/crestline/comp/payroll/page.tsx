@@ -51,7 +51,7 @@ export default function PayrollOutput() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>
           Payroll Output & Reconciliation
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
@@ -108,9 +108,9 @@ export default function PayrollOutput() {
                 </div>
                 <div className="flex items-center gap-3">
                   {row.pct && (
-                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.pct}</span>
+                    <span className="text-[10px] tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row.pct}</span>
                   )}
-                  <span className="text-sm font-bold font-mono" style={{ color: row.color }}>{row.amount}</span>
+                  <span className="text-sm font-bold tabular-nums" style={{ color: row.color }}>{row.amount}</span>
                 </div>
               </div>
             ))}
@@ -120,7 +120,7 @@ export default function PayrollOutput() {
               style={{ backgroundColor: COLORS.primary }}
             >
               <span className="text-xs font-bold text-white">Total Payout</span>
-              <span className="text-base font-bold font-mono" style={{ color: COLORS.accent }}>$324,000</span>
+              <span className="text-base font-bold tabular-nums" style={{ color: COLORS.accent }}>$324,000</span>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function PayrollOutput() {
             Guarantee Floor Calculation
           </p>
           <span
-            className="text-[10px] font-mono px-2.5 py-1 rounded-full"
+            className="text-[10px] px-2.5 py-1 rounded-full"
             style={{ backgroundColor: '#fef3c7', color: '#92400e' }}
           >
             hourly_minimum_enforcement
@@ -147,11 +147,11 @@ export default function PayrollOutput() {
         <table className="w-full text-xs">
           <thead>
             <tr style={{ color: 'var(--pl-text-muted)' }}>
-              <th className="text-left pb-3 font-medium">Associate</th>
-              <th className="text-right pb-3 font-medium">Commission Earned</th>
-              <th className="text-right pb-3 font-medium">Hourly Guarantee</th>
-              <th className="text-center pb-3 font-medium">Floor Applied</th>
-              <th className="text-right pb-3 font-medium">Final Payout</th>
+              <th className="text-left pb-3 font-semibold">Associate</th>
+              <th className="text-right pb-3 font-semibold">Commission Earned</th>
+              <th className="text-right pb-3 font-semibold">Hourly Guarantee</th>
+              <th className="text-center pb-3 font-semibold">Floor Applied</th>
+              <th className="text-right pb-3 font-semibold">Final Payout</th>
             </tr>
           </thead>
           <tbody>
@@ -160,10 +160,10 @@ export default function PayrollOutput() {
                 <td className="py-3">
                   <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.name}</span>
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: row.floorApplied ? '#DC2626' : 'var(--pl-text-secondary)' }}>
+                <td className="py-3 text-right tabular-nums" style={{ color: row.floorApplied ? '#DC2626' : 'var(--pl-text-secondary)' }}>
                   ${row.commission.toLocaleString()}
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>
+                <td className="py-3 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>
                   ${row.guarantee.toLocaleString()}
                 </td>
                 <td className="py-3 text-center">
@@ -183,7 +183,7 @@ export default function PayrollOutput() {
                     </span>
                   )}
                 </td>
-                <td className="py-3 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>
+                <td className="py-3 text-right tabular-nums font-bold" style={{ color: 'var(--pl-text)' }}>
                   ${row.payout.toLocaleString()}
                 </td>
               </tr>
@@ -206,12 +206,12 @@ export default function PayrollOutput() {
         <table className="w-full text-xs">
           <thead>
             <tr style={{ color: 'var(--pl-text-muted)' }}>
-              <th className="text-left pb-3 font-medium">Associate</th>
-              <th className="text-right pb-3 font-medium">Selling Hours</th>
-              <th className="text-right pb-3 font-medium">Hourly Rate</th>
-              <th className="text-right pb-3 font-medium">Min Guarantee</th>
-              <th className="text-right pb-3 font-medium">Actual Commission</th>
-              <th className="text-right pb-3 font-medium">Delta</th>
+              <th className="text-left pb-3 font-semibold">Associate</th>
+              <th className="text-right pb-3 font-semibold">Selling Hours</th>
+              <th className="text-right pb-3 font-semibold">Hourly Rate</th>
+              <th className="text-right pb-3 font-semibold">Min Guarantee</th>
+              <th className="text-right pb-3 font-semibold">Actual Commission</th>
+              <th className="text-right pb-3 font-semibold">Delta</th>
             </tr>
           </thead>
           <tbody>
@@ -220,11 +220,11 @@ export default function PayrollOutput() {
                 <td className="py-3">
                   <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{row.name}</span>
                 </td>
-                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.sellingHours}</td>
-                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.hourlyRate.toFixed(2)}</td>
-                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.minGuarantee.toLocaleString()}</td>
-                <td className="py-3 text-right font-mono" style={{ color: 'var(--pl-text-secondary)' }}>${row.actualCommission.toLocaleString()}</td>
-                <td className="py-3 text-right font-mono font-bold" style={{ color: row.delta < 0 ? '#DC2626' : '#059669' }}>
+                <td className="py-3 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{row.sellingHours}</td>
+                <td className="py-3 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>${row.hourlyRate.toFixed(2)}</td>
+                <td className="py-3 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>${row.minGuarantee.toLocaleString()}</td>
+                <td className="py-3 text-right tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>${row.actualCommission.toLocaleString()}</td>
+                <td className="py-3 text-right tabular-nums font-bold" style={{ color: row.delta < 0 ? '#DC2626' : '#059669' }}>
                   {row.delta < 0 ? '-' : '+'}${Math.abs(row.delta).toLocaleString()}
                 </td>
               </tr>
@@ -271,7 +271,7 @@ export default function PayrollOutput() {
           </div>
 
           {/* Summary stats */}
-          <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
+          <div className="rounded-xl p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
                 <p style={{ color: 'var(--pl-text-muted)' }}>Records Processed</p>
@@ -283,11 +283,11 @@ export default function PayrollOutput() {
               </div>
               <div>
                 <p style={{ color: 'var(--pl-text-muted)' }}>Batch ID</p>
-                <p className="font-mono font-medium" style={{ color: 'var(--pl-text-secondary)' }}>CL-2026-PP04-001</p>
+                <p className="font-semibold" style={{ color: 'var(--pl-text-secondary)' }}>CL-2026-PP04-001</p>
               </div>
               <div>
                 <p style={{ color: 'var(--pl-text-muted)' }}>Last Run</p>
-                <p className="font-mono font-medium" style={{ color: 'var(--pl-text-secondary)' }}>Mar 31, 06:00 UTC</p>
+                <p className="font-semibold" style={{ color: 'var(--pl-text-secondary)' }}>Mar 31, 06:00 UTC</p>
               </div>
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function PayrollOutput() {
                 {/* Content */}
                 <div className="pt-1 pb-6">
                   <p className="text-xs font-bold" style={{ color: 'var(--pl-text)' }}>{step.label}</p>
-                  <p className="text-[10px] font-mono mt-0.5" style={{ color: step.color }}>{step.offset}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: step.color }}>{step.offset}</p>
                 </div>
               </div>
             ))}
@@ -329,8 +329,8 @@ export default function PayrollOutput() {
             <div className="h-2 rounded-lg" style={{ width: '100%', background: `linear-gradient(90deg, #2563eb, #7c3aed, #d946ef, #059669)` }} />
           </div>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>T+0</span>
-            <span className="text-[10px] font-mono font-bold" style={{ color: '#059669' }}>T+4hr (complete)</span>
+            <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>T+0</span>
+            <span className="text-[10px] tabular-nums font-bold" style={{ color: '#059669' }}>T+4hr (complete)</span>
           </div>
         </div>
       </div>

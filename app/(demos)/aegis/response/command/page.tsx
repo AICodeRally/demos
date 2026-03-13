@@ -80,7 +80,7 @@ export default function CommandCenter() {
     <>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Command Center</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Command Center</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Active crisis response &mdash; Meridian Dynamics &mdash; T+18 hours
         </p>
@@ -103,7 +103,7 @@ export default function CommandCenter() {
         </div>
 
         {/* Right: 2x3 StatCard grid */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <StatCard
             label="Hours Active"
             value="18"
@@ -146,7 +146,7 @@ export default function CommandCenter() {
       </div>
 
       {/* Middle row: 3 charts */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <h2 className="text-sm font-semibold mb-3" style={{ color: '#1C1917' }}>Task Burndown</h2>
           <AreaChart data={BURNDOWN_DATA} color="#7C3AED" height={160} />
@@ -183,7 +183,7 @@ export default function CommandCenter() {
                 style={{ backgroundColor: i % 2 === 0 ? '#F5F5F4' : 'transparent' }}
               >
                 <span
-                  className="text-[11px] font-mono shrink-0 pt-0.5"
+                  className="text-[11px] shrink-0 pt-0.5"
                   style={{ color: '#A8A29E', width: 40 }}
                 >
                   {item.time}
@@ -209,7 +209,7 @@ export default function CommandCenter() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold" style={{ color: '#1C1917' }}>Technical Containment</h2>
-          <span className="text-sm font-bold font-mono" style={{ color: '#7C3AED' }}>94%</span>
+          <span className="text-sm font-bold tabular-nums" style={{ color: '#7C3AED' }}>94%</span>
         </div>
         <div className="h-4 w-full rounded-full overflow-hidden" style={{ backgroundColor: '#F5F5F4' }}>
           <div

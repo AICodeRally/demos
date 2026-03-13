@@ -114,22 +114,22 @@ export default function FacilitiesPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Issue
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Room
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Priority
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Status
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Assigned To
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Reported
                   </th>
                 </tr>
@@ -227,7 +227,7 @@ export default function FacilitiesPage() {
               { room: 'Room 204', requester: "Women's Bible Study", date: 'Apr 15, 10am-12pm', status: 'Approved', statusColor: 'bg-blue-50 text-blue-700' },
               { room: 'Main Sanctuary', requester: 'Community Concert', date: 'Apr 20, 6pm-9pm', status: 'Requested', statusColor: 'bg-amber-50 text-amber-700' },
             ].map((booking) => (
-              <div key={booking.room + booking.date} className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-3">
+              <div key={booking.room + booking.date} className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3">
                 <div>
                   <span className="font-semibold text-[#2d3142]">{booking.room}</span>
                   <span className="ml-2 text-sm text-gray-500">{booking.requester} &middot; {booking.date}</span>
@@ -244,7 +244,7 @@ export default function FacilitiesPage() {
             { alert: 'Projector A double-booked Sun 10am', severity: 'border-amber-200 bg-amber-50' },
             { alert: 'Parking Lot B reserved for construction Apr 14-18', severity: 'border-red-200 bg-red-50' },
           ].map((conflict) => (
-            <div key={conflict.alert} className={`rounded-lg border-2 ${conflict.severity} p-3 text-sm font-medium text-gray-700`}>
+            <div key={conflict.alert} className={`rounded-xl border-2 ${conflict.severity} p-3 text-sm font-medium text-gray-700`}>
               {conflict.alert}
             </div>
           ))}

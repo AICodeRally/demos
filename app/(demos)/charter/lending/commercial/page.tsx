@@ -34,14 +34,14 @@ export default function SBACommercial() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>SBA & Commercial</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>SBA & Commercial</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Commercial lending portfolio, SBA participation, and industry concentration
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Commercial Portfolio" value="$112M" trend="up" trendValue="+7.2% YoY" color="#475569" />
         <StatCard label="SBA Loans Active" value="84" trend="up" trendValue="+12 this quarter" color="#B87333" />
         <StatCard label="Avg Loan Size" value="$420K" trend="up" trendValue="+$15K" color="#475569" />

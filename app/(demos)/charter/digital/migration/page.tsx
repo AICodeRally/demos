@@ -29,14 +29,14 @@ export default function MigrationTrackerPage() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Migration Tracker</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Migration Tracker</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Core system migration progress, parallel run status, and data validation scores
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Modules Live" value="1 / 6" color="#6B8F71" />
         <StatCard label="Parallel Run" value="Active" color="#B87333" />
         <StatCard label="Data Accuracy" value="99.2%" trend="up" trendValue="+0.4%" color="#475569" />

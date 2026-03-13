@@ -86,12 +86,12 @@ export default function ClientPortfolio() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Client Portfolio</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Client Portfolio</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Active retainer clients with risk intelligence</p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Active Clients" value="42" trend="up" trendValue="+3" color="#8B7355" sparkline={[32, 34, 35, 36, 37, 38, 39, 40, 40, 41, 41, 42]} />
         <StatCard label="Platinum Tier" value="8" trend="up" trendValue="+1" color="#8B7355" sparkline={[5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8]} />
         <StatCard label="Avg Readiness" value="78/100" trend="up" trendValue="+4" color="#059669" sparkline={[70, 71, 72, 73, 74, 74, 75, 76, 76, 77, 77, 78]} />

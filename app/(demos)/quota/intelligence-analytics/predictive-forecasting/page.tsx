@@ -20,7 +20,7 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
       <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -85,7 +85,7 @@ export default function PredictiveForecastingPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Predictive Forecasting</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Predictive Forecasting</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             AI-powered revenue forecasting with confidence intervals and scenario modeling.
           </p>
@@ -187,12 +187,12 @@ export default function PredictiveForecastingPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="text-left py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Scenario</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Q1 Forecast</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Q2 Forecast</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Annual Projection</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Confidence</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Probability</th>
+                <th className="text-left py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Scenario</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Q1 Forecast</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Q2 Forecast</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Annual Projection</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Confidence</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Probability</th>
               </tr>
             </thead>
             <tbody>

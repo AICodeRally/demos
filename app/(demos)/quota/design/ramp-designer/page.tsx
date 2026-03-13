@@ -189,7 +189,7 @@ export default function RampDesignerPage() {
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
           <TrendingUp className="h-5 w-5 text-amber-500" />
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
             Ramp Designer
           </h1>
         </div>
@@ -212,7 +212,7 @@ export default function RampDesignerPage() {
           >
             <div className="flex items-center justify-between mb-3">
               <span
-                className="text-xs font-medium uppercase tracking-wider"
+                className="text-[11px] font-medium uppercase tracking-wider"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {k.label}
@@ -232,7 +232,7 @@ export default function RampDesignerPage() {
       {/* Ramp Templates */}
       <div className="mb-2">
         <h2
-          className="text-xs font-medium uppercase tracking-wider mb-3"
+          className="text-[11px] font-medium uppercase tracking-wider mb-3"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           Ramp Templates
@@ -247,7 +247,7 @@ export default function RampDesignerPage() {
       {/* Ramp Impact Analysis */}
       <div className="mb-2">
         <h2
-          className="text-xs font-medium uppercase tracking-wider mb-3"
+          className="text-[11px] font-medium uppercase tracking-wider mb-3"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           Ramp Impact Analysis
@@ -346,7 +346,7 @@ export default function RampDesignerPage() {
       {/* Active Ramps Table */}
       <div className="mb-2">
         <h2
-          className="text-xs font-medium uppercase tracking-wider mb-3"
+          className="text-[11px] font-medium uppercase tracking-wider mb-3"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           Active Ramps
@@ -366,7 +366,7 @@ export default function RampDesignerPage() {
               {['Rep', 'Territory', 'Template', 'Start Date', 'Current Month', 'Current %', 'Est. Full Quota Date'].map((h) => (
                 <th
                   key={h}
-                  className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                  className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   {h}

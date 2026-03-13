@@ -206,7 +206,7 @@ export default function FloorDashboard() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Floor Dashboard</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Floor Dashboard</h1>
           <span
             className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider animate-pulse"
             style={{ backgroundColor: '#D1FAE5', color: '#059669' }}
@@ -228,7 +228,7 @@ export default function FloorDashboard() {
             <p className="text-sm font-semibold" style={{ color: 'var(--pl-text)' }}>
               Live Floor Layout &mdash; {currentFormat?.name ?? 'Flagship'}
             </p>
-            <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+            <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
               {format === 'flagship' ? '48,000' : format === 'standard' ? '28,000' : format === 'rack' ? '18,000' : '4,500'} sq ft
             </span>
           </div>

@@ -66,7 +66,7 @@ export default function PromotionsAndSpiffs() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Promotions & SPIFFs</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Promotions & SPIFFs</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           6 promotional events and 3 active SPIFFs driving {totalPromoBudget} in annual spend with targeted revenue lift
         </p>
@@ -97,7 +97,7 @@ export default function PromotionsAndSpiffs() {
             <p className="text-[11px] mb-3" style={{ color: 'var(--pl-text-secondary)' }}>{spiff.trigger}</p>
             <div className="flex justify-between text-xs">
               <span style={{ color: 'var(--pl-text-muted)' }}>Expires</span>
-              <span className="font-mono" style={{ color: 'var(--pl-text)' }}>{spiff.expires ?? 'Ongoing'}</span>
+              <span className="tabular-nums" style={{ color: 'var(--pl-text)' }}>{spiff.expires ?? 'Ongoing'}</span>
             </div>
           </div>
         ))}
@@ -193,9 +193,9 @@ export default function PromotionsAndSpiffs() {
               {MONTHLY_ACTIVITY.map((row) => (
                 <tr key={row.month} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
                   <td className="py-2 px-3 font-medium" style={{ color: 'var(--pl-text)' }}>{row.month}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: row.events > 0 ? COLORS.flagship : 'var(--pl-text-muted)' }}>{row.events}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: row.spiffs > 1 ? COLORS.accent : 'var(--pl-text-secondary)' }}>{row.spiffs}</td>
-                  <td className="py-2 px-3 font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{row.spend}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: row.events > 0 ? COLORS.flagship : 'var(--pl-text-muted)' }}>{row.events}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: row.spiffs > 1 ? COLORS.accent : 'var(--pl-text-secondary)' }}>{row.spiffs}</td>
+                  <td className="py-2 px-3 tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>{row.spend}</td>
                 </tr>
               ))}
             </tbody>
@@ -232,11 +232,11 @@ export default function PromotionsAndSpiffs() {
               </div>
               <div className="flex justify-between text-xs">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Budget</span>
-                <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{p.budget}</span>
+                <span className="tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>{p.budget}</span>
               </div>
               <div className="flex justify-between text-xs">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Projected Lift</span>
-                <span className="font-mono font-semibold" style={{ color: '#10B981' }}>+{p.lift}</span>
+                <span className="tabular-nums font-semibold" style={{ color: '#10B981' }}>+{p.lift}</span>
               </div>
             </div>
           </div>

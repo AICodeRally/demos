@@ -63,12 +63,12 @@ export default function PlaybookLibrary() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Playbook Library</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Playbook Library</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Pre-built crisis response frameworks</p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Playbooks" value="8" color="#8B7355" sparkline={[5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8]} />
         <StatCard label="Deployments YTD" value="23" trend="up" trendValue="+4" color="#8B7355" sparkline={[12, 14, 15, 16, 17, 18, 19, 20, 20, 21, 22, 23]} />
         <StatCard label="Avg Resolution" value="12.4d" trend="down" trendValue="-2.1d" color="#059669" sparkline={[18, 17, 16, 15, 15, 14, 14, 13, 13, 13, 12, 12]} />
@@ -101,7 +101,7 @@ export default function PlaybookLibrary() {
 
               <h3 className="font-semibold text-sm mb-3" style={{ color: '#1C1917' }}>{p.name}</h3>
 
-              <div className="grid grid-cols-3 gap-3 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
                 <div>
                   <p className="text-[10px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Activations</p>
                   <p className="text-sm font-bold" style={{ color: '#1C1917' }}>{p.activations}</p>

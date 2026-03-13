@@ -64,14 +64,14 @@ export default function EvidenceVault() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Evidence Vault</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Evidence Vault</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Chain-of-custody management and forensic integrity
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Artifacts" value="127" color="#7C3AED" />
         <StatCard label="Verified" value="94%" color="#059669" />
         <StatCard label="Privileged" value="67%" color="#7C3AED" />
@@ -82,7 +82,7 @@ export default function EvidenceVault() {
       <div className="rounded-xl bg-white border p-5 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Chain of Custody</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['ID', 'Type', 'Description', 'Collected By', 'Timestamp', 'SHA-256', 'Privilege', 'Status'].map((h) => (
@@ -139,7 +139,7 @@ export default function EvidenceVault() {
           {PIPELINE_STEPS.map((step, i) => (
             <div key={step.name} className="flex items-center flex-1">
               <div
-                className="rounded-lg p-3 text-center flex-1"
+                className="rounded-xl p-3 text-center flex-1"
                 style={{
                   backgroundColor: '#F5F5F4',
                   border: '1px solid #E7E5E4',
@@ -166,7 +166,7 @@ export default function EvidenceVault() {
         {/* Recent Additions */}
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Recent Additions</h2>
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Artifact', 'Collector', 'Time', 'Hash'].map((h) => (

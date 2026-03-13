@@ -120,7 +120,7 @@ export default function RateTables() {
                         <td key={`${dept.id}-${pi}`} colSpan={2} className="py-3">
                           <div className="flex justify-center gap-6">
                             <span
-                              className="font-mono"
+                              className="tabular-nums"
                               style={{
                                 color: isCurrent ? dept.color : 'var(--pl-text-secondary)',
                                 fontWeight: isCurrent ? 700 : 400,
@@ -129,7 +129,7 @@ export default function RateTables() {
                               {base}%
                             </span>
                             <span
-                              className="font-mono"
+                              className="tabular-nums"
                               style={{
                                 color: isCurrent ? dept.color : 'var(--pl-text-secondary)',
                                 fontWeight: isCurrent ? 700 : 400,
@@ -158,7 +158,7 @@ export default function RateTables() {
           {SELLING_DEPTS.map((dept) => {
             const products = productsByDept[dept.id] ?? [];
             return (
-              <div key={dept.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
+              <div key={dept.id} className="rounded-xl border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
                   <span className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>{dept.name}</span>
@@ -195,7 +195,7 @@ export default function RateTables() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{cp.format}</span>
                 <span
-                  className="text-[10px] font-mono px-2 py-0.5 rounded-full"
+                  className="text-[10px] px-2 py-0.5 rounded-full"
                   style={{ backgroundColor: `${cp.color}18`, color: cp.color }}
                 >
                   {cp.streams} streams

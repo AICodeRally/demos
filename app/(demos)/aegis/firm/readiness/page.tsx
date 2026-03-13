@@ -72,7 +72,7 @@ export default function ReadinessScores() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Readiness Scores</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Readiness Scores</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Client preparedness across 6 crisis dimensions</p>
       </div>
 
@@ -173,7 +173,7 @@ export default function ReadinessScores() {
           {RECOMMENDATIONS.map((rec, i) => {
             const ps = PRIORITY_STYLES[rec.priority];
             return (
-              <div key={i} className="rounded-lg p-4" style={{ borderLeft: `4px solid ${ps.border}`, backgroundColor: '#FAFAF9' }}>
+              <div key={i} className="rounded-xl p-4" style={{ borderLeft: `4px solid ${ps.border}`, backgroundColor: '#FAFAF9' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-medium text-sm" style={{ color: '#1C1917' }}>{rec.client}</span>
                   <span className="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase" style={{ backgroundColor: ps.badgeBg, color: ps.badge }}>{rec.priority}</span>

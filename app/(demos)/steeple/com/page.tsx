@@ -358,7 +358,7 @@ export default function CommunicationsPage() {
         {activeTab === 'social' && (
           <div className="space-y-6">
             {/* Platform Cards */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
               {socialPlatforms.map((platform) => {
                 const Icon = platform.icon;
                 const TrendIcon = platform.trending === 'up' ? ArrowUp : ArrowDown;
@@ -468,7 +468,7 @@ export default function CommunicationsPage() {
 
             {/* Content Calendar */}
             <ChartCard title="Content Calendar - This Week">
-              <div className="grid grid-cols-7 gap-3 mb-6">
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
                 {contentCalendar.map((day) => (
                   <div
                     key={day.day}
@@ -532,7 +532,7 @@ export default function CommunicationsPage() {
                   <Bar dataKey="conversions" fill="#059669" name="Conversions" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-              <div className="mt-4 grid grid-cols-3 gap-4 border-t border-gray-200 pt-4">
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-gray-200 pt-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600">15,400</div>
                   <div className="text-xs text-gray-600">People Reached (Mar)</div>
@@ -584,7 +584,7 @@ export default function CommunicationsPage() {
             {/* Delivery Metrics */}
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-[0_1px_3px_rgba(82,35,152,0.06),0_1px_2px_rgba(82,35,152,0.04)]">
               <h3 className="text-lg font-semibold text-[#2d3142]">Email Campaign Performance</h3>
-              <div className="mt-4 grid grid-cols-4 gap-4">
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[
                   { label: 'Sent', value: '2,450', pct: '100%', color: 'text-gray-700' },
                   { label: 'Delivered', value: '2,380', pct: '97.1%', color: 'text-blue-600' },
@@ -755,22 +755,22 @@ export default function CommunicationsPage() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead>
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Subject
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Sent Date
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Recipients
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Open Rate
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Click Rate
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Consent
                       </th>
                     </tr>

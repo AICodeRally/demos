@@ -20,7 +20,7 @@ function SettingRow({ label, value, sub }: { label: string; value: React.ReactNo
         <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{label}</p>
         {sub && <p className="text-xs mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{sub}</p>}
       </div>
-      <div className="text-sm font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>{value}</div>
+      <div className="text-sm" style={{ color: 'var(--prizym-text-secondary)' }}>{value}</div>
     </div>
   );
 }
@@ -67,7 +67,7 @@ export default function SystemConfigurationPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>System Configuration</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>System Configuration</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Configure calculation methods, business rules, and global platform settings.
           </p>
@@ -83,7 +83,7 @@ export default function SystemConfigurationPage() {
       </div>
 
       {/* Environment Banner */}
-      <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 mb-6 flex items-center justify-between">
+      <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Settings className="h-4 w-4 text-amber-400" />
           <span className="text-xs" style={{ color: 'var(--prizym-text-secondary)' }}>Environment: <span className="font-semibold text-amber-400">Production</span></span>

@@ -42,14 +42,14 @@ export default function PortfolioHealth() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Portfolio Health</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Portfolio Health</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Loan portfolio composition, performance, and risk metrics
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Portfolio" value="$1.4B" trend="up" trendValue="+3.2% YoY" color="#475569" />
         <StatCard label="Weighted Avg Rate" value="5.82%" trend="up" trendValue="+18bps" color="#B87333" />
         <StatCard label="NPL Ratio" value="0.68%" trend="down" trendValue="-14bps" color="#6B8F71" />
@@ -72,7 +72,7 @@ export default function PortfolioHealth() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold" style={{ color: '#1C1917' }}>12-Month NPL Trend</h2>
-          <span className="text-xs font-mono" style={{ color: '#6B8F71' }}>Target: &lt; 0.75%</span>
+          <span className="text-xs tabular-nums" style={{ color: '#6B8F71' }}>Target: &lt; 0.75%</span>
         </div>
         <AreaChart data={NPL_TREND} color="#475569" height={200} />
       </div>

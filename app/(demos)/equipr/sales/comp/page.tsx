@@ -75,7 +75,7 @@ const chartCommVsLeak = COMP_VS_LEAKAGE.map((d) => ({
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>•</span>
@@ -116,7 +116,7 @@ export default function SalesCompPage() {
           <SourceBadge source="Wynne Systems + Point of Rental" synced="5 min ago" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(16,185,129,0.12)',
             color: '#059669',
@@ -145,7 +145,7 @@ export default function SalesCompPage() {
             style={{ background: '#2563EB' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Team Revenue
@@ -183,7 +183,7 @@ export default function SalesCompPage() {
             style={{ background: '#DC2626' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Total Leakage
@@ -221,7 +221,7 @@ export default function SalesCompPage() {
             style={{ background: '#10B981' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             AI Plan Reps
@@ -259,7 +259,7 @@ export default function SalesCompPage() {
             style={{ background: '#059669' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Leakage Reduction
@@ -477,7 +477,7 @@ export default function SalesCompPage() {
             className="flex items-center gap-2"
             style={{ color: '#64748B' }}
           >
-            <span className="text-[13px] font-mono font-medium">
+            <span className="text-[13px] font-medium">
               ${(trad.avgLeakagePerRep / 1e3).toFixed(1)}K/rep
             </span>
           </div>
@@ -486,7 +486,7 @@ export default function SalesCompPage() {
             className="flex items-center gap-2"
             style={{ color: '#059669' }}
           >
-            <span className="text-[13px] font-mono font-medium">
+            <span className="text-[13px] font-medium">
               ${(ai.avgLeakagePerRep / 1e3).toFixed(1)}K/rep
             </span>
           </div>
@@ -694,7 +694,7 @@ export default function SalesCompPage() {
             Rep Performance
           </h3>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Sort: Compliance {'\u25BE'}
@@ -746,21 +746,21 @@ export default function SalesCompPage() {
             {/* Annual Leakage: Before → After */}
             <div>
               <div
-                className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2"
+                className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 Annual Leakage
               </div>
               <div className="flex items-baseline gap-2">
                 <span
-                  className="text-xl font-bold font-mono line-through"
+                  className="text-xl font-bold tabular-nums line-through"
                   style={{ color: '#DC2626' }}
                 >
                   {fmtDollar(proj.currentAnnualLeakage)}
                 </span>
                 <ArrowRight size={14} style={{ color: '#10B981' }} />
                 <span
-                  className="text-xl font-bold font-mono"
+                  className="text-xl font-bold tabular-nums"
                   style={{ color: '#059669' }}
                 >
                   {fmtDollar(proj.projectedAnnualLeakage)}
@@ -771,13 +771,13 @@ export default function SalesCompPage() {
             {/* Annual Savings */}
             <div>
               <div
-                className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2"
+                className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 Annual Savings
               </div>
               <span
-                className="text-xl font-bold font-mono"
+                className="text-xl font-bold tabular-nums"
                 style={{ color: '#059669' }}
               >
                 {fmtDollar(proj.annualSavings)}
@@ -787,13 +787,13 @@ export default function SalesCompPage() {
             {/* Net Revenue Lift */}
             <div>
               <div
-                className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2"
+                className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 Net Revenue Lift
               </div>
               <span
-                className="text-2xl font-bold font-mono"
+                className="text-2xl font-bold tabular-nums"
                 style={{
                   color: '#059669',
                   fontFamily: "'Space Grotesk', sans-serif",
@@ -857,7 +857,7 @@ function CompRow({
         {label}
       </span>
       <span
-        className="text-[12px] font-mono font-semibold"
+        className="text-[12px] font-semibold"
         style={{ color: muted ? 'var(--prizym-text-muted)' : 'var(--prizym-text-primary)' }}
       >
         {value}
@@ -883,14 +883,14 @@ function StatBox({
       style={{ background: `${color}08`, border: `1px solid ${color}20` }}
     >
       <div
-        className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+        className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
         style={{ color: 'var(--prizym-text-muted)' }}
       >
         {label}
       </div>
       <div className="flex items-baseline gap-1">
         <span
-          className="text-[16px] font-bold font-mono"
+          className="text-[16px] font-bold tabular-nums"
           style={{ color }}
         >
           {value}
@@ -971,13 +971,13 @@ function RepCard({
         {/* Revenue */}
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+            className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Revenue
           </div>
           <span
-            className="text-[14px] font-bold font-mono"
+            className="text-[14px] font-bold tabular-nums"
             style={{ color: 'var(--prizym-text-primary)' }}
           >
             {fmtK(rep.ytdRevenue)}
@@ -987,13 +987,13 @@ function RepCard({
         {/* Commission */}
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+            className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Commission
           </div>
           <span
-            className="text-[14px] font-bold font-mono"
+            className="text-[14px] font-bold tabular-nums"
             style={{ color: '#2563EB' }}
           >
             {fmtDollar(rep.ytdCommission)}
@@ -1003,13 +1003,13 @@ function RepCard({
         {/* Leakage */}
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+            className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Leakage
           </div>
           <span
-            className="text-[14px] font-bold font-mono"
+            className="text-[14px] font-bold tabular-nums"
             style={{ color: rep.ytdLeakage > 5000 ? '#EF4444' : rep.ytdLeakage > 2000 ? '#F59E0B' : '#10B981' }}
           >
             {fmtDollar(rep.ytdLeakage)}
@@ -1019,14 +1019,14 @@ function RepCard({
         {/* Rate Compliance */}
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5"
+            className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Rate Compliance
           </div>
           <div className="flex items-center gap-2">
             <span
-              className="text-[14px] font-bold font-mono"
+              className="text-[14px] font-bold tabular-nums"
               style={{ color: complianceColor }}
             >
               {rep.rateComplianceScore}%

@@ -42,7 +42,7 @@ export default function MemberGrowth() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Member Growth</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Member Growth</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>142,000 members &mdash; demographics, acquisition &amp; engagement</p>
       </div>
 
@@ -72,7 +72,7 @@ export default function MemberGrowth() {
       {/* Funnel Metrics */}
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Monthly Acquisition Funnel</h2>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <StatCard label="New Applications" value="2,840" trend="up" trendValue="+12%" color="#475569" sparkline={[2200, 2300, 2400, 2500, 2550, 2600, 2650, 2700, 2740, 2780, 2810, 2840]} />
           <StatCard label="Approved" value="2,130" trend="up" trendValue="+9%" color="#B87333" sparkline={[1700, 1760, 1820, 1860, 1900, 1940, 1980, 2010, 2050, 2080, 2100, 2130]} />
           <StatCard label="Funded" value="1,890" trend="up" trendValue="+7%" color="#6B8F71" sparkline={[1520, 1560, 1600, 1640, 1680, 1720, 1750, 1790, 1820, 1850, 1870, 1890]} />

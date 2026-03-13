@@ -182,13 +182,13 @@ export default function ScadaAlarmsPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#B45309' }}
         >
           Act 3 &middot; Production Operations
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           SCADA Alarms
@@ -252,7 +252,7 @@ export default function ScadaAlarmsPage() {
           <button
             key={opt.id}
             onClick={() => setFilter(opt.id)}
-            className="text-[11px] font-mono px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+            className="text-[11px] px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
             style={{
               background: filter === opt.id ? '#B45309' : '#1E2530',
               color: filter === opt.id ? '#FFFFFF' : '#94A3B8',
