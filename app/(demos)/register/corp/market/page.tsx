@@ -3,10 +3,10 @@
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 
 const MARKET_SHARE = [
-  { name: 'Mattress Firm', pct: 28, color: '#64748B' },
+  { name: 'RestWell Corp.', pct: 28, color: '#64748B' },
   { name: 'Summit Sleep', pct: 18, color: '#1E3A5F' },
-  { name: 'Tempur Sealy', pct: 15, color: '#8B5CF6' },
-  { name: 'Sleep Number', pct: 12, color: '#06B6D4' },
+  { name: 'DreamHaven Group', pct: 15, color: '#8B5CF6' },
+  { name: 'NightOwl Select', pct: 12, color: '#06B6D4' },
   { name: 'Other', pct: 27, color: '#CBD5E1' },
 ];
 
@@ -18,7 +18,7 @@ const DIFFERENTIATORS = [
 ];
 
 const GROWTH_OPPS = [
-  { title: 'DTC Bridge Expansion', impact: '+$22M', desc: 'Purple partnership DTC-to-retail conversion — 20 new SiS locations planned.' },
+  { title: 'DTC Bridge Expansion', impact: '+$22M', desc: 'Brand partner DTC-to-retail conversion — 20 new SiS locations planned.' },
   { title: 'Outlet Network Growth', impact: '+$18M', desc: 'Convert 8 underperforming Standard stores to Outlet format in saturated markets.' },
   { title: 'Sleep Tech Category', impact: '+$14M', desc: 'Smart mattress and sleep tracker accessories — projected 8% of Flagship revenue by FY27.' },
 ];
