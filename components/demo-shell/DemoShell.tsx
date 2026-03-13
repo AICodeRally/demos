@@ -125,39 +125,26 @@ export function DemoShell({ config, children }: DemoShellProps) {
             : `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
         }}
       >
-        {/* Logo */}
+        {/* Sidebar header — name + tagline only (no icon) */}
         <Link
           href={demoBase}
           className="flex flex-col px-6 py-5 hover:bg-white/[0.02] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
-          <div className="flex items-center gap-3.5">
-            <div
-              className="flex h-11 w-11 items-center justify-center rounded-full shadow-lg"
-              style={{
-                background: `linear-gradient(135deg, ${primaryColor} 0%, ${resolved.colors.accent} 100%)`,
-                boxShadow: `0 4px 12px ${primaryColor}40`,
-              }}
-            >
-              <LogoIcon className="h-5.5 w-5.5 text-white" />
-            </div>
-            <div>
-              <div
-                className={cn("text-[19px] font-bold tracking-wide", !config.darkMode && "text-white")}
-                style={{
-                  fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
-                  ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
-                }}
-              >
-                {config.product.name.toUpperCase()}
-              </div>
-              <div
-                className="text-[10px] font-semibold tracking-[0.12em] uppercase"
-                style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}AA` }}
-              >
-                {config.client.tagline}
-              </div>
-            </div>
+          <div
+            className={cn("text-[20px] font-bold tracking-wide", !config.darkMode && "text-white")}
+            style={{
+              fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
+              ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
+            }}
+          >
+            {config.product.name.toUpperCase()}
+          </div>
+          <div
+            className="text-[11px] font-semibold tracking-[0.08em] uppercase mt-1"
+            style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}AA` }}
+          >
+            {config.client.tagline}
           </div>
         </Link>
 
@@ -250,38 +237,29 @@ export function DemoShell({ config, children }: DemoShellProps) {
         </nav>
 
         {/* Client info */}
+        {/* Client badge — text only */}
         <div className="p-4" style={{ borderTop: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}>
           <div
             className="rounded-xl p-3.5"
             style={{ background: `${primaryColor}0F` }}
           >
-            <div className="flex items-center gap-2.5">
+            <div
+              className={cn("text-[13px] font-semibold", !config.darkMode && "text-white/90")}
+              style={{
+                fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
+                ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
+              }}
+            >
+              {config.client.name}
+            </div>
+            <div className="flex items-center gap-1.5 mt-1">
               <div
-                className="flex h-8 w-8 items-center justify-center rounded-lg"
-                style={{ background: `${primaryColor}1F` }}
-              >
-                <LogoIcon className="h-4 w-4" style={{ color: primaryColor }} />
-              </div>
-              <div>
-                <div
-                  className={cn("text-[13px] font-semibold", !config.darkMode && "text-white/90")}
-                  style={{
-                    fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
-                    ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
-                  }}
-                >
-                  {config.client.name}
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div
-                    className="h-1.5 w-1.5 rounded-full animate-pulse"
-                    style={{ background: primaryColor }}
-                  />
-                  <span className="text-[11px]" style={{ color: `${primaryColor}99` }}>
-                    {config.product.badge ?? 'Live Demo'}
-                  </span>
-                </div>
-              </div>
+                className="h-1.5 w-1.5 rounded-full animate-pulse"
+                style={{ background: primaryColor }}
+              />
+              <span className="text-[11px]" style={{ color: `${primaryColor}99` }}>
+                {config.product.badge ?? 'Live Demo'}
+              </span>
             </div>
           </div>
         </div>
