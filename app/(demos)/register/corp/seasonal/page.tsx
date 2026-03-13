@@ -38,19 +38,14 @@ export default function SeasonalStrategy() {
   return (
     <RegisterPage title="Seasonal Strategy" subtitle="Revenue Patterns & SPIFF Timing" accentColor="#1E3A5F">
       {/* Monthly Revenue Index */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
+      <div className="register-section" style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? 'translateY(0)' : 'translateY(12px)',
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Calendar size={16} color="#1E3A5F" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ marginBottom: 0 }}>
             Monthly Revenue Index (100 = average)
           </h2>
         </div>
@@ -119,11 +114,9 @@ export default function SeasonalStrategy() {
         {HOLIDAYS.map((h, i) => (
           <div
             key={h.name}
+            className="register-card"
             style={{
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
               borderTop: `3px solid ${h.color}`,
-              borderRadius: 10,
               padding: '18px 18px',
               textAlign: 'center',
               position: 'relative',
@@ -140,7 +133,7 @@ export default function SeasonalStrategy() {
               pointerEvents: 'none',
             }} />
             <TrendingUp size={14} color="#10B981" style={{ margin: '0 auto 6px' }} />
-            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#10B981' }}>{h.lift}</div>
+            <div className="register-kpi-value" style={{ color: '#10B981' }}>{h.lift}</div>
             <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginTop: 4 }}>{h.name}</div>
             <div style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', marginTop: 2 }}>{h.month} traffic spike</div>
           </div>
@@ -148,18 +141,13 @@ export default function SeasonalStrategy() {
       </div>
 
       {/* SPIFF Calendar Timeline */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
+      <div className="register-section" style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? 'translateY(0)' : 'translateY(12px)',
         transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
         transitionDelay: '0.5s',
       }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 16 }}>
+        <h2 className="register-section-header">
           SPIFF Calendar
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

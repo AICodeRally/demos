@@ -347,20 +347,20 @@ export default function POSTerminal() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                   <div style={{ display: 'flex', gap: 16 }}>
                     <div>
-                      <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: 'var(--register-text-dim)' }}>Subtotal</span>
-                      <p style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                      <span className="register-meta-label">Subtotal</span>
+                      <p style={{ fontSize: '0.85rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', margin: 0 }}>
                         ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                       </p>
                     </div>
                     <div>
-                      <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: 'var(--register-text-dim)' }}>Tax</span>
-                      <p style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: 'var(--register-text-muted)', margin: 0 }}>
+                      <span className="register-meta-label">Tax</span>
+                      <p style={{ fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)', margin: 0 }}>
                         ${tax.toFixed(2)}
                       </p>
                     </div>
                     <div>
-                      <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: 'var(--register-text-dim)' }}>Total</span>
-                      <p style={{ fontSize: '1rem', fontWeight: 800, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                      <span className="register-meta-label">Total</span>
+                      <p style={{ fontSize: '1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', margin: 0 }}>
                         ${total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                       </p>
                     </div>

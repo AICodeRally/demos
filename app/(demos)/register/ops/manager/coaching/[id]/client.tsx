@@ -34,13 +34,7 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
       </Link>
 
       {/* Rep header card */}
-      <div
-        style={{
-          padding: 20, borderRadius: 12, marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
+      <div className="register-section" style={{ padding: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
           <div
             style={{
@@ -81,8 +75,8 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
             { label: 'Shift Revenue', value: `$${rep.metrics.shiftRevenue.toLocaleString()}`, sub: '', bad: false },
           ].map((m) => (
             <div key={m.label} style={{ padding: 12, borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
-              <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-dim)', margin: 0 }}>{m.label}</p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace', color: m.bad ? '#EF4444' : '#10B981', margin: '4px 0 0' }}>{m.value}</p>
+              <p className="register-meta-label" style={{ margin: 0 }}>{m.label}</p>
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: m.bad ? '#EF4444' : '#10B981', margin: '4px 0 0' }}>{m.value}</p>
               {m.sub && <p style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>{m.sub}</p>}
             </div>
           ))}
@@ -102,7 +96,7 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
             {scenario.lastSale.items.map((item, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                 <span style={{ color: 'var(--register-text)' }}>{item.name}</span>
-                <span style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-text)' }}>${item.price.toLocaleString()}</span>
+                <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text)' }}>${item.price.toLocaleString()}</span>
               </div>
             ))}
             <div style={{ borderTop: '1px solid rgba(239,68,68,0.15)', paddingTop: 8, display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700 }}>
@@ -126,11 +120,11 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
 
           {scenario.recommendation.products.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 10 }}>
-              <p style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#10B981', margin: 0 }}>Recommended Add-ons</p>
+              <p className="register-meta-label" style={{ color: '#10B981', margin: 0 }}>Recommended Add-ons</p>
               {scenario.recommendation.products.map((product, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                   <span style={{ color: 'var(--register-text)' }}>{product.name}</span>
-                  <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#10B981' }}>+${product.price.toLocaleString()}</span>
+                  <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: '#10B981' }}>+${product.price.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -146,16 +140,10 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
       </div>
 
       {/* Coaching Script */}
-      <div
-        style={{
-          padding: 18, borderRadius: 12, marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
+      <div className="register-section" style={{ padding: 18 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
           <MessageSquare size={18} style={{ color: 'var(--register-ai)' }} />
-          <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>Coaching Script</span>
+          <span className="register-section-header" style={{ margin: 0 }}>Coaching Script</span>
         </div>
         <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {scenario.recommendation.script.map((point, i) => (
@@ -248,12 +236,8 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
 
       {/* Comp Admin Link */}
       <div
-        style={{
-          marginTop: 20, padding: 14, borderRadius: 12,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: 'var(--register-bg-surface)',
-          border: '1px solid var(--register-border)',
-        }}
+        className="register-card"
+        style={{ marginTop: 20, padding: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Settings size={16} style={{ color: 'var(--register-ai)' }} />

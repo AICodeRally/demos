@@ -54,7 +54,7 @@ export default function ContestBoard() {
             </p>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <p style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'monospace', color: '#F59E0B', margin: 0 }}>
+            <p style={{ fontSize: '1.5rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#F59E0B', margin: 0 }}>
               $25
             </p>
             <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>per unit sold</p>
@@ -63,15 +63,8 @@ export default function ContestBoard() {
       </div>
 
       {/* Monthly Leaderboard */}
-      <div
-        style={{
-          padding: 18, borderRadius: 12,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          marginBottom: 24,
-        }}
-      >
-        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 14 }}>
+      <div className="register-section">
+        <p className="register-section-header">
           Monthly Leaderboard
         </p>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -122,10 +115,10 @@ export default function ContestBoard() {
                   <td style={{ padding: '10px', fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)' }}>
                     {rep.name}
                   </td>
-                  <td style={{ padding: '10px', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-text)', textAlign: 'right' }}>
+                  <td style={{ padding: '10px', fontSize: '0.8rem', fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text)', textAlign: 'right' }}>
                     {rep.units}
                   </td>
-                  <td style={{ padding: '10px', fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 700, color: 'var(--register-text)', textAlign: 'right' }}>
+                  <td style={{ padding: '10px', fontSize: '0.8rem', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: 'var(--register-text)', textAlign: 'right' }}>
                     ${rep.revenue.toLocaleString()}
                   </td>
                   <td style={{ padding: '10px' }}>
@@ -160,14 +153,8 @@ export default function ContestBoard() {
       </div>
 
       {/* Tier Threshold Tracker */}
-      <div
-        style={{
-          padding: 18, borderRadius: 12,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
-        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 14 }}>
+      <div className="register-section" style={{ marginBottom: 0 }}>
+        <p className="register-section-header">
           Tier Threshold Tracker
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -189,7 +176,7 @@ export default function ContestBoard() {
                   <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
                     {nextTier ? (
                       <>
-                        <span style={{ fontFamily: 'monospace', fontWeight: 700, color: nextColor }}>
+                        <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: nextColor }}>
                           ${toNext.toLocaleString()}
                         </span>{' '}
                         to {nextTier.tier}

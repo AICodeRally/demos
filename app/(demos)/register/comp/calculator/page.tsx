@@ -119,7 +119,7 @@ function TierRing({ progress, animatedProgress }: { progress: number; animatedPr
             {currentTier.tier}
           </span>
         </div>
-        <span style={{ fontSize: '1.4rem', fontWeight: 800, color: ACCENT, fontFamily: 'monospace' }}>
+        <span className="register-kpi-value" style={{ fontSize: '1.4rem', color: ACCENT }}>
           ${(amountToNext / 1000).toFixed(1)}K
         </span>
         <span style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)' }}>
@@ -163,11 +163,8 @@ export default function CalculatorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* LEFT: Varicent Projected Statement */}
         <div
-          className="rounded-xl p-6"
-          style={{
-            background: 'var(--register-bg-surface)',
-            border: '1px solid var(--register-border)',
-          }}
+          className="register-section"
+          style={{ background: 'var(--register-bg-surface)', marginBottom: 0 }}
         >
           <div className="flex items-center gap-3 mb-5">
             <div
@@ -202,10 +199,10 @@ export default function CalculatorPage() {
               borderBottom: '1px dashed var(--register-border)',
             }}
           >
-            <p style={{ fontSize: '0.6rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 4px' }}>
+            <p className="register-meta-label" style={{ margin: '0 0 4px' }}>
               Projected Payout
             </p>
-            <p style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--register-text-muted)', margin: 0, fontFamily: 'monospace' }}>
+            <p className="register-kpi-value" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
               {fmtCurrency(VARICENT_PROJECTED.total)}
             </p>
           </div>
@@ -224,7 +221,7 @@ export default function CalculatorPage() {
                 }}
               >
                 <span style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)' }}>{comp.name}</span>
-                <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-text-muted)' }}>
+                <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text-muted)' }}>
                   {fmtCurrency(comp.amount)}
                 </span>
               </div>
@@ -324,10 +321,10 @@ export default function CalculatorPage() {
               borderBottom: '1px solid rgba(16,185,129,0.2)',
             }}
           >
-            <p style={{ fontSize: '0.6rem', fontWeight: 600, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 4px' }}>
+            <p className="register-meta-label" style={{ margin: '0 0 4px' }}>
               Earned Right Now
             </p>
-            <p style={{ fontSize: '2.5rem', fontWeight: 800, color: ACCENT, margin: 0, fontFamily: 'monospace' }}>
+            <p className="register-kpi-value" style={{ fontSize: '2.5rem', color: ACCENT, margin: 0 }}>
               {fmtCurrency(liveEarnings)}
             </p>
           </div>
@@ -342,27 +339,27 @@ export default function CalculatorPage() {
             }}
           >
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
                 vs Varicent
               </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace', margin: 0, color: liveEarnings < VARICENT_PROJECTED.total ? '#F59E0B' : ACCENT }}>
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: liveEarnings < VARICENT_PROJECTED.total ? '#F59E0B' : ACCENT }}>
                 {liveEarnings < VARICENT_PROJECTED.total ? '-' : '+'}
                 {fmtCurrency(Math.abs(liveEarnings - VARICENT_PROJECTED.total))}
               </p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
                 Today&apos;s Sales
               </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace', margin: 0, color: 'var(--register-text)' }}>
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: 'var(--register-text)' }}>
                 5
               </p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
                 Eff. Rate
               </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace', margin: 0, color: '#06B6D4' }}>
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: '#06B6D4' }}>
                 4.8%
               </p>
             </div>
@@ -385,11 +382,8 @@ export default function CalculatorPage() {
       </div>
 
       {/* ── Tier Progress Ring ───────────────────────────────── */}
-      <div
-        className="rounded-xl p-6 mb-8"
-        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-      >
-        <h2 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--register-text)', margin: '0 0 16px' }}>
+      <div className="register-section">
+        <h2 className="register-section-header">
           Tier Progress
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -420,7 +414,7 @@ export default function CalculatorPage() {
             </div>
 
             <p style={{ fontSize: '0.85rem', color: 'var(--register-text)', lineHeight: 1.6, margin: '0 0 16px' }}>
-              Casey is <strong style={{ fontFamily: 'monospace' }}>${amountToNext.toLocaleString()}</strong> away from{' '}
+              Casey is <strong style={{ fontVariantNumeric: 'tabular-nums' }}>${amountToNext.toLocaleString()}</strong> away from{' '}
               <strong style={{ color: nextTier?.color ?? ACCENT }}>{nextTier?.tier ?? 'Max'}</strong> tier at{' '}
               <strong>{nextTier ? (nextTier.rate * 100).toFixed(1) : '--'}%</strong>.
             </p>
@@ -474,12 +468,9 @@ export default function CalculatorPage() {
       </div>
 
       {/* ── Recent Sale Impact List ──────────────────────────── */}
-      <div
-        className="rounded-xl p-6 mb-8"
-        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-      >
+      <div className="register-section">
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ marginBottom: 0 }}>
             Recent Sale Impact
           </h2>
           <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
@@ -516,16 +507,16 @@ export default function CalculatorPage() {
                 background: i === 0 ? 'rgba(16,185,129,0.04)' : 'transparent',
               }}
             >
-              <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>
+              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)' }}>
                 {sale.time}
               </span>
               <span style={{ fontSize: '0.75rem', color: 'var(--register-text)', fontWeight: 500 }}>
                 {sale.item}
               </span>
-              <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-text)' }}>
+              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text)' }}>
                 ${sale.amount.toLocaleString()}
               </span>
-              <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 700, color: ACCENT }}>
+              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: ACCENT }}>
                 +${sale.commission.toFixed(2)}
               </span>
               <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>

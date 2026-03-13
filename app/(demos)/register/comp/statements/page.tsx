@@ -83,15 +83,7 @@ export default function StatementsPage() {
     <RegisterPage title="Statement + Live Delta" subtitle="Sarah Johnson — Flagship #12" accentColor={ACCENT}>
 
       {/* ── Last Varicent Statement ─────────────────────────── */}
-      <div
-        style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          borderRadius: 16,
-          overflow: 'hidden',
-          marginBottom: 24,
-        }}
-      >
+      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
         {/* Header */}
         <div
           style={{
@@ -102,7 +94,7 @@ export default function StatementsPage() {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
-              <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#94A3B8', marginBottom: 4 }}>
+              <p className="register-meta-label" style={{ color: '#94A3B8', marginBottom: 4 }}>
                 Last Varicent Statement
               </p>
               <p style={{ fontSize: '1.1rem', fontWeight: 800, color: '#E2E8F0', margin: 0 }}>
@@ -145,7 +137,7 @@ export default function StatementsPage() {
                   <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: comp.color }} />
                   <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--register-text)' }}>{comp.label}</span>
                 </div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                   ${comp.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </div>
@@ -164,10 +156,10 @@ export default function StatementsPage() {
               border: '1px solid rgba(30,58,95,0.3)',
             }}
           >
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--register-text)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <span className="register-meta-label" style={{ color: 'var(--register-text)', fontSize: '0.85rem', fontWeight: 800 }}>
               Total Payout
             </span>
-            <span style={{ fontSize: '1.4rem', fontWeight: 800, fontFamily: 'monospace', color: '#1E3A5F' }}>
+            <span className="register-kpi-value" style={{ fontSize: '1.4rem', color: '#1E3A5F' }}>
               $4,247.50
             </span>
           </div>
@@ -181,13 +173,10 @@ export default function StatementsPage() {
 
       {/* ── Since Last Statement (Live Delta) ───────────────── */}
       <div
+        className="register-section"
         style={{
-          borderRadius: 16,
           overflow: 'hidden',
-          marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          borderLeft: `4px solid ${ACCENT}`,
-          border: '1px solid var(--register-border)',
+          padding: 0,
           borderLeftWidth: 4,
           borderLeftColor: ACCENT,
           position: 'relative',
@@ -244,10 +233,10 @@ export default function StatementsPage() {
             }}
           >
             <span
+              className="register-kpi-value"
               style={{
                 fontSize: '2.8rem',
                 fontWeight: 900,
-                fontFamily: 'monospace',
                 color: ACCENT,
                 lineHeight: 1,
                 transition: 'all 0.3s ease',
@@ -266,7 +255,7 @@ export default function StatementsPage() {
                 <div key={i} style={{ padding: '12px 14px', borderRadius: 10, background: 'var(--register-bg-surface)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                     <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>{comp.label}</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                       ${comp.amount}
                     </span>
                   </div>
@@ -340,8 +329,8 @@ export default function StatementsPage() {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: '#1E3A5F' }}>$4,247.50</span>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: ACCENT }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#1E3A5F' }}>$4,247.50</span>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ACCENT }}>
                 ${projectedTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
@@ -350,18 +339,10 @@ export default function StatementsPage() {
       </div>
 
       {/* ── Recent Transaction Feed ─────────────────────────── */}
-      <div
-        style={{
-          borderRadius: 16,
-          overflow: 'hidden',
-          marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
+      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
         <div style={{ padding: '20px 28px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <Clock size={16} color="var(--register-text-muted)" />
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>Recent Transactions</span>
+          <span className="register-section-header" style={{ marginBottom: 0 }}>Recent Transactions</span>
           <span
             style={{
               fontSize: '0.65rem',
@@ -413,10 +394,10 @@ export default function StatementsPage() {
                 <p style={{ fontSize: '0.68rem', color: 'var(--register-text-muted)', margin: '2px 0 0' }}>{tx.time}</p>
               </div>
               <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 16 }}>
-                <p style={{ fontSize: '0.78rem', fontWeight: 600, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                <p style={{ fontSize: '0.78rem', fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', margin: 0 }}>
                   ${tx.revenue.toLocaleString()}
                 </p>
-                <p style={{ fontSize: '0.68rem', fontWeight: 700, fontFamily: 'monospace', color: ACCENT, margin: '2px 0 0' }}>
+                <p style={{ fontSize: '0.68rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ACCENT, margin: '2px 0 0' }}>
                   +${tx.commission.toFixed(2)}
                 </p>
               </div>

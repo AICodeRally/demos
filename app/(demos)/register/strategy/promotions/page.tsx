@@ -26,19 +26,16 @@ export default function PromotionCalendar() {
   return (
     <RegisterPage title="Promotion Calendar" subtitle="SPIFF & Incentive Programs" accentColor="#06B6D4">
       {/* Timeline View */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Calendar size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             FY26 SPIFF Timeline
           </h2>
         </div>
@@ -126,20 +123,17 @@ export default function PromotionCalendar() {
       </div>
 
       {/* Past Promotion ROI */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.25s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.25s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <TrendingUp size={16} color="#10B981" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Past Promotion ROI</h2>
+          <h2 className="register-section-header" style={{ margin: 0 }}>Past Promotion ROI</h2>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {PAST_ROI.map((r, i) => (
@@ -179,7 +173,7 @@ export default function PromotionCalendar() {
                 whiteSpace: 'nowrap',
               }}>
                 <div style={{ fontSize: '1.25rem', fontWeight: 800, color: r.roiColor }}>{r.roi}</div>
-                <div style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>ROI</div>
+                <div className="register-meta-label">ROI</div>
               </div>
             </div>
           ))}
@@ -187,20 +181,17 @@ export default function PromotionCalendar() {
       </div>
 
       {/* Upcoming Promotions */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.4s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.4s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Megaphone size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Upcoming Promotions
           </h2>
         </div>

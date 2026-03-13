@@ -73,7 +73,7 @@ function TierStaircase({ tiers, label, highlight }: { tiers: { name: string; rat
           const h = (tier.rate / maxRate) * 56 + 8;
           return (
             <div key={tier.name} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <span style={{ fontSize: '0.55rem', fontWeight: 700, fontFamily: 'monospace', color: tier.color }}>
+              <span style={{ fontSize: '0.55rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: tier.color }}>
                 {(tier.rate * 100).toFixed(1)}%
               </span>
               <div
@@ -332,7 +332,7 @@ export default function CompAdminPage() {
                     >
                       {/* Tier rows — editable */}
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                        <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', margin: 0 }}>
+                        <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
                           Commission Tiers
                         </p>
                         {editedTiers[p.id] && (
@@ -389,14 +389,14 @@ export default function CompAdminPage() {
                                   onChange={(e) => updateTier(p.id, i, 'minRevenue', Math.max(0, Number(e.target.value)))}
                                   style={{
                                     width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                    fontSize: '0.7rem', fontFamily: 'monospace',
+                                    fontSize: '0.7rem', fontVariantNumeric: 'tabular-nums',
                                     color: minChanged ? '#F59E0B' : 'var(--register-text-dim)',
                                     fontWeight: minChanged ? 700 : 400,
                                   }}
                                 />
                                 <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
                                 {tier.maxRevenue === Infinity ? (
-                                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>{'\u221E'}</span>
+                                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums' }}>{'\u221E'}</span>
                                 ) : (
                                   <>
                                     <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>$</span>
@@ -406,7 +406,7 @@ export default function CompAdminPage() {
                                       onChange={(e) => updateTier(p.id, i, 'maxRevenue', Math.max(0, Number(e.target.value)))}
                                       style={{
                                         width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                        fontSize: '0.7rem', fontFamily: 'monospace',
+                                        fontSize: '0.7rem', fontVariantNumeric: 'tabular-nums',
                                         color: maxChanged ? '#F59E0B' : 'var(--register-text-dim)',
                                         fontWeight: maxChanged ? 700 : 400,
                                       }}
@@ -431,7 +431,7 @@ export default function CompAdminPage() {
                                   onChange={(e) => updateTier(p.id, i, 'rate', Math.max(0, Math.min(100, Number(e.target.value))) / 100)}
                                   style={{
                                     width: 42, background: 'transparent', border: 'none', outline: 'none',
-                                    fontSize: '0.8rem', fontWeight: 700, fontFamily: 'monospace', textAlign: 'right',
+                                    fontSize: '0.8rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', textAlign: 'right',
                                     color: rateChanged ? '#F59E0B' : tier.color,
                                   }}
                                 />
@@ -443,7 +443,7 @@ export default function CompAdminPage() {
                       </div>
 
                       {/* SPIFF Toggles */}
-                      <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
+                      <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
                         SPIFF Rules
                       </p>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -498,7 +498,7 @@ export default function CompAdminPage() {
                       {/* Accelerators */}
                       {p.accelerators.length > 0 && (
                         <>
-                          <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
+                          <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
                             Accelerators
                           </p>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -517,7 +517,7 @@ export default function CompAdminPage() {
                               >
                                 <Zap size={12} color="#3B82F6" />
                                 <span style={{ fontSize: '0.7rem', color: 'var(--register-text)' }}>{acc.label}</span>
-                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#3B82F6', fontFamily: 'monospace', marginLeft: 'auto' }}>
+                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#3B82F6', fontVariantNumeric: 'tabular-nums', marginLeft: 'auto' }}>
                                   {acc.multiplier}x
                                 </span>
                               </div>
@@ -581,13 +581,13 @@ export default function CompAdminPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Original Commission</span>
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                     ${swicResult.original.toFixed(2)}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Modified Commission</span>
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: swicResult.delta >= 0 ? '#10B981' : '#EF4444' }}>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: swicResult.delta >= 0 ? '#10B981' : '#EF4444' }}>
                     ${swicResult.modified.toFixed(2)}
                   </span>
                 </div>
@@ -596,7 +596,7 @@ export default function CompAdminPage() {
                   <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text)' }}>Delta</span>
                   <span
                     style={{
-                      fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace',
+                      fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums',
                       color: swicResult.delta >= 0 ? '#10B981' : '#EF4444',
                     }}
                   >
@@ -624,10 +624,9 @@ export default function CompAdminPage() {
 
           {/* ── Live Impact Simulator ─────────────────── */}
           <div
+            className="register-card"
             style={{
-              borderRadius: 14,
               background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(16,185,129,0.04))',
-              border: '1px solid var(--register-border)',
               padding: '20px',
             }}
           >
@@ -647,7 +646,7 @@ export default function CompAdminPage() {
               }}
             >
               <p style={{ fontSize: '0.75rem', color: 'var(--register-text)', margin: 0, lineHeight: 1.5 }}>
-                If you change <strong style={{ color: '#06B6D4' }}>Silver threshold</strong> from <span style={{ fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>$25K &rarr; $20K</span> and <strong style={{ color: '#06B6D4' }}>Gold threshold</strong> from <span style={{ fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>$50K &rarr; $45K</span>:
+                If you change <strong style={{ color: '#06B6D4' }}>Silver threshold</strong> from <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)' }}>$25K &rarr; $20K</span> and <strong style={{ color: '#06B6D4' }}>Gold threshold</strong> from <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)' }}>$50K &rarr; $45K</span>:
               </p>
             </div>
 
@@ -656,9 +655,9 @@ export default function CompAdminPage() {
               <div style={{ padding: '12px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                   <Users size={12} color="var(--register-text-muted)" />
-                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Affected Reps</span>
+                  <span className="register-meta-label">Affected Reps</span>
                 </div>
-                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', margin: 0 }}>
                   {affectedReps}
                 </p>
                 <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>across 12 stores</span>
@@ -666,9 +665,9 @@ export default function CompAdminPage() {
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Payout Delta</span>
+                  <span className="register-meta-label">Payout Delta</span>
                 </div>
-                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#10B981', margin: 0 }}>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#10B981', margin: 0 }}>
                   +${payoutDelta.toLocaleString()}
                 </p>
                 <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>monthly increase</span>
@@ -676,9 +675,9 @@ export default function CompAdminPage() {
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Revenue Impact</span>
+                  <span className="register-meta-label">Revenue Impact</span>
                 </div>
-                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#10B981', margin: 0 }}>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#10B981', margin: 0 }}>
                   +${revImpact.toLocaleString()}
                 </p>
                 <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>projected incremental</span>
@@ -686,9 +685,9 @@ export default function CompAdminPage() {
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Budget Impact</span>
+                  <span className="register-meta-label">Budget Impact</span>
                 </div>
-                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#F59E0B', margin: 0 }}>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#F59E0B', margin: 0 }}>
                   +0.8%
                 </p>
                 <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>comp ratio increase</span>
@@ -716,14 +715,7 @@ export default function CompAdminPage() {
           </div>
 
           {/* ── Push to Varicent ─────────────────────── */}
-          <div
-            style={{
-              borderRadius: 14,
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
-              padding: '20px',
-            }}
-          >
+          <div className="register-card" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
               <Send size={15} color="#06B6D4" />
               <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Push to Varicent</h3>
@@ -797,7 +789,7 @@ export default function CompAdminPage() {
             <div style={{ marginTop: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
                 <FileText size={13} color="var(--register-text-muted)" />
-                <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>
+                <span className="register-meta-label" style={{ color: 'var(--register-text-muted)' }}>
                   Push History
                 </span>
               </div>

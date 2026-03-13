@@ -99,7 +99,7 @@ export default function ProductOverviewPage() {
 
       {/* ── Module Breakdown ─────────────────────────────────── */}
       <section className="mb-10">
-        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--register-text)' }}>
+        <p className="register-section-header">
           Five-Act Platform
         </p>
         <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
@@ -110,11 +110,7 @@ export default function ProductOverviewPage() {
           {MODULES.map((mod) => (
             <div
               key={mod.act}
-              className="rounded-xl border p-5"
-              style={{
-                borderColor: 'var(--register-border)',
-                backgroundColor: 'var(--register-bg-surface)',
-              }}
+              className="register-card p-5"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div
@@ -127,7 +123,7 @@ export default function ProductOverviewPage() {
                   <p className="text-[13px] font-bold" style={{ color: 'var(--register-text)' }}>
                     {mod.name}
                   </p>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: mod.color }}>
+                  <p className="register-meta-label" style={{ color: mod.color }}>
                     Act {mod.act}
                   </p>
                 </div>
@@ -156,7 +152,7 @@ export default function ProductOverviewPage() {
 
       {/* ── Technology Highlights ─────────────────────────────── */}
       <section className="mb-6">
-        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--register-text)' }}>
+        <p className="register-section-header">
           Technology Highlights
         </p>
         <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
@@ -167,11 +163,7 @@ export default function ProductOverviewPage() {
           {TECH.map((t) => (
             <div
               key={t.label}
-              className="rounded-xl border p-5"
-              style={{
-                borderColor: 'var(--register-border)',
-                backgroundColor: 'var(--register-bg-surface)',
-              }}
+              className="register-card register-card-hover p-5"
             >
               <div className="flex items-center gap-2 mb-2">
                 <span

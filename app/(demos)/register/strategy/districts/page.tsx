@@ -31,10 +31,8 @@ export default function DistrictPlanning() {
         {DISTRICTS.map((d, i) => (
           <div
             key={d.name}
+            className="register-card"
             style={{
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
-              borderRadius: 10,
               padding: '14px 18px',
               borderTop: `3px solid #06B6D4`,
               position: 'relative',
@@ -105,26 +103,23 @@ export default function DistrictPlanning() {
       </div>
 
       {/* District Comparison — Visual Bars */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.4s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.4s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 20 }}>
           <BarChart3 size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>District Comparison</h2>
+          <h2 className="register-section-header" style={{ margin: 0 }}>District Comparison</h2>
         </div>
 
         {/* Column headers */}
         <div className="grid" style={{ gridTemplateColumns: '120px 1fr 1fr 1fr', gap: 12, marginBottom: 8 }}>
           {['District', 'Rev / Store', 'Rev / Rep', 'Attach Rate'].map(h => (
-            <div key={h} style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <div key={h} className="register-meta-label">
               {h}
             </div>
           ))}
