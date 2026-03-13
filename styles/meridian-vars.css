@@ -1,0 +1,62 @@
+/* ═══════════════════════════════════════════════════════════
+   MERIDIAN — PE Carried Interest Theme
+   Deep charcoal + gold accents for institutional finance
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --mr-font: 'Inter', system-ui, sans-serif;
+
+  /* ── Text ──────────────────────────── */
+  --mr-text: #1a1a2e;
+  --mr-text-secondary: #374151;
+  --mr-text-muted: #6b7280;
+  --mr-text-faint: #9ca3af;
+
+  /* ── Surfaces ─────────────────────── */
+  --mr-bg: #fafafa;
+  --mr-card: #ffffff;
+  --mr-card-alt: #f8f9fb;
+  --mr-border: #e5e7eb;
+  --mr-hover: #f3f4f6;
+  --mr-stripe: #f9fafb;
+  --mr-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+
+  /* ── Chart ────────────────────────── */
+  --mr-chart-bar-track: #f0f0f5;
+  --mr-chart-grid: #e5e7eb;
+
+  /* ── Sidebar (always dark for PE gravitas) ── */
+  --mr-sidebar-bg-start: #0f172a;
+  --mr-sidebar-bg-end: #1e293b;
+}
+
+.dark {
+  --mr-text: #f1f5f9;
+  --mr-text-secondary: #cbd5e1;
+  --mr-text-muted: #94a3b8;
+  --mr-text-faint: #64748b;
+
+  --mr-bg: #0a0f1a;
+  --mr-card: #131b2e;
+  --mr-card-alt: #1a2340;
+  --mr-border: #1e2d4a;
+  --mr-hover: #1a2340;
+  --mr-stripe: #111827;
+  --mr-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+
+  --mr-chart-bar-track: #1e2d4a;
+  --mr-chart-grid: #1e2d4a;
+
+  --mr-sidebar-bg-start: #060a14;
+  --mr-sidebar-bg-end: #0f172a;
+}
+
+/* ── Animations ─────────────────────── */
+@keyframes mr-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-mr-fade-in {
+  animation: mr-fade-in 0.4s ease-out both;
+}
