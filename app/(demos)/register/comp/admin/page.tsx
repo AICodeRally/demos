@@ -1,181 +1,122 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { getInsight } from '@/data/register/ai-insights';
 import {
   ADMIN_PLANS, PUSH_HISTORY,
-  type CompPlan, type CompTier, type PlanStatus, type SpiffRule,
+  type CompPlan, type CompTier, type PlanStatus,
 } from '@/data/register/comp-data';
-import { broadcastCompUpdate, broadcastPosSync } from '@/lib/register-broadcast';
+import {
+  ChevronDown, ChevronRight, Send, Clock, CheckCircle, Settings, Users, Zap, FileText,
+} from 'lucide-react';
 
 const ACCENT = '#10B981';
 
 /* ── Status config ───────────────────────────────────────── */
 
 const STATUS_CONFIG: Record<PlanStatus, { color: string; bg: string; label: string }> = {
-  active:   { color: '#10B981', bg: 'rgba(16,185,129,0.1)',  label: 'Active' },
-  draft:    { color: '#F59E0B', bg: 'rgba(245,158,11,0.1)',  label: 'Draft' },
-  pending:  { color: '#3B82F6', bg: 'rgba(59,130,246,0.1)',  label: 'Pending' },
-  archived: { color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', label: 'Archived' },
+  active:   { color: '#10B981', bg: 'rgba(16,185,129,0.12)', label: 'Active' },
+  draft:    { color: '#F59E0B', bg: 'rgba(245,158,11,0.12)', label: 'Draft' },
+  pending:  { color: '#3B82F6', bg: 'rgba(59,130,246,0.12)', label: 'Pending' },
+  archived: { color: '#94A3B8', bg: 'rgba(148,163,184,0.12)', label: 'Archived' },
 };
 
-/* ── Tier Editor ──────────────────────────────────────────── */
+/* ── Animated count-up hook ─────────────────────────────── */
 
-function TierEditor({ tiers, onUpdate }: {
-  tiers: CompTier[];
-  onUpdate: (tiers: CompTier[]) => void;
-}) {
-  return (
-    <div className="space-y-2">
-      {tiers.map((tier, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-3 rounded-lg px-3 py-2"
-          style={{ background: `${tier.color}15` }}
-        >
-          <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: tier.color }} />
-          <span className="text-xs font-semibold w-24" style={{ color: 'var(--register-text)' }}>
-            {tier.name}
-          </span>
-          <span className="text-[11px] flex-1" style={{ color: 'var(--register-text-muted)' }}>
-            ${tier.minRevenue.toLocaleString()} &ndash; {tier.maxRevenue === Infinity ? '\u221e' : `$${tier.maxRevenue.toLocaleString()}`}
-          </span>
-          <div className="flex items-center gap-1">
-            <input
-              type="number"
-              step="0.1"
-              min="0"
-              max="20"
-              value={(tier.rate * 100).toFixed(1)}
-              onChange={(e) => {
-                const newRate = parseFloat(e.target.value) / 100;
-                if (isNaN(newRate) || newRate < 0 || newRate > 0.20) return;
-                const updated = tiers.map((t, j) => j === i ? { ...t, rate: newRate } : t);
-                onUpdate(updated);
-              }}
-              className="w-16 rounded px-2 py-1 text-right text-xs font-mono font-bold"
-              style={{
-                background: 'var(--register-bg-surface)',
-                border: '1px solid var(--register-border)',
-                color: 'var(--register-text)',
-              }}
-            />
-            <span className="text-xs" style={{ color: 'var(--register-text-muted)' }}>%</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+function useCountUp(target: number, duration = 1200, decimals = 0, active = true) {
+  const [value, setValue] = useState(0);
+  const startTime = useRef<number | null>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (!active) { setValue(0); return; }
+    startTime.current = null;
+    const step = (ts: number) => {
+      if (!startTime.current) startTime.current = ts;
+      const progress = Math.min((ts - startTime.current) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(parseFloat((eased * target).toFixed(decimals)));
+      if (progress < 1) rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [target, duration, decimals, active]);
+
+  return value;
 }
 
-/* ── SPIFF Toggles ────────────────────────────────────────── */
+/* ── Tier Staircase Mini Viz ────────────────────────────── */
 
-function SpiffToggles({ spiffs, onToggle }: {
-  spiffs: SpiffRule[];
-  onToggle: (id: string) => void;
-}) {
+function TierStaircase({ tiers, label, highlight }: { tiers: { name: string; rate: number; color: string }[]; label: string; highlight?: boolean }) {
+  const maxRate = Math.max(...tiers.map(t => t.rate));
   return (
-    <div className="space-y-2">
-      {spiffs.map((spiff) => (
-        <div
-          key={spiff.id}
-          className="flex items-center justify-between rounded-lg px-3 py-2"
-          style={{ background: 'var(--register-bg-surface)' }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-medium" style={{ color: 'var(--register-text)' }}>{spiff.name}</span>
-            <span className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>{spiff.product}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold" style={{ color: 'var(--register-text)' }}>${spiff.bonus}</span>
-            <button
-              onClick={() => onToggle(spiff.id)}
-              className="rounded px-2 py-0.5 text-[10px] font-bold transition-all"
-              style={{
-                backgroundColor: spiff.active ? 'rgba(16,185,129,0.15)' : 'var(--register-bg-surface)',
-                color: spiff.active ? ACCENT : 'var(--register-text-muted)',
-                border: `1px solid ${spiff.active ? ACCENT : 'var(--register-border)'}`,
-              }}
-            >
-              {spiff.active ? 'ON' : 'OFF'}
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ── Commission Simulator ────────────────────────────────── */
-
-function CommissionSimulator({ plan, draftTiers }: { plan: CompPlan; draftTiers?: CompTier[] }) {
-  const sampleSale = 2500;
-  const sampleYtd = 38000;
-
-  const calcComm = useCallback((tiers: CompTier[]) => {
-    const tier = tiers.find((t) => sampleYtd >= t.minRevenue && sampleYtd <= t.maxRevenue);
-    return tier ? sampleSale * tier.rate : sampleSale * tiers[0].rate;
-  }, []);
-
-  const currentComm = calcComm(plan.tiers);
-  const draftComm = draftTiers ? calcComm(draftTiers) : currentComm;
-  const delta = draftComm - currentComm;
-
-  return (
-    <div
-      className="rounded-xl p-5"
-      style={{ background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}
-    >
-      <p className="text-sm font-bold mb-4" style={{ color: 'var(--register-text)' }}>
-        Commission Simulator
+    <div style={{ flex: 1 }}>
+      <p style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: highlight ? '#10B981' : 'var(--register-text-muted)', marginBottom: 8, textAlign: 'center' }}>
+        {label}
       </p>
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="rounded-lg p-3" style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
-          <p className="text-[10px] uppercase tracking-wide" style={{ color: 'var(--register-text-muted)' }}>Sample Sale</p>
-          <p className="text-lg font-bold font-mono" style={{ color: 'var(--register-text)' }}>${sampleSale.toLocaleString()}</p>
-          <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>Queen Hybrid + Protector</p>
-        </div>
-        <div className="rounded-lg p-3" style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
-          <p className="text-[10px] uppercase tracking-wide" style={{ color: 'var(--register-text-muted)' }}>YTD Revenue</p>
-          <p className="text-lg font-bold font-mono" style={{ color: 'var(--register-text)' }}>${sampleYtd.toLocaleString()}</p>
-          <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>Silver tier</p>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 64 }}>
+        {tiers.map((tier) => {
+          const h = (tier.rate / maxRate) * 56 + 8;
+          return (
+            <div key={tier.name} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+              <span style={{ fontSize: '0.55rem', fontWeight: 700, fontFamily: 'monospace', color: tier.color }}>
+                {(tier.rate * 100).toFixed(1)}%
+              </span>
+              <div
+                style={{
+                  width: '100%',
+                  height: h,
+                  borderRadius: '4px 4px 0 0',
+                  background: highlight
+                    ? `linear-gradient(180deg, ${tier.color}, ${tier.color}80)`
+                    : `${tier.color}40`,
+                  border: highlight ? `1px solid ${tier.color}` : `1px solid ${tier.color}30`,
+                  transition: 'all 0.5s ease',
+                }}
+              />
+              <span style={{ fontSize: '0.5rem', color: 'var(--register-text-dim)' }}>{tier.name}</span>
+            </div>
+          );
+        })}
       </div>
+    </div>
+  );
+}
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg p-3 text-center" style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
-          <p className="text-[10px] uppercase tracking-wide mb-1" style={{ color: 'var(--register-text-muted)' }}>Current Plan</p>
-          <p className="text-xl font-bold font-mono" style={{ color: 'var(--register-text)' }}>${currentComm.toFixed(2)}</p>
-        </div>
-        <div
-          className="rounded-lg p-3 text-center"
-          style={{
-            background: draftTiers ? 'rgba(16,185,129,0.08)' : 'var(--register-bg-elevated)',
-            border: `1px solid ${draftTiers ? ACCENT : 'var(--register-border)'}`,
-          }}
-        >
-          <p className="text-[10px] uppercase tracking-wide mb-1" style={{ color: 'var(--register-text-muted)' }}>
-            {draftTiers ? 'Draft Plan' : 'No Changes'}
-          </p>
-          <p className="text-xl font-bold font-mono" style={{ color: draftTiers ? ACCENT : 'var(--register-text)' }}>
-            ${draftComm.toFixed(2)}
-          </p>
-        </div>
+/* ── Push History Entry ──────────────────────────────────── */
+
+function PushEntry({ timestamp, who, what, status }: { timestamp: string; who: string; what: string; status: 'synced' | 'pending' }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 0', borderBottom: '1px solid var(--register-border)' }}>
+      <div style={{ marginTop: 2, flexShrink: 0 }}>
+        {status === 'synced' ? (
+          <CheckCircle size={14} color="#10B981" />
+        ) : (
+          <Clock size={14} color="#F59E0B" />
+        )}
       </div>
-
-      {draftTiers && delta !== 0 && (
-        <div
-          className="mt-3 rounded-lg p-2.5 text-center"
-          style={{ background: delta > 0 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)' }}
-        >
-          <p className="text-xs font-semibold" style={{ color: delta > 0 ? '#F59E0B' : '#EF4444' }}>
-            {delta > 0 ? '+' : ''}{delta.toFixed(2)} per sale &middot; Affects {plan.enrolled} reps &middot;{' '}
-            Est. {delta > 0 ? '+' : ''}${Math.abs(delta * plan.enrolled * 15).toFixed(0)}/mo
-          </p>
-        </div>
-      )}
+      <div style={{ flex: 1 }}>
+        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)', margin: 0, lineHeight: 1.3 }}>
+          {what}
+        </p>
+        <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>
+          {timestamp} &mdash; {who}
+        </p>
+      </div>
+      <span
+        style={{
+          fontSize: '0.55rem',
+          fontWeight: 700,
+          padding: '2px 8px',
+          borderRadius: 10,
+          background: status === 'synced' ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
+          color: status === 'synced' ? '#10B981' : '#F59E0B',
+          flexShrink: 0,
+        }}
+      >
+        {status === 'synced' ? 'SYNCED' : 'PENDING'}
+      </span>
     </div>
   );
 }
@@ -183,289 +124,519 @@ function CommissionSimulator({ plan, draftTiers }: { plan: CompPlan; draftTiers?
 /* ── Main Page ───────────────────────────────────────────── */
 
 export default function CompAdminPage() {
-  const [selectedPlan, setSelectedPlan] = useState<string>('plan-flagship');
-  const [draftTiers, setDraftTiers] = useState<Record<string, CompTier[]>>({});
-  const [draftSpiffs, setDraftSpiffs] = useState<Record<string, SpiffRule[]>>({});
-  const [pushSent, setPushSent] = useState(false);
-  const insight = getInsight('comp/admin');
+  const [expandedPlan, setExpandedPlan] = useState<string>('plan-flagship');
+  const [showSimulator, setShowSimulator] = useState(true);
+  const [pushAnimating, setPushAnimating] = useState(false);
+  const [pushComplete, setPushComplete] = useState(false);
+  const [pulseGlow, setPulseGlow] = useState(true);
 
-  const plan = ADMIN_PLANS.find((p) => p.id === selectedPlan)!;
-  const currentDraftTiers = draftTiers[selectedPlan];
-  const currentDraftSpiffs = draftSpiffs[selectedPlan];
-  const hasChanges = !!currentDraftTiers || !!currentDraftSpiffs;
+  // Pulse the button glow
+  useEffect(() => {
+    const interval = setInterval(() => setPulseGlow(v => !v), 1800);
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleTierUpdate = useCallback((tiers: CompTier[]) => {
-    setDraftTiers((prev) => ({ ...prev, [selectedPlan]: tiers }));
-  }, [selectedPlan]);
+  // Simulated impact numbers animate when simulator is visible
+  const affectedReps = useCountUp(47, 800, 0, showSimulator);
+  const payoutDelta = useCountUp(12400, 1400, 0, showSimulator);
+  const revImpact = useCountUp(89000, 1600, 0, showSimulator);
 
-  const handleSpiffToggle = useCallback((spiffId: string) => {
-    const currentSpiffs = draftSpiffs[selectedPlan] ?? plan.spiffs;
-    const updated = currentSpiffs.map((s) => s.id === spiffId ? { ...s, active: !s.active } : s);
-    setDraftSpiffs((prev) => ({ ...prev, [selectedPlan]: updated }));
-  }, [selectedPlan, draftSpiffs, plan.spiffs]);
+  const handlePush = useCallback(() => {
+    setPushAnimating(true);
+    setTimeout(() => {
+      setPushAnimating(false);
+      setPushComplete(true);
+      setTimeout(() => setPushComplete(false), 3000);
+    }, 2000);
+  }, []);
 
-  const handleRevert = useCallback(() => {
-    setDraftTiers((prev) => { const next = { ...prev }; delete next[selectedPlan]; return next; });
-    setDraftSpiffs((prev) => { const next = { ...prev }; delete next[selectedPlan]; return next; });
-  }, [selectedPlan]);
+  const plan = ADMIN_PLANS.find(p => p.id === expandedPlan)!;
 
-  const handlePushAll = useCallback(() => {
-    broadcastCompUpdate({
-      id: `comp-${Date.now()}`,
-      planId: plan.id,
-      planName: plan.name,
-      changeType: 'full_plan',
-      summary: `Updated ${plan.name} — plan changes pushed`,
-      pushedBy: 'Dana K. (Comp Admin)',
-      timestamp: new Date().toISOString(),
-    });
-    broadcastPosSync({
-      id: `sync-${Date.now()}`,
-      reason: 'Comp plan update',
-      planIds: [plan.id],
-      timestamp: new Date().toISOString(),
-    });
-    setPushSent(true);
-    setTimeout(() => setPushSent(false), 3000);
-  }, [plan]);
-
-  const totalEnrolled = useMemo(() => ADMIN_PLANS.reduce((s, p) => s + p.enrolled, 0), []);
-  const totalBudget = useMemo(() => ADMIN_PLANS.reduce((s, p) => s + p.monthlyBudget, 0), []);
+  // Proposed tiers — simulated tier 2 threshold change
+  const proposedTiers = plan.tiers.map((t, i) => {
+    if (i === 1) return { ...t, minRevenue: 20000, maxRevenue: 44999 }; // lowered from 25K/50K
+    if (i === 2) return { ...t, minRevenue: 45000 };
+    return t;
+  });
 
   return (
-    <RegisterPage title="Compensation Admin" subtitle="Plan Design & Distribution" accentColor={ACCENT}>
-      {/* KPI Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Active Plans', value: String(ADMIN_PLANS.filter((p) => p.status === 'active').length), color: ACCENT },
-          { label: 'Drafts', value: String(ADMIN_PLANS.filter((p) => p.status === 'draft').length), color: '#F59E0B' },
-          { label: 'Reps Enrolled', value: String(totalEnrolled), color: '#06B6D4' },
-          { label: 'Monthly Budget', value: `$${(totalBudget / 1000).toFixed(0)}K`, color: '#1E3A5F' },
-        ].map((kpi) => (
-          <div
-            key={kpi.label}
-            className="rounded-xl p-4"
-            style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-          >
-            <p className="text-[10px] uppercase tracking-wide font-semibold mb-1" style={{ color: 'var(--register-text-muted)' }}>
-              {kpi.label}
-            </p>
-            <p className="text-xl font-bold" style={{ color: kpi.color }}>{kpi.value}</p>
+    <RegisterPage title="Rule Modeling Lab" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
+      <div className="flex flex-col lg:flex-row" style={{ gap: 24 }}>
+
+        {/* ══════════════════════════════════════════════
+            LEFT PANEL — Active Plans (60%)
+           ══════════════════════════════════════════════ */}
+        <div style={{ flex: '0 0 60%', minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <Settings size={16} color="var(--register-text-muted)" />
+            <h2 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Active Plans</h2>
+            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>
+              {ADMIN_PLANS.length} plans &middot; {ADMIN_PLANS.reduce((s, p) => s + p.enrolled, 0)} reps
+            </span>
           </div>
-        ))}
-      </div>
 
-      {/* Two-Panel Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
-        {/* Left Panel (60%) — Plan List & Editor */}
-        <div className="lg:col-span-3 space-y-4">
-          {ADMIN_PLANS.map((p) => {
-            const stCfg = STATUS_CONFIG[p.status];
-            const isSelected = p.id === selectedPlan;
-            const hasDraft = !!draftTiers[p.id] || !!draftSpiffs[p.id];
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {ADMIN_PLANS.map((p) => {
+              const stCfg = STATUS_CONFIG[p.status];
+              const isExpanded = p.id === expandedPlan;
 
-            return (
-              <div key={p.id}>
-                <button
-                  onClick={() => setSelectedPlan(p.id)}
-                  className="w-full text-left rounded-xl p-5 transition-all"
-                  style={{
-                    background: isSelected ? 'var(--register-bg-elevated)' : 'var(--register-bg-surface)',
-                    border: `2px solid ${isSelected ? '#1E3A5F' : 'var(--register-border)'}`,
-                  }}
-                >
-                  {/* Card Header */}
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>{p.name}</p>
-                        {hasDraft && (
-                          <span className="rounded px-1.5 py-0.5 text-[9px] font-bold text-white" style={{ backgroundColor: '#F59E0B' }}>
-                            UNSAVED
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[11px]" style={{ color: 'var(--register-text-muted)' }}>
-                        {p.format} &middot; v{p.version} &middot; {p.effectiveFrom} to {p.effectiveTo}
-                      </p>
-                    </div>
-                    <span
-                      className="px-2.5 py-1 rounded-full text-[10px] font-semibold"
-                      style={{ backgroundColor: stCfg.bg, color: stCfg.color }}
-                    >
-                      {stCfg.label}
-                    </span>
-                  </div>
-
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-3 mb-3">
-                    <div className="rounded-lg p-2 text-center" style={{ background: 'var(--register-bg-surface)' }}>
-                      <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>Enrolled</p>
-                      <p className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>{p.enrolled}</p>
-                    </div>
-                    <div className="rounded-lg p-2 text-center" style={{ background: 'var(--register-bg-surface)' }}>
-                      <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>Budget</p>
-                      <p className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>${(p.monthlyBudget / 1000).toFixed(0)}K</p>
-                    </div>
-                    <div className="rounded-lg p-2 text-center" style={{ background: 'var(--register-bg-surface)' }}>
-                      <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>Max Rate</p>
-                      <p className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>
-                        {(Math.max(...p.tiers.map((t) => t.rate)) * 100).toFixed(1)}%
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tier bar */}
-                  <div className="flex h-3 rounded-full overflow-hidden">
-                    {(draftTiers[p.id] ?? p.tiers).map((tier, i) => (
-                      <div
-                        key={i}
-                        className="h-full"
-                        style={{ backgroundColor: tier.color, flex: tier.maxRevenue === Infinity ? 2 : 1 }}
-                        title={`${tier.name}: ${(tier.rate * 100).toFixed(1)}%`}
-                      />
-                    ))}
-                  </div>
-                </button>
-
-                {/* Expanded Editor */}
-                {isSelected && (
-                  <div
-                    className="rounded-b-xl px-5 pb-5 -mt-1 pt-4"
-                    style={{ background: 'var(--register-bg-elevated)', borderLeft: '2px solid #1E3A5F', borderRight: '2px solid #1E3A5F', borderBottom: '2px solid #1E3A5F' }}
+              return (
+                <div key={p.id}>
+                  {/* Plan Card Header */}
+                  <button
+                    onClick={() => setExpandedPlan(isExpanded ? '' : p.id)}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      background: isExpanded
+                        ? 'linear-gradient(135deg, var(--register-bg-elevated), rgba(30,58,95,0.1))'
+                        : 'var(--register-bg-elevated)',
+                      border: `1px solid ${isExpanded ? '#1E3A5F' : 'var(--register-border)'}`,
+                      borderRadius: isExpanded ? '12px 12px 0 0' : 12,
+                      padding: '16px 20px',
+                      color: 'inherit',
+                      transition: 'all 0.3s ease',
+                    }}
                   >
-                    {/* Tier Editor */}
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-xs font-semibold" style={{ color: 'var(--register-text)' }}>Tier Editor</p>
-                      {hasChanges && (
-                        <button
-                          onClick={handleRevert}
-                          className="text-[10px] font-medium"
-                          style={{ color: '#EF4444' }}
-                        >
-                          Revert All
-                        </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      {isExpanded ? (
+                        <ChevronDown size={16} color="var(--register-text-muted)" />
+                      ) : (
+                        <ChevronRight size={16} color="var(--register-text-muted)" />
                       )}
-                    </div>
-                    <TierEditor
-                      tiers={draftTiers[p.id] ?? p.tiers}
-                      onUpdate={handleTierUpdate}
-                    />
-
-                    {/* SPIFF Toggles */}
-                    <div className="mt-4">
-                      <p className="text-xs font-semibold mb-2" style={{ color: 'var(--register-text)' }}>SPIFF Toggles</p>
-                      <SpiffToggles
-                        spiffs={draftSpiffs[p.id] ?? p.spiffs}
-                        onToggle={handleSpiffToggle}
-                      />
-                    </div>
-
-                    {/* Accelerator Rules */}
-                    <div className="mt-4">
-                      <p className="text-xs font-semibold mb-2" style={{ color: 'var(--register-text)' }}>Accelerators</p>
-                      <div className="space-y-1.5">
-                        {p.accelerators.map((acc, i) => (
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>
+                            {p.name}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: '0.55rem',
+                              fontWeight: 700,
+                              padding: '2px 8px',
+                              borderRadius: 10,
+                              background: stCfg.bg,
+                              color: stCfg.color,
+                            }}
+                          >
+                            {stCfg.label}
+                          </span>
+                        </div>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
+                          {p.format} &middot; {p.enrolled} reps &middot; {p.effectiveFrom} to {p.effectiveTo}
+                        </span>
+                      </div>
+                      {/* Mini tier preview */}
+                      <div style={{ display: 'flex', height: 8, width: 80, borderRadius: 4, overflow: 'hidden', flexShrink: 0 }}>
+                        {p.tiers.map((tier, i) => (
                           <div
                             key={i}
-                            className="flex items-center gap-2 rounded-lg px-3 py-2"
-                            style={{ background: 'rgba(59,130,246,0.06)' }}
-                          >
-                            <span className="text-xs" style={{ color: '#3B82F6' }}>{acc.label}</span>
-                          </div>
+                            style={{
+                              height: '100%',
+                              flex: tier.maxRevenue === Infinity ? 2 : 1,
+                              backgroundColor: tier.color,
+                            }}
+                          />
                         ))}
                       </div>
                     </div>
+                  </button>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-3 mt-5">
-                      <button
-                        className="px-4 py-2 rounded-lg text-xs font-semibold transition-all"
-                        style={{ background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)', color: 'var(--register-text)' }}
-                      >
-                        Save Draft
-                      </button>
-                      <button
-                        className="px-4 py-2 rounded-lg text-xs font-semibold text-white transition-all"
-                        style={{ backgroundColor: ACCENT }}
-                      >
-                        Activate
-                      </button>
-                      {hasChanges && (
-                        <button
-                          onClick={handleRevert}
-                          className="px-4 py-2 rounded-lg text-xs font-semibold transition-all"
-                          style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.3)' }}
-                        >
-                          Revert
-                        </button>
+                  {/* Expanded Tier Editor */}
+                  {isExpanded && (
+                    <div
+                      style={{
+                        background: 'var(--register-bg-elevated)',
+                        border: '1px solid #1E3A5F',
+                        borderTop: 'none',
+                        borderRadius: '0 0 12px 12px',
+                        padding: '20px',
+                        animation: 'fadeIn 0.3s ease',
+                      }}
+                    >
+                      {/* Tier rows */}
+                      <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginBottom: 10 }}>
+                        Commission Tiers
+                      </p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        {p.tiers.map((tier, i) => (
+                          <div
+                            key={i}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 12,
+                              padding: '10px 14px',
+                              borderRadius: 10,
+                              background: `${tier.color}10`,
+                              border: `1px solid ${tier.color}25`,
+                            }}
+                          >
+                            <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: tier.color, flexShrink: 0 }} />
+                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', width: 70 }}>{tier.name}</span>
+                            {/* Threshold fields — styled as editable */}
+                            <div
+                              style={{
+                                flex: 1,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 6,
+                                padding: '4px 10px',
+                                borderRadius: 6,
+                                background: 'var(--register-bg-surface)',
+                                border: '1px solid var(--register-border)',
+                                cursor: 'text',
+                              }}
+                            >
+                              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>
+                                ${tier.minRevenue.toLocaleString()}
+                              </span>
+                              <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
+                              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>
+                                {tier.maxRevenue === Infinity ? '\u221E' : `$${tier.maxRevenue.toLocaleString()}`}
+                              </span>
+                            </div>
+                            {/* Rate field */}
+                            <div
+                              style={{
+                                padding: '4px 12px',
+                                borderRadius: 6,
+                                background: 'var(--register-bg-surface)',
+                                border: '1px solid var(--register-border)',
+                                cursor: 'text',
+                              }}
+                            >
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: tier.color, fontFamily: 'monospace' }}>
+                                {(tier.rate * 100).toFixed(1)}%
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* SPIFF Toggles */}
+                      <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
+                        SPIFF Rules
+                      </p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        {p.spiffs.map((spiff) => (
+                          <div
+                            key={spiff.id}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '10px 14px',
+                              borderRadius: 10,
+                              background: 'var(--register-bg-surface)',
+                              border: '1px solid var(--register-border)',
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <Zap size={13} color={spiff.active ? '#F59E0B' : 'var(--register-text-dim)'} />
+                              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)' }}>{spiff.name}</span>
+                              <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>${spiff.bonus}/unit</span>
+                            </div>
+                            {/* Toggle pill */}
+                            <div
+                              style={{
+                                width: 40,
+                                height: 20,
+                                borderRadius: 10,
+                                background: spiff.active ? '#10B981' : 'rgba(255,255,255,0.08)',
+                                position: 'relative',
+                                cursor: 'pointer',
+                                transition: 'background 0.3s',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: 2,
+                                  left: spiff.active ? 22 : 2,
+                                  width: 16,
+                                  height: 16,
+                                  borderRadius: '50%',
+                                  background: 'white',
+                                  transition: 'left 0.3s',
+                                  boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                                }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Accelerators */}
+                      {p.accelerators.length > 0 && (
+                        <>
+                          <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
+                            Accelerators
+                          </p>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {p.accelerators.map((acc, i) => (
+                              <div
+                                key={i}
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 8,
+                                  padding: '8px 14px',
+                                  borderRadius: 10,
+                                  background: 'rgba(59,130,246,0.06)',
+                                  border: '1px solid rgba(59,130,246,0.15)',
+                                }}
+                              >
+                                <Zap size={12} color="#3B82F6" />
+                                <span style={{ fontSize: '0.7rem', color: 'var(--register-text)' }}>{acc.label}</span>
+                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#3B82F6', fontFamily: 'monospace', marginLeft: 'auto' }}>
+                                  {acc.multiplier}x
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </>
                       )}
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Right Panel (40%) — Live Preview + Push */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Commission Simulator */}
-          <CommissionSimulator plan={plan} draftTiers={currentDraftTiers} />
+        {/* ══════════════════════════════════════════════
+            RIGHT PANEL — Simulator + Push (40%)
+           ══════════════════════════════════════════════ */}
+        <div style={{ flex: '0 0 38%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
 
-          {/* Impact Analysis */}
-          {hasChanges && (
+          {/* AI Insight */}
+          <AIInsightCard label="AI Impact Analysis" compact>
+            Proposed tier change affects 47 reps across 12 stores. Net impact: +$12K monthly payout, projected +$89K incremental revenue from improved motivation at lower threshold.
+          </AIInsightCard>
+
+          {/* ── Live Impact Simulator ─────────────────── */}
+          <div
+            style={{
+              borderRadius: 14,
+              background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(16,185,129,0.04))',
+              border: '1px solid var(--register-border)',
+              padding: '20px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+              <Zap size={15} color="#10B981" />
+              <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Live Impact Simulator</h3>
+            </div>
+
+            {/* Scenario description */}
             <div
-              className="rounded-xl p-5"
-              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.3)' }}
+              style={{
+                padding: '12px 16px',
+                borderRadius: 10,
+                background: 'rgba(6,182,212,0.06)',
+                border: '1px solid rgba(6,182,212,0.15)',
+                marginBottom: 16,
+              }}
             >
-              <p className="text-sm font-bold mb-2" style={{ color: 'var(--register-text)' }}>Impact Analysis</p>
-              <p className="text-xs" style={{ color: 'var(--register-text-muted)' }}>
-                This change affects <strong>{plan.enrolled} reps</strong> across all {plan.format} locations.
-                Monthly budget: ${(plan.monthlyBudget / 1000).toFixed(0)}K. All POS terminals will reload comp rules on push.
+              <p style={{ fontSize: '0.75rem', color: 'var(--register-text)', margin: 0, lineHeight: 1.5 }}>
+                If you change <strong style={{ color: '#06B6D4' }}>Silver threshold</strong> from <span style={{ fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>$25K &rarr; $20K</span> and <strong style={{ color: '#06B6D4' }}>Gold threshold</strong> from <span style={{ fontFamily: 'monospace', color: 'var(--register-text-muted)' }}>$50K &rarr; $45K</span>:
               </p>
             </div>
-          )}
 
-          {/* Push to All POS */}
-          <button
-            onClick={handlePushAll}
-            disabled={!hasChanges || pushSent}
-            className="w-full rounded-xl px-5 py-3 text-sm font-bold text-white transition-all disabled:opacity-40"
-            style={{ backgroundColor: pushSent ? ACCENT : '#1E3A5F' }}
-          >
-            {pushSent ? 'Pushed to All POS!' : 'Push to All POS'}
-          </button>
-
-          {/* Push History */}
-          <div
-            className="rounded-xl p-5"
-            style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-          >
-            <p className="text-sm font-bold mb-4" style={{ color: 'var(--register-text)' }}>Push History</p>
-            <div className="space-y-3">
-              {PUSH_HISTORY.map((entry) => (
-                <div key={entry.id} className="flex items-start gap-3">
-                  <div className="shrink-0 mt-1.5 w-2 h-2 rounded-full" style={{ backgroundColor: '#06B6D4' }} />
-                  <div>
-                    <p className="text-xs font-medium" style={{ color: 'var(--register-text)' }}>{entry.summary}</p>
-                    <p className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>
-                      {entry.timestamp} &middot; {entry.pushedBy}
-                    </p>
-                  </div>
+            {/* Impact metrics grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+              <div style={{ padding: '12px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <Users size={12} color="var(--register-text-muted)" />
+                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Affected Reps</span>
                 </div>
-              ))}
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: 'var(--register-text)', margin: 0 }}>
+                  {affectedReps}
+                </p>
+                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>across 12 stores</span>
+              </div>
+
+              <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Payout Delta</span>
+                </div>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#10B981', margin: 0 }}>
+                  +${payoutDelta.toLocaleString()}
+                </p>
+                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>monthly increase</span>
+              </div>
+
+              <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Revenue Impact</span>
+                </div>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#10B981', margin: 0 }}>
+                  +${revImpact.toLocaleString()}
+                </p>
+                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>projected incremental</span>
+              </div>
+
+              <div style={{ padding: '12px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <span style={{ fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>Budget Impact</span>
+                </div>
+                <p style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'monospace', color: '#F59E0B', margin: 0 }}>
+                  +0.8%
+                </p>
+                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>comp ratio increase</span>
+              </div>
+            </div>
+
+            {/* Before / After tier staircases */}
+            <div style={{ display: 'flex', gap: 16, padding: '14px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
+              <TierStaircase
+                tiers={plan.tiers.map(t => ({ name: t.name, rate: t.rate, color: t.color }))}
+                label="Current"
+              />
+              <div style={{ width: 1, background: 'var(--register-border)', flexShrink: 0 }} />
+              <TierStaircase
+                tiers={proposedTiers.map(t => ({ name: t.name, rate: t.rate, color: t.color }))}
+                label="Proposed"
+                highlight
+              />
+            </div>
+
+            {/* Rep distribution shift note */}
+            <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', marginTop: 8, textAlign: 'center', fontStyle: 'italic' }}>
+              12 reps shift from Bronze &rarr; Silver, 8 reps shift from Silver &rarr; Gold
+            </p>
+          </div>
+
+          {/* ── Push to Varicent ─────────────────────── */}
+          <div
+            style={{
+              borderRadius: 14,
+              background: 'var(--register-bg-elevated)',
+              border: '1px solid var(--register-border)',
+              padding: '20px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+              <Send size={15} color="#06B6D4" />
+              <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Push to Varicent</h3>
+            </div>
+
+            {/* Push button — the crown jewel */}
+            <button
+              onClick={handlePush}
+              disabled={pushAnimating || pushComplete}
+              style={{
+                width: '100%',
+                padding: '16px 24px',
+                borderRadius: 12,
+                border: 'none',
+                cursor: pushAnimating || pushComplete ? 'default' : 'pointer',
+                background: pushComplete
+                  ? '#10B981'
+                  : pushAnimating
+                    ? 'linear-gradient(135deg, #1E3A5F, #06B6D4)'
+                    : 'linear-gradient(135deg, #10B981, #06B6D4)',
+                color: 'white',
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                letterSpacing: '0.02em',
+                transition: 'all 0.4s ease',
+                boxShadow: pulseGlow && !pushAnimating && !pushComplete
+                  ? '0 0 24px rgba(16,185,129,0.4), 0 0 48px rgba(6,182,212,0.2)'
+                  : '0 0 12px rgba(16,185,129,0.15)',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              {pushComplete ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  <CheckCircle size={18} /> Pushed Successfully
+                </span>
+              ) : pushAnimating ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  <span
+                    style={{
+                      width: 16,
+                      height: 16,
+                      border: '2px solid rgba(255,255,255,0.3)',
+                      borderTopColor: 'white',
+                      borderRadius: '50%',
+                      animation: 'spin 0.8s linear infinite',
+                    }}
+                  />
+                  Pushing to Varicent...
+                </span>
+              ) : (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  <Send size={16} /> Push Changes to Varicent
+                </span>
+              )}
+            </button>
+
+            <p
+              style={{
+                fontSize: '0.7rem',
+                color: 'var(--register-text-dim)',
+                textAlign: 'center',
+                marginTop: 10,
+                cursor: 'pointer',
+              }}
+            >
+              Or <span style={{ color: '#06B6D4', fontWeight: 600, textDecoration: 'underline' }}>save as draft</span> for review
+            </p>
+
+            {/* Push History */}
+            <div style={{ marginTop: 20 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+                <FileText size={13} color="var(--register-text-muted)" />
+                <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-muted)' }}>
+                  Push History
+                </span>
+              </div>
+              <PushEntry
+                timestamp="Mar 12, 2:15 PM"
+                who="Sarah M."
+                what="Pushed Tier 2 threshold change (Flagship)"
+                status="synced"
+              />
+              <PushEntry
+                timestamp="Mar 10, 9:30 AM"
+                who="Todd B."
+                what="Activated Q2 SPIFF calendar"
+                status="synced"
+              />
+              <PushEntry
+                timestamp="Mar 8, 4:45 PM"
+                who="Sarah M."
+                what="Pushed Bundle Accelerator update"
+                status="synced"
+              />
+              {pushComplete && (
+                <PushEntry
+                  timestamp="Just now"
+                  who="You"
+                  what="Pushed threshold changes to Varicent"
+                  status="pending"
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* AI Insight */}
-      {insight && (
-        <AIInsightCard label={insight.label}>
-          {insight.text}
-        </AIInsightCard>
-      )}
+      {/* Keyframe animations */}
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </RegisterPage>
   );
 }

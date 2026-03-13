@@ -1,223 +1,385 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
-import { COMP_TIERS, SPIFF_CALENDAR } from '@/data/register/comp-data';
+import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { CheckCircle, AlertTriangle, TrendingUp } from 'lucide-react';
+import { COMP_TIERS } from '@/data/register/comp-data';
+import { POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
 
 const ACCENT = '#10B981';
 
-const ACCELERATOR_RULES = [
-  { metric: 'Attach Rate', threshold: '> 35%', multiplier: '1.15x', description: '15% bonus on all commission when accessory attach rate exceeds 35%' },
-  { metric: 'Financing Penetration', threshold: '> 70%', multiplier: '1.10x', description: '10% bonus when financing penetration exceeds 70%' },
-  { metric: 'Bundle Completion', threshold: '> 25%', multiplier: '1.05x', description: '5% bonus when 25%+ of mattress sales include adjustable base' },
+/* ── Mock rep tier assignments ───────────────────────────── */
+
+const REP_TIER_DATA = POS_REPS.map((rep) => {
+  const period = SAMPLE_PERIODS[rep.id];
+  const revenue = period?.revenue ?? 0;
+  const tier = COMP_TIERS.find((t) => revenue >= t.minRevenue && revenue <= t.maxRevenue) ?? COMP_TIERS[0];
+  return { ...rep, revenue, tier: tier.tier, tierColor: tier.color, rate: tier.rate };
+});
+
+/* ── Component payout data ───────────────────────────────── */
+
+const COMPONENT_PAYOUTS = [
+  {
+    name: 'Base Comm.',
+    payout: 18420,
+    trend: 5.2,
+    sparkline: [14200, 15800, 16400, 17100, 18420],
+    color: '#06B6D4',
+  },
+  {
+    name: 'Product Prem.',
+    payout: 4250,
+    trend: -2.1,
+    sparkline: [4800, 4600, 4400, 4350, 4250],
+    color: '#8B5CF6',
+  },
+  {
+    name: 'SPIFF',
+    payout: 2875,
+    trend: 12.4,
+    sparkline: [1800, 2100, 2400, 2600, 2875],
+    color: '#F59E0B',
+  },
+  {
+    name: 'Bundle Accel.',
+    payout: 3150,
+    trend: 8.7,
+    sparkline: [2200, 2500, 2700, 2900, 3150],
+    color: '#10B981',
+  },
 ];
 
-export default function CompPlanPage() {
-  const now = new Date();
-  const activeSpiffs = SPIFF_CALENDAR.filter((s) => s.active);
-  const upcomingSpiffs = SPIFF_CALENDAR.filter((s) => !s.active && new Date(s.startDate) > now);
-  const pastSpiffs = SPIFF_CALENDAR.filter((s) => !s.active && new Date(s.endDate) < now);
+/* ── Dead zone reps (between Bronze and Silver) ──────────── */
+
+const DEAD_ZONE_REPS = 23;
+const DEAD_ZONE_AVG_GAP = 2400;
+
+/* ── Animated Dot ────────────────────────────────────────── */
+
+function AnimatedDots({ tier, count }: { tier: string; count: number }) {
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setOffset((prev) => (prev + 1) % 60);
+    }, 80);
+    return () => clearInterval(id);
+  }, []);
 
   return (
-    <RegisterPage title="Compensation Plan" subtitle="FY26 Floor Sales Plan" accentColor={ACCENT}>
-      {/* Plan Metadata */}
-      <div className="flex flex-wrap items-center gap-3 mb-8">
-        <span
-          className="px-4 py-2 rounded-lg text-sm font-semibold"
-          style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', color: 'var(--register-text-muted)' }}
+    <div style={{ position: 'relative', width: '100%', height: 6, overflow: 'hidden', borderRadius: 3 }}>
+      {Array.from({ length: count }).map((_, i) => {
+        const x = ((offset + i * (60 / count)) % 60) / 60 * 100;
+        return (
+          <div
+            key={`${tier}-dot-${i}`}
+            style={{
+              position: 'absolute',
+              left: `${x}%`,
+              top: 0,
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: 'var(--register-accent)',
+              opacity: 0.7,
+              transition: 'left 0.08s linear',
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── Mini Sparkline Bar ──────────────────────────────────── */
+
+function MiniSparkBar({ data, color }: { data: number[]; color: string }) {
+  const max = Math.max(...data);
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 28 }}>
+      {data.map((v, i) => (
+        <div
+          key={i}
+          style={{
+            flex: 1,
+            height: `${(v / max) * 100}%`,
+            background: i === data.length - 1 ? color : `${color}50`,
+            borderRadius: 2,
+            minHeight: 3,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── Main Page ───────────────────────────────────────────── */
+
+export default function CompPlanPage() {
+  const [glowPhase, setGlowPhase] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setGlowPhase((prev) => (prev + 1) % 100);
+    }, 50);
+    return () => clearInterval(id);
+  }, []);
+
+  const glowIntensity = 0.15 + Math.sin(glowPhase / 15) * 0.1;
+
+  /* ── Tier distribution ─────────────────────────────────── */
+
+  const tierDistribution = COMP_TIERS.map((tier) => {
+    const repsInTier = REP_TIER_DATA.filter((r) => r.tier === tier.tier);
+    return { ...tier, repCount: repsInTier.length, reps: repsInTier };
+  });
+
+  // Total reps across org (mock: 170 enrolled)
+  const totalReps = 170;
+  const bronzeCount = 68;
+  const silverCount = 52;
+  const goldCount = 34;
+  const platinumCount = 16;
+
+  const tierCounts = [
+    { ...COMP_TIERS[0], count: bronzeCount },
+    { ...COMP_TIERS[1], count: silverCount },
+    { ...COMP_TIERS[2], count: goldCount },
+    { ...COMP_TIERS[3], count: platinumCount },
+  ];
+
+  return (
+    <RegisterPage title="Live Plan Performance" subtitle="FY26 Floor Sales Plan -- Real-Time Tier Intelligence" accentColor={ACCENT}>
+      {/* Varicent sync badge */}
+      <div className="flex items-center gap-3 mb-8">
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full"
+          style={{ background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}
         >
-          Version 3.2
-        </span>
-        <span
-          className="px-4 py-2 rounded-lg text-sm font-semibold"
-          style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', color: 'var(--register-text-muted)' }}
-        >
-          Effective: Jan 1 – Dec 31, 2026
-        </span>
-        <span
-          className="px-4 py-2 rounded-lg text-sm font-semibold"
-          style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: ACCENT }}
-        >
-          170 Reps Enrolled
-        </span>
-        <span
-          className="px-4 py-2 rounded-lg text-sm font-semibold"
-          style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: ACCENT }}
-        >
-          Active
+          <CheckCircle size={14} color="var(--register-text-muted)" />
+          <span style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>
+            Synced from Varicent
+          </span>
+        </div>
+        <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
+          Last sync: 2h ago
         </span>
       </div>
 
-      {/* Tier Visualization */}
+      {/* ── Animated Tier Staircase ──────────────────────────── */}
       <div
         className="rounded-xl p-6 mb-8"
         style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
       >
-        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
-          Commission Tiers
-        </h2>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--register-border)' }}>
-                <th className="text-left py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Tier</th>
-                <th className="text-left py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Revenue Range</th>
-                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Rate</th>
-                <th className="text-right py-3 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Est. Monthly Earnings</th>
-              </tr>
-            </thead>
-            <tbody>
-              {COMP_TIERS.map((tier) => {
-                const rangeLabel =
-                  tier.maxRevenue === Infinity
-                    ? `$${tier.minRevenue.toLocaleString()}+`
-                    : `$${tier.minRevenue.toLocaleString()} – $${tier.maxRevenue.toLocaleString()}`;
-                const midpoint = tier.maxRevenue === Infinity ? tier.minRevenue + 25000 : (tier.minRevenue + tier.maxRevenue) / 2;
-                const estEarnings = midpoint * tier.rate;
-
-                return (
-                  <tr key={tier.tier} style={{ borderBottom: '1px solid var(--register-border)' }}>
-                    <td className="py-3 pr-4">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                          style={{ backgroundColor: tier.color }}
-                        >
-                          {tier.tier[0]}
-                        </span>
-                        <span className="font-semibold" style={{ color: 'var(--register-text)' }}>
-                          {tier.tier}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 pr-4 font-mono" style={{ color: 'var(--register-text-muted)' }}>
-                      {rangeLabel}
-                    </td>
-                    <td className="py-3 pr-4 text-right">
-                      <span
-                        className="inline-block px-3 py-1 rounded-full text-xs font-bold"
-                        style={{ backgroundColor: `${tier.color}20`, color: tier.color }}
-                      >
-                        {(tier.rate * 100).toFixed(1)}%
-                      </span>
-                    </td>
-                    <td className="py-3 text-right font-mono font-semibold" style={{ color: ACCENT }}>
-                      ${estEarnings.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div className="flex items-center justify-between mb-5">
+          <h2 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--register-text)', margin: 0 }}>
+            Tier Staircase
+          </h2>
+          <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
+            {totalReps} reps enrolled
+          </span>
         </div>
 
-        {/* Tier bar visual */}
-        <div className="mt-6">
-          <div className="flex h-4 rounded-full overflow-hidden">
-            {COMP_TIERS.map((tier, i) => (
-              <div
-                key={i}
-                className="h-full"
-                style={{ backgroundColor: tier.color, flex: tier.maxRevenue === Infinity ? 2 : 1 }}
-                title={`${tier.tier}: ${(tier.rate * 100).toFixed(1)}%`}
-              />
-            ))}
-          </div>
-          <div className="flex justify-between mt-2">
-            {COMP_TIERS.map((tier, i) => (
-              <span key={i} className="text-xs" style={{ color: 'var(--register-text-muted)' }}>
-                {tier.tier}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          {tierCounts.map((tier, i) => {
+            const maxCount = Math.max(...tierCounts.map((t) => t.count));
+            const barWidth = Math.max((tier.count / maxCount) * 100, 20);
+            const isDeadZoneBoundary = i === 0; // Bronze-Silver boundary
 
-      {/* Active SPIFFs */}
-      <div
-        className="rounded-xl p-6 mb-8"
-        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-      >
-        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
-          SPIFF Calendar
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SPIFF_CALENDAR.map((spiff, i) => {
-            const isActive = spiff.active;
-            const isUpcoming = !isActive && new Date(spiff.startDate) > now;
             return (
-              <div
-                key={i}
-                className="rounded-lg p-4 transition-all"
-                style={{
-                  background: isActive ? 'rgba(16,185,129,0.08)' : 'var(--register-bg-surface)',
-                  border: `2px solid ${isActive ? ACCENT : 'var(--register-border)'}`,
-                  opacity: isActive ? 1 : isUpcoming ? 0.7 : 0.45,
-                }}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--register-text-muted)' }}>
-                    {spiff.month}
-                  </span>
-                  {isActive && (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style={{ backgroundColor: ACCENT }}>
-                      ACTIVE
+              <div key={tier.tier} style={{ position: 'relative' }}>
+                {/* Tier row */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 16,
+                    padding: '12px 0',
+                    borderBottom: i < tierCounts.length - 1 ? '1px solid var(--register-border)' : 'none',
+                  }}
+                >
+                  {/* Tier badge */}
+                  <div style={{ width: 80, flexShrink: 0 }}>
+                    <div
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        padding: '4px 10px',
+                        borderRadius: 8,
+                        background: `${tier.color}20`,
+                      }}
+                    >
+                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: tier.color }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text)' }}>
+                        {tier.tier}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Threshold & rate */}
+                  <div style={{ width: 140, flexShrink: 0 }}>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', fontFamily: 'monospace' }}>
+                      {tier.maxRevenue === Infinity
+                        ? `$${(tier.minRevenue / 1000).toFixed(0)}K+`
+                        : `$${(tier.minRevenue / 1000).toFixed(0)}K - $${(tier.maxRevenue / 1000).toFixed(0)}K`}
+                    </div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: tier.color }}>
+                      {(tier.rate * 100).toFixed(1)}%
+                    </div>
+                  </div>
+
+                  {/* Bar + dots */}
+                  <div style={{ flex: 1, position: 'relative' }}>
+                    <div
+                      style={{
+                        width: `${barWidth}%`,
+                        height: 32,
+                        borderRadius: 8,
+                        background: `linear-gradient(90deg, ${tier.color}40, ${tier.color}80)`,
+                        position: 'relative',
+                        overflow: 'hidden',
+                        transition: 'width 0.5s ease',
+                      }}
+                    >
+                      {/* Flowing dots inside bar */}
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 8px' }}>
+                        <AnimatedDots tier={tier.tier} count={Math.min(tier.count / 5, 8)} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Rep count */}
+                  <div style={{ width: 60, textAlign: 'right', flexShrink: 0 }}>
+                    <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--register-text)' }}>
+                      {tier.count}
                     </span>
-                  )}
-                  {isUpcoming && (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ backgroundColor: 'rgba(59,130,246,0.15)', color: '#3B82F6' }}>
-                      UPCOMING
-                    </span>
-                  )}
+                    <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)', marginLeft: 4 }}>reps</span>
+                  </div>
                 </div>
-                <p className="text-sm font-bold mb-1" style={{ color: 'var(--register-text)' }}>{spiff.name}</p>
-                <p className="text-xs mb-3" style={{ color: 'var(--register-text-muted)' }}>{spiff.product}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-base font-bold" style={{ color: isActive ? ACCENT : 'var(--register-text-muted)' }}>
-                    {spiff.bonus}
-                  </span>
-                  <span className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>
-                    {spiff.startDate.slice(5)} – {spiff.endDate.slice(5)}
-                  </span>
-                </div>
+
+                {/* Dead zone glow on Bronze-Silver boundary */}
+                {isDeadZoneBoundary && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: -2,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: `rgba(245, 158, 11, ${glowIntensity})`,
+                      boxShadow: `0 0 12px rgba(245, 158, 11, ${glowIntensity * 1.5})`,
+                      borderRadius: 2,
+                      zIndex: 1,
+                    }}
+                  />
+                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Accelerator Rules */}
+      {/* ── Dead Zone Alert ──────────────────────────────────── */}
       <div
-        className="rounded-xl p-6"
-        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+        className="rounded-xl p-5 mb-8"
+        style={{
+          background: 'rgba(245, 158, 11, 0.06)',
+          border: '2px solid rgba(245, 158, 11, 0.3)',
+          boxShadow: `0 0 20px rgba(245, 158, 11, ${glowIntensity * 0.5})`,
+        }}
       >
-        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
-          Accelerator Rules
-        </h2>
-        <div className="space-y-3">
-          {ACCELERATOR_RULES.map((rule, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-4 rounded-lg px-5 py-4"
-              style={{ background: 'rgba(59,130,246,0.06)', borderLeft: '3px solid #3B82F6' }}
-            >
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-1">
-                  <span className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>{rule.metric}</span>
-                  <span className="px-2 py-0.5 rounded text-xs font-mono font-bold" style={{ backgroundColor: 'rgba(59,130,246,0.12)', color: '#3B82F6' }}>
-                    {rule.threshold}
-                  </span>
-                  <span className="px-2 py-0.5 rounded text-xs font-mono font-bold" style={{ backgroundColor: 'rgba(16,185,129,0.12)', color: ACCENT }}>
-                    {rule.multiplier}
-                  </span>
-                </div>
-                <p className="text-xs" style={{ color: 'var(--register-text-muted)' }}>{rule.description}</p>
-              </div>
+        <div className="flex items-start gap-4">
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              background: 'rgba(245, 158, 11, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <AlertTriangle size={20} color="#F59E0B" />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div className="flex items-center gap-2 mb-1">
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#F59E0B' }}>
+                Dead Zone Alert
+              </span>
+              <span
+                style={{
+                  fontSize: '0.6rem',
+                  fontWeight: 700,
+                  padding: '2px 8px',
+                  borderRadius: 4,
+                  background: 'rgba(245, 158, 11, 0.2)',
+                  color: '#F59E0B',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Action Needed
+              </span>
             </div>
-          ))}
+            <p style={{ fontSize: '0.85rem', color: 'var(--register-text)', margin: 0, lineHeight: 1.5 }}>
+              <strong>{DEAD_ZONE_REPS} reps</strong> stuck between Bronze and Silver —{' '}
+              <strong style={{ color: '#F59E0B' }}>${DEAD_ZONE_AVG_GAP.toLocaleString()}</strong> avg. gap to next tier.
+            </p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', margin: '4px 0 0' }}>
+              These reps are below the $25K Silver threshold but above $22.6K avg. They can see the tier but cannot reach it this period.
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* ── Component Breakdown Grid ─────────────────────────── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {COMPONENT_PAYOUTS.map((comp) => (
+          <div
+            key={comp.name}
+            className="rounded-xl p-4"
+            style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                {comp.name}
+              </span>
+              <div className="flex items-center gap-1">
+                {comp.trend > 0 ? (
+                  <TrendingUp size={12} color={ACCENT} />
+                ) : (
+                  <TrendingUp size={12} color="#EF4444" style={{ transform: 'scaleY(-1)' }} />
+                )}
+                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: comp.trend > 0 ? ACCENT : '#EF4444' }}>
+                  {comp.trend > 0 ? '+' : ''}{comp.trend}%
+                </span>
+              </div>
+            </div>
+            <p style={{ fontSize: '1.25rem', fontWeight: 800, color: comp.color, margin: '0 0 8px', fontFamily: 'monospace' }}>
+              ${comp.payout.toLocaleString()}
+            </p>
+            <MiniSparkBar data={comp.sparkline} color={comp.color} />
+            <p style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', marginTop: 4 }}>
+              Current period total
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* ── AI Insight ───────────────────────────────────────── */}
+      <AIInsightCard
+        label="AI Plan Optimization"
+        action={{ label: 'Simulate', onClick: () => {} }}
+      >
+        Lower Tier 2 threshold from $25K to $22K — moves {DEAD_ZONE_REPS} reps out of the dead zone.
+        Projected impact: <strong style={{ color: ACCENT }}>+$340K incremental revenue</strong> this quarter,
+        with only $18K additional comp spend (5.3% ROI on comp investment).
+      </AIInsightCard>
     </RegisterPage>
   );
 }
