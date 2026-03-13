@@ -1,4 +1,12 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function MeridianHome() {
-  redirect('/meridian/fund/strategy');
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/meridian/fund/strategy');
+  }, [router]);
+  return null;
 }
