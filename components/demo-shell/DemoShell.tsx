@@ -368,53 +368,24 @@ export function DemoShell({ config, children }: DemoShellProps) {
               background: `linear-gradient(90deg, transparent, ${primaryColor} 20%, ${resolved.colors.accent} 80%, transparent)`,
             }}
           />
-          <div className="px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex h-7 w-7 items-center justify-center rounded-lg"
+          <div className="px-6 lg:px-8 py-3">
+            <div
+              className="flex items-center justify-center gap-3 text-[11px] tracking-[0.08em]"
+              style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.6 }}
+            >
+              <span>{config.footer.copyright}</span>
+              <span>&middot;</span>
+              <span>
+                Powered by{' '}
+                <span
+                  className="font-bold bg-clip-text text-transparent"
                   style={{
-                    background: `linear-gradient(135deg, ${primaryColor}, ${resolved.colors.accent})`,
+                    backgroundImage: `linear-gradient(90deg, ${primaryColor}, ${resolved.colors.accent})`,
                   }}
                 >
-                  <LogoIcon className="h-3.5 w-3.5 text-white" />
-                </div>
-                <div>
-                  <span
-                    className="text-[13px] font-bold tracking-wide"
-                    style={{
-                      color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-secondary)',
-                      fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
-                    }}
-                  >
-                    {config.product.name.toUpperCase()}
-                  </span>
-                  <span
-                    className="text-[11px] ml-2"
-                    style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.6 }}
-                  >
-                    {config.client.tagline}
-                  </span>
-                </div>
-              </div>
-              <div
-                className="flex items-center gap-3 text-[11px] tracking-[0.08em]"
-                style={{ color: config.darkMode ? 'var(--pl-text-faint)' : 'var(--prizym-text-muted)', opacity: 0.6 }}
-              >
-                <span>{config.footer.copyright}</span>
-                <span>&middot;</span>
-                <span>
-                  Powered by{' '}
-                  <span
-                    className="font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(90deg, ${primaryColor}, ${resolved.colors.accent})`,
-                    }}
-                  >
-                    {config.footer.poweredBy.toUpperCase()}
-                  </span>
+                  {config.footer.poweredBy.toUpperCase()}
                 </span>
-              </div>
+              </span>
             </div>
           </div>
         </footer>

@@ -1,6 +1,6 @@
 'use client';
 
-import { ActNavigation, SectionCard } from '@/components/demos/meridian';
+import { ActNavigation, SectionCard, SignalStrip, ThesisSpotlight } from '@/components/demos/meridian';
 
 const SCREENING_CRITERIA = [
   { criterion: 'Enterprise Value', range: '$150M \u2013 $750M', rationale: 'Sweet spot for platform + bolt-on strategy', weight: 'Required', color: '#D4A847' },
@@ -29,38 +29,60 @@ export default function ScreeningPage() {
     <>
       <ActNavigation currentAct={2} />
 
-      <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#8B5CF6' }}>
+      {/* Signal Strip */}
+      <SignalStrip
+        signals={[
+          { label: 'Close Rate', value: `${conversionRate}%`, status: 'green', detail: 'From initial review' },
+          { label: 'Funnel Depth', value: '847', status: 'green', detail: 'Opportunities reviewed' },
+          { label: 'Pass Rate', value: '16.8%', status: 'green', detail: 'Initial screen' },
+          { label: 'Portfolio', value: '7 Deals', status: 'green', detail: 'Closed investments' },
+        ]}
+      />
+
+      {/* Hero */}
+      <div className="mt-2 mb-8 animate-mr-fade-in">
+        <div className="text-[11px] tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#8B5CF6' }}>
           Deal Origination &middot; Screening
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--mr-text)', fontFamily: 'var(--mr-font)' }}>
+        <h1 className="text-3xl font-extrabold mb-1" style={{ color: 'var(--mr-text)', fontFamily: 'var(--mr-font)' }}>
           Deal Screening & Origination Funnel
         </h1>
-        <p className="text-[13px] mt-1" style={{ color: 'var(--mr-text-muted)' }}>
+        <p className="text-[14px] mt-1" style={{ color: 'var(--mr-text-muted)' }}>
           Fund IV lifetime &middot; {conversionRate}% close rate from initial review
         </p>
       </div>
 
+      {/* Thesis Spotlight */}
+      <ThesisSpotlight
+        headline="Disciplined Origination: Quality Over Quantity"
+        insight="Our screening framework prioritizes businesses with defensible market positions and predictable cash flows. The 0.8% conversion rate from review to close reflects disciplined underwriting — we pass on 99%+ of opportunities to concentrate capital in high-conviction investments."
+        accentColor="#8B5CF6"
+        implications={[
+          '38% of closed deals sourced proprietary — yielding lower entry multiples and reduced competitive pressure vs. bank-led processes.',
+          '4 of 8 screening criteria are hard requirements — any miss on EV, EBITDA, margin, or management is an automatic pass.',
+        ]}
+      />
+
       {/* Funnel */}
-      <SectionCard title="Origination Funnel (Fund IV Lifetime)">
+      <SectionCard title="Origination Funnel (Fund IV Lifetime)" variant="hero" accentColor="#8B5CF6">
         <div className="space-y-2">
           {FUNNEL_DATA.map((f, i) => {
             const widthPct = (f.count / FUNNEL_DATA[0].count) * 100;
             return (
-              <div key={f.stage} className="flex items-center gap-3">
+              <div key={f.stage} className="flex items-center gap-3 animate-mr-fade-in" style={{ animationDelay: `${i * 60}ms` }}>
                 <div className="w-44 shrink-0 text-right">
                   <span className="text-[13px] font-semibold" style={{ color: 'var(--mr-text)' }}>{f.stage}</span>
                 </div>
-                <div className="flex-1 h-8 rounded-lg overflow-hidden" style={{ background: 'var(--mr-chart-bar-track)' }}>
+                <div className="flex-1 h-8 rounded-xl overflow-hidden" style={{ background: 'var(--mr-chart-bar-track)' }}>
                   <div
-                    className="h-full rounded-lg flex items-center px-3 transition-all"
+                    className="h-full rounded-xl flex items-center px-3 transition-all"
                     style={{ width: `${Math.max(widthPct, 5)}%`, background: f.color }}
                   >
-                    <span className="text-xs font-bold font-mono text-white">{f.count}</span>
+                    <span className="text-xs font-bold tabular-nums text-white">{f.count}</span>
                   </div>
                 </div>
                 {i > 0 && (
-                  <div className="w-14 text-right text-xs font-mono" style={{ color: 'var(--mr-text-faint)' }}>
+                  <div className="w-14 text-right text-xs tabular-nums" style={{ color: 'var(--mr-text-faint)' }}>
                     {((f.count / FUNNEL_DATA[i - 1].count) * 100).toFixed(0)}%
                   </div>
                 )}
@@ -71,46 +93,55 @@ export default function ScreeningPage() {
       </SectionCard>
 
       {/* Screening Criteria */}
-      <SectionCard title="Investment Screening Criteria">
-        <div className="space-y-0">
-          {SCREENING_CRITERIA.map((c, i) => (
-            <div
-              key={c.criterion}
-              className="flex items-center gap-4 py-3 px-3"
-              style={i % 2 === 0 ? { background: 'var(--mr-stripe)', borderRadius: 8 } : undefined}
-            >
-              <div className="w-40 shrink-0">
-                <div className="text-[13px] font-bold" style={{ color: 'var(--mr-text)' }}>{c.criterion}</div>
+      <SectionCard title="Investment Screening Criteria" meta="4 required, 4 preferred">
+        <div className="overflow-x-auto -mx-1">
+          <div className="space-y-0 min-w-[600px]">
+            {SCREENING_CRITERIA.map((c, i) => (
+              <div
+                key={c.criterion}
+                className="flex items-center gap-4 py-3 px-3 animate-mr-fade-in"
+                style={{
+                  ...(i % 2 === 0 ? { background: 'var(--mr-stripe)', borderRadius: 8 } : {}),
+                  animationDelay: `${i * 50}ms`,
+                }}
+              >
+                <div className="w-40 shrink-0">
+                  <div className="text-[13px] font-bold" style={{ color: 'var(--mr-text)' }}>{c.criterion}</div>
+                </div>
+                <div className="w-32 shrink-0">
+                  <span className="text-sm font-bold tabular-nums" style={{ color: c.color }}>{c.range}</span>
+                </div>
+                <div className="flex-1">
+                  <span className="text-[12px]" style={{ color: 'var(--mr-text-muted)' }}>{c.rationale}</span>
+                </div>
+                <div className="w-20 text-right">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded" style={{ background: `${c.color}15`, color: c.color }}>
+                    {c.weight}
+                  </span>
+                </div>
               </div>
-              <div className="w-32 shrink-0">
-                <span className="text-sm font-bold font-mono" style={{ color: c.color }}>{c.range}</span>
-              </div>
-              <div className="flex-1">
-                <span className="text-[12px]" style={{ color: 'var(--mr-text-muted)' }}>{c.rationale}</span>
-              </div>
-              <div className="w-20 text-right">
-                <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: `${c.color}15`, color: c.color }}>
-                  {c.weight}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </SectionCard>
 
       {/* Source mix */}
-      <SectionCard title="Deal Source Mix (Fund IV)">
-        <div className="grid grid-cols-4 gap-4">
+      <SectionCard title="Deal Source Mix (Fund IV)" meta="7 closed investments">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { source: 'Proprietary', pct: 38, deals: 3, color: '#10B981', desc: 'Direct relationships, proactive outreach' },
             { source: 'Bank Process', pct: 28, deals: 2, color: '#3B82F6', desc: 'Competitive auctions, banker-led' },
             { source: 'Relationship', pct: 22, deals: 1, color: '#8B5CF6', desc: 'Industry contacts, operating partners' },
             { source: 'Auction', pct: 12, deals: 1, color: '#F59E0B', desc: 'Broad auction processes' },
-          ].map((s) => (
-            <div key={s.source} className="text-center p-4 rounded-lg" style={{ background: `${s.color}08`, border: `1px solid ${s.color}20` }}>
-              <div className="text-2xl font-bold font-mono" style={{ color: s.color }}>{s.pct}%</div>
+          ].map((s, i) => (
+            <div
+              key={s.source}
+              className="text-center p-4 rounded-xl hover:shadow-lg transition-all animate-mr-fade-in"
+              style={{ background: `${s.color}08`, border: `1px solid ${s.color}20`, animationDelay: `${i * 80}ms` }}
+            >
+              <div className="text-2xl font-bold tabular-nums" style={{ color: s.color }}>{s.pct}%</div>
               <div className="text-sm font-bold mt-1" style={{ color: 'var(--mr-text)' }}>{s.source}</div>
-              <div className="text-xs font-mono mt-1" style={{ color: 'var(--mr-text-faint)' }}>{s.deals} investments</div>
+              <div className="text-xs tabular-nums mt-1" style={{ color: 'var(--mr-text-faint)' }}>{s.deals} investments</div>
               <div className="text-xs mt-2" style={{ color: 'var(--mr-text-muted)' }}>{s.desc}</div>
             </div>
           ))}
