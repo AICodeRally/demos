@@ -51,10 +51,8 @@ export default function StorePortfolio() {
           {REGIONS.map((r, i) => (
             <div
               key={r.name}
+              className="register-card"
               style={{
-                background: 'var(--register-bg-elevated)',
-                border: '1px solid var(--register-border)',
-                borderRadius: 12,
                 padding: '18px 20px',
                 borderTop: `3px solid ${r.color}`,
                 position: 'relative',
@@ -100,18 +98,13 @@ export default function StorePortfolio() {
       </div>
 
       {/* Format Performance Comparison */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
+      <div className="register-section" style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? 'translateY(0)' : 'translateY(12px)',
         transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
         transitionDelay: '0.3s',
       }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 20 }}>
+        <h2 className="register-section-header" style={{ marginBottom: 20 }}>
           Format Performance Comparison
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -163,10 +156,7 @@ export default function StorePortfolio() {
 
       {/* Top / Bottom Performers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          borderRadius: 12,
+        <div className="register-section" style={{
           padding: 20,
           opacity: mounted ? 1 : 0,
           transform: mounted ? 'translateY(0)' : 'translateY(12px)',
@@ -175,7 +165,7 @@ export default function StorePortfolio() {
         }}>
           <div className="flex items-center gap-2" style={{ marginBottom: 14 }}>
             <TrendingUp size={16} color="#10B981" />
-            <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Top 3 Stores</h2>
+            <h2 className="register-section-header" style={{ marginBottom: 0 }}>Top 3 Stores</h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {TOP_STORES.map((s, i) => (
@@ -219,10 +209,7 @@ export default function StorePortfolio() {
           </div>
         </div>
 
-        <div style={{
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          borderRadius: 12,
+        <div className="register-section" style={{
           padding: 20,
           opacity: mounted ? 1 : 0,
           transform: mounted ? 'translateY(0)' : 'translateY(12px)',
@@ -231,7 +218,7 @@ export default function StorePortfolio() {
         }}>
           <div className="flex items-center gap-2" style={{ marginBottom: 14 }}>
             <ArrowDown size={16} color="#EF4444" />
-            <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Bottom 3 Stores</h2>
+            <h2 className="register-section-header" style={{ marginBottom: 0 }}>Bottom 3 Stores</h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {BOTTOM_STORES.map((s, i) => (

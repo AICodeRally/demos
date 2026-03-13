@@ -59,19 +59,16 @@ export default function ProductMix() {
   return (
     <RegisterPage title="Product Mix" subtitle="Category Performance & Attach Rates" accentColor="#06B6D4">
       {/* Category Revenue Breakdown */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Sliders size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Revenue by Category
           </h2>
         </div>
@@ -129,20 +126,17 @@ export default function ProductMix() {
       </div>
 
       {/* Attach Rate by Category */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.2s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.2s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Target size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Attach Rate by Category
           </h2>
         </div>
@@ -208,18 +202,15 @@ export default function ProductMix() {
       </div>
 
       {/* Bundle Penetration */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.4s',
-      }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 8 }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.4s',
+        }}>
+        <h2 className="register-section-header" style={{ marginBottom: 8 }}>
           Bundle Penetration
         </h2>
         <p style={{ fontSize: '0.8rem', color: 'var(--register-text-muted)', marginBottom: 20 }}>

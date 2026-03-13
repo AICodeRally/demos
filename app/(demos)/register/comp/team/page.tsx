@@ -106,7 +106,7 @@ export default function TeamPerformancePage() {
     <RegisterPage title="Floor Intelligence Dashboard" subtitle="Flagship #12 -- March 2026" accentColor={ACCENT}>
 
       {/* ── Top Stat Cards ──────────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
+      <div className="register-kpi-strip" style={{ marginBottom: 28 }}>
         {[
           { label: 'Active Reps', value: '5', icon: Users, color: '#06B6D4', bg: 'rgba(6,182,212,0.1)' },
           { label: 'Avg Pace-to-Target', value: `${avgPace}%`, icon: Target, color: ACCENT, bg: 'rgba(16,185,129,0.1)' },
@@ -117,11 +117,9 @@ export default function TeamPerformancePage() {
           return (
             <div
               key={stat.label}
+              className="register-card"
               style={{
-                borderRadius: 14,
                 padding: '18px 20px',
-                background: 'var(--register-bg-elevated)',
-                border: '1px solid var(--register-border)',
                 position: 'relative',
                 overflow: 'hidden',
               }}
@@ -131,10 +129,10 @@ export default function TeamPerformancePage() {
                   <Icon size={18} color={stat.color} />
                 </div>
               </div>
-              <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--register-text-muted)', marginBottom: 6 }}>
+              <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginBottom: 6 }}>
                 {stat.label}
               </p>
-              <p style={{ fontSize: '1.6rem', fontWeight: 900, color: stat.color, fontFamily: 'monospace', margin: 0, lineHeight: 1 }}>
+              <p className="register-kpi-value" style={{ fontSize: '1.6rem', color: stat.color, margin: 0, lineHeight: 1 }}>
                 {stat.value}
               </p>
             </div>
@@ -143,18 +141,10 @@ export default function TeamPerformancePage() {
       </div>
 
       {/* ── Rep Performance Cards ───────────────────────────── */}
-      <div
-        style={{
-          borderRadius: 16,
-          overflow: 'hidden',
-          marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
+      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
         <div style={{ padding: '20px 28px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <Award size={16} color={ACCENT} />
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>Rep Performance</span>
+          <span className="register-section-header" style={{ marginBottom: 0 }}>Rep Performance</span>
           <span
             style={{
               fontSize: '0.62rem',
@@ -228,7 +218,7 @@ export default function TeamPerformancePage() {
                 {/* Revenue bar */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                       ${(rep.revenue / 1000).toFixed(1)}K
                     </span>
                     <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>
@@ -288,12 +278,12 @@ export default function TeamPerformancePage() {
 
       {/* ── Dead Zone Alert ─────────────────────────────────── */}
       <div
+        className="register-section"
         style={{
-          borderRadius: 16,
           overflow: 'hidden',
-          marginBottom: 24,
+          padding: 0,
           background: 'rgba(245,158,11,0.06)',
-          border: '1px solid rgba(245,158,11,0.25)',
+          borderColor: 'rgba(245,158,11,0.25)',
           position: 'relative',
         }}
       >
@@ -348,7 +338,7 @@ export default function TeamPerformancePage() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                   <p style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>{rep.name}</p>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 700, fontFamily: 'monospace', color: '#F59E0B' }}>{rep.revenue}</span>
+                  <span style={{ fontSize: '0.7rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#F59E0B' }}>{rep.revenue}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                   <ArrowUp size={12} color={ACCENT} />
@@ -383,29 +373,20 @@ export default function TeamPerformancePage() {
       </div>
 
       {/* ── SPIFF ROI Tracker ───────────────────────────────── */}
-      <div
-        style={{
-          borderRadius: 16,
-          overflow: 'hidden',
-          marginBottom: 24,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-        }}
-      >
+      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
         <div style={{ padding: '20px 28px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <Zap size={16} color="#8B5CF6" />
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>SPIFF ROI Tracker</span>
+          <span className="register-section-header" style={{ marginBottom: 0 }}>SPIFF ROI Tracker</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '0 28px 24px' }}>
           {SPIFF_DATA.map((spiff) => (
             <div
               key={spiff.name}
+              className="register-card"
               style={{
-                borderRadius: 14,
                 padding: '18px 16px',
                 background: 'var(--register-bg-surface)',
-                border: '1px solid var(--register-border)',
                 position: 'relative',
                 overflow: 'hidden',
               }}
@@ -418,7 +399,7 @@ export default function TeamPerformancePage() {
               </p>
 
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 12 }}>
-                <span style={{ fontSize: '1.8rem', fontWeight: 900, fontFamily: 'monospace', color: spiff.color, lineHeight: 1 }}>
+                <span className="register-kpi-value" style={{ fontSize: '1.8rem', fontWeight: 900, color: spiff.color, lineHeight: 1 }}>
                   {spiff.roi}x
                 </span>
                 <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>ROI</span>
@@ -426,19 +407,19 @@ export default function TeamPerformancePage() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Triggered</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                   {spiff.triggered}x
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Spend</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: '#EF4444' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#EF4444' }}>
                   ${spiff.spend.toLocaleString()}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Revenue</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontFamily: 'monospace', color: ACCENT }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ACCENT }}>
                   ${spiff.revenue.toLocaleString()}
                 </span>
               </div>

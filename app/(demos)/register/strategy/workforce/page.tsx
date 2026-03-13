@@ -71,10 +71,8 @@ export default function WorkforceModel() {
         ].map((s, i) => (
           <div
             key={s.label}
+            className="register-card"
             style={{
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
-              borderRadius: 10,
               padding: '16px 20px',
               textAlign: 'center',
               borderTop: `3px solid ${s.color}`,
@@ -84,27 +82,24 @@ export default function WorkforceModel() {
               transitionDelay: `${i * 0.08}s`,
             }}
           >
-            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--register-text)' }}>{s.value}</div>
+            <div className="register-kpi-value">{s.value}</div>
             <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2 }}>{s.label}</div>
           </div>
         ))}
       </div>
 
       {/* Headcount by Format */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.15s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.15s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <Users size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Headcount by Format
           </h2>
         </div>
@@ -151,10 +146,10 @@ export default function WorkforceModel() {
                 background: `radial-gradient(circle at top right, ${f.color}10, transparent 70%)`,
                 pointerEvents: 'none',
               }} />
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <div className="register-meta-label">
                 {f.format}
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 6 }}>
+              <div className="register-kpi-value" style={{ marginTop: 6 }}>
                 {f.avgReps}
                 <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--register-text-muted)', marginLeft: 4 }}>avg reps</span>
               </div>
@@ -178,20 +173,17 @@ export default function WorkforceModel() {
       </div>
 
       {/* Rep-to-Traffic Ratio Analysis */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.3s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.3s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 4 }}>
           <BarChart3 size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Rep-to-Traffic Ratio Analysis</h2>
+          <h2 className="register-section-header" style={{ margin: 0 }}>Rep-to-Traffic Ratio Analysis</h2>
         </div>
         <p style={{ fontSize: '0.8rem', color: 'var(--register-text-muted)', margin: '4px 0 16px' }}>Monthly walk-ins per sales rep</p>
 
@@ -223,11 +215,11 @@ export default function WorkforceModel() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Peak</span>
+                    <span className="register-meta-label">Peak</span>
                     <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginLeft: 6 }}>{t.peakRatio}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Off-Peak</span>
+                    <span className="register-meta-label">Off-Peak</span>
                     <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--register-text-muted)', marginLeft: 6 }}>{t.offPeakRatio}</span>
                   </div>
                 </div>
@@ -238,19 +230,17 @@ export default function WorkforceModel() {
       </div>
 
       {/* Turnover Metrics */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.45s',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.45s',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
           <ArrowDown size={16} color="#EF4444" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Turnover Metrics
           </h2>
         </div>

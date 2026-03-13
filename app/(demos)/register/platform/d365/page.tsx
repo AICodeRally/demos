@@ -278,10 +278,8 @@ export default function D365IntegrationPage() {
           {DETAILS.map((col, colIdx) => (
             <div
               key={col.title}
+              className="register-card"
               style={{
-                borderRadius: 14,
-                border: '1px solid var(--register-border)',
-                backgroundColor: 'var(--register-bg-surface)',
                 overflow: 'hidden',
                 opacity: 0,
                 animation: `fadeInUp 0.5s ${0.1 + colIdx * 0.15}s forwards`,
@@ -322,7 +320,7 @@ export default function D365IntegrationPage() {
                       borderRadius: 8,
                       backgroundColor: 'var(--register-bg-elevated)',
                       fontSize: '0.6rem',
-                      fontFamily: 'monospace',
+                      fontVariantNumeric: 'tabular-nums',
                       color: 'var(--register-text-muted)',
                       lineHeight: 1.5,
                       overflowX: 'auto',
@@ -347,7 +345,7 @@ export default function D365IntegrationPage() {
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#10B981', animation: 'pulseGlow 2s ease-in-out infinite' }} />
-            <span style={{ fontSize: '0.6rem', fontWeight: 600, color: '#10B981', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Live</span>
+            <span className="register-meta-label" style={{ color: '#10B981' }}>Live</span>
           </div>
         </div>
         <p style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', marginBottom: 12 }}>
@@ -355,12 +353,8 @@ export default function D365IntegrationPage() {
         </p>
 
         <div
-          style={{
-            borderRadius: 14,
-            border: '1px solid var(--register-border)',
-            backgroundColor: 'var(--register-bg-surface)',
-            overflow: 'hidden',
-          }}
+          className="register-card"
+          style={{ overflow: 'hidden' }}
         >
           {/* Header row */}
           <div
@@ -374,7 +368,7 @@ export default function D365IntegrationPage() {
             }}
           >
             {['Time', 'Event', 'Description', 'Status'].map((h) => (
-              <span key={h} style={{ fontSize: '0.6rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span key={h} className="register-meta-label">
                 {h}
               </span>
             ))}
@@ -403,7 +397,7 @@ export default function D365IntegrationPage() {
                   }}
                 >
                   {/* Time */}
-                  <span style={{ fontSize: '0.7rem', fontFamily: 'monospace', color: 'var(--register-text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ fontSize: '0.7rem', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
                     <Clock size={11} color="var(--register-text-dim)" />
                     {timeStr}
                   </span>

@@ -56,12 +56,8 @@ export default function BrandPartners() {
   return (
     <RegisterPage title="Brand Partners" subtitle="Manufacturing & Distribution Partners" accentColor="#1E3A5F">
       {/* Revenue share bar */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
+      <div className="register-section" style={{
         padding: '16px 24px',
-        marginBottom: 20,
         opacity: mounted ? 1 : 0,
         transform: mounted ? 'translateY(0)' : 'translateY(8px)',
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -102,10 +98,8 @@ export default function BrandPartners() {
         {PARTNERS.map((p, i) => (
           <div
             key={p.name}
+            className="register-card"
             style={{
-              background: 'var(--register-bg-elevated)',
-              border: '1px solid var(--register-border)',
-              borderRadius: 12,
               padding: 24,
               borderTop: `3px solid ${p.tierColor}`,
               position: 'relative',
@@ -153,7 +147,7 @@ export default function BrandPartners() {
             {/* Metrics Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <div style={{ background: 'var(--register-bg-surface)', borderRadius: 8, padding: '10px 14px', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <div className="register-meta-label">
                   % of Revenue
                 </div>
                 <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 2 }}>
@@ -172,7 +166,7 @@ export default function BrandPartners() {
                 </div>
               </div>
               <div style={{ background: 'var(--register-bg-surface)', borderRadius: 8, padding: '10px 14px' }}>
-                <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <div className="register-meta-label">
                   Margin Profile
                 </div>
                 <div className="flex items-center gap-1" style={{ marginTop: 4 }}>

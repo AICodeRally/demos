@@ -213,13 +213,8 @@ export default function ManagerConsole() {
 
       {/* Store status bar */}
       <div
-        style={{
-          display: 'flex', alignItems: 'center', gap: 24,
-          padding: '14px 20px', borderRadius: 12,
-          background: 'var(--register-bg-elevated)',
-          border: '1px solid var(--register-border)',
-          marginBottom: 20,
-        }}
+        className="register-section"
+        style={{ display: 'flex', alignItems: 'center', gap: 24, padding: '14px 20px', marginBottom: 20 }}
       >
         {[
           { label: "Today's Revenue", value: '$47,200', color: 'var(--register-text)' },
@@ -230,10 +225,10 @@ export default function ManagerConsole() {
           <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
             {i > 0 && <div style={{ width: 1, height: 32, background: 'var(--register-border)' }} />}
             <div>
-              <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-dim)', margin: 0 }}>
+              <p className="register-meta-label" style={{ margin: 0 }}>
                 {stat.label}
               </p>
-              <p style={{ fontSize: '1rem', fontWeight: 700, fontFamily: 'monospace', color: stat.color, margin: '2px 0 0' }}>
+              <p style={{ fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: stat.color, margin: '2px 0 0' }}>
                 {stat.value}
               </p>
             </div>
@@ -243,7 +238,7 @@ export default function ManagerConsole() {
 
       {/* Rep Cards */}
       <div style={{ marginBottom: 24 }}>
-        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 12 }}>
+        <p className="register-section-header" style={{ marginBottom: 12 }}>
           Floor Team
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
@@ -253,12 +248,8 @@ export default function ManagerConsole() {
             return (
               <div
                 key={rep.id}
-                style={{
-                  position: 'relative',
-                  padding: 14, borderRadius: 12,
-                  background: 'var(--register-bg-elevated)',
-                  border: `1px solid var(--register-border)`,
-                }}
+                className="register-card"
+                style={{ position: 'relative', padding: 14 }}
               >
                 <Link
                   href={`/register/ops/manager/coaching/${rep.id}`}

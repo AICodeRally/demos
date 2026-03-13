@@ -58,19 +58,16 @@ export default function StoreTargets() {
   return (
     <RegisterPage title="Store Targets" subtitle="FY26 Target Allocation" accentColor="#06B6D4">
       {/* Target Allocation by Format */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}>
         <div className="flex items-center gap-2" style={{ marginBottom: 20 }}>
           <Target size={16} color="#06B6D4" />
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ margin: 0 }}>
             Target Allocation by Format (per store/month)
           </h2>
         </div>
@@ -96,10 +93,10 @@ export default function StoreTargets() {
                 background: `radial-gradient(circle at top right, ${f.color}10, transparent 70%)`,
                 pointerEvents: 'none',
               }} />
-              <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <div className="register-meta-label">
                 {f.format} ({f.stores} stores)
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--register-text)', marginTop: 6 }}>
+              <div className="register-kpi-value" style={{ marginTop: 6 }}>
                 {f.target}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2 }}>
@@ -111,18 +108,15 @@ export default function StoreTargets() {
       </div>
 
       {/* Current vs Target Progress Bars */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        marginBottom: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.2s',
-      }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 20 }}>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.2s',
+        }}>
+        <h2 className="register-section-header" style={{ marginBottom: 20 }}>
           Current vs. Target (MTD)
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
@@ -179,17 +173,15 @@ export default function StoreTargets() {
       </div>
 
       {/* Variance Analysis */}
-      <div style={{
-        background: 'var(--register-bg-elevated)',
-        border: '1px solid var(--register-border)',
-        borderRadius: 12,
-        padding: 24,
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        transitionDelay: '0.4s',
-      }}>
-        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 16 }}>Variance Analysis</h2>
+      <div
+        className="register-section"
+        style={{
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          transitionDelay: '0.4s',
+        }}>
+        <h2 className="register-section-header">Variance Analysis</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {VARIANCE.map((v, i) => (
             <div

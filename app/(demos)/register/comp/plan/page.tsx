@@ -169,12 +169,9 @@ export default function CompPlanPage() {
       </div>
 
       {/* ── Animated Tier Staircase ──────────────────────────── */}
-      <div
-        className="rounded-xl p-6 mb-8"
-        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
-      >
+      <div className="register-section">
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--register-text)', margin: 0 }}>
+          <h2 className="register-section-header" style={{ marginBottom: 0 }}>
             Tier Staircase
           </h2>
           <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
@@ -221,7 +218,7 @@ export default function CompPlanPage() {
 
                   {/* Threshold & rate */}
                   <div style={{ width: 140, flexShrink: 0 }}>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', fontFamily: 'monospace' }}>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
                       {tier.maxRevenue === Infinity
                         ? `$${(tier.minRevenue / 1000).toFixed(0)}K+`
                         : `$${(tier.minRevenue / 1000).toFixed(0)}K - $${(tier.maxRevenue / 1000).toFixed(0)}K`}
@@ -342,11 +339,11 @@ export default function CompPlanPage() {
         {COMPONENT_PAYOUTS.map((comp) => (
           <div
             key={comp.name}
-            className="rounded-xl p-4"
-            style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+            className="register-card"
+            style={{ padding: '16px' }}
           >
             <div className="flex items-center justify-between mb-2">
-              <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <span className="register-meta-label" style={{ color: 'var(--register-text-muted)' }}>
                 {comp.name}
               </span>
               <div className="flex items-center gap-1">
@@ -360,7 +357,7 @@ export default function CompPlanPage() {
                 </span>
               </div>
             </div>
-            <p style={{ fontSize: '1.25rem', fontWeight: 800, color: comp.color, margin: '0 0 8px', fontFamily: 'monospace' }}>
+            <p className="register-kpi-value" style={{ fontSize: '1.25rem', color: comp.color, margin: '0 0 8px' }}>
               ${comp.payout.toLocaleString()}
             </p>
             <MiniSparkBar data={comp.sparkline} color={comp.color} />
