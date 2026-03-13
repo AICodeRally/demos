@@ -1,7 +1,4 @@
 import Link from 'next/link';
-import manifest from '../data/services-manifest.json';
-import { playgrounds } from '../components/api-explorer/playgrounds';
-import { GatewayHealth } from '../components/api-explorer/GatewayHealth';
 
 const productDemos = [
   {
@@ -69,25 +66,6 @@ const productDemos = [
   },
 ];
 
-// Service categories with a teal/cyan color scheme to contrast with orange product demos
-const SERVICE_COLOR = '#06b6d4';
-
-const serviceCategoryOrder = [
-  'AI & Intelligence',
-  'Core Platform',
-  'Domain Services',
-  'Infrastructure',
-];
-
-function getServicesByCategory() {
-  const grouped: Record<string, typeof manifest.services> = {};
-  for (const svc of manifest.services) {
-    const cat = svc.category || 'Other';
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push(svc);
-  }
-  return grouped;
-}
 
 function DemoCard({ demo }: { demo: typeof productDemos[0] }) {
   return (
@@ -142,9 +120,6 @@ function DemoCard({ demo }: { demo: typeof productDemos[0] }) {
 }
 
 export default function PortfolioPage() {
-  const byCategory = getServicesByCategory();
-  const totalRpcs = manifest.services.reduce((sum, s) => sum + (s.rpcs?.length ?? 0), 0);
-
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       {/* Hero */}
@@ -171,7 +146,7 @@ export default function PortfolioPage() {
             Showcase
           </h1>
           <p className="mx-auto max-w-2xl text-xl text-[#ccc] font-light leading-relaxed sm:text-2xl">
-            Product demos &amp; API explorer &mdash; click any card to launch
+            Product demos &mdash; click any card to launch
           </p>
           <div
             className="mx-auto mt-8 h-[1px] w-64"
@@ -202,76 +177,6 @@ export default function PortfolioPage() {
               <DemoCard key={demo.slug} demo={demo} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ API Explorer ═══════════════ */}
-      <section id="api-explorer" className="px-6 pb-16 pt-4 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-8 flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#06b6d4] to-[#0891b2]">
-              <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
-              </svg>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-white">API Explorer</h2>
-              <div className="flex items-center gap-3">
-                <p className="text-sm text-[#888]">{manifest.services.length} microservices &middot; {totalRpcs} RPCs &middot; gRPC + REST</p>
-                <GatewayHealth />
-              </div>
-            </div>
-          </div>
-
-          {serviceCategoryOrder.map((category) => {
-            const services = byCategory[category];
-            if (!services?.length) return null;
-            return (
-              <div key={category} className="mb-10">
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#06b6d4]">
-                  {category}
-                </h3>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {services.map((svc) => (
-                    <Link
-                      key={svc.slug}
-                      href={`/api-explorer/${svc.slug}`}
-                      className="group overflow-hidden rounded-xl border border-[#1a2a2e] bg-[#0d1517] transition-all duration-300 hover:border-[#06b6d4]/40 hover:bg-[#0f1a1d]"
-                    >
-                      <div className="p-5">
-                        <div className="mb-3 flex items-center justify-between">
-                          <h4 className="text-lg font-bold text-white group-hover:text-[#06b6d4] transition-colors">
-                            {svc.name.replace('Service', '')}
-                          </h4>
-                          <span className="rounded-full bg-[#06b6d4]/10 px-2.5 py-0.5 text-xs font-mono text-[#06b6d4]">
-                            :{svc.port}
-                          </span>
-                        </div>
-                        <p className="mb-3 text-sm text-[#888] leading-relaxed">
-                          {svc.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-[#555]">
-                            {svc.rpcs?.length ?? 0} RPCs
-                          </span>
-                          <div className="flex items-center gap-2">
-                            {playgrounds[svc.slug] && (
-                              <span className="rounded bg-[#06b6d4]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#06b6d4]">
-                                Playground
-                              </span>
-                            )}
-                            <span className="text-xs text-[#06b6d4] opacity-0 transition-opacity group-hover:opacity-100">
-                              Explore &rarr;
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
         </div>
       </section>
 
