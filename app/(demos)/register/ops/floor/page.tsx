@@ -14,241 +14,239 @@ const STATUS_DOT: Record<string, string> = {
 /* ── Floor Plan Data ─────────────────────────────────────── */
 
 const ZONES = [
-  { id: 'king-prem', label: 'King\nPremium', x: 4, y: 12, w: 22, h: 30 },
-  { id: 'queen-val', label: 'Queen\nValue', x: 30, y: 12, w: 22, h: 30 },
-  { id: 'adj-bases', label: 'Adjustable\nBases', x: 56, y: 12, w: 22, h: 30 },
-  { id: 'accessories', label: 'Accessories', x: 82, y: 12, w: 14, h: 30 },
-  { id: 'kids-twin', label: 'Kids &\nTwin', x: 4, y: 52, w: 22, h: 24 },
-  { id: 'outlet', label: 'Outlet\nCorner', x: 30, y: 52, w: 22, h: 24 },
-  { id: 'lounge', label: 'Sleep\nLounge', x: 56, y: 52, w: 22, h: 24 },
-  { id: 'checkout', label: 'Checkout', x: 82, y: 52, w: 14, h: 24 },
+  { id: 'king-prem', label: 'King Premium', x: 4, y: 14, w: 22, h: 28, accent: '#8B5CF6' },
+  { id: 'queen-val', label: 'Queen Value', x: 30, y: 14, w: 22, h: 28, accent: '#8B5CF6' },
+  { id: 'adj-bases', label: 'Adjustable Bases', x: 56, y: 14, w: 22, h: 28, accent: '#8B5CF6' },
+  { id: 'accessories', label: 'Accessories', x: 82, y: 14, w: 14, h: 28, accent: '#F59E0B' },
+  { id: 'kids-twin', label: 'Kids & Twin', x: 4, y: 50, w: 22, h: 24, accent: '#8B5CF6' },
+  { id: 'outlet', label: 'Outlet Corner', x: 30, y: 50, w: 22, h: 24, accent: '#8B5CF6' },
+  { id: 'lounge', label: 'Sleep Lounge', x: 56, y: 50, w: 22, h: 24, accent: '#06B6D4' },
+  { id: 'checkout', label: 'Checkout', x: 82, y: 50, w: 14, h: 24, accent: '#06B6D4' },
 ];
 
 const REP_DOTS = [
-  { name: 'Sarah', color: '#10B981', x: 18, y: 25 },
-  { name: 'Marcus', color: '#F59E0B', x: 62, y: 24 },
-  { name: 'Casey', color: '#EF4444', x: 40, y: 60 },
+  { name: 'Sarah K.', color: '#10B981', x: 15, y: 26 },
+  { name: 'Marcus T.', color: '#F59E0B', x: 64, y: 26 },
+  { name: 'Casey M.', color: '#EF4444', x: 40, y: 60 },
 ];
 
 const CUSTOMER_DOTS = [
-  { x: 12, y: 20 },
-  { x: 65, y: 30 },
-  { x: 36, y: 56 },
-];
-
-const ARROWS = [
-  { x: 50, y: 4, char: '\u2193', rotate: 0 },
-  { x: 26, y: 44, char: '\u2192', rotate: 0 },
-  { x: 52, y: 44, char: '\u2192', rotate: 0 },
-  { x: 78, y: 44, char: '\u2193', rotate: 0 },
+  { x: 10, y: 22, zone: 'King Premium' },
+  { x: 68, y: 32, zone: 'Adj. Bases' },
+  { x: 34, y: 56, zone: 'Outlet' },
+  { x: 88, y: 56, zone: 'Checkout' },
 ];
 
 /* ── Floor Plan Component ───────────────────────────────── */
 
 function StoreFloorPlan() {
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: 300,
-        borderRadius: 14,
-        background: 'var(--register-bg-surface)',
-        border: '1px solid var(--register-border)',
-        overflow: 'hidden',
-        marginBottom: 24,
-        backgroundImage:
-          'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
-        backgroundSize: '20px 20px',
-      }}
-    >
+    <div className="register-section" style={{ padding: 0, overflow: 'hidden', position: 'relative' }}>
       {/* Title bar */}
       <div
         style={{
-          position: 'absolute', top: 0, left: 0, right: 0,
-          padding: '6px 14px',
-          background: 'rgba(0,0,0,0.3)',
+          padding: '10px 18px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          zIndex: 10,
+          borderBottom: '1px solid var(--register-border)',
+          background: 'var(--register-bg-surface)',
         }}
       >
-        <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)' }}>
+        <span className="register-meta-label" style={{ margin: 0 }}>
           Store Floor Plan — Flagship #12
         </span>
-        <span style={{ fontSize: '0.55rem', color: 'var(--register-text-dim)' }}>
-          Live &bull; 3 reps on floor
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span className="floor-live-dot" style={{
+            width: 6, height: 6, borderRadius: '50%', background: '#10B981',
+            display: 'inline-block',
+          }} />
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>
+            Live — 3 reps, 4 customers
+          </span>
+        </div>
       </div>
 
-      {/* Entrance door */}
+      {/* Floor area */}
       <div
         style={{
-          position: 'absolute',
-          top: 0, left: '44%', width: '12%', height: 8,
-          background: 'linear-gradient(180deg, #06B6D4, #06B6D480)',
-          borderRadius: '0 0 4px 4px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 5,
+          position: 'relative',
+          width: '100%',
+          height: 380,
+          background: 'var(--register-bg-surface)',
+          backgroundImage:
+            'linear-gradient(var(--register-border) 1px, transparent 1px), linear-gradient(90deg, var(--register-border) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          backgroundPosition: '12px 12px',
         }}
       >
-        <span style={{ fontSize: '0.5rem', fontWeight: 700, color: '#0F0E1A', letterSpacing: '0.08em' }}>ENTRANCE</span>
-      </div>
-
-      {/* Store boundary walls */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '3%', left: '2%', right: '2%', bottom: '3%',
-          border: '2px solid var(--register-border)',
-          borderRadius: 8,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Bed zones */}
-      {ZONES.map((zone) => (
+        {/* Entrance indicator */}
         <div
-          key={zone.id}
           style={{
             position: 'absolute',
-            left: `${zone.x}%`,
-            top: `${zone.y}%`,
-            width: `${zone.w}%`,
-            height: `${zone.h}%`,
-            background: zone.id === 'checkout'
-              ? 'rgba(6,182,212,0.08)'
-              : 'rgba(139,92,246,0.06)',
-            border: zone.id === 'checkout'
-              ? '1px dashed rgba(6,182,212,0.3)'
-              : '1px dashed rgba(139,92,246,0.2)',
-            borderRadius: 8,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 4,
-          }}
-        >
-          <span
-            style={{
-              fontSize: '0.6rem',
-              fontWeight: 600,
-              color: 'var(--register-text-dim)',
-              textAlign: 'center',
-              whiteSpace: 'pre-line',
-              lineHeight: 1.3,
-            }}
-          >
-            {zone.label}
-          </span>
-        </div>
-      ))}
-
-      {/* Traffic flow arrows */}
-      {ARROWS.map((arrow, i) => (
-        <span
-          key={i}
-          style={{
-            position: 'absolute',
-            left: `${arrow.x}%`,
-            top: `${arrow.y}%`,
-            fontSize: '1rem',
-            color: 'rgba(6,182,212,0.25)',
-            transform: `translate(-50%, -50%)`,
-            pointerEvents: 'none',
-          }}
-        >
-          {arrow.char}
-        </span>
-      ))}
-
-      {/* Rep dots with pulsing animation */}
-      {REP_DOTS.map((rep) => (
-        <div
-          key={rep.name}
-          style={{
-            position: 'absolute',
-            left: `${rep.x}%`,
-            top: `${rep.y}%`,
-            transform: 'translate(-50%, -50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-            zIndex: 8,
-          }}
-        >
-          <div
-            className="floor-rep-pulse"
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: '50%',
-              background: rep.color,
-              boxShadow: `0 0 8px ${rep.color}80`,
-              border: '2px solid rgba(255,255,255,0.3)',
-            }}
-          />
-          <span
-            style={{
-              fontSize: '0.55rem',
-              fontWeight: 700,
-              color: rep.color,
-              textShadow: '0 1px 3px rgba(0,0,0,0.6)',
-            }}
-          >
-            {rep.name}
-          </span>
-        </div>
-      ))}
-
-      {/* Customer dots */}
-      {CUSTOMER_DOTS.map((cust, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: `${cust.x}%`,
-            top: `${cust.y}%`,
-            transform: 'translate(-50%, -50%)',
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            background: 'rgba(148,163,184,0.5)',
-            border: '1px solid rgba(148,163,184,0.3)',
-            zIndex: 7,
+            top: 0, left: '40%', width: '20%', height: 6,
+            background: 'linear-gradient(90deg, transparent, var(--register-accent), transparent)',
+            borderRadius: '0 0 6px 6px',
+            zIndex: 5,
           }}
         />
-      ))}
+        <div
+          style={{
+            position: 'absolute',
+            top: 8, left: '50%', transform: 'translateX(-50%)',
+            fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em',
+            color: 'var(--register-accent)',
+            zIndex: 5,
+          }}
+        >
+          ENTRANCE
+        </div>
 
-      {/* Legend */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 6, right: 10,
-          display: 'flex', gap: 12, alignItems: 'center',
-          zIndex: 10,
-        }}
-      >
-        {REP_DOTS.map((r) => (
-          <div key={r.name} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: r.color, display: 'inline-block' }} />
-            <span style={{ fontSize: '0.5rem', color: 'var(--register-text-dim)' }}>{r.name}</span>
+        {/* Bed zones */}
+        {ZONES.map((zone) => (
+          <div
+            key={zone.id}
+            style={{
+              position: 'absolute',
+              left: `${zone.x}%`,
+              top: `${zone.y}%`,
+              width: `${zone.w}%`,
+              height: `${zone.h}%`,
+              background: `${zone.accent}08`,
+              border: `1px dashed ${zone.accent}30`,
+              borderRadius: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 8,
+            }}
+          >
+            <span
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                color: 'var(--register-text-dim)',
+                textAlign: 'center',
+                lineHeight: 1.4,
+              }}
+            >
+              {zone.label}
+            </span>
           </div>
         ))}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(148,163,184,0.5)', display: 'inline-block' }} />
-          <span style={{ fontSize: '0.5rem', color: 'var(--register-text-dim)' }}>Customer</span>
+
+        {/* Rep dots with pulsing animation */}
+        {REP_DOTS.map((rep) => (
+          <div
+            key={rep.name}
+            style={{
+              position: 'absolute',
+              left: `${rep.x}%`,
+              top: `${rep.y}%`,
+              transform: 'translate(-50%, -50%)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+              zIndex: 8,
+            }}
+          >
+            <div
+              className="floor-rep-pulse"
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: '50%',
+                background: rep.color,
+                boxShadow: `0 0 12px ${rep.color}60`,
+                border: '2px solid var(--register-bg-elevated)',
+              }}
+            />
+            <span
+              style={{
+                fontSize: '0.65rem',
+                fontWeight: 700,
+                color: rep.color,
+                background: 'var(--register-bg-elevated)',
+                padding: '1px 6px',
+                borderRadius: 4,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {rep.name}
+            </span>
+          </div>
+        ))}
+
+        {/* Customer dots — larger with subtle ring */}
+        {CUSTOMER_DOTS.map((cust, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: `${cust.x}%`,
+              top: `${cust.y}%`,
+              transform: 'translate(-50%, -50%)',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              background: 'var(--register-text-dim)',
+              border: '2px solid var(--register-bg-elevated)',
+              opacity: 0.6,
+              zIndex: 7,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Legend bar */}
+      <div
+        style={{
+          padding: '10px 18px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          borderTop: '1px solid var(--register-border)',
+          background: 'var(--register-bg-surface)',
+          flexWrap: 'wrap',
+          gap: 8,
+        }}
+      >
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          {REP_DOTS.map((r) => (
+            <div key={r.name} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: r.color, display: 'inline-block', boxShadow: `0 0 4px ${r.color}40` }} />
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>{r.name}</span>
+            </div>
+          ))}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--register-text-dim)', display: 'inline-block', opacity: 0.6 }} />
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>Customer</span>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 16, height: 1, background: '#8B5CF620', borderTop: '1px dashed #8B5CF640', display: 'inline-block' }} />
+            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>Bed zone</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 16, height: 1, background: '#06B6D420', borderTop: '1px dashed #06B6D440', display: 'inline-block' }} />
+            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>Service</span>
+          </div>
         </div>
       </div>
 
-      {/* Pulsing animation style */}
+      {/* Pulsing animation */}
       <style>{`
         @keyframes repPulse {
           0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.3); opacity: 0.7; }
+          50% { transform: scale(1.2); opacity: 0.8; }
         }
         .floor-rep-pulse {
-          animation: repPulse 2s ease-in-out infinite;
+          animation: repPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes liveDot {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        .floor-live-dot {
+          animation: liveDot 2s ease-in-out infinite;
         }
       `}</style>
     </div>
