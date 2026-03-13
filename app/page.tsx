@@ -64,6 +64,13 @@ const productDemos = [
     tagline: 'Quota planning and attainment for the modern CRO',
     color: '#f59e0b',
   },
+  {
+    name: 'MERIDIAN',
+    slug: 'meridian',
+    industry: 'Private Equity',
+    tagline: 'Carried interest compensation and fund waterfall for M&A-focused PE firms',
+    color: '#D4A847',
+  },
 ];
 
 
