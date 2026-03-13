@@ -1,398 +1,223 @@
 'use client';
 
-import { useState } from 'react';
-import { FormatSelector, StatCard, BarChart, WaterfallChart, HeatMap } from '@/components/demos/register';
-import { COMP_PLANS, type FormatId } from '@/data/register/store-data';
+import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { COMP_TIERS, SPIFF_CALENDAR } from '@/data/register/comp-data';
 
-/* ── Tier definitions by format ──────────────────────────── */
+const ACCENT = '#10B981';
 
-const TIERS: Record<FormatId, { label: string; range: string; rate: string; pct: number }[]> = {
-  flagship: [
-    { label: 'Tier 1', range: '$0 – $50K', rate: '3%', pct: 3 },
-    { label: 'Tier 2', range: '$50K – $100K', rate: '4%', pct: 4 },
-    { label: 'Tier 3', range: '$100K – $150K', rate: '5%', pct: 5 },
-    { label: 'Tier 4', range: '$150K+', rate: '6%', pct: 6 },
-  ],
-  standard: [
-    { label: 'Tier 1', range: '$0 – $40K', rate: '2.5%', pct: 2.5 },
-    { label: 'Tier 2', range: '$40K – $80K', rate: '3.5%', pct: 3.5 },
-    { label: 'Tier 3', range: '$80K – $120K', rate: '4.5%', pct: 4.5 },
-    { label: 'Tier 4', range: '$120K+', rate: '5%', pct: 5 },
-  ],
-  outlet: [
-    { label: 'Flat', range: 'All sales', rate: '1.5%', pct: 1.5 },
-  ],
-  'shop-in-shop': [],
-};
-
-/* ── Estimated annual earnings ───────────────────────────── */
-
-const ANNUAL_EARNINGS = [
-  { label: 'Flagship', value: 72, color: '#1E3A5F' },
-  { label: 'Standard', value: 52, color: '#06B6D4' },
-  { label: 'Outlet', value: 42, color: '#8B5CF6' },
-  { label: 'Shop-in-Shop', value: 38, color: '#10B981' },
+const ACCELERATOR_RULES = [
+  { metric: 'Attach Rate', threshold: '> 35%', multiplier: '1.15x', description: '15% bonus on all commission when accessory attach rate exceeds 35%' },
+  { metric: 'Financing Penetration', threshold: '> 70%', multiplier: '1.10x', description: '10% bonus when financing penetration exceeds 70%' },
+  { metric: 'Bundle Completion', threshold: '> 25%', multiplier: '1.05x', description: '5% bonus when 25%+ of mattress sales include adjustable base' },
 ];
 
-/* ── Waterfall comp buildup by format ────────────────────── */
-
-const WATERFALL: Record<FormatId, { label: string; value: number; type: 'add' | 'subtract' | 'total' }[]> = {
-  flagship: [
-    { label: 'Base Pay', value: 37440, type: 'add' },
-    { label: 'Commission', value: 22800, type: 'add' },
-    { label: 'SPIFFs', value: 6200, type: 'add' },
-    { label: 'Accelerators', value: 5560, type: 'add' },
-    { label: 'Total OTE', value: 0, type: 'total' },
-  ],
-  standard: [
-    { label: 'Base Pay', value: 31200, type: 'add' },
-    { label: 'Commission', value: 14800, type: 'add' },
-    { label: 'SPIFFs', value: 4200, type: 'add' },
-    { label: 'Accelerators', value: 1800, type: 'add' },
-    { label: 'Total OTE', value: 0, type: 'total' },
-  ],
-  outlet: [
-    { label: 'Base Pay', value: 29120, type: 'add' },
-    { label: 'Commission', value: 4680, type: 'add' },
-    { label: 'Volume Bonus', value: 8200, type: 'add' },
-    { label: 'Total OTE', value: 0, type: 'total' },
-  ],
-  'shop-in-shop': [
-    { label: 'Base Pay', value: 33280, type: 'add' },
-    { label: 'SPIFF Only', value: 4720, type: 'add' },
-    { label: 'Total OTE', value: 0, type: 'total' },
-  ],
-};
-
-/* ── HeatMap: % of reps in earnings bracket ──────────────── */
-
-const BRACKET_ROWS = ['Flagship', 'Standard', 'Outlet', 'Shop-in-Shop'];
-const BRACKET_COLS = ['$30-40K', '$40-50K', '$50-60K', '$60-70K', '$70K+'];
-const BRACKET_DATA = [
-  [5, 12, 25, 35, 23],   // Flagship
-  [10, 30, 38, 18, 4],   // Standard
-  [22, 42, 28, 8, 0],    // Outlet
-  [35, 45, 18, 2, 0],    // SiS
-];
-
-/* ── Comp plan card config ───────────────────────────────── */
-
-const PLAN_DETAILS: Record<FormatId, { title: string; desc: string; icon: string }> = {
-  flagship: { title: 'Flagship', desc: 'Base $18/hr + 3-6% tiered commission + accelerators above quota', icon: 'F' },
-  standard: { title: 'Standard', desc: 'Base $15/hr + 2.5-5% tiered commission', icon: 'S' },
-  outlet: { title: 'Outlet', desc: 'Base $14/hr + 1.5% flat rate + $200/wk volume bonus above 15 units', icon: 'O' },
-  'shop-in-shop': { title: 'Shop-in-Shop', desc: 'Base $16/hr + $25/mattress SPIFF only', icon: 'Si' },
-};
-
-export default function CompPlan() {
-  const [format, setFormat] = useState<string>('flagship');
-  const fmt = format as FormatId;
-  const tiers = TIERS[fmt];
+export default function CompPlanPage() {
+  const now = new Date();
+  const activeSpiffs = SPIFF_CALENDAR.filter((s) => s.active);
+  const upcomingSpiffs = SPIFF_CALENDAR.filter((s) => !s.active && new Date(s.startDate) > now);
+  const pastSpiffs = SPIFF_CALENDAR.filter((s) => !s.active && new Date(s.endDate) < now);
 
   return (
-    <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Comp Plan Design</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
-          Commission structures, tier staircase visualization, and earnings analysis by format
-        </p>
+    <RegisterPage title="Compensation Plan" subtitle="FY26 Floor Sales Plan" accentColor={ACCENT}>
+      {/* Plan Metadata */}
+      <div className="flex flex-wrap items-center gap-3 mb-8">
+        <span
+          className="px-4 py-2 rounded-lg text-sm font-semibold"
+          style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', color: 'var(--register-text-muted)' }}
+        >
+          Version 3.2
+        </span>
+        <span
+          className="px-4 py-2 rounded-lg text-sm font-semibold"
+          style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', color: 'var(--register-text-muted)' }}
+        >
+          Effective: Jan 1 – Dec 31, 2026
+        </span>
+        <span
+          className="px-4 py-2 rounded-lg text-sm font-semibold"
+          style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: ACCENT }}
+        >
+          170 Reps Enrolled
+        </span>
+        <span
+          className="px-4 py-2 rounded-lg text-sm font-semibold"
+          style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: ACCENT }}
+        >
+          Active
+        </span>
       </div>
 
-      <FormatSelector selected={format} onSelect={setFormat} />
+      {/* Tier Visualization */}
+      <div
+        className="rounded-xl p-6 mb-8"
+        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+      >
+        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
+          Commission Tiers
+        </h2>
 
-      {/* Comp Plan Summary Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {(Object.keys(PLAN_DETAILS) as FormatId[]).map((fid) => {
-          const plan = PLAN_DETAILS[fid];
-          const comp = COMP_PLANS[fid];
-          const isActive = fid === fmt;
-          return (
-            <div
-              key={fid}
-              className="rounded-xl border p-4 transition-all"
-              style={{
-                backgroundColor: isActive ? '#F0FDF4' : '#FFFFFF',
-                borderColor: isActive ? '#10B981' : '#E2E8F0',
-                borderWidth: isActive ? 2 : 1,
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className="flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-bold text-white"
-                  style={{ backgroundColor: isActive ? '#10B981' : '#94A3B8' }}
-                >
-                  {plan.icon}
-                </span>
-                <span className="text-[13px] font-bold" style={{ color: '#0F172A' }}>{plan.title}</span>
-              </div>
-              <p className="text-[11px] leading-relaxed mb-3" style={{ color: '#475569' }}>{plan.desc}</p>
-              <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: '#F1F5F9' }}>
-                <span className="text-[10px] font-medium" style={{ color: '#94A3B8' }}>OTE</span>
-                <span className="text-[14px] font-bold" style={{ color: isActive ? '#10B981' : '#0F172A' }}>{comp.ote}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: '2px solid var(--register-border)' }}>
+                <th className="text-left py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Tier</th>
+                <th className="text-left py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Revenue Range</th>
+                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Rate</th>
+                <th className="text-right py-3 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Est. Monthly Earnings</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMP_TIERS.map((tier) => {
+                const rangeLabel =
+                  tier.maxRevenue === Infinity
+                    ? `$${tier.minRevenue.toLocaleString()}+`
+                    : `$${tier.minRevenue.toLocaleString()} – $${tier.maxRevenue.toLocaleString()}`;
+                const midpoint = tier.maxRevenue === Infinity ? tier.minRevenue + 25000 : (tier.minRevenue + tier.maxRevenue) / 2;
+                const estEarnings = midpoint * tier.rate;
 
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        {/* Tier Staircase Visualization */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Commission Tier Staircase
-          </p>
-          {tiers.length > 0 ? (
-            <div className="flex items-end gap-3" style={{ height: 180 }}>
-              {tiers.map((tier, i) => {
-                const maxPct = Math.max(...tiers.map((t) => t.pct));
-                const barHeight = (tier.pct / maxPct) * 150;
                 return (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                    <span className="text-[11px] font-bold" style={{ color: '#10B981' }}>{tier.rate}</span>
-                    <div
-                      className="w-full rounded-t-lg transition-all duration-300"
-                      style={{
-                        height: barHeight,
-                        background: `linear-gradient(180deg, #10B981 0%, #059669 100%)`,
-                        opacity: 0.7 + (i * 0.1),
-                      }}
-                    />
-                    <span className="text-[10px] font-medium text-center" style={{ color: '#0F172A' }}>{tier.label}</span>
-                    <span className="text-[9px] text-center" style={{ color: '#94A3B8' }}>{tier.range}</span>
-                  </div>
+                  <tr key={tier.tier} style={{ borderBottom: '1px solid var(--register-border)' }}>
+                    <td className="py-3 pr-4">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+                          style={{ backgroundColor: tier.color }}
+                        >
+                          {tier.tier[0]}
+                        </span>
+                        <span className="font-semibold" style={{ color: 'var(--register-text)' }}>
+                          {tier.tier}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-3 pr-4 font-mono" style={{ color: 'var(--register-text-muted)' }}>
+                      {rangeLabel}
+                    </td>
+                    <td className="py-3 pr-4 text-right">
+                      <span
+                        className="inline-block px-3 py-1 rounded-full text-xs font-bold"
+                        style={{ backgroundColor: `${tier.color}20`, color: tier.color }}
+                      >
+                        {(tier.rate * 100).toFixed(1)}%
+                      </span>
+                    </td>
+                    <td className="py-3 text-right font-mono font-semibold" style={{ color: ACCENT }}>
+                      ${estEarnings.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                    </td>
+                  </tr>
                 );
               })}
-            </div>
-          ) : (
-            <div className="flex items-center justify-center" style={{ height: 180 }}>
-              <div className="text-center">
-                <p className="text-[13px] font-semibold" style={{ color: '#475569' }}>SPIFF-Only Model</p>
-                <p className="text-[11px] mt-1" style={{ color: '#94A3B8' }}>$25 per mattress sold &mdash; no tiered commission</p>
-              </div>
-            </div>
-          )}
+            </tbody>
+          </table>
         </div>
 
-        {/* Estimated Annual Earnings */}
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Estimated Annual Earnings at 100% Attainment ($K)
-          </p>
-          <BarChart data={ANNUAL_EARNINGS} unit="K" />
-        </div>
-      </div>
-
-      {/* Waterfall + HeatMap */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Comp Build-Up &mdash; {PLAN_DETAILS[fmt].title}
-          </p>
-          <WaterfallChart data={WATERFALL[fmt]} height={260} />
-        </div>
-
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Rep Earnings Distribution (% of reps in bracket)
-          </p>
-          <HeatMap
-            rows={BRACKET_ROWS}
-            cols={BRACKET_COLS}
-            data={BRACKET_DATA}
-            colorScale={{ low: '#F1F5F9', mid: '#10B981', high: '#059669' }}
-          />
+        {/* Tier bar visual */}
+        <div className="mt-6">
+          <div className="flex h-4 rounded-full overflow-hidden">
+            {COMP_TIERS.map((tier, i) => (
+              <div
+                key={i}
+                className="h-full"
+                style={{ backgroundColor: tier.color, flex: tier.maxRevenue === Infinity ? 2 : 1 }}
+                title={`${tier.tier}: ${(tier.rate * 100).toFixed(1)}%`}
+              />
+            ))}
+          </div>
+          <div className="flex justify-between mt-2">
+            {COMP_TIERS.map((tier, i) => (
+              <span key={i} className="text-xs" style={{ color: 'var(--register-text-muted)' }}>
+                {tier.tier}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* ── Commission Tiers ─────────────────────────────── */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-5" style={{ color: '#0F172A' }}>Commission Tiers</p>
-        <div className="space-y-3">
-          {COMP_TIERS.map((tier) => {
-            const currentRevenue = 42000;
-            const isCurrent = currentRevenue >= tier.minRevenue && currentRevenue <= tier.maxRevenue;
-            const rangeLabel =
-              tier.maxRevenue === Infinity
-                ? `$${tier.minRevenue.toLocaleString()}+`
-                : `$${tier.minRevenue.toLocaleString()} – $${tier.maxRevenue.toLocaleString()}`;
+      {/* Active SPIFFs */}
+      <div
+        className="rounded-xl p-6 mb-8"
+        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+      >
+        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
+          SPIFF Calendar
+        </h2>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {SPIFF_CALENDAR.map((spiff, i) => {
+            const isActive = spiff.active;
+            const isUpcoming = !isActive && new Date(spiff.startDate) > now;
             return (
               <div
-                key={tier.tier}
-                className="flex items-center gap-4 rounded-xl px-5 py-4 transition-all"
+                key={i}
+                className="rounded-lg p-4 transition-all"
                 style={{
-                  backgroundColor: isCurrent ? `${tier.color}18` : '#F8FAFC',
-                  borderLeft: `4px solid ${isCurrent ? tier.color : '#E2E8F0'}`,
-                  borderTop: '1px solid',
-                  borderRight: '1px solid',
-                  borderBottom: '1px solid',
-                  borderTopColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
-                  borderRightColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
-                  borderBottomColor: isCurrent ? `${tier.color}40` : '#F1F5F9',
+                  background: isActive ? 'rgba(16,185,129,0.08)' : 'var(--register-bg-surface)',
+                  border: `2px solid ${isActive ? ACCENT : 'var(--register-border)'}`,
+                  opacity: isActive ? 1 : isUpcoming ? 0.7 : 0.45,
                 }}
               >
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: tier.color, opacity: isCurrent ? 1 : 0.5 }}
-                >
-                  <span className="text-[11px] font-bold" style={{ color: '#FFFFFF' }}>
-                    {tier.tier[0]}
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--register-text-muted)' }}>
+                    {spiff.month}
+                  </span>
+                  {isActive && (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style={{ backgroundColor: ACCENT }}>
+                      ACTIVE
+                    </span>
+                  )}
+                  {isUpcoming && (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ backgroundColor: 'rgba(59,130,246,0.15)', color: '#3B82F6' }}>
+                      UPCOMING
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm font-bold mb-1" style={{ color: 'var(--register-text)' }}>{spiff.name}</p>
+                <p className="text-xs mb-3" style={{ color: 'var(--register-text-muted)' }}>{spiff.product}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-base font-bold" style={{ color: isActive ? ACCENT : 'var(--register-text-muted)' }}>
+                    {spiff.bonus}
+                  </span>
+                  <span className="text-[10px]" style={{ color: 'var(--register-text-muted)' }}>
+                    {spiff.startDate.slice(5)} – {spiff.endDate.slice(5)}
                   </span>
                 </div>
-
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[13px] font-bold" style={{ color: '#0F172A' }}>{tier.tier}</span>
-                    {isCurrent && (
-                      <span
-                        className="px-2 py-0.5 rounded-full text-[10px] font-bold"
-                        style={{ backgroundColor: tier.color, color: '#FFFFFF' }}
-                      >
-                        CURRENT
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-[11px]" style={{ color: '#94A3B8' }}>{rangeLabel}</span>
-                </div>
-
-                <span className="text-[16px] font-bold" style={{ color: isCurrent ? tier.color : '#94A3B8' }}>
-                  {(tier.rate * 100).toFixed(1)}%
-                </span>
               </div>
             );
           })}
         </div>
-
-        <div
-          className="mt-4 px-4 py-3 rounded-lg flex items-center gap-2"
-          style={{ backgroundColor: '#FEF3C7' }}
-        >
-          <span className="text-[12px]">📍</span>
-          <span className="text-[12px] font-medium" style={{ color: '#92400E' }}>
-            Current: $42,000 MTD Revenue — <strong>Silver Tier (4.5%)</strong>. $8,000 more to reach Gold (5.0%).
-          </span>
-        </div>
       </div>
 
-      {/* ── SPIFF Calendar ────────────────────────────────── */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-5" style={{ color: '#0F172A' }}>Active SPIFFs</p>
-        <div className="grid grid-cols-3 gap-4">
-          {SPIFF_CALENDAR.map((spiff, i) => (
+      {/* Accelerator Rules */}
+      <div
+        className="rounded-xl p-6"
+        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+      >
+        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
+          Accelerator Rules
+        </h2>
+        <div className="space-y-3">
+          {ACCELERATOR_RULES.map((rule, i) => (
             <div
               key={i}
-              className="rounded-xl p-4 border transition-all"
-              style={{
-                backgroundColor: spiff.active ? '#F0FDF4' : '#FAFAFA',
-                borderColor: spiff.active ? '#10B981' : '#E2E8F0',
-                borderWidth: spiff.active ? 2 : 1,
-              }}
+              className="flex items-center gap-4 rounded-lg px-5 py-4"
+              style={{ background: 'rgba(59,130,246,0.06)', borderLeft: '3px solid #3B82F6' }}
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: '#94A3B8' }}>
-                  {spiff.month}
-                </span>
-                {spiff.active && (
-                  <span
-                    className="px-2 py-0.5 rounded-full text-[9px] font-bold"
-                    style={{ backgroundColor: '#10B981', color: '#FFFFFF' }}
-                  >
-                    ACTIVE
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-sm font-bold" style={{ color: 'var(--register-text)' }}>{rule.metric}</span>
+                  <span className="px-2 py-0.5 rounded text-xs font-mono font-bold" style={{ backgroundColor: 'rgba(59,130,246,0.12)', color: '#3B82F6' }}>
+                    {rule.threshold}
                   </span>
-                )}
-              </div>
-              <p className="text-[12px] font-bold mb-1" style={{ color: '#0F172A' }}>{spiff.name}</p>
-              <p className="text-[11px] mb-3" style={{ color: '#475569' }}>{spiff.product}</p>
-              <div className="flex items-center justify-between">
-                <span
-                  className="text-[13px] font-bold"
-                  style={{ color: spiff.active ? '#10B981' : '#94A3B8' }}
-                >
-                  {spiff.bonus}
-                </span>
-                <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-                  {spiff.startDate.slice(5)} – {spiff.endDate.slice(5)}
-                </span>
+                  <span className="px-2 py-0.5 rounded text-xs font-mono font-bold" style={{ backgroundColor: 'rgba(16,185,129,0.12)', color: ACCENT }}>
+                    {rule.multiplier}
+                  </span>
+                </div>
+                <p className="text-xs" style={{ color: 'var(--register-text-muted)' }}>{rule.description}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* ── Plan Metadata ─────────────────────────────────── */}
-      <div className="flex items-center gap-3 mb-8">
-        <span
-          className="px-4 py-2 rounded-lg text-[12px] font-semibold border"
-          style={{ backgroundColor: '#F1F5F9', borderColor: '#E2E8F0', color: '#475569' }}
-        >
-          Plan Version: v2.1 — Effective Jan 1, 2026
-        </span>
-        <span
-          className="px-4 py-2 rounded-lg text-[12px] font-semibold border"
-          style={{ backgroundColor: '#F0FDF4', borderColor: '#BBF7D0', color: '#16A34A' }}
-        >
-          Acknowledged: Mar 1, 2026 ✓
-        </span>
-      </div>
-
-      {/* Comparison Table */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          Format Comparison
-        </p>
-        <div className="overflow-x-auto">
-          <table className="w-full text-[12px]">
-            <thead>
-              <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
-                <th className="text-left py-2 pr-4 font-semibold" style={{ color: '#94A3B8' }}>Format</th>
-                <th className="text-left py-2 pr-4 font-semibold" style={{ color: '#94A3B8' }}>Base</th>
-                <th className="text-left py-2 pr-4 font-semibold" style={{ color: '#94A3B8' }}>Commission Rate</th>
-                <th className="text-center py-2 pr-4 font-semibold" style={{ color: '#94A3B8' }}>SPIFF Eligible</th>
-                <th className="text-center py-2 pr-4 font-semibold" style={{ color: '#94A3B8' }}>Accelerator</th>
-                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>OTE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {([
-                { name: 'Flagship', base: '$18/hr', rate: '3-6% tiered', spiff: true, accel: true, ote: '$72K' },
-                { name: 'Standard', base: '$15/hr', rate: '2.5-5% tiered', spiff: true, accel: false, ote: '$52K' },
-                { name: 'Outlet', base: '$14/hr', rate: '1.5% flat', spiff: false, accel: false, ote: '$42K' },
-                { name: 'Shop-in-Shop', base: '$16/hr', rate: 'N/A (SPIFF only)', spiff: true, accel: false, ote: '$38K' },
-              ]).map((row, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                  <td className="py-2.5 pr-4 font-semibold" style={{ color: '#0F172A' }}>{row.name}</td>
-                  <td className="py-2.5 pr-4 font-mono" style={{ color: '#475569' }}>{row.base}</td>
-                  <td className="py-2.5 pr-4 font-mono" style={{ color: '#475569' }}>{row.rate}</td>
-                  <td className="py-2.5 pr-4 text-center">
-                    <span
-                      className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold"
-                      style={{
-                        backgroundColor: row.spiff ? '#F0FDF4' : '#FEF2F2',
-                        color: row.spiff ? '#059669' : '#DC2626',
-                      }}
-                    >
-                      {row.spiff ? 'Yes' : 'No'}
-                    </span>
-                  </td>
-                  <td className="py-2.5 pr-4 text-center">
-                    <span
-                      className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold"
-                      style={{
-                        backgroundColor: row.accel ? '#F0FDF4' : '#FEF2F2',
-                        color: row.accel ? '#059669' : '#DC2626',
-                      }}
-                    >
-                      {row.accel ? 'Yes' : 'No'}
-                    </span>
-                  </td>
-                  <td className="py-2.5 text-right font-bold" style={{ color: '#10B981' }}>{row.ote}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
+    </RegisterPage>
   );
 }

@@ -180,3 +180,161 @@ export const COMP_AS_PCT_REVENUE = [
   { month: 'May', pct: 7.6 },
   { month: 'Jun', pct: 7.4 },
 ];
+
+/* ── Comp Admin Plan Data ──────────────────────────────── */
+
+export type PlanStatus = 'active' | 'draft' | 'pending' | 'archived';
+
+export interface CompTier {
+  name: string;
+  minRevenue: number;
+  maxRevenue: number;
+  rate: number;
+  color: string;
+}
+
+export interface SpiffRule {
+  id: string;
+  name: string;
+  product: string;
+  bonus: number;
+  active: boolean;
+}
+
+export interface AcceleratorRule {
+  metric: string;
+  threshold: number;
+  multiplier: number;
+  label: string;
+}
+
+export interface CompPlan {
+  id: string;
+  name: string;
+  format: string;
+  status: PlanStatus;
+  enrolled: number;
+  monthlyBudget: number;
+  effectiveFrom: string;
+  effectiveTo: string;
+  version: string;
+  tiers: CompTier[];
+  spiffs: SpiffRule[];
+  accelerators: AcceleratorRule[];
+}
+
+export const ADMIN_PLANS: CompPlan[] = [
+  {
+    id: 'plan-flagship',
+    name: 'Flagship Floor Sales Plan',
+    format: 'Flagship',
+    status: 'active',
+    enrolled: 48,
+    monthlyBudget: 142000,
+    effectiveFrom: '2026-01-01',
+    effectiveTo: '2026-12-31',
+    version: '3.2',
+    tiers: [
+      { name: 'Bronze', minRevenue: 0, maxRevenue: 24999, rate: 0.04, color: '#CD7F32' },
+      { name: 'Silver', minRevenue: 25000, maxRevenue: 49999, rate: 0.045, color: '#C0C0C0' },
+      { name: 'Gold', minRevenue: 50000, maxRevenue: 74999, rate: 0.05, color: '#FFD700' },
+      { name: 'Platinum', minRevenue: 75000, maxRevenue: Infinity, rate: 0.055, color: '#E5E4E2' },
+    ],
+    spiffs: [
+      { id: 'sp-1', name: 'Adj Base SPIFF', product: 'ErgoMotion Bases', bonus: 25, active: true },
+      { id: 'sp-2', name: 'Protector Attach', product: 'All Protectors', bonus: 10, active: true },
+      { id: 'sp-3', name: 'Premium Pillow Push', product: 'Premium Pillows', bonus: 5, active: false },
+    ],
+    accelerators: [
+      { metric: 'Attach Rate', threshold: 35, multiplier: 1.15, label: '15% bonus when attach rate > 35%' },
+      { metric: 'Financing Penetration', threshold: 70, multiplier: 1.10, label: '10% bonus when financing > 70%' },
+    ],
+  },
+  {
+    id: 'plan-standard',
+    name: 'Standard Store Plan',
+    format: 'Standard',
+    status: 'active',
+    enrolled: 72,
+    monthlyBudget: 198000,
+    effectiveFrom: '2026-01-01',
+    effectiveTo: '2026-12-31',
+    version: '3.1',
+    tiers: [
+      { name: 'Bronze', minRevenue: 0, maxRevenue: 19999, rate: 0.035, color: '#CD7F32' },
+      { name: 'Silver', minRevenue: 20000, maxRevenue: 39999, rate: 0.04, color: '#C0C0C0' },
+      { name: 'Gold', minRevenue: 40000, maxRevenue: 59999, rate: 0.045, color: '#FFD700' },
+      { name: 'Platinum', minRevenue: 60000, maxRevenue: Infinity, rate: 0.05, color: '#E5E4E2' },
+    ],
+    spiffs: [
+      { id: 'sp-4', name: 'Adj Base SPIFF', product: 'ErgoMotion Bases', bonus: 20, active: true },
+      { id: 'sp-5', name: 'Clearance Push', product: 'Clearance Items', bonus: 15, active: false },
+    ],
+    accelerators: [
+      { metric: 'Attach Rate', threshold: 30, multiplier: 1.10, label: '10% bonus when attach rate > 30%' },
+    ],
+  },
+  {
+    id: 'plan-outlet',
+    name: 'Outlet Volume Plan',
+    format: 'Outlet',
+    status: 'draft',
+    enrolled: 34,
+    monthlyBudget: 68000,
+    effectiveFrom: '2026-04-01',
+    effectiveTo: '2026-12-31',
+    version: '2.0-draft',
+    tiers: [
+      { name: 'Base', minRevenue: 0, maxRevenue: 14999, rate: 0.03, color: '#94A3B8' },
+      { name: 'Volume', minRevenue: 15000, maxRevenue: 29999, rate: 0.035, color: '#C0C0C0' },
+      { name: 'Power', minRevenue: 30000, maxRevenue: Infinity, rate: 0.04, color: '#FFD700' },
+    ],
+    spiffs: [
+      { id: 'sp-6', name: 'Unit Volume Bonus', product: 'All Items', bonus: 5, active: true },
+    ],
+    accelerators: [
+      { metric: 'Units Sold', threshold: 25, multiplier: 1.20, label: '20% bonus when 25+ units/month' },
+    ],
+  },
+  {
+    id: 'plan-sis',
+    name: 'Shop-in-Shop Partner Plan',
+    format: 'Shop-in-Shop',
+    status: 'pending',
+    enrolled: 16,
+    monthlyBudget: 42000,
+    effectiveFrom: '2026-01-01',
+    effectiveTo: '2026-12-31',
+    version: '1.4-pending',
+    tiers: [
+      { name: 'Partner Base', minRevenue: 0, maxRevenue: 19999, rate: 0.045, color: '#CD7F32' },
+      { name: 'Partner Plus', minRevenue: 20000, maxRevenue: 39999, rate: 0.05, color: '#C0C0C0' },
+      { name: 'Partner Elite', minRevenue: 40000, maxRevenue: Infinity, rate: 0.055, color: '#FFD700' },
+    ],
+    spiffs: [
+      { id: 'sp-7', name: 'Host Store Referral', product: 'Referral Sales', bonus: 15, active: true },
+      { id: 'sp-8', name: 'Adj Base SPIFF', product: 'ErgoMotion Bases', bonus: 25, active: true },
+    ],
+    accelerators: [
+      { metric: 'Attach Rate', threshold: 35, multiplier: 1.15, label: '15% bonus when attach rate > 35%' },
+      { metric: 'Customer Satisfaction', threshold: 4.5, multiplier: 1.05, label: '5% bonus when CSAT > 4.5' },
+    ],
+  },
+];
+
+export interface PushLogEntry {
+  id: string;
+  timestamp: string;
+  pushedBy: string;
+  planId: string;
+  changeType: string;
+  summary: string;
+}
+
+export const PUSH_HISTORY: PushLogEntry[] = [
+  { id: 'push-5', timestamp: '2026-03-11 2:30 PM', pushedBy: 'Dana K.', planId: 'plan-flagship', changeType: 'spiff_toggle', summary: 'Activated Protector Attach SPIFF ($10/unit)' },
+  { id: 'push-4', timestamp: '2026-03-10 9:15 AM', pushedBy: 'Dana K.', planId: 'plan-standard', changeType: 'tier_rate', summary: 'Adjusted Silver tier rate from 3.8% to 4.0%' },
+  { id: 'push-3', timestamp: '2026-03-08 4:00 PM', pushedBy: 'Mark R.', planId: 'plan-flagship', changeType: 'accelerator', summary: 'Added Financing Penetration accelerator (10% at 70%)' },
+  { id: 'push-2', timestamp: '2026-03-05 11:00 AM', pushedBy: 'Dana K.', planId: 'plan-sis', changeType: 'full_plan', summary: 'Published Shop-in-Shop v1.4 for partner review' },
+  { id: 'push-1', timestamp: '2026-03-01 8:00 AM', pushedBy: 'Mark R.', planId: 'plan-flagship', changeType: 'full_plan', summary: 'Activated FY26 Q1 Flagship plan v3.2' },
+];

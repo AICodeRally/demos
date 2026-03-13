@@ -259,6 +259,101 @@ export const SHIFT_SALES: ShiftSale[] = [
   },
 ];
 
+/* ── Rep status colors for traffic-light cards ─────────── */
+
+export type StatusColor = 'green' | 'amber' | 'red';
+
+export interface RepStatus {
+  repId: string;
+  statusColor: StatusColor;
+  statusLabel: string;
+  shiftAttainment: number; // pct of daily target
+}
+
+export const REP_STATUSES: RepStatus[] = [
+  { repId: 'casey', statusColor: 'red', statusLabel: 'Below Target', shiftAttainment: 62 },
+  { repId: 'raj', statusColor: 'amber', statusLabel: 'Near Target', shiftAttainment: 84 },
+  { repId: 'james', statusColor: 'amber', statusLabel: 'Near Target', shiftAttainment: 79 },
+];
+
+export function getRepStatus(repId: string): RepStatus | undefined {
+  return REP_STATUSES.find((s) => s.repId === repId);
+}
+
+/* ── Coaching cards for live feed ──────────────────────── */
+
+export type CoachingPriority = 'urgent' | 'high' | 'medium' | 'low';
+
+export interface CoachingCard {
+  id: string;
+  repId: string;
+  priority: CoachingPriority;
+  title: string;
+  dataPoints: string[];
+  suggestedAction: string;
+  commissionImpact: string;
+  timestamp: string;
+}
+
+export const COACHING_CARDS: CoachingCard[] = [
+  {
+    id: 'cc-1',
+    repId: 'casey',
+    priority: 'urgent',
+    title: 'Attach rate critically low — missed 4 consecutive upsells',
+    dataPoints: [
+      'Attach rate: 12% (floor avg 31%)',
+      'Last 4 sales: mattress-only, no accessories',
+      '$356 in missed commissions today',
+    ],
+    suggestedAction: 'Shadow Sarah J. for next 2 ups — demonstrate adjustable base demo technique',
+    commissionImpact: '+$89/sale with base + protector bundle',
+    timestamp: '2:15 PM',
+  },
+  {
+    id: 'cc-2',
+    repId: 'raj',
+    priority: 'high',
+    title: 'Financing pitch rate dropping — 3 lost closes this week',
+    dataPoints: [
+      'Financing pitch: 28% (floor avg 64%)',
+      'Lost $7,200 in potential sales from price objections',
+      '72% close rate when financing presented on $2,500+ sales',
+    ],
+    suggestedAction: 'Lead with monthly cost framing: "$69/mo — less than streaming subscriptions"',
+    commissionImpact: 'Recover $324 in weekly lost commissions',
+    timestamp: '1:45 PM',
+  },
+  {
+    id: 'cc-3',
+    repId: 'james',
+    priority: 'medium',
+    title: 'ASP below floor average — defaulting to budget tier',
+    dataPoints: [
+      'ASP: $1,420 (floor avg $1,890)',
+      'Step-up demo not used in last 6 sales',
+      'Strong fundamentals: attach 34%, financing 71%',
+    ],
+    suggestedAction: 'Use step-up demo: budget mattress → mid-tier side-by-side, let customer feel difference',
+    commissionImpact: '+$51/sale moving from Twin Firm to Queen Medium',
+    timestamp: '12:30 PM',
+  },
+  {
+    id: 'cc-4',
+    repId: 'casey',
+    priority: 'medium',
+    title: 'New SPIFF opportunity — Adjustable Base push active',
+    dataPoints: [
+      'March SPIFF: $25/unit for ErgoMotion bases',
+      'Casey has sold 0 bases this month',
+      'Floor avg: 2.1 bases/rep this month',
+    ],
+    suggestedAction: 'Pair every mattress demo with adjustable base trial — demo zero-gravity position',
+    commissionImpact: '+$25 SPIFF bonus per base sold',
+    timestamp: '11:00 AM',
+  },
+];
+
 export function getRepById(id: string): RepProfile | undefined {
   return REPS.find((r) => r.id === id);
 }
