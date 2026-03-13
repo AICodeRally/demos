@@ -149,7 +149,7 @@ export default function ContestsAndBoards() {
               <div className="mt-3">
                 <div className="flex justify-between text-[11px] mb-1">
                   <span style={{ color: 'var(--pl-text-secondary)' }}>${(spiff.earned / 1000).toFixed(1)}K earned</span>
-                  <span className="font-mono" style={{ color: spiff.color }}>{pct}%</span>
+                  <span className="tabular-nums" style={{ color: spiff.color }}>{pct}%</span>
                 </div>
                 <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: `${spiff.color}20` }}>
                   <div
@@ -199,15 +199,15 @@ export default function ContestsAndBoards() {
                           {rep.rank}
                         </span>
                       ) : (
-                        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{rep.rank}</span>
+                        <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{rep.rank}</span>
                       )}
                     </td>
                     <td className="py-2.5 text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{rep.name}</td>
                     <td className="py-2.5 text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>{rep.department}</td>
-                    <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: 'var(--pl-text)' }}>
+                    <td className="py-2.5 text-[13px] font-bold tabular-nums text-right" style={{ color: 'var(--pl-text)' }}>
                       ${(rep.revenue / 1000).toFixed(0)}K
                     </td>
-                    <td className="py-2.5 text-[13px] font-bold font-mono text-right" style={{ color: '#059669' }}>
+                    <td className="py-2.5 text-[13px] font-bold tabular-nums text-right" style={{ color: '#059669' }}>
                       ${rep.commission.toLocaleString()}
                     </td>
                     <td className="py-2.5 text-center">

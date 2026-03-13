@@ -39,7 +39,7 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -77,7 +77,7 @@ export default function RevenueOverviewPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Revenue Overview</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Revenue Overview</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Comprehensive revenue tracking against targets across all business segments.
           </p>
@@ -167,13 +167,13 @@ export default function RevenueOverviewPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Quarter</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Target</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Actual</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Variance</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
-                <th className="pb-3 text-xs font-medium w-40" style={{ color: 'var(--prizym-text-muted)' }}>Progress</th>
-                <th className="pb-3 text-xs font-medium text-center" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Quarter</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Target</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Actual</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Variance</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
+                <th className="pb-3 text-xs font-semibold w-40" style={{ color: 'var(--prizym-text-muted)' }}>Progress</th>
+                <th className="pb-3 text-xs font-semibold text-center" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -237,7 +237,7 @@ export default function RevenueOverviewPage() {
         <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Territory Revenue Detail</h2>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {territoryData.map(t => (
-            <div key={t.name} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
+            <div key={t.name} className="rounded-xl p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{t.name}</span>
                 <span className={`text-xs font-bold ${t.attainment >= 100 ? 'text-emerald-600' : t.attainment >= 85 ? 'text-amber-400' : 'text-red-600'}`}>

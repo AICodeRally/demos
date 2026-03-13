@@ -70,14 +70,14 @@ export default function LoanPipeline() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Loan Pipeline</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Loan Pipeline</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Application tracking from intake through funding
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Pipeline Value" value="$48M" trend="up" trendValue="+12% vs last month" color="#475569" />
         <StatCard label="Avg Days to Close" value="32" trend="down" trendValue="-3 days" color="#B87333" />
         <StatCard label="Approval Rate" value="78%" trend="up" trendValue="+2.1%" color="#6B8F71" />

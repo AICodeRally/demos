@@ -21,7 +21,7 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
       <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -249,7 +249,7 @@ export default function AiRecommendationsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>AI Recommendations</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>AI Recommendations</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Machine learning-driven recommendations for quota optimization and territory adjustments.
           </p>
@@ -288,7 +288,7 @@ export default function AiRecommendationsPage() {
       </div>
 
       {/* Category Summary */}
-      <div className="grid gap-4 md:grid-cols-4 mb-6">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-6">
         {Object.entries(CATEGORY_META).map(([cat, meta]) => {
           const count = RECOMMENDATIONS.filter(r => r.category === cat).length;
           const CatIcon = meta.icon;

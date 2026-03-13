@@ -69,7 +69,7 @@ const topAccountMax = Math.max(...TOP_OFFENDING_ACCOUNTS.map((a) => a.amount));
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>•</span>
@@ -106,7 +106,7 @@ export default function RateLeakagePage() {
           <SourceBadge source="Wynne Systems ERP" synced="2 min ago" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(220,38,38,0.12)',
             color: '#EF4444',
@@ -135,7 +135,7 @@ export default function RateLeakagePage() {
             style={{ background: '#DC2626' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Total Leakage
@@ -182,7 +182,7 @@ export default function RateLeakagePage() {
             style={{ background: '#EF4444' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Unauthorized Discounts
@@ -218,7 +218,7 @@ export default function RateLeakagePage() {
             style={{ background: '#F97316' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Missed Fees
@@ -254,7 +254,7 @@ export default function RateLeakagePage() {
             style={{ background: '#F59E0B' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Below-Floor Rates
@@ -461,7 +461,7 @@ export default function RateLeakagePage() {
             Leakage Detail
           </h3>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Sort: Impact {'\u25BE'}
@@ -579,7 +579,7 @@ export default function RateLeakagePage() {
                   >
                     {/* Rank */}
                     <span
-                      className="text-[12px] font-bold font-mono w-6 shrink-0"
+                      className="text-[12px] font-bold tabular-nums w-6 shrink-0"
                       style={{
                         color: isTop ? '#EF4444' : 'var(--prizym-text-muted)',
                       }}
@@ -601,7 +601,7 @@ export default function RateLeakagePage() {
 
                     {/* Incidents */}
                     <span
-                      className="text-[11px] font-mono"
+                      className="text-[11px]"
                       style={{ color: 'var(--prizym-text-muted)' }}
                     >
                       {acct.incidents} incidents
@@ -609,7 +609,7 @@ export default function RateLeakagePage() {
 
                     {/* Amount */}
                     <span
-                      className="text-[13px] font-bold font-mono shrink-0"
+                      className="text-[13px] font-bold tabular-nums shrink-0"
                       style={{ color: '#EF4444' }}
                     >
                       {fmtDollar(acct.amount)}
@@ -727,17 +727,17 @@ function LeakageRow({
       {/* Line 3: Rate comparison (only for items with rate data) */}
       {item.rateCharged != null && item.rateFloor != null && (
         <div className="flex items-center gap-1 mt-1">
-          <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+          <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
             Charged: ${item.rateCharged}/day
           </span>
           <span className="text-[11px] mx-0.5" style={{ color: 'var(--prizym-text-muted)' }}>
             {'\u2192'}
           </span>
-          <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+          <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
             Floor: ${item.rateFloor}/day
           </span>
           <span
-            className="text-[10px] font-bold font-mono ml-1.5 px-1.5 py-0.5 rounded"
+            className="text-[10px] font-bold tabular-nums ml-1.5 px-1.5 py-0.5 rounded"
             style={{
               background: 'rgba(239,68,68,0.12)',
               color: '#EF4444',

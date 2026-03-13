@@ -58,14 +58,14 @@ export default function CommunicationsCenter() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Communications Center</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Communications Center</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Media management and stakeholder messaging
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Statements Issued" value="4" color="#8B7355" />
         <StatCard label="Media Mentions" value="147" color="#EA580C" />
         <StatCard label="Sentiment Score" value="-12" color="#DC2626" />
@@ -108,7 +108,7 @@ export default function CommunicationsCenter() {
       <div className="rounded-xl bg-white border p-5 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Stakeholder Communications</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Stakeholder', 'Channel', 'Status', 'Last Contact', 'Next Action'].map((h) => (
@@ -131,7 +131,7 @@ export default function CommunicationsCenter() {
                       {row.status}
                     </span>
                   </td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#A8A29E' }}>{row.lastContact}</td>
+                  <td className="py-2 px-2" style={{ color: '#A8A29E' }}>{row.lastContact}</td>
                   <td className="py-2 px-2" style={{ color: '#57534E' }}>{row.next}</td>
                 </tr>
               ))}
@@ -156,10 +156,10 @@ export default function CommunicationsCenter() {
           {STATEMENTS.map((s) => (
             <div
               key={s.title}
-              className="rounded-lg p-4"
+              className="rounded-xl p-4"
               style={{ backgroundColor: '#F5F5F4', border: '1px solid #E7E5E4' }}
             >
-              <p className="text-[13px] font-semibold" style={{ color: '#1C1917' }}>{s.title}</p>
+              <p className="text-[14px] font-semibold" style={{ color: '#1C1917' }}>{s.title}</p>
               <p className="text-[11px] mt-1" style={{ color: '#57534E' }}>{s.audience}</p>
               <div className="flex items-center justify-between mt-3">
                 <span
@@ -168,7 +168,7 @@ export default function CommunicationsCenter() {
                 >
                   {s.status}
                 </span>
-                <span className="text-[11px] font-mono" style={{ color: s.color }}>
+                <span className="text-[11px] tabular-nums" style={{ color: s.color }}>
                   Sentiment: {s.before} &rarr; {s.after}{' '}
                   <span style={{ color: '#059669' }}>&uarr;</span>
                 </span>

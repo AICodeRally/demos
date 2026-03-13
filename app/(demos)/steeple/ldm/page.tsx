@@ -209,16 +209,16 @@ export default function LeadershipPage() {
                 <table className="min-w-full divide-y divide-gray-100">
                   <thead>
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Type
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Description
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Pastor
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                         Date
                       </th>
                     </tr>
@@ -420,7 +420,7 @@ export default function LeadershipPage() {
 
         {/* Goals & KPIs */}
         <ChartCard title="Church Goals & KPIs">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {churchGoals.map((goal) => {
               const percentage = goal.reverse
                 ? (goal.target / goal.actual) * 100
@@ -537,19 +537,19 @@ export default function LeadershipPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Rank
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Name
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Hours
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Team
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Role
                   </th>
                 </tr>
@@ -589,19 +589,19 @@ export default function LeadershipPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Name
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Certification
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Completed
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Expires
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Status
                   </th>
                 </tr>

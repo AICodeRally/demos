@@ -32,12 +32,12 @@ export default function RoyaltyPaymentsPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase font-semibold mb-1"
           style={{ color: '#7C3AED' }}
         >
           Act 6 &middot; Royalty Accountant
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Owner Payments
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -102,7 +102,7 @@ export default function RoyaltyPaymentsPage() {
                 <span className="shrink-0 w-[120px] truncate" style={{ color: '#64748B' }}>
                   {payment.lease}
                 </span>
-                <span className="font-bold font-mono shrink-0 w-[80px] text-right" style={{ color: '#7C3AED' }}>
+                <span className="font-bold tabular-nums shrink-0 w-[80px] text-right" style={{ color: '#7C3AED' }}>
                   ${payment.amount.toLocaleString()}
                 </span>
                 <span className="font-mono shrink-0 w-[80px] text-right" style={{ color: '#94A3B8' }}>
@@ -154,13 +154,13 @@ export default function RoyaltyPaymentsPage() {
                   <tr key={owner.id} style={{ borderBottom: '1px solid #252B36' }}>
                     <td className="py-1.5 font-medium" style={{ color: '#F1F5F9' }}>{owner.name}</td>
                     <td className="py-1.5" style={{ color: '#CBD5E1' }}>{owner.leaseName}</td>
-                    <td className="py-1.5 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                    <td className="py-1.5 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                       {(owner.decimalInterest * 100).toFixed(3)}%
                     </td>
-                    <td className="py-1.5 text-right font-mono font-bold" style={{ color: '#7C3AED' }}>
+                    <td className="py-1.5 text-right font-bold tabular-nums" style={{ color: '#7C3AED' }}>
                       ${owner.totalMonthlyPayment.toLocaleString()}
                     </td>
-                    <td className="py-1.5 text-right font-mono" style={{ color: '#94A3B8' }}>
+                    <td className="py-1.5 text-right tabular-nums" style={{ color: '#94A3B8' }}>
                       CHK-{(78420 + i).toString()}
                     </td>
                     <td className="py-1.5 text-right">

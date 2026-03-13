@@ -28,7 +28,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className="text-[13px] font-mono px-3 py-1.5 rounded-lg transition-colors"
+            className="text-[13px] px-3 py-1.5 rounded-lg transition-colors"
             style={{
               background: tab === t.id ? '#2563EB' : 'var(--pl-chart-bar-track)',
               color: tab === t.id ? 'white' : 'var(--pl-text-muted)',
@@ -46,7 +46,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Delivery Manifest */}
           {stop.deliveryManifest.length > 0 && (
             <div>
-              <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+              <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--pl-text-faint)' }}>
                 Delivery Manifest ({stop.deliveryManifest.reduce((s, m) => s + m.cases, 0)} cases)
               </div>
               <div className="space-y-1">
@@ -61,7 +61,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-[13px] font-mono">
+                    <div className="flex items-center gap-3 text-[13px]">
                       <span style={{ color: 'var(--pl-text-muted)' }}>{item.sku}</span>
                       <span className="font-bold" style={{ color: 'var(--pl-text)' }}>{item.cases}cs</span>
                     </div>
@@ -74,7 +74,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Talking Points */}
           {stop.talkingPoints.length > 0 && (
             <div>
-              <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
+              <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--pl-text-faint)' }}>Talking Points</div>
               <ul className="space-y-1.5">
                 {stop.talkingPoints.map((tp, i) => (
                   <li key={i} className="flex items-start gap-2 text-[12px]" style={{ color: 'var(--pl-text-secondary)' }}>
@@ -88,8 +88,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
 
           {/* Display Instructions */}
           {stop.displayInstructions && (
-            <div className="rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.08)', borderLeft: '2px solid #2563EB' }}>
-              <div className="text-xs uppercase tracking-wider font-mono mb-1" style={{ color: '#2563EB' }}>Display Instructions</div>
+            <div className="rounded-xl p-3" style={{ background: 'rgba(37,99,235,0.08)', borderLeft: '2px solid #2563EB' }}>
+              <div className="text-xs uppercase tracking-wider font-semibold mb-1" style={{ color: '#2563EB' }}>Display Instructions</div>
               <div className="text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.displayInstructions}</div>
               {stop.photoRequired && (
                 <div className="mt-1.5 text-xs font-bold" style={{ color: '#F59E0B' }}>📸 Photo Required</div>
@@ -100,7 +100,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {/* Contact */}
           <div className="flex items-center gap-4 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             <span>Contact: <strong style={{ color: 'var(--pl-text-secondary)' }}>{stop.contactName}</strong></span>
-            <span className="font-mono">{stop.contactPhone}</span>
+            <span className="tabular-nums">{stop.contactPhone}</span>
           </div>
         </div>
       )}
@@ -116,11 +116,11 @@ function DetailPanel({ stop }: { stop: Stop }) {
             { date: 'Feb 4', cases: 115, rev: 13800, notes: 'Routine. Pacifico trial 6cs — sold through in 5 days.' },
           ].map((visit, i) => (
             <div key={i} className="flex items-start gap-3 py-2 border-b" style={{ borderColor: 'var(--pl-border)' }}>
-              <span className="text-xs font-mono w-14 shrink-0" style={{ color: 'var(--pl-text-faint)' }}>{visit.date}</span>
+              <span className="text-xs w-14 shrink-0" style={{ color: 'var(--pl-text-faint)' }}>{visit.date}</span>
               <div className="flex-1">
                 <div className="flex items-center gap-3 text-[13px]">
-                  <span className="font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
-                  <span className="text-[#22C55E] font-mono">${fmt(visit.rev)}</span>
+                  <span className="tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{visit.cases}cs</span>
+                  <span className="text-[#22C55E] tabular-nums">${fmt(visit.rev)}</span>
                 </div>
                 <div className="text-[13px] mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>{visit.notes}</div>
               </div>
@@ -136,7 +136,7 @@ function DetailPanel({ stop }: { stop: Stop }) {
           {stop.aiInsights.map((insight, i) => (
             <div
               key={i}
-              className="rounded-lg p-3"
+              className="rounded-xl p-3"
               style={{
                 background: insight.priority === 'high' ? 'rgba(239,68,68,0.06)' :
                   insight.priority === 'medium' ? 'rgba(245,158,11,0.06)' : 'rgba(34,197,94,0.06)',
@@ -155,8 +155,8 @@ function DetailPanel({ stop }: { stop: Stop }) {
 
           {/* Competitive Intel */}
           {stop.competitiveIntel && (
-            <div className="rounded-lg p-3" style={{ background: 'rgba(168,85,247,0.06)', borderLeft: '2px solid #A855F7' }}>
-              <div className="text-xs uppercase tracking-wider font-mono mb-1" style={{ color: '#A855F7' }}>Competitive Intel</div>
+            <div className="rounded-xl p-3" style={{ background: 'rgba(168,85,247,0.06)', borderLeft: '2px solid #A855F7' }}>
+              <div className="text-xs uppercase tracking-wider font-semibold mb-1" style={{ color: '#A855F7' }}>Competitive Intel</div>
               <div className="text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>{stop.competitiveIntel}</div>
             </div>
           )}
@@ -243,7 +243,7 @@ export default function DayPlannerPage() {
       {/* Header Row */}
       <div className="mt-4 mb-4 flex items-start justify-between">
         <div>
-          <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+          <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
             Day-in-the-Life &middot; Route Planner
           </div>
           <h1 className="text-xl font-extrabold" style={{ fontFamily: 'var(--pl-font)', color: 'var(--pl-text)' }}>
@@ -256,7 +256,7 @@ export default function DayPlannerPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/proofline-route"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-mono font-bold transition-all hover:opacity-90"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-bold tabular-nums transition-all hover:opacity-90"
             style={{
               background: 'linear-gradient(135deg, #C6A052, #a8842e)',
               color: '#0a0f1e',
@@ -284,7 +284,7 @@ export default function DayPlannerPage() {
             <strong className="text-[#22C55E]">{plan.optimizationSavings.minutes} min</strong> vs standard sequence
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+        <div className="flex items-center gap-4 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
           <span>{plan.truckNumber}</span>
           <span>{fmt(plan.totalCases)} cases</span>
           <span className="text-[#22C55E] font-bold">${fmt(plan.totalRevenue)}</span>
@@ -295,7 +295,7 @@ export default function DayPlannerPage() {
       <div className="flex gap-1 mb-4">
         <button
           onClick={() => { setWhatIfTab(false); setSwappedPair([-1, -1]); }}
-          className="text-[13px] font-mono px-3 py-1.5 rounded-lg transition-colors"
+          className="text-[13px] px-3 py-1.5 rounded-lg transition-colors"
           style={{
             background: !whatIfTab ? '#2563EB' : 'var(--pl-chart-bar-track)',
             color: !whatIfTab ? 'white' : 'var(--pl-text-muted)',
@@ -306,7 +306,7 @@ export default function DayPlannerPage() {
         </button>
         <button
           onClick={() => setWhatIfTab(true)}
-          className="text-[13px] font-mono px-3 py-1.5 rounded-lg transition-colors"
+          className="text-[13px] px-3 py-1.5 rounded-lg transition-colors"
           style={{
             background: whatIfTab ? '#2563EB' : 'var(--pl-chart-bar-track)',
             color: whatIfTab ? 'white' : 'var(--pl-text-muted)',
@@ -323,7 +323,7 @@ export default function DayPlannerPage() {
           className="rounded-lg px-4 py-3 mb-4"
           style={{ background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.15)' }}
         >
-          <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: '#2563EB' }}>
+          <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: '#2563EB' }}>
             Click two stops below to swap their order and see the impact
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -333,7 +333,7 @@ export default function DayPlannerPage() {
                 <button
                   key={stop.id}
                   onClick={() => handleWhatIfClick(idx)}
-                  className="text-[13px] font-mono px-2.5 py-1 rounded-lg border transition-colors"
+                  className="text-[13px] px-2.5 py-1 rounded-xl border transition-colors"
                   style={{
                     borderColor: isSelected ? '#2563EB' : 'var(--pl-border)',
                     background: isSelected ? 'rgba(37,99,235,0.1)' : 'transparent',
@@ -348,12 +348,12 @@ export default function DayPlannerPage() {
           </div>
           {swappedPair[0] >= 0 && swappedPair[1] >= 0 && (
             <div className="mt-2 flex items-center gap-3">
-              <span className="text-[13px] font-mono" style={{ color: '#2563EB' }}>
+              <span className="text-[13px]" style={{ color: '#2563EB' }}>
                 Swapped stops {swappedPair[0] + 1} &harr; {swappedPair[1] + 1}
               </span>
               <button
                 onClick={() => setSwappedPair([-1, -1])}
-                className="text-xs font-mono px-2 py-0.5 rounded"
+                className="text-xs px-2 py-0.5 rounded"
                 style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}
               >
                 Reset
@@ -371,7 +371,7 @@ export default function DayPlannerPage() {
             className="rounded-xl p-3 sticky top-4"
             style={{ background: 'var(--pl-card)', border: '1px solid var(--pl-border)' }}
           >
-            <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--pl-text-faint)' }}>
               Route Map &middot; {plan.hometownName}
             </div>
             <RouteMap
@@ -385,7 +385,7 @@ export default function DayPlannerPage() {
 
         {/* Center: Stop List */}
         <div className="col-span-4">
-          <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--pl-text-faint)' }}>
             Stops ({plan.stops.length})
           </div>
           <div className="space-y-2 max-h-[680px] overflow-y-auto pr-1">
@@ -400,7 +400,7 @@ export default function DayPlannerPage() {
                 {activeStopId === stop.id && (
                   <Link
                     href={`/proofline/ops/day-planner/stop/${stop.id}`}
-                    className="block mt-1 text-center text-xs font-mono py-1.5 rounded-lg transition-colors hover:opacity-80"
+                    className="block mt-1 text-center text-xs py-1.5 rounded-lg transition-colors hover:opacity-80"
                     style={{ color: '#2563EB' }}
                   >
                     Full Stop Detail &rarr;
@@ -415,7 +415,7 @@ export default function DayPlannerPage() {
         <div className="col-span-4">
           {activeStop ? (
             <div>
-              <div className="text-xs uppercase tracking-wider font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+              <div className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--pl-text-faint)' }}>
                 Stop Detail
               </div>
               <div
@@ -438,7 +438,7 @@ export default function DayPlannerPage() {
               {/* Mobile Preview Button */}
               <button
                 onClick={() => setShowMobile(true)}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-mono transition-all hover:opacity-80"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] transition-all hover:opacity-80"
                 style={{ border: '1px solid var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 <span className="text-base">📱</span>
@@ -448,7 +448,7 @@ export default function DayPlannerPage() {
               {/* Bridge to Rep Tablet Demo */}
               <Link
                 href="/proofline-route"
-                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-mono font-bold transition-all hover:opacity-90"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-bold tabular-nums transition-all hover:opacity-90"
                 style={{
                   background: 'linear-gradient(135deg, #C6A052, #a8842e)',
                   color: '#0a0f1e',

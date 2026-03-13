@@ -75,14 +75,14 @@ export default function AfterActionReview() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>After-Action Review</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>After-Action Review</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Response performance analysis and improvement recommendations
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Response Score" value="88/100" color="#059669" />
         <StatCard label="Vs. Benchmark" value="+12%" trend="up" trendValue="above avg" color="#059669" />
         <StatCard label="Improvements" value="6" color="#8B7355" />
@@ -109,7 +109,7 @@ export default function AfterActionReview() {
               <div key={item.label}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[11px] font-semibold" style={{ color: '#1C1917' }}>{item.label}</span>
-                  <span className="text-[10px] font-mono" style={{ color: '#A8A29E' }}>
+                  <span className="text-[10px] tabular-nums" style={{ color: '#A8A29E' }}>
                     {item.value >= 24 ? `${Math.round(item.value / 24)}d` : `${item.value}hr`} vs {INDUSTRY_AVG[i].value >= 24 ? `${Math.round(INDUSTRY_AVG[i].value / 24)}d` : `${INDUSTRY_AVG[i].value}hr`}
                   </span>
                 </div>
@@ -141,7 +141,7 @@ export default function AfterActionReview() {
           <h2 className="text-sm font-semibold mb-3" style={{ color: '#1C1917' }}>What Worked</h2>
           <div className="space-y-2">
             {WORKED.map((item, i) => (
-              <div key={i} className="rounded-lg border-l-4 bg-white border p-3" style={{ borderLeftColor: '#059669', borderColor: '#E7E5E4' }}>
+              <div key={i} className="rounded-xl border-l-4 bg-white border p-3" style={{ borderLeftColor: '#059669', borderColor: '#E7E5E4' }}>
                 <p className="text-[12px]" style={{ color: '#1C1917' }}>{item}</p>
               </div>
             ))}
@@ -151,7 +151,7 @@ export default function AfterActionReview() {
           <h2 className="text-sm font-semibold mb-3" style={{ color: '#1C1917' }}>What Needs Improvement</h2>
           <div className="space-y-2">
             {IMPROVE.map((item, i) => (
-              <div key={i} className="rounded-lg border-l-4 bg-white border p-3" style={{ borderLeftColor: '#EA580C', borderColor: '#E7E5E4' }}>
+              <div key={i} className="rounded-xl border-l-4 bg-white border p-3" style={{ borderLeftColor: '#EA580C', borderColor: '#E7E5E4' }}>
                 <p className="text-[12px]" style={{ color: '#1C1917' }}>{item}</p>
               </div>
             ))}
@@ -181,7 +181,7 @@ export default function AfterActionReview() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Team Performance</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Team Member', 'Tasks Completed', 'Avg Response Time', 'Feedback Score'].map((h) => (
@@ -195,8 +195,8 @@ export default function AfterActionReview() {
               {TEAM_PERF.map((row) => (
                 <tr key={row.name} style={{ borderBottom: '1px solid #F5F5F4' }}>
                   <td className="py-2 px-2 font-semibold" style={{ color: '#1C1917' }}>{row.name}</td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#57534E' }}>{row.tasks}</td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#57534E' }}>{row.avgResponse}</td>
+                  <td className="py-2 px-2 tabular-nums" style={{ color: '#57534E' }}>{row.tasks}</td>
+                  <td className="py-2 px-2 tabular-nums" style={{ color: '#57534E' }}>{row.avgResponse}</td>
                   <td className="py-2.5 px-2">
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#F5F5F4' }}>
@@ -205,7 +205,7 @@ export default function AfterActionReview() {
                           style={{ width: `${row.score}%`, backgroundColor: '#059669' }}
                         />
                       </div>
-                      <span className="text-[10px] font-mono font-bold" style={{ color: '#059669' }}>{row.score}</span>
+                      <span className="text-[10px] tabular-nums font-bold" style={{ color: '#059669' }}>{row.score}</span>
                     </div>
                   </td>
                 </tr>

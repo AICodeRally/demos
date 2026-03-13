@@ -155,7 +155,7 @@ function LatencyBar({ ms, max = 1000 }: { ms: number; max?: number }) {
           transition: 'width 0.6s ease',
         }} />
       </div>
-      <span className="text-xs font-mono font-bold" style={{ color }}>{ms}ms</span>
+      <span className="text-xs font-bold tabular-nums" style={{ color }}>{ms}ms</span>
     </div>
   );
 }
@@ -311,15 +311,15 @@ export default function IntegrationsPage() {
               {'\u26A1'}
             </div>
             <div>
-              <div className="text-xs tracking-[4px] uppercase font-mono font-bold" style={{ color: ACCENT }}>
+              <div className="text-xs tracking-[4px] uppercase font-bold tabular-nums" style={{ color: ACCENT }}>
                 Act 6 \u00B7 Platform Architecture
               </div>
-              <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+              <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                 How PROOFLINE Connects, Calculates, and Delivers
               </h1>
             </div>
           </div>
-          <p className="text-sm font-mono leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
             PROOFLINE replaces batch-driven Alteryx workflows with an event-driven architecture across three layers:
             real-time data ingestion, a version-aware calculation engine, and automated approval workflows.
             Every number is traced from source to payout.
@@ -414,11 +414,11 @@ export default function IntegrationsPage() {
               transition: `all 0.5s ease ${(i + 3) * 150}ms`,
             }}>
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono"
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums"
                   style={{ background: `${layer.color}20`, color: layer.color }}>
                   {layer.num}
                 </div>
-                <span className="text-sm font-bold font-mono uppercase tracking-wider" style={{ color: layer.color }}>
+                <span className="text-sm font-bold tabular-nums uppercase tracking-wider" style={{ color: layer.color }}>
                   {layer.title}
                 </span>
               </div>
@@ -426,7 +426,7 @@ export default function IntegrationsPage() {
                 {layer.points.map((pt, pi) => (
                   <li key={pi} className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: layer.color, opacity: 0.6 }} />
-                    <span className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{pt}</span>
+                    <span className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{pt}</span>
                   </li>
                 ))}
               </ul>
@@ -442,7 +442,7 @@ export default function IntegrationsPage() {
         if (layerConnectors.length === 0) return null;
         return (
           <LightSectionCard key={layerKey} title={`LAYER: ${meta.label.toUpperCase()}`}>
-            <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>{meta.description}</p>
+            <p className="text-xs mb-4" style={{ color: 'var(--pl-text-faint)' }}>{meta.description}</p>
             <div className="grid gap-3">
               {layerConnectors.map((conn, ci) => {
                 const s = STATUS_STYLES[conn.status];
@@ -465,7 +465,7 @@ export default function IntegrationsPage() {
                         </div>
                         <div className="flex items-center gap-1">
                           {s.pulse && <PulseDot color={s.color} size={5} />}
-                          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
+                          <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-full"
                             style={{ background: s.bg, color: s.color }}>{s.label}</span>
                         </div>
                       </div>
@@ -475,18 +475,18 @@ export default function IntegrationsPage() {
                           <span className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                             {conn.name}
                           </span>
-                          <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-full"
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
                             style={{ background: `${dir.color}12`, color: dir.color }}>
                             {dir.label}
                           </span>
                         </div>
-                        <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>{conn.description}</div>
+                        <div className="text-xs mb-2" style={{ color: 'var(--pl-text-muted)' }}>{conn.description}</div>
                         {/* Metrics row */}
                         <div className="flex items-center gap-4 flex-wrap">
                           {conn.records !== undefined && (
                             <div className="flex items-center gap-1">
-                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Records:</span>
-                              <span className="text-xs font-bold font-mono" style={{ color: meta.color }}>
+                              <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Records:</span>
+                              <span className="text-xs font-bold tabular-nums" style={{ color: meta.color }}>
                                 {conn.records >= 1000000 ? `${(conn.records / 1000000).toFixed(1)}M`
                                   : conn.records >= 1000 ? `${(conn.records / 1000).toFixed(0)}K`
                                   : String(conn.records)}
@@ -495,14 +495,14 @@ export default function IntegrationsPage() {
                           )}
                           {conn.throughput && (
                             <div className="flex items-center gap-1">
-                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Throughput:</span>
-                              <span className="text-xs font-bold font-mono" style={{ color: GREEN }}>{conn.throughput}</span>
+                              <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Throughput:</span>
+                              <span className="text-xs font-bold tabular-nums" style={{ color: GREEN }}>{conn.throughput}</span>
                             </div>
                           )}
                           {conn.lastSync && (
                             <div className="flex items-center gap-1">
-                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Last sync:</span>
-                              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{conn.lastSync}</span>
+                              <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Last sync:</span>
+                              <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{conn.lastSync}</span>
                             </div>
                           )}
                           {conn.latency !== undefined && (
@@ -525,7 +525,7 @@ export default function IntegrationsPage() {
           background: `${ACCENT}06`,
           border: `1px solid ${ACCENT}15`,
         }}>
-          <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
             Alteryx is a powerful data-blending tool, but it was never designed for incentive compensation.
             PROOFLINE is purpose-built for ICM \u2014 event-driven, version-aware, and auditable at the row level.
           </p>
@@ -534,10 +534,10 @@ export default function IntegrationsPage() {
           {/* Header row */}
           <div className="grid grid-cols-[auto_1fr_1fr] gap-4 items-center px-4">
             <div className="w-10" />
-            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: SLATE }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-widest" style={{ color: SLATE }}>
               Alteryx Approach
             </div>
-            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: ACCENT }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-widest" style={{ color: ACCENT }}>
               PROOFLINE
             </div>
           </div>
@@ -556,25 +556,25 @@ export default function IntegrationsPage() {
                   style={{ background: `${ACCENT}10`, color: ACCENT }}>
                   {row.icon}
                 </div>
-                <span className="text-xs font-bold font-mono text-center leading-tight" style={{ color: 'var(--pl-text)' }}>
+                <span className="text-xs font-bold tabular-nums text-center leading-tight" style={{ color: 'var(--pl-text)' }}>
                   {row.dimension}
                 </span>
               </div>
               {/* Alteryx side */}
-              <div className="rounded-lg p-3" style={{ background: 'rgba(148,163,184,0.06)', border: '1px solid rgba(148,163,184,0.12)' }}>
+              <div className="rounded-xl p-3" style={{ background: 'rgba(148,163,184,0.06)', border: '1px solid rgba(148,163,184,0.12)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 rounded-full" style={{ background: '#EF4444', opacity: 0.7 }} />
-                  <span className="text-xs font-bold font-mono" style={{ color: SLATE }}>Legacy</span>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: SLATE }}>Legacy</span>
                 </div>
-                <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-faint)' }}>{row.alteryx}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-faint)' }}>{row.alteryx}</p>
               </div>
               {/* PROOFLINE side */}
-              <div className="rounded-lg p-3" style={{ background: `${ACCENT}06`, border: `1px solid ${ACCENT}15` }}>
+              <div className="rounded-xl p-3" style={{ background: `${ACCENT}06`, border: `1px solid ${ACCENT}15` }}>
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 rounded-full" style={{ background: GREEN }} />
-                  <span className="text-xs font-bold font-mono" style={{ color: ACCENT }}>PROOFLINE</span>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: ACCENT }}>PROOFLINE</span>
                 </div>
-                <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{row.proofline}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{row.proofline}</p>
               </div>
             </div>
           ))}
@@ -588,19 +588,19 @@ export default function IntegrationsPage() {
         boxShadow: 'var(--pl-shadow)',
       }}>
         <div className="p-6 pb-2">
-          <div className="text-xs tracking-[4px] uppercase font-mono font-bold mb-2" style={{ color: PURPLE }}>
+          <div className="text-xs tracking-[4px] uppercase font-bold tabular-nums mb-2" style={{ color: PURPLE }}>
             Enterprise Platform
           </div>
           <h2 className="text-xl font-extrabold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             PROOFLINE Is Powered by the AICR Platform
           </h2>
-          <p className="text-sm font-mono leading-relaxed mb-6" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed mb-6" style={{ color: 'var(--pl-text-muted)' }}>
             Enterprise governance, AI intelligence, and immutable audit trail \u2014 built in from day one, not bolted on.
             Every PROOFLINE deployment includes these platform capabilities.
           </p>
         </div>
         <div className="px-6 pb-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {PLATFORM_CAPABILITIES.map((cap, i) => (
               <div key={cap.name} className="rounded-xl p-4 transition-all hover:scale-[1.02]"
                 style={{
@@ -616,19 +616,19 @@ export default function IntegrationsPage() {
                   {cap.icon}
                 </div>
                 {/* Name tag */}
-                <div className="text-xs font-bold font-mono uppercase tracking-widest mb-1" style={{ color: cap.color }}>
+                <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-1" style={{ color: cap.color }}>
                   {cap.name}
                 </div>
                 <div className="text-sm font-bold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                   {cap.title}
                 </div>
-                <p className="text-xs font-mono leading-relaxed mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--pl-text-muted)' }}>
                   {cap.description}
                 </p>
                 {/* Stat */}
                 <div className="flex items-center gap-1.5">
                   <PulseDot color={cap.color} size={5} />
-                  <span className="text-xs font-bold font-mono" style={{ color: cap.color }}>{cap.stats}</span>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: cap.color }}>{cap.stats}</span>
                 </div>
               </div>
             ))}
@@ -647,30 +647,30 @@ export default function IntegrationsPage() {
           {API_METRICS.map((api, i) => {
             const healthColor = api.errorRate === 0 ? GREEN : api.errorRate < 0.1 ? '#F59E0B' : '#EF4444';
             return (
-              <div key={i} className="rounded-lg p-3" style={{
+              <div key={i} className="rounded-xl p-3" style={{
                 background: `${healthColor}04`,
                 border: `1px solid ${healthColor}15`,
               }}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <PulseDot color={healthColor} size={6} />
-                    <span className="text-sm font-bold font-mono" style={{ color: ACCENT }}>{api.endpoint}</span>
+                    <span className="text-sm font-bold tabular-nums" style={{ color: ACCENT }}>{api.endpoint}</span>
                   </div>
-                  <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                     {api.calls24h.toLocaleString()} calls
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Avg Latency</div>
+                    <div className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Avg Latency</div>
                     <LatencyBar ms={api.avgMs} />
                   </div>
                   <div>
-                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>P99 Latency</div>
+                    <div className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>P99 Latency</div>
                     <LatencyBar ms={api.p99} max={3000} />
                   </div>
                   <div>
-                    <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Error Rate</div>
+                    <div className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--pl-text-faint)' }}>Error Rate</div>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--pl-hover)', maxWidth: 80 }}>
                         <div className="h-full rounded-full" style={{
@@ -678,7 +678,7 @@ export default function IntegrationsPage() {
                           background: healthColor,
                         }} />
                       </div>
-                      <span className="text-xs font-mono font-bold" style={{ color: healthColor }}>{api.errorRate}%</span>
+                      <span className="text-xs font-bold tabular-nums" style={{ color: healthColor }}>{api.errorRate}%</span>
                     </div>
                   </div>
                 </div>
@@ -688,18 +688,18 @@ export default function IntegrationsPage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>25,520</div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total API Calls (24h)</div>
+            <div className="text-xl font-bold tabular-nums" style={{ color: GREEN }}>25,520</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total API Calls (24h)</div>
           </div>
           <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>67ms</div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Avg Response Time</div>
+            <div className="text-xl font-bold tabular-nums" style={{ color: GREEN }}>67ms</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Avg Response Time</div>
           </div>
           <div className="text-center p-4 rounded-xl" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: GREEN }}>0.03%</div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Error Rate</div>
+            <div className="text-xl font-bold tabular-nums" style={{ color: GREEN }}>0.03%</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Error Rate</div>
           </div>
         </div>
       </LightSectionCard>

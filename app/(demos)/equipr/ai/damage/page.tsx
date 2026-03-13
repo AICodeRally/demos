@@ -108,7 +108,7 @@ export default function AiDamageDetectionPage() {
           </p>
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5"
           style={{
             background: 'rgba(124,58,237,0.10)',
             color: '#7C3AED',
@@ -139,7 +139,7 @@ export default function AiDamageDetectionPage() {
           />
           <div className="flex items-center justify-between mb-1">
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Photos Analyzed
@@ -178,7 +178,7 @@ export default function AiDamageDetectionPage() {
           />
           <div className="flex items-center justify-between mb-1">
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Damage Cases
@@ -217,7 +217,7 @@ export default function AiDamageDetectionPage() {
           />
           <div className="flex items-center justify-between mb-1">
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Revenue Recovered
@@ -256,7 +256,7 @@ export default function AiDamageDetectionPage() {
           />
           <div className="flex items-center justify-between mb-1">
             <div
-              className="text-[10px] uppercase tracking-[1.5px] font-mono"
+              className="text-[10px] uppercase tracking-[1.5px] font-semibold"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               Detection Speed
@@ -314,7 +314,7 @@ export default function AiDamageDetectionPage() {
           </div>
           <div className="flex items-center gap-2">
             <span
-              className="text-[11px] font-mono"
+              className="text-[11px]"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               {featured.assetId}
@@ -341,7 +341,7 @@ export default function AiDamageDetectionPage() {
               {featured.assetName}
             </span>
             <span
-              className="text-[11px] font-mono px-2 py-0.5 rounded"
+              className="text-[11px] px-2 py-0.5 rounded"
               style={{
                 background: 'rgba(0,0,0,0.04)',
                 color: 'var(--prizym-text-muted)',
@@ -358,7 +358,7 @@ export default function AiDamageDetectionPage() {
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center mb-5">
             {/* CHECK-OUT photo placeholder */}
             <div
-              className="rounded-lg p-6 flex flex-col items-center justify-center gap-2"
+              className="rounded-xl p-6 flex flex-col items-center justify-center gap-2"
               style={{
                 background: 'rgba(16,185,129,0.04)',
                 border: '2px dashed rgba(16,185,129,0.25)',
@@ -373,7 +373,7 @@ export default function AiDamageDetectionPage() {
                 Check-Out
               </span>
               <span
-                className="text-[11px] font-mono"
+                className="text-[11px]"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {formatDate(featured.checkoutDate)}
@@ -419,7 +419,7 @@ export default function AiDamageDetectionPage() {
               </div>
               <ArrowRight size={20} style={{ color: '#7C3AED' }} />
               <span
-                className="text-[10px] font-mono"
+                className="text-[10px]"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {featured.photoCount} photos
@@ -428,7 +428,7 @@ export default function AiDamageDetectionPage() {
 
             {/* RETURN photo placeholder */}
             <div
-              className="rounded-lg p-6 flex flex-col items-center justify-center gap-2"
+              className="rounded-xl p-6 flex flex-col items-center justify-center gap-2"
               style={{
                 background: 'rgba(220,38,38,0.04)',
                 border: '2px dashed rgba(220,38,38,0.25)',
@@ -443,7 +443,7 @@ export default function AiDamageDetectionPage() {
                 Return
               </span>
               <span
-                className="text-[11px] font-mono"
+                className="text-[11px]"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {formatDate(featured.returnDate)}
@@ -478,7 +478,7 @@ export default function AiDamageDetectionPage() {
 
           {/* AI Findings Panel */}
           <div
-            className="rounded-lg p-4"
+            className="rounded-xl p-4"
             style={{
               background: 'rgba(124,58,237,0.04)',
               border: '1px solid rgba(124,58,237,0.15)',
@@ -493,7 +493,7 @@ export default function AiDamageDetectionPage() {
                 AI Findings
               </span>
               <span
-                className="text-[10px] font-mono ml-auto"
+                className="text-[10px] ml-auto"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 Processed in {DAMAGE_KPIS.avgDetectionTime}s &middot; {DAMAGE_KPIS.falsePositiveRate}% false positive rate
@@ -541,7 +541,7 @@ export default function AiDamageDetectionPage() {
                       {det.severity}
                     </span>
                     <div
-                      className="text-[11px] font-mono shrink-0 px-2 py-0.5 rounded"
+                      className="text-[11px] shrink-0 px-2 py-0.5 rounded"
                       style={{
                         background: 'rgba(124,58,237,0.08)',
                         color: '#7C3AED',
@@ -550,7 +550,7 @@ export default function AiDamageDetectionPage() {
                       {Math.round(det.confidence * 100)}% conf
                     </div>
                     <span
-                      className="text-[12px] font-bold font-mono shrink-0"
+                      className="text-[12px] font-bold tabular-nums shrink-0"
                       style={{ color: 'var(--prizym-text-primary)' }}
                     >
                       {fmtDollar(det.estimatedRepairCost)}
@@ -768,7 +768,7 @@ export default function AiDamageDetectionPage() {
             Recent Detections
           </h3>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             {DAMAGE_DETECTIONS.length} cases this month
@@ -788,7 +788,7 @@ export default function AiDamageDetectionPage() {
             (col) => (
               <span
                 key={col}
-                className="text-[10px] uppercase tracking-[1.5px] font-bold font-mono"
+                className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {col}
@@ -889,7 +889,7 @@ function DetectionRow({
           {detection.assetName}
         </span>
         <span
-          className="text-[10px] font-mono"
+          className="text-[10px]"
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           {detection.assetId}
@@ -906,7 +906,7 @@ function DetectionRow({
 
       {/* Return Date */}
       <span
-        className="text-[12px] font-mono"
+        className="text-[12px]"
         style={{ color: 'var(--prizym-text-secondary)' }}
       >
         {formatDate(detection.returnDate)}
@@ -914,7 +914,7 @@ function DetectionRow({
 
       {/* Detections count */}
       <span
-        className="text-[12px] font-bold font-mono"
+        className="text-[12px] font-bold tabular-nums"
         style={{ color: 'var(--prizym-text-primary)' }}
       >
         {detection.aiDetections.length}
@@ -922,7 +922,7 @@ function DetectionRow({
 
       {/* Total Value */}
       <span
-        className="text-[12px] font-bold font-mono"
+        className="text-[12px] font-bold tabular-nums"
         style={{ color: '#059669' }}
       >
         {fmtDollar(detection.totalDamageValue)}
@@ -938,7 +938,7 @@ function DetectionRow({
 
       {/* Review Time */}
       <span
-        className="text-[11px] font-mono"
+        className="text-[11px]"
         style={{ color: 'var(--prizym-text-muted)' }}
       >
         {detection.humanReviewTime}

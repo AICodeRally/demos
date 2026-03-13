@@ -72,14 +72,14 @@ export default function RegulatoryTracker() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Regulatory Tracker</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Regulatory Tracker</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Multi-jurisdiction compliance and filing management
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Jurisdictions" value="5" color="#8B7355" />
         <StatCard label="Filed" value="2/5" color="#EAB308" />
         <StatCard label="On-Time Rate" value="100%" color="#059669" />
@@ -102,7 +102,7 @@ export default function RegulatoryTracker() {
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[12px] font-semibold" style={{ color: '#1C1917' }}>{item.jurisdiction}</span>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-mono" style={{ color: '#A8A29E' }}>
+                  <span className="text-[10px] tabular-nums" style={{ color: '#A8A29E' }}>
                     {item.daysLeft}d remaining
                   </span>
                   <span
@@ -143,7 +143,7 @@ export default function RegulatoryTracker() {
       <div className="rounded-xl bg-white border p-5 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Filing Checklist</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Jurisdiction', 'Requirement', 'Deadline', 'Status', 'Attorney'].map((h) => (
@@ -158,7 +158,7 @@ export default function RegulatoryTracker() {
                 <tr key={i} style={{ borderBottom: '1px solid #F5F5F4' }}>
                   <td className="py-2 px-2 font-semibold" style={{ color: '#1C1917' }}>{row.jurisdiction}</td>
                   <td className="py-2 px-2" style={{ color: '#57534E' }}>{row.requirement}</td>
-                  <td className="py-2 px-2 font-mono" style={{ color: '#1C1917' }}>{row.deadline}</td>
+                  <td className="py-2 px-2 tabular-nums" style={{ color: '#1C1917' }}>{row.deadline}</td>
                   <td className="py-2 px-2">
                     <span
                       className="inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider"
@@ -185,7 +185,7 @@ export default function RegulatoryTracker() {
               className="flex items-start gap-4 rounded-lg px-3 py-2"
               style={{ backgroundColor: i % 2 === 0 ? '#F5F5F4' : 'transparent' }}
             >
-              <span className="text-[10px] font-mono shrink-0 pt-0.5" style={{ color: '#A8A29E', width: 100 }}>
+              <span className="text-[10px] shrink-0 pt-0.5" style={{ color: '#A8A29E', width: 100 }}>
                 {entry.date}
               </span>
               <div className="flex-1">

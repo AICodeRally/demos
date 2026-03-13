@@ -28,7 +28,7 @@ export default function AIHubPage() {
               <div className="rounded-full bg-white/15 p-2.5">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-3xl font-bold text-white">
                 AI-Powered Ministry Intelligence
               </h2>
             </div>

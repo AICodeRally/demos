@@ -32,12 +32,12 @@ export default function RoyaltyAccountingPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase font-semibold mb-1"
           style={{ color: '#7C3AED' }}
         >
           Act 6 &middot; Royalty Accountant
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Production Accounting
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -121,19 +121,19 @@ export default function RoyaltyAccountingPage() {
                   <td className="py-2 font-medium capitalize" style={{ color: '#F1F5F9' }}>
                     {ra.stream}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {ra.volume.toLocaleString()} {ra.unit}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     ${ra.avgPrice.toFixed(2)}
                   </td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: '#F1F5F9' }}>
+                  <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#F1F5F9' }}>
                     ${(ra.grossRevenue / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#DC2626' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#DC2626' }}>
                     -${(ra.royaltyBurden / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: '#059669' }}>
+                  <td className="py-2 text-right font-bold tabular-nums" style={{ color: '#059669' }}>
                     ${(ra.netToOperator / 1000).toFixed(0)}K
                   </td>
                 </tr>
@@ -169,16 +169,16 @@ export default function RoyaltyAccountingPage() {
               {VOLUME_RECON.map((v, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #252B36' }}>
                   <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{v.lease}</td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {v.measured.toLocaleString()}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {v.allocated.toLocaleString()}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     {v.sold.toLocaleString()}
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#EAB308' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#EAB308' }}>
                     {v.variance}%
                   </td>
                 </tr>

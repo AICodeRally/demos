@@ -92,8 +92,8 @@ function InquiryTimeline({ inquiry, animate }: { inquiry: Inquiry; animate: bool
                 }}>
                 {active ? '\u2713' : i + 1}
               </div>
-              <div className="text-xs font-mono font-semibold mt-1" style={{ color: active ? s.color : 'var(--pl-text-faint)' }}>{s.label}</div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{s.date}</div>
+              <div className="text-xs font-semibold mt-1" style={{ color: active ? s.color : 'var(--pl-text-faint)' }}>{s.label}</div>
+              <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{s.date}</div>
             </div>
             {i < steps.length - 1 && (
               <div className="w-10 h-0.5 mx-1 rounded-full overflow-hidden" style={{ background: 'var(--pl-border)' }}>
@@ -134,7 +134,7 @@ function SubmitInquiryDemo() {
           <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             Submit New Inquiry
           </div>
-          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Interactive demo — try it out</div>
+          <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Interactive demo — try it out</div>
         </div>
       </div>
 
@@ -146,7 +146,7 @@ function SubmitInquiryDemo() {
             <span style={{ color: '#22C55E', fontSize: '32px', fontWeight: 'bold' }}>{'\u2713'}</span>
           </div>
           <div className="text-sm font-bold" style={{ color: '#22C55E' }}>Inquiry Submitted Successfully!</div>
-          <div className="text-[13px] font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
             Ticket #INQ-025 created. Expected resolution: 2-3 business days.
           </div>
         </div>
@@ -156,7 +156,7 @@ function SubmitInquiryDemo() {
           <div className="flex gap-2 mb-4">
             {['Category', 'Details', 'Review'].map((label, i) => (
               <button key={label} onClick={() => setFormStep(i)}
-                className="flex-1 py-1.5 rounded-lg text-xs font-bold font-mono transition-all"
+                className="flex-1 py-1.5 rounded-lg text-xs font-bold tabular-nums transition-all"
                 style={{
                   background: formStep >= i ? `${STATUS_COLORS.open}15` : 'var(--pl-card-alt)',
                   color: formStep >= i ? STATUS_COLORS.open : 'var(--pl-text-faint)',
@@ -177,20 +177,20 @@ function SubmitInquiryDemo() {
                     border: '1px solid var(--pl-border)',
                   }}>
                   <div className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{label}</div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>Select category</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'var(--pl-text-faint)' }}>Select category</div>
                 </button>
               ))}
             </div>
           )}
           {formStep === 1 && (
             <div className="space-y-3">
-              <div className="rounded-lg p-3" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                <div className="text-xs font-mono font-bold mb-1" style={{ color: 'var(--pl-text-muted)' }}>SUBJECT</div>
-                <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text)' }}>Missing commission on order #48201</div>
+              <div className="rounded-xl p-3" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+                <div className="text-xs font-bold tabular-nums mb-1" style={{ color: 'var(--pl-text-muted)' }}>SUBJECT</div>
+                <div className="text-[13px]" style={{ color: 'var(--pl-text)' }}>Missing commission on order #48201</div>
               </div>
-              <div className="rounded-lg p-3" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                <div className="text-xs font-mono font-bold mb-1" style={{ color: 'var(--pl-text-muted)' }}>DESCRIPTION</div>
-                <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text)' }}>Order placed 2/15 for 240 cases of Modelo. Commission not showing in my dashboard...</div>
+              <div className="rounded-xl p-3" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+                <div className="text-xs font-bold tabular-nums mb-1" style={{ color: 'var(--pl-text-muted)' }}>DESCRIPTION</div>
+                <div className="text-[13px]" style={{ color: 'var(--pl-text)' }}>Order placed 2/15 for 240 cases of Modelo. Commission not showing in my dashboard...</div>
               </div>
               <button onClick={() => setFormStep(2)}
                 className="w-full py-2 rounded-lg text-[13px] font-bold transition-all"
@@ -201,9 +201,9 @@ function SubmitInquiryDemo() {
           )}
           {formStep === 2 && (
             <div className="space-y-3">
-              <div className="rounded-lg p-3" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)' }}>
-                <div className="text-xs font-mono font-bold mb-2" style={{ color: STATUS_COLORS.open }}>INQUIRY SUMMARY</div>
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+              <div className="rounded-xl p-3" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)' }}>
+                <div className="text-xs font-bold tabular-nums mb-2" style={{ color: STATUS_COLORS.open }}>INQUIRY SUMMARY</div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
                   <div><span style={{ color: 'var(--pl-text-muted)' }}>Category:</span> <span style={{ color: 'var(--pl-text)' }}>Missing Credit</span></div>
                   <div><span style={{ color: 'var(--pl-text-muted)' }}>Priority:</span> <span style={{ color: '#F59E0B' }}>Medium</span></div>
                   <div><span style={{ color: 'var(--pl-text-muted)' }}>Est. Impact:</span> <span style={{ color: 'var(--pl-text)' }}>$912</span></div>
@@ -289,10 +289,10 @@ export default function MgmtInquiriesPage() {
         background: 'linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.06), rgba(34,197,94,0.04))',
         border: '1px solid var(--pl-border)',
       }}>
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-2" style={{ color: '#3B82F6' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-2" style={{ color: '#3B82F6' }}>
           Sales Comp Management &middot; Inquiries
         </div>
-        <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Compensation Inquiries
         </h1>
         <p className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
@@ -301,7 +301,7 @@ export default function MgmtInquiriesPage() {
       </div>
 
       {/* KPI Row with color-coded status */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="New" value={String(openCount)} accent={STATUS_COLORS.open} sub="Awaiting review" stagger={0} />
         <LightKpiCard label="Pending" value={String(reviewCount)} accent={STATUS_COLORS['under-review']} sub="Manager assigned" stagger={1} />
         <LightKpiCard label="Resolved" value={String(resolvedCount)} accent={STATUS_COLORS.resolved} sub="This quarter" stagger={2} />
@@ -310,13 +310,13 @@ export default function MgmtInquiriesPage() {
       </div>
 
       {/* Dashboard Row: Donut + Stats + Impact */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {/* Donut Chart */}
         <div className="rounded-xl p-4 flex flex-col items-center" style={{
           background: 'var(--pl-card-alt)',
           border: '1px solid var(--pl-border)',
         }}>
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
             Status Distribution
           </div>
           <ProofDonutChart data={donutData} size={140} label={`${MGMT_INQUIRIES.length}`} labelColor="var(--pl-text)" />
@@ -324,7 +324,7 @@ export default function MgmtInquiriesPage() {
             {donutData.map(d => (
               <div key={d.name} className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full" style={{ background: d.color }} />
-                <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{d.name} ({d.value})</span>
+                <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{d.name} ({d.value})</span>
               </div>
             ))}
           </div>
@@ -335,13 +335,13 @@ export default function MgmtInquiriesPage() {
           background: 'var(--pl-card-alt)',
           border: '1px solid var(--pl-border)',
         }}>
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-2" style={{ color: STATUS_COLORS.resolved }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-2" style={{ color: STATUS_COLORS.resolved }}>
             Resolution Rate
           </div>
-          <div className="text-[42px] font-bold font-mono leading-none" style={{ color: STATUS_COLORS.resolved }}>
+          <div className="text-[42px] font-bold tabular-nums leading-none" style={{ color: STATUS_COLORS.resolved }}>
             {((resolvedCount / MGMT_INQUIRIES.length) * 100).toFixed(0)}%
           </div>
-          <div className="text-[13px] font-mono mt-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-[13px] mt-2" style={{ color: 'var(--pl-text-muted)' }}>
             {resolvedCount} of {MGMT_INQUIRIES.length} resolved
           </div>
           <div className="w-full mt-3 h-2 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
@@ -358,27 +358,27 @@ export default function MgmtInquiriesPage() {
           background: 'var(--pl-card-alt)',
           border: '1px solid var(--pl-border)',
         }}>
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-2" style={{ color: '#8B5CF6' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-2" style={{ color: '#8B5CF6' }}>
             Total $ Impact
           </div>
-          <div className="text-[36px] font-bold font-mono leading-none" style={{ color: 'var(--pl-text)' }}>
+          <div className="text-[36px] font-bold tabular-nums leading-none" style={{ color: 'var(--pl-text)' }}>
             ${fmt(totalImpact)}
           </div>
-          <div className="text-[13px] font-mono mt-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-[13px] mt-2" style={{ color: 'var(--pl-text-muted)' }}>
             pending + resolved adjustments
           </div>
           <div className="flex gap-3 mt-3">
             <div className="text-center">
-              <div className="text-[14px] font-bold font-mono" style={{ color: STATUS_COLORS['under-review'] }}>
+              <div className="text-[14px] font-bold tabular-nums" style={{ color: STATUS_COLORS['under-review'] }}>
                 ${fmt(MGMT_INQUIRIES.filter(i => i.status !== 'resolved' && i.impactAmount && i.impactAmount > 0).reduce((s, i) => s + (i.impactAmount ?? 0), 0))}
               </div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Pending</div>
+              <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Pending</div>
             </div>
             <div className="text-center">
-              <div className="text-[14px] font-bold font-mono" style={{ color: STATUS_COLORS.resolved }}>
+              <div className="text-[14px] font-bold tabular-nums" style={{ color: STATUS_COLORS.resolved }}>
                 ${fmt(MGMT_INQUIRIES.filter(i => i.status === 'resolved' && i.impactAmount && i.impactAmount > 0).reduce((s, i) => s + (i.impactAmount ?? 0), 0))}
               </div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Resolved</div>
+              <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Resolved</div>
             </div>
           </div>
         </div>
@@ -388,7 +388,7 @@ export default function MgmtInquiriesPage() {
       <div className="flex gap-2 flex-wrap mb-4">
         <button
           onClick={() => setCategoryFilter('all')}
-          className="px-3 py-1.5 rounded-full text-xs font-bold font-mono transition-all"
+          className="px-3 py-1.5 rounded-full text-xs font-bold tabular-nums transition-all"
           style={{
             background: categoryFilter === 'all' ? '#8B5CF620' : 'var(--pl-card-alt)',
             color: categoryFilter === 'all' ? '#8B5CF6' : 'var(--pl-text-muted)',
@@ -400,7 +400,7 @@ export default function MgmtInquiriesPage() {
           <button
             key={chip.key}
             onClick={() => setCategoryFilter(chip.key as InquiryCategory)}
-            className="px-3 py-1.5 rounded-full text-xs font-bold font-mono transition-all"
+            className="px-3 py-1.5 rounded-full text-xs font-bold tabular-nums transition-all"
             style={{
               background: categoryFilter === chip.key ? '#3B82F620' : 'var(--pl-card-alt)',
               color: categoryFilter === chip.key ? '#3B82F6' : 'var(--pl-text-muted)',
@@ -426,7 +426,7 @@ export default function MgmtInquiriesPage() {
           >
             <span className="w-2 h-2 rounded-full" style={{ background: tab.color, opacity: statusFilter === tab.id ? 1 : 0.4 }} />
             {tab.label}
-            <span className="text-xs font-mono px-1.5 py-0.5 rounded-full"
+            <span className="text-xs px-1.5 py-0.5 rounded-full"
               style={{
                 background: statusFilter === tab.id ? `${tab.color}20` : 'var(--pl-chart-bar-track)',
                 color: statusFilter === tab.id ? tab.color : 'var(--pl-text-faint)',
@@ -480,18 +480,18 @@ export default function MgmtInquiriesPage() {
                             style={{ background: statusColor + '20', color: statusColor }}>
                             {priorityCfg.icon}
                           </div>
-                          <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full"
+                          <span className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full"
                             style={{ background: statusColor + '18', color: statusColor }}>
                             {statusCfg.label}
                           </span>
-                          <span className="text-xs font-mono px-2 py-0.5 rounded-full"
+                          <span className="text-xs px-2 py-0.5 rounded-full"
                             style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
                             {CATEGORY_LABELS[inquiry.category]}
                           </span>
-                          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{inquiry.id}</span>
+                          <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{inquiry.id}</span>
                         </div>
                         <h4 className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{inquiry.subject}</h4>
-                        <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>
+                        <div className="text-xs mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>
                           {inquiry.repName} ({inquiry.routeId}) &middot; {inquiry.submittedDate}
                           {inquiry.reviewerName && <> &middot; Reviewer: {inquiry.reviewerName}</>}
                         </div>
@@ -499,11 +499,11 @@ export default function MgmtInquiriesPage() {
                       <div className="flex items-center gap-3 flex-shrink-0 ml-4">
                         {inquiry.impactAmount !== null && (
                           <div className="text-right">
-                            <div className="text-[14px] font-bold font-mono"
+                            <div className="text-[14px] font-bold tabular-nums"
                               style={{ color: inquiry.impactAmount > 0 ? STATUS_COLORS['under-review'] : STATUS_COLORS.resolved }}>
                               {inquiry.impactAmount > 0 ? `+$${fmt(inquiry.impactAmount)}` : `-$${fmt(Math.abs(inquiry.impactAmount))}`}
                             </div>
-                            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>$ impact</div>
+                            <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>$ impact</div>
                           </div>
                         )}
                         <div className="w-6 h-6 rounded-full flex items-center justify-center transition-transform"
@@ -532,10 +532,10 @@ export default function MgmtInquiriesPage() {
                           background: 'rgba(34,197,94,0.06)',
                           borderLeft: `3px solid ${STATUS_COLORS.resolved}`,
                         }}>
-                          <div className="text-xs font-bold font-mono mb-1" style={{ color: STATUS_COLORS.resolved }}>RESOLUTION</div>
+                          <div className="text-xs font-bold tabular-nums mb-1" style={{ color: STATUS_COLORS.resolved }}>RESOLUTION</div>
                           <p className="text-[13px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>{inquiry.resolution}</p>
                           {inquiry.resolvedDate && (
-                            <div className="text-xs font-mono mt-2" style={{ color: 'var(--pl-text-faint)' }}>
+                            <div className="text-xs mt-2" style={{ color: 'var(--pl-text-faint)' }}>
                               Resolved on {inquiry.resolvedDate}
                             </div>
                           )}
@@ -545,7 +545,7 @@ export default function MgmtInquiriesPage() {
                           background: `${statusColor}08`,
                           borderLeft: `3px solid ${statusColor}`,
                         }}>
-                          <div className="text-xs font-bold font-mono mb-1" style={{ color: statusColor }}>
+                          <div className="text-xs font-bold tabular-nums mb-1" style={{ color: statusColor }}>
                             {inquiry.status === 'escalated' ? 'ESCALATED' : 'PENDING'}
                           </div>
                           <p className="text-[13px] leading-relaxed" style={{ color: 'var(--pl-text-secondary)' }}>
@@ -574,7 +574,7 @@ export default function MgmtInquiriesPage() {
             }}>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{chip.label}</span>
-                <span className="text-xs font-mono font-bold" style={{ color: '#3B82F6' }}>{chip.count}</span>
+                <span className="text-xs font-bold tabular-nums" style={{ color: '#3B82F6' }}>{chip.count}</span>
               </div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                 <div className="h-full rounded-full" style={{
@@ -582,7 +582,7 @@ export default function MgmtInquiriesPage() {
                   background: `linear-gradient(to right, ${STATUS_COLORS.resolved}, #10B981)`,
                 }} />
               </div>
-              <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>
+              <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>
                 {catResolved}/{catInquiries.length} resolved
               </div>
             </div>
@@ -593,7 +593,7 @@ export default function MgmtInquiriesPage() {
       {/* ═══════ DISPUTE SLA TRACKING ═══════ */}
       <LightSectionCard title="DISPUTE SLA TRACKING">
         {/* SLA KPIs */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
           <LightKpiCard label="Avg Resolution" value={`${SLA_METRICS.avgResolutionDays}d`} accent="#3B82F6" sub={`Target: <${SLA_TARGETS.standardDays}d`} />
           <LightKpiCard label="SLA Compliance" value={`${(SLA_METRICS.slaComplianceRate * 100).toFixed(0)}%`} accent="#22C55E" sub="within SLA target" />
           <LightKpiCard label="Repeat Rate" value={`${(SLA_METRICS.repeatDisputeRate * 100).toFixed(0)}%`} accent="#F59E0B" sub="same rep, same issue type" />
@@ -603,7 +603,7 @@ export default function MgmtInquiriesPage() {
         {/* Aging Buckets Bar Chart */}
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
               AGING DISTRIBUTION
             </div>
             <div className="space-y-3">
@@ -612,8 +612,8 @@ export default function MgmtInquiriesPage() {
                 return (
                   <div key={bucket.label}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{bucket.label}</span>
-                      <span className="text-xs font-bold font-mono" style={{ color: bucket.color }}>{bucket.count}</span>
+                      <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{bucket.label}</span>
+                      <span className="text-xs font-bold tabular-nums" style={{ color: bucket.color }}>{bucket.count}</span>
                     </div>
                     <div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div className="h-full rounded-full transition-all" style={{
@@ -629,7 +629,7 @@ export default function MgmtInquiriesPage() {
 
           {/* Root Cause Donut */}
           <div>
-            <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
               ROOT CAUSE ANALYSIS
             </div>
             <div className="flex items-center gap-4">
@@ -638,8 +638,8 @@ export default function MgmtInquiriesPage() {
                 {ROOT_CAUSE_DATA.map((item) => (
                   <div key={item.name} className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ background: item.color }} />
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item.name}</span>
-                    <span className="text-xs font-bold font-mono" style={{ color: item.color }}>{item.value}%</span>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{item.name}</span>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: item.color }}>{item.value}%</span>
                   </div>
                 ))}
               </div>
@@ -648,7 +648,7 @@ export default function MgmtInquiriesPage() {
         </div>
 
         {/* SLA rules callout */}
-        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+        <div className="mt-4 p-3 rounded-lg text-xs" style={{
           background: 'rgba(59,130,246,0.06)',
           border: '1px solid rgba(59,130,246,0.15)',
           color: 'var(--pl-text-muted)',
@@ -658,7 +658,7 @@ export default function MgmtInquiriesPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="rounded-xl p-4 text-[13px] font-mono" style={{
+      <div className="rounded-xl p-4 text-[13px]" style={{
         color: 'var(--pl-text-faint)',
         background: 'var(--pl-card-alt)',
         border: '1px solid var(--pl-border)',

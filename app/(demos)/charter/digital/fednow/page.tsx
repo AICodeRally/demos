@@ -55,14 +55,14 @@ export default function FedNowDashboard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>FedNow Dashboard</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>FedNow Dashboard</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Instant payment settlement, latency monitoring, and enrollment metrics
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Enrolled Members" value="42K" trend="up" trendValue="+2.4K this quarter" color="#475569" />
         <StatCard label="Success Rate" value="99.92%" trend="up" trendValue="+0.03%" color="#6B8F71" />
         <StatCard label="Avg Settlement" value="8.3s" trend="down" trendValue="-1.2s vs Q4" color="#B87333" />

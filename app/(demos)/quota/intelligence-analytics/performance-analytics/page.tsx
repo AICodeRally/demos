@@ -20,7 +20,7 @@ function KpiCard({ title, value, subtitle, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wide" style={{ color: 'var(--prizym-text-muted)' }}>{title}</span>
         <Icon className="h-4 w-4 text-amber-500" />
       </div>
       <p className="text-2xl font-bold mt-1" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -83,7 +83,7 @@ export default function PerformanceAnalyticsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Analytics</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Analytics</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Deep-dive analytics on sales velocity, team performance, and success correlators.
           </p>
@@ -177,13 +177,13 @@ export default function PerformanceAnalyticsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Rep</th>
-                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
-                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
-                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Pipeline</th>
-                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Deals</th>
-                <th className="text-right py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Cycle</th>
-                <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
+                <th className="text-left py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Rep</th>
+                <th className="text-left py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
+                <th className="text-right py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Attainment</th>
+                <th className="text-right py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Pipeline</th>
+                <th className="text-right py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Deals</th>
+                <th className="text-right py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Cycle</th>
+                <th className="text-left py-3 px-3 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -237,7 +237,7 @@ export default function PerformanceAnalyticsPage() {
                   style={{ width: `${Math.abs(c.correlation) * 100}%` }}
                 />
               </div>
-              <span className="text-xs font-mono w-12 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{c.correlation > 0 ? '+' : ''}{c.correlation.toFixed(2)}</span>
+              <span className="text-xs tabular-nums w-12 text-right" style={{ color: 'var(--prizym-text-primary)' }}>{c.correlation > 0 ? '+' : ''}{c.correlation.toFixed(2)}</span>
               <span className={`text-xs px-2 py-0.5 rounded w-36 text-center ${
                 c.impact.includes('Strong Positive') ? 'bg-emerald-500/10 text-emerald-600'
                 : c.impact.includes('Moderate Positive') ? 'bg-amber-500/10 text-amber-400'

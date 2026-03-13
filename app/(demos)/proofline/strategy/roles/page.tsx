@@ -96,10 +96,10 @@ export default function RolesMechanicsPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#7C3AED' }}>
           Roles &amp; Mechanics &middot; FY2026 Compensation Architecture
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Sales Force Job Architecture
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -108,7 +108,7 @@ export default function RolesMechanicsPage() {
       </div>
 
       {/* ═══ Section A — Role Cards ═══ */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {ROLE_DEFINITIONS.map(role => {
           const Icon = ROLE_ICONS[role.icon];
           return (
@@ -125,7 +125,7 @@ export default function RolesMechanicsPage() {
 
               {/* Headcount badge */}
               <span
-                className="inline-block text-[11px] font-mono px-2 py-0.5 rounded-full mb-3"
+                className="inline-block text-[11px] px-2 py-0.5 rounded-full mb-3"
                 style={{ background: 'var(--pl-stripe)', color: 'var(--pl-text-muted)' }}
               >
                 {role.headcount} positions
@@ -136,7 +136,7 @@ export default function RolesMechanicsPage() {
                 <div style={{ width: `${role.payMix.base}%`, background: '#64748B' }} />
                 <div style={{ width: `${role.payMix.variable}%`, background: '#C6A052' }} />
               </div>
-              <div className="text-xs font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+              <div className="text-xs mb-3" style={{ color: 'var(--pl-text-muted)' }}>
                 {role.payMix.base}% base / {role.payMix.variable}% variable
               </div>
 
@@ -144,13 +144,13 @@ export default function RolesMechanicsPage() {
               <div className="text-2xl font-bold mb-0.5" style={{ color: '#C6A052' }}>
                 ${fmt(role.ote)}
               </div>
-              <div className="text-xs font-mono mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+              <div className="text-xs mb-3" style={{ color: 'var(--pl-text-muted)' }}>
                 ${fmt(role.baseRange[0])} - ${fmt(role.baseRange[1])}
               </div>
 
               {/* Primary metric */}
               <span
-                className="inline-block text-[11px] font-mono font-bold px-2 py-1 rounded mb-2"
+                className="inline-block text-[11px] font-bold tabular-nums px-2 py-1 rounded mb-2"
                 style={{ background: 'rgba(198,160,82,0.1)', color: '#C6A052' }}
               >
                 {role.primaryMetric}
@@ -179,7 +179,7 @@ export default function RolesMechanicsPage() {
               const barWidth = (role.ote / maxOTE) * 100;
               return (
                 <div key={role.role} className="flex items-center gap-3">
-                  <span className="w-32 text-[13px] font-mono font-bold shrink-0" style={{ color: 'var(--pl-text)' }}>
+                  <span className="w-32 text-[13px] font-bold tabular-nums shrink-0" style={{ color: 'var(--pl-text)' }}>
                     {role.title.split(' ').slice(0, 2).join(' ')}
                   </span>
                   <div className="flex-1 flex items-center gap-2">
@@ -190,7 +190,7 @@ export default function RolesMechanicsPage() {
                       <div style={{ width: `${role.payMix.base}%`, background: '#64748B' }} />
                       <div style={{ width: `${role.payMix.variable}%`, background: '#C6A052' }} />
                     </div>
-                    <span className="text-[13px] font-mono font-bold shrink-0" style={{ color: '#C6A052' }}>
+                    <span className="text-[13px] font-bold tabular-nums shrink-0" style={{ color: '#C6A052' }}>
                       ${fmt(role.ote)}
                     </span>
                   </div>
@@ -200,7 +200,7 @@ export default function RolesMechanicsPage() {
           </div>
 
           {/* Legend */}
-          <div className="flex items-center gap-4 mt-4 text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="flex items-center gap-4 mt-4 text-[11px]" style={{ color: 'var(--pl-text-faint)' }}>
             <span className="flex items-center gap-1"><span className="w-3 h-3 rounded" style={{ background: '#64748B' }} /> Base</span>
             <span className="flex items-center gap-1"><span className="w-3 h-3 rounded" style={{ background: '#C6A052' }} /> Variable</span>
           </div>
@@ -211,18 +211,18 @@ export default function RolesMechanicsPage() {
             <table className="w-full text-[12px]">
               <thead>
                 <tr style={{ color: 'var(--pl-text-muted)' }}>
-                  <th className="text-left font-medium pb-2">Tenure</th>
-                  <th className="text-left font-medium pb-2">Base Adj</th>
-                  <th className="text-left font-medium pb-2">Variable Adj</th>
-                  <th className="text-left font-medium pb-2">Rationale</th>
+                  <th className="text-left font-semibold pb-2">Tenure</th>
+                  <th className="text-left font-semibold pb-2">Base Adj</th>
+                  <th className="text-left font-semibold pb-2">Variable Adj</th>
+                  <th className="text-left font-semibold pb-2">Rationale</th>
                 </tr>
               </thead>
               <tbody>
                 {TENURE_ROWS.map((row, i) => (
                   <tr key={row.tenure} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
-                    <td className="py-1.5 font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{row.tenure}</td>
-                    <td className="py-1.5 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.baseAdj}</td>
-                    <td className="py-1.5 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.variableAdj}</td>
+                    <td className="py-1.5 font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{row.tenure}</td>
+                    <td className="py-1.5 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row.baseAdj}</td>
+                    <td className="py-1.5 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row.variableAdj}</td>
                     <td className="py-1.5" style={{ color: 'var(--pl-text-faint)' }}>{row.rationale}</td>
                   </tr>
                 ))}
@@ -303,7 +303,7 @@ export default function RolesMechanicsPage() {
           </LightSectionCard>
 
           {/* Gate Checkpoint Badges */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
               { gate: 'BBI Gate', value: '>= 75%', color: '#10B981', desc: 'Brand Balance Index must meet minimum threshold for variable eligibility' },
               { gate: 'New Account Gate', value: '>= 1/quarter', color: '#3B82F6', desc: 'At least one net-new account per quarter to qualify' },
@@ -311,11 +311,11 @@ export default function RolesMechanicsPage() {
             ].map(g => (
               <div
                 key={g.gate}
-                className="rounded-lg p-3"
+                className="rounded-xl p-3"
                 style={{ border: `1px solid ${g.color}30`, background: `${g.color}08` }}
               >
                 <div className="text-[12px] font-bold mb-1" style={{ color: g.color }}>{g.gate}</div>
-                <div className="text-lg font-bold font-mono mb-1" style={{ color: g.color }}>{g.value}</div>
+                <div className="text-lg font-bold tabular-nums mb-1" style={{ color: g.color }}>{g.value}</div>
                 <p className="text-[11px]" style={{ color: 'var(--pl-text-muted)' }}>{g.desc}</p>
               </div>
             ))}
@@ -330,10 +330,10 @@ export default function RolesMechanicsPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-2">Component</th>
-                <th className="text-left font-medium pb-2">Rate/Value</th>
-                <th className="text-left font-medium pb-2">Trigger</th>
-                <th className="text-left font-medium pb-2">Notes</th>
+                <th className="text-left font-semibold pb-2">Component</th>
+                <th className="text-left font-semibold pb-2">Rate/Value</th>
+                <th className="text-left font-semibold pb-2">Trigger</th>
+                <th className="text-left font-semibold pb-2">Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -344,9 +344,9 @@ export default function RolesMechanicsPage() {
                 ['SKU Placement', '$150/SKU', 'New SKU landed', 'Per net-new SKU in key account'],
               ].map((row, i) => (
                 <tr key={row[0]} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
-                  <td className="py-1.5 font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{row[0]}</td>
-                  <td className="py-1.5 font-mono" style={{ color: '#C6A052' }}>{row[1]}</td>
-                  <td className="py-1.5 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row[2]}</td>
+                  <td className="py-1.5 font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{row[0]}</td>
+                  <td className="py-1.5 tabular-nums" style={{ color: '#C6A052' }}>{row[1]}</td>
+                  <td className="py-1.5 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row[2]}</td>
                   <td className="py-1.5" style={{ color: 'var(--pl-text-faint)' }}>{row[3]}</td>
                 </tr>
               ))}
@@ -359,10 +359,10 @@ export default function RolesMechanicsPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-2">Component</th>
-                <th className="text-left font-medium pb-2">Rate/Value</th>
-                <th className="text-left font-medium pb-2">Trigger</th>
-                <th className="text-left font-medium pb-2">Notes</th>
+                <th className="text-left font-semibold pb-2">Component</th>
+                <th className="text-left font-semibold pb-2">Rate/Value</th>
+                <th className="text-left font-semibold pb-2">Trigger</th>
+                <th className="text-left font-semibold pb-2">Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -372,9 +372,9 @@ export default function RolesMechanicsPage() {
                 ['Turnover Penalty', '-$2,000', 'Rep departure', 'Per voluntary departure in quarter'],
               ].map((row, i) => (
                 <tr key={row[0]} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
-                  <td className="py-1.5 font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{row[0]}</td>
-                  <td className="py-1.5 font-mono" style={{ color: '#C6A052' }}>{row[1]}</td>
-                  <td className="py-1.5 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row[2]}</td>
+                  <td className="py-1.5 font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{row[0]}</td>
+                  <td className="py-1.5 tabular-nums" style={{ color: '#C6A052' }}>{row[1]}</td>
+                  <td className="py-1.5 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row[2]}</td>
                   <td className="py-1.5" style={{ color: 'var(--pl-text-faint)' }}>{row[3]}</td>
                 </tr>
               ))}
@@ -387,7 +387,7 @@ export default function RolesMechanicsPage() {
           <div className="space-y-3 mb-4">
             {CHANNEL_RATES.map(ch => (
               <div key={ch.label} className="flex items-center gap-3">
-                <span className="w-36 text-[13px] font-mono font-bold shrink-0" style={{ color: 'var(--pl-text)' }}>
+                <span className="w-36 text-[13px] font-bold tabular-nums shrink-0" style={{ color: 'var(--pl-text)' }}>
                   {ch.label}
                 </span>
                 <div className="flex-1">
@@ -396,20 +396,20 @@ export default function RolesMechanicsPage() {
                     style={{ width: `${(ch.rate / MAX_CHANNEL_RATE) * 100}%`, background: '#C6A052' }}
                   />
                 </div>
-                <span className="text-[13px] font-mono font-bold w-14 text-right" style={{ color: '#C6A052' }}>
+                <span className="text-[13px] font-bold tabular-nums w-14 text-right" style={{ color: '#C6A052' }}>
                   {ch.rate.toFixed(1)}%
                 </span>
               </div>
             ))}
           </div>
-          <div className="text-[11px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="text-[11px]" style={{ color: 'var(--pl-text-faint)' }}>
             Off-Premise: grocery, convenience, package stores. On-Premise: bars, restaurants, hotels. Draught and Spirits adders stack on top of base channel rate.
           </div>
         </MechanicsToggle>
 
         {/* Draw/Guarantee Program */}
         <MechanicsToggle label="Draw / Guarantee Program" open={drawOpen} onToggle={() => setDrawOpen(!drawOpen)}>
-          <div className="mb-3 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="mb-3 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             Draw amount: <strong style={{ color: '#C6A052' }}>$3,200 biweekly</strong> for 6 months &middot;
             Recovery rate: <strong style={{ color: '#F59E0B' }}>25%</strong> of earned commissions
           </div>
@@ -449,7 +449,7 @@ export default function RolesMechanicsPage() {
       </div>
 
       {/* ═══ Section D — Role Economics Strip ═══ */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <LightKpiCard label="Revenue/FTE" value={fmtM(revPerFTE)} accent="#7C3AED" sub="Annual per headcount" stagger={0} />
         <LightKpiCard label="Comp/Revenue" value={pct(compOverRevenue)} accent="#C6A052" sub="Total comp budget" stagger={1} />
         <LightKpiCard label="Variable/Revenue" value={pct(variableOverRevenue)} accent="#F59E0B" sub="At-risk compensation" stagger={2} />
@@ -457,7 +457,7 @@ export default function RolesMechanicsPage() {
       </div>
 
       {/* Methodology footer */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Role definitions based on FY2026 compensation plan. OTE = On-Target Earnings (base + variable at 100% attainment).
         Accelerator curve shows commission rate by attainment band. Gate checkpoints must be met for variable eligibility.
       </div>
@@ -482,7 +482,7 @@ function MechanicsToggle({
     <div>
       <button
         onClick={onToggle}
-        className="flex items-center gap-2 w-full text-left px-4 py-2.5 rounded-lg border transition-colors"
+        className="flex items-center gap-2 w-full text-left px-4 py-2.5 rounded-xl border transition-colors"
         style={{
           borderColor: open ? '#C6A052' : 'var(--pl-border)',
           background: open ? 'rgba(198,160,82,0.04)' : 'var(--pl-card)',

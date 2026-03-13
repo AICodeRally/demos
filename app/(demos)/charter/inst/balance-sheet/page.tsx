@@ -49,7 +49,7 @@ export default function BalanceSheet() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Balance Sheet</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Balance Sheet</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Sources &amp; uses of funds, capital adequacy &amp; liquidity position</p>
       </div>
 

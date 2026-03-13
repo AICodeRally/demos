@@ -143,12 +143,12 @@ export default function PaymentsPage() {
                 background: cycle.current ? `${ACCENT}18` : 'var(--pl-card-alt)',
                 border: `1px solid ${cycle.current ? ACCENT : 'var(--pl-border)'}`,
               }}>
-              <div className="text-xs font-mono font-bold uppercase"
+              <div className="text-xs font-bold tabular-nums uppercase"
                 style={{ color: cycle.current ? ACCENT : 'var(--pl-text-faint)' }}>
                 {cycle.status === 'current' ? '\u25B6 CURRENT' : cycle.status === 'deposited' ? '\u2713 PAID' : 'UPCOMING'}
               </div>
-              <div className="text-xs font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{cycle.label}</div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Dep. {cycle.date}</div>
+              <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{cycle.label}</div>
+              <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Dep. {cycle.date}</div>
             </div>
           ))}
         </div>
@@ -162,24 +162,24 @@ export default function PaymentsPage() {
             return (
               <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg"
                 style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                <div className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                <div className="flex-shrink-0 text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                   style={{ background: urg.bg, color: urg.color }}>
                   {item.urgency.toUpperCase()}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{item.rep}</span>
-                    <span className="text-xs font-bold font-mono" style={{ color: ACCENT }}>${item.amount.toLocaleString()}</span>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{item.rep}</span>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: ACCENT }}>${item.amount.toLocaleString()}</span>
                   </div>
-                  <div className="text-xs font-mono font-bold mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{item.type}</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{item.reason}</div>
+                  <div className="text-xs font-bold tabular-nums mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{item.type}</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{item.reason}</div>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
-                  <button className="px-2 py-1 rounded text-xs font-bold font-mono"
+                  <button className="px-2 py-1 rounded text-xs font-bold tabular-nums"
                     style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
                     APPROVE
                   </button>
-                  <button className="px-2 py-1 rounded text-xs font-bold font-mono"
+                  <button className="px-2 py-1 rounded text-xs font-bold tabular-nums"
                     style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>
                     FLAG
                   </button>
@@ -193,7 +193,7 @@ export default function PaymentsPage() {
       {/* Payment Ledger */}
       <LightSectionCard title="PAYMENT LEDGER">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Date', 'Rep', 'Type', 'Amount', 'Status'].map(h => (
@@ -229,19 +229,19 @@ export default function PaymentsPage() {
           {EXCEPTIONS.map(ex => (
             <div key={ex.id} className="flex items-start gap-3 p-3 rounded-lg"
               style={{ background: 'rgba(248,113,113,0.05)', border: '1px solid rgba(248,113,113,0.2)' }}>
-              <div className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+              <div className="flex-shrink-0 text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                 style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>
                 {ex.id}
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{ex.rep}</span>
-                  <span className="text-xs font-bold font-mono" style={{ color: ex.amount < 0 ? '#F87171' : ACCENT }}>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{ex.rep}</span>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: ex.amount < 0 ? '#F87171' : ACCENT }}>
                     {ex.amount < 0 ? '-' : ''}${Math.abs(ex.amount).toLocaleString()}
                   </span>
                 </div>
-                <div className="text-xs font-mono mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{ex.issue}</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Resolution: {ex.resolution}</div>
+                <div className="text-xs mb-0.5" style={{ color: 'var(--pl-text-muted)' }}>{ex.issue}</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Resolution: {ex.resolution}</div>
               </div>
             </div>
           ))}
@@ -251,7 +251,7 @@ export default function PaymentsPage() {
       {/* ═══════ SOX COMPLIANCE — CHANGE AUDIT LOG ═══════ */}
       <LightSectionCard title="SOX COMPLIANCE \u2014 CHANGE AUDIT LOG">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Timestamp', 'User', 'Change Type', 'Object', 'Before', 'After', 'Approved By'].map(h => (
@@ -294,8 +294,8 @@ export default function PaymentsPage() {
                   {role.icon}
                 </div>
                 <div className="text-sm font-bold mb-0.5" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{role.role}</div>
-                <div className="text-xs font-bold font-mono" style={{ color: role.color }}>{role.user}</div>
-                <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{role.description}</div>
+                <div className="text-xs font-bold tabular-nums" style={{ color: role.color }}>{role.user}</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>{role.description}</div>
               </div>
               {i < SOD_ROLES.length - 1 && (
                 <div className="text-2xl font-bold" style={{ color: 'var(--pl-text-faint)' }}>{'\u2260'}</div>
@@ -306,13 +306,13 @@ export default function PaymentsPage() {
 
         {/* Approval Chain Flow */}
         <div className="mt-4 p-4 rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
             APPROVAL CHAIN
           </div>
           <div className="flex items-center justify-center gap-0">
             {APPROVAL_CHAIN.map((step, i) => (
               <div key={step.step} className="flex items-center">
-                <div className="px-4 py-2 rounded-lg text-xs font-bold font-mono"
+                <div className="px-4 py-2 rounded-lg text-xs font-bold tabular-nums"
                   style={{ background: `${step.color}15`, color: step.color, border: `1px solid ${step.color}30` }}>
                   {step.step}
                 </div>
@@ -328,7 +328,7 @@ export default function PaymentsPage() {
       {/* ═══════ SOX CONTROL MAPPING ═══════ */}
       <LightSectionCard title="SOX CONTROL MAPPING">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Control Objective', 'PROOFLINE Feature', 'Status'].map(h => (
@@ -367,12 +367,12 @@ export default function PaymentsPage() {
               <div className="text-sm font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                 Last exported {PAYROLL_EXPORT_STATUS.lastExported}
               </div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                 {PAYROLL_EXPORT_STATUS.totalRecords} records &middot; ${PAYROLL_EXPORT_STATUS.totalAmount.toLocaleString()} &middot; {PAYROLL_EXPORT_STATUS.format}
               </div>
             </div>
           </div>
-          <button className="px-4 py-2 rounded-lg text-xs font-bold font-mono transition-all"
+          <button className="px-4 py-2 rounded-lg text-xs font-bold tabular-nums transition-all"
             style={{ background: 'rgba(14,165,233,0.12)', color: ACCENT, border: `1px solid ${ACCENT}30` }}>
             EXPORT CURRENT PERIOD
           </button>
@@ -380,7 +380,7 @@ export default function PaymentsPage() {
 
         {/* Export preview table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Employee ID', 'Name', 'Earnings Code', 'Amount', 'Period', 'GL Code'].map(h => (
@@ -408,17 +408,17 @@ export default function PaymentsPage() {
         </div>
 
         {/* ADP mapping */}
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Target</div>
+            <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Target</div>
             <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{PAYROLL_EXPORT_STATUS.target}</div>
           </div>
           <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Format</div>
+            <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Format</div>
             <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{PAYROLL_EXPORT_STATUS.format}</div>
           </div>
           <div className="p-3 rounded-lg text-center" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-xs font-mono font-bold uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Schedule</div>
+            <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>Schedule</div>
             <div className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Biweekly (auto)</div>
           </div>
         </div>
@@ -426,29 +426,29 @@ export default function PaymentsPage() {
 
       {/* ═══════ BREAKAGE & RETURNS ═══════ */}
       <LightSectionCard title="BREAKAGE & RETURNS — CREDIT MEMOS">
-        <div className="mb-4 grid grid-cols-3 gap-3">
+        <div className="mb-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+            <div className="text-xl font-bold tabular-nums" style={{ color: '#F87171' }}>
               {CREDIT_MEMOS.length}
             </div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Credit memos (MTD)</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Credit memos (MTD)</div>
           </div>
           <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+            <div className="text-xl font-bold tabular-nums" style={{ color: '#F87171' }}>
               ${Math.abs(CREDIT_MEMOS.reduce((s, m) => s + m.amount, 0)).toFixed(2)}
             </div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total credit impact</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Total credit impact</div>
           </div>
           <div className="p-3 rounded-lg text-center" style={{ background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)' }}>
-            <div className="text-xl font-bold font-mono" style={{ color: '#F87171' }}>
+            <div className="text-xl font-bold tabular-nums" style={{ color: '#F87171' }}>
               {CREDIT_MEMOS.reduce((s, m) => s + m.cases, 0)}
             </div>
-            <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>Cases returned</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>Cases returned</div>
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['ID', 'Date', 'Rep', 'Product', 'Cases', 'Reason', 'Credit'].map(h => (
@@ -473,7 +473,7 @@ export default function PaymentsPage() {
           </table>
         </div>
 
-        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="mt-3 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           Credit memos reduce credited revenue for the affected rep. Commission adjustments applied in the next pay cycle. Out-of-code returns exceeding 2% of route volume trigger a FIFO rotation audit.
         </div>
       </LightSectionCard>

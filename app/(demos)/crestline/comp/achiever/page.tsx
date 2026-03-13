@@ -81,7 +81,7 @@ export default function AchieverProgram() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Achiever Program</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Achiever Program</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Tier progression, percentile ranking, and additive commission rates
         </p>
@@ -115,13 +115,13 @@ export default function AchieverProgram() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Threshold</span>
-                <span className="font-mono font-semibold" style={{ color: 'var(--pl-text)' }}>
+                <span className="tabular-nums font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {t.threshold > 0 ? `${t.threshold}%` : '--'}
                 </span>
               </div>
               <div className="flex justify-between text-xs">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Additive Rate</span>
-                <span className="font-mono font-semibold" style={{ color: t.color }}>
+                <span className="tabular-nums font-semibold" style={{ color: t.color }}>
                   {t.additiveRate > 0 ? `+${(t.additiveRate * 100).toFixed(1)}%` : '--'}
                 </span>
               </div>
@@ -139,14 +139,14 @@ export default function AchieverProgram() {
           <table className="w-full text-xs">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left pb-3 font-medium">Rank</th>
-                <th className="text-left pb-3 font-medium">Associate</th>
-                <th className="text-right pb-3 font-medium">YTD Sales</th>
-                <th className="text-right pb-3 font-medium">Target</th>
-                <th className="text-right pb-3 font-medium">Attainment</th>
-                <th className="text-center pb-3 font-medium">Tier</th>
-                <th className="text-right pb-3 font-medium">Percentile</th>
-                <th className="text-right pb-3 font-medium">To Next Tier</th>
+                <th className="text-left pb-3 font-semibold">Rank</th>
+                <th className="text-left pb-3 font-semibold">Associate</th>
+                <th className="text-right pb-3 font-semibold">YTD Sales</th>
+                <th className="text-right pb-3 font-semibold">Target</th>
+                <th className="text-right pb-3 font-semibold">Attainment</th>
+                <th className="text-center pb-3 font-semibold">Tier</th>
+                <th className="text-right pb-3 font-semibold">Percentile</th>
+                <th className="text-right pb-3 font-semibold">To Next Tier</th>
               </tr>
             </thead>
             <tbody>
@@ -157,22 +157,22 @@ export default function AchieverProgram() {
                   style={{ borderColor: 'var(--pl-stripe)', backgroundColor: selectedRep === a.id ? `${a.tier.color}06` : undefined }}
                   onClick={() => setSelectedRep(a.id)}
                 >
-                  <td className="py-2.5 font-mono font-medium" style={{ color: 'var(--pl-text-muted)' }}>#{i + 1}</td>
+                  <td className="py-2.5 tabular-nums font-medium" style={{ color: 'var(--pl-text-muted)' }}>#{i + 1}</td>
                   <td className="py-2.5">
                     <div>
                       <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{a.name}</span>
                       <span className="ml-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{a.storeId}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-right font-mono font-semibold" style={{ color: 'var(--pl-text)' }}>
+                  <td className="py-2.5 text-right tabular-nums font-semibold" style={{ color: 'var(--pl-text)' }}>
                     ${(a.ytdSales / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <td className="py-2.5 text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>
                     ${(a.ytdTarget / 1000).toFixed(0)}K
                   </td>
                   <td className="py-2.5 text-right">
                     <span
-                      className="font-mono font-bold"
+                      className="tabular-nums font-bold"
                       style={{ color: a.attainment >= 100 ? '#059669' : a.attainment >= 80 ? COLORS.accent : '#ef4444' }}
                     >
                       {a.attainment}%
@@ -187,9 +187,9 @@ export default function AchieverProgram() {
                     </span>
                   </td>
                   <td className="py-2.5 text-right">
-                    <span className="font-mono" style={{ color: 'var(--pl-text-secondary)' }}>P{a.percentile}</span>
+                    <span className="tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>P{a.percentile}</span>
                   </td>
-                  <td className="py-2.5 text-right font-mono" style={{ color: a.nextTier ? 'var(--pl-text-secondary)' : 'var(--pl-text-muted)' }}>
+                  <td className="py-2.5 text-right tabular-nums" style={{ color: a.nextTier ? 'var(--pl-text-secondary)' : 'var(--pl-text-muted)' }}>
                     {a.nextTier ? `$${(a.distanceToNext / 1000).toFixed(0)}K` : '--'}
                   </td>
                 </tr>
@@ -248,7 +248,7 @@ export default function AchieverProgram() {
               const barHeight = Math.min((p.pct / maxPct) * 100, 100);
               return (
                 <div key={p.month} className="flex-1 flex flex-col items-center">
-                  <span className="text-[10px] font-mono mb-1" style={{ color: p.tier.color }}>
+                  <span className="text-[10px] tabular-nums mb-1" style={{ color: p.tier.color }}>
                     {p.pct}%
                   </span>
                   <div className="w-full flex items-end" style={{ height: '140px' }}>
@@ -279,7 +279,7 @@ export default function AchieverProgram() {
               <div key={t.id} className="flex items-center gap-1.5 text-[10px]">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: t.color }} />
                 <span style={{ color: 'var(--pl-text-secondary)' }}>{t.label}</span>
-                <span className="font-mono" style={{ color: 'var(--pl-text-muted)' }}>{t.threshold}%</span>
+                <span className="tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{t.threshold}%</span>
               </div>
             ))}
           </div>

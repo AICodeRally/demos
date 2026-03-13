@@ -64,7 +64,7 @@ export default function ScenarioSimulatorPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Scenario Simulator</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Scenario Simulator</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Monte Carlo simulation engine — test assumptions before committing to quota targets
           </p>
@@ -87,7 +87,7 @@ export default function ScenarioSimulatorPage() {
 
           {/* Corporate Target */}
           <div>
-            <label className="text-xs font-medium uppercase tracking-wide mb-1.5 block" style={{ color: 'var(--prizym-text-muted)' }}>Corporate Target</label>
+            <label className="text-[11px] font-medium uppercase tracking-wide mb-1.5 block" style={{ color: 'var(--prizym-text-muted)' }}>Corporate Target</label>
             <div className="rounded-lg px-3 py-2.5 text-sm font-semibold" style={{ background: '#F8FAFC', border: '1px solid var(--prizym-border-default)', color: 'var(--prizym-text-primary)' }}>
               $28,500,000
             </div>
@@ -212,11 +212,11 @@ export default function ScenarioSimulatorPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="text-left py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Scenario</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Corporate Target</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Over-Assignment %</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Probability of Hit</th>
-                <th className="text-right py-3 px-4 font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Risk Score</th>
+                <th className="text-left py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Scenario</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Corporate Target</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Over-Assignment %</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Probability of Hit</th>
+                <th className="text-right py-3 px-4 font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Risk Score</th>
               </tr>
             </thead>
             <tbody>

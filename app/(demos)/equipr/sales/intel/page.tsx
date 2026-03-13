@@ -85,7 +85,7 @@ function fmtProjectValue(n: number): string {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -154,7 +154,7 @@ function AiScoreCircle({ score, color }: { score: number; color: string }) {
           transform="rotate(-90 26 26)" style={{ transition: 'stroke-dashoffset 0.6s ease' }}
         />
       </svg>
-      <span className="absolute text-[12px] font-bold font-mono" style={{ color }}>{score}</span>
+      <span className="absolute text-[12px] font-bold tabular-nums" style={{ color }}>{score}</span>
     </div>
   );
 }
@@ -172,7 +172,7 @@ function DataSourcePill({ name, color, status, recordCount }: {
       {Icon && <Icon size={13} style={{ color }} />}
       <div className="flex flex-col">
         <span className="text-[11px] font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{name}</span>
-        <span className="text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{recordCount}</span>
+        <span className="text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>{recordCount}</span>
       </div>
       <div
         className="h-2 w-2 rounded-full ml-auto flex-shrink-0"
@@ -210,7 +210,7 @@ function ActionCardRow({ card, rank, defaultExpanded }: {
               {meta.label}
             </span>
             <span
-              className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded"
+              className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded"
               style={{
                 background: card.timeWindow === 'Call now' || card.timeWindow === 'Today' ? 'rgba(239,68,68,0.1)' : 'rgba(100,116,139,0.08)',
                 color: card.timeWindow === 'Call now' || card.timeWindow === 'Today' ? '#DC2626' : '#64748B',
@@ -242,7 +242,7 @@ function ActionCardRow({ card, rank, defaultExpanded }: {
             )}
             <div className="flex items-center gap-1 ml-auto flex-wrap justify-end">
               {card.dataSources.map((src) => (
-                <span key={src} className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.04)', color: 'var(--prizym-text-muted)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <span key={src} className="text-[9px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.04)', color: 'var(--prizym-text-muted)', border: '1px solid rgba(0,0,0,0.06)' }}>
                   {src}
                 </span>
               ))}
@@ -252,8 +252,8 @@ function ActionCardRow({ card, rank, defaultExpanded }: {
         <div className="flex-shrink-0 flex flex-col items-end gap-2">
           <AiScoreCircle score={card.aiScore} color={meta.color} />
           <div className="text-right">
-            <div className="text-[9px] uppercase tracking-[1px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>Revenue</div>
-            <span className="text-[16px] font-bold font-mono" style={{ color: '#059669' }}>{fmtDollar(card.revenuePotential)}</span>
+            <div className="text-[9px] uppercase tracking-[1px] font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Revenue</div>
+            <span className="text-[16px] font-bold tabular-nums" style={{ color: '#059669' }}>{fmtDollar(card.revenuePotential)}</span>
           </div>
           <div className="flex items-center gap-1 text-[11px] font-semibold cursor-pointer px-3 py-1.5 rounded-lg" style={{ color: '#2563EB', background: 'rgba(37,99,235,0.08)', border: '1px solid rgba(37,99,235,0.2)' }}>
             {card.callToAction}
@@ -289,7 +289,7 @@ export default function SalesIntelPage() {
           </p>
           <SourceBadge source="Dodge Construction + 5 Sources" synced="2 min ago" />
         </div>
-        <div className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg" style={{ background: 'rgba(245,158,11,0.12)', color: '#D97706', border: '1px solid rgba(245,158,11,0.25)' }}>
+        <div className="text-[12px] font-medium px-3 py-1.5 rounded-lg" style={{ background: 'rgba(245,158,11,0.12)', color: '#D97706', border: '1px solid rgba(245,158,11,0.25)' }}>
           Feb 26, 2026
         </div>
       </div>
@@ -301,7 +301,7 @@ export default function SalesIntelPage() {
           <h2 className="text-[13px] font-bold" style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
             Data Fusion Pipeline
           </h2>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(16,185,129,0.1)', color: '#059669', border: '1px solid rgba(16,185,129,0.2)' }}>
+          <span className="text-[10px] px-2 py-0.5 rounded" style={{ background: 'rgba(16,185,129,0.1)', color: '#059669', border: '1px solid rgba(16,185,129,0.2)' }}>
             5 of 6 live
           </span>
         </div>
@@ -316,13 +316,13 @@ export default function SalesIntelPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="relative rounded-xl p-5 transition-shadow hover:shadow-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
           <div className="absolute top-4 left-0 w-[3px] h-8 rounded-r" style={{ background: '#2563EB' }} />
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1" style={{ color: 'var(--prizym-text-muted)' }}>Revenue Potential</div>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1" style={{ color: 'var(--prizym-text-muted)' }}>Revenue Potential</div>
           <span className="text-2xl font-bold" style={{ color: '#2563EB', fontFamily: "'Space Grotesk', sans-serif" }}>$1.21M</span>
           <div className="text-[11px] mt-1.5 flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}><DollarSign size={11} /> Across today&apos;s 10 actions</div>
         </div>
         <div className="relative rounded-xl p-5 transition-shadow hover:shadow-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid rgba(16,185,129,0.25)', boxShadow: '0 0 16px rgba(16,185,129,0.06), var(--prizym-shadow-card)' }}>
           <div className="absolute top-4 left-0 w-[3px] h-8 rounded-r" style={{ background: '#10B981' }} />
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1" style={{ color: 'var(--prizym-text-muted)' }}>AI Actions Today</div>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1" style={{ color: 'var(--prizym-text-muted)' }}>AI Actions Today</div>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold" style={{ color: '#10B981', fontFamily: "'Space Grotesk', sans-serif" }}>{TERRITORY_KPIS.aiActionsToday}</span>
             <span className="relative flex h-2.5 w-2.5">
@@ -334,13 +334,13 @@ export default function SalesIntelPage() {
         </div>
         <div className="relative rounded-xl p-5 transition-shadow hover:shadow-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
           <div className="absolute top-4 left-0 w-[3px] h-8 rounded-r" style={{ background: '#8B5CF6' }} />
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1" style={{ color: 'var(--prizym-text-muted)' }}>New Projects This Week</div>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1" style={{ color: 'var(--prizym-text-muted)' }}>New Projects This Week</div>
           <span className="text-2xl font-bold" style={{ color: '#8B5CF6', fontFamily: "'Space Grotesk', sans-serif" }}>{TERRITORY_KPIS.newProjectsThisWeek}</span>
           <div className="text-[11px] mt-1.5 flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}><Building2 size={11} /> From Dodge Construction</div>
         </div>
         <div className="relative rounded-xl p-5 transition-shadow hover:shadow-lg" style={{ background: 'var(--prizym-card-bg)', border: '1px solid rgba(245,158,11,0.25)', boxShadow: 'var(--prizym-shadow-card)' }}>
           <div className="absolute top-4 left-0 w-[3px] h-8 rounded-r" style={{ background: '#F59E0B' }} />
-          <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1" style={{ color: 'var(--prizym-text-muted)' }}>Weather Alerts</div>
+          <div className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1" style={{ color: 'var(--prizym-text-muted)' }}>Weather Alerts</div>
           <span className="text-2xl font-bold" style={{ color: '#F59E0B', fontFamily: "'Space Grotesk', sans-serif" }}>{TERRITORY_KPIS.weatherAlerts}</span>
           <div className="text-[11px] mt-1.5 flex items-center gap-1" style={{ color: 'var(--prizym-text-muted)' }}><AlertTriangle size={11} /> Impacting active contracts</div>
         </div>
@@ -368,11 +368,11 @@ export default function SalesIntelPage() {
               Integration Timeline
             </h3>
             <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: '#EF4444' }}>
+              <span className="flex items-center gap-1.5 text-[10px]" style={{ color: '#EF4444' }}>
                 <span className="h-2.5 w-6 rounded" style={{ background: 'rgba(239,68,68,0.3)' }} />
                 Traditional: {TRADITIONAL_TOTAL_WEEKS} weeks
               </span>
-              <span className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: '#10B981' }}>
+              <span className="flex items-center gap-1.5 text-[10px]" style={{ color: '#10B981' }}>
                 <span className="h-2.5 w-6 rounded" style={{ background: 'rgba(16,185,129,0.4)' }} />
                 EQUIPR: {EQUIPR_TOTAL_WEEKS} weeks
               </span>
@@ -398,16 +398,16 @@ export default function SalesIntelPage() {
                     {/* Traditional bar */}
                     <div className="flex items-center gap-2">
                       <div className="h-4 rounded flex items-center px-2" style={{ width: `${tradPct}%`, minWidth: 40, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.25)' }}>
-                        <span className="text-[9px] font-mono font-medium" style={{ color: '#DC2626' }}>{phase.traditionalWeeks}w</span>
+                        <span className="text-[9px] font-medium" style={{ color: '#DC2626' }}>{phase.traditionalWeeks}w</span>
                       </div>
-                      <span className="text-[9px] font-mono truncate hidden lg:block" style={{ color: 'var(--prizym-text-muted)', maxWidth: 200 }}>{phase.traditionalRisk}</span>
+                      <span className="text-[9px] truncate hidden lg:block" style={{ color: 'var(--prizym-text-muted)', maxWidth: 200 }}>{phase.traditionalRisk}</span>
                     </div>
                     {/* EQUIPR bar */}
                     <div className="flex items-center gap-2">
                       <div className="h-4 rounded flex items-center px-2" style={{ width: `${equiprPct}%`, minWidth: 40, background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.35)' }}>
-                        <span className="text-[9px] font-mono font-medium" style={{ color: '#059669' }}>{phase.equiprWeeks}w</span>
+                        <span className="text-[9px] font-medium" style={{ color: '#059669' }}>{phase.equiprWeeks}w</span>
                       </div>
-                      <span className="text-[9px] font-mono truncate hidden lg:block" style={{ color: '#059669', maxWidth: 200 }}>{phase.equiprAdvantage}</span>
+                      <span className="text-[9px] truncate hidden lg:block" style={{ color: '#059669', maxWidth: 200 }}>{phase.equiprAdvantage}</span>
                     </div>
                   </div>
                 </div>
@@ -417,9 +417,9 @@ export default function SalesIntelPage() {
 
           {/* Summary callout */}
           <div className="flex items-center justify-center gap-3 mt-4 py-2.5 rounded-lg" style={{ background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.15)' }}>
-            <span className="text-[13px] font-mono line-through" style={{ color: '#94A3B8' }}>{TRADITIONAL_TOTAL_WEEKS} weeks</span>
+            <span className="text-[13px] line-through" style={{ color: '#94A3B8' }}>{TRADITIONAL_TOTAL_WEEKS} weeks</span>
             <ArrowRight size={14} style={{ color: '#8B5CF6' }} />
-            <span className="text-[13px] font-bold font-mono" style={{ color: '#8B5CF6' }}>{EQUIPR_TOTAL_WEEKS} weeks</span>
+            <span className="text-[13px] font-bold tabular-nums" style={{ color: '#8B5CF6' }}>{EQUIPR_TOTAL_WEEKS} weeks</span>
             <span className="text-[11px] font-bold px-2 py-0.5 rounded" style={{ background: 'rgba(139,92,246,0.12)', color: '#8B5CF6' }}>
               {Math.round(((TRADITIONAL_TOTAL_WEEKS - EQUIPR_TOTAL_WEEKS) / TRADITIONAL_TOTAL_WEEKS) * 100)}% faster
             </span>
@@ -435,7 +435,7 @@ export default function SalesIntelPage() {
             <h3 className="text-[13px] font-bold" style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
               Account Merge Tracker
             </h3>
-            <span className="text-[10px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+            <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>
               {ACQUISITION_SCENARIO.fromSystem} → {ACQUISITION_SCENARIO.toSystem}
             </span>
           </div>
@@ -460,17 +460,17 @@ export default function SalesIntelPage() {
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="text-[13px] font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{acct.customer}</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB', border: '1px solid rgba(37,99,235,0.15)' }}>{acct.systemA}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB', border: '1px solid rgba(37,99,235,0.15)' }}>{acct.systemA}</span>
                     <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>+</span>
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.08)', color: '#D97706', border: '1px solid rgba(245,158,11,0.15)' }}>{acct.systemB}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.08)', color: '#D97706', border: '1px solid rgba(245,158,11,0.15)' }}>{acct.systemB}</span>
                     {acct.systemC && (
                       <>
                         <span className="text-[10px]" style={{ color: 'var(--prizym-text-muted)' }}>+</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(139,92,246,0.08)', color: '#7C3AED', border: '1px solid rgba(139,92,246,0.15)' }}>{acct.systemC}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(139,92,246,0.08)', color: '#7C3AED', border: '1px solid rgba(139,92,246,0.15)' }}>{acct.systemC}</span>
                       </>
                     )}
                   </div>
-                  <span className="text-[10px] font-mono ml-auto" style={{ color: 'var(--prizym-text-muted)' }}>{acct.confidence}% confidence</span>
+                  <span className="text-[10px] ml-auto" style={{ color: 'var(--prizym-text-muted)' }}>{acct.confidence}% confidence</span>
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: statusMeta.bg, color: statusMeta.color }}>
                     <StatusIcon size={10} />
                     {statusMeta.label}
@@ -500,11 +500,11 @@ export default function SalesIntelPage() {
             <p className="text-[12px] leading-relaxed mb-3" style={{ color: 'var(--prizym-text-secondary)' }}>{COMP_STABILIZATION.industry.description}</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg px-3 py-2.5" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
-                <div className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Monthly Variance</div>
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#EF4444' }}>{COMP_STABILIZATION.industry.monthlyVariance}</span>
+                <div className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Monthly Variance</div>
+                <span className="text-[14px] font-bold tabular-nums" style={{ color: '#EF4444' }}>{COMP_STABILIZATION.industry.monthlyVariance}</span>
               </div>
               <div className="rounded-lg px-3 py-2.5" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
-                <div className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Rep Motivation</div>
+                <div className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Rep Motivation</div>
                 <span className="text-[12px] font-bold" style={{ color: '#EF4444' }}>{COMP_STABILIZATION.industry.repMotivation}</span>
               </div>
             </div>
@@ -529,11 +529,11 @@ export default function SalesIntelPage() {
             <p className="text-[12px] leading-relaxed mb-3" style={{ color: 'var(--prizym-text-secondary)' }}>{COMP_STABILIZATION.equipr.description}</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg px-3 py-2.5" style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.12)' }}>
-                <div className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Monthly Variance</div>
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#059669' }}>{COMP_STABILIZATION.equipr.monthlyVariance}</span>
+                <div className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Monthly Variance</div>
+                <span className="text-[14px] font-bold tabular-nums" style={{ color: '#059669' }}>{COMP_STABILIZATION.equipr.monthlyVariance}</span>
               </div>
               <div className="rounded-lg px-3 py-2.5" style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.12)' }}>
-                <div className="text-[10px] uppercase tracking-[1px] font-mono mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Rep Motivation</div>
+                <div className="text-[10px] uppercase tracking-[1px] font-semibold mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Rep Motivation</div>
                 <span className="text-[12px] font-bold" style={{ color: '#059669' }}>{COMP_STABILIZATION.equipr.repMotivation}</span>
               </div>
             </div>
@@ -560,19 +560,19 @@ export default function SalesIntelPage() {
           {/* Column headers */}
           <div className="grid gap-0" style={{ gridTemplateColumns: '1.5fr 1fr 1fr 1fr' }}>
             <div className="px-4 py-3" style={{ background: '#F3F4F6', borderBottom: '1px solid var(--prizym-border-default)' }}>
-              <span className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold" style={{ color: 'var(--prizym-text-muted)' }}>Task</span>
+              <span className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums" style={{ color: 'var(--prizym-text-muted)' }}>Task</span>
             </div>
             <div className="px-4 py-3 text-center" style={{ background: 'rgba(16,185,129,0.06)', borderBottom: '2px solid #10B981' }}>
-              <span className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold" style={{ color: '#059669' }}>Legacy</span>
-              <div className="text-[9px] font-mono" style={{ color: '#059669' }}>It worked</div>
+              <span className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums" style={{ color: '#059669' }}>Legacy</span>
+              <div className="text-[9px]" style={{ color: '#059669' }}>It worked</div>
             </div>
             <div className="px-4 py-3 text-center" style={{ background: 'rgba(239,68,68,0.04)', borderBottom: '2px solid #EF4444' }}>
-              <span className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold" style={{ color: '#DC2626' }}>Current CRM</span>
-              <div className="text-[9px] font-mono" style={{ color: '#DC2626' }}>The problem</div>
+              <span className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums" style={{ color: '#DC2626' }}>Current CRM</span>
+              <div className="text-[9px]" style={{ color: '#DC2626' }}>The problem</div>
             </div>
             <div className="px-4 py-3 text-center" style={{ background: 'rgba(37,99,235,0.04)', borderBottom: '2px solid #2563EB' }}>
-              <span className="text-[10px] uppercase tracking-[1.5px] font-mono font-bold" style={{ color: '#2563EB' }}>EQUIPR</span>
-              <div className="text-[9px] font-mono" style={{ color: '#2563EB' }}>The fix</div>
+              <span className="text-[10px] uppercase tracking-[1.5px] font-bold tabular-nums" style={{ color: '#2563EB' }}>EQUIPR</span>
+              <div className="text-[9px]" style={{ color: '#2563EB' }}>The fix</div>
             </div>
           </div>
 
@@ -591,16 +591,16 @@ export default function SalesIntelPage() {
                 <span className="text-[13px] font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{task.task}</span>
               </div>
               <div className="px-4 py-3 text-center">
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#059669' }}>{task.legacy.time}</span>
-                <div className="text-[9px] font-mono mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.legacy.system}</div>
+                <span className="text-[14px] font-bold tabular-nums" style={{ color: '#059669' }}>{task.legacy.time}</span>
+                <div className="text-[9px] mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.legacy.system}</div>
               </div>
               <div className="px-4 py-3 text-center" style={{ background: 'rgba(239,68,68,0.03)' }}>
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#DC2626' }}>{task.current.time}</span>
-                <div className="text-[9px] font-mono mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.current.system}</div>
+                <span className="text-[14px] font-bold tabular-nums" style={{ color: '#DC2626' }}>{task.current.time}</span>
+                <div className="text-[9px] mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.current.system}</div>
               </div>
               <div className="px-4 py-3 text-center" style={{ background: 'rgba(37,99,235,0.03)' }}>
-                <span className="text-[14px] font-bold font-mono" style={{ color: '#2563EB' }}>{task.equipr.time}</span>
-                <div className="text-[9px] font-mono mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.equipr.method}</div>
+                <span className="text-[14px] font-bold tabular-nums" style={{ color: '#2563EB' }}>{task.equipr.time}</span>
+                <div className="text-[9px] mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>{task.equipr.method}</div>
               </div>
             </div>
           ))}
@@ -614,15 +614,15 @@ export default function SalesIntelPage() {
               className="rounded-xl p-4"
               style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}
             >
-              <div className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--prizym-text-muted)' }}>
+              <div className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2" style={{ color: 'var(--prizym-text-muted)' }}>
                 {metric.label}
               </div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-mono font-medium" style={{ color: '#059669' }}>{metric.legacy.value}</span>
+                <span className="text-[11px] font-medium" style={{ color: '#059669' }}>{metric.legacy.value}</span>
                 <ArrowRight size={10} style={{ color: '#EF4444' }} />
-                <span className="text-[11px] font-mono font-medium" style={{ color: '#DC2626' }}>{metric.current.value}</span>
+                <span className="text-[11px] font-medium" style={{ color: '#DC2626' }}>{metric.current.value}</span>
                 <ArrowRight size={10} style={{ color: '#2563EB' }} />
-                <span className="text-[11px] font-mono font-bold" style={{ color: '#2563EB' }}>{metric.equipr.value}</span>
+                <span className="text-[11px] font-bold tabular-nums" style={{ color: '#2563EB' }}>{metric.equipr.value}</span>
               </div>
               {/* Mini bar chart: 3 bars */}
               <div className="flex items-end gap-1 h-6">
@@ -676,7 +676,7 @@ export default function SalesIntelPage() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{source.leadsPerWeek} leads/wk</span>
+                  <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>{source.leadsPerWeek} leads/wk</span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ background: `${source.color}12`, color: source.color, border: `1px solid ${source.color}25` }}>
                     {source.daysEarlier} days earlier
                   </span>
@@ -694,7 +694,7 @@ export default function SalesIntelPage() {
           <h3 className="text-[13px] font-bold mb-4" style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
             Pipeline Conversion: Manual vs EQUIPR
           </h3>
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {PIPELINE_STAGES.map((stage, i) => (
               <div key={stage.stage} className="text-center">
                 <div className="text-[10px] font-bold mb-2" style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -711,10 +711,10 @@ export default function SalesIntelPage() {
                     style={{ height: `${(stage.equiprConversion / 100) * 64}px`, background: 'rgba(8,145,178,0.4)', border: '1px solid rgba(8,145,178,0.5)' }}
                   />
                 </div>
-                <div className="text-[10px] font-mono" style={{ color: '#64748B' }}>{stage.manualConversion}%</div>
-                <div className="text-[10px] font-mono font-bold" style={{ color: '#0891B2' }}>{stage.equiprConversion}%</div>
+                <div className="text-[10px]" style={{ color: '#64748B' }}>{stage.manualConversion}%</div>
+                <div className="text-[10px] font-bold tabular-nums" style={{ color: '#0891B2' }}>{stage.equiprConversion}%</div>
                 {i < PIPELINE_STAGES.length - 1 && stage.equiprDays > 0 && (
-                  <div className="text-[9px] font-mono mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
+                  <div className="text-[9px] mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
                     Day {stage.manualDays} → {stage.equiprDays}
                   </div>
                 )}
@@ -722,10 +722,10 @@ export default function SalesIntelPage() {
             ))}
           </div>
           <div className="flex items-center justify-center gap-4 mt-3 pt-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-            <span className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: '#64748B' }}>
+            <span className="flex items-center gap-1.5 text-[10px]" style={{ color: '#64748B' }}>
               <span className="h-2.5 w-4 rounded" style={{ background: 'rgba(100,116,139,0.25)' }} /> Manual
             </span>
-            <span className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: '#0891B2' }}>
+            <span className="flex items-center gap-1.5 text-[10px]" style={{ color: '#0891B2' }}>
               <span className="h-2.5 w-4 rounded" style={{ background: 'rgba(8,145,178,0.4)' }} /> EQUIPR
             </span>
           </div>
@@ -750,7 +750,7 @@ export default function SalesIntelPage() {
         >
           {/* Header */}
           <div
-            className="grid gap-2 px-5 py-2.5 text-[10px] uppercase tracking-[1.5px] font-mono"
+            className="grid gap-2 px-5 py-2.5 text-[10px] uppercase tracking-[1.5px] font-semibold"
             style={{ gridTemplateColumns: '1.5fr 1.2fr 0.8fr 0.6fr 0.6fr', color: 'var(--prizym-text-muted)', background: '#F3F4F6', borderBottom: '1px solid var(--prizym-border-default)' }}
           >
             <div>Equipment</div>
@@ -777,7 +777,7 @@ export default function SalesIntelPage() {
               >
                 <div className="text-[13px] font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{row.equipment}</div>
                 <div>
-                  <div className="flex items-center gap-2 text-[11px] font-mono mb-1">
+                  <div className="flex items-center gap-2 text-[11px] mb-1">
                     <span style={{ color: 'var(--prizym-text-muted)' }}>${row.marketLow}</span>
                     <span style={{ color: 'var(--prizym-text-muted)' }}>—</span>
                     <span style={{ color: 'var(--prizym-text-muted)' }}>${row.marketHigh}</span>
@@ -792,8 +792,8 @@ export default function SalesIntelPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[14px] font-bold font-mono" style={{ color: 'var(--prizym-text-primary)' }}>${row.yourRate}</span>
-                  <div className="text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>±${row.cstStep} step</div>
+                  <span className="text-[14px] font-bold tabular-nums" style={{ color: 'var(--prizym-text-primary)' }}>${row.yourRate}</span>
+                  <div className="text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>±${row.cstStep} step</div>
                 </div>
                 <div className="text-center">
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: signal.bg, color: signal.text }}>
@@ -806,7 +806,7 @@ export default function SalesIntelPage() {
                       <AlertTriangle size={10} /> LOW
                     </span>
                   ) : (
-                    <span className="text-[10px] font-mono" style={{ color: '#10B981' }}>OK</span>
+                    <span className="text-[10px]" style={{ color: '#10B981' }}>OK</span>
                   )}
                 </div>
               </div>
@@ -826,13 +826,13 @@ export default function SalesIntelPage() {
             {COMMISSION_TIERS.map((tier) => (
               <div
                 key={tier.label}
-                className="flex-1 rounded-lg p-3 text-center"
+                className="flex-1 rounded-xl p-3 text-center"
                 style={{ background: tier.bgColor, border: `1px solid ${tier.color}25` }}
               >
-                <div className="text-[18px] font-bold font-mono mb-1" style={{ color: tier.color, fontFamily: "'Space Grotesk', sans-serif" }}>
+                <div className="text-[18px] font-bold tabular-nums mb-1" style={{ color: tier.color, fontFamily: "'Space Grotesk', sans-serif" }}>
                   {tier.rate}
                 </div>
-                <div className="text-[10px] font-mono font-medium" style={{ color: tier.color }}>{tier.range}</div>
+                <div className="text-[10px] font-medium" style={{ color: tier.color }}>{tier.range}</div>
                 <div className="text-[9px] mt-1" style={{ color: 'var(--prizym-text-muted)' }}>{tier.label}</div>
                 {tier.alert && (
                   <div className="flex items-center justify-center gap-1 mt-1.5 text-[9px] font-bold" style={{ color: '#DC2626' }}>
@@ -852,11 +852,11 @@ export default function SalesIntelPage() {
             <h2 className="text-[15px] font-bold" style={{ color: 'var(--prizym-text-primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
               Your Top 10 Moves Today
             </h2>
-            <span className="text-[10px] font-mono font-medium px-2.5 py-1 rounded-lg" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB', border: '1px solid rgba(37,99,235,0.15)' }}>
+            <span className="text-[10px] font-medium px-2.5 py-1 rounded-lg" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB', border: '1px solid rgba(37,99,235,0.15)' }}>
               Sorted by AI Revenue Score
             </span>
           </div>
-          <div className="flex items-center gap-3 text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+          <div className="flex items-center gap-3 text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
             {(Object.entries(ACTION_TYPE_META) as [ActionType, typeof ACTION_TYPE_META[ActionType]][]).map(([key, meta]) => (
               <span key={key} className="flex items-center gap-1">
                 <span className="h-2 w-2 rounded-full" style={{ background: meta.color }} />
@@ -891,27 +891,27 @@ export default function SalesIntelPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
             <div className="rounded-lg px-4 py-3 text-center" style={{ background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.15)' }}>
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-[16px] font-mono line-through" style={{ color: '#94A3B8' }}>{TRADITIONAL_TOTAL_WEEKS} weeks</span>
+                <span className="text-[16px] line-through" style={{ color: '#94A3B8' }}>{TRADITIONAL_TOTAL_WEEKS} weeks</span>
                 <ArrowRight size={14} style={{ color: '#8B5CF6' }} />
-                <span className="text-[20px] font-bold font-mono" style={{ color: '#8B5CF6' }}>{EQUIPR_TOTAL_WEEKS} weeks</span>
+                <span className="text-[20px] font-bold tabular-nums" style={{ color: '#8B5CF6' }}>{EQUIPR_TOTAL_WEEKS} weeks</span>
               </div>
-              <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>M&A integration</span>
+              <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>M&A integration</span>
             </div>
             <div className="rounded-lg px-4 py-3 text-center" style={{ background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.12)' }}>
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-[16px] font-mono line-through" style={{ color: '#94A3B8' }}>10 min</span>
+                <span className="text-[16px] line-through" style={{ color: '#94A3B8' }}>10 min</span>
                 <ArrowRight size={14} style={{ color: '#2563EB' }} />
-                <span className="text-[20px] font-bold font-mono" style={{ color: '#2563EB' }}>30 sec</span>
+                <span className="text-[20px] font-bold tabular-nums" style={{ color: '#2563EB' }}>30 sec</span>
               </div>
-              <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>CRM task time</span>
+              <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>CRM task time</span>
             </div>
             <div className="rounded-lg px-4 py-3 text-center" style={{ background: 'rgba(8,145,178,0.06)', border: '1px solid rgba(8,145,178,0.12)' }}>
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-[16px] font-mono line-through" style={{ color: '#94A3B8' }}>Portal</span>
+                <span className="text-[16px] line-through" style={{ color: '#94A3B8' }}>Portal</span>
                 <ArrowRight size={14} style={{ color: '#0891B2' }} />
-                <span className="text-[20px] font-bold font-mono" style={{ color: '#0891B2' }}>6am push</span>
+                <span className="text-[20px] font-bold tabular-nums" style={{ color: '#0891B2' }}>6am push</span>
               </div>
-              <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>Lead intelligence</span>
+              <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>Lead intelligence</span>
             </div>
           </div>
 

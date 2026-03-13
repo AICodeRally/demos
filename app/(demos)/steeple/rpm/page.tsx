@@ -230,19 +230,19 @@ export default function ReportsPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Report Name
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Type
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Generated
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Status
                   </th>
-                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Actions
                   </th>
                 </tr>

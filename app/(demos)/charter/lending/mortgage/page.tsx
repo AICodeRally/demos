@@ -34,14 +34,14 @@ export default function MortgageCenter() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Mortgage Center</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Mortgage Center</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Rate lock pipeline, origination metrics, and revenue analysis
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Rate Lock Pipeline" value="$28M" trend="up" trendValue="+15%" color="#475569" />
         <StatCard label="Avg Rate" value="6.75%" trend="up" trendValue="+12bps" color="#B87333" />
         <StatCard label="Apps in Progress" value="142" trend="up" trendValue="+18 this week" color="#475569" />
@@ -58,7 +58,7 @@ export default function MortgageCenter() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold" style={{ color: '#1C1917' }}>Origination Volume by Month ($M)</h2>
-          <span className="text-xs font-mono" style={{ color: '#B87333' }}>Peak: Aug $42M</span>
+          <span className="text-xs tabular-nums" style={{ color: '#B87333' }}>Peak: Aug $42M</span>
         </div>
         <BarChart data={ORIGINATION_VOLUME} unit="M" maxVal={50} />
       </div>

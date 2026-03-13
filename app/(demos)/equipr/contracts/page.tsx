@@ -36,7 +36,7 @@ function capitalize(s: string): string {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -90,49 +90,49 @@ export default function ContractsPage() {
                 }}
               >
                 <th
-                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Contract #
                 </th>
                 <th
-                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Customer
                 </th>
                 <th
-                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold max-w-[200px]"
+                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold max-w-[200px]"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Items
                 </th>
                 <th
-                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Start
                 </th>
                 <th
-                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-left px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   End
                 </th>
                 <th
-                  className="text-right px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-right px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Value
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-center px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Signature
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                  className="text-center px-4 py-3 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Deposit
@@ -155,7 +155,7 @@ export default function ContractsPage() {
                     {/* Contract # */}
                     <td className="px-4 py-3">
                       <span
-                        className="font-mono font-medium"
+                        className="font-semibold"
                         style={{ color: '#2563EB' }}
                       >
                         {contract.id}

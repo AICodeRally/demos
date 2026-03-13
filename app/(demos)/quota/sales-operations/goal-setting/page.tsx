@@ -64,7 +64,7 @@ export default function GoalSettingPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Goal Setting & Cascading</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Goal Setting & Cascading</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Set company-wide goals and cascade targets through teams to individual contributors.
           </p>
@@ -84,7 +84,7 @@ export default function GoalSettingPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -131,7 +131,7 @@ export default function GoalSettingPage() {
               const att = t.actual / t.goal;
               const color = att >= 0.90 ? '#34d399' : att >= 0.75 ? '#f59e0b' : '#ef4444';
               return (
-                <div key={t.team} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                <div key={t.team} className="rounded-xl p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <Layers className="h-4 w-4 text-amber-400" />
@@ -142,15 +142,15 @@ export default function GoalSettingPage() {
                   <div className="space-y-1.5 text-xs mb-3">
                     <div className="flex justify-between">
                       <span style={{ color: 'var(--prizym-text-muted)' }}>Goal</span>
-                      <span className="font-mono font-semibold">{fmtDollar(t.goal)}</span>
+                      <span className="tabular-nums font-semibold">{fmtDollar(t.goal)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span style={{ color: 'var(--prizym-text-muted)' }}>Stretch</span>
-                      <span className="font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{fmtDollar(t.stretch)}</span>
+                      <span className="tabular-nums" style={{ color: 'var(--prizym-text-muted)' }}>{fmtDollar(t.stretch)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span style={{ color: 'var(--prizym-text-muted)' }}>Actual</span>
-                      <span className="font-mono">{fmtDollar(t.actual)}</span>
+                      <span className="tabular-nums">{fmtDollar(t.actual)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span style={{ color: 'var(--prizym-text-muted)' }}>Attainment</span>
@@ -170,7 +170,7 @@ export default function GoalSettingPage() {
           </div>
 
           {/* Individual Level */}
-          <div className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+          <div className="rounded-xl p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
             <div className="flex items-center gap-2 mb-3">
               <Users className="h-4 w-4 text-amber-400" />
               <span className="font-semibold text-sm" style={{ color: 'var(--prizym-text-primary)' }}>Individual Targets ({individualTargets.length} reps)</span>
@@ -233,7 +233,7 @@ export default function GoalSettingPage() {
               const isComplete = m.status === 'complete';
               const isCurrent = m.status === 'current';
               return (
-                <div key={m.quarter} className={`rounded-lg p-4 ${isCurrent ? 'border-amber-400/30 bg-amber-400/[0.05]' : ''}`} style={isCurrent ? { border: '1px solid rgba(251,191,36,0.3)' } : { background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+                <div key={m.quarter} className={`rounded-xl p-4 ${isCurrent ? 'border-amber-400/30 bg-amber-400/[0.05]' : ''}`} style={isCurrent ? { border: '1px solid rgba(251,191,36,0.3)' } : { background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {isComplete && <CheckCircle2 className="h-4 w-4 text-emerald-600" />}
@@ -292,9 +292,9 @@ export default function GoalSettingPage() {
             <tbody>
               <tr className="bg-amber-400/[0.03]" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                 <td className="py-3 pr-4 font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>Company</td>
-                <td className="py-3 pr-4 text-right font-mono">{fmtDollar(companyGoal)}</td>
-                <td className="py-3 pr-4 text-right font-mono">{fmtDollar(companyActual)}</td>
-                <td className="py-3 pr-4 text-right font-mono text-red-600">{fmtDollar(companyGoal - companyActual)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{fmtDollar(companyGoal)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{fmtDollar(companyActual)}</td>
+                <td className="py-3 pr-4 text-right tabular-nums text-red-600">{fmtDollar(companyGoal - companyActual)}</td>
                 <td className="py-3 pr-4 text-right font-semibold text-amber-400">{fmtPct(companyAtt * 100)}</td>
                 <td className="py-3 text-center">
                   <span className="px-2 py-0.5 rounded-full text-xs border border-amber-400/30 bg-amber-400/10 text-amber-400">On Pace</span>
@@ -307,9 +307,9 @@ export default function GoalSettingPage() {
                 return (
                   <tr key={t.team} style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                     <td className="py-3 pr-4 pl-6" style={{ color: 'var(--prizym-text-muted)' }}>{t.team}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.goal)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(t.actual)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs text-red-600">{gap > 0 ? fmtDollar(gap) : '--'}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(t.goal)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(t.actual)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs text-red-600">{gap > 0 ? fmtDollar(gap) : '--'}</td>
                     <td className={`py-3 pr-4 text-right font-semibold ${color}`}>{fmtPct(att * 100)}</td>
                     <td className="py-3 text-center">
                       <span className={`px-2 py-0.5 rounded-full text-xs border ${att >= 0.90 ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-600' : att >= 0.75 ? 'border-amber-400/30 bg-amber-400/10 text-amber-400' : 'border-red-400/30 bg-red-400/10 text-red-600'}`}>

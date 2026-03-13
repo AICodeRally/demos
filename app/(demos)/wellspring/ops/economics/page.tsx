@@ -49,12 +49,12 @@ export default function OpsEconomicsPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#0D9488' }}
         >
           Act 4 &middot; Operations Manager
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Well Economics
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -102,31 +102,31 @@ export default function OpsEconomicsPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #334155' }}>
-                <th className="text-left py-2 font-medium" style={{ color: '#94A3B8' }}>Well</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Revenue</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>LOE</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Net</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>IRR %</th>
-                <th className="text-right py-2 font-medium" style={{ color: '#94A3B8' }}>Payout (mo)</th>
+                <th className="text-left py-2 font-semibold" style={{ color: '#94A3B8' }}>Well</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Revenue</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>LOE</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Net</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>IRR %</th>
+                <th className="text-right py-2 font-semibold" style={{ color: '#94A3B8' }}>Payout (mo)</th>
               </tr>
             </thead>
             <tbody>
               {WELL_ECONOMICS.map((w, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #252B36' }}>
                   <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{w.name}</td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                     ${(w.revenue / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#DC2626' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#DC2626' }}>
                     ${(w.loe / 1000).toFixed(1)}K
                   </td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: '#059669' }}>
+                  <td className="py-2 text-right tabular-nums font-bold" style={{ color: '#059669' }}>
                     ${(w.net / 1000).toFixed(0)}K
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#0D9488' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#0D9488' }}>
                     {w.irr}%
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#94A3B8' }}>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#94A3B8' }}>
                     {w.payout}
                   </td>
                 </tr>

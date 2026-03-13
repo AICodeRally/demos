@@ -497,13 +497,13 @@ export default function ProductArchitecturePage() {
         border: '1px solid rgba(249,115,22,0.25)',
       }}>
         <div className="p-8">
-          <div className="text-xs font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="text-xs mb-3" style={{ color: 'var(--pl-text-faint)' }}>
             Platform &amp; Integrations / Product Architecture
           </div>
-          <h1 className="text-2xl font-extrabold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+          <h1 className="text-3xl font-extrabold mb-2" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             PROOFLINE Product Architecture
           </h1>
-          <p className="text-sm font-mono leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
             Six modules, one data spine, zero spreadsheets
           </p>
         </div>
@@ -514,7 +514,7 @@ export default function ProductArchitecturePage() {
       </div>
 
       {/* ═══════ KPI ROW ═══════ */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         <LightKpiCard
           label="Modules"
           value="6"
@@ -557,7 +557,7 @@ export default function ProductArchitecturePage() {
 
       {/* ═══════ MODULE MAP ═══════ */}
       <LightSectionCard title="MODULE MAP">
-        <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-faint)' }}>
           Six modules connected by an event-driven data spine. Data flows left to right, from external sources through to payments and BI.
         </p>
         <ModuleMapSVG mounted={mounted} />
@@ -565,7 +565,7 @@ export default function ProductArchitecturePage() {
 
       {/* ═══════ DATA SPINE ═══════ */}
       <LightSectionCard title="DATA SPINE \u2014 ONE DELIVERY TO ONE COMMISSION">
-        <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-faint)' }}>
           Seven steps from delivery close-out to payroll file. Every step timed, every number traced.
         </p>
         <DataSpineSVG mounted={mounted} />
@@ -580,7 +580,7 @@ export default function ProductArchitecturePage() {
               style={{ background: `${GOLD}15`, color: GOLD }}>
               {'\u23F1'}
             </div>
-            <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text)' }}>
+            <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text)' }}>
               <span className="font-bold" style={{ color: GOLD }}>End-to-end:</span>{' '}
               From delivery close-out to commission visibility in under 50 milliseconds.
               Payout in next pay cycle. No batch ETL. No overnight jobs. No spreadsheet reconciliation.
@@ -621,7 +621,7 @@ export default function ProductArchitecturePage() {
                     {mod.capabilities.map((cap, ci) => (
                       <li key={ci} className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: mod.color, opacity: 0.6 }} />
-                        <span className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{cap}</span>
+                        <span className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{cap}</span>
                       </li>
                     ))}
                   </ul>
@@ -629,22 +629,22 @@ export default function ProductArchitecturePage() {
                   {/* Inputs / Outputs */}
                   <div className="grid grid-cols-2 gap-3 mb-3">
                     <div>
-                      <div className="text-[10px] font-bold font-mono uppercase tracking-widest mb-1" style={{ color: 'var(--pl-text-faint)' }}>
+                      <div className="text-[10px] font-bold tabular-nums uppercase tracking-widest mb-1" style={{ color: 'var(--pl-text-faint)' }}>
                         Inputs
                       </div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{mod.inputs}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{mod.inputs}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-bold font-mono uppercase tracking-widest mb-1" style={{ color: 'var(--pl-text-faint)' }}>
+                      <div className="text-[10px] font-bold tabular-nums uppercase tracking-widest mb-1" style={{ color: 'var(--pl-text-faint)' }}>
                         Outputs
                       </div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{mod.outputs}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{mod.outputs}</div>
                     </div>
                   </div>
 
                   {/* Link */}
                   <a href={mod.linkHref}
-                    className="text-xs font-bold font-mono transition-colors"
+                    className="text-xs font-bold tabular-nums transition-colors"
                     style={{ color: mod.color }}>
                     {mod.linkLabel}
                   </a>
@@ -666,7 +666,7 @@ export default function ProductArchitecturePage() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#9CA3AF' }} />
-                <span className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: 'var(--pl-text-faint)' }}>
+                <span className="text-xs font-bold tabular-nums uppercase tracking-widest" style={{ color: 'var(--pl-text-faint)' }}>
                   Traditional (Alteryx/Excel)
                 </span>
               </div>
@@ -679,7 +679,7 @@ export default function ProductArchitecturePage() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#EF4444', opacity: 0.6 }} />
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{item}</span>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -688,7 +688,7 @@ export default function ProductArchitecturePage() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ background: GOLD }} />
-                <span className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: GOLD }}>
+                <span className="text-xs font-bold tabular-nums uppercase tracking-widest" style={{ color: GOLD }}>
                   PROOFLINE
                 </span>
               </div>
@@ -701,7 +701,7 @@ export default function ProductArchitecturePage() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: GREEN }} />
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{item}</span>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -715,7 +715,7 @@ export default function ProductArchitecturePage() {
 
       {/* ═══════ FOOTER ═══════ */}
       <div className="text-center py-6">
-        <p className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <p className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           PROOFLINE architecture designed for beverage distribution at scale. 36 routes today, engineered for 500+.
         </p>
       </div>

@@ -118,7 +118,7 @@ function TrendArrow({ value, suffix = '%' }: { value: number; suffix?: string })
   const isUp = value > 0;
   const color = isUp ? '#22C55E' : '#F87171';
   return (
-    <span className="inline-flex items-center gap-0.5 text-xs font-bold font-mono" style={{ color }}>
+    <span className="inline-flex items-center gap-0.5 text-xs font-bold tabular-nums" style={{ color }}>
       <svg width="10" height="10" viewBox="0 0 10 10" fill={color}>
         {isUp ? <path d="M5 1L9 6H1z" /> : <path d="M5 9L1 4H9z" />}
       </svg>
@@ -134,8 +134,8 @@ function ProgressRaceBar({ name, value, max, color, tier, rank }: {
   const tierColors: Record<string, string> = { Diamond: '#9F7AEA', Platinum: '#B8C5D6', Gold: '#C6A052' };
   return (
     <div className="flex items-center gap-3 py-1">
-      <div className="w-5 text-xs font-bold font-mono text-center flex-shrink-0" style={{ color: ACCENT }}>{rank}</div>
-      <div className="w-28 text-xs font-bold font-mono truncate flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{name}</div>
+      <div className="w-5 text-xs font-bold tabular-nums text-center flex-shrink-0" style={{ color: ACCENT }}>{rank}</div>
+      <div className="w-28 text-xs font-bold tabular-nums truncate flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{name}</div>
       <div className="flex-1 relative h-5 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
         <div className="absolute top-0 left-0 h-full rounded-full transition-all duration-500"
           style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${color}90, ${color})` }} />
@@ -143,16 +143,16 @@ function ProgressRaceBar({ name, value, max, color, tier, rank }: {
         <div className="absolute top-0 h-full w-px" style={{ left: `${(1.10 / max) * 100}%`, background: '#B8C5D680' }} />
         <div className="absolute top-0 h-full w-px" style={{ left: `${(1.20 / max) * 100}%`, background: '#9F7AEA80' }} />
       </div>
-      <div className="w-12 text-right text-xs font-bold font-mono flex-shrink-0"
+      <div className="w-12 text-right text-xs font-bold tabular-nums flex-shrink-0"
         style={{ color: value >= 1.00 ? '#22C55E' : value >= 0.90 ? '#F59E0B' : '#F87171' }}>
         {(value * 100).toFixed(1)}%
       </div>
       <div className="w-14 flex-shrink-0">
         {tier ? (
-          <span className="px-1.5 py-0.5 rounded text-xs font-bold font-mono"
+          <span className="px-1.5 py-0.5 rounded text-xs font-bold tabular-nums"
             style={{ background: `${tierColors[tier] ?? '#555'}18`, color: tierColors[tier] ?? '#555' }}>{tier}</span>
         ) : (
-          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>&mdash;</span>
+          <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>&mdash;</span>
         )}
       </div>
     </div>
@@ -163,7 +163,7 @@ function HeatCell({ value, thresholds }: { value: number; thresholds: [number, n
   const color = value >= thresholds[1] ? '#22C55E' : value >= thresholds[0] ? '#F59E0B' : '#F87171';
   const bg = value >= thresholds[1] ? 'rgba(34,197,94,0.12)' : value >= thresholds[0] ? 'rgba(245,158,11,0.12)' : 'rgba(248,113,113,0.12)';
   return (
-    <div className="px-2 py-1 rounded text-center text-xs font-bold font-mono" style={{ background: bg, color }}>
+    <div className="px-2 py-1 rounded text-center text-xs font-bold tabular-nums" style={{ background: bg, color }}>
       {(value * 100).toFixed(1)}%
     </div>
   );
@@ -212,7 +212,7 @@ export default function ReportsPage() {
           <button
             key={t.key}
             onClick={() => setActiveTab(t.key)}
-            className="flex-shrink-0 px-4 py-2.5 text-xs font-bold font-mono uppercase tracking-wider transition-colors"
+            className="flex-shrink-0 px-4 py-2.5 text-xs font-bold tabular-nums uppercase tracking-wider transition-colors"
             style={{
               color: activeTab === t.key ? ACCENT : 'var(--pl-text-muted)',
               borderBottom: activeTab === t.key ? `2px solid ${ACCENT}` : '2px solid transparent',
@@ -239,8 +239,8 @@ export default function ReportsPage() {
                   ]}
                   label={`${(overallAttainment * 100).toFixed(0)}%`} />
                 <div className="text-center">
-                  <div className="text-xs font-bold font-mono uppercase" style={{ color: 'var(--pl-text-muted)' }}>Revenue vs Quota</div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text)' }}>
+                  <div className="text-xs font-bold tabular-nums uppercase" style={{ color: 'var(--pl-text-muted)' }}>Revenue vs Quota</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'var(--pl-text)' }}>
                     ${(totalRevenue / 1e6).toFixed(2)}M / ${(totalQuota / 1e6).toFixed(2)}M
                   </div>
                 </div>
@@ -254,11 +254,11 @@ export default function ReportsPage() {
                   ]}
                   label={`${onTrackCount}/${HOMETOWNS_LIST.length}`} />
                 <div className="text-center">
-                  <div className="text-xs font-bold font-mono uppercase" style={{ color: 'var(--pl-text-muted)' }}>Hometown Health</div>
+                  <div className="text-xs font-bold tabular-nums uppercase" style={{ color: 'var(--pl-text-muted)' }}>Hometown Health</div>
                   <div className="flex gap-3 mt-1 justify-center">
-                    <span className="text-xs font-mono" style={{ color: '#22C55E' }}>{onTrackCount} On Track</span>
-                    <span className="text-xs font-mono" style={{ color: '#F59E0B' }}>{watchCount} Watch</span>
-                    <span className="text-xs font-mono" style={{ color: '#F87171' }}>{behindCount} Behind</span>
+                    <span className="text-xs" style={{ color: '#22C55E' }}>{onTrackCount} On Track</span>
+                    <span className="text-xs" style={{ color: '#F59E0B' }}>{watchCount} Watch</span>
+                    <span className="text-xs" style={{ color: '#F87171' }}>{behindCount} Behind</span>
                   </div>
                 </div>
               </div>
@@ -272,7 +272,7 @@ export default function ReportsPage() {
                   ]}
                   label={`$${(totalCompExpense / 1000).toFixed(0)}K`} />
                 <div className="text-center">
-                  <div className="text-xs font-bold font-mono uppercase" style={{ color: 'var(--pl-text-muted)' }}>Comp Mix (QTD)</div>
+                  <div className="text-xs font-bold tabular-nums uppercase" style={{ color: 'var(--pl-text-muted)' }}>Comp Mix (QTD)</div>
                   <div className="flex gap-2 mt-1 justify-center flex-wrap">
                     {[
                       { label: 'Base', color: '#94A3B8' },
@@ -280,7 +280,7 @@ export default function ReportsPage() {
                       { label: 'Commission', color: '#2563EB' },
                       { label: 'Bonus', color: '#22C55E' },
                     ].map(item => (
-                      <span key={item.label} className="flex items-center gap-1 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                      <span key={item.label} className="flex items-center gap-1 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                         <span className="inline-block w-2 h-2 rounded-full" style={{ background: item.color }} />
                         {item.label}
                       </span>
@@ -292,7 +292,7 @@ export default function ReportsPage() {
           </LightSectionCard>
 
           {/* KPI Cards with sparklines and deltas */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
             <LightKpiCard label="Total Revenue" value={`$${(totalRevenue / 1e6).toFixed(2)}M`} accent={ACCENT} delta={3.2} sparkline={revSparkline} stagger={0} />
             <LightKpiCard label="Overall Attainment" value={`${(overallAttainment * 100).toFixed(1)}%`} accent={ACCENT} delta={1.8} sparkline={attSparkline} stagger={1} />
             <LightKpiCard label="Total Comp (QTD)" value={`$${(totalCompExpense / 1000).toFixed(0)}K`} accent={ACCENT} sparkline={compSparkline} stagger={2} />
@@ -312,19 +312,19 @@ export default function ReportsPage() {
                 return (
                   <div key={hometown.id} className="flex items-center gap-4 p-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
                     <div className="w-28 flex-shrink-0">
-                      <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{hometown.manager}</div>
+                      <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{hometown.manager}</div>
                     </div>
                     <div className="flex-1 relative h-7 rounded-lg overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div className="absolute top-0 left-0 h-full rounded-lg transition-all duration-700"
                         style={{ width: `${Math.min(att * 100, 100)}%`, background: `linear-gradient(90deg, ${barColor}60, ${barColor})` }} />
                       <div className="absolute inset-0 flex items-center px-3 justify-between">
-                        <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{(att * 100).toFixed(1)}%</span>
-                        <span className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>${(hometown.revenue / 1e6).toFixed(2)}M</span>
+                        <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{(att * 100).toFixed(1)}%</span>
+                        <span className="text-xs" style={{ color: 'var(--pl-text)' }}>${(hometown.revenue / 1e6).toFixed(2)}M</span>
                       </div>
                     </div>
                     <TrendArrow value={delta} />
-                    <span className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                    <span className="flex-shrink-0 text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                       style={{ background: s.bg, color: s.color, whiteSpace: 'nowrap' }}>{s.label}</span>
                   </div>
                 );
@@ -340,14 +340,14 @@ export default function ReportsPage() {
                   const medalColors = ['#C6A052', '#94A3B8', '#92400E', ACCENT, ACCENT];
                   return (
                     <div key={seller.id} className="flex items-center gap-3 p-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
-                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono flex-shrink-0"
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums flex-shrink-0"
                         style={{ background: `${medalColors[i]}18`, color: medalColors[i], border: `1.5px solid ${medalColors[i]}40` }}>{i + 1}</div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold font-mono truncate" style={{ color: 'var(--pl-text)' }}>{seller.name}</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.hometown} &middot; T{seller.tier}</div>
+                        <div className="text-xs font-bold tabular-nums truncate" style={{ color: 'var(--pl-text)' }}>{seller.name}</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{seller.hometown} &middot; T{seller.tier}</div>
                       </div>
                       <Sparkline data={seller.weeklyAttainment} color="#22C55E" width={60} height={20} />
-                      <div className="text-xs font-bold font-mono flex-shrink-0" style={{ color: '#22C55E' }}>{(seller.ytdAttainment * 100).toFixed(1)}%</div>
+                      <div className="text-xs font-bold tabular-nums flex-shrink-0" style={{ color: '#22C55E' }}>{(seller.ytdAttainment * 100).toFixed(1)}%</div>
                     </div>
                   );
                 })}
@@ -357,14 +357,14 @@ export default function ReportsPage() {
               <div className="grid gap-2">
                 {LEADERBOARD.slice(-5).reverse().map((seller, i) => (
                   <div key={seller.id} className="flex items-center gap-3 p-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono flex-shrink-0"
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums flex-shrink-0"
                       style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171', border: '1.5px solid rgba(248,113,113,0.3)' }}>{LEADERBOARD.length - i}</div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs font-bold font-mono truncate" style={{ color: 'var(--pl-text)' }}>{seller.name}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.hometown} &middot; T{seller.tier}</div>
+                      <div className="text-xs font-bold tabular-nums truncate" style={{ color: 'var(--pl-text)' }}>{seller.name}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{seller.hometown} &middot; T{seller.tier}</div>
                     </div>
                     <Sparkline data={seller.weeklyAttainment} color="#F87171" width={60} height={20} />
-                    <div className="text-xs font-bold font-mono flex-shrink-0" style={{ color: '#F87171' }}>{(seller.ytdAttainment * 100).toFixed(1)}%</div>
+                    <div className="text-xs font-bold tabular-nums flex-shrink-0" style={{ color: '#F87171' }}>{(seller.ytdAttainment * 100).toFixed(1)}%</div>
                   </div>
                 ))}
               </div>
@@ -402,7 +402,7 @@ export default function ReportsPage() {
       {activeTab === 'club' && (
         <>
           {/* Club tier cards with mini donuts */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             {CLUB_TIERS.map(tier => {
               const qualifiers = LEADERBOARD.filter(s => s.ytdAttainment >= tier.threshold).length;
               const projected = LEADERBOARD.filter(s => s.projectedAnnual >= tier.threshold).length;
@@ -419,9 +419,9 @@ export default function ReportsPage() {
                         ]}
                         label={String(qualifiers)} />
                     </div>
-                    <div className="text-xs font-bold font-mono uppercase mb-1" style={{ color: tier.color }}>{tier.label}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>&ge;{(tier.threshold * 100).toFixed(0)}% YTD</div>
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>Projected: {projected}</div>
+                    <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: tier.color }}>{tier.label}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>&ge;{(tier.threshold * 100).toFixed(0)}% YTD</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>Projected: {projected}</div>
                   </div>
                 </div>
               );
@@ -437,7 +437,7 @@ export default function ReportsPage() {
 
           {/* Visual Leaderboard Race */}
           <LightSectionCard title="PRESIDENTS CLUB LEADERBOARD RACE">
-            <div className="mb-3 flex gap-4 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="mb-3 flex gap-4 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#C6A052' }} /> Gold 100%</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#B8C5D6' }} /> Platinum 110%</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: '#9F7AEA' }} /> Diamond 120%</span>
@@ -456,7 +456,7 @@ export default function ReportsPage() {
               })}
             </div>
             {LEADERBOARD.length > 20 && (
-              <div className="text-xs font-mono mt-2 text-center" style={{ color: 'var(--pl-text-faint)' }}>+ {LEADERBOARD.length - 20} more reps below</div>
+              <div className="text-xs mt-2 text-center" style={{ color: 'var(--pl-text-faint)' }}>+ {LEADERBOARD.length - 20} more reps below</div>
             )}
           </LightSectionCard>
 
@@ -467,29 +467,29 @@ export default function ReportsPage() {
                 <div className="flex justify-center gap-4 items-end mb-2">
                   <div className="text-center">
                     <div className="w-10 rounded-t mx-auto" style={{ height: 44, background: '#94A3B860' }} />
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>2025</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>2025</div>
                   </div>
                   <div className="text-center">
                     <div className="w-10 rounded-t mx-auto" style={{ height: 56, background: ACCENT }} />
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>2026</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>2026</div>
                   </div>
                 </div>
-                <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>{LEADERBOARD.filter(s => s.ytdAttainment >= 1.05).length}</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Current Qualifiers (vs 11 in 2025)</div>
+                <div className="text-lg font-bold tabular-nums" style={{ color: ACCENT }}>{LEADERBOARD.filter(s => s.ytdAttainment >= 1.05).length}</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Current Qualifiers (vs 11 in 2025)</div>
               </div>
               <div className="text-center">
                 <div className="flex justify-center gap-4 items-end mb-2">
                   <div className="text-center">
                     <div className="w-10 rounded-t mx-auto" style={{ height: 43, background: '#94A3B860' }} />
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>2025</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>2025</div>
                   </div>
                   <div className="text-center">
                     <div className="w-10 rounded-t mx-auto" style={{ height: 48, background: ACCENT }} />
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>2026</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>2026</div>
                   </div>
                 </div>
-                <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>108.4%</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>2025 Avg Attainment (qualifiers)</div>
+                <div className="text-lg font-bold tabular-nums" style={{ color: ACCENT }}>108.4%</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>2025 Avg Attainment (qualifiers)</div>
               </div>
               <div className="text-center">
                 <div className="flex justify-center mb-2">
@@ -499,8 +499,8 @@ export default function ReportsPage() {
                     <path d="M5 48 L20 44 L35 42 L50 38 L65 34 L75 30" fill="none" stroke="#94A3B860" strokeWidth="2" strokeDasharray="4 2" />
                   </svg>
                 </div>
-                <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>Marcus Reyes</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>2025 Top Earner &middot; 127.3% <TrendArrow value={4.2} /></div>
+                <div className="text-lg font-bold tabular-nums" style={{ color: ACCENT }}>Marcus Reyes</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>2025 Top Earner &middot; 127.3% <TrendArrow value={4.2} /></div>
               </div>
             </div>
           </LightSectionCard>
@@ -511,9 +511,9 @@ export default function ReportsPage() {
       {activeTab === 'rep' && (
         <>
           <div className="mb-6">
-            <label className="text-xs font-bold font-mono uppercase mb-2 block" style={{ color: 'var(--pl-text-muted)' }}>Select Rep</label>
+            <label className="text-xs font-bold tabular-nums uppercase mb-2 block" style={{ color: 'var(--pl-text-muted)' }}>Select Rep</label>
             <select value={selectedRep} onChange={e => setSelectedRep(e.target.value)}
-              className="px-3 py-2 rounded text-xs font-mono"
+              className="px-3 py-2 rounded text-xs"
               style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)', color: 'var(--pl-text)' }}>
               {SELLERS.map(s => (
                 <option key={s.id} value={s.id}>{s.name} \u2014 {s.hometown}</option>
@@ -523,7 +523,7 @@ export default function ReportsPage() {
 
           {/* Earnings with color bars */}
           <LightSectionCard title={`EARNINGS SUMMARY \u2014 ${rep.name.toUpperCase()}`}>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {[
                 { label: 'Base (QTD)', value: '$13,000', color: '#94A3B8', pct: 45 },
                 { label: 'Variable', value: `$${(rep.attainment * 4200).toFixed(0)}`, color: ACCENT, pct: 28 },
@@ -536,8 +536,8 @@ export default function ReportsPage() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b" style={{ background: 'var(--pl-chart-bar-track)' }}>
                     <div className="h-full rounded-b" style={{ width: `${item.pct}%`, background: item.color }} />
                   </div>
-                  <div className="text-xs font-bold font-mono uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>{item.label}</div>
-                  <div className="text-lg font-bold font-mono" style={{ color: item.color }}>{item.value}</div>
+                  <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: 'var(--pl-text-muted)' }}>{item.label}</div>
+                  <div className="text-lg font-bold tabular-nums" style={{ color: item.color }}>{item.value}</div>
                 </div>
               ))}
             </div>
@@ -553,7 +553,7 @@ export default function ReportsPage() {
                 return (
                   <div key={i} className="flex-1 flex flex-col items-center gap-0.5 relative">
                     {isLast && (
-                      <div className="text-xs font-bold font-mono mb-0.5 px-1 rounded"
+                      <div className="text-xs font-bold tabular-nums mb-0.5 px-1 rounded"
                         style={{ background: `${color}20`, color }}>{(val * 100).toFixed(0)}%</div>
                     )}
                     <div className="w-full rounded-t transition-all"
@@ -563,12 +563,12 @@ export default function ReportsPage() {
                         minHeight: 4,
                         boxShadow: isLast ? `0 0 8px ${color}40` : 'none',
                       }} />
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>W{i + 1}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>W{i + 1}</div>
                   </div>
                 );
               })}
             </div>
-            <div className="flex justify-between text-xs font-mono mt-1 px-1" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="flex justify-between text-xs mt-1 px-1" style={{ color: 'var(--pl-text-faint)' }}>
               <span>Week 1</span>
               <span style={{ color: rep.attainment >= 1.0 ? '#22C55E' : '#F59E0B' }}>
                 Current: {(rep.attainment * 100).toFixed(1)}% {rep.attainment >= 1.0 ? '\u2713' : '\u26A0'}
@@ -599,12 +599,12 @@ export default function ReportsPage() {
                         ]}
                         label={`${(gate.value * 100).toFixed(0)}%`} />
                     </div>
-                    <div className="text-xs font-bold font-mono mb-1" style={{ color: 'var(--pl-text)' }}>{gate.name}</div>
-                    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                    <div className="text-xs font-bold tabular-nums mb-1" style={{ color: 'var(--pl-text)' }}>{gate.name}</div>
+                    <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                       style={{ background: unlocked ? 'rgba(34,197,94,0.1)' : 'rgba(248,113,113,0.1)', color: unlocked ? '#22C55E' : '#F87171' }}>
                       {unlocked ? '\u2713 UNLOCKED' : '\u2717 LOCKED'}
                     </span>
-                    <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>threshold: {(gate.threshold * 100).toFixed(0)}%</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>threshold: {(gate.threshold * 100).toFixed(0)}%</div>
                   </div>
                 );
               })}
@@ -619,19 +619,19 @@ export default function ReportsPage() {
                 const maxTotal = 15500;
                 return (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="w-20 text-xs font-bold font-mono flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{row.period}</div>
+                    <div className="w-20 text-xs font-bold tabular-nums flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{row.period}</div>
                     <div className="flex-1 h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div style={{ width: `${(row.base / maxTotal) * 100}%`, background: '#94A3B880' }} className="h-full" />
                       <div style={{ width: `${(row.variable / maxTotal) * 100}%`, background: `${ACCENT}80` }} className="h-full" />
                       <div style={{ width: `${(row.commission / maxTotal) * 100}%`, background: '#2563EB80' }} className="h-full" />
                       {row.bonus > 0 && <div style={{ width: `${(row.bonus / maxTotal) * 100}%`, background: '#22C55E80' }} className="h-full" />}
                     </div>
-                    <div className="w-14 text-right text-xs font-bold font-mono flex-shrink-0" style={{ color: ACCENT }}>${total.toLocaleString()}</div>
+                    <div className="w-14 text-right text-xs font-bold tabular-nums flex-shrink-0" style={{ color: ACCENT }}>${total.toLocaleString()}</div>
                   </div>
                 );
               })}
             </div>
-            <div className="flex gap-3 justify-center text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+            <div className="flex gap-3 justify-center text-xs" style={{ color: 'var(--pl-text-faint)' }}>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: '#94A3B8' }} /> Base</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: ACCENT }} /> Variable</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: '#2563EB' }} /> Commission</span>
@@ -649,7 +649,7 @@ export default function ReportsPage() {
               const s = STATUS_STYLES[h.status];
               return (
                 <button key={h.id} onClick={() => setSelectedHometown(h.id)}
-                  className="px-3 py-1.5 rounded text-xs font-bold font-mono uppercase transition-colors flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded text-xs font-bold tabular-nums uppercase transition-colors flex items-center gap-1.5"
                   style={{
                     background: selectedHometown === h.id ? ACCENT : 'var(--pl-card-alt)',
                     color: selectedHometown === h.id ? 'white' : 'var(--pl-text-muted)',
@@ -680,13 +680,13 @@ export default function ReportsPage() {
                   <div key={r.id} className="p-3 rounded-lg" style={{ background: 'var(--pl-card-alt)', border: `1px solid ${statusColor}20` }}>
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{r.name}</div>
+                        <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.name}</div>
                         <div className="flex items-center gap-2 mt-0.5">
                           <span className="px-1.5 py-0.5 rounded text-xs font-bold" style={{ background: 'rgba(14,165,233,0.1)', color: ACCENT }}>T{r.tier}</span>
                           <span className="px-1.5 py-0.5 rounded text-xs font-bold" style={{ background: `${statusColor}18`, color: statusColor }}>{statusLabel}</span>
                         </div>
                       </div>
-                      <div className="text-lg font-bold font-mono" style={{ color: statusColor }}>{(r.attainment * 100).toFixed(1)}%</div>
+                      <div className="text-lg font-bold tabular-nums" style={{ color: statusColor }}>{(r.attainment * 100).toFixed(1)}%</div>
                     </div>
                     <div className="rounded-full overflow-hidden mb-2" style={{ height: 6, background: 'var(--pl-chart-bar-track)' }}>
                       <div className="h-full rounded-full" style={{ width: `${Math.min(r.attainment * 100, 100)}%`, background: `linear-gradient(90deg, ${statusColor}60, ${statusColor})` }} />
@@ -696,11 +696,11 @@ export default function ReportsPage() {
                         {['C', 'I', 'E', 'X'].map((g, idx) => {
                           const vals = [r.bbiGates.core >= 0.75, r.bbiGates.import >= 0.80, r.bbiGates.emerging >= 0.70, r.bbiGates.combined >= 0.85];
                           return (
-                            <span key={g} className="w-5 h-5 rounded text-xs font-bold font-mono flex items-center justify-center"
+                            <span key={g} className="w-5 h-5 rounded text-xs font-bold tabular-nums flex items-center justify-center"
                               style={{ background: vals[idx] ? 'rgba(34,197,94,0.15)' : 'rgba(248,113,113,0.1)', color: vals[idx] ? '#22C55E' : '#F87171' }}>{g}</span>
                           );
                         })}
-                        <span className="text-xs font-mono ml-1 self-center" style={{ color: 'var(--pl-text-faint)' }}>{gatesUnlocked}/4</span>
+                        <span className="text-xs ml-1 self-center" style={{ color: 'var(--pl-text-faint)' }}>{gatesUnlocked}/4</span>
                       </div>
                       <Sparkline data={r.weeklyAttainment} color={statusColor} width={60} height={18} />
                     </div>
@@ -719,7 +719,7 @@ export default function ReportsPage() {
                       <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7 4.5h2v4H7v-4zm0 5h2v2H7v-2z" fill={ACCENT} />
                     </svg>
                   </div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>{rec}</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text)' }}>{rec}</div>
                 </div>
               ))}
             </div>
@@ -734,24 +734,24 @@ export default function ReportsPage() {
                   label="71.6%" />
               </div>
               <div className="flex-1 w-full">
-                <div className="grid grid-cols-3 gap-4 text-center mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center mb-3">
                   <div>
-                    <div className="text-lg font-bold font-mono" style={{ color: 'var(--pl-text-muted)' }}>${(htReps.length * 9800).toLocaleString()}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Budget (Q1)</div>
+                    <div className="text-lg font-bold tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>${(htReps.length * 9800).toLocaleString()}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Budget (Q1)</div>
                   </div>
                   <div>
-                    <div className="text-lg font-bold font-mono" style={{ color: ACCENT }}>${(htReps.length * 7020).toLocaleString()}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Spent</div>
+                    <div className="text-lg font-bold tabular-nums" style={{ color: ACCENT }}>${(htReps.length * 7020).toLocaleString()}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Spent</div>
                   </div>
                   <div>
-                    <div className="text-lg font-bold font-mono" style={{ color: '#22C55E' }}>${(htReps.length * 9800 - htReps.length * 7020).toLocaleString()}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Remaining</div>
+                    <div className="text-lg font-bold tabular-nums" style={{ color: '#22C55E' }}>${(htReps.length * 9800 - htReps.length * 7020).toLocaleString()}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Remaining</div>
                   </div>
                 </div>
                 <div className="rounded-full overflow-hidden" style={{ height: 10, background: 'var(--pl-chart-bar-track)' }}>
                   <div className="h-full rounded-full transition-all" style={{ width: `${(7020 / 9800) * 100}%`, background: `linear-gradient(90deg, ${ACCENT}80, ${ACCENT})` }} />
                 </div>
-                <div className="text-xs font-mono mt-1 text-right" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-xs mt-1 text-right" style={{ color: 'var(--pl-text-faint)' }}>
                   Projected EOQ: ${(htReps.length * 9800 * 1.02).toLocaleString()}
                 </div>
               </div>
@@ -772,15 +772,15 @@ export default function ReportsPage() {
                 const s = STATUS_STYLES[hometown.status];
                 return (
                   <div key={hometown.id} className="flex items-center gap-3">
-                    <div className="w-24 text-xs font-bold font-mono flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
+                    <div className="w-24 text-xs font-bold tabular-nums flex-shrink-0" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
                     <div className="flex-1 relative h-8 rounded-lg overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                       <div className="absolute top-0 left-0 h-full rounded-lg transition-all duration-700"
                         style={{ width: `${Math.min(att * 100, 100)}%`, background: `linear-gradient(90deg, ${barColor}50, ${barColor})` }} />
                       <div className="absolute inset-0 flex items-center px-3">
-                        <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{(att * 100).toFixed(1)}%</span>
+                        <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{(att * 100).toFixed(1)}%</span>
                       </div>
                     </div>
-                    <span className="flex-shrink-0 text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                    <span className="flex-shrink-0 text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                       style={{ background: s.bg, color: s.color }}>{s.label}</span>
                   </div>
                 );
@@ -798,23 +798,23 @@ export default function ReportsPage() {
                 return (
                   <div key={hometown.id} className="p-3 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
                     <div className="flex items-center justify-between mb-2">
-                      <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
+                      <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
                       <TrendArrow value={att >= 1.0 ? 2.3 : att >= 0.95 ? 0.8 : -1.5} />
                     </div>
                     <div className="grid gap-1">
                       <div className="flex items-center gap-2">
-                        <div className="w-12 text-xs font-mono flex-shrink-0" style={{ color: 'var(--pl-text-faint)' }}>Revenue</div>
+                        <div className="w-12 text-xs flex-shrink-0" style={{ color: 'var(--pl-text-faint)' }}>Revenue</div>
                         <div className="flex-1 h-4 rounded overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                           <div className="h-full rounded" style={{ width: `${(hometown.revenue / maxVal) * 100}%`, background: barColor }} />
                         </div>
-                        <div className="w-14 text-right text-xs font-bold font-mono" style={{ color: barColor }}>${(hometown.revenue / 1e6).toFixed(2)}M</div>
+                        <div className="w-14 text-right text-xs font-bold tabular-nums" style={{ color: barColor }}>${(hometown.revenue / 1e6).toFixed(2)}M</div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-12 text-xs font-mono flex-shrink-0" style={{ color: 'var(--pl-text-faint)' }}>Quota</div>
+                        <div className="w-12 text-xs flex-shrink-0" style={{ color: 'var(--pl-text-faint)' }}>Quota</div>
                         <div className="flex-1 h-4 rounded overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                           <div className="h-full rounded" style={{ width: `${(hometown.quota / maxVal) * 100}%`, background: '#94A3B860' }} />
                         </div>
-                        <div className="w-14 text-right text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>${(hometown.quota / 1e6).toFixed(2)}M</div>
+                        <div className="w-14 text-right text-xs" style={{ color: 'var(--pl-text-muted)' }}>${(hometown.quota / 1e6).toFixed(2)}M</div>
                       </div>
                     </div>
                   </div>
@@ -843,11 +843,11 @@ export default function ReportsPage() {
                     onClick={() => setExpandedHometown(isExpanded ? null : hometown.id)}>
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Mgr: {hometown.manager}</div>
+                        <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{hometown.name}</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Mgr: {hometown.manager}</div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: s.bg, color: s.color }}>{s.label}</span>
+                        <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: s.bg, color: s.color }}>{s.label}</span>
                         <svg width="12" height="12" viewBox="0 0 12 12" style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
                           <path d="M2 4L6 8L10 4" fill="none" stroke="var(--pl-text-faint)" strokeWidth="1.5" />
                         </svg>
@@ -857,37 +857,37 @@ export default function ReportsPage() {
                       <MiniDonut size={48} strokeWidth={6}
                         segments={[{ value: att, color: barColor }, { value: Math.max(1 - att, 0.001), color: 'transparent' }]} />
                       <div>
-                        <div className="text-lg font-bold font-mono" style={{ color: barColor }}>{(att * 100).toFixed(1)}%</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>${(hometown.revenue / 1e6).toFixed(2)}M / ${(hometown.quota / 1e6).toFixed(2)}M</div>
+                        <div className="text-lg font-bold tabular-nums" style={{ color: barColor }}>{(att * 100).toFixed(1)}%</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>${(hometown.revenue / 1e6).toFixed(2)}M / ${(hometown.quota / 1e6).toFixed(2)}M</div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                       <div className="text-center p-1.5 rounded" style={{ background: 'var(--pl-card)' }}>
-                        <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{hometown.headcount}</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Reps</div>
+                        <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{hometown.headcount}</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Reps</div>
                       </div>
                       <div className="text-center p-1.5 rounded" style={{ background: 'var(--pl-card)' }}>
-                        <div className="text-xs font-bold font-mono" style={{ color: atRiskCount > 0 ? '#F59E0B' : '#22C55E' }}>{atRiskCount}</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>At Risk</div>
+                        <div className="text-xs font-bold tabular-nums" style={{ color: atRiskCount > 0 ? '#F59E0B' : '#22C55E' }}>{atRiskCount}</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>At Risk</div>
                       </div>
                       <div className="text-center p-1.5 rounded" style={{ background: 'var(--pl-card)' }}>
-                        <div className="text-xs font-bold font-mono" style={{ color: '#22C55E' }}>{topRep ? `${(topRep.attainment * 100).toFixed(0)}%` : '\u2014'}</div>
-                        <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Top Rep</div>
+                        <div className="text-xs font-bold tabular-nums" style={{ color: '#22C55E' }}>{topRep ? `${(topRep.attainment * 100).toFixed(0)}%` : '\u2014'}</div>
+                        <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Top Rep</div>
                       </div>
                     </div>
                   </button>
                   {isExpanded && (
                     <div className="px-4 pb-4 pt-2" style={{ borderTop: `1px solid ${ACCENT}20` }}>
-                      <div className="text-xs font-bold font-mono uppercase mb-2" style={{ color: ACCENT }}>Rep Breakdown</div>
+                      <div className="text-xs font-bold tabular-nums uppercase mb-2" style={{ color: ACCENT }}>Rep Breakdown</div>
                       <div className="grid gap-1.5">
                         {[...htRepsLocal].sort((a, b) => b.attainment - a.attainment).map(r => {
                           const rColor = r.attainment >= 1.0 ? '#22C55E' : r.attainment >= 0.85 ? '#F59E0B' : '#F87171';
                           return (
                             <div key={r.id} className="flex items-center gap-2">
-                              <div className="flex-1 text-xs font-mono" style={{ color: 'var(--pl-text)' }}>{r.name}</div>
+                              <div className="flex-1 text-xs" style={{ color: 'var(--pl-text)' }}>{r.name}</div>
                               <Sparkline data={r.weeklyAttainment} color={rColor} width={50} height={14} />
-                              <div className="w-10 text-right text-xs font-bold font-mono" style={{ color: rColor }}>{(r.attainment * 100).toFixed(0)}%</div>
-                              <div className="text-xs font-mono w-5" style={{ color: 'var(--pl-text-faint)' }}>T{r.tier}</div>
+                              <div className="w-10 text-right text-xs font-bold tabular-nums" style={{ color: rColor }}>{(r.attainment * 100).toFixed(0)}%</div>
+                              <div className="text-xs w-5" style={{ color: 'var(--pl-text-faint)' }}>T{r.tier}</div>
                               {r.atRisk && <span className="text-xs font-bold px-1 py-0.5 rounded" style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171' }}>!</span>}
                             </div>
                           );
@@ -903,7 +903,7 @@ export default function ReportsPage() {
           {/* Heatmap table */}
           <LightSectionCard title="DISTRICT PERFORMANCE HEATMAP">
             <div className="overflow-x-auto">
-              <table className="w-full text-xs font-mono">
+              <table className="w-full text-xs">
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Hometown', 'Mgr', 'HC', 'Attainment', 'Avg Rep Att.', 'Revenue', 'Status'].map(h => (

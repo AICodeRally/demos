@@ -263,41 +263,41 @@ function RouteRow({ route, seller, idx, isSelected, onSelect }: {
       onClick={onSelect}
     >
       <td className="py-3 pl-3">
-        <span className="text-[13px] font-bold font-mono" style={{ color: isSelected ? '#7C3AED' : 'var(--pl-text)' }}>{route.id}</span>
+        <span className="text-[13px] font-bold tabular-nums" style={{ color: isSelected ? '#7C3AED' : 'var(--pl-text)' }}>{route.id}</span>
       </td>
       <td className="py-3">
         <div className="flex items-center gap-2">
           <span className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? '\u2014'}</span>
           {tb && (
-            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: tb.bg, color: tb.color }}>
+            <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-full" style={{ background: tb.bg, color: tb.color }}>
               {tb.label}
             </span>
           )}
           {seller?.atRisk && (
-            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
+            <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
               AT RISK
             </span>
           )}
         </div>
       </td>
       <td className="py-3 text-right">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(route.cases)}</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{fmtK(route.cases)}</span>
       </td>
       <td className="py-3 text-right">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text)' }}>{fmtM(route.rev)}</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{fmtM(route.rev)}</span>
       </td>
       <td className="py-3 text-right">
-        <span className="text-[13px] font-mono font-bold" style={{ color: attainColor(route.attain) }}>
+        <span className="text-[13px] font-bold tabular-nums" style={{ color: attainColor(route.attain) }}>
           {pct(route.attain)}
         </span>
       </td>
       <td className="py-3 text-right">
-        <span className="text-[13px] font-mono" style={{ color: route.displayCompliance >= 0.90 ? '#22C55E' : route.displayCompliance >= 0.85 ? '#F59E0B' : '#F87171' }}>
+        <span className="text-[13px]" style={{ color: route.displayCompliance >= 0.90 ? '#22C55E' : route.displayCompliance >= 0.85 ? '#F59E0B' : '#F87171' }}>
           {pct(route.displayCompliance)}
         </span>
       </td>
       <td className="py-3 text-right">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{route.spiritsAccounts}</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{route.spiritsAccounts}</span>
       </td>
       <td className="py-3 text-right pr-3">
         <Sparkline data={route.weeklyAttainment} color={attainColor(route.attain)} width={80} height={22} />
@@ -347,16 +347,16 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
       {/* Breadcrumb + Header */}
       <div className="mt-6 mb-6">
         <div className="flex items-center gap-2 mb-2">
-          <Link href="/proofline-andrews/strategy/territories" className="text-[13px] font-mono hover:underline" style={{ color: '#7C3AED' }}>
+          <Link href="/proofline-andrews/strategy/territories" className="text-[13px] hover:underline" style={{ color: '#7C3AED' }}>
             Territory Design
           </Link>
-          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>/</span>
-          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{hometown.name}</span>
+          <span className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>/</span>
+          <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{hometown.name}</span>
         </div>
 
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+            <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
               {hometown.name}
             </h1>
             <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -367,7 +367,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {prevHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${prevHometown.id}`}
-                className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+                className="text-[13px] px-3 py-1.5 rounded-xl border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 &larr; {prevHometown.name.replace(' HQ', '')}
@@ -376,7 +376,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             {nextHometown && (
               <Link
                 href={`/proofline-andrews/strategy/territories/${nextHometown.id}`}
-                className="text-[13px] font-mono px-3 py-1.5 rounded-lg border hover:opacity-80 transition-colors"
+                className="text-[13px] px-3 py-1.5 rounded-xl border hover:opacity-80 transition-colors"
                 style={{ borderColor: 'var(--pl-border)', color: 'var(--pl-text-muted)' }}
               >
                 {nextHometown.name.replace(' HQ', '')} &rarr;
@@ -398,7 +398,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
               District Manager &middot; {Math.floor(manager.tenure / 12)}y {manager.tenure % 12}m tenure
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-4 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
             <span>{manager.directReports.length} direct reports</span>
             <span>Spirits: {pct(manager.districtKPIs.spiritsPenetration)}</span>
           </div>
@@ -406,7 +406,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
       )}
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Routes" value={String(hometown.routes)} accent="#7C3AED" stagger={0} />
         <LightKpiCard label="Avg Attainment" value={pct(avgAttain)} accent={attainColor(avgAttain)} stagger={1} />
         <LightKpiCard label="Q Revenue" value={fmtM(totalRev)} accent="#7C3AED" stagger={2} />
@@ -443,14 +443,14 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
           <table className="w-full text-[13px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-3 pl-3">Route</th>
-                <th className="text-left font-medium pb-3">Rep</th>
-                <th className="text-right font-medium pb-3">Cases</th>
-                <th className="text-right font-medium pb-3">Revenue</th>
-                <th className="text-right font-medium pb-3">Attain</th>
-                <th className="text-right font-medium pb-3">Display</th>
-                <th className="text-right font-medium pb-3">Spirits</th>
-                <th className="text-right font-medium pb-3 pr-3">13-Week</th>
+                <th className="text-left font-semibold pb-3 pl-3">Route</th>
+                <th className="text-left font-semibold pb-3">Rep</th>
+                <th className="text-right font-semibold pb-3">Cases</th>
+                <th className="text-right font-semibold pb-3">Revenue</th>
+                <th className="text-right font-semibold pb-3">Attain</th>
+                <th className="text-right font-semibold pb-3">Display</th>
+                <th className="text-right font-semibold pb-3">Spirits</th>
+                <th className="text-right font-semibold pb-3 pr-3">13-Week</th>
               </tr>
             </thead>
             <tbody>
@@ -471,11 +471,11 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
             <tfoot>
               <tr className="border-t-2" style={{ borderColor: 'var(--pl-border)' }}>
                 <td className="py-3 pl-3 text-[12px] font-bold" style={{ color: 'var(--pl-text)' }} colSpan={2}>TOTAL / AVG</td>
-                <td className="py-3 text-right text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(totalCases)}</td>
-                <td className="py-3 text-right text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtM(totalRev)}</td>
-                <td className="py-3 text-right text-[12px] font-bold font-mono" style={{ color: attainColor(avgAttain) }}>{pct(avgAttain)}</td>
-                <td className="py-3 text-right text-[12px] font-bold font-mono" style={{ color: avgDisplayCompliance >= 0.90 ? '#22C55E' : '#F59E0B' }}>{pct(avgDisplayCompliance)}</td>
-                <td className="py-3 text-right text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text-muted)' }}>{totalSpiritsAccts}</td>
+                <td className="py-3 text-right text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmtK(totalCases)}</td>
+                <td className="py-3 text-right text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmtM(totalRev)}</td>
+                <td className="py-3 text-right text-[12px] font-bold tabular-nums" style={{ color: attainColor(avgAttain) }}>{pct(avgAttain)}</td>
+                <td className="py-3 text-right text-[12px] font-bold tabular-nums" style={{ color: avgDisplayCompliance >= 0.90 ? '#22C55E' : '#F59E0B' }}>{pct(avgDisplayCompliance)}</td>
+                <td className="py-3 text-right text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{totalSpiritsAccts}</td>
                 <td className="py-3 pr-3" />
               </tr>
             </tfoot>
@@ -498,7 +498,7 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
               >
                 <div className="w-32 shrink-0">
                   <div className="text-[12px] font-semibold" style={{ color: isSelected ? '#7C3AED' : 'var(--pl-text)' }}>{seller.name}</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{seller.routeId}</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{seller.routeId}</div>
                 </div>
                 {[
                   { label: 'Core', val: gates.core, target: 0.85 },
@@ -510,8 +510,8 @@ export default function HometownDetailClient({ params }: { params: Promise<{ hom
                   return (
                     <div key={g.label} className="flex-1">
                       <div className="flex items-center justify-between mb-0.5">
-                        <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{g.label}</span>
-                        <span className="text-xs font-mono font-bold" style={{ color: passed ? '#22C55E' : '#F87171' }}>
+                        <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{g.label}</span>
+                        <span className="text-xs font-bold tabular-nums" style={{ color: passed ? '#22C55E' : '#F87171' }}>
                           {pct(g.val)}
                         </span>
                       </div>

@@ -144,10 +144,10 @@ export default function ThirteenWeekStoryPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#10B981' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#10B981' }}>
           The Narrative &middot; One Quarter in PROOFLINE
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           The 13-Week Story
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -156,7 +156,7 @@ export default function ThirteenWeekStoryPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <LightKpiCard label="Current Week" value="Week 9" accent="#10B981" sub="69% through quarter" stagger={0} />
         <LightKpiCard label="Marcus Attainment" value={pct(marcus.attainment)} accent="#22C55E" sub="On track for T2" stagger={1} />
         <LightKpiCard label="Milestones Passed" value="3/5" accent="#2563EB" sub="Mid-Quarter Pivot complete" stagger={2} />
@@ -183,7 +183,7 @@ export default function ThirteenWeekStoryPage() {
                 <button
                   key={m.week}
                   onClick={() => setActiveMilestone(i)}
-                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all"
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold tabular-nums transition-all"
                   style={{
                     background: activeMilestone === i ? m.color : 'var(--pl-chart-bar-track)',
                     color: activeMilestone === i ? 'white' : 'var(--pl-text-muted)',
@@ -201,13 +201,13 @@ export default function ThirteenWeekStoryPage() {
       <LightSectionCard title="Before vs. After PROOFLINE" className="mb-6">
         <div className="grid grid-cols-2 gap-4">
           {/* Before */}
-          <div className="rounded-lg p-4" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-xs font-bold font-mono mb-3" style={{ color: 'var(--pl-text-faint)' }}>BEFORE PROOFLINE</div>
+          <div className="rounded-xl p-4" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
+            <div className="text-xs font-bold tabular-nums mb-3" style={{ color: 'var(--pl-text-faint)' }}>BEFORE PROOFLINE</div>
             <div className="space-y-3">
               {beforeAfter.map(item => (
                 <div key={item.label} className="flex justify-between items-center">
                   <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{item.label}</span>
-                  <span className="text-[13px] font-bold font-mono" style={{ color: 'var(--pl-text-faint)' }}>{item.before}</span>
+                  <span className="text-[13px] font-bold tabular-nums" style={{ color: 'var(--pl-text-faint)' }}>{item.before}</span>
                 </div>
               ))}
             </div>
@@ -217,15 +217,15 @@ export default function ThirteenWeekStoryPage() {
           </div>
 
           {/* After */}
-          <div className="rounded-lg p-4" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.2)' }}>
-            <div className="text-xs font-bold font-mono mb-3" style={{ color: '#10B981' }}>WITH PROOFLINE</div>
+          <div className="rounded-xl p-4" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.2)' }}>
+            <div className="text-xs font-bold tabular-nums mb-3" style={{ color: '#10B981' }}>WITH PROOFLINE</div>
             <div className="space-y-3">
               {beforeAfter.map(item => (
                 <div key={item.label} className="flex justify-between items-center">
                   <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{item.label}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[13px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{item.after}</span>
-                    <span className="text-xs font-bold font-mono px-1 py-0.5 rounded" style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
+                    <span className="text-[13px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{item.after}</span>
+                    <span className="text-xs font-bold tabular-nums px-1 py-0.5 rounded" style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>
                       {item.improvement}
                     </span>
                   </div>
@@ -240,7 +240,7 @@ export default function ThirteenWeekStoryPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         The 13-Week Story follows Marcus Reyes (DAL-03) as a representative example. &quot;Before PROOFLINE&quot; estimates are based on
         industry benchmarks for spreadsheet-managed comp programs. 5 milestone check-ins align with Lone Star Distribution&apos;s management rhythm.
       </div>

@@ -37,7 +37,7 @@ export default function CommissionEngine() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Commission Engine</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Commission Engine</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           5-stream calculation pipeline — Phil Burnett Steps 2-6
         </p>
@@ -84,7 +84,7 @@ export default function CommissionEngine() {
 
                   {/* Type badge */}
                   <span
-                    className="inline-block self-start text-[10px] font-mono px-2 py-0.5 rounded-full mb-2"
+                    className="inline-block self-start text-[10px] px-2 py-0.5 rounded-full mb-2"
                     style={{ backgroundColor: badge.bg, color: badge.fg }}
                   >
                     {badge.label}
@@ -96,7 +96,7 @@ export default function CommissionEngine() {
                   </p>
 
                   {/* Sample calc */}
-                  <div className="rounded-lg p-2" style={{ backgroundColor: `${pipeColor}10` }}>
+                  <div className="rounded-xl p-2" style={{ backgroundColor: `${pipeColor}10` }}>
                     <p className="text-[10px] font-semibold mb-0.5" style={{ color: pipeColor }}>
                       {SAMPLE_REP}
                     </p>
@@ -141,9 +141,9 @@ export default function CommissionEngine() {
           <table className="w-full text-xs">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left pb-3 font-medium">Stream</th>
-                <th className="text-left pb-3 font-medium">Rate</th>
-                <th className="text-right pb-3 font-medium">Amount</th>
+                <th className="text-left pb-3 font-semibold">Stream</th>
+                <th className="text-left pb-3 font-semibold">Rate</th>
+                <th className="text-right pb-3 font-semibold">Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -158,7 +158,7 @@ export default function CommissionEngine() {
                       <span className="font-medium" style={{ color: 'var(--pl-text)' }}>{c.stream}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{c.rate}</td>
+                  <td className="py-2.5 tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>{c.rate}</td>
                   <td className="py-2.5 text-right font-semibold" style={{ color: c.amount > 0 ? PIPELINE_COLORS[i] : 'var(--pl-text-muted)' }}>
                     ${c.amount.toLocaleString()}
                   </td>
@@ -166,7 +166,7 @@ export default function CommissionEngine() {
               ))}
               <tr className="border-t-2" style={{ borderColor: COLORS.primary }}>
                 <td className="py-2.5 font-bold" style={{ color: 'var(--pl-text)' }}>Total Payout</td>
-                <td className="py-2.5 font-mono" style={{ color: 'var(--pl-text-secondary)' }}>9.0%</td>
+                <td className="py-2.5 tabular-nums" style={{ color: 'var(--pl-text-secondary)' }}>9.0%</td>
                 <td className="py-2.5 text-right font-bold text-base" style={{ color: COLORS.accent }}>$9,000</td>
               </tr>
             </tbody>
@@ -184,7 +184,7 @@ export default function CommissionEngine() {
           {COMMISSION_COMPONENTS.map((comp, i) => {
             const badge = TYPE_BADGES[comp.type];
             return (
-              <div key={comp.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
+              <div key={comp.id} className="rounded-xl border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <div
                     className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
@@ -197,7 +197,7 @@ export default function CommissionEngine() {
                   </span>
                 </div>
                 <span
-                  className="inline-block text-[9px] font-mono px-1.5 py-0.5 rounded-full"
+                  className="inline-block text-[9px] px-1.5 py-0.5 rounded-full"
                   style={{ backgroundColor: badge.bg, color: badge.fg }}
                 >
                   {badge.label}
@@ -225,17 +225,17 @@ export default function CommissionEngine() {
           {DRAW_CONFIG.map((dc) => (
             <div
               key={dc.format}
-              className="rounded-lg border p-4"
+              className="rounded-xl border p-4"
               style={{ borderColor: 'var(--pl-border)', backgroundColor: 'var(--pl-bg)' }}
             >
               <p className="text-xs font-bold mb-2" style={{ color: 'var(--pl-text)' }}>{dc.format}</p>
               <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-lg font-bold font-mono" style={{ color: COLORS.accent }}>${dc.hourlyDraw}</span>
+                <span className="text-lg font-bold tabular-nums" style={{ color: COLORS.accent }}>${dc.hourlyDraw}</span>
                 <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>/hr draw</span>
               </div>
               <div className="flex items-center gap-1 mb-2">
                 <span className="text-[10px]" style={{ color: 'var(--pl-text-secondary)' }}>Commission threshold:</span>
-                <span className="text-xs font-bold font-mono" style={{ color: '#059669' }}>${dc.commissionThresholdSPH} SPH</span>
+                <span className="text-xs font-bold tabular-nums" style={{ color: '#059669' }}>${dc.commissionThresholdSPH} SPH</span>
               </div>
               <p className="text-[10px] leading-snug" style={{ color: 'var(--pl-text-muted)' }}>{dc.description}</p>
             </div>
@@ -243,26 +243,26 @@ export default function CommissionEngine() {
         </div>
 
         {/* Visual: How SPH determines pay mode */}
-        <div className="rounded-lg p-4" style={{ backgroundColor: `${COLORS.primary}06`, border: `1px solid ${COLORS.primary}15` }}>
+        <div className="rounded-xl p-4" style={{ backgroundColor: `${COLORS.primary}06`, border: `1px solid ${COLORS.primary}15` }}>
           <p className="text-[11px] font-semibold mb-3" style={{ color: 'var(--pl-text)' }}>
             How It Works — Flagship Example ($20/hr draw, 5% Designer rate)
           </p>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#FEE2E2', border: '1px solid #FECACA' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div className="rounded-xl p-3" style={{ backgroundColor: '#FEE2E2', border: '1px solid #FECACA' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#EF4444' }}>Below Draw</p>
-              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $300 &times; 5% = $15/hr</p>
+              <p className="text-xs tabular-nums" style={{ color: 'var(--pl-text)' }}>SPH $300 &times; 5% = $15/hr</p>
               <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Earns draw: <strong>$20/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#EF4444' }}>Commission doesn&apos;t beat draw</p>
             </div>
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#FEF9C3', border: '1px solid #FDE68A' }}>
+            <div className="rounded-xl p-3" style={{ backgroundColor: '#FEF9C3', border: '1px solid #FDE68A' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#D97706' }}>At Threshold</p>
-              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $400 &times; 5% = $20/hr</p>
+              <p className="text-xs tabular-nums" style={{ color: 'var(--pl-text)' }}>SPH $400 &times; 5% = $20/hr</p>
               <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Break-even: <strong>$20/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#D97706' }}>Commission = draw exactly</p>
             </div>
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#D1FAE5', border: '1px solid #A7F3D0' }}>
+            <div className="rounded-xl p-3" style={{ backgroundColor: '#D1FAE5', border: '1px solid #A7F3D0' }}>
               <p className="text-[10px] font-semibold mb-1" style={{ color: '#059669' }}>Making Commission</p>
-              <p className="text-xs font-mono" style={{ color: 'var(--pl-text)' }}>SPH $600 &times; 5% = $30/hr</p>
+              <p className="text-xs tabular-nums" style={{ color: 'var(--pl-text)' }}>SPH $600 &times; 5% = $30/hr</p>
               <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>Earns commission: <strong>$30/hr</strong></p>
               <p className="text-[9px] mt-0.5" style={{ color: '#059669' }}>+$10/hr above draw</p>
             </div>

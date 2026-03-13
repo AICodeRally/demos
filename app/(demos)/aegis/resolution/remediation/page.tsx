@@ -52,14 +52,14 @@ export default function RemediationPlan() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Remediation Plan</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Remediation Plan</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Root cause remediation and implementation tracking
         </p>
       </div>
 
       {/* 3 StatCards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard label="Budget" value="$3.2M" color="#8B7355" />
         <StatCard label="Spent" value="$1.8M" color="#EA580C" />
         <StatCard label="Remaining" value="$1.4M" color="#059669" />
@@ -73,7 +73,7 @@ export default function RemediationPlan() {
             <div key={w.name}>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[12px] font-semibold truncate" style={{ color: '#1C1917', maxWidth: 220 }}>{w.name}</span>
-                <span className="text-[11px] font-mono font-bold" style={{ color: '#059669' }}>{w.pct}%</span>
+                <span className="text-[11px] tabular-nums font-bold" style={{ color: '#059669' }}>{w.pct}%</span>
               </div>
               <div className="h-5 w-full rounded overflow-hidden relative" style={{ backgroundColor: '#F5F5F4' }}>
                 <div
@@ -103,11 +103,11 @@ export default function RemediationPlan() {
       <div className="rounded-xl bg-white border p-5 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-1" style={{ color: '#1C1917' }}>Risk Recurrence Prediction</h2>
         <div className="grid grid-cols-2 gap-4 mb-3">
-          <div className="rounded-lg p-3" style={{ backgroundColor: '#FEF2F2' }}>
+          <div className="rounded-xl p-3" style={{ backgroundColor: '#FEF2F2' }}>
             <p className="text-[11px] font-semibold" style={{ color: '#DC2626' }}>Without encryption upgrade</p>
             <p className="text-[10px] mt-0.5" style={{ color: '#57534E' }}>64% breach recurrence in 18 months</p>
           </div>
-          <div className="rounded-lg p-3" style={{ backgroundColor: '#ECFDF5' }}>
+          <div className="rounded-xl p-3" style={{ backgroundColor: '#ECFDF5' }}>
             <p className="text-[11px] font-semibold" style={{ color: '#059669' }}>With upgrade</p>
             <p className="text-[10px] mt-0.5" style={{ color: '#57534E' }}>8% breach recurrence in 18 months</p>
           </div>
@@ -119,7 +119,7 @@ export default function RemediationPlan() {
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Accountability Tracker</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
+          <table className="w-full min-w-[600px] text-[11px]">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Workstream', 'Owner', 'Deadline', 'Status', 'Dependencies'].map((h) => (

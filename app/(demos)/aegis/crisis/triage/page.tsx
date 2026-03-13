@@ -59,12 +59,12 @@ export default function TriageDashboard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Triage Dashboard</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Triage Dashboard</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Multi-dimensional risk assessment &mdash; Meridian Dynamics</p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Est. Exposure" value="$22M" color="#DC2626" sparkline={[8, 12, 15, 18, 20, 22]} />
         <StatCard label="Jurisdictions" value="4" color="#7C3AED" />
         <StatCard label="Stakeholder Groups" value="6" color="#8B7355" />
@@ -79,11 +79,11 @@ export default function TriageDashboard() {
             <SeverityGauge value={78} max={100} label="Legal Exposure" />
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
+            <div className="rounded-xl p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
               <p className="text-lg font-bold" style={{ color: '#DC2626' }}>4</p>
               <p className="text-[10px]" style={{ color: '#57534E' }}>Active Jurisdictions</p>
             </div>
-            <div className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
+            <div className="rounded-xl p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
               <p className="text-lg font-bold" style={{ color: '#7C3AED' }}>7</p>
               <p className="text-[10px]" style={{ color: '#57534E' }}>Regulatory Triggers</p>
             </div>
@@ -100,11 +100,11 @@ export default function TriageDashboard() {
       <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Regulatory Trigger Analysis</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[600px] text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Jurisdiction', 'Law', 'Deadline', 'Triggered', 'Countdown'].map((h) => (
-                  <th key={h} className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>
+                  <th key={h} className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>
                     {h}
                   </th>
                 ))}
@@ -144,10 +144,10 @@ export default function TriageDashboard() {
       </div>
 
       {/* Classification Summary */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {CLASSIFICATION.map((c) => (
           <div key={c.label} className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-            <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: '#A8A29E' }}>{c.label}</p>
+            <p className="text-[11px] font-medium uppercase tracking-wider mb-3" style={{ color: '#A8A29E' }}>{c.label}</p>
             <div className="flex items-center gap-2 flex-wrap">
               <span
                 className="inline-block rounded-full px-3 py-1 text-xs font-bold"

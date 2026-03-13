@@ -103,12 +103,12 @@ export default function ThreatLandscape() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Threat Landscape</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Threat Landscape</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>External threat intelligence and predictive risk analysis</p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Active Threats" value="12" trend="up" trendValue="+3" color="#8B7355" sparkline={[6, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12]} />
         <StatCard label="Critical" value="3" trend="up" trendValue="+1" color="#DC2626" sparkline={[1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3]} />
         <StatCard label="New This Week" value="4" trend="up" trendValue="+2" color="#8B7355" sparkline={[1, 2, 1, 2, 3, 2, 1, 3, 2, 2, 3, 4]} />
@@ -169,7 +169,7 @@ export default function ThreatLandscape() {
             return (
               <div
                 key={i}
-                className="rounded-lg p-4"
+                className="rounded-xl p-4"
                 style={{ borderLeft: `4px solid ${ss.border}`, backgroundColor: '#FAFAF9' }}
               >
                 <div className="flex items-start justify-between mb-2">
@@ -192,19 +192,19 @@ export default function ThreatLandscape() {
       </div>
 
       {/* Bottom Summary Row */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Highest-Risk Sector</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Highest-Risk Sector</p>
           <p className="text-lg font-bold" style={{ color: '#2563EB' }}>Technology</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>Cyber + AI deepfake convergence</p>
         </div>
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Fastest-Growing Threat</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Fastest-Growing Threat</p>
           <p className="text-lg font-bold" style={{ color: '#DC2626' }}>AI Deepfakes</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>+68% quarter-over-quarter</p>
         </div>
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Regulatory Horizon</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Regulatory Horizon</p>
           <p className="text-lg font-bold" style={{ color: '#F59E0B' }}>3 New Rules</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>SEC, FTC, and EU DORA enforcement</p>
         </div>

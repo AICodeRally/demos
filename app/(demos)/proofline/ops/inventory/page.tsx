@@ -129,10 +129,10 @@ export default function InventoryPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
           Inventory &middot; Warehouse Operations
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Inventory Management
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -141,7 +141,7 @@ export default function InventoryPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Total On-Hand" value={fmtK(totalCases)} accent="#2563EB" sub="Cases across all WHs" stagger={0} />
         <LightKpiCard label="Low Stock Alerts" value={String(lowStockCount)} accent={lowStockCount > 0 ? '#F87171' : '#22C55E'} sub="High urgency items" stagger={1} />
         <LightKpiCard label="Spirits Cage" value={fmt(spiritsTotal)} accent="#F87171" sub="Cases in regulated storage" stagger={2} />
@@ -151,10 +151,10 @@ export default function InventoryPage() {
 
       {/* Hometown Filter */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Warehouse:</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>Warehouse:</span>
         <button
           onClick={() => setSelectedHometown('all')}
-          className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+          className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
           style={{
             borderColor: selectedHometown === 'all' ? '#2563EB' : 'var(--pl-border)',
             background: selectedHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
@@ -168,7 +168,7 @@ export default function InventoryPage() {
           <button
             key={h.id}
             onClick={() => setSelectedHometown(h.id)}
-            className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+            className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
             style={{
               borderColor: selectedHometown === h.id ? '#2563EB' : 'var(--pl-border)',
               background: selectedHometown === h.id ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
@@ -191,11 +191,11 @@ export default function InventoryPage() {
                   <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>
                     {hometown.name}
                   </span>
-                  <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+                  <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                     {fmtK(hometown.sqft)} sq ft
                   </span>
                 </div>
-                <span className="text-[12px] font-mono font-bold" style={{ color: 'var(--pl-text)' }}>
+                <span className="text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>
                   {fmtK(total)} cases
                 </span>
               </div>
@@ -221,7 +221,7 @@ export default function InventoryPage() {
                 {suppliers.filter(s => s.cases > 0).map(s => (
                   <div key={s.supplier} className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full" style={{ background: SUPPLIER_COLORS[s.supplier] }} />
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                       {SUPPLIER_NAMES[s.supplier].split(' ')[0]} {fmtK(s.cases)}
                     </span>
                   </div>
@@ -240,10 +240,10 @@ export default function InventoryPage() {
             const urg = URGENCY_COLORS[rec.urgency];
             const act = ACTION_LABELS[rec.action];
             return (
-              <div key={rec.brandId} className="flex items-start gap-4 px-4 py-3 rounded-lg border" style={{ borderColor: 'var(--pl-border)' }}>
+              <div key={rec.brandId} className="flex items-start gap-4 px-4 py-3 rounded-xl border" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex-shrink-0 mt-0.5">
                   <span
-                    className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                    className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                     style={{ background: urg.bg, color: urg.color }}
                   >
                     {rec.urgency.toUpperCase()}
@@ -254,11 +254,11 @@ export default function InventoryPage() {
                     <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>
                       {brand?.name ?? rec.brandId}
                     </span>
-                    <span className="text-xs font-bold font-mono" style={{ color: act.color }}>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: act.color }}>
                       {act.label}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 mb-1 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="flex items-center gap-4 mb-1 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                     <span>Current: <strong>{rec.currentDaysOnHand}d</strong> on-hand</span>
                     <span>Target: <strong>{rec.recommendedDaysOnHand}d</strong></span>
                     <span className="font-bold" style={{ color: rec.currentDaysOnHand < rec.recommendedDaysOnHand ? '#F87171' : '#22C55E' }}>
@@ -279,11 +279,11 @@ export default function InventoryPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-3 pl-2">Brand</th>
-                <th className="text-right font-medium pb-3">Cases</th>
-                <th className="text-right font-medium pb-3">Days On-Hand</th>
-                <th className="text-left font-medium pb-3">Status</th>
-                <th className="text-left font-medium pb-3 pr-2">Note</th>
+                <th className="text-left font-semibold pb-3 pl-2">Brand</th>
+                <th className="text-right font-semibold pb-3">Cases</th>
+                <th className="text-right font-semibold pb-3">Days On-Hand</th>
+                <th className="text-left font-semibold pb-3">Status</th>
+                <th className="text-left font-semibold pb-3 pr-2">Note</th>
               </tr>
             </thead>
             <tbody>
@@ -292,13 +292,13 @@ export default function InventoryPage() {
                 return (
                   <tr key={item.brand} className={i % 2 === 0 ? '' : ''} style={{ background: i % 2 === 0 ? 'var(--pl-stripe)' : undefined }}>
                     <td className="py-2 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>{item.brand}</td>
-                    <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text)' }}>{fmt(item.cases)}</td>
-                    <td className="py-2 text-right font-mono font-bold" style={{ color: statusColor }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmt(item.cases)}</td>
+                    <td className="py-2 text-right font-bold tabular-nums" style={{ color: statusColor }}>
                       {item.daysOnHand}d
                     </td>
                     <td className="py-2">
                       <span
-                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded uppercase"
+                        className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded uppercase"
                         style={{
                           background: item.status === 'low' ? 'rgba(248,113,113,0.08)' : item.status === 'high' ? 'rgba(245,158,11,0.08)' : 'rgba(34,197,94,0.08)',
                           color: statusColor,
@@ -314,7 +314,7 @@ export default function InventoryPage() {
             </tbody>
           </table>
         </div>
-        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="mt-3 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           Spirits stored in TABC-compliant locked cage. Separate regulatory tracking required. W-permit and P-permit accounts only.
         </div>
       </LightSectionCard>
@@ -325,21 +325,21 @@ export default function InventoryPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-3 pl-2">Warehouse</th>
-                <th className="text-left font-medium pb-3">Brand</th>
-                <th className="text-right font-medium pb-3">Cases</th>
-                <th className="text-left font-medium pb-3">Reason</th>
-                <th className="text-right font-medium pb-3 pr-2">Days Pending</th>
+                <th className="text-left font-semibold pb-3 pl-2">Warehouse</th>
+                <th className="text-left font-semibold pb-3">Brand</th>
+                <th className="text-right font-semibold pb-3">Cases</th>
+                <th className="text-left font-semibold pb-3">Reason</th>
+                <th className="text-right font-semibold pb-3 pr-2">Days Pending</th>
               </tr>
             </thead>
             <tbody>
               {RETURNS_PENDING.map((ret, i) => (
                 <tr key={`${ret.hometown}-${ret.brand}`} className={i % 2 === 0 ? '' : ''} style={{ background: i % 2 === 0 ? 'var(--pl-stripe)' : undefined }}>
                   <td className="py-2 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>{ret.hometown}</td>
-                  <td className="py-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{ret.brand}</td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{ret.cases}</td>
+                  <td className="py-2 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{ret.brand}</td>
+                  <td className="py-2 text-right font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{ret.cases}</td>
                   <td className="py-2 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{ret.reason}</td>
-                  <td className="py-2 text-right pr-2 font-mono" style={{ color: ret.daysPending >= 5 ? '#F87171' : 'var(--pl-text-muted)' }}>
+                  <td className="py-2 text-right pr-2 tabular-nums" style={{ color: ret.daysPending >= 5 ? '#F87171' : 'var(--pl-text-muted)' }}>
                     {ret.daysPending}d
                   </td>
                 </tr>
@@ -350,7 +350,7 @@ export default function InventoryPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Inventory levels simulated from quarterly case data. AI recommendations based on seasonal forecast, velocity trends, and supplier allocation constraints.
         Spirits cage tracked separately per TABC regulatory requirements. Days on-hand = current stock &divide; weekly run rate.
       </div>
@@ -358,7 +358,7 @@ export default function InventoryPage() {
       {/* ═══════ KEG TRACKING ═══════ */}
       <LightSectionCard title="KEG TRACKING — DEPOSIT MANAGEMENT" className="mt-6">
         {/* KPIs */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <LightKpiCard label="Kegs Out" value={String(KEG_SUMMARY.totalOut)} accent="#3B82F6" />
           <LightKpiCard label="Kegs Returned" value={String(KEG_SUMMARY.totalReturned)} accent="#22C55E" />
           <LightKpiCard label="Deposit Value" value={`$${(KEG_SUMMARY.depositValue / 1000).toFixed(1)}K`} accent="#F59E0B" />
@@ -368,11 +368,11 @@ export default function InventoryPage() {
 
         {/* Keg by size table */}
         <div className="mb-6">
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
             BY KEG SIZE
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-xs font-mono">
+            <table className="w-full text-xs">
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                   {['Keg Size', 'Out', 'Returned', 'Outstanding', 'Aging >30d', 'Deposit/Unit', 'Deposit Exposure'].map(h => (
@@ -403,17 +403,17 @@ export default function InventoryPage() {
         </div>
 
         {/* Aging Distribution */}
-        <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+        <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
           AGING DISTRIBUTION
         </div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {KEG_AGING_BUCKETS.map((bucket) => (
             <div key={bucket.label} className="p-3 rounded-lg text-center" style={{
               background: `${bucket.color}08`,
               border: `1px solid ${bucket.color}20`,
             }}>
-              <div className="text-2xl font-bold font-mono" style={{ color: bucket.color }}>{bucket.count}</div>
-              <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{bucket.label}</div>
+              <div className="text-2xl font-bold tabular-nums" style={{ color: bucket.color }}>{bucket.count}</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>{bucket.label}</div>
             </div>
           ))}
         </div>

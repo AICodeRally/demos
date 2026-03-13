@@ -75,7 +75,7 @@ function KpiCard({
       <div className="flex items-start justify-between">
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             {label}
@@ -179,7 +179,7 @@ function TechCard({ tech }: { tech: Technician }) {
       <div className="grid grid-cols-3 gap-2">
         <div className="text-center">
           <div
-            className="text-[10px] font-mono uppercase"
+            className="text-[10px] uppercase"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Fix Rate
@@ -196,7 +196,7 @@ function TechCard({ tech }: { tech: Technician }) {
         </div>
         <div className="text-center">
           <div
-            className="text-[10px] font-mono uppercase"
+            className="text-[10px] uppercase"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Avg Repair
@@ -213,7 +213,7 @@ function TechCard({ tech }: { tech: Technician }) {
         </div>
         <div className="text-center">
           <div
-            className="text-[10px] font-mono uppercase"
+            className="text-[10px] uppercase"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             AI Queries
@@ -254,7 +254,7 @@ function KnowledgeEntry({ title, content }: { title: string; content: string }) 
             {title}
           </div>
           <div
-            className="text-[11px] mt-0.5 font-mono"
+            className="text-[11px] mt-0.5"
             style={{ color: 'var(--prizym-text-secondary)' }}
           >
             {content}
@@ -294,7 +294,7 @@ export default function AIWorkforcePage() {
           </p>
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(139,92,246,0.12)',
             color: '#8B5CF6',
@@ -474,7 +474,7 @@ export default function AIWorkforcePage() {
               Technician Roster
             </h3>
             <span
-              className="text-[11px] font-mono"
+              className="text-[11px]"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               {sortedTechs.length} techs

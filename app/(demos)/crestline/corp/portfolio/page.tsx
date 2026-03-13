@@ -65,7 +65,7 @@ export default function StorePortfolio() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Store Portfolio</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Store Portfolio</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           200-store fleet analysis across 8 districts and 4 formats
         </p>
@@ -146,7 +146,7 @@ export default function StorePortfolio() {
                       </span>
                     </td>
                     <td className="py-2.5 pr-4 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{store.district}</td>
-                    <td className="py-2.5 pr-4 font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{store.revenue}</td>
+                    <td className="py-2.5 pr-4 tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>{store.revenue}</td>
                     <td className="py-2.5 pr-4">
                       <span className="text-xs font-semibold" style={{ color: '#10B981' }}>{store.yoy}</span>
                     </td>

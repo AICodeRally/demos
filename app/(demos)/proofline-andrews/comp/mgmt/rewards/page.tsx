@@ -153,7 +153,7 @@ function RankBadge({ rank }: { rank: number }) {
     : { bg: 'var(--pl-card-alt)', color: 'var(--pl-text-muted)', label: `${rank}`, glow: 'none' };
 
   return (
-    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold font-mono flex-shrink-0"
+    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold tabular-nums flex-shrink-0"
       style={{ background: config.bg, color: config.color, boxShadow: config.glow }}>
       {config.label}
     </div>
@@ -189,7 +189,7 @@ function QualificationJourney({ attPct }: { attPct: number }) {
               background: attPct * 100 >= m.pct ? m.color : 'var(--pl-border)',
               boxShadow: attPct * 100 >= m.pct ? `0 0 6px ${m.color}40` : 'none',
             }} />
-            <span className="text-xs font-mono mt-0.5" style={{
+            <span className="text-xs mt-0.5" style={{
               color: attPct * 100 >= m.pct ? m.color : 'var(--pl-text-faint)',
             }}>{m.label}</span>
           </div>
@@ -243,10 +243,10 @@ export default function RewardsPage() {
         <SparkleEffect color={GOLD} count={8} />
         <div className="relative z-10 p-6 text-center">
           <div className="text-4xl mb-2">{'\u2606'}</div>
-          <div className="text-xs tracking-[4px] uppercase font-mono mb-2" style={{ color: GOLD }}>
+          <div className="text-xs tracking-[4px] uppercase font-semibold mb-2" style={{ color: GOLD }}>
             Lone Star Distribution
           </div>
-          <h1 className="text-2xl font-extrabold mb-1" style={{
+          <h1 className="text-3xl font-extrabold mb-1" style={{
             color: 'var(--pl-text)',
             fontFamily: 'var(--pl-font)',
           }}>
@@ -262,8 +262,8 @@ export default function RewardsPage() {
               { label: 'Gold', count: goldQualifiers.length, color: GOLD },
             ].map(t => (
               <div key={t.label} className="text-center">
-                <div className="text-[24px] font-bold font-mono" style={{ color: t.color }}>{t.count}</div>
-                <div className="text-xs font-mono uppercase tracking-wider" style={{ color: t.color }}>{t.label}</div>
+                <div className="text-[24px] font-bold tabular-nums" style={{ color: t.color }}>{t.count}</div>
+                <div className="text-xs uppercase tracking-wider" style={{ color: t.color }}>{t.label}</div>
               </div>
             ))}
           </div>
@@ -279,7 +279,7 @@ export default function RewardsPage() {
             <button
               key={t.key}
               onClick={() => setActiveTab(t.key)}
-              className="px-5 py-2.5 text-xs font-bold font-mono uppercase tracking-wider transition-colors"
+              className="px-5 py-2.5 text-xs font-bold tabular-nums uppercase tracking-wider transition-colors"
               style={{
                 color: activeTab === t.key ? tabColor : 'var(--pl-text-muted)',
                 borderBottom: activeTab === t.key ? `2px solid ${tabColor}` : '2px solid transparent',
@@ -297,7 +297,7 @@ export default function RewardsPage() {
       {activeTab === 'club' && (
         <>
           {/* Tier Cards with gradients and glow */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             {CLUB_TIERS.map(tier => {
               const qualifiers = leaderboard.filter(r => {
                 const pct = r.attPct * 100;
@@ -314,40 +314,40 @@ export default function RewardsPage() {
                   {/* Gradient header */}
                   <div className="p-4 text-center relative z-10" style={{ background: tier.gradient }}>
                     <div className="text-2xl mb-1">{tier.icon}</div>
-                    <div className="text-sm font-bold font-mono text-white">{tier.name}</div>
-                    <div className="text-xs font-mono text-white/80">{tier.threshold}%+ Attainment</div>
+                    <div className="text-sm font-bold tabular-nums text-white">{tier.name}</div>
+                    <div className="text-xs text-white/80">{tier.threshold}%+ Attainment</div>
                   </div>
                   {/* Body */}
                   <div className="p-4 relative z-10" style={{ background: `${tier.color}08` }}>
                     <div className="text-center mb-3">
-                      <div className="text-[32px] font-bold font-mono" style={{ color: tier.color }}>
+                      <div className="text-[32px] font-bold tabular-nums" style={{ color: tier.color }}>
                         {qualifiers.length}
                       </div>
-                      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>
+                      <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>
                         Qualifiers
                       </div>
                     </div>
                     <div className="space-y-1.5">
                       {qualifiers.slice(0, 4).map(q => (
-                        <div key={q.id} className="flex items-center justify-between text-xs font-mono px-2 py-1 rounded"
+                        <div key={q.id} className="flex items-center justify-between text-xs px-2 py-1 rounded"
                           style={{ background: `${tier.color}10` }}>
                           <span style={{ color: 'var(--pl-text)' }}>{q.name}</span>
                           <span className="font-bold" style={{ color: tier.color }}>{(q.attPct * 100).toFixed(0)}%</span>
                         </div>
                       ))}
                       {qualifiers.length > 4 && (
-                        <div className="text-center text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+                        <div className="text-center text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                           +{qualifiers.length - 4} more
                         </div>
                       )}
                     </div>
                     {/* Perks */}
                     <div className="mt-3 pt-3 border-t" style={{ borderColor: `${tier.color}20` }}>
-                      <div className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5" style={{ color: tier.color }}>
+                      <div className="text-xs font-bold tabular-nums uppercase tracking-wider mb-1.5" style={{ color: tier.color }}>
                         Rewards
                       </div>
                       {tier.perks.map(perk => (
-                        <div key={perk} className="text-xs font-mono flex items-center gap-1.5 py-0.5" style={{ color: 'var(--pl-text-muted)' }}>
+                        <div key={perk} className="text-xs flex items-center gap-1.5 py-0.5" style={{ color: 'var(--pl-text-muted)' }}>
                           <span style={{ color: tier.color }}>{'\u2713'}</span> {perk}
                         </div>
                       ))}
@@ -379,26 +379,26 @@ export default function RewardsPage() {
                     <RankBadge rank={rank} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{rep.name}</span>
+                        <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{rep.name}</span>
                         {clubTier && (
-                          <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
+                          <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-full"
                             style={{ background: clubTier.color + '20', color: clubTier.color }}>
                             {clubTier.name.replace(' Club', '')}
                           </span>
                         )}
                       </div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                         Route {rep.routeId} &middot; {rep.casesQTD.toLocaleString()} cases
                       </div>
                       <QualificationJourney attPct={rep.attPct} />
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <div className="text-lg font-bold font-mono" style={{
+                      <div className="text-lg font-bold tabular-nums" style={{
                         color: clubTier?.color ?? 'var(--pl-text-muted)',
                       }}>
                         {(rep.attPct * 100).toFixed(0)}%
                       </div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>attainment</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>attainment</div>
                     </div>
                   </div>
                 );
@@ -422,7 +422,7 @@ export default function RewardsPage() {
           <div className="flex gap-2 flex-wrap mb-4">
             <button
               onClick={() => setHometownFilter(null)}
-              className="px-3 py-1 rounded text-xs font-bold font-mono uppercase transition-colors"
+              className="px-3 py-1 rounded text-xs font-bold tabular-nums uppercase transition-colors"
               style={{
                 background: hometownFilter === null ? ACCENT : 'var(--pl-card-alt)',
                 color: hometownFilter === null ? 'white' : 'var(--pl-text-muted)',
@@ -435,7 +435,7 @@ export default function RewardsPage() {
               <button
                 key={ht.id}
                 onClick={() => setHometownFilter(ht.id)}
-                className="px-3 py-1 rounded text-xs font-bold font-mono uppercase transition-colors"
+                className="px-3 py-1 rounded text-xs font-bold tabular-nums uppercase transition-colors"
                 style={{
                   background: hometownFilter === ht.id ? ACCENT : 'var(--pl-card-alt)',
                   color: hometownFilter === ht.id ? 'white' : 'var(--pl-text-muted)',
@@ -449,7 +449,7 @@ export default function RewardsPage() {
 
           <LightSectionCard title={`VARIABLE PAY \u2014 ${sorted.length} REPS`}>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs font-mono">
+              <table className="w-full text-xs">
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Rep', 'Route', 'Base Salary', 'Variable Target', 'Earned', '% of Target', 'Status'].map(h => (
@@ -497,9 +497,9 @@ export default function RewardsPage() {
                 const pctH = (b.count / maxCount) * 100;
                 return (
                   <div key={b.label} className="flex-1 flex flex-col items-center gap-1">
-                    <div className="text-xs font-mono font-bold" style={{ color: b.color }}>{b.count}</div>
+                    <div className="text-xs font-bold tabular-nums" style={{ color: b.color }}>{b.count}</div>
                     <div className="w-full rounded-t" style={{ height: `${pctH}%`, background: `${b.color}60`, minHeight: 4 }} />
-                    <div className="text-xs font-mono text-center" style={{ color: 'var(--pl-text-faint)' }}>{b.label}</div>
+                    <div className="text-xs text-center" style={{ color: 'var(--pl-text-faint)' }}>{b.label}</div>
                   </div>
                 );
               })}
@@ -516,14 +516,14 @@ export default function RewardsPage() {
               {RATE_SCHEDULE.map(tier => (
                 <div key={tier.tier} className="p-4 rounded-lg text-center"
                   style={{ background: `${TIER_COLORS[tier.tier]}12`, border: `1px solid ${TIER_COLORS[tier.tier]}30` }}>
-                  <div className="text-xs font-bold font-mono uppercase mb-1" style={{ color: TIER_COLORS[tier.tier] }}>
+                  <div className="text-xs font-bold tabular-nums uppercase mb-1" style={{ color: TIER_COLORS[tier.tier] }}>
                     T{tier.tier} \u2014 {tier.label}
                   </div>
-                  <div className="text-2xl font-bold font-mono mb-1" style={{ color: TIER_COLORS[tier.tier] }}>
+                  <div className="text-2xl font-bold tabular-nums mb-1" style={{ color: TIER_COLORS[tier.tier] }}>
                     ${tier.ratePerCase.toFixed(2)}
                   </div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>per case</div>
-                  <div className="text-xs font-mono mt-2" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>per case</div>
+                  <div className="text-xs mt-2" style={{ color: 'var(--pl-text-muted)' }}>
                     Attainment: {tier.range}
                   </div>
                 </div>
@@ -533,7 +533,7 @@ export default function RewardsPage() {
 
           <LightSectionCard title="REP COMMISSION \u2014 QTD">
             <div className="overflow-x-auto">
-              <table className="w-full text-xs font-mono">
+              <table className="w-full text-xs">
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Rep', 'Tier', 'Volume (Cases)', 'Rate/Case', 'Commission', 'QTD Total'].map(h => (
@@ -567,11 +567,11 @@ export default function RewardsPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {HOMETOWN_ROLLUP.map(ht => (
                 <div key={ht.id} className="p-4 rounded-lg" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
-                  <div className="text-xs font-bold font-mono uppercase mb-2" style={{ color: 'var(--pl-text)' }}>{ht.name}</div>
-                  <div className="text-xl font-bold font-mono" style={{ color: ACCENT }}>${ht.totalComm.toLocaleString()}</div>
-                  <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>total commission &middot; {ht.reps} reps</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Avg rate: ${ht.avgRate.toFixed(2)}/case</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>Top: {ht.topEarner}</div>
+                  <div className="text-xs font-bold tabular-nums uppercase mb-2" style={{ color: 'var(--pl-text)' }}>{ht.name}</div>
+                  <div className="text-xl font-bold tabular-nums" style={{ color: ACCENT }}>${ht.totalComm.toLocaleString()}</div>
+                  <div className="text-xs mb-2" style={{ color: 'var(--pl-text-faint)' }}>total commission &middot; {ht.reps} reps</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Avg rate: ${ht.avgRate.toFixed(2)}/case</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>Top: {ht.topEarner}</div>
                 </div>
               ))}
             </div>
@@ -599,12 +599,12 @@ export default function RewardsPage() {
                   <div key={bonus.name} className="flex items-center gap-4 p-3 rounded-lg"
                     style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
                     <div className="flex-1">
-                      <div className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{bonus.name}</div>
-                      <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{bonus.description}</div>
+                      <div className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{bonus.name}</div>
+                      <div className="text-xs mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{bonus.description}</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-bold font-mono" style={{ color: ACCENT }}>{qualifiers}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>qualifiers</div>
+                      <div className="text-sm font-bold tabular-nums" style={{ color: ACCENT }}>{qualifiers}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>qualifiers</div>
                     </div>
                   </div>
                 );
@@ -614,7 +614,7 @@ export default function RewardsPage() {
 
           <LightSectionCard title="BONUS PAYOUT TABLE">
             <div className="overflow-x-auto">
-              <table className="w-full text-xs font-mono">
+              <table className="w-full text-xs">
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                     {['Rep', 'Bonus Type', 'Qualification', 'Payout', 'Pay Date'].map(h => (

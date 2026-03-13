@@ -27,12 +27,12 @@ export default function HseInspectionsPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#DC2626' }}
         >
           Act 5 &middot; HSE Officer
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Inspection Route
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -178,7 +178,7 @@ export default function HseInspectionsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs font-mono" style={{ color: '#CBD5E1' }}>
+                  <div className="text-xs" style={{ color: '#CBD5E1' }}>
                     {stop.arrivalTime}
                   </div>
                   <div className="text-[10px]" style={{ color: '#64748B' }}>

@@ -235,7 +235,7 @@ export default function DashboardPage() {
 
           {/* Welcome text */}
           <div className="relative mb-6">
-            <h2 className="text-2xl font-bold text-white">Grace Community Church</h2>
+            <h2 className="text-3xl font-bold text-white">Grace Community Church</h2>
             <p className="mt-1 text-white/80">
               Powered by STEEPLE — The complete church management platform
             </p>
@@ -258,7 +258,7 @@ export default function DashboardPage() {
               </div>
               <Link
                 href="/steeple/evm"
-                className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-amber-600 shadow-sm transition-all hover:bg-amber-50"
+                className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-amber-600 shadow-sm transition-all hover:bg-amber-50"
               >
                 Register Now
               </Link>
@@ -378,7 +378,7 @@ export default function DashboardPage() {
                         <p className="mt-1 text-xs font-medium text-green-600">{kpi.trend}</p>
                       </div>
                       <div
-                        className="rounded-lg p-2"
+                        className="rounded-xl p-2"
                         style={{ backgroundColor: `${kpi.color}15` }}
                       >
                         <Icon className="h-5 w-5" style={{ color: kpi.color }} />
@@ -397,7 +397,7 @@ export default function DashboardPage() {
             {upcomingEvents.map((event, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 rounded-lg border border-gray-100 bg-[#faf8f4] p-3 transition-all hover:border-gray-200 hover:bg-white"
+                className="flex items-center gap-4 rounded-xl border border-gray-100 bg-[#faf8f4] p-3 transition-all hover:border-gray-200 hover:bg-white"
               >
                 <div
                   className="h-12 w-1 rounded-full"
@@ -478,7 +478,7 @@ export default function DashboardPage() {
                 return (
                   <div key={index} className="flex items-start gap-3">
                     <div
-                      className="rounded-lg p-2"
+                      className="rounded-xl p-2"
                       style={{ backgroundColor: `${activity.color}15` }}
                     >
                       <Icon className="h-4 w-4" style={{ color: activity.color }} />

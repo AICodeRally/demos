@@ -94,7 +94,7 @@ export default function RetroCorrections() {
                 }}
               >
                 {i === 0 ? 'Original' : i === 1 ? 'Next Period' : 'Corrected'}
-                <span className="ml-2 font-mono text-[10px]">({snap.periodLabel})</span>
+                <span className="ml-2 text-[10px]">({snap.periodLabel})</span>
               </button>
             );
           })}
@@ -105,7 +105,7 @@ export default function RetroCorrections() {
           const snap = CALC_SNAPSHOTS[selectedIdx];
           const isCorrected = snap.periodLabel.includes('CORRECTED');
           return (
-            <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
+            <div className="rounded-xl p-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <span className="text-sm font-bold" style={{ color: 'var(--pl-text)' }}>{snap.repName}</span>
@@ -138,14 +138,14 @@ export default function RetroCorrections() {
                   {snap.components.map(c => (
                     <tr key={c.componentId} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
                       <td className="py-2 text-xs" style={{ color: 'var(--pl-text)' }}>{c.label}</td>
-                      <td className="py-2 text-xs text-right font-mono font-medium" style={{ color: 'var(--pl-text)' }}>${c.amount.toLocaleString()}</td>
+                      <td className="py-2 text-xs text-right tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>${c.amount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr style={{ borderTop: '2px solid var(--pl-border)' }}>
                     <td className="py-2 text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Total</td>
-                    <td className="py-2 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text)' }}>${snap.total.toLocaleString()}</td>
+                    <td className="py-2 text-sm font-bold text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>${snap.total.toLocaleString()}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -180,9 +180,9 @@ export default function RetroCorrections() {
               return (
                 <tr key={oc.componentId} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
                   <td className="py-3 text-xs font-medium" style={{ color: 'var(--pl-text)' }}>{oc.label}</td>
-                  <td className="py-3 text-xs text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>${oc.amount.toLocaleString()}</td>
-                  <td className="py-3 text-xs text-right font-mono" style={{ color: 'var(--pl-text)' }}>${cc.amount.toLocaleString()}</td>
-                  <td className="py-3 text-xs text-right font-mono font-semibold" style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : 'var(--pl-text-muted)' }}>
+                  <td className="py-3 text-xs text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>${oc.amount.toLocaleString()}</td>
+                  <td className="py-3 text-xs text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>${cc.amount.toLocaleString()}</td>
+                  <td className="py-3 text-xs text-right tabular-nums font-semibold" style={{ color: delta > 0 ? '#059669' : delta < 0 ? '#DC2626' : 'var(--pl-text-muted)' }}>
                     {delta > 0 ? '+' : ''}{delta === 0 ? '—' : `$${delta.toLocaleString()}`}
                   </td>
                 </tr>
@@ -192,9 +192,9 @@ export default function RetroCorrections() {
           <tfoot>
             <tr style={{ borderTop: '2px solid var(--pl-border)' }}>
               <td className="py-3 text-sm font-bold" style={{ color: 'var(--pl-text)' }}>Total</td>
-              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>${original.total.toLocaleString()}</td>
-              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: 'var(--pl-text)' }}>${corrected.total.toLocaleString()}</td>
-              <td className="py-3 text-sm font-bold text-right font-mono" style={{ color: '#059669' }}>+${(corrected.total - original.total).toLocaleString()}</td>
+              <td className="py-3 text-sm font-bold text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>${original.total.toLocaleString()}</td>
+              <td className="py-3 text-sm font-bold text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>${corrected.total.toLocaleString()}</td>
+              <td className="py-3 text-sm font-bold text-right tabular-nums" style={{ color: '#059669' }}>+${(corrected.total - original.total).toLocaleString()}</td>
             </tr>
           </tfoot>
         </table>
@@ -269,10 +269,10 @@ export default function RetroCorrections() {
                     borderColor: i === AUDIT_TRAIL.length - 1 ? '#059669' : '#CBD5E1',
                   }}
                 />
-                <div className="flex-1 rounded-lg p-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
+                <div className="flex-1 rounded-xl p-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>{entry.action}</span>
-                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{entry.ts}</span>
+                    <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{entry.ts}</span>
                   </div>
                   <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{entry.detail}</p>
                   <p className="text-[10px] mt-1 font-medium" style={{ color: 'var(--pl-text-muted)' }}>{entry.actor}</p>

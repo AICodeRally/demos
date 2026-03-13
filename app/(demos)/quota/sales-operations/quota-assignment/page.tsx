@@ -47,7 +47,7 @@ export default function QuotaAssignmentPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Quota Assignment</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Quota Assignment</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Create, assign, and manage sales quotas across teams, individuals, and territories.
           </p>
@@ -67,7 +67,7 @@ export default function QuotaAssignmentPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -128,8 +128,8 @@ export default function QuotaAssignmentPage() {
                     <td className="py-3 pr-4 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{r.name}</td>
                     <td className="py-3 pr-4" style={{ color: 'var(--prizym-text-muted)' }}>{r.team}</td>
                     <td className="py-3 pr-4" style={{ color: 'var(--prizym-text-muted)' }}>{r.territory}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(r.quota)}</td>
-                    <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(r.actual)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(r.quota)}</td>
+                    <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(r.actual)}</td>
                     <td className={`py-3 pr-4 text-right font-semibold ${status.color}`}>
                       {fmtPct(att * 100)}
                     </td>
@@ -165,7 +165,7 @@ export default function QuotaAssignmentPage() {
           {teamSummary.map(t => {
             const status = getStatus(t.att);
             return (
-              <div key={t.team} className="rounded-lg p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+              <div key={t.team} className="rounded-xl p-4" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-semibold" style={{ color: 'var(--prizym-text-primary)' }}>{t.team}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-full border ${status.bg}`}>{status.label}</span>
@@ -177,11 +177,11 @@ export default function QuotaAssignmentPage() {
                   </div>
                   <div className="flex justify-between">
                     <span style={{ color: 'var(--prizym-text-muted)' }}>Total Quota</span>
-                    <span className="font-mono">{fmtDollar(t.quota)}</span>
+                    <span className="tabular-nums">{fmtDollar(t.quota)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span style={{ color: 'var(--prizym-text-muted)' }}>Total Actual</span>
-                    <span className="font-mono">{fmtDollar(t.actual)}</span>
+                    <span className="tabular-nums">{fmtDollar(t.actual)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span style={{ color: 'var(--prizym-text-muted)' }}>Attainment</span>

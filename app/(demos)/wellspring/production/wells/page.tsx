@@ -66,13 +66,13 @@ export default function WellStatusBoardPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#B45309' }}
         >
           Act 3 &middot; Production Operations
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           Well Status Board
@@ -121,7 +121,7 @@ export default function WellStatusBoardPage() {
           <button
             key={opt.id}
             onClick={() => setPadFilter(opt.id)}
-            className="text-[11px] font-mono px-4 py-2 rounded-lg transition-colors"
+            className="text-[11px] px-4 py-2 rounded-lg transition-colors"
             style={{
               background:
                 padFilter === opt.id ? '#B45309' : '#1E2530',
@@ -159,7 +159,7 @@ export default function WellStatusBoardPage() {
                 ].map((h) => (
                   <th
                     key={h}
-                    className="px-4 py-3 text-[10px] uppercase tracking-wider font-mono font-semibold"
+                    className="px-4 py-3 text-[10px] uppercase tracking-wider font-semibold font-semibold"
                     style={{ color: '#94A3B8', borderBottom: '1px solid #334155' }}
                   >
                     {h}
@@ -188,7 +188,7 @@ export default function WellStatusBoardPage() {
                       {well.name}
                     </div>
                     <div
-                      className="text-[10px] font-mono"
+                      className="text-[10px]"
                       style={{ color: '#64748B' }}
                     >
                       {well.id}
@@ -217,7 +217,7 @@ export default function WellStatusBoardPage() {
                     </div>
                   </td>
                   <td
-                    className="px-4 py-2.5 text-[12px] font-mono font-semibold"
+                    className="px-4 py-2.5 text-[12px] font-semibold"
                     style={{
                       color:
                         well.oilBpd > 0 ? '#16A34A' : '#475569',
@@ -228,7 +228,7 @@ export default function WellStatusBoardPage() {
                       : '--'}
                   </td>
                   <td
-                    className="px-4 py-2.5 text-[12px] font-mono font-semibold"
+                    className="px-4 py-2.5 text-[12px] font-semibold"
                     style={{
                       color:
                         well.gasMcfd > 0 ? '#EA580C' : '#475569',
@@ -258,7 +258,7 @@ export default function WellStatusBoardPage() {
                         />
                       </div>
                       <span
-                        className="text-[11px] font-mono"
+                        className="text-[11px]"
                         style={{
                           color:
                             well.waterCut > 0.45
@@ -277,7 +277,7 @@ export default function WellStatusBoardPage() {
                     {LIFT_LABELS[well.liftType]}
                   </td>
                   <td
-                    className="px-4 py-2.5 text-[11px] font-mono"
+                    className="px-4 py-2.5 text-[11px]"
                     style={{ color: '#64748B' }}
                   >
                     {well.lastGauge}

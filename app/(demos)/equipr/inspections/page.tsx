@@ -83,7 +83,7 @@ function InspectionCard({ inspection }: { inspection: Inspection }) {
               {inspection.assetName}
             </span>
             <span
-              className="text-[11px] font-mono"
+              className="text-[11px]"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               {inspection.assetId}
@@ -167,19 +167,19 @@ function InspectionCard({ inspection }: { inspection: Inspection }) {
                   }}
                 >
                   <th
-                    className="text-left py-2 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                    className="text-left py-2 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Item
                   </th>
                   <th
-                    className="text-center py-2 text-[10px] uppercase tracking-[1px] font-mono font-semibold w-20"
+                    className="text-center py-2 text-[10px] uppercase tracking-[1px] font-semibold font-semibold w-20"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Result
                   </th>
                   <th
-                    className="text-left py-2 text-[10px] uppercase tracking-[1px] font-mono font-semibold"
+                    className="text-left py-2 text-[10px] uppercase tracking-[1px] font-semibold font-semibold"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Notes
@@ -228,7 +228,7 @@ function InspectionCard({ inspection }: { inspection: Inspection }) {
           {/* Damage section */}
           {inspection.damageFound && (
             <div
-              className="rounded-lg p-3 mt-3"
+              className="rounded-xl p-3 mt-3"
               style={{
                 background: 'rgba(239,68,68,0.06)',
                 border: '1px solid rgba(239,68,68,0.15)',
@@ -346,7 +346,7 @@ function InspectionCard({ inspection }: { inspection: Inspection }) {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>

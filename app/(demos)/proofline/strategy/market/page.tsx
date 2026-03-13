@@ -125,11 +125,11 @@ export default function MarketPositionPage() {
 
       {/* Page Header */}
       <div className="mt-6 mb-8">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#C6A052' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#C6A052' }}>
           Act 1 &middot; Corporate Strategy
         </div>
         <h1
-          className="text-2xl font-extrabold mb-1"
+          className="text-3xl font-extrabold mb-1"
           style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
         >
           Market Position &amp; Growth
@@ -300,7 +300,7 @@ export default function MarketPositionPage() {
                 className="w-3 h-3 rounded-full"
                 style={{ background: p.color, border: p.isHighlighted ? '2px solid #C6A052' : undefined }}
               />
-              <span className="text-xs font-mono" style={{ color: p.isHighlighted ? '#C6A052' : 'var(--pl-text-muted)', fontWeight: p.isHighlighted ? 700 : 400 }}>
+              <span className="text-xs" style={{ color: p.isHighlighted ? '#C6A052' : 'var(--pl-text-muted)', fontWeight: p.isHighlighted ? 700 : 400 }}>
                 {p.name}
               </span>
             </div>
@@ -347,7 +347,7 @@ export default function MarketPositionPage() {
               <div className="absolute left-[-21px] w-[18px] h-[18px] rounded-full border-2 border-white" style={{ background: item.color, boxShadow: `0 0 6px ${item.color}40`, top: '2px' }} />
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[13px] font-bold font-mono px-2 py-0.5 rounded" style={{ background: `${item.color}12`, color: item.color }}>{item.year}</span>
+                  <span className="text-[13px] font-bold tabular-nums px-2 py-0.5 rounded" style={{ background: `${item.color}12`, color: item.color }}>{item.year}</span>
                   <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{item.title}</span>
                 </div>
                 <p className="text-[12px] leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>{item.desc}</p>
@@ -359,8 +359,8 @@ export default function MarketPositionPage() {
 
       {/* ── Growth Vectors ───────────────────────────── */}
       <div className="mb-8">
-        <div className="text-[13px] uppercase tracking-[1.5px] font-mono mb-4" style={{ color: 'var(--pl-text-muted)' }}>Growth Vectors</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="text-[13px] uppercase tracking-[1.5px] font-semibold mb-4" style={{ color: 'var(--pl-text-muted)' }}>Growth Vectors</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {GROWTH_VECTORS.map((v) => (
             <div
               key={v.title}
@@ -369,10 +369,10 @@ export default function MarketPositionPage() {
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[14px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{v.title}</span>
-                <span className="text-[13px] font-bold font-mono px-2 py-0.5 rounded-full" style={{ background: `${v.accent}12`, color: v.accent }}>{v.stat}</span>
+                <span className="text-[13px] font-bold tabular-nums px-2 py-0.5 rounded-full" style={{ background: `${v.accent}12`, color: v.accent }}>{v.stat}</span>
               </div>
               <p className="text-[12px] leading-relaxed mb-3" style={{ color: 'var(--pl-text-muted)' }}>{v.desc}</p>
-              <div className="text-xs font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>Focus: {v.areas}</div>
+              <div className="text-xs uppercase" style={{ color: 'var(--pl-text-faint)' }}>Focus: {v.areas}</div>
             </div>
           ))}
         </div>

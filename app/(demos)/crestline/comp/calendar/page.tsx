@@ -76,7 +76,7 @@ export default function DualCalendar() {
             {PAYROLL_CALENDAR.map(p => (
               <div key={p.period} className="flex items-center justify-between rounded-lg px-4 py-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold font-mono" style={{ color: COLORS.standard, minWidth: 36 }}>{p.period}</span>
+                  <span className="text-sm font-bold tabular-nums" style={{ color: COLORS.standard, minWidth: 36 }}>{p.period}</span>
                   <span className="text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{formatDate(p.start)} — {formatDate(p.end)}</span>
                 </div>
                 <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium" style={{ backgroundColor: '#DBEAFE', color: COLORS.standard }}>
@@ -99,11 +99,11 @@ export default function DualCalendar() {
                 style={{ backgroundColor: p.weeks === 5 ? '#FDF2F8' : 'var(--pl-bg)' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold font-mono" style={{ color: COLORS.flagship, minWidth: 28 }}>{p.period}</span>
+                  <span className="text-sm font-bold tabular-nums" style={{ color: COLORS.flagship, minWidth: 28 }}>{p.period}</span>
                   <span className="text-xs" style={{ color: 'var(--pl-text-secondary)' }}>
                     {formatDate(p.start)} — {formatDate(p.end)}
                   </span>
-                  <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
                     {p.weeks}w
                   </span>
                 </div>
@@ -203,7 +203,7 @@ export default function DualCalendar() {
               Counter Lead Bonus is calculated on the retail calendar, not the payroll calendar.
               In 5-week periods, reps earn on the full extended period, which does not align with payroll splits.
             </p>
-            <div className="rounded-lg p-3" style={{ backgroundColor: 'var(--pl-card)' }}>
+            <div className="rounded-xl p-3" style={{ backgroundColor: 'var(--pl-card)' }}>
               <p className="text-xs font-semibold mb-1" style={{ color: 'var(--pl-text)' }}>Example: Period P2 (5 weeks, Mar 1 — Apr 4)</p>
               <p className="text-xs" style={{ color: 'var(--pl-text-secondary)' }}>
                 Counter Lead Bonus is calculated on the full 5-week period — not split across PP3 (Mar 1-15) and PP4 (Mar 16-31).
@@ -327,7 +327,7 @@ export default function DualCalendar() {
                       {row.cal}
                     </span>
                   </td>
-                  <td className="py-3 text-xs font-mono" style={{ color: 'var(--pl-text-secondary)' }}>{row.freq}</td>
+                  <td className="py-3 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{row.freq}</td>
                   <td className="py-3 text-xs font-medium" style={{ color: 'var(--pl-text)' }}>{row.period}</td>
                 </tr>
               ))}

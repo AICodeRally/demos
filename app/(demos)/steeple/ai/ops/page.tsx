@@ -170,7 +170,7 @@ export default function OpsPage() {
             {healthAlerts.map((alert, i) => (
               <div
                 key={i}
-                className="flex items-start gap-3 rounded-lg border border-gray-100 bg-[#faf8f4] p-3"
+                className="flex items-start gap-3 rounded-xl border border-gray-100 bg-[#faf8f4] p-3"
               >
                 <div
                   className={`shrink-0 rounded-lg p-2 ${

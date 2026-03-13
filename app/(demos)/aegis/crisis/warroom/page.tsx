@@ -48,12 +48,12 @@ export default function WarRoomActivation() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>War Room Activation</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>War Room Activation</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Secure command center &mdash; Meridian Dynamics response</p>
       </div>
 
       {/* 6 Status Tiles */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {STATUS_TILES.map((t) => {
           const Icon = t.icon;
           return (
@@ -101,7 +101,7 @@ export default function WarRoomActivation() {
         >
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold" style={{ color: '#1C1917' }}>Active Playbook</h2>
-            <span className="text-[11px] font-mono" style={{ color: '#8B7355' }}>94% match</span>
+            <span className="text-[11px] tabular-nums" style={{ color: '#8B7355' }}>94% match</span>
           </div>
           <p className="text-base font-bold mb-4" style={{ color: '#1C1917' }}>Cyber Breach Response v3.2</p>
           <div className="space-y-2">
@@ -149,7 +149,7 @@ export default function WarRoomActivation() {
         {/* Active Participants */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
           <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Active Participants</h2>
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             {PARTICIPANTS.map((p) => (
               <div key={p.name} className="flex flex-col items-center">
                 <div className="relative">

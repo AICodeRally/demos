@@ -199,7 +199,7 @@ export default function SettingsPage() {
           </p>
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(37,99,235,0.12)',
             color: '#2563EB',
@@ -232,7 +232,7 @@ export default function SettingsPage() {
             </p>
           </div>
           <div
-            className="flex items-center gap-1.5 text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+            className="flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-lg"
             style={{
               background: 'rgba(16,185,129,0.12)',
               color: '#10B981',
@@ -284,7 +284,7 @@ export default function SettingsPage() {
                       {int.name}
                     </h3>
                     <span
-                      className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md"
+                      className="text-[11px] font-medium px-2 py-0.5 rounded-md"
                       style={{
                         background: `${int.color}18`,
                         color: int.color,
@@ -308,7 +308,7 @@ export default function SettingsPage() {
                       Connected
                     </span>
                   </div>
-                  <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+                  <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
                     {int.uptime} uptime
                   </span>
                   <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
@@ -321,7 +321,7 @@ export default function SettingsPage() {
 
                 {/* Data points */}
                 <div
-                  className="text-[12px] font-mono mb-3"
+                  className="text-[12px] mb-3"
                   style={{ color: 'var(--prizym-text-secondary)' }}
                 >
                   {int.dataPoints}
@@ -364,13 +364,13 @@ export default function SettingsPage() {
               }}
             >
               <div
-                className="text-[10px] uppercase tracking-[1.5px] font-mono font-semibold mb-1"
+                className="text-[10px] uppercase tracking-[1.5px] font-semibold font-semibold mb-1"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 {stat.label}
               </div>
               <div
-                className="text-[15px] font-bold font-mono"
+                className="text-[15px] font-bold tabular-nums"
                 style={{ color: 'var(--prizym-text-primary)' }}
               >
                 {stat.value}
@@ -404,7 +404,7 @@ export default function SettingsPage() {
                 {loc.name}
               </h3>
               <span
-                className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md"
+                className="text-[11px] font-medium px-2 py-0.5 rounded-md"
                 style={{
                   background: 'rgba(37,99,235,0.12)',
                   color: '#2563EB',
@@ -455,7 +455,7 @@ export default function SettingsPage() {
                   (h) => (
                     <th
                       key={h}
-                      className="px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-mono font-semibold"
+                      className="px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-semibold font-semibold"
                       style={{ color: 'var(--prizym-text-muted)' }}
                     >
                       {h}
@@ -483,7 +483,7 @@ export default function SettingsPage() {
                     {rule.category}
                   </td>
                   <td
-                    className="px-5 py-3 text-[13px] font-mono"
+                    className="px-5 py-3 text-[13px]"
                     style={{ color: 'var(--prizym-text-secondary)' }}
                   >
                     {rule.floorRate}
@@ -495,13 +495,13 @@ export default function SettingsPage() {
                     {rule.discountApproval}
                   </td>
                   <td
-                    className="px-5 py-3 text-[13px] font-mono"
+                    className="px-5 py-3 text-[13px]"
                     style={{ color: 'var(--prizym-text-secondary)' }}
                   >
                     {rule.maxDiscount}
                   </td>
                   <td
-                    className="px-5 py-3 text-[13px] font-mono"
+                    className="px-5 py-3 text-[13px]"
                     style={{ color: 'var(--prizym-text-secondary)' }}
                   >
                     {rule.weekendMultiplier}
@@ -535,7 +535,7 @@ export default function SettingsPage() {
                 {['Name', 'Role', 'Location', 'Email', 'Access'].map((h) => (
                   <th
                     key={h}
-                    className="px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-mono font-semibold"
+                    className="px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-semibold font-semibold"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     {h}
@@ -576,14 +576,14 @@ export default function SettingsPage() {
                       {member.location}
                     </td>
                     <td
-                      className="px-5 py-3 text-[13px] font-mono"
+                      className="px-5 py-3 text-[13px]"
                       style={{ color: 'var(--prizym-text-muted)' }}
                     >
                       {member.email}
                     </td>
                     <td className="px-5 py-3">
                       <span
-                        className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md"
+                        className="text-[11px] font-medium px-2 py-0.5 rounded-md"
                         style={{
                           background: colors.bg,
                           color: colors.text,

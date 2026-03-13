@@ -79,12 +79,12 @@ export default function LegalHold() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Legal Hold</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Legal Hold</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Evidence preservation and chain-of-custody initialization</p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Custodians" value="8" color="#8B7355" />
         <StatCard label="Data Volume" value="4.7TB" color="#2563EB" sparkline={[2.1, 2.8, 3.4, 3.9, 4.3, 4.7]} />
         <StatCard label="Acknowledged" value="85%" color="#059669" sparkline={[45, 56, 62, 71, 78, 85]} />
@@ -94,7 +94,7 @@ export default function LegalHold() {
       {/* Custodian Network Grid */}
       <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Custodian Network</h2>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {CUSTODIANS.map((c) => {
             const sc = STATUS_COLORS[c.status];
             return (
@@ -119,7 +119,7 @@ export default function LegalHold() {
                   </span>
                 </div>
                 <p className="text-xs font-semibold" style={{ color: '#1C1917' }}>{c.name}</p>
-                <p className="text-[10px] mt-0.5 font-mono" style={{ color: '#57534E' }}>{c.volume}</p>
+                <p className="text-[10px] mt-0.5 tabular-nums" style={{ color: '#57534E' }}>{c.volume}</p>
                 <span
                   className="inline-block mt-2 rounded-full px-2 py-0.5 text-[9px] font-medium"
                   style={{ backgroundColor: sc.bg, color: sc.text }}
@@ -151,7 +151,7 @@ export default function LegalHold() {
           </div>
           <div className="mt-4 grid grid-cols-3 gap-3">
             {DONUT_SEGMENTS.map((s) => (
-              <div key={s.label} className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
+              <div key={s.label} className="rounded-xl p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
                 <p className="text-lg font-bold" style={{ color: s.color }}>{s.value}%</p>
                 <p className="text-[10px]" style={{ color: '#57534E' }}>{s.label}</p>
               </div>
@@ -177,11 +177,11 @@ export default function LegalHold() {
           <PrivilegeBadge size="md" />
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[600px] text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
                 {['Timestamp', 'Artifact', 'Custodian', 'Action', 'Hash', ''].map((h) => (
-                  <th key={h} className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>
+                  <th key={h} className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>
                     {h}
                   </th>
                 ))}
@@ -201,7 +201,7 @@ export default function LegalHold() {
                       {r.action}
                     </span>
                   </td>
-                  <td className="py-3 font-mono text-[10px]" style={{ color: '#A8A29E' }}>{r.hash}</td>
+                  <td className="py-3 text-[10px]" style={{ color: '#A8A29E' }}>{r.hash}</td>
                   <td className="py-3">
                     <PrivilegeBadge size="sm" />
                   </td>

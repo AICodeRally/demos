@@ -124,10 +124,10 @@ export default function QuotaPlanningPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#7C3AED' }}>
           Quota Planning &middot; FY2026
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Revenue Target Cascade
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -220,11 +220,11 @@ export default function QuotaPlanningPage() {
 
         {/* Route detail panel when hometown selected */}
         {selectedHometown && selectedRoutes.length > 0 && (
-          <div className="mt-3 p-4 rounded-lg border" style={{ borderColor: '#C6A052', background: 'rgba(198,160,82,0.04)' }}>
-            <div className="text-[13px] font-bold font-mono mb-2" style={{ color: '#C6A052' }}>
+          <div className="mt-3 p-4 rounded-xl border" style={{ borderColor: '#C6A052', background: 'rgba(198,160,82,0.04)' }}>
+            <div className="text-[13px] font-bold tabular-nums mb-2" style={{ color: '#C6A052' }}>
               Route Detail — {htBlocks.find(b => b.node.id === selectedHometown)?.node.label ?? selectedHometown}
             </div>
-            <div className="grid grid-cols-4 gap-2 text-[12px] font-mono">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[12px]">
               {selectedRoutes.map(r => (
                 <div key={r.id} className="flex items-center gap-2 p-2 rounded" style={{ background: 'var(--pl-card)' }}>
                   <span className="font-bold" style={{ color: 'var(--pl-text)' }}>{r.id}</span>
@@ -263,12 +263,12 @@ export default function QuotaPlanningPage() {
                     <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{node.label}</span>
                     <div className="flex items-center gap-2">
                       <span
-                        className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded"
+                        className="text-[10px] font-bold tabular-nums px-1.5 py-0.5 rounded"
                         style={{ color: gapColor, background: gapColor === '#F87171' ? 'rgba(248,113,113,0.1)' : gapColor === '#F59E0B' ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)' }}
                       >
                         {gap >= 0 ? '+' : '-'}${(Math.abs(gap) / 1e6).toFixed(1)}M ({gap >= 0 ? '+' : '-'}{(Math.abs(gapPct) * 100).toFixed(1)}%)
                       </span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-stripe)', color: 'var(--pl-text-muted)' }}>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-stripe)', color: 'var(--pl-text-muted)' }}>
                         Conf: {node.confidenceScore}
                       </span>
                     </div>
@@ -283,7 +283,7 @@ export default function QuotaPlanningPage() {
                         opacity: 0.7,
                       }} />
                     </div>
-                    <span className="text-[10px] font-mono w-14 text-right" style={{ color: '#C6A052' }}>{fmtM(node.topDownQuota)}</span>
+                    <span className="text-[10px] w-14 text-right" style={{ color: '#C6A052' }}>{fmtM(node.topDownQuota)}</span>
                   </div>
                   {/* Bottom-up bar */}
                   <div className="flex items-center gap-1">
@@ -295,14 +295,14 @@ export default function QuotaPlanningPage() {
                         opacity: 0.7,
                       }} />
                     </div>
-                    <span className="text-[10px] font-mono w-14 text-right" style={{ color: '#3B82F6' }}>{fmtM(node.bottomUpForecast)}</span>
+                    <span className="text-[10px] w-14 text-right" style={{ color: '#3B82F6' }}>{fmtM(node.bottomUpForecast)}</span>
                   </div>
                 </div>
               );
             })}
           </div>
           {/* Bar legend */}
-          <div className="flex items-center gap-4 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-4 mt-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
             <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-sm" style={{ background: '#C6A052', opacity: 0.7 }} />Top-Down</div>
             <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-sm" style={{ background: '#3B82F6', opacity: 0.7 }} />Bottom-Up</div>
           </div>
@@ -401,7 +401,7 @@ export default function QuotaPlanningPage() {
 
       {/* ── Section D — Quota Fairness Gauges ────────── */}
       <LightSectionCard title="Quota Fairness Index" className="mb-6">
-        <div className="grid grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {FAIRNESS_SCORES.map(fs => {
             const lowestFactor = Object.entries(fs.factors).sort(([, a], [, b]) => a - b)[0];
             return (
@@ -417,7 +417,7 @@ export default function QuotaPlanningPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Quota cascade: $44.8M company target allocated by region weight and hometown revenue share. Fairness index weights capacity, growth, competition, mix, and tenure factors.
       </div>
     </>

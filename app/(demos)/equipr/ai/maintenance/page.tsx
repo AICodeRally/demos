@@ -120,7 +120,7 @@ function KpiCard({ label, value, accent, icon, delta, deltaUp, sub }: KpiCardPro
       <div className="flex items-start justify-between">
         <div>
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             {label}
@@ -216,7 +216,7 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
               {prediction.assetName}
             </span>
             <span
-              className="text-[11px] font-mono"
+              className="text-[11px]"
               style={{ color: 'var(--prizym-text-muted)' }}
             >
               {prediction.assetId}
@@ -244,13 +244,13 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
         {/* Confidence */}
         <div className="text-center shrink-0 hidden sm:block">
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono"
+            className="text-[10px] uppercase tracking-[1px] font-semibold"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Confidence
           </div>
           <div
-            className="text-[14px] font-bold font-mono"
+            className="text-[14px] font-bold tabular-nums"
             style={{ color: 'var(--prizym-text-primary)' }}
           >
             {(prediction.confidenceScore * 100).toFixed(0)}%
@@ -260,13 +260,13 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
         {/* Days until failure */}
         <div className="text-center shrink-0 hidden sm:block">
           <div
-            className="text-[10px] uppercase tracking-[1px] font-mono"
+            className="text-[10px] uppercase tracking-[1px] font-semibold"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Failure in
           </div>
           <div
-            className="text-[14px] font-bold font-mono"
+            className="text-[14px] font-bold tabular-nums"
             style={{
               color:
                 days <= 7 ? '#DC2626' : days <= 14 ? '#EA580C' : 'var(--prizym-text-primary)',
@@ -294,7 +294,7 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
             {/* Left: Prescribed Action */}
             <div>
               <div
-                className="text-[10px] uppercase tracking-[1.5px] font-mono mb-2 flex items-center gap-1.5"
+                className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-2 flex items-center gap-1.5"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 <Wrench size={12} />
@@ -320,7 +320,7 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
                 </div>
                 <div>
                   <div
-                    className="text-[10px] uppercase tracking-[1px] font-mono"
+                    className="text-[10px] uppercase tracking-[1px] font-semibold"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     Recommended Tech
@@ -341,14 +341,14 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span
-                    className="text-[10px] uppercase tracking-[1.5px] font-mono flex items-center gap-1.5"
+                    className="text-[10px] uppercase tracking-[1.5px] font-semibold flex items-center gap-1.5"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     <Gauge size={12} />
                     Hours Used vs Threshold
                   </span>
                   <span
-                    className="text-[11px] font-mono font-bold"
+                    className="text-[11px] font-bold tabular-nums"
                     style={{
                       color:
                         hoursPct >= 90
@@ -383,14 +383,14 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
               {/* Cost + Downtime row */}
               <div className="flex gap-3">
                 <div
-                  className="flex-1 rounded-lg p-3"
+                  className="flex-1 rounded-xl p-3"
                   style={{
                     background: 'rgba(0,0,0,0.02)',
                     border: '1px solid rgba(0,0,0,0.06)',
                   }}
                 >
                   <div
-                    className="text-[10px] uppercase tracking-[1px] font-mono flex items-center gap-1"
+                    className="text-[10px] uppercase tracking-[1px] font-semibold flex items-center gap-1"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     <DollarSign size={10} />
@@ -407,14 +407,14 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
                   </div>
                 </div>
                 <div
-                  className="flex-1 rounded-lg p-3"
+                  className="flex-1 rounded-xl p-3"
                   style={{
                     background: 'rgba(0,0,0,0.02)',
                     border: '1px solid rgba(0,0,0,0.06)',
                   }}
                 >
                   <div
-                    className="text-[10px] uppercase tracking-[1px] font-mono flex items-center gap-1"
+                    className="text-[10px] uppercase tracking-[1px] font-semibold flex items-center gap-1"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     <Clock size={10} />
@@ -434,7 +434,7 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
 
               {/* Predicted failure date */}
               <div
-                className="text-[11px] font-mono flex items-center gap-1.5"
+                className="text-[11px] flex items-center gap-1.5"
                 style={{ color: 'var(--prizym-text-muted)' }}
               >
                 <AlertTriangle size={11} />
@@ -452,7 +452,7 @@ function PredictionCard({ prediction }: { prediction: MaintenancePrediction }) {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>•</span>
@@ -489,7 +489,7 @@ export default function AIPredictiveMaintenancePage() {
           <SourceBadge source="Trackunit Telematics + SmartEquip" synced="Live telemetry" />
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5"
           style={{
             background: 'rgba(139,92,246,0.12)',
             color: '#8B5CF6',
@@ -729,7 +729,7 @@ export default function AIPredictiveMaintenancePage() {
             Active Predictions
           </h2>
           <span
-            className="text-[11px] font-mono"
+            className="text-[11px]"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             {PREDICTIONS.length} assets monitored
@@ -798,19 +798,19 @@ export default function AIPredictiveMaintenancePage() {
             <div className="flex items-center gap-4 mt-3">
               <div className="flex items-center gap-1.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ background: '#10B981' }} />
-                <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+                <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
                   Parts: In Stock
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ background: '#2563EB' }} />
-                <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+                <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
                   Tech: Available Mar 4
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ background: '#8B5CF6' }} />
-                <span className="text-[11px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+                <span className="text-[11px]" style={{ color: 'var(--prizym-text-muted)' }}>
                   Risk: Avoided $8,200 emergency repair
                 </span>
               </div>

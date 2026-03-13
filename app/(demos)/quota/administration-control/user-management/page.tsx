@@ -54,7 +54,7 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -114,7 +114,7 @@ export default function UserManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>User Management</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>User Management</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Manage team access, roles, and permissions across the quota platform.
           </p>
@@ -158,13 +158,13 @@ export default function UserManagementPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Role</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
-                <th className="pb-3 text-xs font-medium text-right" style={{ color: 'var(--prizym-text-muted)' }}>Quota Assigned</th>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Last Login</th>
-                <th className="pb-3 text-xs font-medium w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>User</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Role</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Team</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Status</th>
+                <th className="pb-3 text-xs font-semibold text-right" style={{ color: 'var(--prizym-text-muted)' }}>Quota Assigned</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Last Login</th>
+                <th className="pb-3 text-xs font-semibold w-10" style={{ color: 'var(--prizym-text-muted)' }}></th>
               </tr>
             </thead>
             <tbody>
@@ -184,7 +184,7 @@ export default function UserManagementPage() {
                   <td className="py-3"><RoleBadge role={u.role} /></td>
                   <td className="py-3" style={{ color: 'var(--prizym-text-secondary)' }}>{u.team}</td>
                   <td className="py-3"><StatusBadge status={u.status} /></td>
-                  <td className="py-3 text-right font-mono" style={{ color: 'var(--prizym-text-secondary)' }}>
+                  <td className="py-3 text-right tabular-nums" style={{ color: 'var(--prizym-text-secondary)' }}>
                     {u.quotaAssigned > 0 ? fmtDollar(u.quotaAssigned) : '\u2014'}
                   </td>
                   <td className="py-3">
@@ -215,11 +215,11 @@ export default function UserManagementPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
-                <th className="pb-3 text-xs font-medium" style={{ color: 'var(--prizym-text-muted)' }}>Permission</th>
-                <th className="pb-3 text-xs font-medium text-center text-purple-400">Admin</th>
-                <th className="pb-3 text-xs font-medium text-center text-blue-400">Manager</th>
-                <th className="pb-3 text-xs font-medium text-center text-amber-400">Rep</th>
-                <th className="pb-3 text-xs font-medium text-center" style={{ color: 'var(--prizym-text-muted)' }}>Viewer</th>
+                <th className="pb-3 text-xs font-semibold" style={{ color: 'var(--prizym-text-muted)' }}>Permission</th>
+                <th className="pb-3 text-xs font-semibold text-center text-purple-400">Admin</th>
+                <th className="pb-3 text-xs font-semibold text-center text-blue-400">Manager</th>
+                <th className="pb-3 text-xs font-semibold text-center text-amber-400">Rep</th>
+                <th className="pb-3 text-xs font-semibold text-center" style={{ color: 'var(--prizym-text-muted)' }}>Viewer</th>
               </tr>
             </thead>
             <tbody>

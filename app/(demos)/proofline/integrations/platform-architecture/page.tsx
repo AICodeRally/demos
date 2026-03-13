@@ -353,15 +353,15 @@ export default function PlatformArchitecturePage() {
               {'\u2699'}
             </div>
             <div>
-              <div className="text-xs tracking-[4px] uppercase font-mono font-bold" style={{ color: 'var(--pl-text-faint)' }}>
+              <div className="text-xs tracking-[4px] uppercase font-bold tabular-nums" style={{ color: 'var(--pl-text-faint)' }}>
                 Platform & Integrations / Platform Architecture
               </div>
-              <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+              <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                 Enterprise Platform Architecture
               </h1>
             </div>
           </div>
-          <p className="text-sm font-mono leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
             Powered by AICR &mdash; Multi-Tenant, AI-Governed, SOX-Ready.
             PROOFLINE is not a standalone app. It sits on top of a battle-tested enterprise platform that handles
             governance, security, audit, and AI &mdash; so you get enterprise-grade infrastructure from day one.
@@ -374,7 +374,7 @@ export default function PlatformArchitecturePage() {
       </div>
 
       {/* ======= KPIs ======= */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         <LightKpiCard
           label="Platform Uptime"
           value="99.97%"
@@ -423,7 +423,7 @@ export default function PlatformArchitecturePage() {
           background: `${ACCENT}06`,
           border: `1px solid ${ACCENT}15`,
         }}>
-          <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
             PROOFLINE sits on top of a battle-tested platform. When the platform improves, every tenant benefits &mdash;
             zero migration required. Infrastructure upgrades, security patches, and AI model improvements flow through
             automatically.
@@ -438,7 +438,7 @@ export default function PlatformArchitecturePage() {
           background: `${PURPLE}06`,
           border: `1px solid ${PURPLE}15`,
         }}>
-          <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
             Your data never touches another tenant&apos;s data. Your rules are yours.
             But you get all platform upgrades automatically &mdash; security patches, AI improvements, and new features
             roll out without migration or downtime.
@@ -467,7 +467,7 @@ export default function PlatformArchitecturePage() {
                   {card.title}
                 </span>
               </div>
-              <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                 {card.description}
               </p>
             </div>
@@ -491,17 +491,17 @@ export default function PlatformArchitecturePage() {
                 opacity: mounted ? 1 : 0,
                 transition: `all 0.5s ease ${i * 200}ms`,
               }}>
-                <div className="text-sm font-bold font-mono" style={{ color: step.color }}>
+                <div className="text-sm font-bold tabular-nums" style={{ color: step.color }}>
                   {step.label}
                 </div>
-                <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>
                   {step.sub}
                 </div>
               </div>
               {i < 2 && (
                 <div className="flex items-center gap-1">
                   <div className="w-6 h-px" style={{ background: 'var(--pl-border)' }} />
-                  <div className="rounded px-1.5 py-0.5 text-xs font-bold font-mono"
+                  <div className="rounded px-1.5 py-0.5 text-xs font-bold tabular-nums"
                     style={{ background: `${PURPLE}12`, color: PURPLE, border: `1px solid ${PURPLE}25` }}>
                     GATE
                   </div>
@@ -532,7 +532,7 @@ export default function PlatformArchitecturePage() {
                   {callout.title}
                 </span>
               </div>
-              <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                 {callout.description}
               </p>
             </div>
@@ -546,7 +546,7 @@ export default function PlatformArchitecturePage() {
           {CONNECTOR_ROWS.map((row) => (
             <div key={row.category} className="flex items-center gap-3 flex-wrap">
               <div className="w-36 text-right">
-                <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>
+                <span className="text-xs font-bold tabular-nums uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>
                   {row.category}
                 </span>
               </div>
@@ -563,10 +563,10 @@ export default function PlatformArchitecturePage() {
                         <path d="M3 8l3 3 7-7" stroke={GREEN} strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div>
-                    <span className="text-xs font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>
                       {conn.name}
                     </span>
-                    <span className="text-xs font-mono px-1.5 py-0.5 rounded-full"
+                    <span className="text-xs px-1.5 py-0.5 rounded-full"
                       style={{
                         background: conn.type === 'Real-time' ? `${CYAN}12` : conn.type === 'Bidirectional' ? `${PURPLE}12` : `${SLATE}10`,
                         color: conn.type === 'Real-time' ? CYAN : conn.type === 'Bidirectional' ? PURPLE : SLATE,
@@ -606,7 +606,7 @@ export default function PlatformArchitecturePage() {
                 {card.points.map((pt) => (
                   <li key={pt} className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: card.color, opacity: 0.6 }} />
-                    <span className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+                    <span className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                       {pt}
                     </span>
                   </li>
@@ -625,11 +625,11 @@ export default function PlatformArchitecturePage() {
         <div className="p-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <PulseDot color={ACCENT} size={6} />
-            <span className="text-xs tracking-[4px] uppercase font-mono font-bold" style={{ color: ACCENT }}>
+            <span className="text-xs tracking-[4px] uppercase font-bold tabular-nums" style={{ color: ACCENT }}>
               AICR Platform
             </span>
           </div>
-          <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
             Powering enterprise incentive compensation for beverage distribution and beyond.
           </p>
         </div>

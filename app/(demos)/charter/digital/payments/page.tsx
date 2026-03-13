@@ -51,14 +51,14 @@ export default function PaymentOperations() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Payment Operations</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Payment Operations</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Real-time payment processing, channel mix, and volume analytics
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Daily Volume" value="$4.2M" trend="up" trendValue="+6.8%" color="#475569" />
         <StatCard label="Success Rate" value="99.7%" trend="up" trendValue="+0.1%" color="#6B8F71" />
         <StatCard label="Avg Processing" value="1.2s" trend="down" trendValue="-0.3s" color="#B87333" />

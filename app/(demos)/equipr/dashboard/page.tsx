@@ -49,7 +49,7 @@ function KpiCard({ label, value, accent, delta, deltaUp, sub, source }: KpiCardP
         style={{ background: accent }}
       />
       <div
-        className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+        className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
         style={{ color: 'var(--prizym-text-muted)' }}
       >
         {label}
@@ -87,7 +87,7 @@ function KpiCard({ label, value, accent, delta, deltaUp, sub, source }: KpiCardP
           style={{ color: 'var(--prizym-text-muted)' }}
         >
           <Radio size={10} className="opacity-60" />
-          <span className="text-[9px] font-mono">{source}</span>
+          <span className="text-[9px]">{source}</span>
         </div>
       )}
     </div>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <div
-          className="text-[12px] font-mono font-medium px-3 py-1.5 rounded-lg"
+          className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
           style={{
             background: 'rgba(37,99,235,0.12)',
             color: '#2563EB',
@@ -218,7 +218,7 @@ export default function DashboardPage() {
             Connected Systems
           </h2>
           <span
-            className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full"
+            className="text-[10px] font-medium px-2 py-0.5 rounded-full"
             style={{
               background: 'rgba(16,185,129,0.12)',
               color: '#10B981',
@@ -255,7 +255,7 @@ export default function DashboardPage() {
                       animation: 'pulse 2s ease-in-out infinite',
                     }}
                   />
-                  <span className="text-[9px] font-mono font-medium" style={{ color: '#10B981' }}>
+                  <span className="text-[9px] font-medium" style={{ color: '#10B981' }}>
                     Connected
                   </span>
                 </div>
@@ -278,7 +278,7 @@ export default function DashboardPage() {
                   {sys.type}
                 </div>
                 <div
-                  className="text-[10px] font-mono truncate"
+                  className="text-[10px] truncate"
                   style={{ color: 'var(--prizym-text-muted)' }}
                 >
                   Last sync: {sys.lastSync}
@@ -312,7 +312,7 @@ export default function DashboardPage() {
             </h3>
             <div className="flex items-center gap-1" style={{ color: '#9CA3AF' }}>
               <Radio size={9} />
-              <span className="text-[9px] font-mono">Trackunit + Wynne</span>
+              <span className="text-[9px]">Trackunit + Wynne</span>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={240}>
@@ -383,7 +383,7 @@ export default function DashboardPage() {
             </h3>
             <div className="flex items-center gap-1" style={{ color: '#9CA3AF' }}>
               <Radio size={9} />
-              <span className="text-[9px] font-mono">Wynne Systems</span>
+              <span className="text-[9px]">Wynne Systems</span>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={240}>

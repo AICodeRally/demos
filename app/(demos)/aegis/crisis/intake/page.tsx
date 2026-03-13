@@ -60,7 +60,7 @@ export default function IncidentIntake() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Incident Intake</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Incident Intake</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Active incident classification and initial assessment</p>
       </div>
 
@@ -224,7 +224,7 @@ export default function IncidentIntake() {
 
       {/* Severity scale bar */}
       <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: '#A8A29E' }}>Impact Scale</h2>
+        <h2 className="text-[11px] font-semibold uppercase tracking-wider mb-3" style={{ color: '#A8A29E' }}>Impact Scale</h2>
         <div className="flex items-center gap-1">
           {Array.from({ length: 20 }).map((_, i) => {
             const isActive = i < Math.round(92 / 5);

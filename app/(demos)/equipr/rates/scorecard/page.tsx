@@ -35,7 +35,7 @@ const avgGap = avgActual - avgTarget;
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>•</span>
@@ -85,7 +85,7 @@ export default function RateScorecardPage() {
             style={{ background: '#2563EB' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Overall Target
@@ -115,7 +115,7 @@ export default function RateScorecardPage() {
             style={{ background: '#F59E0B' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Overall Actual
@@ -145,7 +145,7 @@ export default function RateScorecardPage() {
             style={{ background: '#EF4444' }}
           />
           <div
-            className="text-[10px] uppercase tracking-[1.5px] font-mono mb-1"
+            className="text-[10px] uppercase tracking-[1.5px] font-semibold mb-1"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Gap
@@ -173,7 +173,7 @@ export default function RateScorecardPage() {
       >
         {/* Table Header */}
         <div
-          className="grid gap-2 px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-mono"
+          className="grid gap-2 px-5 py-3 text-[10px] uppercase tracking-[1.5px] font-semibold"
           style={{
             gridTemplateColumns: '2fr 1fr 1fr 1.2fr 0.8fr 1fr 1fr 1.2fr',
             background: '#F3F4F6',
@@ -217,7 +217,7 @@ export default function RateScorecardPage() {
 
               {/* Target */}
               <div
-                className="text-right font-mono"
+                className="text-right tabular-nums"
                 style={{ color: 'var(--prizym-text-secondary)' }}
               >
                 {row.targetMargin}%
@@ -225,7 +225,7 @@ export default function RateScorecardPage() {
 
               {/* Actual */}
               <div
-                className="text-right font-mono"
+                className="text-right tabular-nums"
                 style={{ color: 'var(--prizym-text-primary)' }}
               >
                 {row.actualMargin}%
@@ -234,7 +234,7 @@ export default function RateScorecardPage() {
               {/* Gap */}
               <div className="flex justify-center">
                 <span
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[12px] font-bold font-mono"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[12px] font-bold tabular-nums"
                   style={{
                     color: gc.text,
                     background: gc.bg,
@@ -249,7 +249,7 @@ export default function RateScorecardPage() {
 
               {/* Floor Rate */}
               <div
-                className="text-right font-mono"
+                className="text-right tabular-nums"
                 style={{ color: 'var(--prizym-text-secondary)' }}
               >
                 ${row.floorDaily}/day
@@ -257,7 +257,7 @@ export default function RateScorecardPage() {
 
               {/* Avg Rate */}
               <div
-                className="text-right font-mono"
+                className="text-right tabular-nums"
                 style={{ color: 'var(--prizym-text-primary)' }}
               >
                 ${row.avgDaily}/day
@@ -265,7 +265,7 @@ export default function RateScorecardPage() {
 
               {/* Revenue */}
               <div
-                className="text-right font-mono font-semibold"
+                className="text-right tabular-nums font-semibold"
                 style={{ color: 'var(--prizym-text-primary)' }}
               >
                 {fmtDollar(row.totalRevenue)}

@@ -57,7 +57,7 @@ function ThreatBadge({ level }: { level: 'high' | 'medium' | 'low' }) {
   }[level];
   return (
     <>
-    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
+    <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
       {cfg.label}
     </span>
     </>
@@ -75,7 +75,7 @@ function PermitBadge({ status }: { status: string }) {
   const c = cfg[status] ?? cfg.filed;
   return (
     <>
-    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: c.bg, color: c.color }}>
+    <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: c.bg, color: c.color }}>
       {c.label}
     </span>
     </>
@@ -189,7 +189,7 @@ function MarketShareChart({ data, region }: { data: typeof MARKET_SHARE_DFW; reg
   return (
     <>
     <div>
-      <div className="text-[13px] font-bold font-mono mb-2" style={{ color: 'var(--pl-text)' }}>{region}</div>
+      <div className="text-[13px] font-bold tabular-nums mb-2" style={{ color: 'var(--pl-text)' }}>{region}</div>
       <svg viewBox={`0 0 ${labelW + chartW + 80} ${totalH}`} className="w-full" style={{ height: totalH }}>
         {data.map((seg, i) => {
           const y = i * (barH + gap);
@@ -266,10 +266,10 @@ export default function FieldIntelPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
           Field Intelligence &middot; Competitive Ops
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Field Intelligence Center
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -278,7 +278,7 @@ export default function FieldIntelPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Active Sightings" value={String(COMPETITOR_SIGHTINGS.length)} accent="#F87171" sub={`${highThreats.length} high threat`} stagger={0} />
         <LightKpiCard label="DFW Avg Share" value={pct(avgLoneStarShareDFW)} accent="#2563EB" sub="Lone Star position" stagger={1} />
         <LightKpiCard label="Gaining Categories" value={`${gainingCategories}/10`} accent="#22C55E" sub="Across both markets" stagger={2} />
@@ -293,10 +293,10 @@ export default function FieldIntelPage() {
           style={{ borderColor: 'rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.03)' }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
+            <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>
               HIGH IMPACT
             </span>
-            <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>June 14 – July 13, 2026</span>
+            <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>June 14 – July 13, 2026</span>
           </div>
           <h4 className="text-[14px] font-bold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             FIFA World Cup — AT&amp;T Stadium
@@ -305,7 +305,7 @@ export default function FieldIntelPage() {
             9 matches in Arlington. Estimated +35% volume surge in DFW metro across all beer categories.
             Corona, Modelo, and Heineken projected highest lift. Pre-positioning starts W18.
           </p>
-          <div className="flex items-center gap-3 text-xs font-mono">
+          <div className="flex items-center gap-3 text-xs">
             <span style={{ color: '#22C55E' }}>+35% projected volume</span>
             <span style={{ color: '#F59E0B' }}>9 match days</span>
             <span style={{ color: '#2563EB' }}>All DFW routes affected</span>
@@ -316,10 +316,10 @@ export default function FieldIntelPage() {
           style={{ borderColor: 'rgba(168,85,247,0.3)', background: 'rgba(168,85,247,0.03)' }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.1)', color: '#A855F7' }}>
+            <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.1)', color: '#A855F7' }}>
               MAJOR EVENT
             </span>
-            <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>October 2026</span>
+            <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>October 2026</span>
           </div>
           <h4 className="text-[14px] font-bold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             F1 Grand Prix — Arlington
@@ -328,7 +328,7 @@ export default function FieldIntelPage() {
             Premium spirits and import beer surge expected. Texas Live (#1 Miller Lite draft account nationally)
             projects 3x normal volume. VIP hospitality packages drive ultra-premium mix.
           </p>
-          <div className="flex items-center gap-3 text-xs font-mono">
+          <div className="flex items-center gap-3 text-xs">
             <span style={{ color: '#22C55E' }}>+25% premium imports</span>
             <span style={{ color: '#A855F7' }}>Spirits 2x uplift</span>
             <span style={{ color: '#2563EB' }}>Texas Live focal point</span>
@@ -342,7 +342,7 @@ export default function FieldIntelPage() {
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            className="px-4 py-2 rounded-lg text-[12px] font-mono font-bold transition-colors"
+            className="px-4 py-2 rounded-lg text-[12px] font-bold tabular-nums transition-colors"
             style={{
               background: activeTab === t.id ? '#2563EB' : 'var(--pl-chart-bar-track)',
               color: activeTab === t.id ? 'white' : 'var(--pl-text-muted)',
@@ -367,25 +367,25 @@ export default function FieldIntelPage() {
               {COMPETITOR_SIGHTINGS.map(s => (
                 <div
                   key={s.id}
-                  className="rounded-lg border p-4"
+                  className="rounded-xl border p-4"
                   style={{ borderColor: s.threatLevel === 'high' ? 'rgba(248,113,113,0.3)' : 'var(--pl-border)' }}
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <ThreatBadge level={s.threatLevel} />
                       <span
-                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                        className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                         style={{ background: `${SIGHTING_COLORS[s.type]}15`, color: SIGHTING_COLORS[s.type] }}
                       >
                         {SIGHTING_LABELS[s.type]}
                       </span>
                       <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{s.competitorName}</span>
                     </div>
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{s.date} {s.time}</span>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{s.date} {s.time}</span>
                   </div>
 
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{s.accountName}</span>
+                    <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>{s.accountName}</span>
                     <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{s.location}</span>
                   </div>
 
@@ -394,7 +394,7 @@ export default function FieldIntelPage() {
                   {s.brandsSighted.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">
                       {s.brandsSighted.map(b => (
-                        <span key={b} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
+                        <span key={b} className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
                           {b}
                         </span>
                       ))}
@@ -403,7 +403,7 @@ export default function FieldIntelPage() {
 
                   {s.actionTaken && (
                     <div className="rounded-md px-3 py-2 mt-2" style={{ background: 'rgba(37,99,235,0.04)', borderLeft: '3px solid #2563EB' }}>
-                      <div className="text-xs font-bold font-mono mb-0.5" style={{ color: '#2563EB' }}>ACTION TAKEN</div>
+                      <div className="text-xs font-bold tabular-nums mb-0.5" style={{ color: '#2563EB' }}>ACTION TAKEN</div>
                       <p className="text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>{s.actionTaken}</p>
                     </div>
                   )}
@@ -416,24 +416,24 @@ export default function FieldIntelPage() {
           <LightSectionCard title="Competitor Profiles" className="mb-6">
             <div className="grid grid-cols-2 gap-3">
               {COMPETITORS.map(c => (
-                <div key={c.id} className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
+                <div key={c.id} className="rounded-xl border p-4" style={{ borderColor: 'var(--pl-border)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{c.name}</h4>
                     <ThreatBadge level={c.threat} />
                   </div>
-                  <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="text-xs mb-2" style={{ color: 'var(--pl-text-muted)' }}>
                     {c.type.toUpperCase()} &middot; {c.territory} &middot; ~{(c.estimatedShare * 100).toFixed(0)}% TX share
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 mb-2">
                     <div>
-                      <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>STRENGTHS</div>
+                      <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#22C55E' }}>STRENGTHS</div>
                       {c.strengths.slice(0, 3).map((s, i) => (
                         <div key={i} className="text-xs mb-0.5" style={{ color: 'var(--pl-text-secondary)' }}>+ {s}</div>
                       ))}
                     </div>
                     <div>
-                      <div className="text-xs font-bold font-mono mb-1" style={{ color: '#F87171' }}>WEAKNESSES</div>
+                      <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#F87171' }}>WEAKNESSES</div>
                       {c.weaknesses.slice(0, 3).map((w, i) => (
                         <div key={i} className="text-xs mb-0.5" style={{ color: 'var(--pl-text-secondary)' }}>- {w}</div>
                       ))}
@@ -442,7 +442,7 @@ export default function FieldIntelPage() {
 
                   <div className="flex flex-wrap gap-1">
                     {c.keyBrands.map(b => (
-                      <span key={b} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
+                      <span key={b} className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
                         {b}
                       </span>
                     ))}
@@ -467,7 +467,7 @@ export default function FieldIntelPage() {
             ].map(l => (
               <div key={l.label} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded" style={{ background: l.color }} />
-                <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{l.label}</span>
+                <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{l.label}</span>
               </div>
             ))}
           </div>
@@ -488,13 +488,13 @@ export default function FieldIntelPage() {
                 const trendColor = seg.trend === 'gaining' ? '#22C55E' : seg.trend === 'losing' ? '#F87171' : 'var(--pl-text-faint)';
                 return (
                   <div key={`${region}-${seg.category}`} className="flex items-start gap-3 px-3 py-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
-                    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5" style={{ background: trendColor + '15', color: trendColor }}>
+                    <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5" style={{ background: trendColor + '15', color: trendColor }}>
                       {seg.trend.toUpperCase()}
                     </span>
                     <div>
                       <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{seg.category}</span>
-                      <span className="text-xs font-mono ml-2" style={{ color: 'var(--pl-text-faint)' }}>{region}</span>
-                      <span className="text-xs font-bold font-mono ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
+                      <span className="text-xs ml-2" style={{ color: 'var(--pl-text-faint)' }}>{region}</span>
+                      <span className="text-xs font-bold tabular-nums ml-2" style={{ color: '#2563EB' }}>{(seg.loneStarShare * 100).toFixed(0)}% Lone Star</span>
                       <p className="text-xs mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{seg.notes}</p>
                     </div>
                   </div>
@@ -509,14 +509,14 @@ export default function FieldIntelPage() {
       {activeTab === 'pipeline' && (
         <>
           {/* Pipeline summary */}
-          <div className="grid grid-cols-4 gap-3 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
             {(['filed', 'approved', 'inspection', 'ready'] as const).map(status => {
               const count = PIPELINE_ACCOUNTS.filter(p => p.permitStatus === status).length;
               return (
-                <div key={status} className="rounded-lg border p-3 text-center" style={{ borderColor: 'var(--pl-border)' }}>
+                <div key={status} className="rounded-xl border p-3 text-center" style={{ borderColor: 'var(--pl-border)' }}>
                   <PermitBadge status={status} />
-                  <div className="text-[20px] font-bold font-mono mt-1" style={{ color: 'var(--pl-text)' }}>{count}</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>accounts</div>
+                  <div className="text-[20px] font-bold tabular-nums mt-1" style={{ color: 'var(--pl-text)' }}>{count}</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>accounts</div>
                 </div>
               );
             })}
@@ -526,27 +526,27 @@ export default function FieldIntelPage() {
           <LightSectionCard title="New Account Pipeline" className="mb-4">
             <div className="space-y-3">
               {PIPELINE_ACCOUNTS.map(p => (
-                <div key={p.id} className="rounded-lg border p-4" style={{ borderColor: 'var(--pl-border)' }}>
+                <div key={p.id} className="rounded-xl border p-4" style={{ borderColor: 'var(--pl-border)' }}>
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <PermitBadge status={p.permitStatus} />
-                        <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
+                        <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: 'var(--pl-chart-bar-track)', color: 'var(--pl-text-muted)' }}>
                           {p.type.toUpperCase()}
                         </span>
                       </div>
                       <h4 className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>{p.name}</h4>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{p.address}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{p.address}</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[16px] font-bold font-mono" style={{ color: '#2563EB' }}>{p.estimatedWeeklyCases}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>cases/wk</div>
-                      <div className="text-[13px] font-bold font-mono" style={{ color: '#22C55E' }}>${fmt(p.estimatedWeeklyRevenue)}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>revenue/wk</div>
+                      <div className="text-[16px] font-bold tabular-nums" style={{ color: '#2563EB' }}>{p.estimatedWeeklyCases}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>cases/wk</div>
+                      <div className="text-[13px] font-bold tabular-nums" style={{ color: '#22C55E' }}>${fmt(p.estimatedWeeklyRevenue)}</div>
+                      <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>revenue/wk</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 mb-2 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="flex items-center gap-4 mb-2 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                     <span>Opens: <strong style={{ color: 'var(--pl-text)' }}>{p.expectedOpenDate}</strong></span>
                     <span>Hometown: <strong style={{ color: 'var(--pl-text)' }}>{p.hometownId.toUpperCase()}</strong></span>
                     {p.assignedSeller && <span>Seller: <strong style={{ color: 'var(--pl-text)' }}>{p.assignedSeller}</strong></span>}
@@ -556,7 +556,7 @@ export default function FieldIntelPage() {
 
                   {p.competitorInterest && (
                     <div className="rounded-md px-3 py-2" style={{ background: 'rgba(248,113,113,0.04)', borderLeft: '3px solid #F87171' }}>
-                      <div className="text-xs font-bold font-mono mb-0.5" style={{ color: '#F87171' }}>COMPETITOR INTEREST</div>
+                      <div className="text-xs font-bold tabular-nums mb-0.5" style={{ color: '#F87171' }}>COMPETITOR INTEREST</div>
                       <p className="text-[13px]" style={{ color: 'var(--pl-text-secondary)' }}>{p.competitorInterest}</p>
                     </div>
                   )}
@@ -567,23 +567,23 @@ export default function FieldIntelPage() {
 
           {/* Pipeline revenue projection */}
           <LightSectionCard title="Revenue Projection" className="mb-6">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(37,99,235,0.04)' }}>
-                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>ANNUAL CASES</div>
-                <div className="text-[22px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(pipelineCases)}</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>from {PIPELINE_ACCOUNTS.length} new accounts</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="rounded-xl p-4 text-center" style={{ background: 'rgba(37,99,235,0.04)' }}>
+                <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#2563EB' }}>ANNUAL CASES</div>
+                <div className="text-[22px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmtK(pipelineCases)}</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>from {PIPELINE_ACCOUNTS.length} new accounts</div>
               </div>
-              <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(34,197,94,0.04)' }}>
-                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#22C55E' }}>ANNUAL REVENUE</div>
-                <div className="text-[22px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>${(pipelineRevenue / 1e3).toFixed(0)}K</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>projected at current pricing</div>
+              <div className="rounded-xl p-4 text-center" style={{ background: 'rgba(34,197,94,0.04)' }}>
+                <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#22C55E' }}>ANNUAL REVENUE</div>
+                <div className="text-[22px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>${(pipelineRevenue / 1e3).toFixed(0)}K</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>projected at current pricing</div>
               </div>
-              <div className="rounded-lg p-4 text-center" style={{ background: 'rgba(245,158,11,0.04)' }}>
-                <div className="text-xs font-bold font-mono mb-1" style={{ color: '#F59E0B' }}>AVG WEEKLY/ACCOUNT</div>
-                <div className="text-[22px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>
+              <div className="rounded-xl p-4 text-center" style={{ background: 'rgba(245,158,11,0.04)' }}>
+                <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#F59E0B' }}>AVG WEEKLY/ACCOUNT</div>
+                <div className="text-[22px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>
                   {(PIPELINE_ACCOUNTS.reduce((s, p) => s + p.estimatedWeeklyCases, 0) / PIPELINE_ACCOUNTS.length).toFixed(0)}
                 </div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>cases per account</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>cases per account</div>
               </div>
             </div>
           </LightSectionCard>
@@ -591,7 +591,7 @@ export default function FieldIntelPage() {
       )}
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Field intelligence sourced from route sales reps via mobile sighting reports. Competitive market share estimates based on
         IRI/Nielsen syndicated data + Lone Star internal shipment analysis. Pipeline accounts tracked from TABC permit filings and
         commercial real estate monitoring. Updated weekly.
@@ -600,7 +600,7 @@ export default function FieldIntelPage() {
       {/* ═══════ SCAN DATA — IRI/NIELSEN VELOCITY ═══════ */}
       <LightSectionCard title="SCAN DATA — IRI/NIELSEN VELOCITY">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Rank', 'SKU', 'Store', 'Units/Wk', 'Category Share', 'Trend'].map(h => (
@@ -634,7 +634,7 @@ export default function FieldIntelPage() {
       {/* ═══════ PRICE COMPLIANCE ═══════ */}
       <LightSectionCard title="PRICE COMPLIANCE — RETAIL AUDIT">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Product', 'Store', 'Authorized', 'Actual', 'Variance', 'Status'].map(h => (

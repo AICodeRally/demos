@@ -148,19 +148,19 @@ export default function TithingPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Member
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Amount
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Fund
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Method
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     Date
                   </th>
                 </tr>
@@ -200,7 +200,7 @@ export default function TithingPage() {
 
         {/* Pledge Campaigns */}
         <ChartCard title="Active Pledge Campaigns">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {pledgeCampaigns.map((campaign) => {
               const percentage = Math.round((campaign.raised / campaign.goal) * 100);
               const remaining = campaign.goal - campaign.raised;
@@ -255,7 +255,7 @@ export default function TithingPage() {
               { id: '#246', entries: 31, total: '$6,120', status: 'Reconciled', statusColor: 'bg-emerald-50 text-emerald-700' },
               { id: '#245', entries: 18, total: '$3,450', status: 'In Review', statusColor: 'bg-purple-50 text-[#522398]' },
             ].map((batch) => (
-              <div key={batch.id} className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-3">
+              <div key={batch.id} className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3">
                 <div>
                   <span className="font-semibold text-[#2d3142]">Batch {batch.id}</span>
                   <span className="ml-2 text-sm text-gray-500">{batch.entries} cash/check entries · {batch.total} total</span>

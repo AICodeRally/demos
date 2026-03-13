@@ -572,7 +572,7 @@ export default function MembersPage() {
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Top Families */}
           <ChartCard title="Top Engaged Families">
-            <div className="mb-4 grid grid-cols-3 gap-4 text-center">
+            <div className="mb-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-blue-600">847</div>
                 <div className="text-xs text-gray-600">Family Units</div>
@@ -816,7 +816,7 @@ export default function MembersPage() {
               { family: 'Williams Family', members: ['Sarah Williams', 'David Williams'], count: 2 },
               { family: 'Anderson Family', members: ['Robert Anderson', 'Mary Anderson', 'Thomas Anderson'], count: 3 },
             ].map((household) => (
-              <div key={household.family} className="rounded-lg border border-gray-100 p-4">
+              <div key={household.family} className="rounded-xl border border-gray-100 p-4">
                 <div className="flex items-center justify-between">
                   <h4 className="font-semibold text-[#2d3142]">{household.family}</h4>
                   <span className="rounded-full bg-purple-50 px-2.5 py-0.5 text-[11px] font-semibold text-[#522398]">{household.count} members</span>

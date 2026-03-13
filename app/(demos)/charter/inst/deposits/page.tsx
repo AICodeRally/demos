@@ -38,7 +38,7 @@ export default function DepositPortfolio() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Deposit Portfolio</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Deposit Portfolio</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>$1.7B total deposits &mdash; composition, growth drivers &amp; rate structure</p>
       </div>
 

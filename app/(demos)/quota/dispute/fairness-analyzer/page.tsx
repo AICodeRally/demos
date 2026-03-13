@@ -212,7 +212,7 @@ export default function FairnessAnalyzerPage() {
             <Scale className="h-5 w-5 text-violet-500" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+            <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
               Fairness Analyzer
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--prizym-text-muted)' }}>
@@ -239,7 +239,7 @@ export default function FairnessAnalyzerPage() {
 
           {/* Score details */}
           <div className="flex-1 text-center md:text-left">
-            <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: 'var(--prizym-text-muted)' }}>
+            <p className="text-[11px] font-medium uppercase tracking-wider mb-1" style={{ color: 'var(--prizym-text-muted)' }}>
               Quota Fairness Index
             </p>
             <div className="flex items-baseline gap-3 justify-center md:justify-start mb-2">

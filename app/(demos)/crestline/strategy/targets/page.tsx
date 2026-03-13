@@ -76,7 +76,7 @@ export default function TargetsAndQuotas() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Targets & Quotas</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Targets & Quotas</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           ${totalQuota}M corporate target cascading through districts, formats, and achiever tiers
         </p>
@@ -104,11 +104,11 @@ export default function TargetsAndQuotas() {
               <p className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>Attainment Threshold</p>
               <div className="mt-2 flex justify-between text-xs">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Associates</span>
-                <span className="font-mono font-medium" style={{ color: 'var(--pl-text)' }}>{count}</span>
+                <span className="tabular-nums font-medium" style={{ color: 'var(--pl-text)' }}>{count}</span>
               </div>
               <div className="flex justify-between text-xs mt-1">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Additive Rate</span>
-                <span className="font-mono font-medium" style={{ color: tier.color }}>{(tier.additiveRate * 100).toFixed(1)}%</span>
+                <span className="tabular-nums font-medium" style={{ color: tier.color }}>{(tier.additiveRate * 100).toFixed(1)}%</span>
               </div>
             </div>
           );
@@ -174,9 +174,9 @@ export default function TargetsAndQuotas() {
                 <tr key={r.name} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
                   <td className="py-2 px-3 font-medium" style={{ color: 'var(--pl-text)' }}>{r.name}</td>
                   <td className="py-2 px-3" style={{ color: 'var(--pl-text-secondary)' }}>{r.store}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{r.quota}</td>
-                  <td className="py-2 px-3 font-mono" style={{ color: 'var(--pl-text)' }}>{r.actual}</td>
-                  <td className="py-2 px-3 font-mono font-semibold" style={{ color: r.attainment >= 100 ? '#10B981' : r.attainment >= 90 ? COLORS.standard : '#EF4444' }}>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.quota}</td>
+                  <td className="py-2 px-3 tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.actual}</td>
+                  <td className="py-2 px-3 tabular-nums font-semibold" style={{ color: r.attainment >= 100 ? '#10B981' : r.attainment >= 90 ? COLORS.standard : '#EF4444' }}>
                     {r.attainment}%
                   </td>
                   <td className="py-2 px-3">

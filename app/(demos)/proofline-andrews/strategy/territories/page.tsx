@@ -100,10 +100,10 @@ export default function TerritoryDesignPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#7C3AED' }}>
           Territory &amp; Coverage &middot; 6 Hometowns
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           North &amp; South Texas Coverage
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -143,11 +143,11 @@ export default function TerritoryDesignPage() {
 
       {/* ── Territory Performance Heatmap ────────────── */}
       <LightSectionCard title="Territory Heatmap — Route Performance" className="mb-6">
-        <p className="text-xs font-mono mb-4" style={{ color: 'var(--pl-text-faint)' }}>
+        <p className="text-xs mb-4" style={{ color: 'var(--pl-text-faint)' }}>
           36 routes across 6 hometowns. Color intensity shows relative performance — darker = stronger.
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full text-[11px] font-mono border-collapse">
+          <table className="w-full text-[11px] border-collapse">
             <thead>
               <tr>
                 <th className="text-left py-2 px-2 font-bold" style={{ color: 'var(--pl-text-muted)', width: 80 }}>Route</th>
@@ -236,7 +236,7 @@ export default function TerritoryDesignPage() {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-4 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+        <div className="flex items-center justify-center gap-6 mt-4 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
           <div className="flex items-center gap-1.5">
             <div className="w-6 h-3 rounded" style={{ background: 'rgba(34,197,94,0.4)' }} />
             Strong
@@ -254,7 +254,7 @@ export default function TerritoryDesignPage() {
       </LightSectionCard>
 
       {/* ── KPI Strip (6 cards) ──────────────────────── */}
-      <div className="grid grid-cols-6 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
         <LightKpiCard label="Accounts/Route" value={avgAccountsPerRoute.toFixed(1)} accent="#7C3AED" stagger={0} />
         <LightKpiCard label="Revenue/Route" value={fmtM(avgRevenuePerRoute)} accent="#7C3AED" stagger={1} />
         <LightKpiCard label="Stops/Day" value={avgStopsPerDay.toFixed(1)} accent="#2563EB" stagger={2} />
@@ -283,7 +283,7 @@ export default function TerritoryDesignPage() {
             }}
           />
           {/* Tier legend */}
-          <div className="flex items-center justify-center gap-4 mt-2 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center justify-center gap-4 mt-2 text-xs" style={{ color: 'var(--pl-text-muted)' }}>
             {([
               { tier: 'A', color: '#22C55E' },
               { tier: 'B', color: '#3B82F6' },
@@ -312,14 +312,14 @@ export default function TerritoryDesignPage() {
                     const badgeBg = m.workloadIndex > 115 ? 'rgba(248,113,113,0.12)' : m.workloadIndex >= 100 ? 'rgba(245,158,11,0.12)' : 'rgba(34,197,94,0.12)';
                     return (
                       <div key={m.routeId} className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-mono w-14 shrink-0" style={{ color: 'var(--pl-text-muted)' }}>{m.routeId}</span>
+                        <span className="text-xs w-14 shrink-0" style={{ color: 'var(--pl-text-muted)' }}>{m.routeId}</span>
                         <div className="flex-1 flex h-[14px] rounded-sm overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                           <div style={{ width: `${m.sellingTimePct * 100}%`, background: '#22C55E', opacity: 0.7 }} />
                           <div style={{ width: `${m.drivingTimePct * 100}%`, background: '#F59E0B', opacity: 0.7 }} />
                           <div style={{ width: `${m.adminTimePct * 100}%`, background: '#94A3B8', opacity: 0.7 }} />
                         </div>
                         <span
-                          className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0"
+                          className="text-[10px] font-bold tabular-nums px-1.5 py-0.5 rounded shrink-0"
                           style={{ background: badgeBg, color: badgeColor }}
                         >
                           {m.workloadIndex}
@@ -333,7 +333,7 @@ export default function TerritoryDesignPage() {
             })}
           </div>
           {/* Bar legend */}
-          <div className="flex items-center gap-4 mt-2 text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="flex items-center gap-4 mt-2 text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>
             <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-sm" style={{ background: '#22C55E', opacity: 0.7 }} />Selling</div>
             <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-sm" style={{ background: '#F59E0B', opacity: 0.7 }} />Driving</div>
             <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-sm" style={{ background: '#94A3B8', opacity: 0.7 }} />Admin</div>
@@ -345,7 +345,7 @@ export default function TerritoryDesignPage() {
       <div className="mb-6">
         <button
           onClick={() => setSimulatorOpen(!simulatorOpen)}
-          className="flex items-center gap-2 text-[13px] font-mono font-bold px-4 py-2 rounded-lg border transition-colors"
+          className="flex items-center gap-2 text-[13px] font-bold tabular-nums px-4 py-2 rounded-xl border transition-colors"
           style={{
             borderColor: simulatorOpen ? '#C6A052' : 'var(--pl-border)',
             background: simulatorOpen ? 'rgba(198,160,82,0.08)' : 'var(--pl-card)',
@@ -359,13 +359,13 @@ export default function TerritoryDesignPage() {
             <table className="w-full text-[12px]">
               <thead>
                 <tr style={{ color: 'var(--pl-text-muted)' }}>
-                  <th className="text-left font-medium pb-2 pl-1">Route</th>
-                  <th className="text-left font-medium pb-2">Hometown</th>
-                  <th className="text-right font-medium pb-2">Cur. Accounts</th>
-                  <th className="text-right font-medium pb-2">Cur. Workload</th>
-                  <th className="text-right font-medium pb-2">Prop. Accounts</th>
-                  <th className="text-right font-medium pb-2">Prop. Workload</th>
-                  <th className="text-right font-medium pb-2 pr-1">Delta</th>
+                  <th className="text-left font-semibold pb-2 pl-1">Route</th>
+                  <th className="text-left font-semibold pb-2">Hometown</th>
+                  <th className="text-right font-semibold pb-2">Cur. Accounts</th>
+                  <th className="text-right font-semibold pb-2">Cur. Workload</th>
+                  <th className="text-right font-semibold pb-2">Prop. Accounts</th>
+                  <th className="text-right font-semibold pb-2">Prop. Workload</th>
+                  <th className="text-right font-semibold pb-2 pr-1">Delta</th>
                 </tr>
               </thead>
               <tbody>
@@ -374,15 +374,15 @@ export default function TerritoryDesignPage() {
                   const deltaColor = r.delta < 0 ? '#22C55E' : r.delta > 0 ? '#F87171' : 'var(--pl-text-muted)';
                   return (
                     <tr key={r.routeId} style={i % 2 === 0 ? { background: 'var(--pl-stripe)' } : undefined}>
-                      <td className="py-1.5 pl-1 font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{r.routeId}</td>
+                      <td className="py-1.5 pl-1 font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.routeId}</td>
                       <td className="py-1.5" style={{ color: 'var(--pl-text-muted)' }}>{htName}</td>
-                      <td className="py-1.5 text-right font-mono" style={{ color: 'var(--pl-text)' }}>{r.accountsPerRoute}</td>
-                      <td className="py-1.5 text-right font-mono" style={{ color: r.workloadIndex > 115 ? '#F87171' : r.workloadIndex < 85 ? '#3B82F6' : 'var(--pl-text)' }}>
+                      <td className="py-1.5 text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.accountsPerRoute}</td>
+                      <td className="py-1.5 text-right tabular-nums" style={{ color: r.workloadIndex > 115 ? '#F87171' : r.workloadIndex < 85 ? '#3B82F6' : 'var(--pl-text)' }}>
                         {r.workloadIndex}
                       </td>
-                      <td className="py-1.5 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{r.proposedAccounts}</td>
-                      <td className="py-1.5 text-right font-mono font-bold" style={{ color: '#22C55E' }}>{r.proposedWorkload}</td>
-                      <td className="py-1.5 text-right font-mono font-bold pr-1" style={{ color: deltaColor }}>
+                      <td className="py-1.5 text-right font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{r.proposedAccounts}</td>
+                      <td className="py-1.5 text-right font-bold tabular-nums" style={{ color: '#22C55E' }}>{r.proposedWorkload}</td>
+                      <td className="py-1.5 text-right font-bold tabular-nums pr-1" style={{ color: deltaColor }}>
                         {r.delta > 0 ? '+' : ''}{r.delta}
                       </td>
                     </tr>
@@ -390,7 +390,7 @@ export default function TerritoryDesignPage() {
                 })}
               </tbody>
             </table>
-            <div className="mt-3 text-[12px] font-mono p-3 rounded-lg" style={{ background: 'rgba(198,160,82,0.06)', color: 'var(--pl-text-muted)' }}>
+            <div className="mt-3 text-[12px] p-3 rounded-lg" style={{ background: 'rgba(198,160,82,0.06)', color: 'var(--pl-text-muted)' }}>
               Rebalancing {rebalancedRows.length} routes reduces workload variance from {originalVariance.toFixed(1)}% to {proposedVariance.toFixed(1)}% CV
             </div>
           </LightSectionCard>
@@ -420,34 +420,34 @@ export default function TerritoryDesignPage() {
                         {h.name}
                       </h3>
                       <span
-                        className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-full"
+                        className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-full"
                         style={{ background: tier.bg, color: tier.color }}
                       >
                         {tier.label}
                       </span>
                     </div>
-                    <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                    <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
                       {h.profile} &middot; {h.acquired.split(' — ')[0]}
                     </div>
                   </div>
                   <Sparkline data={avgSparkline} color={tier.color} width={80} height={24} />
                 </div>
 
-                <div className="grid grid-cols-4 gap-3 mb-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                   <div>
-                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Routes</div>
+                    <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Routes</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{h.routes}</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Attainment</div>
+                    <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Attainment</div>
                     <div className="text-[15px] font-bold" style={{ color: tier.color }}>{pct(avgAttain)}</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Revenue</div>
+                    <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Revenue</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{fmtM(h.rev * 4)}</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wider font-mono" style={{ color: 'var(--pl-text-muted)' }}>Cases</div>
+                    <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--pl-text-muted)' }}>Cases</div>
                     <div className="text-[15px] font-bold" style={{ color: 'var(--pl-text)' }}>{fmtK(h.cases)}</div>
                   </div>
                 </div>
@@ -457,13 +457,13 @@ export default function TerritoryDesignPage() {
                     <span className="font-semibold" style={{ color: 'var(--pl-text-secondary)' }}>{h.manager}</span> &middot; {h.accounts} accounts
                   </div>
                   {atRiskCount > 0 && (
-                    <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
+                    <span className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full" style={{ background: 'rgba(248,113,113,0.08)', color: '#F87171' }}>
                       {atRiskCount} at risk
                     </span>
                   )}
                 </div>
 
-                <div className="text-[13px] font-mono mt-2" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-[13px] mt-2" style={{ color: 'var(--pl-text-faint)' }}>
                   {fmt(h.sqft)} sq ft warehouse
                 </div>
               </div>
@@ -473,7 +473,7 @@ export default function TerritoryDesignPage() {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-6 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+      <div className="flex items-center gap-6 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#22C55E' }} />
           On Track (&ge;100%)

@@ -105,7 +105,7 @@ export default function DisputeConsolePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>
             Dispute Console
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
@@ -138,7 +138,7 @@ export default function DisputeConsolePage() {
             }}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>
                 {k.label}
               </span>
               <k.icon className={`h-4 w-4 ${k.color}`} />
@@ -178,7 +178,7 @@ export default function DisputeConsolePage() {
                 {['Case ID', 'Rep', 'Type', 'Territory', 'Quota Impact', 'Status', 'Filed', 'Priority'].map(h => (
                   <th
                     key={h}
-                    className="px-4 py-3 text-left font-medium uppercase tracking-wider"
+                    className="px-4 py-3 text-left font-semibold uppercase tracking-wider"
                     style={{ color: 'var(--prizym-text-muted)' }}
                   >
                     {h}
@@ -212,7 +212,7 @@ export default function DisputeConsolePage() {
                     <td className="px-4 py-3" style={{ color: 'var(--prizym-text-secondary)' }}>
                       {d.territory}
                     </td>
-                    <td className="px-4 py-3 font-mono font-semibold text-red-600">
+                    <td className="px-4 py-3 tabular-nums font-semibold text-red-600">
                       {fmtDollar(d.quotaImpact)}
                     </td>
                     <td className="px-4 py-3">
@@ -267,7 +267,7 @@ export default function DisputeConsolePage() {
             return (
               <div
                 key={t}
-                className="rounded-lg p-3 text-center"
+                className="rounded-xl p-3 text-center"
                 style={{
                   background: 'var(--prizym-card-bg)',
                   border: '1px solid var(--prizym-border-default)',

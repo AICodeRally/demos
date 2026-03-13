@@ -75,7 +75,7 @@ export default function SeasonalStrategy() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--pl-text)' }}>Seasonal Strategy</h1>
+        <h1 className="text-3xl font-bold" style={{ color: 'var(--pl-text)' }}>Seasonal Strategy</h1>
         <p className="text-sm mt-1" style={{ color: 'var(--pl-text-secondary)' }}>
           Annual promotional calendar, demand forecasting, and inventory pre-positioning
         </p>
@@ -152,14 +152,14 @@ export default function SeasonalStrategy() {
             return (
               <div
                 key={p.period}
-                className="rounded-lg p-3 text-center"
+                className="rounded-xl p-3 text-center"
                 style={{
                   backgroundColor: isCounterLead ? `${qColor}18` : 'var(--pl-bg)',
                   border: `1px solid ${isCounterLead ? qColor : 'var(--pl-border)'}`,
                 }}
               >
                 <p className="text-xs font-bold" style={{ color: qColor }}>{p.period}</p>
-                <p className="text-[10px] font-mono mt-1" style={{ color: 'var(--pl-text-secondary)' }}>{p.weeks}w</p>
+                <p className="text-[10px] mt-1" style={{ color: 'var(--pl-text-secondary)' }}>{p.weeks}w</p>
                 <p className="text-[9px] mt-0.5" style={{ color: 'var(--pl-text-muted)' }}>{p.quarter}</p>
                 {isCounterLead && (
                   <span
@@ -192,7 +192,7 @@ export default function SeasonalStrategy() {
                     className="h-full rounded-lg flex items-center px-2 transition-all duration-500"
                     style={{ width: `${pct}%`, backgroundColor: item.color }}
                   >
-                    <span className="text-[10px] font-mono text-white whitespace-nowrap">{item.weeks} wks</span>
+                    <span className="text-[10px] tabular-nums text-white whitespace-nowrap">{item.weeks} wks</span>
                   </div>
                 </div>
               </div>

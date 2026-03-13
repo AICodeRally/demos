@@ -57,7 +57,7 @@ export default function PerformanceTrackingPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Tracking</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Performance Tracking</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Monitor individual and team performance against quota targets with real-time activity metrics.
           </p>
@@ -79,7 +79,7 @@ export default function PerformanceTrackingPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -196,10 +196,10 @@ export default function PerformanceTrackingPage() {
               {activityData.map(a => (
                 <tr key={a.rep} className="transition hover:opacity-80" style={{ borderBottom: '1px solid var(--prizym-border-default)' }}>
                   <td className="py-3 pr-4 font-medium" style={{ color: 'var(--prizym-text-primary)' }}>{a.rep}</td>
-                  <td className="py-3 pr-4 text-center font-mono text-xs">{a.calls}</td>
-                  <td className="py-3 pr-4 text-center font-mono text-xs">{a.meetings}</td>
-                  <td className="py-3 pr-4 text-center font-mono text-xs">{a.proposals}</td>
-                  <td className="py-3 pr-4 text-center font-mono text-xs">{a.emails}</td>
+                  <td className="py-3 pr-4 text-center tabular-nums text-xs">{a.calls}</td>
+                  <td className="py-3 pr-4 text-center tabular-nums text-xs">{a.meetings}</td>
+                  <td className="py-3 pr-4 text-center tabular-nums text-xs">{a.proposals}</td>
+                  <td className="py-3 pr-4 text-center tabular-nums text-xs">{a.emails}</td>
                   <td className="py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-16 rounded-full h-1.5 overflow-hidden" style={{ background: 'var(--prizym-border-default)' }}>

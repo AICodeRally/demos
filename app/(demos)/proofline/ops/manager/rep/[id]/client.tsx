@@ -134,7 +134,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       <ActNavigation currentAct={3} />
 
       {/* Breadcrumb */}
-      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="mt-4 flex items-center gap-2 text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         <Link href="/proofline/ops/manager" style={{ color: '#2563EB' }}>Manager Dashboard</Link>
         <span>/</span>
         <span>{seller.name}</span>
@@ -143,14 +143,14 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       {/* Header */}
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+          <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             {seller.name}
           </h1>
-          <span className="text-[13px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
+          <span className="text-[13px] px-2 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>
             {seller.routeId}
           </span>
           <span
-            className="text-[13px] font-mono px-2 py-0.5 rounded"
+            className="text-[13px] px-2 py-0.5 rounded"
             style={{
               background: seller.atRisk ? 'rgba(248,113,113,0.08)' : 'rgba(34,197,94,0.08)',
               color: seller.atRisk ? '#F87171' : '#22C55E',
@@ -160,7 +160,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
           </span>
           {liveSnap && (
             <span
-              className="text-xs font-mono px-2 py-0.5 rounded"
+              className="text-xs px-2 py-0.5 rounded"
               style={{
                 background: liveSnap.statusColor === 'green' ? 'rgba(34,197,94,0.08)' : liveSnap.statusColor === 'amber' ? 'rgba(245,158,11,0.08)' : 'rgba(248,113,113,0.08)',
                 color: liveSnap.statusColor === 'green' ? '#22C55E' : liveSnap.statusColor === 'amber' ? '#F59E0B' : '#F87171',
@@ -176,7 +176,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-6 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
         <LightKpiCard label="Attainment" value={pct(seller.attainment)} accent={seller.attainment >= 1.0 ? '#22C55E' : '#F59E0B'} sub={`Tier ${seller.tier}`} stagger={0} />
         <LightKpiCard label="Q Revenue" value={fmtM(route?.rev ?? 0)} accent="#2563EB" sub={`${localFmtK(route?.cases ?? 0)} cases`} stagger={1} />
         <LightKpiCard label="Spirits Accts" value={String(seller.spiritsAccounts)} accent="#F87171" sub={`of ${route?.accounts ?? 0} total`} stagger={2} />
@@ -190,7 +190,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
         <div className="flex items-center gap-4 mb-2">
           <button
             onClick={() => setShowPeerCompare(!showPeerCompare)}
-            className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+            className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
             style={{
               borderColor: showPeerCompare ? '#2563EB' : 'var(--pl-border)',
               background: showPeerCompare ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
@@ -199,7 +199,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
           >
             {showPeerCompare ? 'Hide' : 'Show'} Peer Comparison
           </button>
-          <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
             Blue = {seller.name.split(' ')[0]} &middot; {showPeerCompare ? 'Dashed = district avg' : 'Dashed line = 100% target'}
           </span>
         </div>
@@ -224,7 +224,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
                     <span className="text-[12px] font-semibold" style={{ color: 'var(--pl-text)' }}>{SUPPLIER_NAMES[s]}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs font-mono">
+                  <div className="flex items-center gap-3 text-xs">
                     <span style={{ color: 'var(--pl-text-muted)' }}>Current: <strong style={{ color }}>{pct(current)}</strong></span>
                     <span style={{ color: 'var(--pl-text-faint)' }}>Target: {pct(target)}</span>
                     <span style={{ color: current >= target ? '#22C55E' : '#F87171' }}>
@@ -244,27 +244,27 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
 
       {/* Gate Status */}
       <LightSectionCard title="Gate Status" className="mb-6">
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {gates.map(g => {
             const unlocked = g.value >= g.threshold;
             return (
               <div
                 key={g.name}
-                className="rounded-lg border p-4 text-center"
+                className="rounded-xl border p-4 text-center"
                 style={{ borderColor: unlocked ? '#22C55E' : 'var(--pl-border)', background: unlocked ? 'rgba(34,197,94,0.04)' : 'var(--pl-card)' }}
               >
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--pl-text-faint)' }}>{g.name} Gate</div>
-                <div className="text-[22px] font-bold font-mono" style={{ color: unlocked ? '#22C55E' : '#F87171' }}>
+                <div className="text-xs mb-1" style={{ color: 'var(--pl-text-faint)' }}>{g.name} Gate</div>
+                <div className="text-[22px] font-bold tabular-nums" style={{ color: unlocked ? '#22C55E' : '#F87171' }}>
                   {pct(g.value)}
                 </div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                   Threshold: {pct(g.threshold)} {unlocked ? '\u2713' : '\u2717'}
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="mt-3 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           Comp tier: <strong style={{ color: 'var(--pl-text)' }}>Tier {seller.tier}</strong>
           {tier && <> &middot; Rate: {pct(tier.rate)}</>}
           &middot; {gates.filter(g => g.value >= g.threshold).length} of 4 gates unlocked
@@ -285,7 +285,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{entry.summary}</span>
                   </div>
-                  <div className="flex items-center gap-2 mb-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+                  <div className="flex items-center gap-2 mb-2 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                     <span>{entry.date}</span>
                     <span className="px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563EB' }}>{entry.type}</span>
                   </div>
@@ -311,10 +311,10 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
         <LightSectionCard title={`Active Coaching Cards \u2014 ${coachingCards.length}`} className="mb-6">
           <div className="space-y-2">
             {coachingCards.map(card => (
-              <div key={card.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
+              <div key={card.id} className="rounded-xl border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
                   <span
-                    className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+                    className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
                     style={{
                       background: card.priority === 'urgent' ? 'rgba(220,38,38,0.08)' : card.priority === 'high' ? 'rgba(248,113,113,0.08)' : 'rgba(245,158,11,0.08)',
                       color: card.priority === 'urgent' ? '#DC2626' : card.priority === 'high' ? '#F87171' : '#F59E0B',
@@ -332,7 +332,7 @@ export default function RepDetailClient({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Manager note */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         {seller.coachingNote}
       </div>
     </>

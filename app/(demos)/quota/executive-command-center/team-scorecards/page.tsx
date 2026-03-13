@@ -80,7 +80,7 @@ function KPI({ label, value, sub, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -105,7 +105,7 @@ export default function TeamScorecardsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Team Scorecards</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Team Scorecards</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Performance breakdown by team with individual rep metrics and cross-team comparison.
           </p>
@@ -248,7 +248,7 @@ export default function TeamScorecardsPage() {
                       return (
                         <div
                           key={rep.id}
-                          className={`rounded-lg p-4 transition ${
+                          className={`rounded-xl p-4 transition ${
                             isTop ? 'border border-amber-500/30 bg-amber-500/5' : ''
                           }`}
                           style={isTop ? undefined : { background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}
@@ -322,8 +322,8 @@ export default function TeamScorecardsPage() {
       {/* Cross-Team Insights */}
       <div className="mt-6 rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Cross-Team Insights</h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
               <Trophy className="h-4 w-4 text-emerald-600" />
               <span className="text-xs font-semibold text-emerald-600 uppercase">Top Team</span>
@@ -331,7 +331,7 @@ export default function TeamScorecardsPage() {
             <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>Mid-Market</p>
             <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>105% attainment with highest consistency across reps</p>
           </div>
-          <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4 text-amber-400" />
               <span className="text-xs font-semibold text-amber-400 uppercase">Fastest Growing</span>
@@ -339,7 +339,7 @@ export default function TeamScorecardsPage() {
             <p className="text-sm font-medium" style={{ color: 'var(--prizym-text-primary)' }}>SMB</p>
             <p className="text-xs mt-1" style={{ color: 'var(--prizym-text-muted)' }}>David Kim at 110% driving Pacific NW growth</p>
           </div>
-          <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-4">
+          <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
             <div className="flex items-center gap-2 mb-2">
               <Target className="h-4 w-4 text-red-600" />
               <span className="text-xs font-semibold text-red-600 uppercase">Needs Attention</span>

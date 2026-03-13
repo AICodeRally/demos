@@ -104,19 +104,19 @@ export default function TeamAssembly() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Team Assembly</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Team Assembly</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Crisis response team mobilization</p>
       </div>
 
       {/* 3 StatCards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard label="Team Size" value="6" color="#8B7355" />
         <StatCard label="Estimated Ready" value="2.4hr" color="#059669" />
         <StatCard label="Skill Coverage" value="94%" color="#8B7355" sparkline={[88, 90, 91, 92, 93, 94]} />
       </div>
 
       {/* Team Member Cards — 3x2 grid */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {TEAM.map((m) => {
           const wl = workloadColor(m.activeCases);
           return (
@@ -196,7 +196,7 @@ export default function TeamAssembly() {
           {/* Horizontal connector */}
           <div className="relative w-full max-w-xl">
             <div className="absolute top-0 left-1/6 right-1/6 h-px" style={{ backgroundColor: '#E7E5E4' }} />
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Legal Branch */}
               <div className="flex flex-col items-center">
                 <div className="w-px h-4" style={{ backgroundColor: '#E7E5E4' }} />

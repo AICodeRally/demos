@@ -298,7 +298,8 @@ export default function FloorDashboard() {
         <p className="register-section-header">
           Shift Sales
         </p>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="overflow-x-auto -mx-1">
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
           <thead>
             <tr>
               {['ID', 'Time', 'Items', 'Total', 'Attach %', 'Financing'].map((h) => (
@@ -342,6 +343,7 @@ export default function FloorDashboard() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Rep Status Cards */}

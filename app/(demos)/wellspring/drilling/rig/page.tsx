@@ -37,13 +37,13 @@ export default function RigDashboardPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase font-semibold mb-1"
           style={{ color: '#6B7280' }}
         >
           Act 2 &middot; Drilling Superintendent
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           Rig Dashboard

@@ -89,7 +89,7 @@ export default function CommissionCalculationsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Commission Calculations</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Commission Calculations</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Calculate, review, and manage commission payouts based on quota attainment tiers.
           </p>
@@ -109,7 +109,7 @@ export default function CommissionCalculationsPage() {
         {kpis.map(k => (
           <div key={k.label} className="rounded-xl p-5" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{k.label}</span>
               <k.icon className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-2xl font-bold tracking-tight" style={{ color: 'var(--prizym-text-primary)' }}>{k.value}</p>
@@ -124,10 +124,10 @@ export default function CommissionCalculationsPage() {
       {/* Commission Tier Ladder */}
       <div className="rounded-xl p-5 mb-6" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--prizym-text-primary)' }}>Commission Tier Structure</h2>
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
           {COMMISSION_TIERS.map((t, i) => (
             <div key={t.tier} className="relative">
-              <div className={`rounded-lg border p-4 ${tierColors[t.tier]}`}>
+              <div className={`rounded-xl border p-4 ${tierColors[t.tier]}`}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs uppercase tracking-wider font-semibold">{t.tier}</span>
                   <span className="text-lg font-bold">{t.label}</span>
@@ -240,8 +240,8 @@ export default function CommissionCalculationsPage() {
                       <span className="text-xs ml-2" style={{ color: 'var(--prizym-text-muted)' }}>{r.team}</span>
                     </div>
                   </td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(r.quota)}</td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{fmtDollar(r.actual)}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(r.quota)}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtDollar(r.actual)}</td>
                   <td className={`py-3 pr-4 text-right font-semibold ${r.attainment >= 1 ? 'text-emerald-600' : r.attainment >= 0.85 ? 'text-amber-400' : 'text-red-600'}`}>
                     {fmtPct(r.attainment * 100)}
                   </td>
@@ -250,15 +250,15 @@ export default function CommissionCalculationsPage() {
                       {r.tier}
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-right font-mono text-xs">{fmtPct(r.rate * 100)}</td>
-                  <td className="py-3 text-right font-semibold text-amber-400 font-mono">{fmtDollar(r.amount)}</td>
+                  <td className="py-3 pr-4 text-right tabular-nums text-xs">{fmtPct(r.rate * 100)}</td>
+                  <td className="py-3 text-right font-semibold text-amber-400 tabular-nums">{fmtDollar(r.amount)}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr style={{ borderTop: '1px solid var(--prizym-border-default)' }}>
                 <td className="py-3 pr-4 font-semibold" colSpan={6}>Total Commissions</td>
-                <td className="py-3 text-right font-bold text-amber-400 font-mono text-base">{fmtDollar(totalCommissions)}</td>
+                <td className="py-3 text-right font-bold text-amber-400 tabular-nums text-base">{fmtDollar(totalCommissions)}</td>
               </tr>
             </tfoot>
           </table>

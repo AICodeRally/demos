@@ -35,13 +35,13 @@ export default function ProductionDashboardPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#B45309' }}
         >
           Act 3 &middot; Production Operations
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           Production Dashboard
@@ -224,7 +224,7 @@ export default function ProductionDashboardPage() {
                   </div>
                 </div>
                 <div
-                  className="text-sm font-bold font-mono"
+                  className="text-sm font-bold tabular-nums"
                   style={{ color: '#F1F5F9' }}
                 >
                   {metric.value}

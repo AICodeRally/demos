@@ -210,11 +210,11 @@ export default function BrandPortfolioPage() {
 
       {/* Page Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#C6A052' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#C6A052' }}>
           Act 1 &middot; Corporate Strategy
         </div>
         <h1
-          className="text-2xl font-extrabold mb-1"
+          className="text-3xl font-extrabold mb-1"
           style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
         >
           Brand Portfolio Command
@@ -226,11 +226,11 @@ export default function BrandPortfolioPage() {
 
       {/* ── Summary Bar ──────────────────────────────── */}
       <div
-        className="grid grid-cols-4 gap-4 mb-6 rounded-xl border p-4"
+        className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 rounded-xl border p-4"
         style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', boxShadow: 'var(--pl-shadow)' }}
       >
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1px] font-semibold mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Total Brands
           </div>
           <div className="text-xl font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
@@ -238,7 +238,7 @@ export default function BrandPortfolioPage() {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1px] font-semibold mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Quarterly Revenue
           </div>
           <div className="text-xl font-bold" style={{ color: '#C6A052', fontFamily: 'var(--pl-font)' }}>
@@ -246,7 +246,7 @@ export default function BrandPortfolioPage() {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1px] font-semibold mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Avg Margin
           </div>
           <div className="text-xl font-bold" style={{ color: '#2563EB', fontFamily: 'var(--pl-font)' }}>
@@ -254,7 +254,7 @@ export default function BrandPortfolioPage() {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs uppercase tracking-[1px] font-mono mb-1" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1px] font-semibold mb-1" style={{ color: 'var(--pl-text-muted)' }}>
             Spirits Brands
           </div>
           <div className="text-xl font-bold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>
@@ -272,7 +272,7 @@ export default function BrandPortfolioPage() {
             <button
               key={f.key}
               onClick={() => { setFilter(f.key); setSelected(null); }}
-              className="text-[13px] font-bold font-mono px-3 py-1.5 rounded-lg transition-all"
+              className="text-[13px] font-bold tabular-nums px-3 py-1.5 rounded-lg transition-all"
               style={{
                 background: isActive ? tabColor : 'var(--pl-chart-bar-track)',
                 color: isActive ? '#fff' : 'var(--pl-text-muted)',
@@ -436,7 +436,7 @@ export default function BrandPortfolioPage() {
             {supplierBreakdown.map((s) => (
               <div key={s.supplier} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full" style={{ background: s.color }} />
-                <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                   {s.label} ({pct(s.pct)})
                 </span>
               </div>
@@ -457,7 +457,7 @@ export default function BrandPortfolioPage() {
           >
             {/* Close button */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs uppercase tracking-[1.5px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <span className="text-xs uppercase tracking-[1.5px] font-semibold" style={{ color: 'var(--pl-text-muted)' }}>
                 Brand Detail
               </span>
               <button
@@ -505,7 +505,7 @@ export default function BrandPortfolioPage() {
                 { label: 'Rev/Case', value: `$${selected.revenuePerCase}`, color: 'var(--pl-text)' },
               ].map((s) => (
                 <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: 'var(--pl-card-alt)' }}>
-                  <div className="text-xs font-mono uppercase" style={{ color: 'var(--pl-text-faint)' }}>{s.label}</div>
+                  <div className="text-xs uppercase" style={{ color: 'var(--pl-text-faint)' }}>{s.label}</div>
                   <div className="text-[16px] font-bold" style={{ color: s.color, fontFamily: 'var(--pl-font)' }}>
                     {s.value}
                   </div>
@@ -518,7 +518,7 @@ export default function BrandPortfolioPage() {
               <div className="flex items-center justify-between text-[13px] mb-1">
                 <span style={{ color: 'var(--pl-text-muted)' }}>Margin vs Target</span>
                 <span
-                  className="font-bold font-mono"
+                  className="font-bold tabular-nums"
                   style={{ color: selected.gp >= selected.marginTarget ? '#C6A052' : '#F87171' }}
                 >
                   {pct(selected.gp)} / {pct(selected.marginTarget)}
@@ -537,7 +537,7 @@ export default function BrandPortfolioPage() {
             </div>
 
             {/* Seasonal Revenue */}
-            <div className="text-xs uppercase tracking-[1px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs uppercase tracking-[1px] font-semibold mb-2" style={{ color: 'var(--pl-text-muted)' }}>
               Seasonal Revenue
             </div>
             <LightBarChart
@@ -555,11 +555,11 @@ export default function BrandPortfolioPage() {
             const barH = (s.pct / supplierBreakdown[0].pct) * 100;
             return (
               <div key={s.supplier} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-xs font-bold font-mono" style={{ color: s.color }}>
+                <span className="text-xs font-bold tabular-nums" style={{ color: s.color }}>
                   {pct(s.pct)}
                 </span>
                 <div className="w-full rounded-t-lg" style={{ height: barH, background: s.color, opacity: 0.7 }} />
-                <span className="text-xs font-mono text-center leading-tight" style={{ color: 'var(--pl-text-muted)' }}>
+                <span className="text-xs text-center leading-tight" style={{ color: 'var(--pl-text-muted)' }}>
                   {s.label}
                 </span>
               </div>
@@ -580,7 +580,7 @@ export default function BrandPortfolioPage() {
                   <div key={pkg.type} style={{ width: `${pkg.pct}%`, background: pkg.color }}
                     className="flex items-center justify-center" title={`${pkg.type}: ${pkg.pct}%`}>
                     {pkg.pct >= 15 && (
-                      <span className="text-xs font-bold font-mono" style={{ color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+                      <span className="text-xs font-bold tabular-nums" style={{ color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
                         {pkg.pct}%
                       </span>
                     )}
@@ -592,14 +592,14 @@ export default function BrandPortfolioPage() {
                 {brand.packages.map((pkg) => (
                   <div key={pkg.type} className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full" style={{ background: pkg.color }} />
-                    <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{pkg.type} ({pkg.pct}%)</span>
+                    <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{pkg.type} ({pkg.pct}%)</span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+        <div className="mt-4 p-3 rounded-lg text-xs" style={{
           background: 'rgba(198,160,82,0.06)',
           border: '1px solid rgba(198,160,82,0.15)',
           color: 'var(--pl-text-muted)',

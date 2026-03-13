@@ -106,7 +106,7 @@ export default function DisputesAndAudit() {
                     <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--pl-text)' }}>
                       {KANBAN_LABELS[status]}
                     </span>
-                    <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{cards.length}</span>
+                    <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{cards.length}</span>
                   </div>
                 </div>
 
@@ -137,8 +137,8 @@ export default function DisputesAndAudit() {
                           </span>
                         </div>
                         <div className="mt-1.5 flex items-center justify-between">
-                          <span className="text-[10px] font-mono font-semibold" style={{ color: 'var(--pl-text)' }}>${d.amount}</span>
-                          <span className="text-[9px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{d.filedDate}</span>
+                          <span className="text-[10px] font-semibold" style={{ color: 'var(--pl-text)' }}>${d.amount}</span>
+                          <span className="text-[9px]" style={{ color: 'var(--pl-text-muted)' }}>{d.filedDate}</span>
                         </div>
                       </button>
                     );
@@ -177,11 +177,11 @@ export default function DisputesAndAudit() {
               <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: STATUS_COLORS[selectedDispute.status].dot }} />
               {selectedDispute.status.toUpperCase()}
             </span>
-            <span className="text-sm font-bold font-mono" style={{ color: 'var(--pl-text)' }}>${selectedDispute.amount}</span>
+            <span className="text-sm font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>${selectedDispute.amount}</span>
           </div>
         </div>
 
-        <div className="rounded-lg p-3 mb-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
+        <div className="rounded-xl p-3 mb-4" style={{ backgroundColor: 'var(--pl-bg)' }}>
           <p className="text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{selectedDispute.description}</p>
         </div>
 
@@ -201,10 +201,10 @@ export default function DisputesAndAudit() {
                         borderColor: isLast ? STATUS_COLORS[selectedDispute.status].dot : '#CBD5E1',
                       }}
                     />
-                    <div className="flex-1 rounded-lg p-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
+                    <div className="flex-1 rounded-xl p-3" style={{ backgroundColor: 'var(--pl-bg)' }}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs font-semibold" style={{ color: 'var(--pl-text)' }}>{entry.action}</span>
-                        <span className="text-[10px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>{entry.ts}</span>
+                        <span className="text-[10px]" style={{ color: 'var(--pl-text-muted)' }}>{entry.ts}</span>
                       </div>
                       <p className="text-[11px]" style={{ color: 'var(--pl-text-secondary)' }}>{entry.detail}</p>
                       <p className="text-[10px] mt-1 font-medium" style={{ color: 'var(--pl-text-muted)' }}>{entry.actor}</p>
@@ -271,15 +271,15 @@ export default function DisputesAndAudit() {
             <tbody>
               {OVERRIDES.map((o, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid var(--pl-stripe)' }}>
-                  <td className="py-2.5 text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{o.date}</td>
+                  <td className="py-2.5 text-xs" style={{ color: 'var(--pl-text-muted)' }}>{o.date}</td>
                   <td className="py-2.5 text-xs font-medium" style={{ color: 'var(--pl-text)' }}>{o.rep}</td>
                   <td className="py-2.5">
                     <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium" style={{ backgroundColor: 'var(--pl-stripe)', color: 'var(--pl-text-secondary)' }}>
                       {o.type}
                     </span>
                   </td>
-                  <td className="py-2.5 text-xs font-mono text-right" style={{ color: 'var(--pl-text-muted)' }}>{o.original}</td>
-                  <td className="py-2.5 text-xs font-mono text-right font-semibold" style={{ color: '#059669' }}>{o.adjusted}</td>
+                  <td className="py-2.5 text-xs text-right" style={{ color: 'var(--pl-text-muted)' }}>{o.original}</td>
+                  <td className="py-2.5 text-xs text-right font-semibold" style={{ color: '#059669' }}>{o.adjusted}</td>
                   <td className="py-2.5 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{o.approvedBy}</td>
                   <td className="py-2.5 text-xs" style={{ color: 'var(--pl-text-secondary)' }}>{o.reason}</td>
                 </tr>
@@ -298,9 +298,9 @@ export default function DisputesAndAudit() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Input */}
-          <div className="rounded-lg p-4 text-center" style={{ backgroundColor: '#DBEAFE' }}>
+          <div className="rounded-xl p-4 text-center" style={{ backgroundColor: '#DBEAFE' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#2563EB' }}>Total Sales In</p>
-            <p className="text-xl font-bold font-mono" style={{ color: '#1e40af' }}>$14.2M</p>
+            <p className="text-xl font-bold tabular-nums" style={{ color: '#1e40af' }}>$14.2M</p>
             <p className="text-[10px] mt-1" style={{ color: '#3b82f6' }}>PP1-PP6 commissionable sales</p>
           </div>
 
@@ -319,9 +319,9 @@ export default function DisputesAndAudit() {
           </div>
 
           {/* Output */}
-          <div className="rounded-lg p-4 text-center" style={{ backgroundColor: '#DCFCE7' }}>
+          <div className="rounded-xl p-4 text-center" style={{ backgroundColor: '#DCFCE7' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#059669' }}>Total Commission Out</p>
-            <p className="text-xl font-bold font-mono" style={{ color: '#166534' }}>$782K</p>
+            <p className="text-xl font-bold tabular-nums" style={{ color: '#166534' }}>$782K</p>
             <p className="text-[10px] mt-1" style={{ color: '#059669' }}>5 components across 3,200 reps</p>
           </div>
         </div>

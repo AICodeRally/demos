@@ -68,14 +68,14 @@ export default function CEODashboard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>CEO Dashboard</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>CEO Dashboard</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Portfolio intelligence and predictive risk analysis
         </p>
       </div>
 
       {/* 5 StatCards */}
-      <div className="grid grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         <StatCard label="Active Clients" value="42" color="#8B7355" />
         <StatCard label="Active Incidents" value="3" color="#DC2626" />
         <StatCard label="Resolved YTD" value="18" color="#059669" />
@@ -98,7 +98,7 @@ export default function CEODashboard() {
       </div>
 
       {/* Predictive Alert Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {ALERTS.map((alert) => (
           <div
             key={alert.title}

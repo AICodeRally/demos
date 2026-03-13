@@ -45,12 +45,12 @@ export default function HseFlaresPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#DC2626' }}
         >
           Act 5 &middot; HSE Officer
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Flare Monitoring
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -129,7 +129,7 @@ export default function HseFlaresPage() {
               }}
             >
               <span
-                className="absolute right-0 -top-4 text-[9px] font-mono font-bold"
+                className="absolute right-0 -top-4 text-[9px] font-bold tabular-nums"
                 style={{ color: '#DC2626' }}
               >
                 RRC Limit
@@ -163,13 +163,13 @@ export default function HseFlaresPage() {
                 {FLARE_VOLUMES.map((f) => (
                   <tr key={f.padId} style={{ borderBottom: '1px solid #252B36' }}>
                     <td className="py-2 font-medium" style={{ color: '#F1F5F9' }}>{f.padName}</td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#CBD5E1' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#CBD5E1' }}>
                       {f.monthlyMcf.toLocaleString()}
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: f.captureRate >= 0.96 ? '#059669' : '#EAB308' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: f.captureRate >= 0.96 ? '#059669' : '#EAB308' }}>
                       {(f.captureRate * 100).toFixed(0)}%
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: '#94A3B8' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: '#94A3B8' }}>
                       {f.expirationDate}
                     </td>
                   </tr>

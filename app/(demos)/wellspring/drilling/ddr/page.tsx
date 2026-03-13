@@ -44,13 +44,13 @@ export default function DailyDrillingReportPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase mb-1"
           style={{ color: '#6B7280' }}
         >
           Act 2 &middot; Drilling Superintendent
         </div>
         <h1
-          className="text-2xl font-extrabold"
+          className="text-3xl font-extrabold"
           style={{ color: '#F1F5F9' }}
         >
           Daily Drilling Report
@@ -163,7 +163,7 @@ export default function DailyDrillingReportPage() {
               style={{ backgroundColor: i % 2 === 0 ? '#2A3241' : 'transparent' }}
             >
               <span
-                className="font-mono font-bold shrink-0"
+                className="font-bold tabular-nums shrink-0"
                 style={{ color: '#C2A04E', width: 40 }}
               >
                 {entry.time}

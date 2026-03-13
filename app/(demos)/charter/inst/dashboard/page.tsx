@@ -49,12 +49,12 @@ export default function ExecutiveDashboard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Executive Dashboard</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Executive Dashboard</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Lakeshore Credit Union &mdash; institution performance at a glance</p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard label="Total Assets" value="$2.1B" trend="up" trendValue="+4.2%" color="#B87333" sparkline={SPARKLINE_ASSETS} />
         <StatCard label="Members" value="142,000" trend="up" trendValue="+3.1%" color="#475569" sparkline={SPARKLINE_MEMBERS} />
         <StatCard label="Net Interest Margin" value="3.12%" trend="up" trendValue="+0.08%" color="#6B8F71" sparkline={SPARKLINE_NIM} />
@@ -73,14 +73,14 @@ export default function ExecutiveDashboard() {
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Top Performing Branches</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[600px] text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Branch</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Deposits</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Members</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Growth</th>
-                <th className="text-right pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Trend</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Branch</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Deposits</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Members</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Growth</th>
+                <th className="text-right pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Trend</th>
               </tr>
             </thead>
             <tbody>

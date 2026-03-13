@@ -29,12 +29,12 @@ export default function RoyaltyAllocationPage() {
       {/* Header */}
       <div className="mb-5">
         <div
-          className="text-[10px] tracking-[3px] uppercase font-mono mb-1"
+          className="text-[10px] tracking-[3px] uppercase font-semibold mb-1"
           style={{ color: '#7C3AED' }}
         >
           Act 6 &middot; Royalty Accountant
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: '#F1F5F9' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: '#F1F5F9' }}>
           Revenue Allocation
         </h1>
         <p className="text-[12px] mt-1" style={{ color: '#94A3B8' }}>
@@ -120,11 +120,11 @@ export default function RoyaltyAllocationPage() {
                 </span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-[11px] font-mono" style={{ color: '#94A3B8' }}>
+                <span className="text-[11px]" style={{ color: '#94A3B8' }}>
                   {item.pct}
                 </span>
                 <span
-                  className="text-sm font-bold font-mono"
+                  className="text-sm font-bold tabular-nums"
                   style={{ color: item.amount.startsWith('-') ? '#DC2626' : '#F1F5F9' }}
                 >
                   {item.amount}

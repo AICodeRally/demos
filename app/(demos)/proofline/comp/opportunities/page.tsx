@@ -175,15 +175,15 @@ export default function OpportunityBonusPage() {
               &#9733;
             </div>
             <div>
-              <div className="text-xs tracking-[4px] uppercase font-mono font-bold" style={{ color: ACCENT }}>
+              <div className="text-xs tracking-[4px] uppercase font-bold tabular-nums" style={{ color: ACCENT }}>
                 Act 4 &middot; RSM Quarterly Programs
               </div>
-              <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+              <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                 Opportunity Bonus Programs
               </h1>
             </div>
           </div>
-          <p className="text-sm font-mono leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-sm tabular-nums leading-relaxed max-w-3xl" style={{ color: 'var(--pl-text-muted)' }}>
             Regional Sales Managers design quarterly bonus programs targeting specific strategic objectives.
             Three-tier structure (Good / Better / Best) lets managers reward incremental effort, not just top performers.
             All programs are budget-capped, auditable, and tracked inside PROOFLINE.
@@ -226,7 +226,7 @@ export default function OpportunityBonusPage() {
 
       {/* ═══════ TIER STRUCTURE ═══════ */}
       <LightSectionCard title="THREE-TIER PAYOUT STRUCTURE">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {TIERS.map((tier) => (
             <div key={tier.id} className="rounded-xl p-5 text-center" style={{
               background: `${tier.color}08`,
@@ -236,17 +236,17 @@ export default function OpportunityBonusPage() {
               <div className="text-lg font-extrabold mb-1" style={{ color: tier.color, fontFamily: 'var(--pl-font)' }}>
                 {tier.label}
               </div>
-              <div className="text-2xl font-extrabold font-mono mb-2" style={{ color: 'var(--pl-text)' }}>
+              <div className="text-3xl font-extrabold tabular-nums mb-2" style={{ color: 'var(--pl-text)' }}>
                 ${tier.payout}
               </div>
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                 per qualifying rep
               </div>
             </div>
           ))}
         </div>
         <div className="mt-4 p-3 rounded-lg" style={{ background: 'var(--pl-hover)', border: '1px solid var(--pl-border)' }}>
-          <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
             RSMs set the qualification criteria for each tier. Programs are budget-capped &mdash; if projected payouts exceed budget,
             the RSM is alerted before the program closes. All payouts run through the standard comp approval workflow.
           </p>
@@ -274,15 +274,15 @@ export default function OpportunityBonusPage() {
                   <span className="text-sm font-bold" style={{ color: isSelected ? ACCENT : 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                     {p.name}
                   </span>
-                  <span className="text-xs font-mono px-2 py-0.5 rounded-full" style={{
+                  <span className="text-xs px-2 py-0.5 rounded-full" style={{
                     background: `${ACCENT}15`,
                     color: ACCENT,
                   }}>ACTIVE</span>
                 </div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                   {p.managerName} &middot; {p.district}
                 </div>
-                <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-faint)' }}>
+                <div className="text-xs mt-1" style={{ color: 'var(--pl-text-faint)' }}>
                   {p.focus} &middot; {p.repResults.filter(r => r.tier).length}/{p.repResults.length} qualifying
                 </div>
               </button>
@@ -298,44 +298,44 @@ export default function OpportunityBonusPage() {
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div>
-              <div className="text-xs tracking-[2px] uppercase font-mono mb-1" style={{ color: ACCENT }}>
+              <div className="text-xs tracking-[2px] uppercase font-semibold mb-1" style={{ color: ACCENT }}>
                 {activeProgram.quarter} &middot; {activeProgram.district}
               </div>
               <h3 className="text-xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
                 {activeProgram.name}
               </h3>
-              <p className="text-sm font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>
+              <p className="text-sm tabular-nums mt-1" style={{ color: 'var(--pl-text-muted)' }}>
                 Created by {activeProgram.managerName} &middot; {activeProgram.startDate} &ndash; {activeProgram.endDate}
               </p>
             </div>
             <div className="text-right">
-              <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Budget</div>
-              <div className="text-lg font-bold font-mono" style={{ color: GOLD }}>${activeProgram.budgetCap.toLocaleString()}</div>
+              <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Budget</div>
+              <div className="text-lg font-bold tabular-nums" style={{ color: GOLD }}>${activeProgram.budgetCap.toLocaleString()}</div>
             </div>
           </div>
 
           {/* Description */}
-          <div className="rounded-lg p-3 mb-5" style={{ background: 'var(--pl-hover)', border: '1px solid var(--pl-border)' }}>
-            <div className="text-xs font-bold font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="rounded-xl p-3 mb-5" style={{ background: 'var(--pl-hover)', border: '1px solid var(--pl-border)' }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-wider mb-1" style={{ color: 'var(--pl-text-faint)' }}>
               Program Rules
             </div>
-            <p className="text-sm font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+            <p className="text-sm tabular-nums leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
               {activeProgram.description}
             </p>
           </div>
 
           {/* Tier thresholds */}
-          <div className="grid grid-cols-3 gap-3 mb-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
             {activeProgram.tiers.map((t, i) => {
               const tierDef = TIERS[i];
               return (
-                <div key={t.label} className="rounded-lg p-3 text-center" style={{
+                <div key={t.label} className="rounded-xl p-3 text-center" style={{
                   background: `${tierDef.color}08`,
                   border: `1px solid ${tierDef.color}20`,
                 }}>
                   <div className="text-lg font-bold" style={{ color: tierDef.color }}>{tierDef.icon} {t.label}</div>
-                  <div className="text-sm font-mono font-bold" style={{ color: 'var(--pl-text)' }}>${t.payout}</div>
-                  <div className="text-xs font-mono mt-1" style={{ color: 'var(--pl-text-muted)' }}>{t.threshold}</div>
+                  <div className="text-sm font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>${t.payout}</div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--pl-text-muted)' }}>{t.threshold}</div>
                 </div>
               );
             })}
@@ -344,16 +344,16 @@ export default function OpportunityBonusPage() {
           {/* Tier distribution bar */}
           <div className="mb-5">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>
+              <span className="text-xs font-bold tabular-nums uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>
                 Tier Distribution
               </span>
-              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+              <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
                 ${programPayout.toLocaleString()} of ${activeProgram.budgetCap.toLocaleString()} budget
               </span>
             </div>
             <div className="flex h-8 rounded-lg overflow-hidden" style={{ border: '1px solid var(--pl-border)' }}>
               {bestCount > 0 && (
-                <div className="flex items-center justify-center text-xs font-bold font-mono" style={{
+                <div className="flex items-center justify-center text-xs font-bold tabular-nums" style={{
                   width: `${(bestCount / activeProgram.repResults.length) * 100}%`,
                   background: '#C6A05230',
                   color: '#C6A052',
@@ -363,7 +363,7 @@ export default function OpportunityBonusPage() {
                 </div>
               )}
               {betterCount > 0 && (
-                <div className="flex items-center justify-center text-xs font-bold font-mono" style={{
+                <div className="flex items-center justify-center text-xs font-bold tabular-nums" style={{
                   width: `${(betterCount / activeProgram.repResults.length) * 100}%`,
                   background: '#94A3B820',
                   color: '#94A3B8',
@@ -373,7 +373,7 @@ export default function OpportunityBonusPage() {
                 </div>
               )}
               {goodCount > 0 && (
-                <div className="flex items-center justify-center text-xs font-bold font-mono" style={{
+                <div className="flex items-center justify-center text-xs font-bold tabular-nums" style={{
                   width: `${(goodCount / activeProgram.repResults.length) * 100}%`,
                   background: '#CD7F3220',
                   color: '#CD7F32',
@@ -383,7 +383,7 @@ export default function OpportunityBonusPage() {
                 </div>
               )}
               {noTier > 0 && (
-                <div className="flex items-center justify-center text-xs font-mono" style={{
+                <div className="flex items-center justify-center text-xs" style={{
                   width: `${(noTier / activeProgram.repResults.length) * 100}%`,
                   background: 'var(--pl-hover)',
                   color: 'var(--pl-text-faint)',
@@ -395,7 +395,7 @@ export default function OpportunityBonusPage() {
           </div>
 
           {/* Rep leaderboard */}
-          <div className="text-xs font-bold font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-faint)' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-wider mb-3" style={{ color: 'var(--pl-text-faint)' }}>
             Rep Progress
           </div>
           <div className="space-y-2">
@@ -410,7 +410,7 @@ export default function OpportunityBonusPage() {
                   background: i % 2 === 0 ? 'var(--pl-stripe)' : 'transparent',
                 }}>
                   {/* Rank */}
-                  <div className="w-6 text-center text-sm font-bold font-mono" style={{ color: tc }}>
+                  <div className="w-6 text-center text-sm font-bold tabular-nums" style={{ color: tc }}>
                     {tierIcon(r.tier)}
                   </div>
                   {/* Name & route */}
@@ -418,7 +418,7 @@ export default function OpportunityBonusPage() {
                     <div className="text-sm font-semibold truncate" style={{ color: 'var(--pl-text)' }}>
                       {seller.name}
                     </div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>
                       {seller.routeId}
                     </div>
                   </div>
@@ -430,7 +430,7 @@ export default function OpportunityBonusPage() {
                         background: `${tc}30`,
                         borderRight: `3px solid ${tc}`,
                       }}>
-                        <span className="text-xs font-bold font-mono" style={{ color: tc }}>
+                        <span className="text-xs font-bold tabular-nums" style={{ color: tc }}>
                           {r.progress}
                         </span>
                       </div>
@@ -439,14 +439,14 @@ export default function OpportunityBonusPage() {
                   {/* Tier label */}
                   <div className="w-16 text-right">
                     {r.tier ? (
-                      <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full" style={{
+                      <span className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full" style={{
                         background: `${tc}15`,
                         color: tc,
                       }}>
                         ${r.tier === 'best' ? '1,000' : r.tier === 'better' ? '800' : '600'}
                       </span>
                     ) : (
-                      <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>—</span>
+                      <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>—</span>
                     )}
                   </div>
                 </div>
@@ -461,13 +461,13 @@ export default function OpportunityBonusPage() {
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ color: 'var(--pl-text-muted)' }}>
-              <th className="text-left font-medium pb-3 pl-2">Program</th>
-              <th className="text-left font-medium pb-3">RSM</th>
-              <th className="text-center font-medium pb-3">★</th>
-              <th className="text-center font-medium pb-3">◆</th>
-              <th className="text-center font-medium pb-3">●</th>
-              <th className="text-right font-medium pb-3">Projected</th>
-              <th className="text-right font-medium pb-3 pr-2">Budget</th>
+              <th className="text-left font-semibold pb-3 pl-2">Program</th>
+              <th className="text-left font-semibold pb-3">RSM</th>
+              <th className="text-center font-semibold pb-3">★</th>
+              <th className="text-center font-semibold pb-3">◆</th>
+              <th className="text-center font-semibold pb-3">●</th>
+              <th className="text-right font-semibold pb-3">Projected</th>
+              <th className="text-right font-semibold pb-3 pr-2">Budget</th>
             </tr>
           </thead>
           <tbody>
@@ -485,19 +485,19 @@ export default function OpportunityBonusPage() {
                 >
                   <td className="py-2.5 pl-2">
                     <div className="font-semibold" style={{ color: 'var(--pl-text)' }}>{p.name}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{p.focus}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{p.focus}</div>
                   </td>
                   <td className="py-2.5">
-                    <div className="font-mono" style={{ color: 'var(--pl-text-muted)' }}>{p.managerName}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{p.district}</div>
+                    <div className="tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{p.managerName}</div>
+                    <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{p.district}</div>
                   </td>
-                  <td className="py-2.5 text-center font-mono font-bold" style={{ color: '#C6A052' }}>{best}</td>
-                  <td className="py-2.5 text-center font-mono font-bold" style={{ color: '#94A3B8' }}>{better}</td>
-                  <td className="py-2.5 text-center font-mono font-bold" style={{ color: '#CD7F32' }}>{good}</td>
-                  <td className="py-2.5 text-right font-mono font-bold" style={{ color: ACCENT }}>
+                  <td className="py-2.5 text-center font-bold tabular-nums" style={{ color: '#C6A052' }}>{best}</td>
+                  <td className="py-2.5 text-center font-bold tabular-nums" style={{ color: '#94A3B8' }}>{better}</td>
+                  <td className="py-2.5 text-center font-bold tabular-nums" style={{ color: '#CD7F32' }}>{good}</td>
+                  <td className="py-2.5 text-right font-bold tabular-nums" style={{ color: ACCENT }}>
                     ${projected.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-right pr-2 font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <td className="py-2.5 text-right pr-2 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>
                     ${p.budgetCap.toLocaleString()}
                   </td>
                 </tr>
@@ -506,20 +506,20 @@ export default function OpportunityBonusPage() {
             {/* Totals row */}
             <tr style={{ borderTop: '2px solid var(--pl-border)' }}>
               <td className="pt-3 pl-2 font-bold" style={{ color: 'var(--pl-text)' }}>TOTAL</td>
-              <td className="pt-3 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{PROGRAMS.length} programs</td>
-              <td className="pt-3 text-center font-mono font-bold" style={{ color: '#C6A052' }}>
+              <td className="pt-3 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{PROGRAMS.length} programs</td>
+              <td className="pt-3 text-center font-bold tabular-nums" style={{ color: '#C6A052' }}>
                 {PROGRAMS.reduce((s, p) => s + p.repResults.filter(r => r.tier === 'best').length, 0)}
               </td>
-              <td className="pt-3 text-center font-mono font-bold" style={{ color: '#94A3B8' }}>
+              <td className="pt-3 text-center font-bold tabular-nums" style={{ color: '#94A3B8' }}>
                 {PROGRAMS.reduce((s, p) => s + p.repResults.filter(r => r.tier === 'better').length, 0)}
               </td>
-              <td className="pt-3 text-center font-mono font-bold" style={{ color: '#CD7F32' }}>
+              <td className="pt-3 text-center font-bold tabular-nums" style={{ color: '#CD7F32' }}>
                 {PROGRAMS.reduce((s, p) => s + p.repResults.filter(r => r.tier === 'good').length, 0)}
               </td>
-              <td className="pt-3 text-right font-mono font-bold" style={{ color: ACCENT }}>
+              <td className="pt-3 text-right font-bold tabular-nums" style={{ color: ACCENT }}>
                 ${totalProjectedPayout.toLocaleString()}
               </td>
-              <td className="pt-3 text-right pr-2 font-mono font-bold" style={{ color: 'var(--pl-text-muted)' }}>
+              <td className="pt-3 text-right pr-2 font-bold tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>
                 ${totalBudget.toLocaleString()}
               </td>
             </tr>
@@ -541,7 +541,7 @@ export default function OpportunityBonusPage() {
               border: `1px solid ${s.color}18`,
             }}>
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold font-mono"
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold tabular-nums"
                   style={{ background: `${s.color}20`, color: s.color }}>
                   {s.step}
                 </div>
@@ -549,7 +549,7 @@ export default function OpportunityBonusPage() {
                   {s.title}
                 </span>
               </div>
-              <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--pl-text-muted)' }}>
                 {s.desc}
               </p>
             </div>

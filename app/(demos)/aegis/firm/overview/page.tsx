@@ -50,12 +50,12 @@ export default function PracticeOverview() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Practice Overview</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Practice Overview</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>Ironclad Crisis Group &mdash; capabilities at a glance</p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Incidents Managed" value="247" trend="up" trendValue="+12%" color="#8B7355" sparkline={[18, 22, 19, 24, 28, 26, 30, 27, 32, 29, 34, 36]} />
         <StatCard label="Privilege Preserved" value="98.6%" trend="up" trendValue="+0.3%" color="#7C3AED" sparkline={[96, 97, 97, 98, 97, 98, 98, 99, 98, 99, 99, 99]} />
         <StatCard label="Avg Response Time" value="2.1hr" trend="down" trendValue="-18min" color="#059669" sparkline={[4, 3.8, 3.5, 3.2, 3, 2.8, 2.6, 2.5, 2.4, 2.3, 2.2, 2.1]} />
@@ -78,9 +78,9 @@ export default function PracticeOverview() {
           <div className="flex justify-center">
             <DonutChart segments={TEAM_SEGMENTS} centerValue="34" centerLabel="Professionals" size={200} />
           </div>
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {TEAM_SEGMENTS.map((s) => (
-              <div key={s.label} className="rounded-lg p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
+              <div key={s.label} className="rounded-xl p-3 text-center" style={{ backgroundColor: '#F5F5F4' }}>
                 <p className="text-xl font-bold" style={{ color: s.color }}>{s.value}</p>
                 <p className="text-[11px]" style={{ color: '#57534E' }}>{s.label}</p>
               </div>
@@ -93,14 +93,14 @@ export default function PracticeOverview() {
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-sm font-semibold mb-4" style={{ color: '#1C1917' }}>Recent Engagements</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[600px] text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid #E7E5E4' }}>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Client</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Type</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Outcome</th>
-                <th className="text-left pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Duration</th>
-                <th className="text-right pb-3 font-medium text-xs uppercase tracking-wider" style={{ color: '#A8A29E' }}>Trend</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Client</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Type</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Outcome</th>
+                <th className="text-left pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Duration</th>
+                <th className="text-right pb-3 font-semibold text-[11px] uppercase tracking-wider" style={{ color: '#A8A29E' }}>Trend</th>
               </tr>
             </thead>
             <tbody>
@@ -128,19 +128,19 @@ export default function PracticeOverview() {
       </div>
 
       {/* Practice Highlights */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Fastest Resolution</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Fastest Resolution</p>
           <p className="text-lg font-bold" style={{ color: '#1C1917' }}>4.2 hours</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>Data Exfiltration — Client Epsilon</p>
         </div>
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Largest Engagement</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Largest Engagement</p>
           <p className="text-lg font-bold" style={{ color: '#1C1917' }}>$2.4M</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>Multi-jurisdiction regulatory defense</p>
         </div>
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Privileged Documents</p>
+          <p className="text-[11px] font-medium uppercase tracking-wider mb-2" style={{ color: '#A8A29E' }}>Privileged Documents</p>
           <p className="text-lg font-bold" style={{ color: '#1C1917' }}>12,847</p>
           <p className="text-xs mt-1" style={{ color: '#57534E' }}>Maintained across all active matters</p>
         </div>

@@ -67,7 +67,8 @@ export default function ContestBoard() {
         <p className="register-section-header">
           Monthly Leaderboard
         </p>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="overflow-x-auto -mx-1">
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
           <thead>
             <tr>
               {['Rank', 'Rep', 'Units', 'Revenue', 'Tier', 'Progress'].map((h) => (
@@ -150,6 +151,7 @@ export default function ContestBoard() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Tier Threshold Tracker */}

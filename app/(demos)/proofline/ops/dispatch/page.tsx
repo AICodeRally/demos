@@ -63,10 +63,10 @@ function ExceptionAlert({ route }: { route: Route }) {
 
   return (
     <>
-    <div className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: 'rgba(248,113,113,0.3)', background: 'rgba(248,113,113,0.04)' }}>
-      <span className="text-[12px] font-bold font-mono" style={{ color: '#F87171' }}>{route.id}</span>
+    <div className="flex items-center gap-3 px-4 py-2 rounded-xl border" style={{ borderColor: 'rgba(248,113,113,0.3)', background: 'rgba(248,113,113,0.04)' }}>
+      <span className="text-[12px] font-bold tabular-nums" style={{ color: '#F87171' }}>{route.id}</span>
       <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? 'Unknown'}</span>
-      <span className="text-[13px] font-mono" style={{ color: '#F87171' }}>{reasons.join(' · ')}</span>
+      <span className="text-[13px]" style={{ color: '#F87171' }}>{reasons.join(' · ')}</span>
     </div>
     </>
   );
@@ -82,12 +82,12 @@ function RouteCard({ route }: { route: Route }) {
 
   return (
     <>
-    <div className="rounded-lg border p-3 hover:shadow-sm transition-shadow" style={{ borderColor: 'var(--pl-border)' }}>
+    <div className="rounded-xl border p-3 hover:shadow-sm transition-shadow" style={{ borderColor: 'var(--pl-border)' }}>
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{route.id}</span>
+          <span className="text-[13px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{route.id}</span>
           <span
-            className="text-xs font-bold font-mono px-1.5 py-0.5 rounded"
+            className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded"
             style={{ background: cfg.bg, color: cfg.color }}
           >
             {cfg.label}
@@ -99,13 +99,13 @@ function RouteCard({ route }: { route: Route }) {
       </div>
 
       <div className="text-[12px] mb-1" style={{ color: 'var(--pl-text)' }}>{seller?.name ?? '—'}</div>
-      <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-xs mb-2" style={{ color: 'var(--pl-text-faint)' }}>
         {route.stopsPerDay} stops · {route.accounts} accts · {route.channel}
       </div>
 
       {/* Cases delivered progress */}
       <div className="mb-1">
-        <div className="flex items-center justify-between text-xs font-mono mb-0.5">
+        <div className="flex items-center justify-between text-xs mb-0.5">
           <span style={{ color: 'var(--pl-text-muted)' }}>Cases</span>
           <span style={{ color: deliveredPct >= 0.8 ? '#22C55E' : deliveredPct >= 0.6 ? '#F59E0B' : '#F87171' }}>
             {fmt(delivered)}/{fmt(planned)}
@@ -123,7 +123,7 @@ function RouteCard({ route }: { route: Route }) {
       </div>
 
       {/* On-time rate */}
-      <div className="flex items-center justify-between text-xs font-mono">
+      <div className="flex items-center justify-between text-xs">
         <span style={{ color: 'var(--pl-text-muted)' }}>On-time</span>
         <span
           className="font-bold"
@@ -160,10 +160,10 @@ export default function DeliveryDispatchPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
           Delivery Dispatch &middot; Real-Time Operations
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Route Dispatch Board
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -172,7 +172,7 @@ export default function DeliveryDispatchPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Routes Active" value={`${activeRoutes.length}/${ROUTES.length}`} accent="#22C55E" sub="En route + delivering" stagger={0} />
         <LightKpiCard label="Daily Cases" value={fmt(totalCasesToday)} accent="#2563EB" sub="Planned today" stagger={1} />
         <LightKpiCard label="Daily Revenue" value={fmtM(totalRevToday)} accent="#2563EB" sub="Projected" stagger={2} />
@@ -194,11 +194,11 @@ export default function DeliveryDispatchPage() {
             { id: 'EXC-004', type: 'Compliance Flag', route: 'DAL-07', rep: 'Marcus Johnson', detail: 'Display photo missing at Spec\'s #12 — required by promo', color: '#2563EB' },
             { id: 'EXC-005', type: 'Delivery Delay', route: 'LAR-01', rep: 'Diego Ramirez', detail: 'Warehouse loading backup — ETA pushed 25 min', color: '#F97316' },
           ].map(alert => (
-            <div key={alert.id} className="flex items-center gap-3 px-4 py-2 rounded-lg border" style={{ borderColor: `${alert.color}30`, background: `${alert.color}06` }}>
-              <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${alert.color}15`, color: alert.color }}>{alert.type.toUpperCase()}</span>
-              <span className="text-[12px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{alert.route}</span>
+            <div key={alert.id} className="flex items-center gap-3 px-4 py-2 rounded-xl border" style={{ borderColor: `${alert.color}30`, background: `${alert.color}06` }}>
+              <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: `${alert.color}15`, color: alert.color }}>{alert.type.toUpperCase()}</span>
+              <span className="text-[12px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{alert.route}</span>
               <span className="text-[12px]" style={{ color: 'var(--pl-text)' }}>{alert.rep}</span>
-              <span className="text-[13px] font-mono flex-1" style={{ color: 'var(--pl-text-muted)' }}>{alert.detail}</span>
+              <span className="text-[13px] flex-1" style={{ color: 'var(--pl-text-muted)' }}>{alert.detail}</span>
             </div>
           ))}
         </div>
@@ -206,10 +206,10 @@ export default function DeliveryDispatchPage() {
 
       {/* Hometown Filter */}
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Hometown:</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>Hometown:</span>
         <button
           onClick={() => setFilterHometown('all')}
-          className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+          className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
           style={{
             borderColor: filterHometown === 'all' ? '#2563EB' : 'var(--pl-border)',
             background: filterHometown === 'all' ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
@@ -225,7 +225,7 @@ export default function DeliveryDispatchPage() {
             <button
               key={h.id}
               onClick={() => setFilterHometown(h.id)}
-              className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+              className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
               style={{
                 borderColor: filterHometown === h.id ? '#2563EB' : 'var(--pl-border)',
                 background: filterHometown === h.id ? 'rgba(37,99,235,0.08)' : 'var(--pl-card)',
@@ -243,7 +243,7 @@ export default function DeliveryDispatchPage() {
       <div className="flex items-center gap-4 mb-4">
         {(Object.entries(STATUS_CONFIG) as [DeliveryStatus, typeof STATUS_CONFIG[DeliveryStatus]][]).map(([key, cfg]) => (
           <div key={key} className="flex items-center gap-1.5">
-            <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
+            <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: cfg.bg, color: cfg.color }}>
               {cfg.label}
             </span>
           </div>
@@ -263,7 +263,7 @@ export default function DeliveryDispatchPage() {
             className="mb-6"
           >
             {/* Hometown summary bar */}
-            <div className="flex items-center gap-6 mb-4 text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="flex items-center gap-6 mb-4 text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
               <span>Manager: <strong style={{ color: 'var(--pl-text)' }}>{hometown.manager}</strong></span>
               <span>Avg on-time: <strong style={{ color: htAvgOnTime >= 0.93 ? '#22C55E' : '#F59E0B' }}>{pct(htAvgOnTime)}</strong></span>
               <span>Cases/day: <strong style={{ color: 'var(--pl-text)' }}>{fmt(routes.reduce((s, r) => s + Math.round(r.cases / 65), 0))}</strong></span>
@@ -275,7 +275,7 @@ export default function DeliveryDispatchPage() {
             </div>
 
             {/* Route card grid */}
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {routes.map(route => (
                 <RouteCard key={route.id} route={route} />
               ))}
@@ -285,7 +285,7 @@ export default function DeliveryDispatchPage() {
       })}
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Status reflects simulated real-time delivery tracking. Cases = daily plan based on quarterly target &divide; 65 working days.
         On-time rate sourced from route performance data. Exception threshold: shrinkage &gt;2%, on-time &lt;90%, or display compliance &lt;80%.
       </div>

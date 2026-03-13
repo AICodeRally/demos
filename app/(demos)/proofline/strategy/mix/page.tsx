@@ -58,11 +58,11 @@ function MixTargetBar({
           <span className="text-[13px] font-bold" style={{ color: 'var(--pl-text)' }}>
             {SUPPLIER_NAMES[supplier]}
           </span>
-          <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+          <span className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
             {brands.length} brands &middot; {fmtM(supplierRev)}/Q &middot; {pct(supplierGP)} GP
           </span>
         </div>
-        <div className="flex items-center gap-3 text-[13px] font-mono">
+        <div className="flex items-center gap-3 text-[13px]">
           <span style={{ color: 'var(--pl-text-muted)' }}>Current: <strong style={{ color }}>{pct(current)}</strong></span>
           <span style={{ color: 'var(--pl-text-muted)' }}>Target: <strong style={{ color }}>{pct(target)}</strong></span>
           <span
@@ -95,7 +95,7 @@ function MixTargetBar({
           style={{ left: `${(current / maxPct) * 100}%`, background: color }}
         />
       </div>
-      <div className="flex items-center gap-4 mt-1.5 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="flex items-center gap-4 mt-1.5 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
         <span>filled = current</span>
         <span>outline = target</span>
         <span>{delta > 0 ? '+' : ''}{(delta * 100).toFixed(1)}pp shift</span>
@@ -210,10 +210,10 @@ export default function BrandMixScenariosPage() {
 
       {/* Header */}
       <div className="mt-6 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#7C3AED' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#7C3AED' }}>
           Brand Mix &amp; Scenarios &middot; Portfolio Strategy + FY2026 Modeling
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Portfolio Strategy &amp; Scenario Comparison
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -222,7 +222,7 @@ export default function BrandMixScenariosPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Q Revenue" value={fmtM(TOTAL_QUARTERLY_REVENUE)} accent="#7C3AED" sub="All brands" stagger={0} />
         <LightKpiCard label="Avg Gross Profit" value={pct(avgGP)} accent="#22C55E" sub="Blended margin" stagger={1} />
         <LightKpiCard label="Emerging Share" value={pct(emergingShare)} accent="#F59E0B" sub={`${BRAND_FAMILIES.filter(b => b.emerging).length} brands`} stagger={2} />
@@ -249,11 +249,11 @@ export default function BrandMixScenariosPage() {
           </div>
 
           {/* Legend */}
-          <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
             {SUPPLIERS.map(s => {
               const growth = growthMap[s] ?? 0;
               return (
-                <div key={s} className="flex items-center gap-2 text-[11px] font-mono">
+                <div key={s} className="flex items-center gap-2 text-[11px]">
                   <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: SUPPLIER_COLORS[s] }} />
                   <span style={{ color: 'var(--pl-text)' }}>{SUPPLIER_NAMES[s]}</span>
                   <span style={{ color: 'var(--pl-text-muted)' }}>{pct(SUPPLIER_PORTFOLIO_SHARE[s])}</span>
@@ -313,7 +313,7 @@ export default function BrandMixScenariosPage() {
             ]}
           />
           {/* Legend */}
-          <div className="flex items-center gap-4 mt-3 text-[11px] font-mono">
+          <div className="flex items-center gap-4 mt-3 text-[11px]">
             <span className="flex items-center gap-1.5">
               <span className="w-4 h-0.5" style={{ background: '#C6A052', display: 'inline-block', borderTop: '2px dashed #C6A052' }} />
               <span style={{ color: '#C6A052' }}>Target</span>
@@ -334,7 +334,7 @@ export default function BrandMixScenariosPage() {
       <div className="grid grid-cols-2 gap-4 mb-6">
         {/* Left: Scenario Comparison Table */}
         <LightSectionCard title="Scenario Comparison">
-          <div className="grid grid-cols-3 gap-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0">
             {SCENARIOS.map((s, i) => {
               const isActive = selectedScenario === i;
               const totalNewAccounts = s.hometownProjections.reduce((sum, h) => sum + h.newAccounts, 0);
@@ -355,7 +355,7 @@ export default function BrandMixScenariosPage() {
                       {s.name}
                     </span>
                     <span
-                      className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                      className="text-[10px] px-1.5 py-0.5 rounded"
                       style={{ background: `${s.color}15`, color: s.color }}
                     >
                       {s.label}
@@ -363,7 +363,7 @@ export default function BrandMixScenariosPage() {
                   </div>
 
                   {/* Metric rows */}
-                  <div className="space-y-1.5 text-[11px] font-mono">
+                  <div className="space-y-1.5 text-[11px]">
                     <MetricRow label="Revenue Target" value={fmtM(s.revenueTarget)} color={isActive ? s.color : undefined} />
                     <MetricRow label="YoY Growth" value={`+${pct(s.yoyGrowth)}`} color={isActive ? s.color : undefined} />
                     <MetricRow label="Case Target" value={`${(s.caseTarget / 1e6).toFixed(1)}M`} />
@@ -433,7 +433,7 @@ export default function BrandMixScenariosPage() {
           </svg>
 
           {/* Legend */}
-          <div className="flex items-center gap-4 mt-2 text-[11px] font-mono">
+          <div className="flex items-center gap-4 mt-2 text-[11px]">
             {bellCurves.map(c => (
               <span key={c.name} className="flex items-center gap-1.5">
                 <span className="w-3 h-0.5 rounded" style={{ background: c.color, display: 'inline-block' }} />
@@ -452,12 +452,12 @@ export default function BrandMixScenariosPage() {
         <table className="w-full text-[12px]">
           <thead>
             <tr style={{ color: 'var(--pl-text-muted)' }}>
-              <th className="text-left font-medium pb-2">Scenario</th>
-              <th className="text-right font-medium pb-2">Avg Attainment</th>
-              <th className="text-right font-medium pb-2">Total Comp Cost</th>
-              <th className="text-right font-medium pb-2">Comp/Revenue %</th>
-              <th className="text-right font-medium pb-2">Variable Spend</th>
-              <th className="text-right font-medium pb-2 pr-2">Upside Risk</th>
+              <th className="text-left font-semibold pb-2">Scenario</th>
+              <th className="text-right font-semibold pb-2">Avg Attainment</th>
+              <th className="text-right font-semibold pb-2">Total Comp Cost</th>
+              <th className="text-right font-semibold pb-2">Comp/Revenue %</th>
+              <th className="text-right font-semibold pb-2">Variable Spend</th>
+              <th className="text-right font-semibold pb-2 pr-2">Upside Risk</th>
             </tr>
           </thead>
           <tbody>
@@ -471,23 +471,23 @@ export default function BrandMixScenariosPage() {
                     borderLeft: isActive ? '3px solid #C6A052' : '3px solid transparent',
                   }}
                 >
-                  <td className="py-2 pl-1 font-mono font-bold" style={{ color: isActive ? SCENARIOS[row.idx].color : 'var(--pl-text)' }}>
+                  <td className="py-2 pl-1 font-bold tabular-nums" style={{ color: isActive ? SCENARIOS[row.idx].color : 'var(--pl-text)' }}>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full" style={{ background: SCENARIOS[row.idx].color }} />
                       {row.scenario}
                     </div>
                   </td>
-                  <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.avgAttainment}</td>
-                  <td className="py-2 text-right font-mono font-bold" style={{ color: 'var(--pl-text)' }}>{row.totalComp}</td>
-                  <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>{row.compRev}</td>
-                  <td className="py-2 text-right font-mono" style={{ color: '#C6A052' }}>{row.variableSpend}</td>
-                  <td className="py-2 text-right font-mono pr-2" style={{ color: '#F59E0B' }}>{row.upsideRisk}</td>
+                  <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row.avgAttainment}</td>
+                  <td className="py-2 text-right font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{row.totalComp}</td>
+                  <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{row.compRev}</td>
+                  <td className="py-2 text-right tabular-nums" style={{ color: '#C6A052' }}>{row.variableSpend}</td>
+                  <td className="py-2 text-right tabular-nums pr-2" style={{ color: '#F59E0B' }}>{row.upsideRisk}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        <p className="text-[11px] font-mono mt-3" style={{ color: 'var(--pl-text-faint)' }}>
+        <p className="text-[11px] mt-3" style={{ color: 'var(--pl-text-faint)' }}>
           Upside risk = additional comp cost if attainment exceeds plan by 10pp
         </p>
       </LightSectionCard>
@@ -504,7 +504,7 @@ export default function BrandMixScenariosPage() {
 
         {/* Attainment Distribution Bar Chart */}
         <div className="mb-6">
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-3" style={{ color: 'var(--pl-text-muted)' }}>
             ATTAINMENT DISTRIBUTION — 43 FTEs (36 RSRs + 6 MANAGERS + 1 DIRECTOR)
           </div>
           <div className="w-full overflow-hidden rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
@@ -544,13 +544,13 @@ export default function BrandMixScenariosPage() {
           borderLeft: '4px solid #F59E0B',
           border: '1px solid rgba(245,158,11,0.15)',
         }}>
-          <div className="text-xs font-bold font-mono uppercase tracking-widest mb-1" style={{ color: '#F59E0B' }}>
+          <div className="text-xs font-bold tabular-nums uppercase tracking-widest mb-1" style={{ color: '#F59E0B' }}>
             SENSITIVITY ANALYSIS
           </div>
           <div className="text-sm font-bold mb-1" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
             +5% avg attainment = +$182K variable payout (+8.8%)
           </div>
-          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>
             Model assumes current plan structure, territory assignments, and brand mix targets. Does not include kicker payouts.
           </div>
         </div>
@@ -558,27 +558,27 @@ export default function BrandMixScenariosPage() {
         {/* Comp-to-Revenue Trend */}
         <div className="p-4 rounded-xl" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
           <div className="flex items-center justify-between mb-3">
-            <div className="text-xs font-bold font-mono uppercase tracking-widest" style={{ color: 'var(--pl-text-muted)' }}>
+            <div className="text-xs font-bold tabular-nums uppercase tracking-widest" style={{ color: 'var(--pl-text-muted)' }}>
               COMP / REVENUE RATIO — 8-QUARTER TREND
             </div>
-            <div className="text-sm font-bold font-mono" style={{ color: '#22C55E' }}>11.0%</div>
+            <div className="text-sm font-bold tabular-nums" style={{ color: '#22C55E' }}>11.0%</div>
           </div>
           <Sparkline data={COMP_TO_REV_TREND} color="#22C55E" width={400} height={48} />
           <div className="flex items-center gap-4 mt-2">
             <div className="flex items-center gap-1">
               <div className="w-8 h-0 border-t border-dashed" style={{ borderColor: '#22C55E' }} />
-              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Low benchmark (10%)</span>
+              <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Low benchmark (10%)</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-8 h-0 border-t border-dashed" style={{ borderColor: '#F59E0B' }} />
-              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>High benchmark (13%)</span>
+              <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>High benchmark (13%)</span>
             </div>
           </div>
         </div>
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Mix targets derived from CEO revenue mandate, supplier incentive structures, and gate alignment.
         Bell curves model expected attainment distribution under each scenario. Wider variance = higher risk/reward.
       </div>
@@ -590,7 +590,7 @@ export default function BrandMixScenariosPage() {
           {Object.entries(EVENT_TYPE_LABELS).map(([key, cfg]) => (
             <div key={key} className="flex items-center gap-1.5">
               <div className="w-3 h-3 rounded" style={{ background: cfg.color }} />
-              <span className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{cfg.label}</span>
+              <span className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{cfg.label}</span>
             </div>
           ))}
         </div>
@@ -601,7 +601,7 @@ export default function BrandMixScenariosPage() {
             {/* Month headers */}
             <div className="flex mb-2" style={{ paddingLeft: 160 }}>
               {MONTHS.map((m) => (
-                <div key={m} className="flex-1 text-center text-xs font-mono font-bold"
+                <div key={m} className="flex-1 text-center text-xs font-bold tabular-nums"
                   style={{ color: 'var(--pl-text-faint)' }}>{m}</div>
               ))}
             </div>
@@ -613,7 +613,7 @@ export default function BrandMixScenariosPage() {
                 const widthPct = (event.durationMonths / 12) * 100;
                 return (
                   <div key={i} className="flex items-center" style={{ height: 28 }}>
-                    <div className="text-xs font-mono font-bold truncate" style={{ width: 160, color: 'var(--pl-text-muted)', paddingRight: 8 }}>
+                    <div className="text-xs font-bold tabular-nums truncate" style={{ width: 160, color: 'var(--pl-text-muted)', paddingRight: 8 }}>
                       {event.label}
                     </div>
                     <div className="flex-1 relative" style={{ height: 20 }}>
@@ -641,7 +641,7 @@ export default function BrandMixScenariosPage() {
           </div>
         </div>
 
-        <div className="mt-4 p-3 rounded-lg text-xs font-mono" style={{
+        <div className="mt-4 p-3 rounded-lg text-xs" style={{
           background: 'rgba(198,160,82,0.06)',
           border: '1px solid rgba(198,160,82,0.15)',
           color: 'var(--pl-text-muted)',

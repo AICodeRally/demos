@@ -121,7 +121,7 @@ export default function DemandForecastingPage() {
       <ActNavigation currentAct={3} />
 
       {/* Breadcrumb */}
-      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="mt-4 flex items-center gap-2 text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         <Link href="/proofline/ops/ai" style={{ color: '#2563EB' }}>AI Intelligence Hub</Link>
         <span>/</span>
         <span>Demand Forecasting</span>
@@ -129,10 +129,10 @@ export default function DemandForecastingPage() {
 
       {/* Header */}
       <div className="mt-4 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
           Demand Forecasting &middot; 13-Week Outlook
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Brand-Level Forecast
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -141,7 +141,7 @@ export default function DemandForecastingPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Q Target" value={fmtK(totalTarget)} accent="#2563EB" sub="Total cases" stagger={0} />
         <LightKpiCard label="Current Pace" value={fmtK(totalPace)} accent={totalPace >= totalTarget ? '#22C55E' : '#F59E0B'} sub={pct(totalPace / totalTarget)} stagger={1} />
         <LightKpiCard label="Accuracy (MAPE)" value={`${(avgAccuracy * 100).toFixed(1)}%`} accent="#22C55E" sub="Lower is better" stagger={2} />
@@ -151,14 +151,14 @@ export default function DemandForecastingPage() {
 
       {/* Brand Selector */}
       <div className="flex items-center gap-2 mb-6 flex-wrap">
-        <span className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>Brand:</span>
+        <span className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>Brand:</span>
         {BRAND_FORECASTS.map(b => {
           const color = SUPPLIER_COLORS[b.supplier] ?? 'var(--pl-text-muted)';
           return (
             <button
               key={b.brandId}
               onClick={() => setSelectedBrand(b.brandId)}
-              className="text-[13px] font-mono px-3 py-1 rounded-lg border transition-colors"
+              className="text-[13px] px-3 py-1 rounded-xl border transition-colors"
               style={{
                 borderColor: selectedBrand === b.brandId ? color : 'var(--pl-border)',
                 background: selectedBrand === b.brandId ? `${color}12` : 'var(--pl-card)',
@@ -174,7 +174,7 @@ export default function DemandForecastingPage() {
 
       {/* Forecast Chart */}
       <LightSectionCard title={`${brand.brandName} — 13-Week Forecast`} className="mb-6">
-        <div className="flex items-center gap-4 mb-2 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="flex items-center gap-4 mb-2 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           <span>Solid = actual · Dashed = forecast · Shaded = 80% confidence · Yellow = seasonal overlay</span>
           <button
             onClick={() => setShowOverlays(!showOverlays)}
@@ -190,34 +190,34 @@ export default function DemandForecastingPage() {
         <ForecastChart forecast={brand} />
 
         {/* Brand metrics */}
-        <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t" style={{ borderColor: 'var(--pl-border)' }}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 pt-4 border-t" style={{ borderColor: 'var(--pl-border)' }}>
           <div>
-            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Quarter Target</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(brand.quarterTarget)}</div>
+            <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Quarter Target</div>
+            <div className="text-[16px] font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmtK(brand.quarterTarget)}</div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Current Pace</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: brand.currentPace >= brand.quarterTarget ? '#22C55E' : '#F59E0B' }}>
+            <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Current Pace</div>
+            <div className="text-[16px] font-bold tabular-nums" style={{ color: brand.currentPace >= brand.quarterTarget ? '#22C55E' : '#F59E0B' }}>
               {fmtK(brand.currentPace)}
             </div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Accuracy (MAPE)</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: brand.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
+            <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Accuracy (MAPE)</div>
+            <div className="text-[16px] font-bold tabular-nums" style={{ color: brand.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
               {(brand.forecastAccuracy * 100).toFixed(1)}%
             </div>
           </div>
           <div>
-            <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>Trend</div>
-            <div className="text-[16px] font-bold font-mono" style={{ color: brand.trend === 'up' ? '#22C55E' : brand.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
+            <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>Trend</div>
+            <div className="text-[16px] font-bold tabular-nums" style={{ color: brand.trend === 'up' ? '#22C55E' : brand.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
               {brand.trend === 'up' ? '↑ Up' : brand.trend === 'down' ? '↓ Down' : '→ Flat'}
             </div>
           </div>
         </div>
 
         {/* AI Recommendation */}
-        <div className="mt-4 rounded-lg p-3" style={{ background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.1)' }}>
-          <div className="text-xs font-bold font-mono mb-1" style={{ color: '#2563EB' }}>AI RECOMMENDATION</div>
+        <div className="mt-4 rounded-xl p-3" style={{ background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.1)' }}>
+          <div className="text-xs font-bold tabular-nums mb-1" style={{ color: '#2563EB' }}>AI RECOMMENDATION</div>
           <p className="text-[13px]" style={{ color: 'var(--pl-text)' }}>{brand.aiRecommendation}</p>
         </div>
       </LightSectionCard>
@@ -228,16 +228,16 @@ export default function DemandForecastingPage() {
           {WEATHER_IMPACTS.map(wi => {
             const typeColor = wi.type === 'heat-wave' ? '#F87171' : wi.type === 'cold-snap' ? '#3B82F6' : wi.type === 'storm' ? 'var(--pl-text-muted)' : '#22C55E';
             return (
-              <div key={wi.week} className="rounded-lg border p-3" style={{ borderColor: 'var(--pl-border)' }}>
+              <div key={wi.week} className="rounded-xl border p-3" style={{ borderColor: 'var(--pl-border)' }}>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${typeColor}12`, color: typeColor }}>
+                  <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded" style={{ background: `${typeColor}12`, color: typeColor }}>
                     W{wi.week}
                   </span>
                   <span className="text-[12px] font-bold" style={{ color: 'var(--pl-text)' }}>{wi.type.replace('-', ' ')}</span>
-                  <span className="text-xs font-mono" style={{ color: wi.tempDelta > 0 ? '#F87171' : '#3B82F6' }}>
+                  <span className="text-xs" style={{ color: wi.tempDelta > 0 ? '#F87171' : '#3B82F6' }}>
                     {wi.tempDelta > 0 ? '+' : ''}{wi.tempDelta}°F
                   </span>
-                  <span className="text-xs font-bold font-mono ml-auto" style={{ color: wi.volumeImpact > 0 ? '#22C55E' : '#F87171' }}>
+                  <span className="text-xs font-bold tabular-nums ml-auto" style={{ color: wi.volumeImpact > 0 ? '#22C55E' : '#F87171' }}>
                     {wi.volumeImpact > 0 ? '+' : ''}{(wi.volumeImpact * 100).toFixed(0)}% vol
                   </span>
                 </div>
@@ -254,12 +254,12 @@ export default function DemandForecastingPage() {
           <table className="w-full text-[12px]">
             <thead>
               <tr style={{ color: 'var(--pl-text-muted)' }}>
-                <th className="text-left font-medium pb-3 pl-2">Brand</th>
-                <th className="text-right font-medium pb-3">Q Target</th>
-                <th className="text-right font-medium pb-3">Pace</th>
-                <th className="text-right font-medium pb-3">MAPE</th>
-                <th className="text-left font-medium pb-3">Trend</th>
-                <th className="text-left font-medium pb-3 pr-2">AI Note</th>
+                <th className="text-left font-semibold pb-3 pl-2">Brand</th>
+                <th className="text-right font-semibold pb-3">Q Target</th>
+                <th className="text-right font-semibold pb-3">Pace</th>
+                <th className="text-right font-semibold pb-3">MAPE</th>
+                <th className="text-left font-semibold pb-3">Trend</th>
+                <th className="text-left font-semibold pb-3 pr-2">AI Note</th>
               </tr>
             </thead>
             <tbody>
@@ -278,14 +278,14 @@ export default function DemandForecastingPage() {
                         <span className="font-semibold" style={{ color: 'var(--pl-text)' }}>{b.brandName}</span>
                       </div>
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: 'var(--pl-text)' }}>{fmtK(b.quarterTarget)}</td>
-                    <td className="py-2 text-right font-mono" style={{ color: b.currentPace >= b.quarterTarget ? '#22C55E' : '#F59E0B' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: 'var(--pl-text)' }}>{fmtK(b.quarterTarget)}</td>
+                    <td className="py-2 text-right tabular-nums" style={{ color: b.currentPace >= b.quarterTarget ? '#22C55E' : '#F59E0B' }}>
                       {fmtK(b.currentPace)} ({pct(b.currentPace / b.quarterTarget)})
                     </td>
-                    <td className="py-2 text-right font-mono" style={{ color: b.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
+                    <td className="py-2 text-right tabular-nums" style={{ color: b.forecastAccuracy <= 0.04 ? '#22C55E' : '#F59E0B' }}>
                       {(b.forecastAccuracy * 100).toFixed(1)}%
                     </td>
-                    <td className="py-2 font-mono font-bold" style={{ color: b.trend === 'up' ? '#22C55E' : b.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
+                    <td className="py-2 font-bold tabular-nums" style={{ color: b.trend === 'up' ? '#22C55E' : b.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)' }}>
                       {b.trend === 'up' ? '↑' : b.trend === 'down' ? '↓' : '→'}
                     </td>
                     <td className="py-2 pr-2 text-xs max-w-[200px] truncate" style={{ color: 'var(--pl-text-muted)' }}>
@@ -300,7 +300,7 @@ export default function DemandForecastingPage() {
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         ARIMA + XGBoost ensemble model. 80% confidence bands from 1000 simulation runs. Seasonal decomposition using X-13ARIMA-SEATS.
         Weather data from NOAA API (DFW, Corpus Christi, Laredo stations). Retrained weekly.
       </div>

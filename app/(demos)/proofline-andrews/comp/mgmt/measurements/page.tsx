@@ -77,7 +77,7 @@ function GateStatusBadge({ status }: { status: 'locked' | 'unlocked' | 'at-risk'
     'at-risk': { bg: 'rgba(245,158,11,0.12)', color: '#F59E0B', icon: '\u26A0', glow: '0 0 6px rgba(245,158,11,0.2)' },
   }[status];
   return (
-    <span className="text-xs font-bold font-mono px-1.5 py-0.5 rounded-md inline-flex items-center gap-0.5 transition-all"
+    <span className="text-xs font-bold tabular-nums px-1.5 py-0.5 rounded-md inline-flex items-center gap-0.5 transition-all"
       style={{ background: cfg.bg, color: cfg.color, boxShadow: cfg.glow }}>
       {cfg.icon} {status.toUpperCase()}
     </span>
@@ -118,8 +118,8 @@ function ProgressBar({ value, max = 1.0, color, label, delay = 0 }: { value: num
     <div className="w-full">
       {label && (
         <div className="flex justify-between items-center mb-1">
-          <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>{label}</span>
-          <span className="text-xs font-bold font-mono" style={{ color }}>{(value * 100).toFixed(0)}%</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>{label}</span>
+          <span className="text-xs font-bold tabular-nums" style={{ color }}>{(value * 100).toFixed(0)}%</span>
         </div>
       )}
       <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
@@ -227,19 +227,19 @@ function AttainmentRing({ seller }: { seller: Seller }) {
         </text>
       </ProgressRing>
       <div className="space-y-3">
-        <div className="rounded-lg p-2.5" style={{ background: `${tier.color}10`, border: `1px solid ${tier.color}25` }}>
-          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Tier</div>
-          <div className="text-[15px] font-bold font-mono" style={{ color: tier.color }}>{tier.label}</div>
-          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{pct(tier.floor)} &ndash; {pct(tier.ceiling)} attainment</div>
+        <div className="rounded-xl p-2.5" style={{ background: `${tier.color}10`, border: `1px solid ${tier.color}25` }}>
+          <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Tier</div>
+          <div className="text-[15px] font-bold tabular-nums" style={{ color: tier.color }}>{tier.label}</div>
+          <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{pct(tier.floor)} &ndash; {pct(tier.ceiling)} attainment</div>
         </div>
         <div className="flex gap-3">
-          <div className="rounded-lg p-2.5 flex-1" style={{ background: `${ACT5_ACCENT}08`, border: `1px solid ${ACT5_ACCENT}20` }}>
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Gates</div>
-            <div className="text-[15px] font-bold font-mono" style={{ color: ACT5_ACCENT }}>{gates}/4</div>
+          <div className="rounded-xl p-2.5 flex-1" style={{ background: `${ACT5_ACCENT}08`, border: `1px solid ${ACT5_ACCENT}20` }}>
+            <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Gates</div>
+            <div className="text-[15px] font-bold tabular-nums" style={{ color: ACT5_ACCENT }}>{gates}/4</div>
           </div>
-          <div className="rounded-lg p-2.5 flex-1" style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}>
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Multiplier</div>
-            <div className="text-[15px] font-bold font-mono" style={{ color: '#F59E0B' }}>{mult.toFixed(2)}x</div>
+          <div className="rounded-xl p-2.5 flex-1" style={{ background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.15)' }}>
+            <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--pl-text-faint)' }}>Multiplier</div>
+            <div className="text-[15px] font-bold tabular-nums" style={{ color: '#F59E0B' }}>{mult.toFixed(2)}x</div>
           </div>
         </div>
       </div>
@@ -269,12 +269,12 @@ function GateCard({ gate, filteredSellers, delay }: { gate: typeof BBI_GATES[num
         <div className="w-1 h-8 rounded-full" style={{ background: `linear-gradient(180deg, ${gate.color}, ${gate.color}40)` }} />
         <div>
           <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>{gate.label}</div>
-          <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{gate.multiplier}x multiplier</div>
+          <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>{gate.multiplier}x multiplier</div>
         </div>
       </div>
 
       {/* Big number */}
-      <div className="text-[26px] font-bold font-mono mb-1" style={{ color: gate.color }}>
+      <div className="text-[26px] font-bold tabular-nums mb-1" style={{ color: gate.color }}>
         {unlocked}<span className="text-[14px] font-normal" style={{ color: 'var(--pl-text-faint)' }}>/{filteredSellers.length}</span>
       </div>
 
@@ -288,7 +288,7 @@ function GateCard({ gate, filteredSellers, delay }: { gate: typeof BBI_GATES[num
       </div>
 
       {/* Status breakdown with colored dots */}
-      <div className="flex items-center gap-3 text-xs font-mono">
+      <div className="flex items-center gap-3 text-xs">
         <span className="flex items-center gap-1">
           <StatusDot status="unlocked" size={6} />
           <span style={{ color: '#22C55E' }}>{unlocked}</span>
@@ -321,7 +321,7 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
   return (
     <div className="m-fade-slide">
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <LightKpiCard label="Reps Shown" value={String(filteredSellers.length)} accent={ACT5_ACCENT} sub="Filtered view" stagger={0} />
         <LightKpiCard label="Avg Attainment" value={pct(avgAttainment)} accent={ACT5_ACCENT} sub="This quarter" stagger={1} />
         <LightKpiCard label="All 4 Gates Unlocked" value={String(unlocked4)} accent="#22C55E" sub="Full gate bonus" stagger={2} />
@@ -329,7 +329,7 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
       </div>
 
       {/* Gate Summary Cards (enhanced) */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {BBI_GATES.map((gate, i) => (
           <GateCard key={gate.name} gate={gate} filteredSellers={filteredSellers} delay={i * 80} />
         ))}
@@ -368,10 +368,10 @@ function CategoryAttainmentTab({ hometownFilter }: { hometownFilter: string }) {
                         {seller.name}
                       </div>
                     </td>
-                    <td className="py-2.5 font-mono" style={{ color: 'var(--pl-text-muted)' }}>{seller.routeId}</td>
+                    <td className="py-2.5 tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>{seller.routeId}</td>
                     <td className="py-2.5 pl-2">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold font-mono text-[12px] w-10 text-right" style={{ color }}>{pct(seller.attainment)}</span>
+                        <span className="font-bold tabular-nums text-[12px] w-10 text-right" style={{ color }}>{pct(seller.attainment)}</span>
                         <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                           <div className="h-full rounded-full m-bar-grow" style={{
                             width: `${barPct * 100}%`,
@@ -444,7 +444,7 @@ function VisibilityTab() {
               const pillColor = s.attainment >= 1.0 ? '#22C55E' : s.attainment >= 0.85 ? '#F59E0B' : '#F87171';
               return (
                 <button key={s.id} onClick={() => setSelectedSeller(s)}
-                  className="px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5"
+                  className="px-2.5 py-1.5 rounded-lg text-xs transition-all flex items-center gap-1.5"
                   style={{
                     background: isSelected ? `${ACT5_ACCENT}15` : heatColor(s.attainment, attMin, attMax),
                     color: isSelected ? ACT5_ACCENT : 'var(--pl-text-muted)',
@@ -464,7 +464,7 @@ function VisibilityTab() {
 
             {/* Gate progress bars */}
             <div className="mt-5 space-y-1">
-              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-faint)' }}>Gate Progress</div>
+              <div className="text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-faint)' }}>Gate Progress</div>
               {BBI_GATES.map((gate, i) => {
                 const val = selectedSeller.bbiGates[gate.name];
                 const status = getGateStatus(selectedSeller.bbiGates, gate.name);
@@ -480,7 +480,7 @@ function VisibilityTab() {
             </div>
 
             {/* Gate cards grid */}
-            <div className="mt-4 grid grid-cols-4 gap-3">
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
               {BBI_GATES.map(gate => {
                 const status = getGateStatus(selectedSeller.bbiGates, gate.name);
                 return (
@@ -494,7 +494,7 @@ function VisibilityTab() {
                   >
                     <div className="text-xs font-bold mb-1.5" style={{ color: gate.color }}>{gate.label}</div>
                     <GateStatusBadge status={status} />
-                    <div className="mt-1.5 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>{gate.multiplier}x</div>
+                    <div className="mt-1.5 text-xs" style={{ color: 'var(--pl-text-faint)' }}>{gate.multiplier}x</div>
                   </div>
                 );
               })}
@@ -510,7 +510,7 @@ function VisibilityTab() {
               const htAvg = htSellers.reduce((s, r) => s + r.attainment, 0) / htSellers.length;
               return (
                 <button key={ht.id} onClick={() => setSelectedHometown(ht.id)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg text-xs transition-all flex items-center gap-1.5"
                   style={{
                     background: selectedHometown === ht.id ? `${ACT5_ACCENT}15` : heatColor(htAvg, attMin, attMax),
                     color: selectedHometown === ht.id ? ACT5_ACCENT : 'var(--pl-text-muted)',
@@ -525,7 +525,7 @@ function VisibilityTab() {
             })}
           </div>
 
-          <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
             <LightKpiCard label="Avg Attainment" value={pct(avgAtt)} accent={ACT5_ACCENT} sub={`${hometownSellers.length} reps`} stagger={0} />
             <LightKpiCard label="All Gates Unlocked"
               value={String(hometownSellers.filter(s => countUnlockedGates(s.bbiGates) === 4).length)}
@@ -560,7 +560,7 @@ function VisibilityTab() {
 
                     {/* Attainment bar */}
                     <div className="flex items-center gap-2 flex-1">
-                      <span className="font-mono text-[13px] w-11 text-right font-bold" style={{ color }}>{pct(seller.attainment)}</span>
+                      <span className="text-[13px] tabular-nums w-11 text-right font-bold" style={{ color }}>{pct(seller.attainment)}</span>
                       <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'var(--pl-chart-bar-track)' }}>
                         <div className="h-full rounded-full m-bar-grow" style={{
                           width: `${barPct * 100}%`,
@@ -614,10 +614,10 @@ export default function MeasurementsPage() {
       {/* Header (enhanced with gradient accent bar) */}
       <div className="mt-6 mb-5 relative">
         <div className="absolute -left-2 top-0 w-1 h-full rounded-full" style={{ background: `linear-gradient(180deg, ${ACT5_ACCENT}, ${ACT5_ACCENT}20)` }} />
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: ACT5_ACCENT }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: ACT5_ACCENT }}>
           Sales Comp Management &middot; Measurements
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Measurements
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>

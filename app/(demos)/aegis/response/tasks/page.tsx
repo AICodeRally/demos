@@ -92,14 +92,14 @@ export default function TaskBoard() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Task Board</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Task Board</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Response action tracking and team coordination
         </p>
       </div>
 
       {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Tasks" value="52" color="#8B7355" />
         <StatCard label="Completed" value="34" color="#059669" />
         <StatCard label="Blocked" value="3" color="#DC2626" />

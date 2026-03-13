@@ -129,7 +129,7 @@ function DispatchCard({ job }: { job: DispatchJob }) {
 
 function SourceBadge({ source, synced }: { source: string; synced: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-[9px] font-mono" style={{ color: 'var(--prizym-text-muted)' }}>
+    <div className="flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--prizym-text-muted)' }}>
       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
       <span>{source}</span>
       <span style={{ opacity: 0.5 }}>&bull;</span>
@@ -182,7 +182,7 @@ export default function DispatchPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
           <h2
-            className="text-[11px] uppercase tracking-[1.5px] font-bold font-mono"
+            className="text-[11px] uppercase tracking-[1.5px] font-bold tabular-nums"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Morning (AM)
@@ -200,7 +200,7 @@ export default function DispatchPage() {
       <div>
         <div className="flex items-center gap-3 mb-4">
           <h2
-            className="text-[11px] uppercase tracking-[1.5px] font-bold font-mono"
+            className="text-[11px] uppercase tracking-[1.5px] font-bold tabular-nums"
             style={{ color: 'var(--prizym-text-muted)' }}
           >
             Afternoon (PM)

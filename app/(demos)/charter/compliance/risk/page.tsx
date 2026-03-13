@@ -51,14 +51,14 @@ export default function RiskManagement() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Risk Management</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Risk Management</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Capital allocation, concentration analysis &amp; interest rate stress scenarios
         </p>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Risk Capital" value="$228M" trend="up" trendValue="+3.6%" color="#475569" sparkline={SPARKLINE_RISK_CAPITAL} />
         <StatCard label="Capital Ratio" value="10.86%" trend="up" trendValue="+0.16%" color="#6B8F71" sparkline={SPARKLINE_CAPITAL_RATIO} />
         <StatCard label="Risk Score" value="2.1 (Low)" trend="down" trendValue="-0.7" color="#6B8F71" sparkline={SPARKLINE_RISK_SCORE} />

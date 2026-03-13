@@ -63,14 +63,14 @@ export default function DigitalBanking() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#1C1917' }}>Digital Banking</h1>
+        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>Digital Banking</h1>
         <p className="text-sm mt-1" style={{ color: '#57534E' }}>
           Digital channel adoption, engagement metrics, and feature utilization
         </p>
       </div>
 
       {/* StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Daily Active Users" value="28,400" trend="up" trendValue="+12.3%" color="#475569" />
         <StatCard label="Mobile Sessions" value="72%" trend="up" trendValue="+4% YoY" color="#B87333" />
         <StatCard label="Avg Session" value="4.2 min" trend="up" trendValue="+0.6 min" color="#6B8F71" />

@@ -99,13 +99,13 @@ export default function CeoMandatePage() {
         </div>
         <div>
           <div
-            className="text-xs tracking-[3px] uppercase font-mono mb-1"
+            className="text-xs tracking-[3px] uppercase font-semibold mb-1"
             style={{ color: '#C6A052' }}
           >
             Act 1 &middot; Corporate Strategy
           </div>
           <h1
-            className="text-2xl font-extrabold mb-1"
+            className="text-3xl font-extrabold mb-1"
             style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}
           >
             FY2026 CEO Mandate
@@ -117,13 +117,13 @@ export default function CeoMandatePage() {
       </div>
 
       {/* ── 3 KPI Hero Cards ─────────────────────────── */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {/* Revenue Target */}
         <div
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #C6A052', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-semibold mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Revenue Target
           </div>
           <div
@@ -142,11 +142,11 @@ export default function CeoMandatePage() {
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #F87171', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-semibold mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             Sazerac Target Share
           </div>
           <div className="flex items-baseline justify-center gap-2 mb-1">
-            <span className="text-lg font-mono" style={{ color: 'var(--pl-text-muted)' }}>5%</span>
+            <span className="text-lg tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>5%</span>
             <span className="text-lg" style={{ color: 'var(--pl-text-faint)' }}>&rarr;</span>
             <span className="text-3xl font-extrabold" style={{ color: '#F87171', fontFamily: 'var(--pl-font)' }}>8%</span>
           </div>
@@ -160,7 +160,7 @@ export default function CeoMandatePage() {
           className="rounded-xl border p-5 text-center"
           style={{ background: 'var(--pl-card)', borderColor: 'var(--pl-border)', borderTop: '3px solid #2563EB', boxShadow: 'var(--pl-shadow)' }}
         >
-          <div className="text-xs uppercase tracking-[1.5px] font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>
+          <div className="text-xs uppercase tracking-[1.5px] font-semibold mb-2" style={{ color: 'var(--pl-text-muted)' }}>
             South TX Cases
           </div>
           <div
@@ -195,7 +195,7 @@ export default function CeoMandatePage() {
                   <div className="text-[13px] font-semibold" style={{ color: 'var(--pl-text)' }}>
                     {d.name}
                   </div>
-                  <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                  <div className="text-[13px]" style={{ color: 'var(--pl-text-muted)' }}>
                     {pct(d.value)} share
                   </div>
                 </div>
@@ -210,10 +210,10 @@ export default function CeoMandatePage() {
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ color: 'var(--pl-text-muted)' }}>
-              <th className="text-left font-medium pb-3 pl-2">Metric</th>
-              <th className="text-right font-medium pb-3">FY2025</th>
-              <th className="text-right font-medium pb-3">FY2026 Target</th>
-              <th className="text-right font-medium pb-3 pr-2">Change</th>
+              <th className="text-left font-semibold pb-3 pl-2">Metric</th>
+              <th className="text-right font-semibold pb-3">FY2025</th>
+              <th className="text-right font-semibold pb-3">FY2026 Target</th>
+              <th className="text-right font-semibold pb-3 pr-2">Change</th>
             </tr>
           </thead>
           <tbody>
@@ -225,17 +225,17 @@ export default function CeoMandatePage() {
                 <td className="py-2.5 pl-2 font-semibold" style={{ color: 'var(--pl-text)' }}>
                   {row.metric}
                 </td>
-                <td className="py-2.5 text-right font-mono" style={{ color: 'var(--pl-text-muted)' }}>
+                <td className="py-2.5 text-right tabular-nums" style={{ color: 'var(--pl-text-muted)' }}>
                   {row.fy25}
                 </td>
                 <td
-                  className="py-2.5 text-right font-mono font-bold"
+                  className="py-2.5 text-right font-bold tabular-nums"
                   style={{ color: 'var(--pl-text)' }}
                 >
                   {row.fy26}
                 </td>
                 <td
-                  className="py-2.5 text-right pr-2 font-mono font-bold"
+                  className="py-2.5 text-right pr-2 font-bold tabular-nums"
                   style={{ color: row.positive ? '#10B981' : '#F87171' }}
                 >
                   {row.delta}
@@ -249,7 +249,7 @@ export default function CeoMandatePage() {
       {/* ── Strategic Priorities ──────────────────────── */}
       <div className="mb-4">
         <div
-          className="text-[13px] uppercase tracking-[1.5px] font-mono mb-4"
+          className="text-[13px] uppercase tracking-[1.5px] font-semibold mb-4"
           style={{ color: 'var(--pl-text-muted)' }}
         >
           Strategic Priorities
@@ -272,7 +272,7 @@ export default function CeoMandatePage() {
                       {p.title}
                     </span>
                     <span
-                      className="text-[12px] font-bold font-mono px-2 py-0.5 rounded-full"
+                      className="text-[12px] font-bold tabular-nums px-2 py-0.5 rounded-full"
                       style={{ background: 'rgba(198,160,82,0.10)', color: '#C6A052' }}
                     >
                       {p.stat}

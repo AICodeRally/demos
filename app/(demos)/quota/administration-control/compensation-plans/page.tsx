@@ -92,7 +92,7 @@ function KPI({ label, value, icon: Icon, trend, trendUp }: {
   return (
     <div className="rounded-xl p-5 flex flex-col gap-2" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)', boxShadow: 'var(--prizym-shadow-card)' }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--prizym-text-muted)' }}>{label}</span>
         <Icon className="h-4 w-4 text-amber-400" />
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{value}</p>
@@ -151,7 +151,7 @@ export default function CompensationPlansPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Compensation Plans</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--prizym-text-primary)' }}>Compensation Plans</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--prizym-text-muted)' }}>
             Design, manage, and version commission structures and incentive plans.
           </p>
@@ -182,20 +182,20 @@ export default function CompensationPlansPage() {
                 </div>
                 <p className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{plan.effectiveFrom} — {plan.effectiveTo}</p>
               </div>
-              <span className="text-xs font-mono" style={{ color: 'var(--prizym-text-muted)' }}>{plan.version}</span>
+              <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{plan.version}</span>
             </div>
 
             {/* Metrics Row */}
             <div className="grid grid-cols-3 gap-3 mb-4">
-              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+              <div className="rounded-xl p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                 <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Enrolled</p>
                 <p className="text-sm font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{plan.enrolled}</p>
               </div>
-              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+              <div className="rounded-xl p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                 <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Budget</p>
                 <p className="text-sm font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{fmtDollar(plan.budget)}</p>
               </div>
-              <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
+              <div className="rounded-xl p-2.5 text-center" style={{ background: 'var(--prizym-card-bg)', border: '1px solid var(--prizym-border-default)' }}>
                 <p className="text-xs mb-0.5" style={{ color: 'var(--prizym-text-muted)' }}>Max Rate</p>
                 <p className="text-sm font-bold text-amber-400">{plan.tiers[plan.tiers.length - 1].rate}</p>
               </div>
@@ -261,7 +261,7 @@ export default function CompensationPlansPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold" style={{ color: 'var(--prizym-text-primary)' }}>{v.version}</span>
+                    <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--prizym-text-primary)' }}>{v.version}</span>
                     <span className="text-xs" style={{ color: 'var(--prizym-text-muted)' }}>{v.date}</span>
                   </div>
                   <p className="text-sm mt-0.5" style={{ color: 'var(--prizym-text-secondary)' }}>{v.change}</p>

@@ -66,7 +66,7 @@ export default function PricingPage() {
       <ActNavigation currentAct={3} />
 
       {/* Breadcrumb */}
-      <div className="mt-4 flex items-center gap-2 text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="mt-4 flex items-center gap-2 text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         <Link href="/proofline/ops/ai" style={{ color: '#2563EB' }}>AI Intelligence Hub</Link>
         <span>/</span>
         <span>Price Optimization</span>
@@ -74,10 +74,10 @@ export default function PricingPage() {
 
       {/* Header */}
       <div className="mt-4 mb-6">
-        <div className="text-xs tracking-[3px] uppercase font-mono mb-1" style={{ color: '#2563EB' }}>
+        <div className="text-xs tracking-[3px] uppercase font-semibold mb-1" style={{ color: '#2563EB' }}>
           Revenue Maximization &middot; AI-Driven Pricing
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
+        <h1 className="text-3xl font-extrabold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>
           Price Optimization Engine
         </h1>
         <p className="text-[13px] mt-1" style={{ color: 'var(--pl-text-muted)' }}>
@@ -86,7 +86,7 @@ export default function PricingPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
         <LightKpiCard label="Blended Margin" value={pct(avgMargin)} accent="#22C55E" sub="Current portfolio" stagger={0} />
         <LightKpiCard label="Optimization Uplift" value={`+${(optUplift * 100).toFixed(1)}pp`} accent="#2563EB" sub="If all implemented" stagger={1} />
         <LightKpiCard label="Low-Risk Opps" value={String(lowRiskOpps)} accent="#22C55E" sub="Safe to implement" stagger={2} />
@@ -97,7 +97,7 @@ export default function PricingPage() {
       {/* Price Elasticity Table */}
       <LightSectionCard title="BRAND PRICE ELASTICITY & OPTIMIZATION" className="mb-6">
         <div className="overflow-x-auto">
-          <table className="w-full text-xs font-mono">
+          <table className="w-full text-xs">
             <thead>
               <tr style={{ borderBottom: '1px solid var(--pl-border)' }}>
                 {['Brand', 'Current $/cs', 'Optimal $/cs', 'Elasticity', 'Curve', 'Current Margin', 'Optimal Margin', 'Lift', 'Risk'].map(h => (
@@ -137,14 +137,14 @@ export default function PricingPage() {
             </tbody>
           </table>
         </div>
-        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="mt-3 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           Elasticity = % volume change per 1% price increase. Values closer to 0 = less price sensitive (safe to raise). White Claw at -3.2 = highly elastic, recommend price decrease to defend share.
         </div>
       </LightSectionCard>
 
       {/* Channel Pricing */}
       <LightSectionCard title="CHANNEL PRICING ANALYSIS" className="mb-6">
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {CHANNEL_PRICING.map((ch) => {
             const isSelected = selectedChannel === ch.channel;
             const trendColor = ch.trend === 'up' ? '#22C55E' : ch.trend === 'down' ? '#F87171' : 'var(--pl-text-muted)';
@@ -159,17 +159,17 @@ export default function PricingPage() {
                   border: `1px solid ${isSelected ? 'rgba(37,99,235,0.3)' : 'var(--pl-border)'}`,
                 }}
               >
-                <div className="text-xs font-mono mb-2" style={{ color: 'var(--pl-text-muted)' }}>{ch.channel}</div>
-                <div className="text-lg font-bold font-mono" style={{ color: 'var(--pl-text)' }}>${ch.avgPrice.toFixed(2)}</div>
-                <div className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>avg $/case</div>
+                <div className="text-xs mb-2" style={{ color: 'var(--pl-text-muted)' }}>{ch.channel}</div>
+                <div className="text-lg font-bold tabular-nums" style={{ color: 'var(--pl-text)' }}>${ch.avgPrice.toFixed(2)}</div>
+                <div className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>avg $/case</div>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs font-bold font-mono" style={{ color: '#C6A052' }}>{pct(ch.margin)}</span>
-                  <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>margin</span>
+                  <span className="text-xs font-bold tabular-nums" style={{ color: '#C6A052' }}>{pct(ch.margin)}</span>
+                  <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>margin</span>
                 </div>
                 <div className="flex items-center gap-1 mt-1">
                   <span className="text-xs font-bold" style={{ color: trendColor }}>{trendIcon}</span>
-                  <span className="text-xs font-mono" style={{ color: trendColor }}>{ch.trend}</span>
-                  <span className="text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>&middot; {ch.volume}% vol</span>
+                  <span className="text-xs" style={{ color: trendColor }}>{ch.trend}</span>
+                  <span className="text-xs" style={{ color: 'var(--pl-text-faint)' }}>&middot; {ch.volume}% vol</span>
                 </div>
               </button>
             );
@@ -186,9 +186,9 @@ export default function PricingPage() {
               <div key={promo.promo} className="flex items-center justify-between p-3 rounded-lg" style={{ background: 'var(--pl-card-alt)', border: '1px solid var(--pl-border)' }}>
                 <div className="flex-1">
                   <div className="text-[13px] font-bold" style={{ color: 'var(--pl-text)', fontFamily: 'var(--pl-font)' }}>{promo.promo}</div>
-                  <div className="text-xs font-mono" style={{ color: 'var(--pl-text-muted)' }}>{promo.weeks}</div>
+                  <div className="text-xs" style={{ color: 'var(--pl-text-muted)' }}>{promo.weeks}</div>
                 </div>
-                <div className="flex items-center gap-6 text-xs font-mono">
+                <div className="flex items-center gap-6 text-xs">
                   <div className="text-center">
                     <div className="font-bold" style={{ color: '#22C55E' }}>+{(promo.volumeLift * 100).toFixed(0)}%</div>
                     <div style={{ color: 'var(--pl-text-faint)' }}>Volume</div>
@@ -210,13 +210,13 @@ export default function PricingPage() {
             );
           })}
         </div>
-        <div className="mt-3 text-xs font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+        <div className="mt-3 text-xs" style={{ color: 'var(--pl-text-faint)' }}>
           ROI calculated as incremental revenue / promotion cost. Tap takeovers and display allowances consistently outperform price-cut promotions due to lower margin erosion.
         </div>
       </LightSectionCard>
 
       {/* Methodology */}
-      <div className="text-[13px] font-mono" style={{ color: 'var(--pl-text-faint)' }}>
+      <div className="text-[13px]" style={{ color: 'var(--pl-text-faint)' }}>
         Elasticity models trained on 52-week POS scan data (IRI/Nielsen) + internal shipment history. Channel pricing from eoStar invoice data.
         Promotion ROI from A/B control periods with matched store panels. Updated weekly.
       </div>
