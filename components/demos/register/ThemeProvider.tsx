@@ -65,11 +65,32 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('register-theme') as Theme | null;
-    if (saved === 'light' || saved === 'dark') setTheme(saved);
+    // Sync with DemoShell's theme (routeiq-theme key) or fall back to own key
+    const shellTheme = localStorage.getItem('routeiq-theme') as Theme | null;
+    const ownTheme = localStorage.getItem('register-theme') as Theme | null;
+    const resolved = shellTheme ?? ownTheme;
+    if (resolved === 'light' || resolved === 'dark') setTheme(resolved);
     const savedSize = localStorage.getItem('register-font-size');
     if (savedSize) setFontSize(Number(savedSize));
     setMounted(true);
+
+    // Listen for DemoShell theme changes (same-tab custom event)
+    const handleShellToggle = () => {
+      const t = localStorage.getItem('routeiq-theme') as Theme | null;
+      if (t === 'light' || t === 'dark') setTheme(t);
+    };
+    window.addEventListener('demoshell-theme-change', handleShellToggle);
+    // Cross-tab sync
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'routeiq-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+        setTheme(e.newValue);
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('demoshell-theme-change', handleShellToggle);
+      window.removeEventListener('storage', handleStorage);
+    };
   }, []);
 
   useEffect(() => {
