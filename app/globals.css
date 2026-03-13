@@ -1,1 +1,42 @@
 @import "tailwindcss";
+
+:root {
+  --register-radius-card: 14px;
+  --register-radius-section: 16px;
+  --register-shadow-card: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --register-shadow-card-hover: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+.register-page {
+  color: var(--register-text);
+}
+
+.register-heading {
+  font-size: clamp(1.5rem, 1.18rem + 1vw, 2.05rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.register-subtitle {
+  font-size: 0.875rem;
+  color: var(--register-text-muted);
+  margin: 0.35rem 0 0;
+}
+
+.register-card {
+  background: var(--register-bg-elevated);
+  border: 1px solid var(--register-border);
+  border-radius: var(--register-radius-card);
+  box-shadow: var(--register-shadow-card);
+}
+
+.register-card-hover {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.register-card-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--register-shadow-card-hover);
+}

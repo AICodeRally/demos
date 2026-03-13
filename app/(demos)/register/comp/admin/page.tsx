@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
 import {
@@ -8,10 +8,23 @@ import {
   type CompPlan, type CompTier, type PlanStatus,
 } from '@/data/register/comp-data';
 import {
-  ChevronDown, ChevronRight, Send, Clock, CheckCircle, Settings, Users, Zap, FileText,
+  ChevronDown, ChevronRight, Send, Clock, CheckCircle, Settings, Users, Zap, FileText, TrendingUp, TrendingDown,
 } from 'lucide-react';
+import { calculate } from '@/lib/swic-engine/calculator';
+import { SUMMIT_SLEEP_CONFIG, CATALOG_ITEMS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
+import type { ClientConfig, SaleItem } from '@/lib/swic-engine/types';
 
 const ACCENT = '#10B981';
+
+/* ── Sample sale for SWIC simulation ─────────────────────── */
+
+const SAMPLE_SALE: SaleItem[] = [
+  { ...CATALOG_ITEMS[0], quantity: 1 },   // CloudRest King $2,999
+  { ...CATALOG_ITEMS[8], quantity: 1 },   // ErgoMotion Pro $1,999
+  { ...CATALOG_ITEMS[16], quantity: 1 },  // 5-Year Protection $149
+];
+
+const SAMPLE_PERIOD = SAMPLE_PERIODS['rep-sarah'];
 
 /* ── Status config ───────────────────────────────────────── */
 
@@ -152,12 +165,74 @@ export default function CompAdminPage() {
 
   const plan = ADMIN_PLANS.find(p => p.id === expandedPlan)!;
 
-  // Proposed tiers — simulated tier 2 threshold change
-  const proposedTiers = plan.tiers.map((t, i) => {
-    if (i === 1) return { ...t, minRevenue: 20000, maxRevenue: 44999 }; // lowered from 25K/50K
-    if (i === 2) return { ...t, minRevenue: 45000 };
-    return t;
-  });
+  /* ── Editable tier state ──────────────────────────────── */
+  const [editedTiers, setEditedTiers] = useState<Record<string, CompTier[]>>({});
+
+  // Get current tiers for the expanded plan (edited or original)
+  const currentTiers = plan ? (editedTiers[plan.id] ?? plan.tiers) : [];
+  const originalTiers = plan?.tiers ?? [];
+  const hasEdits = plan ? !!editedTiers[plan.id] : false;
+
+  const updateTier = useCallback((planId: string, tierIndex: number, field: 'minRevenue' | 'maxRevenue' | 'rate', value: number) => {
+    setEditedTiers(prev => {
+      const base = prev[planId] ?? ADMIN_PLANS.find(p => p.id === planId)!.tiers;
+      const updated = base.map((t, i) => i === tierIndex ? { ...t, [field]: value } : t);
+      return { ...prev, [planId]: updated };
+    });
+  }, []);
+
+  const resetTiers = useCallback((planId: string) => {
+    setEditedTiers(prev => {
+      const next = { ...prev };
+      delete next[planId];
+      return next;
+    });
+  }, []);
+
+  /* ── SWIC Calculation (live impact) ───────────────────── */
+  const swicResult = useMemo(() => {
+    if (!plan) return null;
+
+    // Original calculation
+    const originalResult = calculate(SUMMIT_SLEEP_CONFIG, SAMPLE_SALE, SAMPLE_PERIOD);
+
+    // Build modified config by cloning and replacing base-comm tiers
+    const tiers = editedTiers[plan.id];
+    if (!tiers) return { original: originalResult.totalCommission, modified: originalResult.totalCommission, delta: 0 };
+
+    const modifiedConfig: ClientConfig = {
+      ...SUMMIT_SLEEP_CONFIG,
+      components: SUMMIT_SLEEP_CONFIG.components.map(comp => {
+        if (comp.id === 'base-comm' && comp.rule.type === 'tiered') {
+          return {
+            ...comp,
+            rule: {
+              ...comp.rule,
+              tiers: tiers.map(t => ({ min: t.minRevenue, rate: t.rate })),
+            },
+          };
+        }
+        return comp;
+      }),
+    };
+
+    const modifiedResult = calculate(modifiedConfig, SAMPLE_SALE, SAMPLE_PERIOD);
+
+    return {
+      original: originalResult.totalCommission,
+      modified: modifiedResult.totalCommission,
+      delta: modifiedResult.totalCommission - originalResult.totalCommission,
+    };
+  }, [plan, editedTiers]);
+
+  // Proposed tiers for the staircase viz — use edited if available, else simulated
+  const proposedTiers = hasEdits
+    ? currentTiers
+    : plan.tiers.map((t, i) => {
+        if (i === 1) return { ...t, minRevenue: 20000, maxRevenue: 44999 };
+        if (i === 2) return { ...t, minRevenue: 45000 };
+        return t;
+      });
 
   return (
     <RegisterPage title="Rule Modeling Lab" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
@@ -255,64 +330,116 @@ export default function CompAdminPage() {
                         animation: 'fadeIn 0.3s ease',
                       }}
                     >
-                      {/* Tier rows */}
-                      <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', marginBottom: 10 }}>
-                        Commission Tiers
-                      </p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        {p.tiers.map((tier, i) => (
-                          <div
-                            key={i}
+                      {/* Tier rows — editable */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                        <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--register-text-muted)', margin: 0 }}>
+                          Commission Tiers
+                        </p>
+                        {editedTiers[p.id] && (
+                          <button
+                            onClick={() => resetTiers(p.id)}
                             style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 12,
-                              padding: '10px 14px',
-                              borderRadius: 10,
-                              background: `${tier.color}10`,
-                              border: `1px solid ${tier.color}25`,
+                              fontSize: '0.6rem', fontWeight: 600, color: '#F59E0B',
+                              background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
+                              borderRadius: 6, padding: '2px 8px', cursor: 'pointer',
                             }}
                           >
-                            <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: tier.color, flexShrink: 0 }} />
-                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', width: 70 }}>{tier.name}</span>
-                            {/* Threshold fields — styled as editable */}
+                            Reset
+                          </button>
+                        )}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        {(editedTiers[p.id] ?? p.tiers).map((tier, i) => {
+                          const orig = p.tiers[i];
+                          const minChanged = tier.minRevenue !== orig.minRevenue;
+                          const maxChanged = tier.maxRevenue !== orig.maxRevenue;
+                          const rateChanged = tier.rate !== orig.rate;
+                          return (
                             <div
+                              key={i}
                               style={{
-                                flex: 1,
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 6,
-                                padding: '4px 10px',
-                                borderRadius: 6,
-                                background: 'var(--register-bg-surface)',
-                                border: '1px solid var(--register-border)',
-                                cursor: 'text',
+                                gap: 12,
+                                padding: '10px 14px',
+                                borderRadius: 10,
+                                background: `${tier.color}10`,
+                                border: `1px solid ${(minChanged || maxChanged || rateChanged) ? '#F59E0B' : tier.color}25`,
                               }}
                             >
-                              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>
-                                ${tier.minRevenue.toLocaleString()}
-                              </span>
-                              <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
-                              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>
-                                {tier.maxRevenue === Infinity ? '\u221E' : `$${tier.maxRevenue.toLocaleString()}`}
-                              </span>
+                              <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: tier.color, flexShrink: 0 }} />
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', width: 70 }}>{tier.name}</span>
+                              {/* Threshold fields — editable inputs */}
+                              <div
+                                style={{
+                                  flex: 1,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 6,
+                                  padding: '4px 10px',
+                                  borderRadius: 6,
+                                  background: 'var(--register-bg-surface)',
+                                  border: `1px solid ${minChanged || maxChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
+                                }}
+                              >
+                                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>$</span>
+                                <input
+                                  type="number"
+                                  value={tier.minRevenue}
+                                  onChange={(e) => updateTier(p.id, i, 'minRevenue', Math.max(0, Number(e.target.value)))}
+                                  style={{
+                                    width: 60, background: 'transparent', border: 'none', outline: 'none',
+                                    fontSize: '0.7rem', fontFamily: 'monospace',
+                                    color: minChanged ? '#F59E0B' : 'var(--register-text-dim)',
+                                    fontWeight: minChanged ? 700 : 400,
+                                  }}
+                                />
+                                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
+                                {tier.maxRevenue === Infinity ? (
+                                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontFamily: 'monospace' }}>{'\u221E'}</span>
+                                ) : (
+                                  <>
+                                    <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>$</span>
+                                    <input
+                                      type="number"
+                                      value={tier.maxRevenue}
+                                      onChange={(e) => updateTier(p.id, i, 'maxRevenue', Math.max(0, Number(e.target.value)))}
+                                      style={{
+                                        width: 60, background: 'transparent', border: 'none', outline: 'none',
+                                        fontSize: '0.7rem', fontFamily: 'monospace',
+                                        color: maxChanged ? '#F59E0B' : 'var(--register-text-dim)',
+                                        fontWeight: maxChanged ? 700 : 400,
+                                      }}
+                                    />
+                                  </>
+                                )}
+                              </div>
+                              {/* Rate field — editable */}
+                              <div
+                                style={{
+                                  padding: '4px 8px',
+                                  borderRadius: 6,
+                                  background: 'var(--register-bg-surface)',
+                                  border: `1px solid ${rateChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
+                                  display: 'flex', alignItems: 'center', gap: 2,
+                                }}
+                              >
+                                <input
+                                  type="number"
+                                  step="0.1"
+                                  value={parseFloat((tier.rate * 100).toFixed(2))}
+                                  onChange={(e) => updateTier(p.id, i, 'rate', Math.max(0, Math.min(100, Number(e.target.value))) / 100)}
+                                  style={{
+                                    width: 42, background: 'transparent', border: 'none', outline: 'none',
+                                    fontSize: '0.8rem', fontWeight: 700, fontFamily: 'monospace', textAlign: 'right',
+                                    color: rateChanged ? '#F59E0B' : tier.color,
+                                  }}
+                                />
+                                <span style={{ fontSize: '0.7rem', fontWeight: 700, color: rateChanged ? '#F59E0B' : tier.color }}>%</span>
+                              </div>
                             </div>
-                            {/* Rate field */}
-                            <div
-                              style={{
-                                padding: '4px 12px',
-                                borderRadius: 6,
-                                background: 'var(--register-bg-surface)',
-                                border: '1px solid var(--register-border)',
-                                cursor: 'text',
-                              }}
-                            >
-                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: tier.color, fontFamily: 'monospace' }}>
-                                {(tier.rate * 100).toFixed(1)}%
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
 
                       {/* SPIFF Toggles */}
@@ -415,6 +542,85 @@ export default function CompAdminPage() {
           <AIInsightCard label="AI Impact Analysis" compact>
             Proposed tier change affects 47 reps across 12 stores. Net impact: +$12K monthly payout, projected +$89K incremental revenue from improved motivation at lower threshold.
           </AIInsightCard>
+
+          {/* ── SWIC Live Calculation Panel ──────────────── */}
+          {swicResult && hasEdits && (
+            <div
+              style={{
+                borderRadius: 14,
+                background: 'linear-gradient(135deg, var(--register-bg-elevated), rgba(139,92,246,0.04))',
+                border: `1px solid ${swicResult.delta >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                padding: '20px',
+                animation: 'fadeIn 0.3s ease',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                {swicResult.delta >= 0 ? (
+                  <TrendingUp size={15} color="#10B981" />
+                ) : (
+                  <TrendingDown size={15} color="#EF4444" />
+                )}
+                <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>SWIC Live Calc</h3>
+                <span style={{ fontSize: '0.55rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>sample sale</span>
+              </div>
+
+              {/* Sample sale description */}
+              <div
+                style={{
+                  padding: '8px 12px', borderRadius: 8, marginBottom: 14,
+                  background: 'rgba(6,182,212,0.06)',
+                  border: '1px solid rgba(6,182,212,0.12)',
+                }}
+              >
+                <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: 0, lineHeight: 1.4 }}>
+                  CloudRest King ($2,999) + ErgoMotion Pro ($1,999) + 5-Year Protection ($149) = <strong style={{ color: 'var(--register-text)' }}>$5,147</strong>
+                </p>
+              </div>
+
+              {/* Original vs Modified */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Original Commission</span>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)' }}>
+                    ${swicResult.original.toFixed(2)}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Modified Commission</span>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'monospace', color: swicResult.delta >= 0 ? '#10B981' : '#EF4444' }}>
+                    ${swicResult.modified.toFixed(2)}
+                  </span>
+                </div>
+                <div style={{ height: 1, background: 'var(--register-border)' }} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text)' }}>Delta</span>
+                  <span
+                    style={{
+                      fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace',
+                      color: swicResult.delta >= 0 ? '#10B981' : '#EF4444',
+                    }}
+                  >
+                    {swicResult.delta >= 0 ? '+' : ''}{swicResult.delta.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Explanation */}
+              <p
+                style={{
+                  fontSize: '0.65rem', color: 'var(--register-text-dim)',
+                  margin: 0, lineHeight: 1.5, fontStyle: 'italic',
+                  padding: '8px 10px', borderRadius: 8,
+                  background: swicResult.delta >= 0 ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.06)',
+                  border: `1px solid ${swicResult.delta >= 0 ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)'}`,
+                }}
+              >
+                {swicResult.delta === 0
+                  ? 'No change in commission for this sample sale.'
+                  : `This changes the rep's earnings by $${Math.abs(swicResult.delta).toFixed(2)} ${swicResult.delta > 0 ? 'more' : 'less'} on this sample sale.`}
+              </p>
+            </div>
+          )}
 
           {/* ── Live Impact Simulator ─────────────────── */}
           <div
