@@ -56,6 +56,7 @@ export default defineDemo({
         { label: 'Hurdle & Catch-Up', href: '/meridian/waterfall/hurdle', icon: 'ArrowUpRight' },
         { label: 'Capital Accounts', href: '/meridian/waterfall/capital', icon: 'Wallet' },
         { label: 'Clawback Analysis', href: '/meridian/waterfall/clawback', icon: 'RotateCcw' },
+        { label: 'Structure Comparison', href: '/meridian/waterfall/structures', icon: 'GitCompare' },
       ],
     },
     {
@@ -66,6 +67,8 @@ export default defineDemo({
         { label: 'Vesting & Retention', href: '/meridian/carry/vesting', icon: 'Clock' },
         { label: 'Co-Invest Program', href: '/meridian/carry/coinvest', icon: 'Handshake' },
         { label: 'Individual Statements', href: '/meridian/carry/statements', icon: 'Receipt' },
+        { label: 'Tax & Accounting', href: '/meridian/carry/tax', icon: 'Calculator' },
+        { label: 'LPA Governance', href: '/meridian/carry/governance', icon: 'Scale' },
       ],
     },
     {

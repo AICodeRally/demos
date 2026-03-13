@@ -46,3 +46,23 @@ export {
   COINVEST_PROGRAM,
   type TeamMember,
 } from './carry';
+
+export {
+  SECTION_1061_ITEMS,
+  SECTION_1061_SUMMARY,
+  ACCOUNTING_ITEMS,
+  WATERFALL_STRUCTURES,
+  WATERFALL_COMPARISON,
+  DEAL_BY_DEAL_SCENARIO,
+  GOVERNANCE_CLAUSES,
+  CARRY_KPIS,
+  ADVISORY_LANDSCAPE,
+  type Section1061Item,
+  type AccountingItem,
+  type WaterfallStructure,
+  type WaterfallComparison,
+  type DealByDealScenario,
+  type GovernanceClause,
+  type CarryKPI,
+  type AdvisoryFirm,
+} from './tax-governance';
