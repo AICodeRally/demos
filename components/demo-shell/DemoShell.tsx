@@ -66,6 +66,8 @@ export function DemoShell({ config, children }: DemoShellProps) {
     setIsDark((prev) => {
       const next = !prev;
       localStorage.setItem('routeiq-theme', next ? 'dark' : 'light');
+      // Notify same-tab listeners (e.g. RegisterThemeProvider)
+      window.dispatchEvent(new Event('demoshell-theme-change'));
       return next;
     });
   };
