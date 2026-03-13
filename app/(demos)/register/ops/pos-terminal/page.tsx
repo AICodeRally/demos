@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Wifi, ShoppingCart, PauseCircle, Send } from 'lucide-react';
+import { Wifi, ShoppingCart, PauseCircle, Send, Sparkles, MessageSquare, User } from 'lucide-react';
 import { TabletFrame } from '@/components/demos/proofline-route/TabletFrame';
 import { useRegisterTheme } from '@/components/demos/register/ThemeProvider';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
@@ -19,7 +19,7 @@ import { getInsight } from '@/data/register/ai-insights';
 import type { SaleItem } from '@/lib/swic-engine/types';
 import type { D365TransactionEvent } from '@/data/register/d365-schemas';
 
-type PosTab = 'lines' | 'rewards' | 'd365';
+type PosTab = 'lines' | 'rewards' | 'coaching' | 'd365';
 
 const REP = POS_REPS[0]; // Sarah Johnson
 const PERIOD = SAMPLE_PERIODS['rep-sarah'];
@@ -58,6 +58,12 @@ export default function POSTerminal() {
   const [d365Events, setD365Events] = useState<D365TransactionEvent[]>([]);
   const [showCloseSale, setShowCloseSale] = useState(false);
   const [toasts, setToasts] = useState<{ id: string; message: string }[]>([]);
+  const [coachingFeed, setCoachingFeed] = useState<{ id: string; source: 'ai' | 'manager'; title: string; message: string; time: string }[]>([
+    { id: 'ai-1', source: 'ai', title: 'Bundle Opportunity', message: 'Customers who buy King mattresses have 31% adjustable base attach rate. Lead with the sleep system pitch.', time: '9:15 AM' },
+    { id: 'ai-2', source: 'ai', title: 'Tier Progress', message: 'You\'re $3,000 from Silver tier. Two more premium sales this week unlocks 5% commission rate.', time: '9:02 AM' },
+    { id: 'ai-3', source: 'ai', title: 'Traffic Alert', message: 'Mall foot traffic spike predicted 2-4pm today. Prepare floor coverage for peak walk-ins.', time: '8:45 AM' },
+  ]);
+  const [coachingUnread, setCoachingUnread] = useState(0);
 
   const insight = getInsight('ops/floor');
 
@@ -67,14 +73,34 @@ export default function POSTerminal() {
   const tax = +(subtotal * STORE_CONTEXT.taxRate).toFixed(2);
   const total = subtotal + tax;
 
-  // Broadcast listener
+  // Broadcast listener — persist coaching messages to feed + show toast
   useEffect(() => {
     const unsub = onRegisterBroadcast((msg: BroadcastMessage) => {
       let text = '';
       if (msg.type === 'coaching') {
         text = `Coaching: ${msg.data.repName} — ${msg.data.action}`;
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        setCoachingFeed((prev) => [{
+          id: `mgr-${Date.now()}`,
+          source: 'manager' as const,
+          title: `From Manager: ${msg.data.repName}`,
+          message: msg.data.message || msg.data.action || 'Manager coaching update received.',
+          time: timeStr,
+        }, ...prev]);
+        if (activeTab !== 'coaching') setCoachingUnread((n) => n + 1);
       } else if (msg.type === 'comp-update') {
         text = `Comp Update: ${msg.data.summary}`;
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        setCoachingFeed((prev) => [{
+          id: `comp-${Date.now()}`,
+          source: 'manager' as const,
+          title: 'Comp Plan Update',
+          message: msg.data.summary || 'Compensation rules have been updated.',
+          time: timeStr,
+        }, ...prev]);
+        if (activeTab !== 'coaching') setCoachingUnread((n) => n + 1);
       } else if (msg.type === 'alert') {
         text = `Alert: ${msg.data.message}`;
       } else if (msg.type === 'pos-sync') {
@@ -85,7 +111,7 @@ export default function POSTerminal() {
       }
     });
     return unsub;
-  }, []);
+  }, [activeTab]);
 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -127,9 +153,10 @@ export default function POSTerminal() {
     ? result.components.filter((c) => c.amount > 0).map((c) => `${c.label}: $${c.amount.toFixed(2)}`).join(' + ')
     : 'Add items to see';
 
-  const TABS: { id: PosTab; label: string }[] = [
+  const TABS: { id: PosTab; label: string; badge?: number }[] = [
     { id: 'lines', label: 'Lines' },
     { id: 'rewards', label: 'Rewards' },
+    { id: 'coaching', label: 'Coaching', badge: coachingUnread },
     { id: 'd365', label: `D365 Log (${d365Events.length})` },
   ];
 
@@ -196,7 +223,10 @@ export default function POSTerminal() {
                 {TABS.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      if (tab.id === 'coaching') setCoachingUnread(0);
+                    }}
                     style={{
                       padding: '8px 16px', fontSize: '0.75rem', fontWeight: 600,
                       background: activeTab === tab.id ? 'var(--register-bg-elevated)' : 'transparent',
@@ -204,9 +234,22 @@ export default function POSTerminal() {
                       borderBottom: activeTab === tab.id ? '2px solid var(--register-accent)' : '2px solid transparent',
                       border: 'none', borderBottomStyle: 'solid',
                       cursor: 'pointer',
+                      position: 'relative',
                     }}
                   >
                     {tab.label}
+                    {tab.badge && tab.badge > 0 ? (
+                      <span style={{
+                        position: 'absolute', top: 2, right: 2,
+                        minWidth: 16, height: 16, borderRadius: 8,
+                        background: '#EF4444', color: '#fff',
+                        fontSize: '0.6rem', fontWeight: 700,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: '0 4px',
+                      }}>
+                        {tab.badge}
+                      </span>
+                    ) : null}
                   </button>
                 ))}
               </div>
@@ -238,6 +281,57 @@ export default function POSTerminal() {
 
                 {activeTab === 'rewards' && (
                   <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
+                )}
+
+                {activeTab === 'coaching' && (
+                  <div style={{ flex: 1, overflow: 'auto', padding: 10 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {coachingFeed.map((card) => (
+                        <div
+                          key={card.id}
+                          style={{
+                            padding: '10px 14px',
+                            borderRadius: 10,
+                            background: card.source === 'ai'
+                              ? 'rgba(139,92,246,0.06)'
+                              : 'rgba(59,130,246,0.06)',
+                            border: `1px solid ${card.source === 'ai' ? 'rgba(139,92,246,0.15)' : 'rgba(59,130,246,0.15)'}`,
+                            borderLeft: `3px solid ${card.source === 'ai' ? '#8B5CF6' : '#3B82F6'}`,
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                              {card.source === 'ai' ? (
+                                <Sparkles size={12} style={{ color: '#8B5CF6' }} />
+                              ) : (
+                                <User size={12} style={{ color: '#3B82F6' }} />
+                              )}
+                              <span style={{
+                                fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase',
+                                color: card.source === 'ai' ? '#8B5CF6' : '#3B82F6',
+                                letterSpacing: '0.05em',
+                              }}>
+                                {card.source === 'ai' ? 'AI Insight' : 'Manager'}
+                              </span>
+                            </div>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>{card.time}</span>
+                          </div>
+                          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 2 }}>
+                            {card.title}
+                          </div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', lineHeight: 1.4 }}>
+                            {card.message}
+                          </div>
+                        </div>
+                      ))}
+                      {coachingFeed.length === 0 && (
+                        <div style={{ textAlign: 'center', padding: 40, color: 'var(--register-text-dim)', fontSize: '0.8rem' }}>
+                          <MessageSquare size={24} style={{ margin: '0 auto 8px', opacity: 0.3 }} />
+                          <p>No coaching messages yet.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 )}
 
                 {activeTab === 'd365' && (
