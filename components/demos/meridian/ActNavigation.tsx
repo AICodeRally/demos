@@ -8,12 +8,12 @@ interface ActNavigationProps {
 }
 
 const ACTS = [
-  { act: 1, label: 'Fund Overview', pages: 3, color: '#D4A847', path: '/fund/strategy' },
-  { act: 2, label: 'Deal Pipeline', pages: 4, color: '#8B5CF6', path: '/deals/pipeline' },
-  { act: 3, label: 'Portfolio', pages: 4, color: '#2563EB', path: '/portfolio/overview' },
-  { act: 4, label: 'Waterfall', pages: 4, color: '#10B981', path: '/waterfall/distribution' },
-  { act: 5, label: 'Carry Allocation', pages: 4, color: '#0EA5E9', path: '/carry/pool' },
-  { act: 6, label: 'Analytics', pages: 3, color: '#F97316', path: '/platform/analytics' },
+  { act: 1, label: 'Fund Overview', color: '#D4A847', path: '/fund/strategy' },
+  { act: 2, label: 'Deal Pipeline', color: '#8B5CF6', path: '/deals/pipeline' },
+  { act: 3, label: 'Portfolio', color: '#2563EB', path: '/portfolio/overview' },
+  { act: 4, label: 'Waterfall', color: '#10B981', path: '/waterfall/distribution' },
+  { act: 5, label: 'Carry', color: '#0EA5E9', path: '/carry/pool' },
+  { act: 6, label: 'Analytics', color: '#F97316', path: '/platform/analytics' },
 ] as const;
 
 function useBasePrefix(): string {
@@ -24,25 +24,35 @@ function useBasePrefix(): string {
 
 export function ActNavigation({ currentAct }: ActNavigationProps) {
   const prefix = useBasePrefix();
+
   return (
-    <div className="flex w-full gap-1 rounded-lg overflow-hidden mb-6" style={{ background: 'var(--mr-hover)' }}>
-      {ACTS.map(({ act, label, pages, color, path }) => {
+    <div className="flex w-full gap-1.5 rounded-xl overflow-x-auto mb-6 p-1.5" style={{ background: 'var(--mr-hover)' }}>
+      {ACTS.map(({ act, label, color, path }) => {
         const isActive = act === currentAct;
         return (
           <Link
             key={act}
             href={`${prefix}${path}`}
-            className="flex-1 flex items-center gap-2 px-3 py-2.5 transition-all duration-200 group relative"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-3 transition-all duration-200 group relative rounded-lg min-w-[120px]"
             style={{
-              background: isActive ? `${color}15` : 'transparent',
-              borderBottom: isActive ? `2px solid ${color}` : '2px solid transparent',
+              background: isActive ? 'var(--mr-card)' : 'transparent',
+              boxShadow: isActive ? 'var(--mr-shadow)' : 'none',
             }}
           >
+            {/* Active gradient rail at bottom */}
+            {isActive && (
+              <div
+                className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full"
+                style={{ background: color }}
+              />
+            )}
+
             <span
-              className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
+              className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all"
               style={{
-                background: isActive ? `${color}25` : 'var(--mr-hover)',
+                background: isActive ? `${color}20` : 'transparent',
                 color: isActive ? color : 'var(--mr-text-faint)',
+                border: isActive ? `1.5px solid ${color}40` : '1.5px solid transparent',
               }}
             >
               {act}
@@ -50,20 +60,21 @@ export function ActNavigation({ currentAct }: ActNavigationProps) {
             <div className="min-w-0">
               <div
                 className="text-[13px] font-semibold truncate"
-                style={{ color: isActive ? color : 'var(--mr-text-faint)' }}
+                style={{ color: isActive ? 'var(--mr-text)' : 'var(--mr-text-faint)' }}
               >
                 {label}
-              </div>
-              <div
-                className="text-xs font-mono"
-                style={{ color: isActive ? `${color}80` : 'var(--mr-text-faint)' }}
-              >
-                {pages} pages
               </div>
             </div>
           </Link>
         );
       })}
+
+      {/* Progress indicator */}
+      <div className="flex items-center px-3 shrink-0">
+        <span className="text-[10px] font-medium whitespace-nowrap" style={{ color: 'var(--mr-text-faint)' }}>
+          Act {currentAct} of {ACTS.length}
+        </span>
+      </div>
     </div>
   );
 }
