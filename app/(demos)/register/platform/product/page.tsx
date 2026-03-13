@@ -1,224 +1,194 @@
 'use client';
 
-import {
-  Building2, Target, Monitor, TrendingUp, DollarSign, Network,
-  Clock, AlertTriangle, Eye, Brain,
-  CheckCircle,
-} from 'lucide-react';
-import { ACT_SUMMARY, ROI_METRICS } from '@/data/register/platform-data';
+import { RegisterPage } from '@/components/demos/register/RegisterPage';
 
-const actIconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }>> = {
-  Building2,
-  Target,
-  Monitor,
-  TrendingUp,
-  DollarSign,
-  Network,
-};
+/* ── Module breakdown ────────────────────────────────────── */
 
-const roiIconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
-  Clock,
-  TrendingUp,
-  AlertTriangle,
-  Eye,
-  Brain,
-};
+const MODULES = [
+  {
+    act: 1,
+    name: 'Corporate Strategy',
+    color: '#1E3A5F',
+    items: ['Portfolio analysis across 4 store formats', 'Market positioning vs. competitors', 'Seasonal trend planning', 'Brand mix optimization'],
+  },
+  {
+    act: 2,
+    name: 'Sales Strategy',
+    color: '#06B6D4',
+    items: ['District-level territory planning', 'Store target allocation & gap analysis', 'Product mix optimization by format', 'Workforce planning & scheduling', 'Promotion management & SPIFF calendar'],
+  },
+  {
+    act: 3,
+    name: 'Store Operations',
+    color: '#8B5CF6',
+    items: ['Live POS with real-time commission display', 'Manager coaching console with AI nudges', 'Sales contests & leaderboards', 'BroadcastChannel instant sync'],
+  },
+  {
+    act: 4,
+    name: 'Sales Compensation',
+    color: '#10B981',
+    items: ['Comp plan designer with tier editor', 'What-if calculator for reps', 'Live earnings statements', 'Team analytics & executive dashboard', 'Comp admin with push-to-POS'],
+  },
+  {
+    act: 5,
+    name: 'Platform & Integration',
+    color: '#F59E0B',
+    items: ['D365 Commerce real-time integration', 'Transaction event pipeline (<200ms)', 'BroadcastChannel 5-type protocol', 'Product overview & ROI analysis'],
+  },
+];
 
-const ACT_COLORS = ['#1E3A5F', '#06B6D4', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444'];
+/* ── Technology highlights ───────────────────────────────── */
 
-const CTA_STEPS = [
-  { week: 'Week 1', title: 'Data Access', desc: 'POS + HRIS read credentials, Varicent POC environment' },
-  { week: 'Week 2–3', title: 'Configuration', desc: 'Comp plan mapping, measurement setup, field sync validation' },
-  { week: 'Week 4', title: 'Pilot Store', desc: 'Live floor reps, real commissions, side-by-side accuracy check' },
-  { week: 'Week 5–6', title: 'Rollout Plan', desc: 'District rollout sequencing, training plan, go-live readiness' },
+const TECH = [
+  { label: 'AI-Powered Insights', desc: 'Every page surfaces contextual AI coaching — attach rate nudges, upsell prompts, comp optimization tips', color: '#8B5CF6' },
+  { label: 'BroadcastChannel Real-Time', desc: 'Manager-to-POS instant communication — coaching, comp updates, alerts, and sync — zero server round-trip', color: '#06B6D4' },
+  { label: 'SWIC Engine', desc: 'Sales, Workforce, Incentive, Compensation calculation engine powers live commission display and what-if modeling', color: '#10B981' },
+  { label: 'D365 Commerce Native', desc: 'Built on Microsoft Dynamics 365 Retail schemas — RetailTransactionTable, SalesTrans, PaymentTrans — for seamless ERP integration', color: '#F59E0B' },
 ];
 
 export default function ProductOverviewPage() {
   return (
-    <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Product Overview</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
-          PRIZYM — Revenue Operating System for Retail
-        </p>
-      </div>
+    <RegisterPage
+      title="Product Overview"
+      subtitle="REGISTER — Retail Revenue Operating System"
+      accentColor="#F59E0B"
+    >
+      {/* ── Hero Summary ─────────────────────────────────────── */}
+      <section className="mb-10">
+        <div
+          className="rounded-2xl p-8 relative overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #06B6D4 100%)' }}
+        >
+          <div className="relative z-10">
+            <p className="text-2xl font-black tracking-tight text-white mb-2">
+              REGISTER
+            </p>
+            <p className="text-base font-semibold text-white mb-1">
+              Retail Revenue Operating System
+            </p>
+            <p className="text-sm mb-6" style={{ color: '#BAE6FD' }}>
+              Floor-to-boardroom visibility for mattress retail chains with 100&ndash;500 stores.
+              Real-time commission on every sale, AI coaching at store open, and comp admin
+              that pushes plan changes to every POS tablet instantly.
+            </p>
 
-      {/* PRIZYM hero card */}
-      <div
-        className="rounded-2xl p-8 mb-8 relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #06B6D4 100%)' }}
-      >
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <Network size={32} style={{ color: '#FFFFFF' }} />
-            <span className="text-3xl font-black tracking-tight text-white">PRIZYM</span>
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { stat: '200', label: 'Stores', sub: 'Across 4 formats' },
+                { stat: '850', label: 'Sales Reps', sub: 'Active headcount' },
+                { stat: '<200ms', label: 'Sync Latency', sub: 'POS to Manager' },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-xl p-4 text-center"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.12)' }}
+                >
+                  <p className="text-xl font-black text-white">{s.stat}</p>
+                  <p className="text-[12px] font-semibold text-white">{s.label}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: '#BAE6FD' }}>{s.sub}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-lg font-semibold text-white mb-2">Revenue Operating System for Retail</p>
-          <p className="text-sm mb-6" style={{ color: '#BAE6FD' }}>
-            Floor-to-boardroom visibility for compensation, coaching, and operations
-          </p>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { label: 'Real-Time Comp Visibility', desc: 'Every rep sees earnings as they sell' },
-              { label: 'AI-Powered Coaching', desc: 'Attach rate insights at store open' },
-              { label: 'Varicent-Native Sync', desc: 'Your ICM stays the source of truth' },
-            ].map((cap) => (
-              <div
-                key={cap.label}
-                className="rounded-xl p-4"
-                style={{ backgroundColor: 'rgba(255,255,255,0.12)' }}
-              >
-                <CheckCircle size={16} style={{ color: '#A7F3D0' }} className="mb-2" />
-                <p className="text-[13px] font-semibold text-white">{cap.label}</p>
-                <p className="text-[11px] mt-0.5" style={{ color: '#BAE6FD' }}>{cap.desc}</p>
-              </div>
-            ))}
-          </div>
+          <div
+            className="absolute -right-16 -top-16 rounded-full opacity-10"
+            style={{ width: 300, height: 300, backgroundColor: '#FFFFFF' }}
+          />
         </div>
-        {/* Background decoration */}
-        <div
-          className="absolute -right-16 -top-16 rounded-full opacity-10"
-          style={{ width: 300, height: 300, backgroundColor: '#FFFFFF' }}
-        />
-        <div
-          className="absolute -right-4 bottom-0 rounded-full opacity-5"
-          style={{ width: 200, height: 200, backgroundColor: '#FFFFFF' }}
-        />
-      </div>
+      </section>
 
-      {/* 6-Act story grid */}
-      <div className="mb-8">
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          The PRIZYM Platform — 6-Act Story
+      {/* ── Module Breakdown ─────────────────────────────────── */}
+      <section className="mb-10">
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--register-text)' }}>
+          Five-Act Platform
         </p>
-        <div className="grid grid-cols-3 gap-4">
-          {ACT_SUMMARY.map((act, i) => {
-            const Icon = actIconMap[act.icon] ?? Network;
-            const color = ACT_COLORS[i];
-            return (
-              <div
-                key={act.act}
-                className="rounded-xl border p-5"
-                style={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }}
-              >
-                <div className="flex items-center gap-2 mb-3">
+        <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
+          Each act addresses a layer of the retail revenue stack
+        </p>
+
+        <div className="space-y-4">
+          {MODULES.map((mod) => (
+            <div
+              key={mod.act}
+              className="rounded-xl border p-5"
+              style={{
+                borderColor: 'var(--register-border)',
+                backgroundColor: 'var(--register-bg-surface)',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className="flex items-center justify-center w-8 h-8 rounded-lg text-[12px] font-bold text-white"
+                  style={{ backgroundColor: mod.color }}
+                >
+                  {mod.act}
+                </div>
+                <div>
+                  <p className="text-[13px] font-bold" style={{ color: 'var(--register-text)' }}>
+                    {mod.name}
+                  </p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: mod.color }}>
+                    Act {mod.act}
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {mod.items.map((item) => (
                   <div
-                    className="flex items-center justify-center h-8 w-8 rounded-lg"
-                    style={{ backgroundColor: `${color}15` }}
+                    key={item}
+                    className="flex items-start gap-2 rounded-lg px-3 py-2"
+                    style={{ backgroundColor: `${mod.color}10` }}
                   >
-                    <Icon size={16} style={{ color }} />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
+                      style={{ backgroundColor: mod.color }}
+                    />
+                    <span className="text-[11px]" style={{ color: 'var(--register-text)' }}>
+                      {item}
+                    </span>
                   </div>
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-wider"
-                    style={{ color }}
-                  >
-                    Act {act.act}
-                  </span>
-                </div>
-                <p className="text-[13px] font-bold mb-1" style={{ color: '#0F172A' }}>{act.name}</p>
-                <p className="text-[11px] leading-relaxed" style={{ color: '#64748B' }}>{act.description}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ROI Projection */}
-      <div className="mb-8">
-        <div className="mb-4">
-          <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
-            Projected Impact for Summit Sleep Co.
-          </p>
-          <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>
-            Based on 847 stores, 4,200 floor reps
-          </p>
-        </div>
-        <div className="grid grid-cols-5 gap-4">
-          {ROI_METRICS.map((metric) => {
-            const Icon = roiIconMap[metric.icon] ?? TrendingUp;
-            return (
-              <div
-                key={metric.label}
-                className="rounded-xl border p-4"
-                style={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }}
-              >
-                <div
-                  className="flex items-center justify-center h-9 w-9 rounded-lg mb-3"
-                  style={{ backgroundColor: '#DCFCE7' }}
-                >
-                  <Icon size={18} style={{ color: '#059669' }} />
-                </div>
-                <p className="text-[11px] font-semibold mb-3" style={{ color: '#64748B' }}>{metric.label}</p>
-                <div className="space-y-1 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-medium w-10 text-right shrink-0" style={{ color: '#94A3B8' }}>Before</span>
-                    <span className="text-[12px] font-semibold" style={{ color: '#DC2626' }}>{metric.before}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-medium w-10 text-right shrink-0" style={{ color: '#94A3B8' }}>After</span>
-                    <span className="text-[12px] font-semibold" style={{ color: '#059669' }}>{metric.after}</span>
-                  </div>
-                </div>
-                <span
-                  className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
-                  style={{ backgroundColor: '#DCFCE7', color: '#166534' }}
-                >
-                  {metric.improvement}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div
-        className="rounded-2xl border p-8 mb-6"
-        style={{ backgroundColor: '#F8FAFC', borderColor: '#E2E8F0' }}
-      >
-        <div className="text-center mb-6">
-          <p className="text-xl font-bold" style={{ color: '#0F172A' }}>Ready for Your POC?</p>
-          <p className="text-sm mt-1" style={{ color: '#64748B' }}>
-            From data access to rollout plan in 6 weeks
-          </p>
-        </div>
-        <div className="grid grid-cols-4 gap-4">
-          {CTA_STEPS.map((step, i) => (
-            <div key={step.week} className="relative">
-              {/* Connector line */}
-              {i < CTA_STEPS.length - 1 && (
-                <div
-                  className="absolute top-5 left-full w-full h-0.5 z-0"
-                  style={{ backgroundColor: '#CBD5E1', width: '100%', left: '60%' }}
-                />
-              )}
-              <div className="relative z-10 flex flex-col items-center text-center">
-                <div
-                  className="flex items-center justify-center h-10 w-10 rounded-full border-2 font-bold text-sm mb-3"
-                  style={{ backgroundColor: '#1E3A5F', borderColor: '#1E3A5F', color: '#FFFFFF' }}
-                >
-                  {i + 1}
-                </div>
-                <p
-                  className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                  style={{ color: '#06B6D4' }}
-                >
-                  {step.week}
-                </p>
-                <p className="text-[13px] font-semibold mb-1.5" style={{ color: '#0F172A' }}>{step.title}</p>
-                <p className="text-[11px] leading-relaxed" style={{ color: '#64748B' }}>{step.desc}</p>
+                ))}
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <div className="text-center py-4">
-        <p className="text-xs font-semibold" style={{ color: '#94A3B8' }}>
-          Powered by <span style={{ color: '#1E3A5F' }}>PRIZYM</span> — An <span style={{ color: '#06B6D4' }}>AICR Platform</span> Product
+      {/* ── Technology Highlights ─────────────────────────────── */}
+      <section className="mb-6">
+        <p className="text-sm font-semibold mb-1" style={{ color: 'var(--register-text)' }}>
+          Technology Highlights
         </p>
-      </div>
-    </>
+        <p className="text-xs mb-5" style={{ color: 'var(--register-text-muted)' }}>
+          Built for real-time retail at scale
+        </p>
+
+        <div className="grid grid-cols-2 gap-4">
+          {TECH.map((t) => (
+            <div
+              key={t.label}
+              className="rounded-xl border p-5"
+              style={{
+                borderColor: 'var(--register-border)',
+                backgroundColor: 'var(--register-bg-surface)',
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="w-3 h-3 rounded-full shrink-0"
+                  style={{ backgroundColor: t.color }}
+                />
+                <p className="text-[13px] font-bold" style={{ color: t.color }}>
+                  {t.label}
+                </p>
+              </div>
+              <p className="text-[12px] leading-relaxed" style={{ color: 'var(--register-text-muted)' }}>
+                {t.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </RegisterPage>
   );
 }

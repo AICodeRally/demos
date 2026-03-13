@@ -1,223 +1,170 @@
 'use client';
 
-import { useState } from 'react';
-import { StatCard, SankeyFlow, AreaChart, BarChart, DonutChart, ConfidenceBand, HeatMap } from '@/components/demos/register';
+import { RegisterPage } from '@/components/demos/register/RegisterPage';
+import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { getInsight } from '@/data/register/ai-insights';
+import { COMP_AS_PCT_REVENUE, KPI_MEASUREMENTS } from '@/data/register/comp-data';
+import type { FormatId } from '@/data/register/store-data';
 
-/* ── Sankey: Revenue → Comp Expense → Components → Formats ── */
+const ACCENT = '#10B981';
 
-const SANKEY_NODES = [
-  { id: 'revenue', label: 'Revenue ($1.4B)' },
-  { id: 'comp', label: 'Comp Expense ($42M)' },
-  { id: 'base', label: 'Base ($24M)' },
-  { id: 'commission', label: 'Commission ($12M)' },
-  { id: 'spiffs', label: 'SPIFFs ($4M)' },
-  { id: 'accelerators', label: 'Accelerators ($2M)' },
+const FORMAT_SUMMARY: { format: string; formatId: FormatId; enrolled: number; budget: string; avgPayout: string; color: string }[] = [
+  { format: 'Flagship', formatId: 'flagship', enrolled: 48, budget: '$142K', avgPayout: '$6,200', color: '#1E3A5F' },
+  { format: 'Standard', formatId: 'standard', enrolled: 72, budget: '$198K', avgPayout: '$4,800', color: '#06B6D4' },
+  { format: 'Outlet', formatId: 'outlet', enrolled: 34, budget: '$68K', avgPayout: '$3,400', color: '#8B5CF6' },
+  { format: 'Shop-in-Shop', formatId: 'shop-in-shop', enrolled: 16, budget: '$42K', avgPayout: '$5,100', color: '#10B981' },
 ];
 
-const SANKEY_LINKS = [
-  { source: 'revenue', target: 'comp', value: 42, color: 'rgba(30,58,95,0.25)' },
-  { source: 'comp', target: 'base', value: 24, color: 'rgba(71,85,105,0.25)' },
-  { source: 'comp', target: 'commission', value: 12, color: 'rgba(30,58,95,0.25)' },
-  { source: 'comp', target: 'spiffs', value: 4, color: 'rgba(6,182,212,0.25)' },
-  { source: 'comp', target: 'accelerators', value: 2, color: 'rgba(16,185,129,0.25)' },
-];
+export default function ExecutiveViewPage() {
+  const insight = getInsight('comp/executive');
+  const maxPct = Math.max(...COMP_AS_PCT_REVENUE.map((d) => d.pct));
+  const avgPct = (COMP_AS_PCT_REVENUE.reduce((s, d) => s + d.pct, 0) / COMP_AS_PCT_REVENUE.length).toFixed(1);
 
-/* ── 12-month comp expense trend ─────────────────────────── */
-
-const COMP_TREND = [
-  { label: 'Mar', value: 3.4 }, { label: 'Apr', value: 3.3 }, { label: 'May', value: 3.8 },
-  { label: 'Jun', value: 3.5 }, { label: 'Jul', value: 3.6 }, { label: 'Aug', value: 3.4 },
-  { label: 'Sep', value: 3.9 }, { label: 'Oct', value: 3.6 }, { label: 'Nov', value: 4.2 },
-  { label: 'Dec', value: 3.8 }, { label: 'Jan', value: 3.0 }, { label: 'Feb', value: 3.5 },
-];
-
-/* ── Comp-to-revenue ratio by format ─────────────────────── */
-
-const COMP_RATIO = [
-  { label: 'Flagship', value: 2.4, color: '#1E3A5F' },
-  { label: 'Standard', value: 3.0, color: '#06B6D4' },
-  { label: 'Outlet', value: 3.8, color: '#8B5CF6' },
-  { label: 'Shop-in-Shop', value: 4.2, color: '#10B981' },
-];
-
-/* ── Comp expense by format ──────────────────────────────── */
-
-const COMP_BY_FORMAT = [
-  { label: 'Flagship', value: 35, color: '#1E3A5F' },
-  { label: 'Standard', value: 38, color: '#06B6D4' },
-  { label: 'Outlet', value: 18, color: '#8B5CF6' },
-  { label: 'Shop-in-Shop', value: 9, color: '#10B981' },
-];
-
-/* ── Next quarter projection ─────────────────────────────── */
-
-const Q_PROJECTION = [
-  { label: 'Apr', value: 11.2, low: 10.4, high: 12.0 },
-  { label: 'May', value: 11.4, low: 10.6, high: 12.2 },
-  { label: 'Jun', value: 11.2, low: 10.4, high: 12.0 },
-];
-
-/* ── District HeatMap ────────────────────────────────────── */
-
-const DISTRICT_NAMES = ['Northeast', 'Southeast', 'Midwest', 'Southwest', 'Pacific NW', 'Mountain', 'Mid-Atlantic', 'Great Lakes'];
-const COMP_METRICS = ['Expense %', 'Turnover %', 'Attainment %', 'CSAT'];
-const DISTRICT_DATA = [
-  [25, 28, 82, 88],  // Northeast
-  [30, 32, 78, 85],  // Southeast
-  [35, 38, 72, 80],  // Midwest
-  [40, 42, 68, 76],  // Southwest
-  [22, 25, 85, 90],  // Pacific NW
-  [45, 48, 62, 72],  // Mountain
-  [28, 30, 80, 86],  // Mid-Atlantic
-  [32, 35, 75, 82],  // Great Lakes
-];
-
-export default function ExecutiveView() {
   return (
-    <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Executive View</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
-          Enterprise compensation economics, ROI analysis, and strategic workforce metrics
-        </p>
-      </div>
-
-      {/* 5 StatCards */}
-      <div className="grid grid-cols-5 gap-4 mb-8">
-        <StatCard label="Total Comp Expense" value="$42M" color="#1E3A5F" />
-        <StatCard label="Comp-to-Revenue" value="3.0%" trend="down" trendValue="-0.2pp" color="#10B981" />
-        <StatCard label="Avg OTE" value="$52K" color="#06B6D4" />
-        <StatCard label="Turnover" value="34%" trend="down" trendValue="-2%" color="#F59E0B" sparkline={[42, 40, 38, 36, 35, 34]} />
-        <StatCard label="Cost per Hire" value="$4.2K" color="#8B5CF6" />
-      </div>
-
-      {/* Sankey Flow */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          Revenue to Compensation Flow
-        </p>
-        <SankeyFlow nodes={SANKEY_NODES} links={SANKEY_LINKS} height={280} />
-      </div>
-
-      {/* Comp Trend + Comp Ratio */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            12-Month Comp Expense Trend ($M)
-          </p>
-          <AreaChart data={COMP_TREND} color="#1E3A5F" />
-          <div className="mt-2 text-center">
-            <span className="text-[10px] font-mono" style={{ color: '#94A3B8' }}>
-              Avg: $3.5M/mo &mdash; Revenue overlay: $116M/mo avg
-            </span>
-          </div>
-        </div>
-
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Comp-to-Revenue Ratio by Format (%)
-          </p>
-          <BarChart data={COMP_RATIO} unit="%" maxVal={5} />
-          <div className="mt-3 pt-2 border-t text-center" style={{ borderColor: '#F1F5F9' }}>
-            <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-              Industry benchmark: <span className="font-bold" style={{ color: '#10B981' }}>3.5%</span> &mdash; Summit Sleep at 3.0% (below avg)
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Donut + Confidence Band */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Comp Expense by Format
-          </p>
-          <DonutChart
-            segments={COMP_BY_FORMAT}
-            centerValue="$42M"
-            centerLabel="Total"
-          />
-        </div>
-
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>
-              Q2 Comp Expense Projection ($M)
+    <RegisterPage title="Executive View" subtitle="Compensation Program Health" accentColor={ACCENT}>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {[
+          { label: 'Total Comp Budget', value: '$450K/mo', color: '#1E3A5F' },
+          { label: 'Enrolled Reps', value: '170', color: '#06B6D4' },
+          { label: 'Avg Comp/Revenue', value: `${avgPct}%`, color: ACCENT },
+          { label: 'Budget Variance', value: '+2.1%', color: '#F59E0B' },
+        ].map((kpi) => (
+          <div
+            key={kpi.label}
+            className="rounded-xl p-5"
+            style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+          >
+            <p className="text-[10px] uppercase tracking-wide font-semibold mb-2" style={{ color: 'var(--register-text-muted)' }}>
+              {kpi.label}
             </p>
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] font-mono" style={{ color: '#10B981' }}>High: $12.0M</span>
-              <span className="text-[10px] font-mono font-bold" style={{ color: '#0F172A' }}>Center: $11.2M</span>
-              <span className="text-[10px] font-mono" style={{ color: '#F59E0B' }}>Low: $10.4M</span>
-            </div>
+            <p className="text-2xl font-bold" style={{ color: kpi.color }}>{kpi.value}</p>
           </div>
-          <ConfidenceBand data={Q_PROJECTION} color="#1E3A5F" />
-        </div>
+        ))}
       </div>
 
-      {/* ROI Analysis Cards */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
-        <div
-          className="rounded-xl border-2 p-5"
-          style={{ borderColor: '#10B981', backgroundColor: '#F0FDF4' }}
-        >
-          <div className="flex items-start gap-3">
-            <span
-              className="flex items-center justify-center w-10 h-10 rounded-xl text-[16px] font-bold text-white shrink-0"
-              style={{ backgroundColor: '#10B981' }}
-            >
-              $
-            </span>
-            <div>
-              <p className="text-[14px] font-bold" style={{ color: '#0F172A' }}>
-                Every $1 in SPIFFs generates $14 in revenue
-              </p>
-              <p className="text-[11px] mt-1" style={{ color: '#475569' }}>
-                SPIFF ROI: 1,400% &mdash; highest return of any comp component. Purple brand SPIFF alone drove $2.1M in incremental sales last quarter.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="rounded-xl border-2 p-5"
-          style={{ borderColor: '#06B6D4', backgroundColor: '#ECFEFF' }}
-        >
-          <div className="flex items-start gap-3">
-            <span
-              className="flex items-center justify-center w-10 h-10 rounded-xl text-[16px] font-bold text-white shrink-0"
-              style={{ backgroundColor: '#06B6D4' }}
-            >
-              %
-            </span>
-            <div>
-              <p className="text-[14px] font-bold" style={{ color: '#0F172A' }}>
-                Accelerator program ROI: 340%
-              </p>
-              <p className="text-[11px] mt-1" style={{ color: '#475569' }}>
-                Top 15% of reps drive 38% of revenue. Accelerator investment of $2M returns $6.8M in incremental comp-attributed revenue above baseline.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* District HeatMap */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          District Comp Metrics
-        </p>
-        <HeatMap
-          rows={DISTRICT_NAMES}
-          cols={COMP_METRICS}
-          data={DISTRICT_DATA}
-          colorScale={{ low: '#10B981', mid: '#F59E0B', high: '#EF4444' }}
-        />
-        <div className="mt-3 pt-2 border-t text-center" style={{ borderColor: '#F1F5F9' }}>
-          <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-            Mountain &amp; Southwest districts show highest expense ratios &mdash; comp plan optimization recommended
+      {/* Comp as % of Revenue — Bar/Sparkline */}
+      <div
+        className="rounded-xl p-6 mb-8"
+        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+      >
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-lg font-bold" style={{ color: 'var(--register-text)' }}>
+            Comp as % of Revenue — Trend
+          </h2>
+          <span className="text-xs font-mono" style={{ color: 'var(--register-text-muted)' }}>
+            Target: 8.0% | Avg: {avgPct}%
           </span>
         </div>
+        <div className="flex items-end gap-3" style={{ height: 160 }}>
+          {COMP_AS_PCT_REVENUE.map((d, i) => {
+            const barHeight = (d.pct / (maxPct + 1)) * 140;
+            const isAboveTarget = d.pct > 8.0;
+            return (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                <span className="text-xs font-bold font-mono" style={{ color: isAboveTarget ? '#F59E0B' : ACCENT }}>
+                  {d.pct}%
+                </span>
+                <div
+                  className="w-full rounded-t-lg transition-all"
+                  style={{
+                    height: barHeight,
+                    backgroundColor: isAboveTarget ? '#F59E0B' : ACCENT,
+                    opacity: 0.7 + (i * 0.05),
+                  }}
+                />
+                <span className="text-xs font-medium" style={{ color: 'var(--register-text-muted)' }}>{d.month}</span>
+              </div>
+            );
+          })}
+        </div>
+        {/* Target line label */}
+        <div className="mt-3 flex items-center gap-2">
+          <div className="h-px flex-1" style={{ backgroundColor: '#F59E0B', opacity: 0.4 }} />
+          <span className="text-[10px] font-mono" style={{ color: '#F59E0B' }}>8.0% target</span>
+          <div className="h-px flex-1" style={{ backgroundColor: '#F59E0B', opacity: 0.4 }} />
+        </div>
       </div>
-    </>
+
+      {/* Format Comparison Table */}
+      <div
+        className="rounded-xl p-6 mb-8"
+        style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+      >
+        <h2 className="text-lg font-bold mb-5" style={{ color: 'var(--register-text)' }}>
+          Format Comparison
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: '2px solid var(--register-border)' }}>
+                <th className="text-left py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Format</th>
+                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Enrolled</th>
+                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Monthly Budget</th>
+                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Avg Payout</th>
+                <th className="text-right py-3 pr-4 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Units Sold</th>
+                <th className="text-right py-3 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {FORMAT_SUMMARY.map((row) => {
+                const kpis = KPI_MEASUREMENTS[row.formatId];
+                const units = kpis?.find((k) => k.label === 'Units Sold');
+                const revenue = kpis?.find((k) => k.label === 'Revenue');
+                return (
+                  <tr key={row.format} style={{ borderBottom: '1px solid var(--register-border)' }}>
+                    <td className="py-3 pr-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: row.color }} />
+                        <span className="font-semibold" style={{ color: 'var(--register-text)' }}>{row.format}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 pr-4 text-right font-mono" style={{ color: 'var(--register-text)' }}>{row.enrolled}</td>
+                    <td className="py-3 pr-4 text-right font-mono" style={{ color: 'var(--register-text)' }}>{row.budget}</td>
+                    <td className="py-3 pr-4 text-right font-mono font-bold" style={{ color: ACCENT }}>{row.avgPayout}</td>
+                    <td className="py-3 pr-4 text-right font-mono" style={{ color: 'var(--register-text-muted)' }}>
+                      {units?.value ?? '-'}
+                    </td>
+                    <td className="py-3 text-right font-mono" style={{ color: 'var(--register-text-muted)' }}>
+                      {revenue ? `$${(revenue.value / 1000).toFixed(0)}K` : '-'}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Budget Variance Callout */}
+      <div
+        className="rounded-xl p-5 mb-8 flex items-start gap-4"
+        style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.3)' }}
+      >
+        <span
+          className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold text-white shrink-0"
+          style={{ backgroundColor: '#F59E0B' }}
+        >
+          !
+        </span>
+        <div>
+          <p className="text-sm font-bold mb-1" style={{ color: 'var(--register-text)' }}>
+            Budget Variance: +2.1% Over Q1 Target
+          </p>
+          <p className="text-xs" style={{ color: 'var(--register-text-muted)' }}>
+            Primary driver: Flagship format overpayment on Platinum tier. 8 reps hit Platinum ahead of schedule due to
+            strong Presidents Day weekend performance. Recommend raising Flagship Platinum threshold from $75K to $82K
+            for Q2 to align budget with revenue targets.
+          </p>
+        </div>
+      </div>
+
+      {/* AI Insight */}
+      {insight && (
+        <AIInsightCard label={insight.label}>
+          {insight.text}
+        </AIInsightCard>
+      )}
+    </RegisterPage>
   );
 }

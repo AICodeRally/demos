@@ -2,9 +2,10 @@
 
 import { use } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tablet, TrendingDown, TrendingUp, Sparkles, MessageSquare } from 'lucide-react';
-import { StatCard } from '@/components/demos/register';
+import { ArrowLeft, Tablet, TrendingDown, TrendingUp, Sparkles, MessageSquare, Send, Settings } from 'lucide-react';
+import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { getRepById, getScenarioByRepId } from '@/data/register/coaching-data';
+import { broadcastCoaching } from '@/lib/register-broadcast';
 
 export default function RepCoachingClient({ params }: { params: Promise<{ id: string }> }) {
   const { id: repId } = use(params);
@@ -13,116 +14,131 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
 
   if (!rep || !scenario) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p style={{ color: '#94A3B8' }}>Rep not found</p>
-      </div>
+      <RegisterPage title="Rep Coaching" accentColor="#8B5CF6">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 256 }}>
+          <p style={{ color: 'var(--register-text-dim)' }}>Rep not found</p>
+        </div>
+      </RegisterPage>
     );
   }
 
-  const swicBase = process.env.NEXT_PUBLIC_SWIC_URL || 'http://localhost:3010';
-  const swicUrl = `${swicBase}/register-pos?scenario=${repId}`;
-
   return (
-    <>
+    <RegisterPage title={`Coaching — ${rep.name}`} subtitle={`${rep.role} — ${rep.store}`} accentColor="#8B5CF6">
       {/* Back nav */}
       <Link
         href="/register/ops/manager"
-        className="inline-flex items-center gap-2 mb-6 text-sm font-medium transition-colors hover:opacity-80"
-        style={{ color: '#8B5CF6' }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-ai)', textDecoration: 'none' }}
       >
         <ArrowLeft size={16} />
         Back to Manager Console
       </Link>
 
-      {/* Rep header */}
-      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }}>
-        <div className="flex items-center gap-4 mb-4">
+      {/* Rep header card */}
+      <div
+        style={{
+          padding: 20, borderRadius: 12, marginBottom: 24,
+          background: 'var(--register-bg-elevated)',
+          border: '1px solid var(--register-border)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
           <div
-            className="flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, #8B5CF6, #6366F1)' }}
+            style={{
+              width: 48, height: 48, borderRadius: 24,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1rem', fontWeight: 700, color: '#FFFFFF',
+              background: 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+            }}
           >
             {rep.avatar}
           </div>
-          <div>
-            <h1 className="text-xl font-bold" style={{ color: '#0F172A' }}>{rep.name}</h1>
-            <p className="text-sm" style={{ color: '#64748B' }}>{rep.role} — {rep.store}</p>
-            <p className="text-xs" style={{ color: '#94A3B8' }}>{rep.shift}</p>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--register-text)', margin: 0 }}>{rep.name}</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', margin: '2px 0 0' }}>
+              {rep.role} &mdash; {rep.store}
+            </p>
+            <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>{rep.shift}</p>
           </div>
-          <div className="ml-auto">
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-              style={{ backgroundColor: '#FEF3C7', color: '#92400E' }}
-            >
-              <TrendingDown size={12} />
-              {scenario.weaknessLabel}
-            </span>
-          </div>
+          <span
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 4,
+              padding: '4px 10px', borderRadius: 10,
+              fontSize: '0.7rem', fontWeight: 600,
+              background: 'rgba(245,158,11,0.1)', color: '#F59E0B',
+            }}
+          >
+            <TrendingDown size={12} />
+            {scenario.weaknessLabel}
+          </span>
         </div>
 
-        {/* Key metrics */}
-        <div className="grid grid-cols-4 gap-4">
-          <StatCard label="Attach Rate" value={`${rep.metrics.attachRate}%`} trend="down" trendValue={`Floor avg: ${rep.metrics.floorAvgAttach}%`} color="#EF4444" />
-          <StatCard label="Financing Pitch" value={`${rep.metrics.financingPitch}%`} trend={rep.metrics.financingPitch < rep.metrics.floorAvgFinancing ? 'down' : 'up'} trendValue={`Floor avg: ${rep.metrics.floorAvgFinancing}%`} color={rep.metrics.financingPitch < rep.metrics.floorAvgFinancing ? '#EF4444' : '#10B981'} />
-          <StatCard label="Avg Sale Price" value={`$${rep.metrics.asp.toLocaleString()}`} trend={rep.metrics.asp < rep.metrics.floorAvgAsp ? 'down' : 'up'} trendValue={`Floor avg: $${rep.metrics.floorAvgAsp.toLocaleString()}`} color={rep.metrics.asp < rep.metrics.floorAvgAsp ? '#F59E0B' : '#10B981'} />
-          <StatCard label="Shift Revenue" value={`$${rep.metrics.shiftRevenue.toLocaleString()}`} color="#1E3A5F" />
+        {/* Key metrics row */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
+          {[
+            { label: 'Attach Rate', value: `${rep.metrics.attachRate}%`, sub: `Floor avg: ${rep.metrics.floorAvgAttach}%`, bad: rep.metrics.attachRate < rep.metrics.floorAvgAttach },
+            { label: 'Financing Pitch', value: `${rep.metrics.financingPitch}%`, sub: `Floor avg: ${rep.metrics.floorAvgFinancing}%`, bad: rep.metrics.financingPitch < rep.metrics.floorAvgFinancing },
+            { label: 'Avg Sale Price', value: `$${rep.metrics.asp.toLocaleString()}`, sub: `Floor avg: $${rep.metrics.floorAvgAsp.toLocaleString()}`, bad: rep.metrics.asp < rep.metrics.floorAvgAsp },
+            { label: 'Shift Revenue', value: `$${rep.metrics.shiftRevenue.toLocaleString()}`, sub: '', bad: false },
+          ].map((m) => (
+            <div key={m.label} style={{ padding: 12, borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
+              <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-dim)', margin: 0 }}>{m.label}</p>
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'monospace', color: m.bad ? '#EF4444' : '#10B981', margin: '4px 0 0' }}>{m.value}</p>
+              {m.sub && <p style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>{m.sub}</p>}
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Split view: What they did vs What they should do */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        {/* Left: What they did */}
-        <div className="rounded-xl border p-6" style={{ backgroundColor: '#FFF1F2', borderColor: '#FECDD3' }}>
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingDown size={18} className="text-red-500" />
-            <h2 className="text-base font-bold" style={{ color: '#0F172A' }}>What They Did</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
+        {/* What They Did */}
+        <div style={{ padding: 18, borderRadius: 12, background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.15)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <TrendingDown size={18} style={{ color: '#EF4444' }} />
+            <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>What They Did</span>
           </div>
-          <p className="text-sm mb-3" style={{ color: '#64748B' }}>Last sale — missed opportunity</p>
-
-          <div className="space-y-2 mb-4">
+          <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginBottom: 10 }}>Last sale &mdash; missed opportunity</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 10 }}>
             {scenario.lastSale.items.map((item, i) => (
-              <div key={i} className="flex justify-between text-sm">
-                <span style={{ color: '#0F172A' }}>{item.name}</span>
-                <span className="font-mono font-medium" style={{ color: '#0F172A' }}>${item.price.toLocaleString()}</span>
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                <span style={{ color: 'var(--register-text)' }}>{item.name}</span>
+                <span style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--register-text)' }}>${item.price.toLocaleString()}</span>
               </div>
             ))}
-            <div className="border-t pt-2 mt-2 flex justify-between text-sm font-bold" style={{ borderColor: '#FECDD3' }}>
-              <span style={{ color: '#0F172A' }}>Total</span>
-              <span style={{ color: '#0F172A' }}>${scenario.lastSale.total.toLocaleString()}</span>
+            <div style={{ borderTop: '1px solid rgba(239,68,68,0.15)', paddingTop: 8, display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700 }}>
+              <span style={{ color: 'var(--register-text)' }}>Total</span>
+              <span style={{ color: 'var(--register-text)' }}>${scenario.lastSale.total.toLocaleString()}</span>
             </div>
           </div>
-
-          <div className="flex gap-4 text-xs" style={{ color: '#64748B' }}>
-            <span>Attach Rate: {scenario.lastSale.attachRate}%</span>
+          <div style={{ display: 'flex', gap: 16, fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
+            <span>Attach: {scenario.lastSale.attachRate}%</span>
             <span>Financing: {scenario.lastSale.financingUsed ? 'Yes' : 'No'}</span>
           </div>
         </div>
 
-        {/* Right: What they should do */}
-        <div className="rounded-xl border p-6" style={{ backgroundColor: '#F0FDF4', borderColor: '#BBF7D0' }}>
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingUp size={18} className="text-green-500" />
-            <h2 className="text-base font-bold" style={{ color: '#0F172A' }}>What They Should Do</h2>
+        {/* What They Should Do */}
+        <div style={{ padding: 18, borderRadius: 12, background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.15)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <TrendingUp size={18} style={{ color: '#10B981' }} />
+            <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>What They Should Do</span>
           </div>
-          <p className="text-sm mb-3" style={{ color: '#64748B' }}>{scenario.recommendation.action}</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginBottom: 10 }}>{scenario.recommendation.action}</p>
 
           {scenario.recommendation.products.length > 0 && (
-            <div className="space-y-2 mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#10B981' }}>Recommended Add-ons</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 10 }}>
+              <p style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#10B981', margin: 0 }}>Recommended Add-ons</p>
               {scenario.recommendation.products.map((product, i) => (
-                <div key={i} className="flex justify-between text-sm">
-                  <span style={{ color: '#0F172A' }}>{product.name}</span>
-                  <span className="font-mono font-medium" style={{ color: '#10B981' }}>+${product.price.toLocaleString()}</span>
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--register-text)' }}>{product.name}</span>
+                  <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#10B981' }}>+${product.price.toLocaleString()}</span>
                 </div>
               ))}
             </div>
           )}
 
-          <div
-            className="rounded-lg p-3 flex items-center gap-2"
-            style={{ backgroundColor: '#DCFCE7' }}
-          >
-            <Sparkles size={16} className="text-green-600" />
-            <span className="text-sm font-semibold" style={{ color: '#166534' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderRadius: 8, background: 'rgba(16,185,129,0.1)' }}>
+            <Sparkles size={14} style={{ color: '#10B981' }} />
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#10B981' }}>
               +${scenario.recommendation.commissionDelta} commission per sale
             </span>
           </div>
@@ -130,39 +146,135 @@ export default function RepCoachingClient({ params }: { params: Promise<{ id: st
       </div>
 
       {/* Coaching Script */}
-      <div className="rounded-xl border p-6 mb-8" style={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }}>
-        <div className="flex items-center gap-2 mb-4">
-          <MessageSquare size={18} style={{ color: '#8B5CF6' }} />
-          <h2 className="text-base font-bold" style={{ color: '#0F172A' }}>Coaching Script</h2>
+      <div
+        style={{
+          padding: 18, borderRadius: 12, marginBottom: 24,
+          background: 'var(--register-bg-elevated)',
+          border: '1px solid var(--register-border)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+          <MessageSquare size={18} style={{ color: 'var(--register-ai)' }} />
+          <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>Coaching Script</span>
         </div>
-        <ol className="space-y-3">
+        <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {scenario.recommendation.script.map((point, i) => (
-            <li key={i} className="flex gap-3 text-sm" style={{ color: '#334155' }}>
-              <span className="shrink-0 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#8B5CF6' }}>
+            <li key={i} style={{ display: 'flex', gap: 10, fontSize: '0.8rem', color: 'var(--register-text-muted)' }}>
+              <span
+                style={{
+                  flexShrink: 0, width: 24, height: 24, borderRadius: 12,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.7rem', fontWeight: 700, color: '#FFFFFF',
+                  background: 'var(--register-ai)',
+                }}
+              >
                 {i + 1}
               </span>
-              <span className="pt-0.5">{point}</span>
+              <span style={{ paddingTop: 2 }}>{point}</span>
             </li>
           ))}
         </ol>
       </div>
 
-      {/* Open on iPad CTA */}
-      <div className="rounded-xl border p-6 text-center" style={{ backgroundColor: '#EFF6FF', borderColor: '#BFDBFE' }}>
-        <Tablet size={32} className="mx-auto mb-3" style={{ color: '#1E3A5F' }} />
-        <h3 className="text-base font-bold mb-1" style={{ color: '#0F172A' }}>Practice This Scenario on iPad</h3>
-        <p className="text-sm mb-4" style={{ color: '#64748B' }}>
-          Open the POS simulator pre-loaded with {rep.name.split(' ')[0]}&apos;s scenario
-        </p>
-        <button
-          onClick={() => window.open(swicUrl, '_blank')}
-          className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
-          style={{ background: 'linear-gradient(135deg, #1E3A5F, #06B6D4)' }}
+      {/* Action buttons */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        {/* Push Coaching to POS */}
+        <div
+          style={{
+            padding: 20, borderRadius: 12, textAlign: 'center',
+            background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.15)',
+          }}
         >
-          <Tablet size={16} />
-          Open on iPad
-        </button>
+          <Send size={28} style={{ color: '#10B981', margin: '0 auto 10px' }} />
+          <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)', margin: '0 0 4px' }}>Push Coaching to POS</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', margin: '0 0 14px' }}>
+            Send to {rep.name.split(' ')[0]}&apos;s iPad POS terminal
+          </p>
+          <button
+            onClick={() => {
+              broadcastCoaching({
+                id: `coaching-${repId}-${Date.now()}`,
+                repId,
+                repName: rep.name,
+                message: scenario.weaknessLabel,
+                action: scenario.recommendation.action,
+                commissionDelta: scenario.recommendation.commissionDelta,
+                timestamp: new Date().toISOString(),
+              });
+            }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '10px 20px', borderRadius: 10, border: 'none',
+              background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+              color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer',
+            }}
+          >
+            <Send size={14} />
+            Push to Rep Tablet
+          </button>
+          <div style={{ marginTop: 10, padding: '6px 12px', borderRadius: 8, background: 'rgba(16,185,129,0.1)', display: 'inline-block' }}>
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#10B981' }}>
+              +${scenario.recommendation.commissionDelta} commission impact
+            </span>
+          </div>
+        </div>
+
+        {/* Open POS Terminal */}
+        <div
+          style={{
+            padding: 20, borderRadius: 12, textAlign: 'center',
+            background: 'rgba(30,58,95,0.05)', border: '1px solid rgba(30,58,95,0.15)',
+          }}
+        >
+          <Tablet size={28} style={{ color: 'var(--register-primary)', margin: '0 auto 10px' }} />
+          <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)', margin: '0 0 4px' }}>Practice This Scenario</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', margin: '0 0 14px' }}>
+            Open POS pre-loaded with {rep.name.split(' ')[0]}&apos;s scenario
+          </p>
+          <button
+            onClick={() => window.open('/register/ops/pos-terminal', '_blank')}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '10px 20px', borderRadius: 10, border: 'none',
+              background: 'linear-gradient(135deg, #1E3A5F, #06B6D4)',
+              color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer',
+            }}
+          >
+            <Tablet size={14} />
+            Open on iPad
+          </button>
+        </div>
       </div>
-    </>
+
+      {/* Comp Admin Link */}
+      <div
+        style={{
+          marginTop: 20, padding: 14, borderRadius: 12,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          background: 'var(--register-bg-surface)',
+          border: '1px solid var(--register-border)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Settings size={16} style={{ color: 'var(--register-ai)' }} />
+          <div>
+            <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)', margin: 0 }}>Plan design issue?</p>
+            <p style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)', margin: '2px 0 0' }}>Edit tiers, SPIFFs, and accelerators</p>
+          </div>
+        </div>
+        <Link
+          href="/register/comp/admin"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            padding: '6px 14px', borderRadius: 8,
+            fontSize: '0.75rem', fontWeight: 600, color: '#FFFFFF',
+            background: 'var(--register-ai)', textDecoration: 'none',
+          }}
+        >
+          <Settings size={12} />
+          Comp Admin
+        </Link>
+      </div>
+    </RegisterPage>
   );
 }

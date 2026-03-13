@@ -1,311 +1,392 @@
 'use client';
 
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronRight, Tablet } from 'lucide-react';
-import { StatCard, BarChart, AreaChart, KanbanBoard } from '@/components/demos/register';
-import { REPS } from '@/data/register/coaching-data';
+import {
+  ChevronRight, Tablet, Send, Megaphone, Clock,
+  Sparkles, AlertTriangle,
+} from 'lucide-react';
+import { RegisterPage } from '@/components/demos/register/RegisterPage';
+import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import {
+  REPS, COACHING_CARDS, getRepStatus,
+  type CoachingPriority, type CoachingCard as CoachingCardType,
+} from '@/data/register/coaching-data';
+import { broadcastCoaching, broadcastAlert, onRegisterBroadcast, type BroadcastMessage } from '@/lib/register-broadcast';
+import { getInsight } from '@/data/register/ai-insights';
 
-/* ── Rep performance data ────────────────────────────────── */
+/* ── Priority config ─────────────────────────────────────── */
 
-const REP_PERFORMANCE = [
-  { label: 'Sarah J.', value: 18.4, color: '#10B981' },
-  { label: 'Marcus W.', value: 16.2, color: '#1E3A5F' },
-  { label: 'Diana K.', value: 14.8, color: '#1E3A5F' },
-  { label: 'Emily R.', value: 12.6, color: '#1E3A5F' },
-  { label: 'James T.', value: 11.2, color: '#1E3A5F' },
-  { label: 'Raj P.', value: 9.8, color: '#1E3A5F' },
-];
+const PRIORITY_CONFIG: Record<CoachingPriority, { color: string; bg: string; label: string }> = {
+  urgent: { color: '#DC2626', bg: 'rgba(220,38,38,0.08)', label: 'URGENT' },
+  high: { color: '#F59E0B', bg: 'rgba(245,158,11,0.08)', label: 'HIGH' },
+  medium: { color: '#3B82F6', bg: 'rgba(59,130,246,0.08)', label: 'MED' },
+  low: { color: '#10B981', bg: 'rgba(16,185,129,0.08)', label: 'LOW' },
+};
 
-/* ── Kanban task board ───────────────────────────────────── */
+const STATUS_DOT: Record<string, string> = {
+  green: '#10B981',
+  amber: '#F59E0B',
+  red: '#EF4444',
+};
 
-const KANBAN_COLUMNS = [
-  {
-    title: 'Morning Tasks',
-    color: '#06B6D4',
-    cards: [
-      { title: 'Floor walk & display check', assignee: 'Manager', priority: 'medium' as const },
-      { title: 'Review overnight web leads', assignee: 'Manager', priority: 'high' as const },
-    ],
-  },
-  {
-    title: 'In Progress',
-    color: '#F59E0B',
-    cards: [
-      { title: 'Purple endcap refresh', assignee: 'Raj P.', priority: 'medium' as const },
-      { title: 'New hire training \u2014 Casey', assignee: 'Sarah J.', priority: 'high' as const },
-      { title: 'Finance approval backlog', assignee: 'Manager', priority: 'critical' as const },
-    ],
-  },
-  {
-    title: 'Blocked',
-    color: '#EF4444',
-    cards: [
-      { title: 'Sealy display model replacement', assignee: 'Vendor', priority: 'critical' as const },
-      { title: 'POS terminal #3 repair', assignee: 'IT Support', priority: 'high' as const },
-    ],
-  },
-  {
-    title: 'Done',
-    color: '#10B981',
-    cards: [
-      { title: 'Morning team huddle', assignee: 'Manager', priority: 'low' as const },
-      { title: 'Restock bedding wall', assignee: 'Raj P.', priority: 'medium' as const },
-      { title: 'Update promo signage', assignee: 'Emily R.', priority: 'low' as const },
-    ],
-  },
-];
+/* ── Coaching Card Component ─────────────────────────────── */
 
-/* ── Hourly revenue vs target ────────────────────────────── */
+function CoachingCardView({ card, onPush, pushed }: {
+  card: CoachingCardType;
+  onPush: (card: CoachingCardType) => void;
+  pushed: boolean;
+}) {
+  const rep = REPS.find((r) => r.id === card.repId);
+  const cfg = PRIORITY_CONFIG[card.priority];
+  const [expanded, setExpanded] = useState(false);
 
-const HOURLY_ACTUAL = [
-  { label: '8AM', value: 1.2 }, { label: '9AM', value: 3.8 }, { label: '10AM', value: 7.4 },
-  { label: '11AM', value: 12.2 }, { label: '12PM', value: 9.6 }, { label: '1PM', value: 8.4 },
-  { label: '2PM', value: 10.8 }, { label: '3PM', value: 13.1 }, { label: '4PM', value: 11.2 },
-  { label: '5PM', value: 9.4 }, { label: '6PM', value: 7.8 }, { label: '7PM', value: 5.6 },
-  { label: '8PM', value: 3.2 },
-];
-
-const HOURLY_TARGET = [
-  { label: '8AM', value: 2.0 }, { label: '9AM', value: 4.5 }, { label: '10AM', value: 8.0 },
-  { label: '11AM', value: 11.0 }, { label: '12PM', value: 9.0 }, { label: '1PM', value: 8.5 },
-  { label: '2PM', value: 10.0 }, { label: '3PM', value: 12.0 }, { label: '4PM', value: 11.0 },
-  { label: '5PM', value: 9.0 }, { label: '6PM', value: 8.0 }, { label: '7PM', value: 6.0 },
-  { label: '8PM', value: 4.0 },
-];
-
-/* ── Exception alerts ────────────────────────────────────── */
-
-const EXCEPTIONS = [
-  { message: 'Financing system timeout \u2014 3 pending approvals', detail: 'Last response: 4min 22s ago. Avg wait: 3min.', color: '#EF4444', bg: '#FEE2E2' },
-  { message: 'Display model damaged \u2014 King Purple Hybrid', detail: 'Coil exposed at footboard edge. Pulled from floor 1hr ago.', color: '#F59E0B', bg: '#FEF3C7' },
-  { message: 'Rep tardiness: Mike L. \u2014 45min late, no call', detail: 'Scheduled 10AM. Not checked in. Pattern: 3rd time this month.', color: '#EF4444', bg: '#FEE2E2' },
-];
-
-/* ── Coaching queue ──────────────────────────────────────── */
-
-const COACHING = [
-  {
-    rep: 'Casey (new hire)',
-    repId: 'casey',
-    area: 'Attach rate 12%',
-    benchmark: 'store avg 42%',
-    action: 'Shadow Sarah J. for next 3 sales',
-    color: '#EF4444',
-  },
-  {
-    rep: 'Raj P.',
-    repId: 'raj',
-    area: 'Financing pitch 28%',
-    benchmark: 'store avg 55%',
-    action: 'Practice 3-payment breakdown script',
-    color: '#F59E0B',
-  },
-  {
-    rep: 'James T.',
-    repId: 'james',
-    area: 'ASP $1,420',
-    benchmark: 'store avg $1,893',
-    action: 'Focus on premium tier during next ups',
-    color: '#F59E0B',
-  },
-];
-
-export default function ManagerConsole() {
   return (
-    <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Manager Console</h1>
-        <p className="text-sm mt-1" style={{ color: '#475569' }}>
-          Real-time shift management, team performance, and operational exceptions
-        </p>
-      </div>
-
-      {/* Shift Summary Card */}
-      <div className="rounded-xl bg-white border p-5 mb-6" style={{ borderColor: '#E2E8F0' }}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div>
-              <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Today&apos;s Shift</span>
-              <p className="text-sm font-bold" style={{ color: '#0F172A' }}>10:00 AM &ndash; 8:00 PM</p>
-            </div>
-            <div className="h-8 w-px" style={{ backgroundColor: '#E2E8F0' }} />
-            <div>
-              <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Reps on Floor</span>
-              <p className="text-sm font-bold" style={{ color: '#10B981' }}>6 / 8</p>
-            </div>
-            <div className="h-8 w-px" style={{ backgroundColor: '#E2E8F0' }} />
-            <div>
-              <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Scheduled</span>
-              <p className="text-sm font-bold" style={{ color: '#0F172A' }}>8</p>
-            </div>
-            <div className="h-8 w-px" style={{ backgroundColor: '#E2E8F0' }} />
-            <div>
-              <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Call-outs</span>
-              <p className="text-sm font-bold" style={{ color: '#EF4444' }}>2</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <span className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: '#94A3B8' }}>Absent</span>
-            <p className="text-[12px] font-medium" style={{ color: '#EF4444' }}>Mike L., Pat R.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* 4 StatCards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        <div className="relative">
-          <StatCard label="Today's Revenue" value="$89K" color="#1E3A5F" />
+    <div
+      style={{
+        padding: 14, borderRadius: 12,
+        background: cfg.bg,
+        border: `1px solid ${cfg.color}20`,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span
-            className="absolute top-3 right-3 text-[10px] font-mono"
-            style={{ color: '#EF4444' }}
+            style={{
+              display: 'inline-flex', padding: '2px 6px', borderRadius: 4,
+              fontSize: '0.6rem', fontWeight: 700, color: '#FFFFFF',
+              background: cfg.color,
+            }}
           >
-            vs $95K target (-$6K)
+            {cfg.label}
+          </span>
+          <span
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 3,
+              padding: '2px 6px', borderRadius: 10,
+              fontSize: '0.55rem', fontWeight: 600,
+              background: 'rgba(139,92,246,0.1)', color: '#8B5CF6',
+            }}
+          >
+            <Sparkles size={8} /> AI-Generated
           </span>
         </div>
-        <StatCard label="Transactions" value="47" trend="up" trendValue="+8 vs yesterday" color="#06B6D4" />
-        <StatCard label="Team Avg ASP" value="$1,893" trend="up" trendValue="+$42" color="#8B5CF6" />
-        <StatCard label="Comp Earned Today" value="$2,847" sparkline={[180, 220, 260, 310, 360, 420, 480, 540]} color="#10B981" />
+        <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>
+          <Clock size={10} /> {card.timestamp}
+        </span>
       </div>
 
-      {/* Rep Performance + Hourly Revenue */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Rep Performance Today ($K)
+      <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)', margin: '0 0 8px' }}>
+        {rep?.name}: {card.title}
+      </p>
+
+      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 10 }}>
+        {card.dataPoints.map((dp, i) => (
+          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
+            <span style={{ width: 4, height: 4, borderRadius: 2, background: cfg.color, marginTop: 6, flexShrink: 0 }} />
+            {dp}
+          </li>
+        ))}
+      </ul>
+
+      {expanded && (
+        <div style={{ padding: 10, borderRadius: 8, background: 'rgba(139,92,246,0.06)', marginBottom: 10 }}>
+          <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-ai)', margin: 0 }}>
+            {card.suggestedAction}
           </p>
-          <BarChart data={REP_PERFORMANCE} unit="K" />
-          <div className="mt-3 pt-2 border-t text-center" style={{ borderColor: '#F1F5F9' }}>
-            <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-              Top performer:{' '}
-              <span className="font-bold" style={{ color: '#10B981' }}>Sarah J.</span>{' '}
-              &mdash; $18.4K (194% of daily target)
-            </span>
-          </div>
         </div>
+      )}
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-          <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-            Hourly Revenue vs Target ($K)
-          </p>
-          <div className="relative">
-            <AreaChart data={HOURLY_ACTUAL} color="#1E3A5F" />
-            {/* Overlay target line indicator */}
-            <div className="absolute top-0 right-0">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1">
-                  <span className="w-3 h-0.5 rounded" style={{ backgroundColor: '#1E3A5F' }} />
-                  <span className="text-[10px]" style={{ color: '#475569' }}>Actual</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="w-3 h-0.5 rounded border-b border-dashed" style={{ borderColor: '#94A3B8' }} />
-                  <span className="text-[10px]" style={{ color: '#475569' }}>Target</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-2 text-center">
-            <span className="text-[10px] font-mono" style={{ color: '#F59E0B' }}>
-              Pacing: 93.7% of daily target &mdash; need $6K in remaining 3hrs
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Kanban Board */}
-      <div className="rounded-xl bg-white border p-6 mb-8" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          Shift Task Board
-        </p>
-        <KanbanBoard columns={KANBAN_COLUMNS} />
-      </div>
-
-      {/* Exception Alerts */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        {EXCEPTIONS.map((ex, i) => (
-          <div
-            key={i}
-            className="rounded-xl border p-4"
-            style={{ backgroundColor: ex.bg, borderColor: `${ex.color}30` }}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#10B981' }}>
+            {card.commissionImpact}
+          </span>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            style={{ background: 'none', border: 'none', fontSize: '0.65rem', color: 'var(--register-ai)', cursor: 'pointer', textDecoration: 'underline' }}
           >
-            <div className="flex items-start gap-2 mb-2">
-              <span
-                className="shrink-0 w-2 h-2 rounded-full mt-1"
-                style={{ backgroundColor: ex.color }}
-              />
-              <p className="text-[12px] font-semibold leading-tight" style={{ color: ex.color }}>
-                {ex.message}
+            {expanded ? 'Less' : 'Details'}
+          </button>
+        </div>
+        <button
+          onClick={() => onPush(card)}
+          disabled={pushed}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            padding: '6px 12px', borderRadius: 8,
+            fontSize: '0.7rem', fontWeight: 600, color: '#FFFFFF',
+            background: pushed ? '#94A3B8' : 'var(--register-primary)',
+            border: 'none', cursor: pushed ? 'default' : 'pointer',
+            opacity: pushed ? 0.6 : 1,
+          }}
+        >
+          <Send size={10} />
+          {pushed ? 'Sent' : 'Push to Rep Tablet'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Main Page ───────────────────────────────────────────── */
+
+export default function ManagerConsole() {
+  const [pushedCards, setPushedCards] = useState<Set<string>>(new Set());
+  const [broadcastSent, setBroadcastSent] = useState(false);
+  const [liveFeed, setLiveFeed] = useState<string[]>([]);
+
+  const insight = getInsight('ops/floor');
+
+  // Listen for sale:closed events from POS
+  useEffect(() => {
+    const unsub = onRegisterBroadcast((msg: BroadcastMessage) => {
+      if (msg.type === 'alert') {
+        setLiveFeed((prev) => [`${new Date().toLocaleTimeString()} — ${msg.data.message}`, ...prev].slice(0, 10));
+      }
+    });
+    return unsub;
+  }, []);
+
+  const handlePushCoaching = useCallback((card: CoachingCardType) => {
+    const rep = REPS.find((r) => r.id === card.repId);
+    broadcastCoaching({
+      id: card.id,
+      repId: card.repId,
+      repName: rep?.name ?? card.repId,
+      message: card.title,
+      action: card.suggestedAction,
+      commissionDelta: parseInt(card.commissionImpact.replace(/[^0-9]/g, '')) || undefined,
+      timestamp: new Date().toISOString(),
+    });
+    setPushedCards((prev) => new Set(prev).add(card.id));
+  }, []);
+
+  const handleBroadcastAll = useCallback(() => {
+    broadcastAlert({
+      id: `alert-${Date.now()}`,
+      severity: 'info',
+      message: 'New SPIFF active: $25 bonus for every ErgoMotion Adjustable Base sold this month! Demo the zero-gravity position on every up.',
+      timestamp: new Date().toISOString(),
+    });
+    setBroadcastSent(true);
+  }, []);
+
+  return (
+    <RegisterPage title="Manager Console" subtitle="Flagship #12 — Galleria" accentColor="#8B5CF6">
+      {/* AI Insight */}
+      {insight && (
+        <div style={{ marginBottom: 20 }}>
+          <AIInsightCard>{insight.text}</AIInsightCard>
+        </div>
+      )}
+
+      {/* Header actions */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, marginBottom: 20 }}>
+        <button
+          onClick={() => window.open('/register/ops/pos-terminal', '_blank')}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '8px 16px', borderRadius: 8,
+            background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)',
+            color: 'var(--register-text)', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
+          }}
+        >
+          <Tablet size={14} /> Open Rep Tablet
+        </button>
+        <button
+          onClick={handleBroadcastAll}
+          disabled={broadcastSent}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '8px 16px', borderRadius: 8, border: 'none',
+            background: broadcastSent ? '#94A3B8' : 'var(--register-ai)',
+            color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 600,
+            cursor: broadcastSent ? 'default' : 'pointer',
+            opacity: broadcastSent ? 0.6 : 1,
+          }}
+        >
+          <Megaphone size={14} />
+          {broadcastSent ? 'Alert Sent' : 'Broadcast All'}
+        </button>
+      </div>
+
+      {/* Store status bar */}
+      <div
+        style={{
+          display: 'flex', alignItems: 'center', gap: 24,
+          padding: '14px 20px', borderRadius: 12,
+          background: 'var(--register-bg-elevated)',
+          border: '1px solid var(--register-border)',
+          marginBottom: 20,
+        }}
+      >
+        {[
+          { label: "Today's Revenue", value: '$47,200', color: 'var(--register-text)' },
+          { label: 'Traffic', value: '142', color: 'var(--register-text)' },
+          { label: 'Active Shoppers', value: '8', color: '#10B981' },
+          { label: 'Open Sales', value: '3', color: 'var(--register-accent)' },
+        ].map((stat, i) => (
+          <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            {i > 0 && <div style={{ width: 1, height: 32, background: 'var(--register-border)' }} />}
+            <div>
+              <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--register-text-dim)', margin: 0 }}>
+                {stat.label}
+              </p>
+              <p style={{ fontSize: '1rem', fontWeight: 700, fontFamily: 'monospace', color: stat.color, margin: '2px 0 0' }}>
+                {stat.value}
               </p>
             </div>
-            <p className="text-[11px] ml-4" style={{ color: '#475569' }}>
-              {ex.detail}
-            </p>
           </div>
         ))}
       </div>
 
-      {/* Coaching Queue */}
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E2E8F0' }}>
-        <p className="text-sm font-semibold mb-4" style={{ color: '#0F172A' }}>
-          Coaching Queue
+      {/* Rep Cards */}
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 12 }}>
+          Floor Team
         </p>
-        <div className="grid grid-cols-3 gap-4">
-          {COACHING.map((coach, i) => {
-            const rep = REPS.find((r) => r.id === coach.repId);
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+          {REPS.map((rep) => {
+            const status = getRepStatus(rep.id);
+            const dotColor = status ? STATUS_DOT[status.statusColor] : '#10B981';
             return (
-              <div key={i} className="relative group">
+              <div
+                key={rep.id}
+                style={{
+                  position: 'relative',
+                  padding: 14, borderRadius: 12,
+                  background: 'var(--register-bg-elevated)',
+                  border: `1px solid var(--register-border)`,
+                }}
+              >
                 <Link
-                  href={`/register/ops/manager/coaching/${coach.repId}`}
-                  className="block rounded-lg border-l-4 p-4 transition-all duration-150 hover:shadow-md hover:-translate-y-0.5"
-                  style={{ borderLeftColor: coach.color, backgroundColor: '#F8FAFC' }}
+                  href={`/register/ops/manager/coaching/${rep.id}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  <div className="flex items-start justify-between mb-1">
-                    <div>
-                      <p className="text-[13px] font-bold" style={{ color: '#0F172A' }}>
-                        {coach.rep}
-                      </p>
-                      {rep && (
-                        <p className="text-[10px]" style={{ color: '#94A3B8' }}>
-                          {rep.role}
-                        </p>
-                      )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                    <div
+                      style={{
+                        width: 36, height: 36, borderRadius: 18,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '0.75rem', fontWeight: 700, color: '#FFFFFF',
+                        background: `linear-gradient(135deg, ${dotColor}, ${dotColor}88)`,
+                      }}
+                    >
+                      {rep.avatar}
                     </div>
-                    <ChevronRight
-                      className="w-4 h-4 shrink-0 mt-0.5 opacity-40 group-hover:opacity-100 transition-opacity"
-                      style={{ color: coach.color }}
-                    />
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>{rep.name}</p>
+                      <p style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)', margin: '2px 0 0' }}>{rep.role}</p>
+                    </div>
+                    <span style={{ width: 10, height: 10, borderRadius: 5, background: dotColor }} />
+                    <ChevronRight size={14} style={{ color: 'var(--register-text-dim)' }} />
                   </div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[11px] font-mono" style={{ color: coach.color }}>
-                      {coach.area}
-                    </span>
-                    <span className="text-[10px]" style={{ color: '#94A3B8' }}>
-                      ({coach.benchmark})
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-medium shrink-0 mt-px" style={{ color: '#10B981' }}>Action:</span>
-                    <p className="text-[11px]" style={{ color: '#475569' }}>
-                      {coach.action}
-                    </p>
+
+                  {/* Shift attainment */}
+                  {status && (
+                    <div style={{ marginBottom: 10 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6rem', marginBottom: 4 }}>
+                        <span style={{ color: 'var(--register-text-muted)' }}>Shift Attainment</span>
+                        <span style={{ fontWeight: 700, color: dotColor }}>{status.shiftAttainment}%</span>
+                      </div>
+                      <div style={{ height: 6, borderRadius: 3, background: `${dotColor}20` }}>
+                        <div style={{ height: 6, borderRadius: 3, width: `${Math.min(status.shiftAttainment, 100)}%`, background: dotColor }} />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 3 metrics */}
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    {[
+                      { label: 'Attach', value: `${rep.metrics.attachRate}%`, bad: rep.metrics.attachRate < rep.metrics.floorAvgAttach },
+                      { label: 'Finance', value: `${rep.metrics.financingPitch}%`, bad: rep.metrics.financingPitch < rep.metrics.floorAvgFinancing },
+                      { label: 'ASP', value: `$${(rep.metrics.asp / 1000).toFixed(1)}K`, bad: rep.metrics.asp < rep.metrics.floorAvgAsp },
+                    ].map((m) => (
+                      <div key={m.label} style={{ flex: 1, textAlign: 'center' }}>
+                        <p style={{ fontSize: '0.55rem', color: 'var(--register-text-dim)', margin: 0 }}>{m.label}</p>
+                        <p style={{ fontSize: '0.8rem', fontWeight: 700, color: m.bad ? '#EF4444' : '#10B981', margin: '2px 0 0' }}>{m.value}</p>
+                      </div>
+                    ))}
                   </div>
                 </Link>
-                <a
-                  href={`/register/ops/manager/coaching/${coach.repId}?view=ipad`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Open on iPad"
-                  className="absolute top-2 right-8 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity px-1.5 py-0.5 rounded text-[10px] font-medium"
-                  style={{ backgroundColor: '#EFF6FF', color: '#3B82F6', border: '1px solid #BFDBFE' }}
-                  onClick={(e) => e.stopPropagation()}
+
+                {/* Push to iPad hover button */}
+                <button
+                  onClick={() => {
+                    const card = COACHING_CARDS.find((c) => c.repId === rep.id);
+                    if (card) handlePushCoaching(card);
+                  }}
+                  style={{
+                    position: 'absolute', top: 8, right: 8,
+                    display: 'flex', alignItems: 'center', gap: 4,
+                    padding: '4px 8px', borderRadius: 6,
+                    fontSize: '0.6rem', fontWeight: 600, color: '#FFFFFF',
+                    background: 'var(--register-primary)', border: 'none', cursor: 'pointer',
+                    opacity: 0.85,
+                  }}
                 >
-                  <Tablet className="w-3 h-3" />
-                  iPad
-                </a>
+                  <Send size={8} /> Push
+                </button>
               </div>
             );
           })}
         </div>
       </div>
-    </>
+
+      {/* Live Feed from POS */}
+      {liveFeed.length > 0 && (
+        <div
+          style={{
+            padding: 14, borderRadius: 12,
+            background: 'rgba(16,185,129,0.06)',
+            border: '1px solid rgba(16,185,129,0.2)',
+            marginBottom: 20,
+          }}
+        >
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#10B981', marginBottom: 8 }}>Live POS Feed</p>
+          {liveFeed.map((msg, i) => (
+            <p key={i} style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', margin: '4px 0' }}>{msg}</p>
+          ))}
+        </div>
+      )}
+
+      {/* Live Coaching Feed */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <AlertTriangle size={16} style={{ color: '#F59E0B' }} />
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>
+              Live Coaching Feed
+            </span>
+            <span
+              style={{
+                display: 'inline-flex', padding: '2px 8px', borderRadius: 10,
+                fontSize: '0.6rem', fontWeight: 600,
+                background: 'rgba(16,185,129,0.1)', color: '#10B981',
+              }}
+            >
+              {COACHING_CARDS.length} active
+            </span>
+          </div>
+          <Link
+            href="/register/comp/admin"
+            style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-ai)', textDecoration: 'none' }}
+          >
+            Comp Admin &rarr;
+          </Link>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          {COACHING_CARDS.map((card) => (
+            <CoachingCardView
+              key={card.id}
+              card={card}
+              onPush={handlePushCoaching}
+              pushed={pushedCards.has(card.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </RegisterPage>
   );
 }

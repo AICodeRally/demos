@@ -1,0 +1,69 @@
+<h2>POS Tablet Simulator — Launch Pattern</h2>
+<p class="subtitle">How should the POS terminal appear when demoing? Pick the approach that works best for presenting to clients.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Popup Window (PROOFLINE Pattern)</h3>
+      <p>Manager Console has a "Open on iPad" button that launches <code>window.open()</code> with specific dimensions (1024x768). The POS opens in a <strong>separate browser window</strong> styled as a tablet with a CSS bezel frame (camera notch, home indicator, status bar). You position it next to the main browser during the demo.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Two windows side-by-side = manager + rep tablet visible simultaneously</li>
+          <li>BroadcastChannel works perfectly (same origin)</li>
+          <li>Most realistic — feels like a separate device</li>
+          <li>Proven pattern from PROOFLINE demo</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Popup blockers may interfere</li>
+          <li>Requires positioning two windows manually</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Slide-Over Panel</h3>
+      <p>The POS terminal slides in from the right as a <strong>full-height overlay panel</strong> (480px wide) on top of the current page. Has an iPad bezel frame. Manager page stays visible behind it (dimmed). Close button to dismiss.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>No popup blocker issues</li>
+          <li>Single window — easier to present on a projector</li>
+          <li>Smooth animation, feels polished</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Cramped at 480px — POS UI needs to be compact</li>
+          <li>Can't see manager + POS side by side (overlay hides manager)</li>
+          <li>Less realistic as a "separate device"</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Dedicated Route in TabletFrame</h3>
+      <p>POS lives at its own URL (<code>/register/ops/pos-terminal</code>) wrapped in PROOFLINE's <strong>TabletFrame component</strong> — a CSS iPad bezel with camera notch, status bar, and home indicator. Navigate to it directly or via a button that opens a new tab. Full-width tablet experience.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Full screen real estate for the POS UI</li>
+          <li>Reuses existing TabletFrame component from PROOFLINE</li>
+          <li>Can open in new tab for side-by-side with manager</li>
+          <li>Works great on actual iPads too</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Navigating away from manager loses context (unless new tab)</li>
+          <li>Need "Open on iPad" button that opens new tab</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 2rem; padding: 1.5rem; border-radius: 12px; background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.2);">
+  <h3 style="color: #8B5CF6; margin-top: 0;">Recommendation: Option A or C</h3>
+  <p>For client presentations, the popup window (A) gives you the most dramatic "push to iPad" moment — you click a button on the manager screen and a tablet literally appears. Option C is the most pragmatic and reuses existing code. Both support the BroadcastChannel real-time push story.</p>
+</div>
