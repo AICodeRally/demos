@@ -12,6 +12,7 @@ export default defineDemo({
     name: 'REGISTER',
     badge: 'Interactive Demo',
   },
+  darkMode: true,
   theme: 'register-slate',
   colors: {
     primary: '#1E3A5F',
