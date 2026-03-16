@@ -65,7 +65,7 @@ function TierStaircase({ tiers, label, highlight }: { tiers: { name: string; rat
   const maxRate = Math.max(...tiers.map(t => t.rate));
   return (
     <div style={{ flex: 1 }}>
-      <p style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: highlight ? '#10B981' : 'var(--register-text-muted)', marginBottom: 8, textAlign: 'center' }}>
+      <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: highlight ? '#10B981' : 'var(--register-text-muted)', marginBottom: 8, textAlign: 'center' }}>
         {label}
       </p>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 64 }}>
@@ -73,7 +73,7 @@ function TierStaircase({ tiers, label, highlight }: { tiers: { name: string; rat
           const h = (tier.rate / maxRate) * 56 + 8;
           return (
             <div key={tier.name} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <span style={{ fontSize: '0.55rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: tier.color }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: tier.color }}>
                 {(tier.rate * 100).toFixed(1)}%
               </span>
               <div
@@ -88,7 +88,7 @@ function TierStaircase({ tiers, label, highlight }: { tiers: { name: string; rat
                   transition: 'all 0.5s ease',
                 }}
               />
-              <span style={{ fontSize: '0.5rem', color: 'var(--register-text-dim)' }}>{tier.name}</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--register-text-dim)' }}>{tier.name}</span>
             </div>
           );
         })}
@@ -113,13 +113,13 @@ function PushEntry({ timestamp, who, what, status }: { timestamp: string; who: s
         <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)', margin: 0, lineHeight: 1.3 }}>
           {what}
         </p>
-        <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>
+        <p style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)', margin: '2px 0 0' }}>
           {timestamp} &mdash; {who}
         </p>
       </div>
       <span
         style={{
-          fontSize: '0.55rem',
+          fontSize: '0.78rem',
           fontWeight: 700,
           padding: '2px 8px',
           borderRadius: 10,
@@ -245,7 +245,7 @@ export default function CompAdminPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
             <Settings size={16} color="var(--register-text-muted)" />
             <h2 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Active Plans</h2>
-            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>
+            <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>
               {ADMIN_PLANS.length} plans &middot; {ADMIN_PLANS.reduce((s, p) => s + p.enrolled, 0)} reps
             </span>
           </div>
@@ -287,7 +287,7 @@ export default function CompAdminPage() {
                           </span>
                           <span
                             style={{
-                              fontSize: '0.55rem',
+                              fontSize: '0.78rem',
                               fontWeight: 700,
                               padding: '2px 8px',
                               borderRadius: 10,
@@ -298,7 +298,7 @@ export default function CompAdminPage() {
                             {stCfg.label}
                           </span>
                         </div>
-                        <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
+                        <span style={{ fontSize: '0.85rem', color: 'var(--register-text-dim)' }}>
                           {p.format} &middot; {p.enrolled} reps &middot; {p.effectiveFrom} to {p.effectiveTo}
                         </span>
                       </div>
@@ -339,7 +339,7 @@ export default function CompAdminPage() {
                           <button
                             onClick={() => resetTiers(p.id)}
                             style={{
-                              fontSize: '0.6rem', fontWeight: 600, color: '#F59E0B',
+                              fontSize: '0.8rem', fontWeight: 600, color: '#F59E0B',
                               background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
                               borderRadius: 6, padding: '2px 8px', cursor: 'pointer',
                             }}
@@ -382,31 +382,31 @@ export default function CompAdminPage() {
                                   border: `1px solid ${minChanged || maxChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
                                 }}
                               >
-                                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>$</span>
+                                <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
                                 <input
                                   type="number"
                                   value={tier.minRevenue}
                                   onChange={(e) => updateTier(p.id, i, 'minRevenue', Math.max(0, Number(e.target.value)))}
                                   style={{
                                     width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                    fontSize: '0.7rem', fontVariantNumeric: 'tabular-nums',
+                                    fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
                                     color: minChanged ? '#F59E0B' : 'var(--register-text-dim)',
                                     fontWeight: minChanged ? 700 : 400,
                                   }}
                                 />
-                                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
+                                <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
                                 {tier.maxRevenue === Infinity ? (
-                                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums' }}>{'\u221E'}</span>
+                                  <span style={{ fontSize: '0.85rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums' }}>{'\u221E'}</span>
                                 ) : (
                                   <>
-                                    <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>$</span>
+                                    <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
                                     <input
                                       type="number"
                                       value={tier.maxRevenue}
                                       onChange={(e) => updateTier(p.id, i, 'maxRevenue', Math.max(0, Number(e.target.value)))}
                                       style={{
                                         width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                        fontSize: '0.7rem', fontVariantNumeric: 'tabular-nums',
+                                        fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
                                         color: maxChanged ? '#F59E0B' : 'var(--register-text-dim)',
                                         fontWeight: maxChanged ? 700 : 400,
                                       }}
@@ -435,7 +435,7 @@ export default function CompAdminPage() {
                                     color: rateChanged ? '#F59E0B' : tier.color,
                                   }}
                                 />
-                                <span style={{ fontSize: '0.7rem', fontWeight: 700, color: rateChanged ? '#F59E0B' : tier.color }}>%</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: rateChanged ? '#F59E0B' : tier.color }}>%</span>
                               </div>
                             </div>
                           );
@@ -463,7 +463,7 @@ export default function CompAdminPage() {
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                               <Zap size={13} color={spiff.active ? '#F59E0B' : 'var(--register-text-dim)'} />
                               <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)' }}>{spiff.name}</span>
-                              <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>${spiff.bonus}/unit</span>
+                              <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>${spiff.bonus}/unit</span>
                             </div>
                             {/* Toggle pill */}
                             <div
@@ -516,8 +516,8 @@ export default function CompAdminPage() {
                                 }}
                               >
                                 <Zap size={12} color="#3B82F6" />
-                                <span style={{ fontSize: '0.7rem', color: 'var(--register-text)' }}>{acc.label}</span>
-                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#3B82F6', fontVariantNumeric: 'tabular-nums', marginLeft: 'auto' }}>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--register-text)' }}>{acc.label}</span>
+                                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#3B82F6', fontVariantNumeric: 'tabular-nums', marginLeft: 'auto' }}>
                                   {acc.multiplier}x
                                 </span>
                               </div>
@@ -561,7 +561,7 @@ export default function CompAdminPage() {
                   <TrendingDown size={15} color="#EF4444" />
                 )}
                 <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>SWIC Live Calc</h3>
-                <span style={{ fontSize: '0.55rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>sample sale</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>sample sale</span>
               </div>
 
               {/* Sample sale description */}
@@ -572,7 +572,7 @@ export default function CompAdminPage() {
                   border: '1px solid rgba(6,182,212,0.12)',
                 }}
               >
-                <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', margin: 0, lineHeight: 1.4 }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)', margin: 0, lineHeight: 1.4 }}>
                   CloudRest King ($2,999) + ErgoMotion Pro ($1,999) + 5-Year Protection ($149) = <strong style={{ color: 'var(--register-text)' }}>$5,147</strong>
                 </p>
               </div>
@@ -580,20 +580,20 @@ export default function CompAdminPage() {
               {/* Original vs Modified */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Original Commission</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--register-text-muted)' }}>Original Commission</span>
                   <span style={{ fontSize: '0.9rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
                     ${swicResult.original.toFixed(2)}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>Modified Commission</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--register-text-muted)' }}>Modified Commission</span>
                   <span style={{ fontSize: '0.9rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: swicResult.delta >= 0 ? '#10B981' : '#EF4444' }}>
                     ${swicResult.modified.toFixed(2)}
                   </span>
                 </div>
                 <div style={{ height: 1, background: 'var(--register-border)' }} />
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text)' }}>Delta</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>Delta</span>
                   <span
                     style={{
                       fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums',
@@ -608,7 +608,7 @@ export default function CompAdminPage() {
               {/* Explanation */}
               <p
                 style={{
-                  fontSize: '0.65rem', color: 'var(--register-text-dim)',
+                  fontSize: '0.82rem', color: 'var(--register-text-dim)',
                   margin: 0, lineHeight: 1.5, fontStyle: 'italic',
                   padding: '8px 10px', borderRadius: 8,
                   background: swicResult.delta >= 0 ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.06)',
@@ -660,7 +660,7 @@ export default function CompAdminPage() {
                 <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', margin: 0 }}>
                   {affectedReps}
                 </p>
-                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>across 12 stores</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>across 12 stores</span>
               </div>
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
@@ -670,7 +670,7 @@ export default function CompAdminPage() {
                 <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#10B981', margin: 0 }}>
                   +${payoutDelta.toLocaleString()}
                 </p>
-                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>monthly increase</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>monthly increase</span>
               </div>
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
@@ -680,7 +680,7 @@ export default function CompAdminPage() {
                 <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#10B981', margin: 0 }}>
                   +${revImpact.toLocaleString()}
                 </p>
-                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>projected incremental</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>projected incremental</span>
               </div>
 
               <div style={{ padding: '12px', borderRadius: 10, background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}>
@@ -690,7 +690,7 @@ export default function CompAdminPage() {
                 <p style={{ fontSize: '1.3rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: '#F59E0B', margin: 0 }}>
                   +0.8%
                 </p>
-                <span style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)' }}>comp ratio increase</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>comp ratio increase</span>
               </div>
             </div>
 
@@ -709,7 +709,7 @@ export default function CompAdminPage() {
             </div>
 
             {/* Rep distribution shift note */}
-            <p style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)', marginTop: 8, textAlign: 'center', fontStyle: 'italic' }}>
+            <p style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)', marginTop: 8, textAlign: 'center', fontStyle: 'italic' }}>
               12 reps shift from Bronze &rarr; Silver, 8 reps shift from Silver &rarr; Gold
             </p>
           </div>
@@ -775,7 +775,7 @@ export default function CompAdminPage() {
 
             <p
               style={{
-                fontSize: '0.7rem',
+                fontSize: '0.85rem',
                 color: 'var(--register-text-dim)',
                 textAlign: 'center',
                 marginTop: 10,

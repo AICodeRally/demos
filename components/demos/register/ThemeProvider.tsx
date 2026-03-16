@@ -21,7 +21,7 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue>({
   theme: 'dark',
   toggleTheme: () => {},
-  fontSize: 16,
+  fontSize: 18,
   increaseFontSize: () => {},
   decreaseFontSize: () => {},
 });
@@ -31,15 +31,15 @@ export function useRegisterTheme() {
 }
 
 const LIGHT_TOKENS: Record<string, string> = {
-  '--register-bg': '#F8FAFC',
+  '--register-bg': '#F5F5F5',
   '--register-bg-elevated': '#FFFFFF',
   '--register-bg-surface': '#F1F5F9',
-  '--register-border': '#E2E8F0',
+  '--register-border': '#CBD5E1',
   '--register-text': '#0F172A',
-  '--register-text-muted': '#64748B',
-  '--register-text-dim': '#94A3B8',
-  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
-  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06)',
+  '--register-text-muted': '#374151',
+  '--register-text-dim': '#4B5563',
+  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)',
+  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.08)',
 };
 
 const DARK_TOKENS: Record<string, string> = {
@@ -65,7 +65,7 @@ const SHARED_TOKENS: Record<string, string> = {
 
 export function RegisterThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark');
-  const [fontSize, setFontSize] = useState(16);
+  const [fontSize, setFontSize] = useState(18);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -118,11 +118,11 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const increaseFontSize = useCallback(() => {
-    setFontSize((s) => Math.min(s + 2, 24));
+    setFontSize((s) => Math.min(s + 2, 28));
   }, []);
 
   const decreaseFontSize = useCallback(() => {
-    setFontSize((s) => Math.max(s - 2, 12));
+    setFontSize((s) => Math.max(s - 2, 15));
   }, []);
 
   return (
