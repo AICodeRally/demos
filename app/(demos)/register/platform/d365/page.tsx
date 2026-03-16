@@ -14,7 +14,7 @@ const STAGES = [
     subtitle: 'Point of Sale Transactions',
     event: 'RetailTransactionPostedBusinessEvent',
     metrics: ['~2,400 transactions/day', 'Real-time via Business Events API'],
-    color: '#1E3A5F',
+    color: '#5B9BD5',
   },
   {
     icon: Cpu,
@@ -39,7 +39,7 @@ const STAGES = [
 const DETAILS = [
   {
     title: 'D365 Capture',
-    color: '#1E3A5F',
+    color: '#5B9BD5',
     items: [
       'Every Close Sale generates a RetailTransactionPostedBusinessEvent',
       'Sales lines, tender lines, staff ID, store context',
@@ -84,15 +84,15 @@ const DETAILS = [
 /* ── Live Event Feed Data ────────────────────────────────── */
 
 const MOCK_EVENTS = [
-  { type: 'Sale Closed', desc: 'TXN-0847 \u2014 Summit Cloud Queen Hybrid + accessories \u2014 $3,247', icon: Database, color: '#1E3A5F', status: 'done' },
+  { type: 'Sale Closed', desc: 'TXN-0847 \u2014 Summit Cloud Queen Hybrid + accessories \u2014 $3,247', icon: Database, color: '#5B9BD5', status: 'done' },
   { type: 'Commission Calc\u2019d', desc: 'REP-1042 earned $162.35 (5% base + bundle bonus $75)', icon: Cpu, color: '#06B6D4', status: 'done' },
   { type: 'AI Alert', desc: 'REP-1042 is $412 from Gold Tier \u2014 coaching nudge sent', icon: Zap, color: '#8B5CF6', status: 'done' },
   { type: 'Manager Push', desc: 'Floor alert: "Sarah is 1 sale from Gold \u2014 route next walk-in"', icon: Send, color: '#F59E0B', status: 'done' },
   { type: 'Varicent Synced', desc: 'Daily batch 2,847 transactions \u2192 Varicent staging table', icon: BarChart3, color: '#10B981', status: 'done' },
-  { type: 'Sale Closed', desc: 'TXN-0848 \u2014 Arctic Cool King Firm \u2014 $1,899', icon: Database, color: '#1E3A5F', status: 'done' },
+  { type: 'Sale Closed', desc: 'TXN-0848 \u2014 Arctic Cool King Firm \u2014 $1,899', icon: Database, color: '#5B9BD5', status: 'done' },
   { type: 'Commission Calc\u2019d', desc: 'REP-1038 earned $94.95 (5% base rate)', icon: Cpu, color: '#06B6D4', status: 'done' },
   { type: 'AI Alert', desc: 'Split credit flagged on TXN-0849 \u2014 manual review queued', icon: AlertTriangle, color: '#F59E0B', status: 'pending' },
-  { type: 'Sale Closed', desc: 'TXN-0850 \u2014 Adjustable Base + Pillow Pack \u2014 $549', icon: Database, color: '#1E3A5F', status: 'done' },
+  { type: 'Sale Closed', desc: 'TXN-0850 \u2014 Adjustable Base + Pillow Pack \u2014 $549', icon: Database, color: '#5B9BD5', status: 'done' },
   { type: 'Manager Push', desc: 'Evening shift: 3 reps within striking distance of tier-up', icon: TrendingUp, color: '#F59E0B', status: 'done' },
 ];
 
@@ -203,7 +203,7 @@ export default function D365IntegrationPage() {
                     borderTopColor: stage.color,
                     textAlign: 'center',
                     position: 'relative',
-                    animation: isCenter ? 'pulseGlow 3s ease-in-out infinite' : undefined,
+                    animation: undefined,
                     animationDelay: `${i * 0.2}s`,
                     opacity: 0,
                     animationName: 'fadeInUp',
