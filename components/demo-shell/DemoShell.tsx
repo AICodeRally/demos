@@ -125,14 +125,14 @@ export function DemoShell({ config, children }: DemoShellProps) {
             : `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
         }}
       >
-        {/* Sidebar header — name + tagline only (no icon) */}
+        {/* Sidebar header — product name + tagline, matching top bar h-14 */}
         <Link
           href={demoBase}
-          className="flex flex-col px-6 py-5 hover:bg-white/[0.02] transition-colors"
+          className="flex items-center gap-3 px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
           <div
-            className={cn("text-[20px] font-bold tracking-wide", !config.darkMode && "text-white")}
+            className={cn("text-[17px] font-bold tracking-wide", !config.darkMode && "text-white")}
             style={{
               fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
               ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
@@ -141,7 +141,7 @@ export function DemoShell({ config, children }: DemoShellProps) {
             {config.product.name.toUpperCase()}
           </div>
           <div
-            className="text-[11px] font-semibold tracking-[0.08em] uppercase mt-1"
+            className="text-[10px] font-medium tracking-[0.06em] uppercase opacity-50"
             style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}AA` }}
           >
             {config.client.tagline}
@@ -300,16 +300,10 @@ export function DemoShell({ config, children }: DemoShellProps) {
                 <LogoIcon className="h-4 w-4 text-white" />
               </div>
               <span
-                className="text-[13px] font-bold"
+                className="text-[13px] font-semibold"
                 style={{ color: config.darkMode ? 'var(--pl-text)' : 'var(--prizym-text-primary)', fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif" }}
               >
-                {config.client.name.toUpperCase()}
-              </span>
-              <span
-                className="text-[11px] hidden sm:inline"
-                style={{ color: config.darkMode ? 'var(--pl-text-muted)' : 'var(--prizym-text-muted)', letterSpacing: '0.04em' }}
-              >
-                {config.client.tagline}
+                {config.client.name}
               </span>
             </div>
           </div>
