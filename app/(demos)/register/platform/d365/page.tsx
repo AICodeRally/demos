@@ -99,11 +99,17 @@ const MOCK_EVENTS = [
 /* ── CSS Keyframe Styles ─────────────────────────────────── */
 
 const KEYFRAMES = `
-@keyframes flowDot {
+@keyframes flowDotRight {
   0% { transform: translateX(-8px); opacity: 0; }
   15% { opacity: 1; }
   85% { opacity: 1; }
   100% { transform: translateX(56px); opacity: 0; }
+}
+@keyframes flowDotLeft {
+  0% { transform: translateX(64px); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(0px); opacity: 0; }
 }
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.15); }
@@ -125,23 +131,44 @@ const KEYFRAMES = `
 
 /* ── Flowing Dots Component ──────────────────────────────── */
 
-function FlowingDots({ color }: { color: string }) {
+function FlowingDots({ colorRight, colorLeft }: { colorRight: string; colorLeft: string }) {
   return (
-    <div style={{ width: 56, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', height: 20, flexShrink: 0 }}>
-      {[0, 0.4, 0.8].map((delay, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: 0,
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            backgroundColor: color,
-            animation: `flowDot 1.8s ${delay}s ease-in-out infinite`,
-          }}
-        />
-      ))}
+    <div style={{ width: 56, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', height: 36, flexShrink: 0, gap: 4 }}>
+      {/* Forward flow (left → right) */}
+      <div style={{ position: 'relative', width: 56, height: 8 }}>
+        {[0, 0.5, 1.0].map((delay, i) => (
+          <div
+            key={`r${i}`}
+            style={{
+              position: 'absolute',
+              left: 0,
+              width: 7,
+              height: 7,
+              borderRadius: '50%',
+              backgroundColor: colorRight,
+              animation: `flowDotRight 2s ${delay}s ease-in-out infinite`,
+            }}
+          />
+        ))}
+      </div>
+      {/* Return flow (right → left) */}
+      <div style={{ position: 'relative', width: 56, height: 8 }}>
+        {[0.3, 0.8, 1.3].map((delay, i) => (
+          <div
+            key={`l${i}`}
+            style={{
+              position: 'absolute',
+              left: 0,
+              width: 5,
+              height: 5,
+              borderRadius: '50%',
+              backgroundColor: colorLeft,
+              opacity: 0.5,
+              animation: `flowDotLeft 2.4s ${delay}s ease-in-out infinite`,
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -257,7 +284,7 @@ export default function D365IntegrationPage() {
 
                 {/* Flowing dots between stages */}
                 {i < STAGES.length - 1 && (
-                  <FlowingDots color={STAGES[i + 1].color} />
+                  <FlowingDots colorRight={STAGES[i + 1].color} colorLeft={stage.color} />
                 )}
               </div>
             );
