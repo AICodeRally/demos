@@ -9,6 +9,7 @@ import {
 } from '@/data/register/comp-data';
 import {
   ChevronDown, ChevronRight, Send, Clock, CheckCircle, Settings, Users, Zap, FileText, TrendingUp, TrendingDown,
+  Layers, Hash, DollarSign, Package, Table2, Percent, HelpCircle, Plus, GripVertical, Copy, Trash2, ToggleLeft,
 } from 'lucide-react';
 import { calculate } from '@/lib/swic-engine/calculator';
 import { SUMMIT_SLEEP_CONFIG, CATALOG_ITEMS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
@@ -34,6 +35,269 @@ const STATUS_CONFIG: Record<PlanStatus, { color: string; bg: string; label: stri
   pending:  { color: '#3B82F6', bg: 'rgba(59,130,246,0.12)', label: 'Pending' },
   archived: { color: '#94A3B8', bg: 'rgba(148,163,184,0.12)', label: 'Archived' },
 };
+
+/* ── Rule Type Config ──────────────────────────────────── */
+
+const RULE_TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: typeof Layers; description: string }> = {
+  tiered:          { label: 'TIERED',         color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)',  icon: Layers,      description: 'Rate changes at cumulative revenue thresholds (marginal brackets)' },
+  percent_of:      { label: 'PERCENT OF',     color: '#06B6D4', bg: 'rgba(6,182,212,0.12)',   icon: Percent,     description: 'Flat percentage of sale basis (revenue, cost, or margin)' },
+  fixed_per_match: { label: 'FIXED / MATCH',  color: '#F59E0B', bg: 'rgba(245,158,11,0.12)',  icon: DollarSign,  description: 'Fixed dollar amount per qualifying item (tag/category/SKU match)' },
+  bundle_bonus:    { label: 'BUNDLE BONUS',   color: '#10B981', bg: 'rgba(16,185,129,0.12)',  icon: Package,     description: 'Flat bonus when all required product categories present in sale' },
+  lookup:          { label: 'LOOKUP TABLE',   color: '#3B82F6', bg: 'rgba(59,130,246,0.12)',  icon: Table2,      description: 'Rate table lookup driven by ICM configuration' },
+  multiplier:      { label: 'MULTIPLIER',     color: '#EC4899', bg: 'rgba(236,72,153,0.12)',  icon: Hash,        description: 'Factor applied to other components (e.g., split credit)' },
+  placeholder:     { label: 'PLACEHOLDER',    color: '#94A3B8', bg: 'rgba(148,163,184,0.12)', icon: HelpCircle,  description: 'Formula not yet defined — awaiting client input' },
+};
+
+const GROUP_CONFIG: Record<string, { label: string; color: string }> = {
+  commission: { label: 'Commission', color: '#8B5CF6' },
+  spiff:      { label: 'SPIFF',      color: '#F59E0B' },
+  bonus:      { label: 'Bonus',      color: '#10B981' },
+  other:      { label: 'Other',      color: '#94A3B8' },
+};
+
+/* ── Rule Component Card ──────────────────────────────── */
+
+function RuleComponentCard({
+  comp,
+  index,
+  isSelected,
+  onSelect,
+}: {
+  comp: typeof SUMMIT_SLEEP_CONFIG.components[0];
+  index: number;
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
+  const ruleCfg = RULE_TYPE_CONFIG[comp.rule.type] ?? RULE_TYPE_CONFIG.placeholder;
+  const groupCfg = GROUP_CONFIG[comp.group ?? 'other'];
+  const Icon = ruleCfg.icon;
+
+  return (
+    <button
+      onClick={onSelect}
+      style={{
+        width: '100%',
+        textAlign: 'left',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'stretch',
+        gap: 0,
+        background: isSelected
+          ? `linear-gradient(135deg, var(--register-bg-elevated), ${ruleCfg.bg})`
+          : 'var(--register-bg-surface)',
+        border: `1px solid ${isSelected ? ruleCfg.color + '60' : 'var(--register-border)'}`,
+        borderRadius: 12,
+        overflow: 'hidden',
+        color: 'inherit',
+        padding: 0,
+        transition: 'all 0.2s ease',
+      }}
+    >
+      {/* Left accent bar */}
+      <div style={{ width: 4, background: ruleCfg.color, flexShrink: 0 }} />
+
+      {/* Drag handle */}
+      <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px', flexShrink: 0 }}>
+        <GripVertical size={14} color="var(--register-text-dim)" style={{ opacity: 0.4 }} />
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: 1, padding: '12px 14px 12px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+          <Icon size={14} color={ruleCfg.color} />
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>
+            {comp.label}
+          </span>
+          {/* Rule type badge */}
+          <span
+            style={{
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              padding: '2px 8px',
+              borderRadius: 6,
+              background: ruleCfg.bg,
+              color: ruleCfg.color,
+              letterSpacing: '0.04em',
+            }}
+          >
+            {ruleCfg.label}
+          </span>
+          {/* Group badge */}
+          <span
+            style={{
+              fontSize: '0.7rem',
+              fontWeight: 600,
+              padding: '2px 6px',
+              borderRadius: 6,
+              background: `${groupCfg.color}15`,
+              color: groupCfg.color,
+              marginLeft: 'auto',
+            }}
+          >
+            {groupCfg.label}
+          </span>
+        </div>
+
+        {/* Rule-specific summary line */}
+        <p style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)', margin: 0, lineHeight: 1.4 }}>
+          {comp.rule.type === 'tiered' && comp.rule.type === 'tiered' && (
+            <>{comp.rule.tiers.length} tiers &middot; {comp.rule.marginal ? 'Marginal' : 'Flat'} &middot; Basis: {comp.rule.basis}</>
+          )}
+          {comp.rule.type === 'percent_of' && (
+            <>{(comp.rule.rate * 100).toFixed(1)}% of {comp.rule.basis}</>
+          )}
+          {comp.rule.type === 'fixed_per_match' && (
+            <>${comp.rule.amount}/unit &middot; Match: {comp.rule.match.field} = &quot;{comp.rule.match.value}&quot;</>
+          )}
+          {comp.rule.type === 'bundle_bonus' && (
+            <>${comp.rule.amount} per bundle &middot; Requires: {comp.rule.requiredCategories.join(' + ')}</>
+          )}
+          {comp.rule.type === 'lookup' && (
+            <>Table: {comp.rule.tableId} &middot; Input: {comp.rule.inputBasis}</>
+          )}
+          {comp.rule.type === 'multiplier' && (
+            <>{comp.rule.factor}x factor &middot; Applies to: {Array.isArray(comp.rule.appliesTo) ? comp.rule.appliesTo.join(', ') : comp.rule.appliesTo}</>
+          )}
+          {comp.rule.type === 'placeholder' && (
+            <>{comp.rule.description ?? 'Formula TBD'}</>
+          )}
+        </p>
+      </div>
+    </button>
+  );
+}
+
+/* ── Rule Detail Panel (shown when a component is selected) ── */
+
+function RuleDetailPanel({ comp }: { comp: typeof SUMMIT_SLEEP_CONFIG.components[0] }) {
+  const ruleCfg = RULE_TYPE_CONFIG[comp.rule.type] ?? RULE_TYPE_CONFIG.placeholder;
+  const Icon = ruleCfg.icon;
+
+  return (
+    <div
+      style={{
+        background: 'var(--register-bg-surface)',
+        border: `1px solid ${ruleCfg.color}30`,
+        borderRadius: 12,
+        padding: 16,
+        animation: 'fadeIn 0.2s ease',
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+        <Icon size={16} color={ruleCfg.color} />
+        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{comp.label}</span>
+        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>ID: {comp.id}</span>
+      </div>
+
+      {/* Description */}
+      <p style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)', margin: '0 0 12px', lineHeight: 1.4, fontStyle: 'italic' }}>
+        {ruleCfg.description}
+      </p>
+
+      {/* Rule-specific config fields */}
+      {comp.rule.type === 'tiered' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
+            <span style={{ flex: 1, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Threshold</span>
+            <span style={{ width: 80, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Rate</span>
+          </div>
+          {comp.rule.tiers.map((tier, i) => (
+            <div
+              key={i}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '8px 12px',
+                borderRadius: 8,
+                background: `${ruleCfg.color}08`,
+                border: `1px solid ${ruleCfg.color}20`,
+              }}
+            >
+              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums', flex: 1 }}>
+                ${tier.min.toLocaleString()}+
+              </span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums', width: 80, textAlign: 'right' }}>
+                {(tier.rate * 100).toFixed(1)}%
+              </span>
+            </div>
+          ))}
+          <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+              Mode: <strong style={{ color: 'var(--register-text)' }}>{comp.rule.marginal ? 'Marginal (tax-bracket style)' : 'Flat (whole-tier rate)'}</strong>
+            </span>
+            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+              Basis: <strong style={{ color: 'var(--register-text)' }}>{comp.rule.basis}</strong>
+            </span>
+          </div>
+        </div>
+      )}
+
+      {comp.rule.type === 'percent_of' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Rate</span>
+            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+              {(comp.rule.rate * 100).toFixed(1)}%
+            </span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>of</span>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{comp.rule.basis}</span>
+          </div>
+        </div>
+      )}
+
+      {comp.rule.type === 'fixed_per_match' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Amount</span>
+            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+              ${comp.rule.amount}
+            </span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per qualifying unit</span>
+          </div>
+          <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Match: </span>
+            <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
+              {comp.rule.match.field} = &quot;{comp.rule.match.value}&quot;
+            </span>
+          </div>
+        </div>
+      )}
+
+      {comp.rule.type === 'bundle_bonus' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Bonus</span>
+            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+              ${comp.rule.amount}
+            </span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per complete bundle</span>
+          </div>
+          <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Required categories: </span>
+            <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
+              {comp.rule.requiredCategories.join(' + ')}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Action buttons */}
+      <div style={{ display: 'flex', gap: 8, marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--register-border)' }}>
+        <button style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.78rem', fontWeight: 600, color: 'var(--register-text-muted)', background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer' }}>
+          <Copy size={12} /> Duplicate
+        </button>
+        <button style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.78rem', fontWeight: 600, color: 'var(--register-text-muted)', background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer' }}>
+          <ToggleLeft size={12} /> Disable
+        </button>
+        <button style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.78rem', fontWeight: 600, color: '#EF4444', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', marginLeft: 'auto' }}>
+          <Trash2 size={12} /> Remove
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /* ── Animated count-up hook ─────────────────────────────── */
 
@@ -138,6 +402,7 @@ function PushEntry({ timestamp, who, what, status }: { timestamp: string; who: s
 
 export default function CompAdminPage() {
   const [expandedPlan, setExpandedPlan] = useState<string>('plan-flagship');
+  const [selectedComponent, setSelectedComponent] = useState<string>('base-comm');
   const [showSimulator, setShowSimulator] = useState(true);
   const [pushAnimating, setPushAnimating] = useState(false);
   const [pushComplete, setPushComplete] = useState(false);
@@ -318,7 +583,7 @@ export default function CompAdminPage() {
                     </div>
                   </button>
 
-                  {/* Expanded Tier Editor */}
+                  {/* Expanded — Component Rule Builder */}
                   {isExpanded && (
                     <div
                       style={{
@@ -330,201 +595,207 @@ export default function CompAdminPage() {
                         animation: 'fadeIn 0.3s ease',
                       }}
                     >
-                      {/* Tier rows — editable */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                        <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
-                          Commission Tiers
-                        </p>
-                        {editedTiers[p.id] && (
-                          <button
-                            onClick={() => resetTiers(p.id)}
-                            style={{
-                              fontSize: '0.8rem', fontWeight: 600, color: '#F59E0B',
-                              background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
-                              borderRadius: 6, padding: '2px 8px', cursor: 'pointer',
-                            }}
-                          >
-                            Reset
-                          </button>
-                        )}
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        {(editedTiers[p.id] ?? p.tiers).map((tier, i) => {
-                          const orig = p.tiers[i];
-                          const minChanged = tier.minRevenue !== orig.minRevenue;
-                          const maxChanged = tier.maxRevenue !== orig.maxRevenue;
-                          const rateChanged = tier.rate !== orig.rate;
-                          return (
-                            <div
-                              key={i}
+                      {/* Section header */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <Layers size={14} color="#8B5CF6" />
+                          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>
+                            Compensation Components
+                          </span>
+                          <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                            {SUMMIT_SLEEP_CONFIG.components.length} rules
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 6 }}>
+                          {editedTiers[p.id] && (
+                            <button
+                              onClick={() => resetTiers(p.id)}
                               style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 12,
-                                padding: '10px 14px',
-                                borderRadius: 10,
-                                background: `${tier.color}10`,
-                                border: `1px solid ${(minChanged || maxChanged || rateChanged) ? '#F59E0B' : tier.color}25`,
+                                fontSize: '0.78rem', fontWeight: 600, color: '#F59E0B',
+                                background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
+                                borderRadius: 6, padding: '4px 10px', cursor: 'pointer',
                               }}
                             >
-                              <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: tier.color, flexShrink: 0 }} />
-                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)', width: 70 }}>{tier.name}</span>
-                              {/* Threshold fields — editable inputs */}
-                              <div
-                                style={{
-                                  flex: 1,
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 6,
-                                  padding: '4px 10px',
-                                  borderRadius: 6,
-                                  background: 'var(--register-bg-surface)',
-                                  border: `1px solid ${minChanged || maxChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
-                                }}
-                              >
-                                <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
-                                <input
-                                  type="number"
-                                  value={tier.minRevenue}
-                                  onChange={(e) => updateTier(p.id, i, 'minRevenue', Math.max(0, Number(e.target.value)))}
-                                  style={{
-                                    width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                    fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
-                                    color: minChanged ? '#F59E0B' : 'var(--register-text-dim)',
-                                    fontWeight: minChanged ? 700 : 400,
-                                  }}
-                                />
-                                <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
-                                {tier.maxRevenue === Infinity ? (
-                                  <span style={{ fontSize: '0.85rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums' }}>{'\u221E'}</span>
-                                ) : (
-                                  <>
-                                    <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
-                                    <input
-                                      type="number"
-                                      value={tier.maxRevenue}
-                                      onChange={(e) => updateTier(p.id, i, 'maxRevenue', Math.max(0, Number(e.target.value)))}
-                                      style={{
-                                        width: 60, background: 'transparent', border: 'none', outline: 'none',
-                                        fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
-                                        color: maxChanged ? '#F59E0B' : 'var(--register-text-dim)',
-                                        fontWeight: maxChanged ? 700 : 400,
-                                      }}
-                                    />
-                                  </>
-                                )}
-                              </div>
-                              {/* Rate field — editable */}
-                              <div
-                                style={{
-                                  padding: '4px 8px',
-                                  borderRadius: 6,
-                                  background: 'var(--register-bg-surface)',
-                                  border: `1px solid ${rateChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
-                                  display: 'flex', alignItems: 'center', gap: 2,
-                                }}
-                              >
-                                <input
-                                  type="number"
-                                  step="0.1"
-                                  value={parseFloat((tier.rate * 100).toFixed(2))}
-                                  onChange={(e) => updateTier(p.id, i, 'rate', Math.max(0, Math.min(100, Number(e.target.value))) / 100)}
-                                  style={{
-                                    width: 42, background: 'transparent', border: 'none', outline: 'none',
-                                    fontSize: '0.8rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', textAlign: 'right',
-                                    color: rateChanged ? '#F59E0B' : tier.color,
-                                  }}
-                                />
-                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: rateChanged ? '#F59E0B' : tier.color }}>%</span>
-                              </div>
-                            </div>
-                          );
-                        })}
+                              Reset Edits
+                            </button>
+                          )}
+                          <button
+                            style={{
+                              display: 'flex', alignItems: 'center', gap: 4,
+                              fontSize: '0.78rem', fontWeight: 600, color: '#8B5CF6',
+                              background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)',
+                              borderRadius: 6, padding: '4px 10px', cursor: 'pointer',
+                            }}
+                          >
+                            <Plus size={12} /> Add Component
+                          </button>
+                        </div>
                       </div>
 
-                      {/* SPIFF Toggles */}
-                      <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
-                        SPIFF Rules
-                      </p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        {p.spiffs.map((spiff) => (
-                          <div
-                            key={spiff.id}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              padding: '10px 14px',
-                              borderRadius: 10,
-                              background: 'var(--register-bg-surface)',
-                              border: '1px solid var(--register-border)',
-                            }}
-                          >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                              <Zap size={13} color={spiff.active ? '#F59E0B' : 'var(--register-text-dim)'} />
-                              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)' }}>{spiff.name}</span>
-                              <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>${spiff.bonus}/unit</span>
-                            </div>
-                            {/* Toggle pill */}
-                            <div
-                              style={{
-                                width: 40,
-                                height: 20,
-                                borderRadius: 10,
-                                background: spiff.active ? '#10B981' : 'rgba(255,255,255,0.08)',
-                                position: 'relative',
-                                cursor: 'pointer',
-                                transition: 'background 0.3s',
-                              }}
-                            >
-                              <div
-                                style={{
-                                  position: 'absolute',
-                                  top: 2,
-                                  left: spiff.active ? 22 : 2,
-                                  width: 16,
-                                  height: 16,
-                                  borderRadius: '50%',
-                                  background: 'white',
-                                  transition: 'left 0.3s',
-                                  boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
-                                }}
-                              />
-                            </div>
-                          </div>
+                      {/* Component list */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 14 }}>
+                        {SUMMIT_SLEEP_CONFIG.components.map((comp, ci) => (
+                          <RuleComponentCard
+                            key={comp.id}
+                            comp={comp}
+                            index={ci}
+                            isSelected={selectedComponent === comp.id}
+                            onSelect={() => setSelectedComponent(selectedComponent === comp.id ? '' : comp.id)}
+                          />
                         ))}
                       </div>
 
+                      {/* Selected component detail panel */}
+                      {selectedComponent && SUMMIT_SLEEP_CONFIG.components.find(c => c.id === selectedComponent) && (
+                        <RuleDetailPanel comp={SUMMIT_SLEEP_CONFIG.components.find(c => c.id === selectedComponent)!} />
+                      )}
+
+                      {/* Editable tier rows (when base-comm is selected) */}
+                      {selectedComponent === 'base-comm' && (
+                        <div style={{ marginTop: 14 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)' }}>Edit Tier Thresholds</span>
+                            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Drag to reorder, click values to edit</span>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {(editedTiers[p.id] ?? p.tiers).map((tier, i) => {
+                              const orig = p.tiers[i];
+                              const minChanged = tier.minRevenue !== orig.minRevenue;
+                              const maxChanged = tier.maxRevenue !== orig.maxRevenue;
+                              const rateChanged = tier.rate !== orig.rate;
+                              return (
+                                <div
+                                  key={i}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 12,
+                                    padding: '10px 14px',
+                                    borderRadius: 10,
+                                    background: `${tier.color}10`,
+                                    border: `1px solid ${(minChanged || maxChanged || rateChanged) ? '#F59E0B' : tier.color}25`,
+                                  }}
+                                >
+                                  <GripVertical size={12} color="var(--register-text-dim)" style={{ opacity: 0.4 }} />
+                                  <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: tier.color, flexShrink: 0 }} />
+                                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)', width: 80 }}>{tier.name}</span>
+                                  <div
+                                    style={{
+                                      flex: 1, display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px',
+                                      borderRadius: 6, background: 'var(--register-bg-surface)',
+                                      border: `1px solid ${minChanged || maxChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
+                                    }}
+                                  >
+                                    <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
+                                    <input
+                                      type="number"
+                                      value={tier.minRevenue}
+                                      onChange={(e) => updateTier(p.id, i, 'minRevenue', Math.max(0, Number(e.target.value)))}
+                                      style={{
+                                        width: 70, background: 'transparent', border: 'none', outline: 'none',
+                                        fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
+                                        color: minChanged ? '#F59E0B' : 'var(--register-text-dim)',
+                                        fontWeight: minChanged ? 700 : 400,
+                                      }}
+                                    />
+                                    <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>&ndash;</span>
+                                    {tier.maxRevenue === Infinity ? (
+                                      <span style={{ fontSize: '0.85rem', color: 'var(--register-text-dim)' }}>{'\u221E'}</span>
+                                    ) : (
+                                      <>
+                                        <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>$</span>
+                                        <input
+                                          type="number"
+                                          value={tier.maxRevenue}
+                                          onChange={(e) => updateTier(p.id, i, 'maxRevenue', Math.max(0, Number(e.target.value)))}
+                                          style={{
+                                            width: 70, background: 'transparent', border: 'none', outline: 'none',
+                                            fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums',
+                                            color: maxChanged ? '#F59E0B' : 'var(--register-text-dim)',
+                                            fontWeight: maxChanged ? 700 : 400,
+                                          }}
+                                        />
+                                      </>
+                                    )}
+                                  </div>
+                                  <div
+                                    style={{
+                                      padding: '4px 8px', borderRadius: 6, background: 'var(--register-bg-surface)',
+                                      border: `1px solid ${rateChanged ? 'rgba(245,158,11,0.4)' : 'var(--register-border)'}`,
+                                      display: 'flex', alignItems: 'center', gap: 2,
+                                    }}
+                                  >
+                                    <input
+                                      type="number"
+                                      step="0.1"
+                                      value={parseFloat((tier.rate * 100).toFixed(2))}
+                                      onChange={(e) => updateTier(p.id, i, 'rate', Math.max(0, Math.min(100, Number(e.target.value))) / 100)}
+                                      style={{
+                                        width: 48, background: 'transparent', border: 'none', outline: 'none',
+                                        fontSize: '0.85rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', textAlign: 'right',
+                                        color: rateChanged ? '#F59E0B' : tier.color,
+                                      }}
+                                    />
+                                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: rateChanged ? '#F59E0B' : tier.color }}>%</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                            <button
+                              style={{
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                                padding: '8px', borderRadius: 10, cursor: 'pointer',
+                                background: 'transparent', border: '1px dashed var(--register-border)',
+                                color: 'var(--register-text-dim)', fontSize: '0.8rem', fontWeight: 600,
+                              }}
+                            >
+                              <Plus size={14} /> Add Tier
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Accelerators */}
                       {p.accelerators.length > 0 && (
-                        <>
-                          <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginTop: 20, marginBottom: 10 }}>
-                            Accelerators
-                          </p>
+                        <div style={{ marginTop: 18 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                            <Zap size={14} color="#3B82F6" />
+                            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)' }}>Accelerators</span>
+                            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>{p.accelerators.length} rules</span>
+                          </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             {p.accelerators.map((acc, i) => (
                               <div
                                 key={i}
                                 style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 8,
-                                  padding: '8px 14px',
-                                  borderRadius: 10,
-                                  background: 'rgba(59,130,246,0.06)',
-                                  border: '1px solid rgba(59,130,246,0.15)',
+                                  display: 'flex', alignItems: 'center', gap: 8,
+                                  padding: '10px 14px', borderRadius: 10,
+                                  background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)',
                                 }}
                               >
-                                <Zap size={12} color="#3B82F6" />
-                                <span style={{ fontSize: '0.85rem', color: 'var(--register-text)' }}>{acc.label}</span>
+                                <Zap size={13} color="#3B82F6" />
+                                <span style={{ fontSize: '0.82rem', color: 'var(--register-text)' }}>{acc.label}</span>
                                 <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#3B82F6', fontVariantNumeric: 'tabular-nums', marginLeft: 'auto' }}>
                                   {acc.multiplier}x
                                 </span>
                               </div>
                             ))}
                           </div>
-                        </>
+                        </div>
                       )}
+
+                      {/* Plan metadata footer */}
+                      <div style={{ display: 'flex', gap: 16, marginTop: 18, paddingTop: 14, borderTop: '1px solid var(--register-border)' }}>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                          Version: <strong style={{ color: 'var(--register-text)' }}>{p.version}</strong>
+                        </span>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                          Budget: <strong style={{ color: 'var(--register-text)' }}>${p.monthlyBudget.toLocaleString()}/mo</strong>
+                        </span>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                          Engine: <strong style={{ color: '#8B5CF6' }}>SWIC v2.1</strong>
+                        </span>
+                      </div>
                     </div>
                   )}
                 </div>
