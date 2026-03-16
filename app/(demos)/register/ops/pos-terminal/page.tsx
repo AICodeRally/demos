@@ -170,7 +170,7 @@ export default function POSTerminal() {
   ) : null;
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--register-bg)', color: 'var(--register-text)' }}>
+    <div className="pos-terminal-frame" style={{ minHeight: '100vh', background: 'var(--register-bg)', color: 'var(--register-text)' }}>
       {/* Toasts */}
       {toasts.map((toast) => (
         <Toast key={toast.id} message={toast.message} onClose={() => removeToast(toast.id)} />
