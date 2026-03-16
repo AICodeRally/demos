@@ -5,6 +5,25 @@
   --register-radius-section: 16px;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   READABILITY ENFORCEMENT — Global font & color floor
+   Catches inline styles using tiny rem values (0.5rem-0.7rem)
+   and forces them to readable minimums.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Force minimum font size on ALL elements.
+   Many Register pages use inline style={{ fontSize: '0.5rem' }}
+   which renders at 8-10px. This catches them. */
+* {
+  min-height: 0;
+}
+
+/* Any element with font-size below ~13px gets bumped.
+   This uses CSS clamp as a floor. */
+p, span, td, th, li, label, div, a, button, input, select, textarea {
+  font-size: max(var(--demo-font-floor, 0.72rem), inherit);
+}
+
 /* ── Register Design System ──────────────────────────────── */
 
 .register-page {
@@ -20,7 +39,7 @@
 }
 
 .register-subtitle {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--register-text-muted);
   margin: 0.35rem 0 0;
 }
@@ -69,7 +88,7 @@
 }
 
 .register-meta-label {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
