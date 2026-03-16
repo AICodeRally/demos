@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { calculate } from '@/lib/swic-engine/calculator';
 import { SUMMIT_SLEEP_CONFIG, CATALOG_ITEMS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
-import type { ClientConfig, SaleItem } from '@/lib/swic-engine/types';
+import type { ClientConfig, SaleItem, TieredRule, PercentOfRule, FixedPerMatchRule, BundleBonusRule, LookupRule, MultiplierRule, PlaceholderRule } from '@/lib/swic-engine/types';
 
 const ACCENT = '#10B981';
 
@@ -140,27 +140,34 @@ function RuleComponentCard({
 
         {/* Rule-specific summary line */}
         <p style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)', margin: 0, lineHeight: 1.4 }}>
-          {comp.rule.type === 'tiered' && comp.rule.type === 'tiered' && (
-            <>{comp.rule.tiers.length} tiers &middot; {comp.rule.marginal ? 'Marginal' : 'Flat'} &middot; Basis: {comp.rule.basis}</>
-          )}
-          {comp.rule.type === 'percent_of' && (
-            <>{(comp.rule.rate * 100).toFixed(1)}% of {comp.rule.basis}</>
-          )}
-          {comp.rule.type === 'fixed_per_match' && (
-            <>${comp.rule.amount}/unit &middot; Match: {comp.rule.match.field} = &quot;{comp.rule.match.value}&quot;</>
-          )}
-          {comp.rule.type === 'bundle_bonus' && (
-            <>${comp.rule.amount} per bundle &middot; Requires: {comp.rule.requiredCategories.join(' + ')}</>
-          )}
-          {comp.rule.type === 'lookup' && (
-            <>Table: {comp.rule.tableId} &middot; Input: {comp.rule.inputBasis}</>
-          )}
-          {comp.rule.type === 'multiplier' && (
-            <>{comp.rule.factor}x factor &middot; Applies to: {Array.isArray(comp.rule.appliesTo) ? comp.rule.appliesTo.join(', ') : comp.rule.appliesTo}</>
-          )}
-          {comp.rule.type === 'placeholder' && (
-            <>{comp.rule.description ?? 'Formula TBD'}</>
-          )}
+          {comp.rule.type === 'tiered' && (() => {
+            const r = comp.rule as TieredRule;
+            return <>{r.tiers.length} tiers &middot; {r.marginal ? 'Marginal' : 'Flat'} &middot; Basis: {r.basis}</>;
+          })()}
+          {comp.rule.type === 'percent_of' && (() => {
+            const r = comp.rule as PercentOfRule;
+            return <>{(r.rate * 100).toFixed(1)}% of {r.basis}</>;
+          })()}
+          {comp.rule.type === 'fixed_per_match' && (() => {
+            const r = comp.rule as FixedPerMatchRule;
+            return <>${r.amount}/unit &middot; Match: {r.match.field} = &quot;{r.match.value}&quot;</>;
+          })()}
+          {comp.rule.type === 'bundle_bonus' && (() => {
+            const r = comp.rule as BundleBonusRule;
+            return <>${r.amount} per bundle &middot; Requires: {r.requiredCategories.join(' + ')}</>;
+          })()}
+          {comp.rule.type === 'lookup' && (() => {
+            const r = comp.rule as LookupRule;
+            return <>Table: {r.tableId} &middot; Input: {r.inputBasis}</>;
+          })()}
+          {comp.rule.type === 'multiplier' && (() => {
+            const r = comp.rule as MultiplierRule;
+            return <>{r.factor}x factor &middot; Applies to: {Array.isArray(r.appliesTo) ? r.appliesTo.join(', ') : r.appliesTo}</>;
+          })()}
+          {comp.rule.type === 'placeholder' && (() => {
+            const r = comp.rule as PlaceholderRule;
+            return <>{r.description ?? 'Formula TBD'}</>;
+          })()}
         </p>
       </div>
     </button>
@@ -196,92 +203,104 @@ function RuleDetailPanel({ comp }: { comp: typeof SUMMIT_SLEEP_CONFIG.components
       </p>
 
       {/* Rule-specific config fields */}
-      {comp.rule.type === 'tiered' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
-            <span style={{ flex: 1, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Threshold</span>
-            <span style={{ width: 80, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Rate</span>
-          </div>
-          {comp.rule.tiers.map((tier, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                padding: '8px 12px',
-                borderRadius: 8,
-                background: `${ruleCfg.color}08`,
-                border: `1px solid ${ruleCfg.color}20`,
-              }}
-            >
-              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums', flex: 1 }}>
-                ${tier.min.toLocaleString()}+
+      {comp.rule.type === 'tiered' && (() => {
+        const r = comp.rule as TieredRule;
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
+              <span style={{ flex: 1, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Threshold</span>
+              <span style={{ width: 80, fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Rate</span>
+            </div>
+            {r.tiers.map((tier, i) => (
+              <div
+                key={i}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '8px 12px',
+                  borderRadius: 8,
+                  background: `${ruleCfg.color}08`,
+                  border: `1px solid ${ruleCfg.color}20`,
+                }}
+              >
+                <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums', flex: 1 }}>
+                  ${tier.min.toLocaleString()}+
+                </span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums', width: 80, textAlign: 'right' }}>
+                  {(tier.rate * 100).toFixed(1)}%
+                </span>
+              </div>
+            ))}
+            <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                Mode: <strong style={{ color: 'var(--register-text)' }}>{r.marginal ? 'Marginal (tax-bracket style)' : 'Flat (whole-tier rate)'}</strong>
               </span>
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums', width: 80, textAlign: 'right' }}>
-                {(tier.rate * 100).toFixed(1)}%
+              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
+                Basis: <strong style={{ color: 'var(--register-text)' }}>{r.basis}</strong>
               </span>
             </div>
-          ))}
-          <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
-              Mode: <strong style={{ color: 'var(--register-text)' }}>{comp.rule.marginal ? 'Marginal (tax-bracket style)' : 'Flat (whole-tier rate)'}</strong>
-            </span>
-            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>
-              Basis: <strong style={{ color: 'var(--register-text)' }}>{comp.rule.basis}</strong>
-            </span>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {comp.rule.type === 'percent_of' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Rate</span>
-            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
-              {(comp.rule.rate * 100).toFixed(1)}%
-            </span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>of</span>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{comp.rule.basis}</span>
+      {comp.rule.type === 'percent_of' && (() => {
+        const r = comp.rule as PercentOfRule;
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Rate</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+                {(r.rate * 100).toFixed(1)}%
+              </span>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>of</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{r.basis}</span>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {comp.rule.type === 'fixed_per_match' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Amount</span>
-            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
-              ${comp.rule.amount}
-            </span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per qualifying unit</span>
+      {comp.rule.type === 'fixed_per_match' && (() => {
+        const r = comp.rule as FixedPerMatchRule;
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Amount</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+                ${r.amount}
+              </span>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per qualifying unit</span>
+            </div>
+            <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Match: </span>
+              <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
+                {r.match.field} = &quot;{r.match.value}&quot;
+              </span>
+            </div>
           </div>
-          <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Match: </span>
-            <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
-              {comp.rule.match.field} = &quot;{comp.rule.match.value}&quot;
-            </span>
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {comp.rule.type === 'bundle_bonus' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Bonus</span>
-            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
-              ${comp.rule.amount}
-            </span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per complete bundle</span>
+      {comp.rule.type === 'bundle_bonus' && (() => {
+        const r = comp.rule as BundleBonusRule;
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: `${ruleCfg.color}08`, border: `1px solid ${ruleCfg.color}20` }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>Bonus</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: 800, color: ruleCfg.color, fontVariantNumeric: 'tabular-nums' }}>
+                ${r.amount}
+              </span>
+              <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>per complete bundle</span>
+            </div>
+            <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Required categories: </span>
+              <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
+                {r.requiredCategories.join(' + ')}
+              </span>
+            </div>
           </div>
-          <div style={{ padding: '8px 14px', borderRadius: 8, background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)' }}>Required categories: </span>
-            <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)' }}>
-              {comp.rule.requiredCategories.join(' + ')}
-            </span>
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Action buttons */}
       <div style={{ display: 'flex', gap: 8, marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--register-border)' }}>
@@ -500,7 +519,7 @@ export default function CompAdminPage() {
       });
 
   return (
-    <RegisterPage title="Comp Admin" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
+    <RegisterPage title="Plan Designer" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
       <div className="flex flex-col lg:flex-row" style={{ gap: 24 }}>
 
         {/* ══════════════════════════════════════════════

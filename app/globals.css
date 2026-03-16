@@ -19,9 +19,26 @@
 }
 
 /* Any element with font-size below ~13px gets bumped.
-   This uses CSS clamp as a floor. */
+   This uses CSS clamp as a floor.
+   POS terminal opts out — it's a tablet UI with its own sizing. */
 p, span, td, th, li, label, div, a, button, input, select, textarea {
   font-size: max(var(--demo-font-floor, 0.72rem), inherit);
+}
+
+/* Opt-out: POS terminal and other dense UIs set --demo-font-floor to 0 */
+.pos-terminal-frame p,
+.pos-terminal-frame span,
+.pos-terminal-frame td,
+.pos-terminal-frame th,
+.pos-terminal-frame li,
+.pos-terminal-frame label,
+.pos-terminal-frame div,
+.pos-terminal-frame a,
+.pos-terminal-frame button,
+.pos-terminal-frame input,
+.pos-terminal-frame select,
+.pos-terminal-frame textarea {
+  font-size: unset;
 }
 
 /* ── Register Design System ──────────────────────────────── */
