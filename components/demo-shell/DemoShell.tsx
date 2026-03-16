@@ -109,17 +109,20 @@ export function DemoShell({ config, children }: DemoShellProps) {
             : `linear-gradient(180deg, var(--prizym-bg-secondary) 0%, var(--prizym-bg-primary) 100%)`,
         }}
       >
-        {/* Sidebar header — product name + tagline, matching top bar h-14 */}
+        {/* Sidebar header — product name only, gradient text logo treatment */}
         <Link
           href={demoBase}
-          className="flex items-center px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
+          className="flex items-center px-6 h-14 shrink-0 hover:bg-white/[0.03] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
           <div
-            className={cn("text-[18px] font-bold tracking-wide", !config.darkMode && "text-white")}
+            className="text-[22px] font-extrabold tracking-[0.10em]"
             style={{
               fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
-              ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
+              backgroundImage: `linear-gradient(135deg, ${config.darkMode ? '#FFFFFF' : '#FFFFFF'} 30%, ${resolved.colors.accent} 100%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
             }}
           >
             {config.product.name.toUpperCase()}
