@@ -36,8 +36,8 @@ const LIGHT_TOKENS: Record<string, string> = {
   '--register-bg-surface': '#F1F5F9',
   '--register-border': '#CBD5E1',
   '--register-text': '#0F172A',
-  '--register-text-muted': '#374151',
-  '--register-text-dim': '#4B5563',
+  '--register-text-muted': '#1F2937',
+  '--register-text-dim': '#374151',
   '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)',
   '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.08)',
 };

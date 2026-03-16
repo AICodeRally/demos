@@ -235,7 +235,7 @@ export default function CompAdminPage() {
       });
 
   return (
-    <RegisterPage title="Rule Modeling Lab" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
+    <RegisterPage title="Comp Admin" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
       <div className="flex flex-col lg:flex-row" style={{ gap: 24 }}>
 
         {/* ══════════════════════════════════════════════
