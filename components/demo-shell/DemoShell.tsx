@@ -37,30 +37,16 @@ export function DemoShell({ config, children }: DemoShellProps) {
   }, [config.darkMode]);
 
   useEffect(() => {
-    const storageKey = `demoshell-nav-state-${config.product.name}`;
-    const saved = localStorage.getItem(storageKey);
-    let initial: Set<number>;
-
-    if (saved) {
-      try {
-        initial = new Set(JSON.parse(saved) as number[]);
-      } catch {
-        initial = new Set();
-      }
-    } else {
-      initial = new Set();
-    }
-
-    // Always expand the section containing the active route
+    // Default: only the section containing the active route is expanded
+    const initial = new Set<number>();
     const activeIdx = config.nav.findIndex((section) =>
       section.items.some((item) =>
         item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href)
       )
     );
     if (activeIdx !== -1) initial.add(activeIdx);
-
     setExpandedSections(initial);
-  }, [pathname, config.product.name, config.nav]);
+  }, [pathname, config.nav]);
 
   const toggleTheme = () => {
     setIsDark((prev) => {
@@ -80,8 +66,6 @@ export function DemoShell({ config, children }: DemoShellProps) {
       } else {
         next.add(idx);
       }
-      const storageKey = `demoshell-nav-state-${config.product.name}`;
-      localStorage.setItem(storageKey, JSON.stringify(Array.from(next)));
       return next;
     });
   };
@@ -128,11 +112,11 @@ export function DemoShell({ config, children }: DemoShellProps) {
         {/* Sidebar header — product name + tagline, matching top bar h-14 */}
         <Link
           href={demoBase}
-          className="flex items-center gap-3 px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
+          className="flex flex-col justify-center px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
           <div
-            className={cn("text-[17px] font-bold tracking-wide", !config.darkMode && "text-white")}
+            className={cn("text-[17px] font-bold tracking-wide leading-tight", !config.darkMode && "text-white")}
             style={{
               fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
               ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
@@ -141,8 +125,8 @@ export function DemoShell({ config, children }: DemoShellProps) {
             {config.product.name.toUpperCase()}
           </div>
           <div
-            className="text-[10px] font-medium tracking-[0.06em] uppercase opacity-50"
-            style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}AA` }}
+            className="text-[9px] font-medium tracking-[0.08em] uppercase opacity-40 leading-tight"
+            style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}88` }}
           >
             {config.client.tagline}
           </div>
@@ -235,34 +219,6 @@ export function DemoShell({ config, children }: DemoShellProps) {
             );
           })}
         </nav>
-
-        {/* Client info */}
-        {/* Client badge — text only */}
-        <div className="p-4" style={{ borderTop: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}>
-          <div
-            className="rounded-xl p-3.5"
-            style={{ background: `${primaryColor}0F` }}
-          >
-            <div
-              className={cn("text-[13px] font-semibold", !config.darkMode && "text-white/90")}
-              style={{
-                fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
-                ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
-              }}
-            >
-              {config.client.name}
-            </div>
-            <div className="flex items-center gap-1.5 mt-1">
-              <div
-                className="h-1.5 w-1.5 rounded-full animate-pulse"
-                style={{ background: primaryColor }}
-              />
-              <span className="text-[11px]" style={{ color: `${primaryColor}99` }}>
-                {config.product.badge ?? 'Live Demo'}
-              </span>
-            </div>
-          </div>
-        </div>
 
       </aside>
 
