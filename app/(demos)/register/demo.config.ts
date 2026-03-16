@@ -4,7 +4,7 @@ import { Bed } from 'lucide-react';
 export default defineDemo({
   client: {
     name: 'Summit Sleep Co.',
-    tagline: 'Retail Revenue Operating System',
+    tagline: 'Retail Revenue OS',
     region: 'National \u2014 200 Stores',
     logo: Bed,
   },
@@ -60,7 +60,7 @@ export default defineDemo({
         { label: 'Statements', href: '/register/comp/statements', icon: 'Receipt' },
         { label: 'Team Performance', href: '/register/comp/team', icon: 'BarChart3' },
         { label: 'Executive View', href: '/register/comp/executive', icon: 'TrendingUp' },
-        { label: 'Comp Admin', href: '/register/comp/admin', icon: 'Settings' },
+        { label: 'Plan Designer', href: '/register/comp/admin', icon: 'Settings' },
       ],
     },
     {
