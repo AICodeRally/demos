@@ -112,23 +112,17 @@ export function DemoShell({ config, children }: DemoShellProps) {
         {/* Sidebar header — product name + tagline, matching top bar h-14 */}
         <Link
           href={demoBase}
-          className="flex flex-col justify-center px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
+          className="flex items-center px-6 h-14 shrink-0 hover:bg-white/[0.02] transition-colors"
           style={{ borderBottom: `1px solid ${config.darkMode ? 'var(--pl-sidebar-border)' : 'var(--prizym-border-subtle)'}` }}
         >
           <div
-            className={cn("text-[17px] font-bold tracking-wide leading-tight", !config.darkMode && "text-white")}
+            className={cn("text-[18px] font-bold tracking-wide", !config.darkMode && "text-white")}
             style={{
               fontFamily: "var(--font-space-grotesk), 'Space Grotesk', sans-serif",
               ...(config.darkMode ? { color: 'var(--pl-sidebar-text)' } : {}),
             }}
           >
             {config.product.name.toUpperCase()}
-          </div>
-          <div
-            className="text-[9px] font-medium tracking-[0.08em] uppercase opacity-40 leading-tight"
-            style={{ color: config.darkMode ? 'var(--pl-sidebar-text-muted)' : `${primaryColor}88` }}
-          >
-            {config.client.tagline}
           </div>
         </Link>
 
