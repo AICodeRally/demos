@@ -13,6 +13,7 @@ import { Footer } from './parts/Footer';
 import { MobileDrawer } from './parts/MobileDrawer';
 import { ThemeToggle } from './parts/ThemeToggle';
 import { Icon } from './parts/IconResolver';
+import { CockpitProvider } from './cockpit/store';
 
 // Import plugins to trigger self-registration
 import './plugins/sidebar';
@@ -38,11 +39,10 @@ export function DemoShell({ config, children }: Props) {
 
   const layout = getLayout(resolved.layout);
 
-  return (
+  const content = (
     <div style={cssVars as React.CSSProperties}>
       {layout.render({ config: resolved, children, parts })}
 
-      {/* "All Demos" back link */}
       <Link
         href="/"
         className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 rounded-full bg-black/80 px-3 py-1.5 text-xs text-white/80 backdrop-blur transition-colors hover:text-white"
@@ -52,4 +52,14 @@ export function DemoShell({ config, children }: Props) {
       </Link>
     </div>
   );
+
+  if (resolved.cockpit?.enabled) {
+    return (
+      <CockpitProvider slug={resolved.slug} defaultOpen={resolved.cockpit.defaultOpen}>
+        {content}
+      </CockpitProvider>
+    );
+  }
+
+  return content;
 }
