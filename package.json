@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3100",
+    "generate:registry": "tsx scripts/generate-registry.ts",
+    "prebuild": "pnpm generate:registry",
+    "dev": "pnpm generate:registry && next dev -p 3100",
     "build": "next build",
     "start": "npx serve out -p 3100",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify": "pnpm generate:registry && pnpm typecheck && next build"
   },
   "dependencies": {
     "clsx": "^2.1.0",
@@ -25,6 +28,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.0"
   }
 }
