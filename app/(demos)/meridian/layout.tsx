@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/meridian-vars.css';
+import '@/styles/ext/meridian.css';
 import { DemoShell } from '@/components/shell';
 import demoConfig from './demo.config';
 

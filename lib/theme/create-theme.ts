@@ -7,6 +7,7 @@ import { aegisIvory } from './presets/aegis-ivory';
 import { registerSlate } from './presets/register-slate';
 import { charterStone } from './presets/charter-stone';
 import { prizymNavy } from './presets/prizym-navy';
+import { phoenixSapphire } from './presets/phoenix-sapphire';
 
 const PRESETS: Record<string, ThemeTokens> = {
   'barrel-brass': barrelBrass,
@@ -16,6 +17,7 @@ const PRESETS: Record<string, ThemeTokens> = {
   'register-slate': registerSlate,
   'charter-stone': charterStone,
   'prizym-navy': prizymNavy,
+  'phoenix-sapphire': phoenixSapphire,
 };
 
 export function resolveTheme(config: ThemeConfig): ThemeTokens {
