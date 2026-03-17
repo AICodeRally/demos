@@ -3,6 +3,8 @@ import { defineDemo } from '@/components/shell';
 export default defineDemo({
   slug: 'quota',
   layout: 'topnav',
+  client: { name: 'Prizym', tagline: 'RevOps Suite' },
+  product: { name: 'QUOTA', badge: 'Demo Data' },
   suite: { name: 'PRIZYM', tagline: 'RevOps Suite' },
   module: { code: 'QTA', name: 'QUOTA', description: 'Quota Planning and Attainment' },
   gradient: { start: '#F59E0B', mid: '#F97316', end: '#EF4444' },

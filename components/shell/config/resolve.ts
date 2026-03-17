@@ -1,11 +1,9 @@
 import type { DemoConfig, ResolvedDemoConfig } from './types';
 import { applyDefaults } from './defaults';
-import { discoverNav } from './fs-nav-discovery';
 
 export function resolveConfig(config: DemoConfig): ResolvedDemoConfig {
   const resolved = applyDefaults(config);
-  if (resolved.nav.length === 0) {
-    resolved.nav = discoverNav(resolved.slug);
-  }
+  // FS nav discovery (fs-nav-discovery.ts) is available for build-time scripts
+  // but cannot run in client components. All demos provide explicit nav arrays.
   return resolved;
 }
