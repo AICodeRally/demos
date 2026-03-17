@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Landmark } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'charter',
   client: {
     name: 'Lakeshore Credit Union',
     tagline: 'Member-Owned Since 1968',
@@ -67,5 +68,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Lakeshore Credit Union',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Credit Unions',
+    tagline: 'Member-owned financial intelligence for community institutions',
+    color: '#8B7355',
   },
 });

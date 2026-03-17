@@ -83,7 +83,7 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
       const t = localStorage.getItem('proofline-theme') as Theme | null;
       if (t === 'light' || t === 'dark') setTheme(t);
     };
-    window.addEventListener('demoshell-theme-change', handleShellToggle);
+    window.addEventListener('shell-theme-change', handleShellToggle);
     // Cross-tab sync
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'proofline-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
@@ -92,7 +92,7 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
     };
     window.addEventListener('storage', handleStorage);
     return () => {
-      window.removeEventListener('demoshell-theme-change', handleShellToggle);
+      window.removeEventListener('shell-theme-change', handleShellToggle);
       window.removeEventListener('storage', handleStorage);
     };
   }, []);

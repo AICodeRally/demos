@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Shield } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'aegis',
   client: {
     name: 'Ironclad Crisis Group',
     tagline: 'Privilege-First Crisis Defense',
@@ -67,5 +68,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Ironclad Crisis Group',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Crisis Management',
+    tagline: 'Privilege-first crisis defense for law firms and corporate counsel',
+    color: '#D4A574',
   },
 });

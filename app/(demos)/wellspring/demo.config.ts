@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Droplets } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'wellspring',
   client: {
     name: 'Permian Basin Resources',
     tagline: 'Delaware Basin \u00B7 Est. 2014',
@@ -82,5 +83,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Permian Basin Resources',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Oil & Gas',
+    tagline: 'Field operations intelligence for upstream oil and gas producers',
+    color: '#B45309',
   },
 });

@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Bed } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'register',
   client: {
     name: 'Summit Sleep Co.',
     tagline: 'Retail Revenue OS',
@@ -75,5 +76,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Summit Sleep Co.',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Retail Operations',
+    tagline: 'Retail revenue intelligence from floor to boardroom — comp, scheduling, analytics',
+    color: '#64748B',
   },
 });

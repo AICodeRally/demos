@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Beer } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'proofline-andrews',
   darkMode: true,
   client: {
     name: 'Lone Star Distribution',
@@ -88,5 +89,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Lone Star Distribution',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Beverage Distribution',
+    tagline: 'Revenue operating system for beverage distributors',
+    color: '#C6A052',
   },
 });

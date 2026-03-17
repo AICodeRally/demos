@@ -1,6 +1,7 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 
 export default defineDemo({
+  slug: 'crestline',
   client: {
     name: 'Crestline',
     tagline: 'Department Stores',
@@ -76,5 +77,10 @@ export default defineDemo({
   footer: {
     copyright: '© 2026 Crestline Department Stores',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Department Store Retail',
+    tagline: 'Premium retail compensation for multi-format department stores',
+    color: '#c9a84c',
   },
 });
