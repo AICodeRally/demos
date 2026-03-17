@@ -195,6 +195,7 @@ function reducer(state: StoreState, action: Action): StoreState {
 const CockpitCtx = createContext<{ state: StoreState; dispatch: React.Dispatch<Action> } | null>(null);
 
 function loadSession(slug: string): RallySession {
+  if (typeof window === 'undefined') return createEmptySession(slug);
   try {
     const raw = localStorage.getItem(`rally-session-${slug}`);
     if (raw) return JSON.parse(raw) as RallySession;
