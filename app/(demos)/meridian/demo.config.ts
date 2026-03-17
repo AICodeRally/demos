@@ -3,7 +3,7 @@ import { Landmark } from 'lucide-react';
 
 export default defineDemo({
   slug: 'meridian',
-  cockpit: true,
+  cockpit: { defaultOpen: true },
   darkMode: true,
   client: {
     name: 'Granite Peak Capital',

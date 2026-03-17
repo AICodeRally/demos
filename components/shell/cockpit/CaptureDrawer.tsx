@@ -43,20 +43,22 @@ export function CaptureDrawer({ config }: CaptureDrawerProps) {
     }
   };
 
-  // Collapsed state — thin toggle strip
+  // Collapsed state — visible toggle strip
   if (!isOpen) {
     return (
       <button
         onClick={toggle}
-        className="flex w-10 shrink-0 flex-col items-center justify-center gap-2 border-l border-[var(--sem-border-default)] bg-[var(--sem-bg-secondary)] transition-colors hover:bg-[var(--sem-bg-tertiary)]"
+        title="Open Capture (⌘K)"
+        className="group flex w-11 shrink-0 flex-col items-center justify-center gap-2 border-l border-[var(--palette-primary-500)]/20 bg-[var(--sem-bg-secondary)] transition-colors hover:bg-[var(--palette-primary-500)]/10"
       >
-        <ChevronLeft className="h-4 w-4 text-[var(--sem-text-muted)]" />
-        <MessageSquare className="h-4 w-4 text-[var(--sem-text-muted)]" />
+        <ChevronLeft className="h-4 w-4 text-[var(--palette-primary-500)]/60 group-hover:text-[var(--palette-primary-500)]" />
+        <MessageSquare className="h-4 w-4 text-[var(--palette-primary-500)]/60 group-hover:text-[var(--palette-primary-500)]" />
         {notes.length > 0 && (
           <span className="rounded-full bg-[var(--palette-primary-500)] px-1.5 text-[10px] font-bold text-white">
             {notes.length}
           </span>
         )}
+        <span className="text-[9px] font-medium text-[var(--sem-text-muted)] group-hover:text-[var(--palette-primary-500)]">⌘K</span>
       </button>
     );
   }
@@ -111,9 +113,15 @@ export function CaptureDrawer({ config }: CaptureDrawerProps) {
       {/* Notes feed */}
       <div ref={feedRef} className="flex-1 space-y-2 overflow-y-auto p-3">
         {notes.length === 0 && (
-          <p className="text-center text-xs text-[var(--sem-text-muted)] py-8">
-            No notes yet. Type below to capture your first note.
-          </p>
+          <div className="flex flex-col items-center gap-2 py-10 text-center">
+            <MessageSquare className="h-8 w-8 text-[var(--sem-text-muted)]/30" />
+            <p className="text-xs text-[var(--sem-text-muted)]">
+              Capture notes during your Rally session.
+            </p>
+            <p className="text-[10px] text-[var(--sem-text-muted)]/60">
+              Type below or import a Granola transcript
+            </p>
+          </div>
         )}
         {notes.map(note => (
           <div key={note.id} className="rounded-lg border border-[var(--sem-border-default)] bg-[var(--sem-bg-primary)] p-2">

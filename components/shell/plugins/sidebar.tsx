@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, Rocket } from 'lucide-react';
+import Link from 'next/link';
 import { registerLayout } from '../registry';
 import type { ResolvedDemoConfig } from '../config/types';
 import type { SharedParts } from '../registry';
@@ -43,6 +44,15 @@ function SidebarLayout({ config, children, parts }: {
           </div>
         </div>
         {sidebarContent}
+        {config.cockpit?.enabled && !config.cockpit.captureOnly && (
+          <Link
+            href={`/${config.slug}/cockpit`}
+            className="mx-2 mb-3 mt-auto flex items-center gap-2 rounded-lg border border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-active-accent)]/10 px-3 py-2 text-xs font-medium text-[var(--comp-sidebar-active-accent)] transition-colors hover:bg-[var(--comp-sidebar-active-accent)]/20"
+          >
+            <Rocket className="h-3.5 w-3.5" />
+            Rally Cockpit
+          </Link>
+        )}
       </aside>
 
       <div className="flex flex-1 flex-col overflow-hidden">
