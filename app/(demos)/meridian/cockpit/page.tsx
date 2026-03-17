@@ -1,3 +1,5 @@
+'use client';
+
 import { CockpitPage } from '@/components/shell/cockpit/CockpitPage';
 import demoConfig from '../demo.config';
 
