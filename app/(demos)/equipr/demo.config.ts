@@ -1,6 +1,7 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 
 export default defineDemo({
+  slug: 'equipr',
   client: {
     name: 'Blue Horizons Equipment Solutions',
     tagline: '',
@@ -66,5 +67,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Blue Horizons Group',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Equipment Rental',
+    tagline: 'AI-powered fleet intelligence and utilization analytics for rental operations',
+    color: '#F59E0B',
   },
 });

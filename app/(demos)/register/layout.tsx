@@ -1,6 +1,6 @@
 'use client';
 
-import { DemoShell } from '@/components/demo-shell';
+import { DemoShell } from '@/components/shell';
 import { RegisterThemeProvider } from '@/components/demos/register/ThemeProvider';
 import '@/styles/routeiq-vars.css';
 import demoConfig from './demo.config';

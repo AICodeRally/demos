@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Church } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'steeple',
   client: {
     name: 'Grace Community Church',
     tagline: 'Church Management Platform',
@@ -55,5 +56,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Grace Community Church',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Church Management',
+    tagline: 'Full-spectrum church management and ministry platform',
+    color: '#8b5cf6',
   },
 });

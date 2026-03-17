@@ -1,7 +1,8 @@
-import { defineDemo } from '@/components/demo-shell';
+import { defineDemo } from '@/components/shell';
 import { Landmark } from 'lucide-react';
 
 export default defineDemo({
+  slug: 'meridian',
   darkMode: true,
   client: {
     name: 'Granite Peak Capital',
@@ -84,5 +85,10 @@ export default defineDemo({
   footer: {
     copyright: '\u00A9 2026 Granite Peak Capital',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Private Equity',
+    tagline: 'Carried interest compensation and fund waterfall for M&A-focused PE firms',
+    color: '#D4A847',
   },
 });

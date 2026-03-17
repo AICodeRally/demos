@@ -1,6 +1,8 @@
-import { defineSpmDemo } from '@/components/spm-shell';
+import { defineDemo } from '@/components/shell';
 
-export default defineSpmDemo({
+export default defineDemo({
+  slug: 'quota',
+  layout: 'topnav',
   suite: { name: 'PRIZYM', tagline: 'RevOps Suite' },
   module: { code: 'QTA', name: 'QUOTA', description: 'Quota Planning and Attainment' },
   gradient: { start: '#F59E0B', mid: '#F97316', end: '#EF4444' },
@@ -69,5 +71,10 @@ export default defineSpmDemo({
   footer: {
     copyright: '\u00A9 2026 Prizym',
     poweredBy: 'AICR',
+  },
+  meta: {
+    industry: 'Prizym RevOps',
+    tagline: 'Quota planning and attainment for the modern CRO',
+    color: '#f59e0b',
   },
 });

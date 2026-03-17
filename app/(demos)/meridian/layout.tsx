@@ -1,7 +1,7 @@
 'use client';
 
 import '@/styles/meridian-vars.css';
-import { DemoShell } from '@/components/demo-shell';
+import { DemoShell } from '@/components/shell';
 import demoConfig from './demo.config';
 
 export default function MeridianLayout({ children }: { children: React.ReactNode }) {
