@@ -25,5 +25,14 @@ export function applyDefaults(config: DemoConfig): ResolvedDemoConfig {
     ...('module' in config ? { module: config.module } : {}),
     ...('gradient' in config ? { gradient: config.gradient } : {}),
     ...('wizard' in config ? { wizard: config.wizard } : {}),
+    ...(config.cockpit
+      ? {
+          cockpit: {
+            enabled: true as const,
+            defaultOpen: typeof config.cockpit === 'object' ? (config.cockpit.defaultOpen ?? false) : false,
+            captureOnly: typeof config.cockpit === 'object' ? (config.cockpit.captureOnly ?? false) : false,
+          },
+        }
+      : {}),
   };
 }

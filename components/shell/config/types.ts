@@ -39,6 +39,7 @@ interface DemoConfigBase {
     color?: string;
   };
   extensionVars?: string;
+  cockpit?: boolean | import('../cockpit/types').CockpitConfig;
 }
 
 export interface SidebarDemoConfig extends DemoConfigBase {
@@ -78,4 +79,5 @@ export interface ResolvedDemoConfig extends Omit<DemoConfigBase, 'theme' | 'foot
   module?: TopnavDemoConfig['module'];
   gradient?: TopnavDemoConfig['gradient'];
   wizard?: WizardDemoConfig['wizard'];
+  cockpit?: import('../cockpit/types').ResolvedCockpitConfig;
 }
