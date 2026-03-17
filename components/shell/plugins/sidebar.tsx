@@ -5,6 +5,7 @@ import { Menu } from 'lucide-react';
 import { registerLayout } from '../registry';
 import type { ResolvedDemoConfig } from '../config/types';
 import type { SharedParts } from '../registry';
+import { CaptureDrawer } from '../cockpit/CaptureDrawer';
 
 function SidebarLayout({ config, children, parts }: {
   config: ResolvedDemoConfig;
@@ -60,9 +61,12 @@ function SidebarLayout({ config, children, parts }: {
           <parts.ThemeToggle />
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-[var(--sem-bg-content)] p-6">
-          {children}
-        </main>
+        <div className="flex flex-1 overflow-hidden">
+          <main className="flex-1 overflow-y-auto bg-[var(--sem-bg-content)] p-6">
+            {children}
+          </main>
+          {config.cockpit?.enabled && <CaptureDrawer config={config} />}
+        </div>
 
         <parts.Footer config={config} />
       </div>

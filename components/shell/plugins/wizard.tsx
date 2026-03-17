@@ -6,6 +6,7 @@ import { Icon } from '../parts/IconResolver';
 import type { ResolvedDemoConfig } from '../config/types';
 import type { SharedParts } from '../registry';
 import { ChevronLeft, ChevronRight, Grid3X3, ListOrdered, Check } from 'lucide-react';
+import { CaptureDrawer } from '../cockpit/CaptureDrawer';
 
 function WizardInner({ config, children, parts }: {
   config: ResolvedDemoConfig;
@@ -30,35 +31,38 @@ function WizardInner({ config, children, parts }: {
             <parts.ThemeToggle />
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto p-8">
-          <div className="mx-auto max-w-4xl">
-            <h2 className="mb-6 text-2xl font-bold text-[var(--sem-text-primary)]">
-              {config.product.name} — All Steps
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {wiz.steps.map((step, i) => {
-                const completed = wiz.completedSteps.has(step.id);
-                return (
-                  <button
-                    key={step.id}
-                    onClick={() => wiz.goToStep(i)}
-                    className="group flex flex-col items-start gap-3 rounded-xl border border-[var(--sem-border-default)] bg-[var(--sem-bg-secondary)] p-5 text-left transition-all hover:border-[var(--comp-sidebar-active-accent)]"
-                  >
-                    <div className="flex w-full items-center justify-between">
-                      <Icon name={step.icon} className="h-5 w-5 text-[var(--comp-sidebar-active-accent)]" />
-                      {completed ? (
-                        <Check className="h-4 w-4 text-[var(--palette-success)]" />
-                      ) : (
-                        <span className="h-4 w-4 rounded-full border-2 border-[var(--sem-border-default)]" />
-                      )}
-                    </div>
-                    <span className="font-medium text-[var(--sem-text-primary)]">{step.label}</span>
-                  </button>
-                );
-              })}
+        <div className="flex flex-1 overflow-hidden">
+          <main className="flex-1 overflow-y-auto p-8">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="mb-6 text-2xl font-bold text-[var(--sem-text-primary)]">
+                {config.product.name} — All Steps
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {wiz.steps.map((step, i) => {
+                  const completed = wiz.completedSteps.has(step.id);
+                  return (
+                    <button
+                      key={step.id}
+                      onClick={() => wiz.goToStep(i)}
+                      className="group flex flex-col items-start gap-3 rounded-xl border border-[var(--sem-border-default)] bg-[var(--sem-bg-secondary)] p-5 text-left transition-all hover:border-[var(--comp-sidebar-active-accent)]"
+                    >
+                      <div className="flex w-full items-center justify-between">
+                        <Icon name={step.icon} className="h-5 w-5 text-[var(--comp-sidebar-active-accent)]" />
+                        {completed ? (
+                          <Check className="h-4 w-4 text-[var(--palette-success)]" />
+                        ) : (
+                          <span className="h-4 w-4 rounded-full border-2 border-[var(--sem-border-default)]" />
+                        )}
+                      </div>
+                      <span className="font-medium text-[var(--sem-text-primary)]">{step.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+          {config.cockpit?.enabled && <CaptureDrawer config={config} />}
+        </div>
         <parts.Footer config={config} />
       </div>
     );
@@ -105,9 +109,12 @@ function WizardInner({ config, children, parts }: {
         </span>
       </div>
 
-      <main className="flex-1 overflow-y-auto bg-[var(--sem-bg-content)] p-6">
-        {children}
-      </main>
+      <div className="flex flex-1 overflow-hidden">
+        <main className="flex-1 overflow-y-auto bg-[var(--sem-bg-content)] p-6">
+          {children}
+        </main>
+        {config.cockpit?.enabled && <CaptureDrawer config={config} />}
+      </div>
 
       <div className="flex shrink-0 items-center justify-between border-t border-[var(--sem-border-subtle)] bg-[var(--comp-footer-bg)] px-6 py-3">
         <button
