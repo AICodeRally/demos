@@ -1,0 +1,70 @@
+import type { ThemePresetDef } from '../types';
+import { generateShades } from '../shade';
+
+export const cleanLight: ThemePresetDef = {
+  palette: {
+    primary: generateShades('#2563EB'),
+    accent: generateShades('#7C3AED'),
+    neutral: generateShades('#6B7280'),
+    success: '#059669',
+    danger: '#DC2626',
+    warning: '#D97706',
+  },
+  semantic: {
+    // clean-light is a light-first preset — light is the "primary" mode
+    light: {
+      bgPrimary: '#FFFFFF',
+      bgSecondary: '#F9FAFB',
+      bgContent: '#FFFFFF',
+      cardBg: '#FFFFFF',
+      textPrimary: '#111827',
+      textSecondary: '#4B5563',
+      textMuted: '#9CA3AF',
+      textInverse: '#FFFFFF',
+      borderDefault: '#E5E7EB',
+      borderSubtle: '#F3F4F6',
+      shadowCard: '0 1px 2px rgba(0,0,0,0.05)',
+      shadowElevated: '0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04)',
+    },
+    dark: {
+      bgPrimary: '#111827',
+      bgSecondary: '#1F2937',
+      bgContent: '#111827',
+      cardBg: '#1F2937',
+      textPrimary: '#F9FAFB',
+      textSecondary: '#D1D5DB',
+      textMuted: '#6B7280',
+      textInverse: '#111827',
+      borderDefault: '#374151',
+      borderSubtle: '#4B5563',
+      shadowCard: '0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)',
+      shadowElevated: '0 4px 12px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3)',
+    },
+  },
+  component: {
+    dark: {
+      sidebarBg: '#0a0a0a',
+      sidebarText: '#FFFFFF',
+      sidebarTextMuted: '#94A3B8',
+      sidebarBorder: '#1F2937',
+      sidebarActiveAccent: '#2563EB',
+      headerBg: '#111827',
+      headerBorder: '#374151',
+      footerBg: '#111827',
+      navSectionLabel: '#64748B',
+      progressBarFill: '#2563EB',
+    },
+    light: {
+      sidebarBg: '#111827',
+      sidebarText: '#FFFFFF',
+      sidebarTextMuted: '#9CA3AF',
+      sidebarBorder: '#1F2937',
+      sidebarActiveAccent: '#2563EB',
+      headerBg: '#FFFFFF',
+      headerBorder: '#E5E7EB',
+      footerBg: '#F9FAFB',
+      navSectionLabel: '#9CA3AF',
+      progressBarFill: '#2563EB',
+    },
+  },
+};
