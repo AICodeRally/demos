@@ -54,6 +54,25 @@ interface CockpitConfig {
 
 `cockpit: true` is sugar for `cockpit: {}` with all defaults. Existing demos are unaffected.
 
+### ResolvedDemoConfig Extension
+
+`ResolvedDemoConfig` must also carry the resolved cockpit config so layout plugins can access it:
+
+```ts
+export interface ResolvedDemoConfig extends Omit<DemoConfigBase, 'theme' | 'footer'> {
+  // ... existing fields ...
+  cockpit?: ResolvedCockpitConfig;  // added
+}
+
+interface ResolvedCockpitConfig {
+  enabled: true;
+  defaultOpen: boolean;
+  captureOnly: boolean;
+}
+```
+
+`applyDefaults()` normalizes `cockpit: true` → `{ enabled: true, defaultOpen: false, captureOnly: false }` and `cockpit: undefined` → omitted (no cockpit).
+
 ## Data Model
 
 A single `RallySession` object per demo, stored in localStorage at key `rally-session-{slug}`:
@@ -66,7 +85,7 @@ interface RallySession {
   updatedAt: string;
 
   context: {
-    identity: { projectName: string; brandColor?: string; themeName?: string };
+    identity: { projectName: string; brandColor?: string; themeName?: string; tagline?: string };
     org: OrgMember[];
     personas: Persona[];
     scope: ModuleScope[];
@@ -167,6 +186,7 @@ interface Vote {
 interface WorkTask {
   id: string;
   title: string;
+  rationale?: string;          // why this task matters (derived from linked decision text if omitted)
   priority: 'P0' | 'P1' | 'P2';
   status: 'todo' | 'in-progress' | 'done';
   linkedDecisionId?: string;
@@ -203,20 +223,87 @@ components/shell/
 
 ### Modified Existing Files
 
-- `components/shell/config/types.ts` — add `cockpit` field to `DemoConfigBase`
+- `components/shell/config/types.ts` — add `cockpit` field to `DemoConfigBase` and `ResolvedDemoConfig`
+- `components/shell/config/defaults.ts` — normalize `cockpit: true` to `ResolvedCockpitConfig`
 - `components/shell/DemoShell.tsx` — wrap with `CockpitProvider` when enabled
 - `components/shell/plugins/sidebar.tsx` — render `CaptureDrawer` when cockpit enabled
 - `components/shell/plugins/topnav.tsx` — same
 - `components/shell/plugins/wizard.tsx` — same
 - `components/shell/index.ts` — export cockpit hooks and types
 
+### Layout Plugin Drawer Integration
+
+All 3 layout plugins use the same pattern — wrap `<main>` and `<CaptureDrawer>` in a flex row sibling container:
+
+```tsx
+// Inside each layout plugin's render function:
+const cockpitEnabled = config.cockpit?.enabled;
+
+<div className="flex flex-1 overflow-hidden">
+  <main className="flex-1 overflow-y-auto bg-[var(--sem-bg-content)] p-6">
+    {children}
+  </main>
+  {cockpitEnabled && <CaptureDrawer config={config} />}
+</div>
+```
+
+The drawer renders as a flex sibling to `<main>`. When collapsed, it renders only a thin toggle strip (40px). When expanded, it takes 320px and `<main>` shrinks via flex. This works identically in sidebar, topnav, and wizard because the drawer is always a sibling of the main content column, not the outer shell structure.
+
 ### New Route Per Demo
 
-Each cockpit-enabled demo gets: `app/(demos)/{slug}/cockpit/page.tsx`
+Each cockpit-enabled demo needs a `cockpit/page.tsx` in its route directory. Since this is a static export, each demo must have a real file. A shared component keeps it DRY:
+
+```
+app/(demos)/meridian/cockpit/page.tsx    → imports CockpitPage + meridian's demo.config
+app/(demos)/equipr/cockpit/page.tsx      → imports CockpitPage + equipr's demo.config
+```
+
+Each file is a 3-line wrapper:
+
+```tsx
+import { CockpitPage } from '@/components/shell/cockpit/CockpitPage';
+import demoConfig from '../demo.config';
+export default function Page() { return <CockpitPage config={demoConfig} />; }
+```
+
+Only created for demos with `cockpit: true`. The cockpit route inherits the demo's layout.tsx, so it renders inside the shell.
+
+## Store API (CockpitProvider)
+
+`store.ts` exports a React context provider and hooks for all Cockpit state management:
+
+```ts
+// Provider — wraps children in DemoShell when cockpit enabled
+<CockpitProvider slug={config.slug}>
+  {children}
+</CockpitProvider>
+
+// Core hook — returns full session + dispatch actions
+const { session, dispatch } = useCockpit();
+
+// Convenience hooks for specific layers
+const { notes, addNote, importTranscript } = useCapture();
+const { items, vote, promote, lock } = useDecisions();
+const { tasks, addTask, moveTask } = useWorkboard();
+const { identity, org, personas, updateContext } = useContext();
+const { spec, exportJson, exportMarkdown } = useForgeSpec();
+const { isOpen, toggle } = useDrawer();
+```
+
+**Dispatch pattern:** All mutations go through a reducer-style dispatch that auto-persists to localStorage on every action. The reducer handles `RallySession` as a single atom — no partial saves. `updatedAt` is set on every mutation.
+
+**Initialization:** On mount, `CockpitProvider` reads `localStorage.getItem('rally-session-{slug}')`. If empty, initializes with an empty `RallySession` (all arrays empty, identity fields blank). The Cockpit page shows empty states with "Add your first..." prompts per section.
+
+**Error handling:** If localStorage read fails (parse error, quota exceeded), log a console warning and initialize fresh. Data loss is acceptable in Phase 1 — the JSON export is the durable backup.
+
+## Dependencies
+
+- **Drag-and-drop:** Add `@dnd-kit/core` + `@dnd-kit/sortable` for Scope reordering (Context tab) and Workboard column drag. Lightweight, headless, React-native.
+- **UUID generation:** `crypto.randomUUID()` (browser-native, no library needed).
 
 ## Capture Drawer UX
 
-320px right-edge drawer, toggled via header button or `Cmd+.` / `Ctrl+.`.
+320px right-edge drawer, toggled via header button or `Cmd+K` / `Ctrl+K` (cockpit toggle).
 
 ### Quick-Add Mode (default)
 - Chat-like text input at bottom
@@ -247,7 +334,7 @@ Auto-save to localStorage on every mutation. No save button.
 Full pipeline view at `/{slug}/cockpit`, rendered inside the demo's shell layout.
 
 ### Tab 1: Context
-- **Identity** — project name, brand color picker (updates shell theme live via `setTokens()`), tagline
+- **Identity** — project name, brand color picker (calls `setTokens({ 'palette-primary-500': hex })` to update shell theme live), tagline
 - **Org Chart** — cards: name, title, company, role tag, weight slider (1-5)
 - **Personas** — cards: name, role, pain points list, goals list
 - **Scope** — module list with description, drag to reorder priority
@@ -257,7 +344,7 @@ Full pipeline view at `/{slug}/cockpit`, rendered inside the demo's shell layout
 ### Tab 2: Capture
 - Same feed as drawer, full-width
 - Filter bar: by tag, by author, by source
-- Bulk actions: tag multiple, promote to Decision
+- Bulk actions: tag multiple, promote to Decision (promoted items show a "Promoted" badge and link to the decision, but remain in the feed)
 
 ### Tab 3: Decisions
 - Items promoted from Capture or created directly
@@ -288,6 +375,8 @@ weightedScore = Σ(upVotes × weight) - Σ(downVotes × weight)
 A VP with weight 5 who thumbs-up adds +5. A junior analyst with weight 1 adds +1. Items auto-sort by weighted score in the Decisions tab.
 
 Any participant can vote. The consultant can override by locking a decision regardless of score.
+
+**Weight lookup:** `Vote.memberId` references `OrgMember.id` in `session.context.org`. The `computeWeightedScore()` helper joins votes with org members to derive weight. If a member is deleted from the org chart, their votes use weight 1 (default).
 
 ## forge_spec.json
 
