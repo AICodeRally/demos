@@ -2,7 +2,7 @@
 
 import { DemoShell } from '@/components/shell';
 import { PhoenixThemeProvider } from '@/components/demos/phoenix-intel/ThemeProvider';
-import '@/styles/phoenix-intel-vars.css';
+import '@/styles/ext/phoenix-intel.css';
 import demoConfig from './demo.config';
 
 export default function PhoenixIntelLayout({ children }: { children: React.ReactNode }) {

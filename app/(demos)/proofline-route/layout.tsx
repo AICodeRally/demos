@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import '@/styles/proofline-route-vars.css';
+import '@/styles/ext/proofline-route.css';
 
 export const metadata: Metadata = {
   title: 'PROOFLINE Route Commission — Lone Star Spirits',

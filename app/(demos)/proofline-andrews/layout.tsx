@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/proofline-vars.css';
+import '@/styles/ext/proofline.css';
 import { DemoShell } from '@/components/shell';
 import demoConfig from './demo.config';
 

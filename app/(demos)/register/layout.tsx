@@ -2,7 +2,7 @@
 
 import { DemoShell } from '@/components/shell';
 import { RegisterThemeProvider } from '@/components/demos/register/ThemeProvider';
-import '@/styles/proofline-vars.css';
+import '@/styles/ext/proofline.css';
 import demoConfig from './demo.config';
 
 export default function RegisterLayout({ children }: { children: React.ReactNode }) {

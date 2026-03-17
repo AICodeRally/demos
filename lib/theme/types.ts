@@ -34,7 +34,7 @@ export interface ThemeTokens {
   shadows: ThemeShadows;
 }
 
-export type ThemePreset = 'barrel-brass' | 'midnight' | 'clean-light' | 'aegis-ivory' | 'register-slate' | 'charter-stone' | 'prizym-navy';
+export type ThemePreset = 'barrel-brass' | 'midnight' | 'clean-light' | 'aegis-ivory' | 'register-slate' | 'charter-stone' | 'prizym-navy' | 'phoenix-sapphire';
 
 export interface ThemeConfig {
   preset?: ThemePreset;
