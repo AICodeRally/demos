@@ -1851,7 +1851,7 @@ function ScopeList({ scope, onChange }: { scope: ModuleScope[]; onChange: (s: Mo
 
   return (
     <div className="space-y-2">
-      {scope.sort((a, b) => a.priority - b.priority).map((m, idx) => (
+      {[...scope].sort((a, b) => a.priority - b.priority).map((m, idx) => (
         <div key={m.id} className="flex items-center gap-2 rounded border border-[var(--sem-border-default)] px-3 py-2">
           <GripVertical className="h-4 w-4 shrink-0 text-[var(--sem-text-muted)]" />
           <span className="w-6 text-center text-xs font-bold text-[var(--sem-text-muted)]">#{idx + 1}</span>
