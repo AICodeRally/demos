@@ -94,6 +94,15 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
   'rate-card': {
     text: 'Advisory services (assessments, feasibility, strategic planning) have highest margin at 55-65%. Training has highest scalability potential — 45% margin with digital delivery could add $120K in Year 1. Operational retainers (campaign management at $8,500/mo) provide predictable recurring revenue. Consider annual rate review tied to CPI + 2%.',
   },
+  'documents': {
+    text: 'Document migration from Dropbox to SharePoint is 65% complete — 47 of 72 files moved. Kelly still manages 12 active contracts manually via email attachments. Recommend: DocuSign integration for contract workflow (draft → review → sign → auto-file). 3 contracts are expiring within 60 days (Hope Springs, Faith & Light, Pacific Crest) — renewal notices should auto-trigger at 90 days. Template standardization could reduce proposal prep time by 40%.',
+  },
+  'onboarding': {
+    text: 'Average onboarding takes 14 days — best-in-class for boutique consulting. SafeHaven is 30% through onboarding checklist with engagement letter signed and billing setup complete. Sunrise Children\'s Hospital onboarding is pending contract signature. Key bottleneck: Kelly manually creates each client folder in SharePoint and sets permissions — this should auto-provision from the signed engagement letter. QuickBooks client setup averages 2 days due to Cassandra\'s workload.',
+  },
+  'projects': {
+    text: 'Jennifer Blake is leading 4 active projects at 92% utilization — Mountain View ($120K) and Sonoran State ($240K) are the largest. Heritage Arts assessment is 88% complete and on track for March 31 delivery. Riverside Health Annual Fund (planning) should be assigned to Thomas Park (65% utilization) rather than adding to Jennifer\'s load. This unified view replaces Kelly\'s 6+ Excel workbooks and eliminates the "game of telephone" across tracking systems.',
+  },
   'style-guide': {
     text: 'The Sapphire & Gold design system uses Space Grotesk for modern readability. Primary sapphire (#3b6bf5) for trust and intelligence, gold accent (#c9942b) for warmth and premium positioning.',
     label: 'Design Notes',

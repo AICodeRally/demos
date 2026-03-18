@@ -40,6 +40,9 @@ export default defineDemo({
         { label: 'Deliverables', href: '/phoenix-intel/deliverables', icon: 'ListChecks' },
         { label: 'Clients', href: '/phoenix-intel/clients', icon: 'Building2' },
         { label: 'Reports', href: '/phoenix-intel/reports', icon: 'BarChart3' },
+        { label: 'Documents', href: '/phoenix-intel/documents', icon: 'FolderOpen' },
+        { label: 'Onboarding', href: '/phoenix-intel/onboarding', icon: 'UserPlus' },
+        { label: 'Projects', href: '/phoenix-intel/projects', icon: 'Kanban' },
       ],
     },
     {
