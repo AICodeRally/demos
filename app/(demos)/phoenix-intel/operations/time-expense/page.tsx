@@ -2,8 +2,11 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { Clock, DollarSign, TrendingUp, AlertCircle, Zap, Mail, FileSpreadsheet, Monitor, PenTool, AlertTriangle } from 'lucide-react';
+import { Clock, DollarSign, TrendingUp, AlertCircle, Zap, Mail, FileSpreadsheet, Monitor, PenTool } from 'lucide-react';
 
 const TIME_ENTRIES = [
   { date: '2026-03-17', consultant: 'Jennifer Blake', client: 'Mountain View Academy', hours: 4.5, category: 'Campaign Management', billable: true, rate: 175 },
@@ -45,15 +48,15 @@ export default function TimeExpensePage() {
   return (
     <PhoenixPage title="Time & Expense" subtitle="Passive telemetry + manual capture — replaces Intervals" accentColor="#f59e0b">
       {/* Intervals Replacement Banner */}
-      <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #7c3aed' }}>
+      <div className="phoenix-card pi-card-section" style={{ borderLeft: '3px solid #7c3aed' }} role="region" aria-label="Smart time capture">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <Zap size={18} color="#7c3aed" />
+          <Zap size={18} color="#7c3aed" aria-hidden="true" />
           <h3 className="pi-label" style={{ color: '#7c3aed' }}>Smart Time Capture — Replaces Intervals</h3>
         </div>
         <p className="pi-body-muted" style={{ marginBottom: 12 }}>
           Passive telemetry auto-captures work across email, documents, and meetings. Manual entry only needed for offline/analog work. No more double-entry or end-of-week recall.
         </p>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div className="pi-flex-wrap" style={{ gap: 8 }}>
           {[
             { icon: Mail, label: 'Email Activity', desc: 'Outlook threads auto-tagged to client/engagement', color: '#3b6bf5' },
             { icon: FileSpreadsheet, label: 'Document Work', desc: 'Excel, Word, PowerPoint tracked via M365', color: '#10b981' },
@@ -65,7 +68,7 @@ export default function TimeExpensePage() {
               background: `${s.color}08`, border: `1px solid ${s.color}20`,
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                <s.icon size={14} color={s.color} />
+                <s.icon size={14} color={s.color} aria-hidden="true" />
                 <span className="pi-overline" style={{ color: s.color, textTransform: 'none' }}>{s.label}</span>
               </div>
               <div className="pi-caption">{s.desc}</div>
@@ -75,32 +78,20 @@ export default function TimeExpensePage() {
       </div>
 
       {/* Auto-Tag Accuracy */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#10b98108', border: '1px solid #10b98120',
-      }}>
-        <Zap size={14} color="#10b981" style={{ flexShrink: 0 }} />
-        <span>Auto-tagging accuracy: <strong style={{ color: '#10b981' }}>94%</strong> — consultants review &amp; confirm weekly. Unmatched entries flagged for manual classification.</span>
-      </div>
+      <Alert variant="success" icon={Zap}>
+        Auto-tagging accuracy: <strong style={{ color: '#10b981' }}>94%</strong> — consultants review &amp; confirm weekly. Unmatched entries flagged for manual classification.
+      </Alert>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {[
-          { label: 'This Week Hours', value: `${totalHours.toFixed(1)}h`, icon: Clock, color: '#3b6bf5' },
-          { label: 'Billable Revenue', value: `$${(totalBillable / 1000).toFixed(1)}K`, icon: DollarSign, color: '#10b981' },
-          { label: 'Billable %', value: `${((billableHours / totalHours) * 100).toFixed(0)}%`, icon: TrendingUp, color: '#c9942b' },
-          { label: 'Pending Expenses', value: `$${pendingExpenseTotal.toFixed(0)}`, icon: AlertCircle, color: '#ef4444' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" role="region" aria-label="Time and expense summary">
+        <MetricCard label="This Week Hours" value={`${totalHours.toFixed(1)}h`} icon={Clock} color="#3b6bf5" />
+        <MetricCard label="Billable Revenue" value={`$${(totalBillable / 1000).toFixed(1)}K`} icon={DollarSign} color="#10b981" />
+        <MetricCard label="Billable %" value={`${((billableHours / totalHours) * 100).toFixed(0)}%`} icon={TrendingUp} color="#c9942b" />
+        <MetricCard label="Pending Expenses" value={`$${pendingExpenseTotal.toFixed(0)}`} icon={AlertCircle} color="#ef4444" />
       </div>
 
       {/* Weekly Utilization */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card pi-card-section" role="region" aria-label="Weekly utilization">
         <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Weekly Utilization — Week of Mar 10</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {WEEKLY_SUMMARY.map(w => {
@@ -112,13 +103,19 @@ export default function TimeExpensePage() {
               <div key={w.consultant}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                   <span className="pi-label">{w.consultant}</span>
-                  <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                     <span className="pi-body" style={{ color: '#10b981', fontWeight: 600 }}>{w.billable}h billable</span>
                     <span className="pi-caption">{w.nonBillable}h non-bill</span>
                     <span className="pi-label" style={{ color: utilColor }}>{total}h / {w.target}h</span>
                   </div>
                 </div>
-                <div className="pi-bar-track" style={{ height: 8, borderRadius: 4, display: 'flex', overflow: 'hidden' }}>
+                <div className="pi-bar-track" style={{ height: 8, borderRadius: 4, display: 'flex', overflow: 'hidden' }}
+                  role="progressbar"
+                  aria-valuenow={Math.round(pctBillable)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`${w.consultant}: ${w.billable}h billable of ${w.target}h target`}
+                >
                   <div className="pi-bar-fill" style={{ width: `${pctBillable}%`, background: '#10b981', borderRadius: '4px 0 0 4px' }} />
                   <div style={{ height: '100%', width: `${pctNonBill}%`, background: '#f59e0b' }} />
                 </div>
@@ -130,42 +127,35 @@ export default function TimeExpensePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Recent Time Entries */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Recent time entries">
           <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Recent Time Entries</h3>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                  {['Date', 'Consultant', 'Client', 'Hours', 'Type'].map(h => (
-                    <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '6px' }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {TIME_ENTRIES.map((e, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                    <td className="pi-caption" style={{ padding: '8px 6px' }}>{e.date.slice(5)}</td>
-                    <td className="pi-label-muted" style={{ padding: '8px 6px' }}>{e.consultant.split(' ')[1]}</td>
-                    <td className="pi-body-muted" style={{ padding: '8px 6px' }}>{e.client}</td>
-                    <td className="pi-label" style={{ padding: '8px 6px' }}>{e.hours}h</td>
-                    <td style={{ padding: '8px 6px' }}>
-                      <span className="pi-badge" style={{
-                        fontSize: 'var(--pi-fs-overline)',
-                        background: e.billable ? '#10b98120' : '#94a3b820',
-                        color: e.billable ? '#10b981' : '#94a3b8',
-                      }}>
-                        {e.billable ? 'Billable' : 'Internal'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            data={TIME_ENTRIES}
+            keyFn={(_, i) => String(i)}
+            columns={[
+              { key: 'date', header: 'Date', render: (e) => <span className="pi-caption">{e.date.slice(5)}</span> },
+              { key: 'consultant', header: 'Consultant', render: (e) => <span className="pi-label-muted">{e.consultant.split(' ')[1]}</span> },
+              { key: 'client', header: 'Client', hideSm: true, render: (e) => <span className="pi-body-muted">{e.client}</span> },
+              { key: 'hours', header: 'Hours', render: (e) => <span className="pi-label">{e.hours}h</span> },
+              {
+                key: 'type',
+                header: 'Type',
+                render: (e) => (
+                  <span className="pi-badge" style={{
+                    fontSize: 'var(--pi-fs-overline)',
+                    background: e.billable ? '#10b98120' : '#94a3b820',
+                    color: e.billable ? '#10b981' : '#94a3b8',
+                  }}>
+                    {e.billable ? 'Billable' : 'Internal'}
+                  </span>
+                ),
+              },
+            ]}
+          />
         </div>
 
         {/* Expense Approvals */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Expense approvals">
           <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Expense Approvals</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {PENDING_EXPENSES.map((e, i) => (

@@ -2,9 +2,12 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { CONSULTANTS, ENGAGEMENTS } from '@/data/phoenix-intel/nonprofit-data';
-import { Clock, DollarSign, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Clock, DollarSign, CheckCircle } from 'lucide-react';
 
 // Simulated weekly timesheet data
 const CURRENT_WEEK = '2026-03-09';
@@ -39,28 +42,16 @@ export default function TimesheetsPage() {
   return (
     <PhoenixPage title="Timesheets" subtitle="Weekly time capture with passive telemetry auto-tagging" accentColor="#f59e0b">
       {/* Telemetry Banner */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#10b98108', border: '1px solid #10b98120',
-      }}>
-        <CheckCircle size={14} color="#10b981" style={{ flexShrink: 0 }} />
-        <span><strong style={{ color: '#10b981' }}>Passive telemetry active:</strong> Email, document, and meeting time auto-tagged to engagements from M365. Manual entry required only for offline work (site visits, phone calls). Intervals is fully deprecated.</span>
-      </div>
+      <Alert variant="success" icon={CheckCircle}>
+        <strong style={{ color: '#10b981' }}>Passive telemetry active:</strong> Email, document, and meeting time auto-tagged to engagements from M365. Manual entry required only for offline work (site visits, phone calls). Intervals is fully deprecated.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Hours', value: String(totalHours), icon: Clock, color: '#3b6bf5' },
-          { label: 'Billable Hours', value: String(totalBillable), icon: DollarSign, color: '#10b981' },
-          { label: 'Billable Rate', value: `${billableRate}%`, icon: DollarSign, color: billableRate >= 80 ? '#10b981' : '#f59e0b' },
-          { label: 'Auto-Tagged', value: `${autoTagRate}%`, icon: CheckCircle, color: '#7c3aed' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Timesheet summary">
+        <MetricCard label="Total Hours" value={String(totalHours)} icon={Clock} color="#3b6bf5" />
+        <MetricCard label="Billable Hours" value={String(totalBillable)} icon={DollarSign} color="#10b981" />
+        <MetricCard label="Billable Rate" value={`${billableRate}%`} icon={DollarSign} color={billableRate >= 80 ? '#10b981' : '#f59e0b'} />
+        <MetricCard label="Auto-Tagged" value={`${autoTagRate}%`} icon={CheckCircle} color="#7c3aed" />
       </div>
 
       {/* Week selector label */}
@@ -69,51 +60,47 @@ export default function TimesheetsPage() {
       </div>
 
       {/* Timesheet Table */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Consultant', 'Total', 'Billable', 'Non-Bill', 'Auto', 'Manual', 'Status'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {TIMESHEET_ENTRIES.map(t => (
-                <tr key={t.consultant} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '10px 8px' }}>
-                    <div className="pi-label">{t.consultant}</div>
-                    <div className="pi-overline" style={{ textTransform: 'none' }}>{t.title}</div>
-                  </td>
-                  <td className="pi-label" style={{ padding: '10px 8px' }}>{t.totalHours}h</td>
-                  <td className="pi-body" style={{ padding: '10px 8px', color: '#10b981', fontWeight: 600 }}>{t.billableHours}h</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{t.nonBillable}h</td>
-                  <td className="pi-body" style={{ padding: '10px 8px', color: '#7c3aed', fontWeight: 600 }}>{t.autoTagged}h</td>
-                  <td className="pi-body" style={{ padding: '10px 8px', color: t.manualEntry > 5 ? '#f59e0b' : 'var(--pi-text-muted)' }}>{t.manualEntry}h</td>
-                  <td style={{ padding: '10px 8px' }}>
-                    {t.approved ? (
-                      <span className="pi-badge" style={{ background: '#10b98120', color: '#10b981' }}>Approved</span>
-                    ) : t.submitted ? (
-                      <span className="pi-badge" style={{ background: '#3b6bf520', color: '#3b6bf5' }}>Submitted</span>
-                    ) : (
-                      <span className="pi-badge" style={{ background: '#f59e0b20', color: '#f59e0b' }}>Draft</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="phoenix-card pi-card-section">
+        <DataTable
+          data={TIMESHEET_ENTRIES}
+          keyFn={(t) => t.consultant}
+          emptyMessage="No timesheet entries this week"
+          columns={[
+            {
+              key: 'consultant',
+              header: 'Consultant',
+              render: (t) => (
+                <div>
+                  <div className="pi-label">{t.consultant}</div>
+                  <div className="pi-overline" style={{ textTransform: 'none' }}>{t.title}</div>
+                </div>
+              ),
+            },
+            { key: 'total', header: 'Total', render: (t) => <span className="pi-label">{t.totalHours}h</span> },
+            { key: 'billable', header: 'Billable', render: (t) => <span className="pi-body" style={{ color: '#10b981', fontWeight: 600 }}>{t.billableHours}h</span> },
+            { key: 'nonBill', header: 'Non-Bill', hideSm: true, render: (t) => <span className="pi-body-muted">{t.nonBillable}h</span> },
+            { key: 'auto', header: 'Auto', hideSm: true, render: (t) => <span className="pi-body" style={{ color: '#7c3aed', fontWeight: 600 }}>{t.autoTagged}h</span> },
+            { key: 'manual', header: 'Manual', hideSm: true, render: (t) => <span className="pi-body" style={{ color: t.manualEntry > 5 ? '#f59e0b' : 'var(--pi-text-muted)' }}>{t.manualEntry}h</span> },
+            {
+              key: 'status',
+              header: 'Status',
+              render: (t) => {
+                if (t.approved) return <span className="pi-badge" style={{ background: '#10b98120', color: '#10b981' }}>Approved</span>;
+                if (t.submitted) return <span className="pi-badge" style={{ background: '#3b6bf520', color: '#3b6bf5' }}>Submitted</span>;
+                return <span className="pi-badge" style={{ background: '#f59e0b20', color: '#f59e0b' }}>Draft</span>;
+              },
+            },
+          ]}
+        />
       </div>
 
       {/* Engagement Breakdown */}
-      <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #7c3aed' }}>
+      <div className="phoenix-card" style={{ borderLeft: '3px solid #7c3aed' }}>
         <h3 className="pi-section-title">Auto-Tag Accuracy</h3>
         <p className="pi-body-muted" style={{ marginBottom: 12 }}>
           Passive telemetry captured {autoTagRate}% of this week&apos;s hours automatically. Only {100 - autoTagRate}% required manual entry (site visits, phone calls). Auto-tagging accuracy at 94%, up from 89% at launch.
         </p>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div className="pi-flex-wrap">
           {[
             { source: 'Email (M365)', pct: 35, color: '#3b6bf5' },
             { source: 'Documents (SharePoint)', pct: 25, color: '#10b981' },
