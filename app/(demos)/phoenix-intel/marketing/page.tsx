@@ -99,7 +99,7 @@ export default function MarketingPage() {
       {/* Ecosystem Flow Diagram */}
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 4 }}>Marketing Ecosystem</h3>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 16 }}>Current data flow: Website &rarr; Knack (NAC) &rarr; Constant Contact &rarr; Audience Lists</p>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 16 }}>Current data flow: Website &rarr; Knack &rarr; Constant Contact &rarr; Audience Lists</p>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
           {/* Website */}
           <div style={{ padding: '12px 16px', borderRadius: 10, background: '#3b6bf515', border: '1px solid #3b6bf530', textAlign: 'center', minWidth: 140 }}>
@@ -112,10 +112,10 @@ export default function MarketingPage() {
           {/* Knack */}
           <div style={{ padding: '12px 16px', borderRadius: 10, background: '#c9942b15', border: '1px solid #c9942b30', textAlign: 'center', minWidth: 160 }}>
             <Database size={20} color="#c9942b" style={{ margin: '0 auto 6px' }} />
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--pi-text)' }}>Knack (NAC)</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)', marginTop: 4 }}>3,940 records</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-muted)' }}>3,385 individuals · 342 orgs</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-muted)' }}>22 marketing categories</div>
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--pi-text)' }}>Knack</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)', marginTop: 4 }}>2,500-3,000 records</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-muted)' }}>Individuals & organizations</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-muted)' }}>Marketing categories</div>
           </div>
           <ArrowRight size={16} color="var(--pi-text-faint)" />
           {/* Constant Contact */}

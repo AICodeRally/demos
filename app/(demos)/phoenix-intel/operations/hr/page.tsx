@@ -6,7 +6,7 @@ import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { CheckCircle2, Circle, AlertTriangle, Shield, Users, Calendar, Laptop } from 'lucide-react';
 
 const TEAM_ROSTER = [
-  { name: 'Richard Tollefson', title: 'CEO & Managing Partner', status: 'active', type: 'Full-Time', since: '2008', compliance: 'current' },
+  { name: 'Richard Tollefson', title: 'President', status: 'active', type: 'Full-Time', since: '2008', compliance: 'current' },
   { name: 'Cheryl Tollefson', title: 'COO', status: 'active', type: 'Full-Time', since: '2010', compliance: 'current' },
   { name: 'Dr. Michal Tyra', title: 'Senior Consultant', status: 'active', type: 'Contract', since: '2018', compliance: 'current' },
   { name: 'Kelly Martinez', title: 'Director of Client Services', status: 'active', type: 'Full-Time', since: '2020', compliance: 'current' },
@@ -39,7 +39,7 @@ const ONBOARDING_TEMPLATES = [
 ];
 
 const IT_ASSETS = [
-  { category: 'CRM & Data', tools: ['Knack (NAC Database)', 'Constant Contact', 'DonorSearch', 'Formsite (Surveys)'] },
+  { category: 'CRM & Data', tools: ['Knack Database', 'Constant Contact', 'DonorSearch', 'Formsite (Surveys)'] },
   { category: 'Email & Comms', tools: ['Outlook (Org)', 'Outlook (Richard)', 'MS Teams (replacing Zoom)', 'Intermedia/MS365'] },
   { category: 'Finance', tools: ['QuickBooks Online', 'Alliance Bank', 'ADP Payroll', 'Amex (Reconciliation)'] },
   { category: 'Project Mgmt', tools: ['SharePoint', 'Monday.com (Recommended)', 'DocuSign (Contracts)', 'InCorp (State Filings)'] },

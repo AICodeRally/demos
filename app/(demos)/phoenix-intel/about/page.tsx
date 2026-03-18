@@ -23,7 +23,7 @@ const SERVICES = [
 ];
 
 const LEADERSHIP = [
-  { name: 'Richard Tollefson', title: 'CEO & Managing Partner', specialty: 'Capital Campaigns & Strategic Planning', note: 'Generates 70-75% of business (down from 92%)' },
+  { name: 'Richard Tollefson', title: 'President', specialty: 'Capital Campaigns & Strategic Planning', note: 'Generates 70-75% of business (down from 92%)' },
   { name: 'Cheryl Tollefson', title: 'COO', specialty: 'Operations & Finance', note: 'Oversees all internal operations' },
   { name: 'Dr. Michal Tyra', title: 'Senior Consultant', specialty: 'Business Development & Client Strategy', note: 'Key BD leader — expanding revenue share' },
 ];
