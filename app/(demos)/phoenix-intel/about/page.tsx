@@ -3,7 +3,7 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { HeartHandshake, Target, Users, Award } from 'lucide-react';
+import { HeartHandshake, Target, Users, Award, MapPin, TrendingUp, BarChart3, Repeat, Star, DollarSign } from 'lucide-react';
 
 const PILLARS_6P = [
   { name: 'Purpose', color: '#facc15', description: 'Mission clarity, strategic vision, and organizational alignment' },
@@ -18,33 +18,145 @@ const SERVICES = [
   'Fundraising Program Assessment', 'Capital Campaign Consulting', 'Board Development & Training',
   'Major Gifts Strategy', 'Annual Fund Optimization', 'Planned Giving Programs',
   'Donor Stewardship Design', 'Development Staff Coaching', 'Grant Writing & Strategy',
-  'CRM Implementation', 'Interim Development Leadership',
+  'CRM Implementation', 'Interim Development Leadership', 'Feasibility Studies',
+  'Strategic Planning', 'Campaign Readiness Assessment',
 ];
 
-const TEAM = [
-  { name: 'Jennifer Blake', title: 'Managing Director', specialty: 'Capital Campaigns', years: 18 },
-  { name: 'Marcus Rivera', title: 'Senior Consultant', specialty: 'Board Development', years: 12 },
-  { name: 'Sarah Kim', title: 'Senior Consultant', specialty: 'Annual Giving', years: 10 },
-  { name: 'Thomas Park', title: 'Consultant', specialty: 'Planned Giving', years: 7 },
-  { name: 'Diana Reeves', title: 'Associate Consultant', specialty: 'Donor Research', years: 4 },
-  { name: 'Carlos Mendez', title: 'Operations Manager', specialty: 'Project Management', years: 8 },
+const LEADERSHIP = [
+  { name: 'Richard Tollefson', title: 'CEO & Managing Partner', specialty: 'Capital Campaigns & Strategic Planning', note: 'Generates 70-75% of business (down from 92%)' },
+  { name: 'Cheryl Tollefson', title: 'COO', specialty: 'Operations & Finance', note: 'Oversees all internal operations' },
+  { name: 'Dr. Michal Tyra', title: 'Senior Consultant', specialty: 'Business Development & Client Strategy', note: 'Key BD leader — expanding revenue share' },
+];
+
+const FIRM_STATS = [
+  { label: 'Team Size', value: '20', sub: 'Mostly independent contractors', icon: Users, color: '#3b6bf5' },
+  { label: 'Repeat Business', value: '60%', sub: 'Long-term client relationships', icon: Repeat, color: '#10b981' },
+  { label: 'Client Referral Rate', value: '75%+', sub: 'Organic growth engine', icon: TrendingUp, color: '#c9942b' },
+  { label: 'Client Satisfaction', value: '98%', sub: 'Survey-based measurement', icon: Star, color: '#7c3aed' },
+  { label: 'Typical Project', value: '$100-120K', sub: 'Annual engagement value', icon: DollarSign, color: '#3b6bf5' },
+  { label: 'Campaign Range', value: '$100M-3B', sub: 'Higher ed campaigns up to $3B', icon: BarChart3, color: '#ec4899' },
+  { label: 'Overhead', value: '20-25%', sub: 'Lean operating model', icon: Target, color: '#10b981' },
+  { label: 'Billable Target', value: '1,800h', sub: '~50% of standard 2,080h', icon: Award, color: '#c9942b' },
 ];
 
 export default function AboutPage() {
   const insight = getInsight('about');
 
   return (
-    <PhoenixPage title="About TPPG" subtitle="The Phoenix Philanthropy Group — Empowering Nonprofits to Thrive" accentColor="#3b6bf5">
+    <PhoenixPage title="About Phoenix" subtitle="The Phoenix Philanthropy Group — Empowering Nonprofits to Thrive" accentColor="#3b6bf5">
       {/* Mission */}
       <div className="phoenix-card" style={{ marginBottom: 20, borderTop: '3px solid var(--pi-sapphire)' }}>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 16 }}>
-          <HeartHandshake size={32} color="var(--pi-sapphire)" />
+        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+          <HeartHandshake size={32} color="var(--pi-sapphire)" style={{ flexShrink: 0, marginTop: 4 }} />
           <div>
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--pi-text)' }}>Our Mission</h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--pi-text-secondary)', marginTop: 4, lineHeight: 1.6 }}>
-              We partner with nonprofit organizations to build sustainable fundraising programs, strengthen board engagement, and create lasting donor relationships. Our data-driven approach combines deep sector expertise with advanced analytics to deliver measurable results.
+              We partner with nonprofit organizations and educational institutions to build sustainable fundraising programs, strengthen board engagement, and create lasting donor relationships. Our data-driven approach combines deep sector expertise with advanced analytics to deliver measurable results.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Market Position */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Market Position</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div style={{ padding: '12px 14px', borderRadius: 8, background: '#3b6bf508', borderLeft: '3px solid #3b6bf5' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <MapPin size={14} color="#3b6bf5" />
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3b6bf5' }}>Geographic Focus</span>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', margin: 0 }}>National &amp; international operations. Dominant in Southern California and Arizona markets.</p>
+          </div>
+          <div style={{ padding: '12px 14px', borderRadius: 8, background: '#10b98108', borderLeft: '3px solid #10b981' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <Target size={14} color="#10b981" />
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#10b981' }}>Primary Verticals</span>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', margin: 0 }}>Higher education (50% of work), human services, faith-based organizations, healthcare nonprofits.</p>
+          </div>
+          <div style={{ padding: '12px 14px', borderRadius: 8, background: '#c9942b08', borderLeft: '3px solid #c9942b' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <DollarSign size={14} color="#c9942b" />
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#c9942b' }}>Client Profile</span>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', margin: 0 }}>Organizations with $15-50M operating budgets. Engagements run 5-7 years for campaign work.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Firm Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        {FIRM_STATS.map(s => (
+          <div key={s.label} className="phoenix-card" style={{ textAlign: 'center', padding: '14px 10px' }}>
+            <s.icon size={18} color={s.color} style={{ margin: '0 auto 6px' }} />
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--pi-text)' }}>{s.value}</div>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: s.color, marginTop: 2 }}>{s.label}</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{s.sub}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Team Demographics */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>Team Structure</h3>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+          20-person firm of mostly independent contractors — post-retirement professionals in their 60s-70s with deep sector expertise. Consultants work approximately 50% time (1,800 billable hours annually). Technology must be extremely user-friendly given consultant demographics.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {LEADERSHIP.map(m => (
+            <div key={m.name} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '10px 12px', borderRadius: 8,
+              background: 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
+              border: '1px solid var(--pi-border-faint)',
+            }}>
+              <div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{m.name}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>{m.title} — {m.specialty}</div>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)', textAlign: 'right', maxWidth: 200 }}>{m.note}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Billing Model */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>Engagement & Billing Model</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { phase: 'Early Phase', billing: '$200-250K/yr', desc: 'Campaign planning, feasibility, board engagement' },
+            { phase: 'Active Phase', billing: '$100-120K/yr', desc: 'Ongoing campaign management, stewardship' },
+            { phase: 'Campaign Value', billing: '$100M-3B', desc: 'Higher ed campaigns can reach $2.5-3B' },
+          ].map(p => (
+            <div key={p.phase} style={{
+              padding: '12px 14px', borderRadius: 8,
+              background: 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
+              border: '1px solid var(--pi-border-faint)',
+            }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3b6bf5', marginBottom: 4 }}>{p.phase}</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--pi-text)', marginBottom: 4 }}>{p.billing}</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>{p.desc}</div>
+            </div>
+          ))}
+        </div>
+        <p style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)', marginTop: 10 }}>
+          Hourly rates billed monthly. Multiple contract types available. Long-term engagements typically 5-7 years for campaign work.
+        </p>
+      </div>
+
+      {/* UX Design Constraint */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', marginBottom: 20,
+        borderRadius: 8, background: '#c9942b08', border: '1px solid #c9942b20',
+      }}>
+        <Users size={18} color="#c9942b" style={{ flexShrink: 0 }} />
+        <div>
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#c9942b' }}>UX Design Constraint: </span>
+          <span style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>
+            Consultants are post-retirement professionals (60s-70s) working part-time. All technology must prioritize simplicity — large click targets, minimal steps, clear labels, no training required. This drives every product design decision.
+          </span>
         </div>
       </div>
 
@@ -61,41 +173,18 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Services */}
-        <div className="phoenix-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <Target size={18} color="var(--pi-sapphire)" />
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Services</h3>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {SERVICES.map(s => (
-              <span key={s} style={{ padding: '6px 12px', borderRadius: 6, fontSize: '0.875rem', fontWeight: 600, background: 'var(--pi-sapphire-bg)', color: 'var(--pi-sapphire)' }}>
-                {s}
-              </span>
-            ))}
-          </div>
+      {/* Services */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+          <Target size={18} color="var(--pi-sapphire)" />
+          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Services</h3>
         </div>
-
-        {/* Team */}
-        <div className="phoenix-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <Users size={18} color="var(--pi-gold)" />
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Our Team</h3>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {TEAM.map(m => (
-              <div key={m.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--pi-border-faint)' }}>
-                <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{m.name}</div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>{m.title} — {m.specialty}</div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.85rem', color: 'var(--pi-text-faint)' }}>
-                  <Award size={12} /> {m.years}yr
-                </div>
-              </div>
-            ))}
-          </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          {SERVICES.map(s => (
+            <span key={s} style={{ padding: '6px 12px', borderRadius: 6, fontSize: '0.875rem', fontWeight: 600, background: 'var(--pi-sapphire-bg)', color: 'var(--pi-sapphire)' }}>
+              {s}
+            </span>
+          ))}
         </div>
       </div>
 

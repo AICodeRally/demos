@@ -15,10 +15,10 @@ export default function AssessmentsPage() {
   const insight = getInsight('assessments');
 
   return (
-    <PhoenixPage title="Assessments" subtitle={`5 diagnostic tools — ${ASSESSMENT_RESULTS.length} completed assessments`} accentColor="#10b981">
+    <PhoenixPage title="Services & Planning" subtitle={`5 diagnostic tools — ${ASSESSMENT_RESULTS.length} completed assessments`} accentColor="#10b981">
       {/* Assessment Templates */}
       <div className="mb-8">
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>TPPG Diagnostic Portfolio</h2>
+        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Phoenix Diagnostic Portfolio</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {ASSESSMENT_TEMPLATES.map(template => (
             <div key={template.id} className="phoenix-card" style={{ borderTop: '3px solid #10b981' }}>

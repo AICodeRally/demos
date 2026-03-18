@@ -6,7 +6,7 @@ import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { TRAINING_KPIS, COMPLETIONS, COURSES } from '@/data/phoenix-intel/training-data';
-import { GraduationCap, Users, CheckCircle, Star } from 'lucide-react';
+import { GraduationCap, Users, CheckCircle, Star, DollarSign, Award, MonitorPlay, Globe } from 'lucide-react';
 
 export default function TrainingPage() {
   const insight = getInsight('training');
@@ -81,6 +81,49 @@ export default function TrainingPage() {
         </div>
       </div>
 
+      {/* Academy Vision — Monetization & Async Learning */}
+      <div className="phoenix-card" style={{ marginBottom: 24, borderLeft: '3px solid #7c3aed' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <MonitorPlay size={18} color="#7c3aed" />
+          <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#7c3aed' }}>Advancement Academy — Asynchronous Learning Platform</h3>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+          Currently a loss leader for client engagements — but the Academy has strong monetization potential as a standalone product. Nonprofit professionals can purchase courses, earn certifications, and share credentials on LinkedIn.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { icon: MonitorPlay, label: 'Async Courses', desc: 'Self-paced video + exercises, available 24/7', color: '#7c3aed' },
+            { icon: Award, label: 'LinkedIn Badges', desc: 'Digital credentials shared to professional profiles', color: '#3b6bf5' },
+            { icon: DollarSign, label: 'Revenue Stream', desc: 'Course purchases, subscriptions, org licenses', color: '#10b981' },
+            { icon: Globe, label: 'Public Catalog', desc: 'Open enrollment — not limited to Phoenix clients', color: '#c9942b' },
+          ].map(v => (
+            <div key={v.label} style={{
+              padding: '10px 12px', borderRadius: 8,
+              background: `${v.color}08`, border: `1px solid ${v.color}20`,
+            }}>
+              <v.icon size={16} color={v.color} style={{ marginBottom: 6 }} />
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: v.color }}>{v.label}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{v.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Revenue Potential */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {[
+          { label: 'Course Price (avg)', value: '$295', color: '#10b981' },
+          { label: 'Org License (annual)', value: '$2,400', color: '#3b6bf5' },
+          { label: 'Est. Year 1 Revenue', value: '$120K', color: '#7c3aed' },
+          { label: 'Margin', value: '45%', color: '#c9942b' },
+        ].map(m => (
+          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: m.color }}>{m.value}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-muted)', marginTop: 4 }}>{m.label}</div>
+          </div>
+        ))}
+      </div>
+
       {/* Popular Courses */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Popular Courses</h3>
@@ -98,6 +141,46 @@ export default function TrainingPage() {
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+
+      {/* Content Repository Modernization */}
+      <div className="phoenix-card" style={{ marginBottom: 24, borderLeft: '3px solid #3b6bf5' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <GraduationCap size={18} color="#3b6bf5" />
+          <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#3b6bf5' }}>Content Repository Modernization — In Progress</h3>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+          ~20 modules, ~500 files, ~20 years of accumulated content — all in Dropbox with inconsistent naming, no version control, and no tagging.
+          Biggest frustration: inability to find the latest content or formatting when creating new content.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3" style={{ marginBottom: 12 }}>
+          {[
+            { label: 'Find Content', rating: '5/5', desc: 'Critical blocker', color: '#ef4444' },
+            { label: 'Version Confusion', rating: '4/5', desc: 'Multiple versions', color: '#c9942b' },
+            { label: 'Inconsistent Format', rating: '5/5', desc: 'No standard branding', color: '#ef4444' },
+            { label: 'Manual Updates', rating: '5/5', desc: 'Cross-module effort', color: '#ef4444' },
+          ].map(p => (
+            <div key={p.label} style={{
+              padding: '8px 10px', borderRadius: 6, textAlign: 'center',
+              background: `${p.color}08`, border: `1px solid ${p.color}20`,
+            }}>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: p.color }}>{p.rating}</div>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--pi-text-muted)' }}>{p.label}</div>
+              <div style={{ fontSize: '0.65rem', color: 'var(--pi-text-faint)' }}>{p.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
+          {['AI-generated drafts', 'Auto-tagging & metadata', 'Duplicate detection', 'Stale content flagging', 'Format conversion', 'Searchable transcripts', 'Catalog descriptions'].map(tag => (
+            <span key={tag} style={{
+              padding: '3px 8px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700,
+              background: '#3b6bf515', color: '#3b6bf5',
+            }}>{tag}</span>
+          ))}
+        </div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)', borderTop: '1px solid var(--pi-border-faint)', paddingTop: 8 }}>
+          Pilot: CSU Chancellor&apos;s Office modules · Taxonomy: Track / Module / Topic · Target: August 2026 · SMEs: Richard, Michal, Kelly
         </div>
       </div>
 

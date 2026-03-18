@@ -12,11 +12,11 @@ import { WorkboardTab } from './tabs/WorkboardTab';
 import { SpecTab } from './tabs/SpecTab';
 
 const TABS = [
-  { id: 'context', label: 'Context', icon: Settings },
-  { id: 'capture', label: 'Capture', icon: MessageSquare },
-  { id: 'decisions', label: 'Decisions', icon: Scale },
-  { id: 'workboard', label: 'Workboard', icon: Kanban },
-  { id: 'spec', label: 'Spec', icon: FileOutput },
+  { id: 'context', label: 'Context', icon: Settings, desc: 'Identity, team, personas, scope, roadmap' },
+  { id: 'capture', label: 'Capture', icon: MessageSquare, desc: 'Live notes and transcript import' },
+  { id: 'decisions', label: 'Decisions', icon: Scale, desc: 'Vote, rank, and lock priorities' },
+  { id: 'workboard', label: 'Workboard', icon: Kanban, desc: 'P0/P1/P2 task queue' },
+  { id: 'spec', label: 'Spec', icon: FileOutput, desc: 'Export forge_spec.json' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
@@ -37,7 +37,7 @@ export function CockpitPage({ config }: { config: DemoConfig }) {
         <div className="flex items-center gap-3">
           <Link
             href={`/${config.slug}`}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-[var(--sem-text-muted)] transition-colors hover:bg-[var(--sem-bg-tertiary)] hover:text-[var(--sem-text-primary)]"
+            className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-[var(--sem-text-secondary)] transition-colors hover:bg-[var(--sem-bg-secondary)] hover:text-[var(--sem-text-primary)]"
           >
             <ArrowLeft className="h-3 w-3" />
             Demo
@@ -45,12 +45,12 @@ export function CockpitPage({ config }: { config: DemoConfig }) {
           <div className="h-4 w-px bg-[var(--sem-border-default)]" />
           <Rocket className="h-4 w-4 text-[var(--palette-primary-500)]" />
           <span className="text-sm font-bold text-[var(--sem-text-primary)]">Rally Cockpit</span>
-          <span className="text-sm text-[var(--sem-text-muted)]">— {sessionName}</span>
+          <span className="text-sm text-[var(--sem-text-secondary)]" suppressHydrationWarning>— {sessionName}</span>
         </div>
-        <div className="flex items-center gap-3 text-[10px] text-[var(--sem-text-muted)]">
-          <span>{noteCount} notes</span>
-          <span>{decisionCount} decisions</span>
-          <span>{taskCount} tasks</span>
+        <div className="flex items-center gap-3 text-xs text-[var(--sem-text-secondary)]">
+          <span suppressHydrationWarning>{noteCount} notes</span>
+          <span suppressHydrationWarning>{decisionCount} decisions</span>
+          <span suppressHydrationWarning>{taskCount} tasks</span>
         </div>
       </div>
 
@@ -63,10 +63,11 @@ export function CockpitPage({ config }: { config: DemoConfig }) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
+              title={tab.desc}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
                 active
                   ? 'border-[var(--palette-primary-500)] text-[var(--palette-primary-500)]'
-                  : 'border-transparent text-[var(--sem-text-muted)] hover:text-[var(--sem-text-primary)]'
+                  : 'border-transparent text-[var(--sem-text-secondary)] hover:text-[var(--sem-text-primary)]'
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -74,6 +75,13 @@ export function CockpitPage({ config }: { config: DemoConfig }) {
             </button>
           );
         })}
+      </div>
+
+      {/* Active tab descriptor */}
+      <div className="shrink-0 border-b border-[var(--sem-border-default)] bg-[var(--sem-bg-primary)] px-6 py-2">
+        <p className="text-xs text-[var(--sem-text-muted)]">
+          {TABS.find(t => t.id === activeTab)?.desc}
+        </p>
       </div>
 
       {/* Tab content */}

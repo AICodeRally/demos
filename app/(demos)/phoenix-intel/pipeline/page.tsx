@@ -28,6 +28,24 @@ export default function PipelinePage() {
 
   return (
     <PhoenixPage title="Deal Pipeline" subtitle={`${filtered.length} deals — $${(totalValue / 1000).toFixed(0)}K total value`} accentColor="#3b6bf5">
+      {/* Lead Source & Capture */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3" style={{ marginBottom: 16 }}>
+        {[
+          { label: 'Referral Source', value: '75%+', sub: 'Client referrals dominate', color: '#10b981' },
+          { label: 'Repeat Business', value: '60%', sub: 'Existing client renewals', color: '#3b6bf5' },
+          { label: 'Contact Database', value: '2,500-3K', sub: 'After 20 years — needs growth', color: '#ef4444' },
+          { label: 'Conference Capture', value: 'Manual', sub: 'No systematized process', color: '#c9942b' },
+        ].map(m => (
+          <div key={m.label} style={{
+            padding: '10px 12px', borderRadius: 8, textAlign: 'center',
+            background: `${m.color}08`, border: `1px solid ${m.color}20`,
+          }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: m.color }}>{m.value}</div>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{m.sub}</div>
+          </div>
+        ))}
+      </div>
       {/* Stage filters */}
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
         <button

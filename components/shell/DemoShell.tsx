@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import type { DemoConfig } from './config/types';
@@ -29,13 +29,33 @@ interface Props {
 
 export function DemoShell({ config, children }: Props) {
   const resolved = useMemo(() => resolveConfig(config), [config]);
+
+  // Track dark mode state — syncs with ThemeToggle via custom event
+  const [isDark, setIsDark] = useState(resolved.darkMode);
+
+  useEffect(() => {
+    // Read persisted preference on mount
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('demo-theme') : null;
+    if (stored) setIsDark(stored === 'dark');
+
+    const handler = (e: Event) => {
+      const dark = (e as CustomEvent).detail?.dark;
+      if (typeof dark === 'boolean') {
+        // Defer to avoid setState-during-render when ThemeToggle dispatches synchronously
+        queueMicrotask(() => setIsDark(dark));
+      }
+    };
+    window.addEventListener('shell-theme-change', handler);
+    return () => window.removeEventListener('shell-theme-change', handler);
+  }, []);
+
   const cssVars = useMemo(() => {
     return tokensToCssVars(resolveTokens({
       preset: config.theme,
       colors: config.colors,
-      darkMode: resolved.darkMode,
+      darkMode: isDark,
     }));
-  }, [config.theme, config.colors, resolved.darkMode]);
+  }, [config.theme, config.colors, isDark]);
 
   const layout = getLayout(resolved.layout);
 

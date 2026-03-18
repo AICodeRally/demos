@@ -9,7 +9,7 @@ import { PipelineFunnel } from '@/components/demos/phoenix-intel/PipelineFunnel'
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { ANNUAL_SUMMARY } from '@/data/phoenix-intel/financial-data';
 import { getPipelineStages, ENGAGEMENTS, CLIENTS } from '@/data/phoenix-intel/nonprofit-data';
-import { DollarSign, Users, Briefcase, TrendingUp } from 'lucide-react';
+import { DollarSign, Users, Briefcase, TrendingUp, AlertTriangle, Database, UserCheck, Star } from 'lucide-react';
 
 const HERO_KPIS = [
   { label: 'Annual Revenue', value: `$${(ANNUAL_SUMMARY.totalRevenue / 1000).toFixed(0)}K`, icon: DollarSign, color: '#3b6bf5' },
@@ -87,6 +87,30 @@ export default function DashboardPage() {
             <PerformanceRing value={78} label="Completion Rate" color="#3b6bf5" />
             <PerformanceRing value={87} label="Client Health" color="#c9942b" />
           </div>
+        </div>
+      </div>
+
+      {/* Firm Health Indicators */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Firm Health Indicators</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: 'BD Concentration', value: '70-75%', sub: 'Richard generates — target <50%', icon: AlertTriangle, color: '#ef4444', alert: true },
+            { label: 'Contact Database', value: '2,500-3K', sub: 'After 20 years — needs growth', icon: Database, color: '#c9942b', alert: true },
+            { label: 'Repeat Business', value: '60%', sub: 'Strong retention', icon: UserCheck, color: '#10b981', alert: false },
+            { label: 'Client Satisfaction', value: '98%', sub: 'Survey-based', icon: Star, color: '#3b6bf5', alert: false },
+          ].map(m => (
+            <div key={m.label} style={{
+              padding: '12px 10px', borderRadius: 8, textAlign: 'center',
+              background: m.alert ? `${m.color}08` : 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
+              border: `1px solid ${m.alert ? `${m.color}30` : 'var(--pi-border-faint)'}`,
+            }}>
+              <m.icon size={18} color={m.color} style={{ margin: '0 auto 6px' }} />
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: m.color }}>{m.value}</div>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{m.sub}</div>
+            </div>
+          ))}
         </div>
       </div>
 

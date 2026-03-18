@@ -7,7 +7,7 @@ import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { FileText, Sparkles, Clock } from 'lucide-react';
 
 const REPORT_TYPES = [
-  { id: 'iotd', name: "President's Intelligence of the Day", description: 'Daily briefing with pipeline movement, client health, and action items', frequency: 'Daily', lastGenerated: '2026-03-16', views: 22 },
+  { id: 'iotd', name: "President's Intelligence of the Day", description: 'AI-generated daily briefing — replaces Natalie\'s manual "Items of the Day" email to President', frequency: 'Daily', lastGenerated: '2026-03-16', views: 22 },
   { id: 'monthly', name: 'Monthly Performance Report', description: 'Revenue, utilization, engagement progress, and financial projections', frequency: 'Monthly', lastGenerated: '2026-03-01', views: 8 },
   { id: 'pipeline', name: 'Pipeline Analysis Report', description: 'Deal stage analysis, conversion rates, and revenue forecasting', frequency: 'Weekly', lastGenerated: '2026-03-14', views: 12 },
   { id: 'client-health', name: 'Client Health Summary', description: 'Health scores, engagement status, and renewal opportunities', frequency: 'Monthly', lastGenerated: '2026-03-01', views: 6 },
@@ -52,7 +52,38 @@ export default function ReportsPage() {
   };
 
   return (
-    <PhoenixPage title="Reports" subtitle="AI-generated intelligence reports and analytics" accentColor="#3b6bf5">
+    <PhoenixPage title="Reports" subtitle="AI-generated intelligence reports — replacing Kelly's 3 manual reports" accentColor="#3b6bf5">
+      {/* Manual Process Pain Point */}
+      <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #ef4444' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+          <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ef4444' }}>Current State: Manual Report Production</span>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 8 }}>
+          Kelly (Director of Client Services) maintains proposal tracking grids, Gantt charts, client total contracts, and Strategic Plan Metrics — all in Excel with manual copy-paste between linked workbooks. Cassandra (Business Manager) compiles P&amp;L and balance sheets in QuickBooks, then manually formats transaction lists by client/state in Excel for CPA upload. The &ldquo;game of telephone&rdquo; effect spans 8-9 tracking locations.
+        </p>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
+          {[
+            'Proposal Tracking Grid (Excel)',
+            'Gantt Charts (Excel)',
+            'Client Total Contracts (Excel)',
+            'Strategic Plan Metrics (Excel)',
+            'Projections Comparison (Excel)',
+            'Satisfaction Surveys (Formsite)',
+          ].map(r => (
+            <span key={r} style={{
+              padding: '3px 8px', borderRadius: 6, fontSize: '0.7rem', fontWeight: 700,
+              background: '#ef444420', color: '#ef4444',
+            }}>{r}</span>
+          ))}
+        </div>
+        <div style={{
+          padding: '8px 12px', borderRadius: 6, background: '#7c3aed08', border: '1px solid #7c3aed20',
+          fontSize: '0.8rem', color: 'var(--pi-text-muted)',
+        }}>
+          <strong style={{ color: '#7c3aed' }}>Items of the Day (IoTD):</strong> Natalie (Executive Coordinator) currently sends a daily manual email to the President outlining meetings, tasks, project updates, travel, presentations, and action items. The AI-generated IoTD replaces this with real-time data.
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {REPORT_TYPES.map(report => (
           <div key={report.id} className="phoenix-card">

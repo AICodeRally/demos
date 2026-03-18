@@ -23,6 +23,7 @@ export interface Persona {
 
 export interface ModuleScope {
   id: string;
+  department?: string;
   moduleName: string;
   description: string;
   priority: number;
@@ -52,7 +53,7 @@ export interface CaptureItem {
   author?: string;
   tags: CaptureTag[];
   timestamp: string;
-  source: 'manual' | 'transcript-parse';
+  source: 'manual' | 'transcript-parse' | 'ops-functions-doc' | 'tech-recommendation' | 'swot-analysis' | 'academy-intake';
   promotedToDecision?: string;
 }
 
