@@ -12,12 +12,12 @@ interface Message {
 }
 
 const SAMPLE_RESPONSES: Record<string, string> = {
-  'fundraising': 'Based on TPPG methodology, effective fundraising programs need 5 key elements: (1) Clear case for support, (2) Engaged board leadership, (3) Robust prospect pipeline, (4) Professional staff capacity, (5) Donor stewardship systems. Our Fundraising Maturity Assessment evaluates all 5 dimensions across 42 questions.',
-  'board': 'Board engagement is the #1 predictor of campaign success. TPPG recommends the "3G" framework: Give, Get, Govern. Every board member should make a personally meaningful gift, actively participate in fundraising, and provide governance oversight. Our Board Engagement Assessment measures 6 dimensions of board effectiveness.',
-  'campaign': 'Capital campaign success requires careful preparation. TPPG\'s Campaign Readiness Assessment evaluates 6 critical dimensions. We recommend a feasibility study before any campaign exceeding $5M. Key indicators: 60%+ of goal should be achievable from top 15 donors, board must demonstrate 100% giving participation.',
-  'donor': 'Donor retention is more cost-effective than acquisition. TPPG benchmarks show first-year donor retention averages 23% — organizations achieving 40%+ have formal stewardship programs. Key strategies: 48-hour acknowledgment, personalized impact reports, tiered stewardship matrix, and monthly giving programs.',
-  'major': 'Major gifts typically represent 80% of philanthropic revenue from 20% of donors. TPPG recommends a portfolio-based approach: each major gift officer manages 120-150 prospects with 12-15 monthly meaningful contacts. Our Major Gift Officer Certification program covers moves management, prospect research, and closing strategies.',
-  'default': 'That\'s a great question! As TPPG\'s AI Advisor, I draw from our comprehensive knowledge base of 156 resources and 15+ years of consulting experience. I can help with fundraising strategy, board engagement, campaign planning, donor stewardship, assessment interpretation, and nonprofit governance. Could you share more about your specific situation so I can provide tailored guidance?',
+  'fundraising': 'Based on Phoenix methodology, effective fundraising programs need 5 key elements: (1) Clear case for support, (2) Engaged board leadership, (3) Robust prospect pipeline, (4) Professional staff capacity, (5) Donor stewardship systems. Our Fundraising Maturity Assessment evaluates all 5 dimensions across 42 questions.',
+  'board': 'Board engagement is the #1 predictor of campaign success. Phoenix recommends the "3G" framework: Give, Get, Govern. Every board member should make a personally meaningful gift, actively participate in fundraising, and provide governance oversight. Our Board Engagement Assessment measures 6 dimensions of board effectiveness.',
+  'campaign': 'Capital campaign success requires careful preparation. Phoenix\'s Campaign Readiness Assessment evaluates 6 critical dimensions. We recommend a feasibility study before any campaign exceeding $5M. Key indicators: 60%+ of goal should be achievable from top 15 donors, board must demonstrate 100% giving participation.',
+  'donor': 'Donor retention is more cost-effective than acquisition. Phoenix benchmarks show first-year donor retention averages 23% — organizations achieving 40%+ have formal stewardship programs. Key strategies: 48-hour acknowledgment, personalized impact reports, tiered stewardship matrix, and monthly giving programs.',
+  'major': 'Major gifts typically represent 80% of philanthropic revenue from 20% of donors. Phoenix recommends a portfolio-based approach: each major gift officer manages 120-150 prospects with 12-15 monthly meaningful contacts. Our Major Gift Officer Certification program covers moves management, prospect research, and closing strategies.',
+  'default': 'That\'s a great question! As Phoenix\'s AI Advisor, I draw from our comprehensive knowledge base of 156 resources and 15+ years of consulting experience. I can help with fundraising strategy, board engagement, campaign planning, donor stewardship, assessment interpretation, and nonprofit governance. Could you share more about your specific situation so I can provide tailored guidance?',
 };
 
 function getResponse(input: string): string {
@@ -63,7 +63,7 @@ export default function AIAdvisorPage() {
   ];
 
   return (
-    <PhoenixPage title="AI Advisor" subtitle="Ask questions about fundraising, strategy, and TPPG methodology" accentColor="#10b981">
+    <PhoenixPage title="AI Advisor" subtitle="Ask questions about fundraising, strategy, and Phoenix methodology" accentColor="#10b981">
       {insight && <div style={{ marginBottom: 16 }}><AIInsightCard label={insight.label}>{insight.text}</AIInsightCard></div>}
 
       {/* Chat area */}

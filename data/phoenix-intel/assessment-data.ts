@@ -1,4 +1,4 @@
-// TPPG-specific assessment templates, results, benchmarks, and AI interpretations
+// Phoenix-specific assessment templates, results, benchmarks, and AI interpretations
 
 export interface AssessmentTemplate {
   id: string;

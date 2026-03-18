@@ -114,7 +114,7 @@ export const COMPLETIONS: Completion[] = [
   { id: 'comp-3', courseId: 'course-5', courseTitle: 'Donor Stewardship Excellence', learnerName: 'Angela Brooks', learnerOrg: 'SafeHaven Social Services', completedDate: '2026-03-05', score: 91, certificateIssued: true },
   { id: 'comp-4', courseId: 'course-1', courseTitle: 'Introduction to Fundraising', learnerName: 'Rev. Karen Foster', learnerOrg: 'Unity Church Network', completedDate: '2026-03-02', score: 87, certificateIssued: true },
   { id: 'comp-5', courseId: 'course-7', courseTitle: 'Annual Fund Strategy', learnerName: 'Lisa Chang', learnerOrg: 'Green Valley Community Foundation', completedDate: '2026-02-28', score: 92, certificateIssued: true },
-  { id: 'comp-6', courseId: 'course-2', courseTitle: 'Major Gift Officer Certification', learnerName: 'Diana Reeves', learnerOrg: 'TPPG (Internal)', completedDate: '2026-02-25', score: 96, certificateIssued: true },
+  { id: 'comp-6', courseId: 'course-2', courseTitle: 'Major Gift Officer Certification', learnerName: 'Diana Reeves', learnerOrg: 'Phoenix (Internal)', completedDate: '2026-02-25', score: 96, certificateIssued: true },
   { id: 'comp-7', courseId: 'course-6', courseTitle: 'Fundraising Operations & CRM', learnerName: 'Sarah Mitchell', learnerOrg: 'Heritage Arts Collective', completedDate: '2026-02-20', score: 85, certificateIssued: true },
   { id: 'comp-8', courseId: 'course-4', courseTitle: 'Capital Campaign Masterclass', learnerName: 'Dr. James Chen', learnerOrg: 'Riverside Health Alliance', completedDate: '2026-02-15', score: 93, certificateIssued: true },
 ];
