@@ -3,6 +3,8 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { UserPlus, Clock, CheckCircle, Circle, AlertCircle, ListChecks } from 'lucide-react';
 
 interface OnboardingClient {
@@ -61,28 +63,16 @@ export default function OnboardingPage() {
   return (
     <PhoenixPage title="Client Onboarding" subtitle="Standardized onboarding workflows for new engagements" accentColor="#3b6bf5">
       {/* Workflow reference */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#7c3aed08', border: '1px solid #7c3aed20',
-      }}>
-        <ListChecks size={14} color="#7c3aed" style={{ flexShrink: 0 }} />
-        <span><strong style={{ color: '#7c3aed' }}>Workflow:</strong> Kelly drafts contracts &#8594; consultant reviews &#8594; Kelly finalizes &#8594; auto-populates engagement record and PM worksheet downstream.</span>
-      </div>
+      <Alert variant="info" icon={ListChecks}>
+        <strong style={{ color: '#7c3aed' }}>Workflow:</strong> Kelly drafts contracts &#8594; consultant reviews &#8594; Kelly finalizes &#8594; auto-populates engagement record and PM worksheet downstream.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Active Onboarding', value: String(activeCount), icon: UserPlus, color: '#3b6bf5' },
-          { label: 'Avg Days to Complete', value: String(avgDays), icon: Clock, color: '#c9942b' },
-          { label: 'Completion Rate', value: `${completionRate}%`, icon: CheckCircle, color: '#10b981' },
-          { label: 'Checklist Items', value: String(totalItems), icon: ListChecks, color: '#7c3aed' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Onboarding summary">
+        <MetricCard label="Active Onboarding" value={String(activeCount)} icon={UserPlus} color="#3b6bf5" />
+        <MetricCard label="Avg Days to Complete" value={String(avgDays)} icon={Clock} color="#c9942b" />
+        <MetricCard label="Completion Rate" value={`${completionRate}%`} icon={CheckCircle} color="#10b981" />
+        <MetricCard label="Checklist Items" value={String(totalItems)} icon={ListChecks} color="#7c3aed" />
       </div>
 
       {/* Active Onboarding */}

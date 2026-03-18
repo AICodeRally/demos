@@ -4,6 +4,8 @@ import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { ENGAGEMENTS } from '@/data/phoenix-intel/nonprofit-data';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { CheckCircle, Circle, AlertCircle, FileText } from 'lucide-react';
 
 const DELIVERABLES = ENGAGEMENTS.flatMap(eng => {
@@ -44,28 +46,16 @@ export default function DeliverablesPage() {
   return (
     <PhoenixPage title="Deliverables" subtitle="Track project deliverables across all active engagements" accentColor="#10b981">
       {/* Pain Point */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
-      }}>
-        <AlertCircle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
-        <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Deliverables previously tracked across 8-9 separate systems. This unified view replaces Excel Gantt charts, email threads, and spreadsheet trackers.</span>
-      </div>
+      <Alert variant="danger">
+        <strong style={{ color: '#ef4444' }}>Pain point:</strong> Deliverables previously tracked across 8-9 separate systems. This unified view replaces Excel Gantt charts, email threads, and spreadsheet trackers.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Deliverables', value: String(total), icon: FileText, color: '#3b6bf5' },
-          { label: 'Complete', value: String(complete), icon: CheckCircle, color: '#10b981' },
-          { label: 'In Progress', value: String(inProgress), icon: AlertCircle, color: '#f59e0b' },
-          { label: 'Pending', value: String(pending), icon: Circle, color: 'var(--pi-text-faint)' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Deliverables summary">
+        <MetricCard label="Total Deliverables" value={String(total)} icon={FileText} color="#3b6bf5" />
+        <MetricCard label="Complete" value={String(complete)} icon={CheckCircle} color="#10b981" />
+        <MetricCard label="In Progress" value={String(inProgress)} icon={AlertCircle} color="#f59e0b" />
+        <MetricCard label="Pending" value={String(pending)} icon={Circle} color="#94a3b8" />
       </div>
 
       {/* Deliverables by Engagement */}

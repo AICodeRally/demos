@@ -3,6 +3,8 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
+import { MetricCardWithIcon } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { Mail, Calendar, FileText, Users, Database, Globe, ArrowRight, Send } from 'lucide-react';
 
 const CAMPAIGNS = [
@@ -64,35 +66,16 @@ export default function MarketingPage() {
       </div>
 
       {/* SWOT: Marketing Weakness */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
-      }}>
-        <Mail size={14} color="#ef4444" style={{ flexShrink: 0 }} />
-        <span>
-          <strong style={{ color: '#ef4444' }}>SWOT weakness:</strong> No active marketing initiatives until Kris&apos;s hire. Outdated website and overpriced direct mail vendor with messy listserv. Digital marketing strategy now in development.
-        </span>
-      </div>
+      <Alert variant="danger" icon={Mail}>
+        <strong style={{ color: '#ef4444' }}>SWOT weakness:</strong> No active marketing initiatives until Kris&apos;s hire. Outdated website and overpriced direct mail vendor with messy listserv. Digital marketing strategy now in development.
+      </Alert>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {[
-          { icon: Mail, label: 'Active Campaigns', value: '3', color: '#3b6bf5' },
-          { icon: Users, label: 'Total Leads (QTD)', value: '85', color: '#10b981' },
-          { icon: Calendar, label: 'Upcoming Events', value: '3', color: '#c9942b' },
-          { icon: FileText, label: 'Content Assets', value: '41', color: '#7c3aed' },
-        ].map(kpi => {
-          const Icon = kpi.icon;
-          return (
-            <div key={kpi.label} className="phoenix-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <div style={{ background: `${kpi.color}18`, borderRadius: 8, padding: 6, display: 'flex' }}><Icon size={16} color={kpi.color} /></div>
-                <span className="pi-label-muted">{kpi.label}</span>
-              </div>
-              <div className="pi-value">{kpi.value}</div>
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" role="region" aria-label="Marketing KPIs">
+        <MetricCardWithIcon label="Active Campaigns" value="3" icon={Mail} color="#3b6bf5" />
+        <MetricCardWithIcon label="Total Leads (QTD)" value="85" icon={Users} color="#10b981" />
+        <MetricCardWithIcon label="Upcoming Events" value="3" icon={Calendar} color="#c9942b" />
+        <MetricCardWithIcon label="Content Assets" value="41" icon={FileText} color="#7c3aed" />
       </div>
 
       {/* Ecosystem Flow Diagram */}

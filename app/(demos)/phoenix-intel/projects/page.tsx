@@ -4,6 +4,8 @@ import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { ENGAGEMENTS } from '@/data/phoenix-intel/nonprofit-data';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { Kanban, CheckCircle, AlertTriangle, Clock, FileText, Users, DollarSign } from 'lucide-react';
 
 function getProjectStatus(eng: typeof ENGAGEMENTS[number]): 'on-track' | 'monitor' | 'at-risk' {
@@ -41,28 +43,16 @@ export default function ProjectsPage() {
   return (
     <PhoenixPage title="Projects" subtitle="Project management view — replacing Kelly's Gantt charts and Excel tracking" accentColor="#10b981">
       {/* Pain Point */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
-      }}>
-        <AlertTriangle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
-        <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Project tracking previously relied on Kelly&apos;s Excel Gantt charts, proposal tracking grids, and linked workbooks. Status updates required manual copy-paste across 8-9 systems.</span>
-      </div>
+      <Alert variant="danger">
+        <strong style={{ color: '#ef4444' }}>Pain point:</strong> Project tracking previously relied on Kelly&apos;s Excel Gantt charts, proposal tracking grids, and linked workbooks. Status updates required manual copy-paste across 8-9 systems.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Active Projects', value: String(allProjects.length), icon: Kanban, color: '#3b6bf5' },
-          { label: 'On Track', value: String(onTrack), icon: CheckCircle, color: '#10b981' },
-          { label: 'At Risk', value: String(atRisk), icon: AlertTriangle, color: '#ef4444' },
-          { label: 'Completed', value: String(completedCount), icon: FileText, color: '#7c3aed' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Project summary">
+        <MetricCard label="Active Projects" value={String(allProjects.length)} icon={Kanban} color="#3b6bf5" />
+        <MetricCard label="On Track" value={String(onTrack)} icon={CheckCircle} color="#10b981" />
+        <MetricCard label="At Risk" value={String(atRisk)} icon={AlertTriangle} color="#ef4444" />
+        <MetricCard label="Completed" value={String(completedCount)} icon={FileText} color="#7c3aed" />
       </div>
 
       {/* Project Cards */}

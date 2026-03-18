@@ -3,6 +3,8 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { HeartHandshake, Target, Users, Award, MapPin, TrendingUp, BarChart3, Repeat, Star, DollarSign } from 'lucide-react';
 
 const PILLARS_6P = [
@@ -86,14 +88,9 @@ export default function AboutPage() {
       </div>
 
       {/* Firm Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6" role="region" aria-label="Firm statistics">
         {FIRM_STATS.map(s => (
-          <div key={s.label} className="phoenix-card" style={{ textAlign: 'center', padding: '14px 10px' }}>
-            <s.icon size={18} color={s.color} style={{ margin: '0 auto 6px' }} />
-            <div className="pi-value" style={{ fontSize: '1.3rem' }}>{s.value}</div>
-            <div className="pi-caption" style={{ fontWeight: 700, color: s.color, marginTop: 2 }}>{s.label}</div>
-            <div className="pi-overline" style={{ textTransform: 'none', marginTop: 2 }}>{s.sub}</div>
-          </div>
+          <MetricCard key={s.label} label={s.label} value={s.value} icon={s.icon} color={s.color} sub={s.sub} />
         ))}
       </div>
 
@@ -147,18 +144,10 @@ export default function AboutPage() {
       </div>
 
       {/* UX Design Constraint */}
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', marginBottom: 20,
-        borderRadius: 8, background: '#c9942b08', border: '1px solid #c9942b20',
-      }}>
-        <Users size={18} color="#c9942b" style={{ flexShrink: 0 }} />
-        <div>
-          <span className="pi-label" style={{ color: '#c9942b' }}>UX Design Constraint: </span>
-          <span className="pi-body-muted">
-            Consultants are post-retirement professionals (60s-70s) working part-time. All technology must prioritize simplicity — large click targets, minimal steps, clear labels, no training required. This drives every product design decision.
-          </span>
-        </div>
-      </div>
+      <Alert variant="warning" icon={Users}>
+        <span className="pi-label" style={{ color: '#c9942b' }}>UX Design Constraint: </span>
+        Consultants are post-retirement professionals (60s-70s) working part-time. All technology must prioritize simplicity — large click targets, minimal steps, clear labels, no training required. This drives every product design decision.
+      </Alert>
 
       {/* 6P Framework */}
       <div className="mb-8">
