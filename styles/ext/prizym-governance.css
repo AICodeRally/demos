@@ -1,0 +1,368 @@
+/* Prizym Governance — Light/Dark CSS Custom Properties
+   Summit Navy & Cyan theme for SPM governance
+*/
+
+/* ── Light mode (default) ─────────────────────── */
+:root {
+  --pg-text: #0f172a;
+  --pg-text-secondary: #1e293b;
+  --pg-text-muted: #334155;
+  --pg-text-faint: #64748b;
+
+  --pg-bg: #f8fafc;
+  --pg-card: #ffffff;
+  --pg-card-alt: #f7fafc;
+  --pg-border: #e2e8f0;
+  --pg-border-faint: #edf2f7;
+  --pg-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --pg-hover: rgba(0,0,0,0.04);
+  --pg-stripe: #f1f5f9;
+  --pg-surface-alt: #f1f5f9;
+
+  --pg-sidebar-bg-start: #ffffff;
+  --pg-sidebar-bg-end: #f1f5f9;
+  --pg-sidebar-text: #0f172a;
+  --pg-sidebar-text-muted: #475569;
+  --pg-sidebar-active-bg: rgba(6,182,212,0.08);
+  --pg-sidebar-border: #e2e8f0;
+
+  --pg-header-bg: rgba(255,255,255,0.95);
+  --pg-footer-bg: #ffffff;
+
+  /* Brand colors */
+  --pg-navy: #0f172a;
+  --pg-cyan: #06b6d4;
+  --pg-cyan-bg: rgba(6,182,212,0.08);
+  --pg-gold: #c9942b;
+  --pg-gold-bg: rgba(201,148,43,0.08);
+
+  /* Mode indicators */
+  --pg-design: #06b6d4;
+  --pg-operate: #3b82f6;
+  --pg-oversee: #8b5cf6;
+
+  /* Status colors */
+  --pg-success: #10b981;
+  --pg-warning: #f59e0b;
+  --pg-danger: #ef4444;
+  --pg-info: #3b82f6;
+
+  /* Aliases for DemoShell */
+  --pl-text: var(--pg-text);
+  --pl-text-muted: var(--pg-text-muted);
+  --pl-text-secondary: var(--pg-text-secondary);
+  --pl-surface: var(--pg-card);
+  --pl-surface-border: var(--pg-border);
+  --pl-surface-hover: var(--pg-hover);
+  --pl-card-bg: var(--pg-card);
+  --pl-card-border: var(--pg-border);
+  --pl-bar-bg: var(--pg-header-bg);
+  --pl-bar-border: var(--pg-border);
+  --pl-content-bg: var(--pg-bg);
+  --pl-page-bg: var(--pg-bg);
+  --pl-gold: var(--pg-gold);
+  --pl-gold-bg: var(--pg-gold-bg);
+  --pl-gold-border: rgba(201,148,43,0.35);
+  --pl-header-bg: var(--pg-header-bg);
+  --pl-zone-border: var(--pg-border);
+  --pl-bg: var(--pg-bg);
+  --pl-border: var(--pg-border);
+  --pl-text-faint: var(--pg-text-faint);
+  --pl-hover: var(--pg-hover);
+  --pl-footer-bg: var(--pg-footer-bg);
+  --pl-sidebar-bg-start: var(--pg-sidebar-bg-start);
+  --pl-sidebar-bg-end: var(--pg-sidebar-bg-end);
+  --pl-sidebar-text: var(--pg-sidebar-text);
+  --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
+  --pl-sidebar-border: var(--pg-sidebar-border);
+}
+
+/* ── Dark mode ────────────────────────────────── */
+.dark {
+  --pg-text: #f1f5f9;
+  --pg-text-secondary: #cbd5e0;
+  --pg-text-muted: #94a3b8;
+  --pg-text-faint: #64748b;
+
+  --pg-bg: #0f172a;
+  --pg-card: #1e293b;
+  --pg-card-alt: #162032;
+  --pg-border: #334155;
+  --pg-border-faint: #1e293b;
+  --pg-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --pg-hover: rgba(255,255,255,0.04);
+  --pg-stripe: rgba(255,255,255,0.03);
+  --pg-surface-alt: #1e293b;
+
+  --pg-sidebar-bg-start: #1e293b;
+  --pg-sidebar-bg-end: #0f172a;
+  --pg-sidebar-text: #ffffff;
+  --pg-sidebar-text-muted: rgba(255,255,255,0.65);
+  --pg-sidebar-active-bg: rgba(6,182,212,0.12);
+  --pg-sidebar-border: rgba(6,182,212,0.12);
+
+  --pg-header-bg: rgba(15,23,42,0.95);
+  --pg-footer-bg: #0f172a;
+
+  --pg-cyan-bg: rgba(6,182,212,0.12);
+  --pg-gold-bg: rgba(201,148,43,0.12);
+
+  /* DemoShell aliases */
+  --pl-text: var(--pg-text);
+  --pl-text-muted: var(--pg-text-muted);
+  --pl-text-secondary: var(--pg-text-secondary);
+  --pl-surface: rgba(255,255,255,0.06);
+  --pl-surface-border: rgba(255,255,255,0.1);
+  --pl-surface-hover: rgba(255,255,255,0.08);
+  --pl-card-bg: rgba(255,255,255,0.05);
+  --pl-card-border: rgba(255,255,255,0.12);
+  --pl-bar-bg: rgba(15,23,42,0.96);
+  --pl-bar-border: rgba(6,182,212,0.3);
+  --pl-content-bg: var(--pg-bg);
+  --pl-page-bg: var(--pg-bg);
+  --pl-gold: #d4af55;
+  --pl-gold-bg: rgba(201,148,43,0.12);
+  --pl-gold-border: rgba(201,148,43,0.35);
+  --pl-header-bg: var(--pg-header-bg);
+  --pl-zone-border: rgba(255,255,255,0.1);
+  --pl-bg: var(--pg-bg);
+  --pl-border: var(--pg-border);
+  --pl-text-faint: var(--pg-text-faint);
+  --pl-hover: var(--pg-hover);
+  --pl-footer-bg: var(--pg-footer-bg);
+  --pl-sidebar-bg-start: var(--pg-sidebar-bg-start);
+  --pl-sidebar-bg-end: var(--pg-sidebar-bg-end);
+  --pl-sidebar-text: var(--pg-sidebar-text);
+  --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
+  --pl-sidebar-border: var(--pg-sidebar-border);
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes pg-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pg-animate-in {
+  animation: pg-fade-in 0.3s ease-out both;
+}
+
+/* ── Typography ──────────────────────────────── */
+:root {
+  --pg-fs-heading: 1.75rem;
+  --pg-fs-subheading: 1.1rem;
+  --pg-fs-body: 0.9rem;
+  --pg-fs-caption: 0.8rem;
+  --pg-fs-overline: 0.7rem;
+}
+
+/* ── Page classes ────────────────────────────── */
+.pg-page {
+  color: var(--pg-text);
+}
+
+.pg-heading {
+  font-size: var(--pg-fs-heading);
+  font-weight: 800;
+  color: var(--pg-text);
+  line-height: 1.2;
+}
+
+.pg-subheading {
+  font-size: var(--pg-fs-subheading);
+  font-weight: 700;
+  color: var(--pg-text);
+  line-height: 1.3;
+}
+
+.pg-body {
+  font-size: var(--pg-fs-body);
+  color: var(--pg-text);
+  line-height: 1.6;
+}
+
+.pg-caption {
+  font-size: var(--pg-fs-caption);
+  color: var(--pg-text-faint);
+  line-height: 1.4;
+}
+
+.pg-overline {
+  font-size: var(--pg-fs-overline);
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+.pg-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--pg-text);
+  line-height: 1.1;
+}
+
+.pg-value-sm {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--pg-text);
+  line-height: 1.1;
+}
+
+.pg-label {
+  font-size: var(--pg-fs-body);
+  font-weight: 700;
+  color: var(--pg-text);
+}
+
+.pg-label-muted {
+  font-size: var(--pg-fs-body);
+  font-weight: 600;
+  color: var(--pg-text-muted);
+}
+
+.pg-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pg-text);
+  margin-bottom: 12px;
+}
+
+/* ── Card ─────────────────────────────────────── */
+.pg-card {
+  background: var(--pg-card);
+  border: 1px solid var(--pg-border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--pg-shadow);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.pg-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border-color: var(--pg-cyan);
+}
+
+/* ── Badge ────────────────────────────────────── */
+.pg-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: var(--pg-fs-caption);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ── Table ────────────────────────────────────── */
+.pg-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pg-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pg-table thead tr {
+  border-bottom: 2px solid var(--pg-border);
+}
+
+.pg-table tbody tr {
+  border-bottom: 1px solid var(--pg-border-faint);
+}
+
+.pg-table tbody tr:hover td {
+  background: var(--pg-hover);
+}
+
+.pg-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: var(--pg-fs-overline);
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.pg-table td {
+  padding: 10px;
+  font-size: var(--pg-fs-body);
+}
+
+/* ── Metric tile ─────────────────────────────── */
+.pg-metric-tile {
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ── Bar ──────────────────────────────────────── */
+.pg-bar-track {
+  height: 6px;
+  background: var(--pg-border-faint);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pg-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 640px) {
+  .pg-stack-sm {
+    grid-template-columns: 1fr !important;
+  }
+  .pg-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pg-stack-md {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Light-mode sidebar fix ──────────────────── */
+.h-screen:not(.dark) aside .font-extrabold {
+  background-image: linear-gradient(135deg, #0f172a 30%, #06b6d4 100%) !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.h-screen:not(.dark) aside nav button span {
+  filter: saturate(1.5) brightness(0.65) !important;
+}
+
+.h-screen:not(.dark) aside nav button svg {
+  filter: brightness(0.5) !important;
+}
+
+/* ── Focus & accessibility ───────────────────── */
+.pg-page a:focus-visible,
+.pg-page button:focus-visible,
+.pg-page input:focus-visible,
+.pg-page select:focus-visible {
+  outline: 2px solid var(--pg-cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Mode indicator badge ────────────────────── */
+.pg-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: var(--pg-fs-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
