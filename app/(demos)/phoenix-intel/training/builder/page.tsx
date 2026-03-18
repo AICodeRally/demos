@@ -129,7 +129,7 @@ Using the concentric circles worksheet, identify:
 Complete the action plan template with specific, measurable commitments.
 
 ## Resources
-- TPPG Knowledge Base: 156 resources on fundraising best practices
+- Phoenix Knowledge Base: 156 resources on fundraising best practices
 - Board Fundraising FAQ (attached)
 - Recording of today's session (available within 48 hours)`;
 

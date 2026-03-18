@@ -130,7 +130,7 @@ export default function StyleGuidePage() {
 
         <div>
           <span style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 8 }}>AI Insight Card</span>
-          <AIInsightCard>This is an example AI Insight card using the sapphire brand color. It provides contextual intelligence and recommendations powered by TPPG methodology.</AIInsightCard>
+          <AIInsightCard>This is an example AI Insight card using the sapphire brand color. It provides contextual intelligence and recommendations powered by Phoenix methodology.</AIInsightCard>
         </div>
       </div>
 
