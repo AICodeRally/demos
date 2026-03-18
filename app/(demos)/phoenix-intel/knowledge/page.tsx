@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
@@ -15,7 +15,12 @@ const TYPE_COLORS: Record<ContentType, string> = {
 
 export default function KnowledgePage() {
   const insight = getInsight('knowledge');
+  const [searchTerm, setSearchTerm] = useState('');
   const [search, setSearch] = useState('');
+  useEffect(() => {
+    const t = setTimeout(() => setSearch(searchTerm), 300);
+    return () => clearTimeout(t);
+  }, [searchTerm]);
   const [filterType, setFilterType] = useState<ContentType | 'all'>('all');
   const [filterTopic, setFilterTopic] = useState<Topic | 'all'>('all');
   const [filterSector, setFilterSector] = useState<Sector | 'all'>('all');
@@ -39,8 +44,8 @@ export default function KnowledgePage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '8px 12px', background: 'var(--pi-bg)', borderRadius: 8, border: '1px solid var(--pi-border)' }}>
           <Search size={16} color="var(--pi-text-muted)" />
           <input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
             placeholder="Search knowledge base..."
             style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: '0.95rem', color: 'var(--pi-text)' }}
           />

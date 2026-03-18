@@ -3,27 +3,9 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
 import { CONSULTANTS } from '@/data/phoenix-intel/nonprofit-data';
-
-const TIME_ENTRIES = [
-  { date: '2026-03-15', consultant: 'Jennifer Blake', client: 'Mountain View Academy', hours: 4.5, category: 'Campaign Management' },
-  { date: '2026-03-15', consultant: 'Marcus Rivera', client: 'Hope Springs Foundation', hours: 3.0, category: 'Board Development' },
-  { date: '2026-03-15', consultant: 'Sarah Kim', client: 'Heritage Arts Collective', hours: 6.0, category: 'Assessment' },
-  { date: '2026-03-14', consultant: 'Thomas Park', client: 'Riverside Health Alliance', hours: 2.5, category: 'Planned Giving' },
-  { date: '2026-03-14', consultant: 'Jennifer Blake', client: 'Hope Springs Foundation', hours: 3.0, category: 'Feasibility Study' },
-  { date: '2026-03-14', consultant: 'Carlos Mendez', client: 'Internal', hours: 4.0, category: 'Project Management' },
-  { date: '2026-03-13', consultant: 'Diana Reeves', client: 'Mountain View Academy', hours: 5.0, category: 'Prospect Research' },
-  { date: '2026-03-13', consultant: 'Marcus Rivera', client: 'Heritage Arts Collective', hours: 3.5, category: 'Stewardship' },
-];
-
-const ONBOARDING_CHECKLIST = [
-  { task: 'Welcome packet sent', done: true },
-  { task: 'Discovery meeting scheduled', done: true },
-  { task: 'Stakeholder interviews completed', done: true },
-  { task: 'Data request submitted', done: false },
-  { task: 'Assessment template selected', done: false },
-  { task: 'Engagement timeline finalized', done: false },
-];
+import { TIME_ENTRIES, ONBOARDING_CHECKLIST } from '@/data/phoenix-intel/operations-data';
 
 export default function OperationsPage() {
   const insight = getInsight('operations');
@@ -94,30 +76,19 @@ export default function OperationsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Time entries table */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Recent time entries">
           <h3 className="pi-section-title">Recent Time Entries</h3>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                  {['Date', 'Consultant', 'Client', 'Hours', 'Category'].map(h => (
-                    <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 6px' }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {TIME_ENTRIES.map((entry, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                    <td className="pi-caption" style={{ padding: '8px 6px' }}>{entry.date}</td>
-                    <td className="pi-label" style={{ padding: '8px 6px', fontWeight: 600 }}>{entry.consultant}</td>
-                    <td className="pi-body" style={{ padding: '8px 6px', color: 'var(--pi-text-secondary)' }}>{entry.client}</td>
-                    <td className="pi-label" style={{ padding: '8px 6px' }}>{entry.hours}h</td>
-                    <td className="pi-body-muted" style={{ padding: '8px 6px' }}>{entry.category}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            data={TIME_ENTRIES}
+            keyFn={(_, i) => String(i)}
+            columns={[
+              { key: 'date', header: 'Date', render: (e) => <span className="pi-caption">{e.date}</span> },
+              { key: 'consultant', header: 'Consultant', render: (e) => <span className="pi-label" style={{ fontWeight: 600 }}>{e.consultant}</span> },
+              { key: 'client', header: 'Client', hideSm: true, render: (e) => <span className="pi-body-muted">{e.client}</span> },
+              { key: 'hours', header: 'Hours', render: (e) => <span className="pi-label">{e.hours}h</span> },
+              { key: 'category', header: 'Category', hideSm: true, render: (e) => <span className="pi-body-muted">{e.category}</span> },
+            ]}
+          />
         </div>
 
         {/* Onboarding checklist */}

@@ -51,7 +51,7 @@ export function PillarCard({ pillar, score, trend, sparkline = [], delay = 0 }: 
         {score}
       </div>
       {sparkline.length > 0 && (
-        <svg viewBox={`0 0 ${sparkline.length * 12} 24`} style={{ width: '100%', height: 24 }}>
+        <svg viewBox={`0 0 ${sparkline.length * 12} 24`} style={{ width: '100%', height: 24 }} aria-hidden="true">
           <polyline
             points={sparkline.map((v, i) => `${i * 12},${24 - (v / maxVal) * 20}`).join(' ')}
             fill="none"
