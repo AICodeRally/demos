@@ -15,12 +15,14 @@ export interface Client {
 }
 
 export const CLIENTS: Client[] = [
-  { id: 'cl-1', name: 'Hope Springs Foundation', sector: 'community', size: '$5M+', annualBudget: 8200000, healthScore: 92, status: 'active', contactName: 'Maria Gonzalez', contactTitle: 'Executive Director', contactEmail: 'mgonzalez@hopesprings.org', state: 'TX' },
-  { id: 'cl-2', name: 'Riverside Health Alliance', sector: 'healthcare', size: '$10M+', annualBudget: 14500000, healthScore: 87, status: 'active', contactName: 'Dr. James Chen', contactTitle: 'VP of Development', contactEmail: 'jchen@riversidehealth.org', state: 'CA' },
-  { id: 'cl-3', name: 'Heritage Arts Collective', sector: 'arts-culture', size: '$2M+', annualBudget: 3100000, healthScore: 78, status: 'active', contactName: 'Sarah Mitchell', contactTitle: 'Development Director', contactEmail: 'smitchell@heritagearts.org', state: 'NY' },
-  { id: 'cl-4', name: 'Mountain View Academy', sector: 'education', size: '$15M+', annualBudget: 22000000, healthScore: 95, status: 'active', contactName: 'Robert Williams', contactTitle: 'Chief Advancement Officer', contactEmail: 'rwilliams@mtnviewacademy.edu', state: 'CO' },
-  { id: 'cl-5', name: 'Faith & Light Ministries', sector: 'faith-based', size: '$3M+', annualBudget: 4800000, healthScore: 84, status: 'active', contactName: 'Pastor David Thompson', contactTitle: 'Senior Pastor', contactEmail: 'dthompson@faithlight.org', state: 'TN' },
-  { id: 'cl-6', name: 'SafeHaven Social Services', sector: 'social-services', size: '$7M+', annualBudget: 9600000, healthScore: 89, status: 'prospect', contactName: 'Angela Brooks', contactTitle: 'CEO', contactEmail: 'abrooks@safehaven.org', state: 'IL' },
+  { id: 'cl-1', name: 'Hope Springs Foundation', sector: 'community', size: '$18M+', annualBudget: 18200000, healthScore: 92, status: 'active', contactName: 'Maria Gonzalez', contactTitle: 'Executive Director', contactEmail: 'mgonzalez@hopesprings.org', state: 'CA' },
+  { id: 'cl-2', name: 'Riverside Health Alliance', sector: 'healthcare', size: '$22M+', annualBudget: 22000000, healthScore: 87, status: 'active', contactName: 'Dr. James Chen', contactTitle: 'VP of Development', contactEmail: 'jchen@riversidehealth.org', state: 'CA' },
+  { id: 'cl-3', name: 'Heritage Arts Collective', sector: 'arts-culture', size: '$15M+', annualBudget: 15100000, healthScore: 78, status: 'active', contactName: 'Sarah Mitchell', contactTitle: 'Development Director', contactEmail: 'smitchell@heritagearts.org', state: 'AZ' },
+  { id: 'cl-4', name: 'Mountain View Academy', sector: 'education', size: '$35M+', annualBudget: 35000000, healthScore: 95, status: 'active', contactName: 'Robert Williams', contactTitle: 'Chief Advancement Officer', contactEmail: 'rwilliams@mtnviewacademy.edu', state: 'CA' },
+  { id: 'cl-5', name: 'Faith & Light Ministries', sector: 'faith-based', size: '$20M+', annualBudget: 20000000, healthScore: 84, status: 'active', contactName: 'Pastor David Thompson', contactTitle: 'Senior Pastor', contactEmail: 'dthompson@faithlight.org', state: 'AZ' },
+  { id: 'cl-6', name: 'SafeHaven Social Services', sector: 'social-services', size: '$25M+', annualBudget: 25000000, healthScore: 89, status: 'prospect', contactName: 'Angela Brooks', contactTitle: 'CEO', contactEmail: 'abrooks@safehaven.org', state: 'CA' },
+  { id: 'cl-7', name: 'Sonoran State University', sector: 'education', size: '$45M+', annualBudget: 45000000, healthScore: 94, status: 'active', contactName: 'Dr. Patricia Reyes', contactTitle: 'VP University Advancement', contactEmail: 'preyes@sonoranstate.edu', state: 'AZ' },
+  { id: 'cl-8', name: 'Pacific Crest College', sector: 'education', size: '$28M+', annualBudget: 28000000, healthScore: 91, status: 'active', contactName: 'Mark Tanaka', contactTitle: 'Dean of Development', contactEmail: 'mtanaka@pacificcrest.edu', state: 'CA' },
 ];
 
 export interface Engagement {
@@ -54,6 +56,8 @@ export const ENGAGEMENTS: Engagement[] = [
   { id: 'eng-10', clientId: 'cl-5', clientName: 'Faith & Light Ministries', title: 'Development Staff Hiring', type: 'Development Staffing', status: 'completed', progress: 100, budget: 15000, spent: 14200, startDate: '2025-08-01', endDate: '2025-12-31', leadConsultant: 'Marcus Rivera', deliverables: 4, completedDeliverables: 4, sessions: 8 },
   { id: 'eng-11', clientId: 'cl-6', clientName: 'SafeHaven Social Services', title: 'Advancement Program Assessment', type: 'Fundraising Maturity', status: 'planning', progress: 5, budget: 38000, spent: 1900, startDate: '2026-04-15', endDate: '2026-10-31', leadConsultant: 'Jennifer Blake', deliverables: 8, completedDeliverables: 0, sessions: 1 },
   { id: 'eng-12', clientId: 'cl-6', clientName: 'SafeHaven Social Services', title: 'Grant Strategy Development', type: 'Grant Writing', status: 'planning', progress: 0, budget: 20000, spent: 0, startDate: '2026-05-01', endDate: '2026-11-30', leadConsultant: 'Thomas Park', deliverables: 5, completedDeliverables: 0, sessions: 0 },
+  { id: 'eng-13', clientId: 'cl-7', clientName: 'Sonoran State University', title: '$150M Comprehensive Campaign', type: 'Campaign Management', status: 'active', progress: 25, budget: 240000, spent: 60000, startDate: '2025-06-01', endDate: '2030-06-30', leadConsultant: 'Jennifer Blake', deliverables: 24, completedDeliverables: 6, sessions: 18 },
+  { id: 'eng-14', clientId: 'cl-8', clientName: 'Pacific Crest College', title: '$75M Campaign Feasibility', type: 'Campaign Readiness', status: 'active', progress: 65, budget: 120000, spent: 78000, startDate: '2025-08-15', endDate: '2026-08-15', leadConsultant: 'Marcus Rivera', deliverables: 12, completedDeliverables: 8, sessions: 14 },
 ];
 
 export type PipelineStage = 'Inquiry' | 'Qualified' | 'Proposal Sent' | 'Negotiation' | 'Contract' | 'Active' | 'Completed' | 'Declined';
@@ -95,12 +99,14 @@ export interface Consultant {
 }
 
 export const CONSULTANTS: Consultant[] = [
-  { id: 'con-1', name: 'Jennifer Blake', title: 'Managing Director', specialty: 'Capital Campaigns', utilization: 92, activeEngagements: 4, yearsExperience: 18, email: 'jblake@tppg.com' },
-  { id: 'con-2', name: 'Marcus Rivera', title: 'Senior Consultant', specialty: 'Board Development', utilization: 78, activeEngagements: 3, yearsExperience: 12, email: 'mrivera@tppg.com' },
-  { id: 'con-3', name: 'Sarah Kim', title: 'Senior Consultant', specialty: 'Annual Giving', utilization: 85, activeEngagements: 2, yearsExperience: 10, email: 'skim@tppg.com' },
-  { id: 'con-4', name: 'Thomas Park', title: 'Consultant', specialty: 'Planned Giving', utilization: 65, activeEngagements: 3, yearsExperience: 7, email: 'tpark@tppg.com' },
-  { id: 'con-5', name: 'Diana Reeves', title: 'Associate Consultant', specialty: 'Donor Research', utilization: 72, activeEngagements: 2, yearsExperience: 4, email: 'dreeves@tppg.com' },
-  { id: 'con-6', name: 'Carlos Mendez', title: 'Operations Manager', specialty: 'Project Management', utilization: 88, activeEngagements: 5, yearsExperience: 8, email: 'cmendez@tppg.com' },
+  { id: 'con-1', name: 'Jennifer Blake', title: 'Senior Consultant', specialty: 'Capital Campaigns', utilization: 92, activeEngagements: 4, yearsExperience: 18, email: 'jblake@phoenixphilanthropy.com' },
+  { id: 'con-2', name: 'Marcus Rivera', title: 'Consultant', specialty: 'Board Development', utilization: 78, activeEngagements: 3, yearsExperience: 12, email: 'mrivera@phoenixphilanthropy.com' },
+  { id: 'con-3', name: 'Sarah Kim', title: 'Consultant', specialty: 'Annual Giving', utilization: 85, activeEngagements: 2, yearsExperience: 10, email: 'skim@phoenixphilanthropy.com' },
+  { id: 'con-4', name: 'Thomas Park', title: 'Associate Consultant', specialty: 'Planned Giving', utilization: 65, activeEngagements: 3, yearsExperience: 7, email: 'tpark@phoenixphilanthropy.com' },
+  { id: 'con-5', name: 'Diana Reeves', title: 'Research Analyst', specialty: 'Donor Research', utilization: 72, activeEngagements: 2, yearsExperience: 4, email: 'dreeves@phoenixphilanthropy.com' },
+  { id: 'con-6', name: 'Carlos Mendez', title: 'Project Coordinator', specialty: 'Project Management', utilization: 88, activeEngagements: 5, yearsExperience: 8, email: 'cmendez@phoenixphilanthropy.com' },
+  { id: 'con-7', name: 'Dr. Michal Tyra', title: 'Senior Consultant', specialty: 'Business Development & Client Strategy', utilization: 75, activeEngagements: 3, yearsExperience: 20, email: 'mtyra@phoenixphilanthropy.com' },
+  { id: 'con-8', name: 'Evelyn Torres', title: 'Prospect Research', specialty: 'Wealth Screening & Profiles', utilization: 60, activeEngagements: 0, yearsExperience: 6, email: 'etorres@phoenixphilanthropy.com' },
 ];
 
 export interface ServiceRate {

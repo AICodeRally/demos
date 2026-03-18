@@ -21,34 +21,50 @@ export default defineDemo({
   },
   nav: [
     {
-      section: 'Operations OS',
+      section: 'Business Development',
       color: '#3b6bf5',
       items: [
         { label: 'Dashboard', href: '/phoenix-intel/dashboard', icon: 'LayoutDashboard' },
-        { label: 'Deal Pipeline', href: '/phoenix-intel/pipeline', icon: 'GitBranch' },
+        { label: 'Pipeline', href: '/phoenix-intel/pipeline', icon: 'GitBranch' },
+        { label: 'Sales Process', href: '/phoenix-intel/sales-process', icon: 'ListChecks' },
+        { label: 'Scoping / CPQ', href: '/phoenix-intel/scoping', icon: 'SlidersHorizontal' },
         { label: 'Proposals', href: '/phoenix-intel/proposals', icon: 'FileText' },
-        { label: 'Finance', href: '/phoenix-intel/finance', icon: 'DollarSign' },
-        { label: 'P&L', href: '/phoenix-intel/finance/pnl', icon: 'Receipt' },
-        { label: 'Operations', href: '/phoenix-intel/operations', icon: 'Settings' },
-        { label: 'Marketing', href: '/phoenix-intel/marketing', icon: 'Megaphone' },
-        { label: 'Reports', href: '/phoenix-intel/reports', icon: 'BarChart3' },
       ],
     },
     {
-      section: 'Client Engagement',
+      section: 'Client Services',
       color: '#d4a030',
       items: [
         { label: 'Engagements', href: '/phoenix-intel/engagements', icon: 'Briefcase' },
         { label: 'Clients', href: '/phoenix-intel/clients', icon: 'Building2' },
+        { label: 'Reports', href: '/phoenix-intel/reports', icon: 'BarChart3' },
       ],
     },
     {
-      section: 'Advancement Intelligence',
+      section: 'Services & Planning',
       color: '#10b981',
       items: [
-        { label: 'Assessments', href: '/phoenix-intel/assessments', icon: 'ClipboardCheck' },
+        { label: 'Services Dashboard', href: '/phoenix-intel/assessments', icon: 'ClipboardCheck' },
         { label: 'Knowledge Base', href: '/phoenix-intel/knowledge', icon: 'BookOpen' },
         { label: 'AI Advisor', href: '/phoenix-intel/knowledge/ai-advisor', icon: 'Brain' },
+      ],
+    },
+    {
+      section: 'Operations',
+      color: '#f59e0b',
+      items: [
+        { label: 'Overview', href: '/phoenix-intel/operations', icon: 'Settings' },
+        { label: 'Time & Expense', href: '/phoenix-intel/operations/time-expense', icon: 'Clock' },
+        { label: 'HR & Compliance', href: '/phoenix-intel/operations/hr', icon: 'UserCog' },
+        { label: 'Finance', href: '/phoenix-intel/finance', icon: 'DollarSign' },
+        { label: 'P&L', href: '/phoenix-intel/finance/pnl', icon: 'Receipt' },
+      ],
+    },
+    {
+      section: 'Marketing & Communications',
+      color: '#ec4899',
+      items: [
+        { label: 'Marketing', href: '/phoenix-intel/marketing', icon: 'Megaphone' },
       ],
     },
     {
@@ -68,12 +84,6 @@ export default defineDemo({
       items: [
         { label: 'About', href: '/phoenix-intel/about', icon: 'Info' },
         { label: 'Admin', href: '/phoenix-intel/admin', icon: 'Shield' },
-      ],
-    },
-    {
-      section: 'Design System',
-      color: '#9333ea',
-      items: [
         { label: 'Style Guide', href: '/phoenix-intel/style-guide', icon: 'Palette' },
       ],
     },

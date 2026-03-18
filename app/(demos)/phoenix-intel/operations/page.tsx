@@ -30,6 +30,42 @@ export default function OperationsPage() {
 
   return (
     <PhoenixPage title="Operations" subtitle="Team utilization, time tracking, and onboarding" accentColor="#3b6bf5">
+      {/* Operations Org Structure */}
+      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Operations Team — Key Roles</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {[
+            { name: 'Kelly Martinez', title: 'Director of Client Services', scope: 'Contracts, reporting, QC, proposals, state filings, Knack/Dropbox management', color: '#3b6bf5' },
+            { name: 'Timmesse Thompson', title: 'Corp. Operations & Events', scope: 'Events, onboarding, IT support, SOPs, compliance, tech modernization', color: '#10b981' },
+            { name: 'Cassandra Williams', title: 'Business Manager', scope: 'Finance, accounting, invoicing, QuickBooks, Alliance Bank, ADP, Amex reconciliation', color: '#c9942b' },
+          ].map(r => (
+            <div key={r.name} style={{
+              padding: '12px 14px', borderRadius: 8,
+              borderLeft: `3px solid ${r.color}`, background: `${r.color}08`,
+            }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{r.name}</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: r.color, marginTop: 2 }}>{r.title}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-muted)', marginTop: 4 }}>{r.scope}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
+          {[
+            { name: 'Natalie Graff', role: 'Executive Coordinator (PT)' },
+            { name: 'Evelyn Torres', role: 'Prospect Research' },
+            { name: 'Kris Jacober', role: 'Marketing & Comms' },
+          ].map(s => (
+            <span key={s.name} style={{
+              padding: '4px 10px', borderRadius: 6, fontSize: '0.75rem',
+              background: 'var(--pi-surface-alt, rgba(255,255,255,0.03))', border: '1px solid var(--pi-border-faint)',
+              color: 'var(--pi-text-muted)',
+            }}>
+              <strong style={{ color: 'var(--pi-text-secondary)' }}>{s.name}</strong> — {s.role}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Utilization bars */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Consultant Utilization</h3>

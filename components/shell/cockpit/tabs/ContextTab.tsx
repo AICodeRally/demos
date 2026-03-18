@@ -7,10 +7,12 @@ import { useCockpitContext } from '../store';
 import type { Persona, ModuleScope, RoadmapPhase, Artifact } from '../types';
 import { OrgChart } from '../parts/OrgChart';
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, description, children }: { title: string; description?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-lg border border-[var(--sem-border-default)] bg-[var(--sem-bg-secondary)] p-4">
-      <h3 className="mb-3 text-lg font-bold text-[var(--sem-text-primary)]">{title}</h3>
+      <h3 className="mb-1 text-lg font-bold text-[var(--sem-text-primary)]">{title}</h3>
+      {description && <p className="mb-3 text-xs text-[var(--sem-text-muted)] leading-relaxed">{description}</p>}
+      {!description && <div className="mb-3" />}
       {children}
     </section>
   );
@@ -26,7 +28,7 @@ export function ContextTab() {
   return (
     <div className="space-y-6">
       {/* Identity */}
-      <Section title="Identity">
+      <Section title="Identity" description="The project name, brand color, and tagline that define this engagement. Changes here update the demo shell in real time.">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="mb-1 block text-xs text-[var(--sem-text-muted)]">Project Name</label>
@@ -65,34 +67,34 @@ export function ContextTab() {
                 }}
                 className="h-9 w-12 cursor-pointer rounded border border-[var(--sem-border-default)]"
               />
-              <span className="text-xs text-[var(--sem-text-muted)]">{identity.brandColor ?? '#3b82f6'}</span>
+              <span className="text-xs text-[var(--sem-text-muted)]" suppressHydrationWarning>{identity.brandColor ?? '#3b82f6'}</span>
             </div>
           </div>
         </div>
       </Section>
 
       {/* Team (Org Chart) */}
-      <Section title="Team">
+      <Section title="Team" description="Stakeholders in the room and their influence. Weights determine how much each person's vote counts in the Decisions tab.">
         <OrgChart members={org} onAdd={addOrgMember} onRemove={removeOrgMember} onUpdate={updateOrgMember} />
       </Section>
 
       {/* Personas */}
-      <Section title="Personas">
+      <Section title="Personas" description="The end users of the system being built. Who are they, what are their pain points, and what outcomes do they need?">
         <PersonaList personas={personas} onChange={setPersonas} />
       </Section>
 
       {/* Scope */}
-      <Section title="Module Scope">
+      <Section title="Module Scope" description="The buildable functional areas of the system — e.g., Pipeline, Assessments, Training. Each module maps to a department or feature section. Reorder by priority.">
         <ScopeList scope={scope} onChange={setScope} />
       </Section>
 
       {/* Roadmap */}
-      <Section title="Roadmap">
+      <Section title="Roadmap" description="Delivery phases with timelines. Map modules to phases to define what ships when.">
         <RoadmapList roadmap={roadmap} onChange={setRoadmap} />
       </Section>
 
       {/* Artifacts */}
-      <Section title="Artifacts">
+      <Section title="Artifacts" description="Links, documents, and decks relevant to this engagement. Reference materials the team can access during and after the session.">
         <ArtifactList artifacts={artifacts} onChange={setArtifacts} />
       </Section>
     </div>
@@ -161,11 +163,11 @@ function PersonaList({ personas, onChange }: { personas: Persona[]; onChange: (p
 
 function ScopeList({ scope, onChange }: { scope: ModuleScope[]; onChange: (s: ModuleScope[]) => void }) {
   const [adding, setAdding] = useState(false);
-  const [draft, setDraft] = useState({ moduleName: '', description: '' });
+  const [draft, setDraft] = useState({ department: '', moduleName: '', description: '' });
 
   const handleAdd = () => {
-    onChange([...scope, { id: crypto.randomUUID(), moduleName: draft.moduleName, description: draft.description, priority: scope.length + 1 }]);
-    setDraft({ moduleName: '', description: '' });
+    onChange([...scope, { id: crypto.randomUUID(), department: draft.department || undefined, moduleName: draft.moduleName, description: draft.description, priority: scope.length + 1 }]);
+    setDraft({ department: '', moduleName: '', description: '' });
     setAdding(false);
   };
 
@@ -176,7 +178,10 @@ function ScopeList({ scope, onChange }: { scope: ModuleScope[]; onChange: (s: Mo
           <GripVertical className="h-4 w-4 shrink-0 text-[var(--sem-text-muted)]" />
           <span className="w-6 text-center text-xs font-bold text-[var(--sem-text-muted)]">#{idx + 1}</span>
           <div className="flex-1">
-            <div className="text-sm font-medium text-[var(--sem-text-primary)]">{m.moduleName}</div>
+            <div className="text-sm font-medium text-[var(--sem-text-primary)]">
+              {m.department && <span className="text-xs font-semibold text-[var(--palette-primary-500)] mr-1.5">{m.department} /</span>}
+              {m.moduleName}
+            </div>
             {m.description && <div className="text-xs text-[var(--sem-text-muted)]">{m.description}</div>}
           </div>
           <button onClick={() => onChange(scope.filter(x => x.id !== m.id))} className="text-[var(--sem-text-muted)] hover:text-red-400">
@@ -186,8 +191,12 @@ function ScopeList({ scope, onChange }: { scope: ModuleScope[]; onChange: (s: Mo
       ))}
       {adding ? (
         <div className="space-y-2 rounded border border-dashed border-[var(--sem-border-default)] p-3">
-          <input placeholder="Module name" value={draft.moduleName} onChange={e => setDraft(d => ({ ...d, moduleName: e.target.value }))}
-            className="w-full rounded border border-[var(--sem-border-default)] bg-transparent px-2 py-1 text-sm text-[var(--sem-text-primary)] placeholder:text-[var(--sem-text-muted)]" />
+          <div className="grid grid-cols-2 gap-2">
+            <input placeholder="Department (optional)" value={draft.department} onChange={e => setDraft(d => ({ ...d, department: e.target.value }))}
+              className="rounded border border-[var(--sem-border-default)] bg-transparent px-2 py-1 text-sm text-[var(--sem-text-primary)] placeholder:text-[var(--sem-text-muted)]" />
+            <input placeholder="Module name" value={draft.moduleName} onChange={e => setDraft(d => ({ ...d, moduleName: e.target.value }))}
+              className="rounded border border-[var(--sem-border-default)] bg-transparent px-2 py-1 text-sm text-[var(--sem-text-primary)] placeholder:text-[var(--sem-text-muted)]" />
+          </div>
           <input placeholder="Description" value={draft.description} onChange={e => setDraft(d => ({ ...d, description: e.target.value }))}
             className="w-full rounded border border-[var(--sem-border-default)] bg-transparent px-2 py-1 text-sm text-[var(--sem-text-primary)] placeholder:text-[var(--sem-text-muted)]" />
           <div className="flex gap-2">

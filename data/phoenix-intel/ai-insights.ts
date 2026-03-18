@@ -8,7 +8,7 @@ export interface AIInsight {
 
 export const AI_INSIGHTS: Record<string, AIInsight> = {
   'dashboard': {
-    text: 'Pipeline velocity increased 23% this quarter. Three deals in Negotiation stage are forecast to close by month-end, adding $175K in contracted revenue. Recommend prioritizing Mountain View Phase 2 signing — highest probability at 90%.',
+    text: 'Pipeline velocity increased 23% this quarter. Three deals in Negotiation are forecast to close by month-end (+$175K). Key firm health flags: Richard\'s BD concentration at 70-75% is improving but still a risk. Contact database has only 2,500-3,000 records after 20 years — aggressive capture at conferences and seminars could 3x this within 12 months. 98% client satisfaction and 60% repeat rate are best-in-class.',
   },
   'pipeline': {
     text: 'Average time in Proposal Sent stage is 18 days — 30% longer than Q3. Consider implementing a 10-day follow-up cadence. Green Valley ($85K) has been in Proposal Sent for 6 days with no activity.',
@@ -17,25 +17,37 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
     text: 'Win rate on proposals >$50K is 68% when a board presentation is included. For Green Valley ($85K), recommend offering a complimentary board strategy session as part of the proposal follow-up.',
   },
   'finance': {
-    text: 'Revenue is 7% below annual target but Q1 2026 shows strongest quarter in company history ($246K). If Negotiation-stage deals close, year-end projection reaches $920K — exceeding target by 2.2%.',
+    text: 'Revenue is 7% below annual target but Q1 2026 shows strongest quarter in company history ($246K). Cassandra (Business Manager) manages all financials through QuickBooks, Alliance Bank, and ADP. Physical check deposits are a bottleneck — remote deposit recommended. Amex reconciliation is manual. Tech modernization ROI: $16,952/yr net savings.',
   },
   'finance/pnl': {
     text: 'Training revenue margin (45%) is highest across all service lines but represents only 10% of total revenue. Scaling training through digital delivery could add $120K in high-margin revenue with minimal incremental cost.',
   },
+  'sales-process': {
+    text: 'Average deal cycle is 57 days from Identify to Contract. Proposals presented with a board strategy session close at 68% vs 41% without. SafeHaven and Mountain View are both in Negotiation — together representing $153K. Recommend a 10-day follow-up cadence for all prospects in Discovery stage.',
+  },
+  'scoping': {
+    text: 'Campaign Readiness engagements have the highest upsell rate — 72% convert to full Campaign Management. Kelly (Director of Client Services) prepares budget worksheets, circulates for consultant input, finalizes and enters into system. Current active quotes total $179K across 3 prospects. Budget worksheet flow now auto-populates downstream.',
+  },
   'operations': {
-    text: 'Jennifer Blake is at 92% utilization — approaching burnout threshold. With 4 active engagements and the Mountain View Phase 2 incoming, recommend shifting 1 engagement to Sarah Kim (currently at 85%).',
+    text: 'Jennifer Blake is at 92% utilization — approaching burnout threshold. With 4 active engagements and Mountain View Phase 2 incoming, recommend shifting 1 engagement to Sarah Kim (85%). Operations team restructure in effect: Kelly (Director of Client Services) owns contracts/reporting/QC, Timmesse (Corp. Ops) owns events/IT/onboarding, Cassandra (Business Manager) owns all finance. Zoom→Teams migration saves $7,500/yr.',
+  },
+  'operations/time-expense': {
+    text: 'Passive telemetry captured 82% of this week\'s hours automatically — email, document, and meeting time auto-tagged to engagements. Only 18% required manual entry (site visits, phone calls). Intervals is fully deprecated. Billable utilization is at 74% — 6 points below target. Auto-tagging accuracy hit 94% this week, up from 89% at launch.',
+  },
+  'operations/hr': {
+    text: 'Sarah Kim\'s professional license renewal is due April 1 — 15 days out. Cybersecurity awareness training deadline is March 31 for all staff. New role: Timmesse (Corp. Operations & Events) now owns onboarding, IT support, and SOPs — previously split across Kelly and Natalie. Kris Jacober (Marketing & Comms Consultant) takes over website updates, newsletters, and speaking logistics from Executive Coordinator.',
   },
   'marketing': {
-    text: 'Conference-sourced leads convert at 2.4x the rate of website leads. AFP conference generated 3 qualified opportunities worth $151K. Recommend increasing conference presence budget by 25% for Q3.',
+    text: 'Kris Jacober (Marketing & Comms Consultant) now owns brand, digital, and events — previously scattered across 3 roles. Conference leads convert at 2.4x website rate. SWOT flagged: no active marketing initiatives until Kris\'s hire, outdated website, overpriced direct mail vendor. Annual calendar now includes newsletter, President\'s Corner (bi-monthly), social posts, and event promos via Pixa.',
   },
   'reports': {
-    text: 'The President\'s Intelligence of the Day briefing has been viewed 22 times this month. Most-referenced sections: pipeline movement and client health scores. Consider adding automated weekly email delivery.',
+    text: 'The AI-generated IoTD replaces Natalie\'s manual daily email — viewed 22 times this month. Kelly maintains 6+ Excel reports (proposal grid, Gantt, contracts, Strategic Plan Metrics, projections, satisfaction surveys) — all candidates for automation. Cassandra\'s QuickBooks→CPA upload workflow can be fully automated with scheduled exports.',
   },
   'engagements': {
     text: '3 engagements are >80% complete and approaching final deliverable milestones. Heritage Arts assessment (88%) and Faith & Light stewardship (82%) should transition to renewal conversations within 30 days.',
   },
   'clients': {
-    text: 'Client portfolio is concentrated in 2 sectors (healthcare and education = 60% of revenue). Recommend diversifying into social services — SafeHaven pipeline deal ($58K) would begin balancing the mix.',
+    text: 'Higher education represents 50% of work (3 of 8 clients: Mountain View, Sonoran State, Pacific Crest) — consistent with firm strategy. Geographic concentration in SoCal and Arizona (6 of 8 clients). 60% repeat business rate with 75%+ referral sourcing. SafeHaven ($58K pipeline) would add social-services diversification.',
   },
   'assessments': {
     text: '34 assessments completed across 5 templates. Organizations scoring below 60 on Fundraising Maturity show 3x improvement after 12 months of engagement. Heritage Arts (52/100) is the strongest candidate for comprehensive program.',
@@ -44,11 +56,11 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
     text: 'Top 5 most-downloaded resources account for 28% of all downloads. "Year-End Giving Campaign Kit" (678 downloads) and "Major Donor Solicitation Templates" (445) are your most viral content. Consider creating video companions.',
   },
   'knowledge/ai-advisor': {
-    text: 'Ask me about fundraising strategy, board engagement, campaign planning, donor stewardship, or any advancement topic. I draw from TPPG\'s 156-document knowledge base and 15+ years of consulting experience.',
+    text: 'Ask me about fundraising strategy, board engagement, campaign planning, donor stewardship, or any advancement topic. I draw from Phoenix\'s 156-document knowledge base and 15+ years of consulting experience.',
     label: 'AI Advisor',
   },
   'training': {
-    text: '602 total enrollments with a 78% completion rate. Major Gift Officer Certification has the highest satisfaction (4.9/5) but lowest enrollment (48). Recommend a promotional campaign targeting mid-career development professionals.',
+    text: 'Content Repository Modernization underway: ~500 files across ~20 modules, all in Dropbox with no version control. Pain ratings 4-5/5 across the board. CSU Chancellor\'s Office pilot in progress. AI handles drafts, tagging, dedup, and stale flagging (human review required for final content). Academy monetization: $120K Year 1 at 45% margin via async courses and LinkedIn badges. Target completion: August 2026.',
   },
   'training/catalog': {
     text: 'Workshop format courses have 2.3x higher completion rates than webinars. Consider converting top-performing webinars (Introduction to Fundraising, Donor Stewardship Excellence) to hybrid workshop format.',
@@ -61,14 +73,14 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
     label: 'AI Training Builder',
   },
   'training/ai-tutor': {
-    text: 'I can help with fundraising concepts, assessment interpretation, best practices, and TPPG methodology. Try asking about donor cultivation strategies, board engagement techniques, or campaign planning steps.',
+    text: 'I can help with fundraising concepts, assessment interpretation, best practices, and Phoenix methodology. Try asking about donor cultivation strategies, board engagement techniques, or campaign planning steps.',
     label: 'AI Tutor',
   },
   'about': {
-    text: 'TPPG\'s 6P framework (Purpose, People, Process, Practice, Pipeline, Profit) provides a holistic view of organizational advancement health. Each pillar maps to specific assessment dimensions and consulting methodologies.',
+    text: 'Phoenix is a 20-person firm with 98% client satisfaction and 75%+ referral rate — exceptional for boutique consulting. Key risk: Richard generates 70-75% of business (improved from 92%). Diversifying BD across the team is critical for firm valuation and succession planning. The independent contractor model keeps overhead at 20-25% but requires extremely user-friendly technology given consultant demographics (60s-70s, post-retirement).',
   },
   'admin': {
-    text: '4 of 6 connectors are active. Constant Contact integration would automate newsletter performance tracking, and Knack migration (in progress) will consolidate CRM data into a single source of truth.',
+    text: '4 active migrations: Knack→DB (35%), Dropbox→SharePoint, Intervals→Telemetry, Zoom→Teams ($7,500/yr savings). AI dedup flagged 127 dupes (84 auto-merged). New connectors: Alliance Bank (daily balance), ADP (payroll), Formsite (surveys). Timmesse\'s tech recommendation: Monday.com for project tracking, DocuSign for contracts, LastPass for president credentials. Physical bank deposits still happening — remote deposit recommended.',
   },
   'style-guide': {
     text: 'The Sapphire & Gold design system uses Space Grotesk for modern readability. Primary sapphire (#3b6bf5) for trust and intelligence, gold accent (#c9942b) for warmth and premium positioning.',

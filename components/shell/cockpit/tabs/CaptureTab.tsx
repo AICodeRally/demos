@@ -122,6 +122,18 @@ export function CaptureTab() {
                 {note.source === 'transcript-parse' && (
                   <span className="rounded bg-blue-500/20 px-1.5 py-0.5 text-xs text-blue-400">transcript</span>
                 )}
+                {note.source === 'ops-functions-doc' && (
+                  <span className="rounded bg-purple-500/20 px-1.5 py-0.5 text-xs text-purple-400">ops doc</span>
+                )}
+                {note.source === 'tech-recommendation' && (
+                  <span className="rounded bg-teal-500/20 px-1.5 py-0.5 text-xs text-teal-400">tech rec</span>
+                )}
+                {note.source === 'swot-analysis' && (
+                  <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-xs text-amber-400">SWOT</span>
+                )}
+                {note.source === 'academy-intake' && (
+                  <span className="rounded bg-rose-500/20 px-1.5 py-0.5 text-xs text-rose-400">academy</span>
+                )}
                 {note.promotedToDecision && (
                   <span className="rounded bg-green-500/20 px-1.5 py-0.5 text-xs text-green-400">Promoted</span>
                 )}

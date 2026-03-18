@@ -18,7 +18,8 @@ export const midnight: ThemePresetDef = {
       cardBg: '#334155',
       textPrimary: '#F1F5F9',
       textSecondary: '#94A3B8',
-      textMuted: '#64748B',
+      // Bumped for readability at small UI sizes (tabs, helper labels).
+      textMuted: '#94A3B8',
       textInverse: '#0F172A',
       borderDefault: '#475569',
       borderSubtle: 'rgba(59,130,246,0.15)',
@@ -32,7 +33,8 @@ export const midnight: ThemePresetDef = {
       cardBg: '#FFFFFF',
       textPrimary: '#0F172A',
       textSecondary: '#475569',
-      textMuted: '#94A3B8',
+      // Darkened for better contrast against near-white backgrounds.
+      textMuted: '#64748B',
       textInverse: '#FFFFFF',
       borderDefault: '#E2E8F0',
       borderSubtle: 'rgba(59,130,246,0.15)',

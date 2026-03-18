@@ -89,6 +89,41 @@ export default function FinancePage() {
         </div>
       </div>
 
+      {/* Financial Operations Stack */}
+      <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #c9942b' }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>Financial Operations</h3>
+        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+          Business Manager handles all finance: invoicing, reconciliation, payments, CPA coordination. Weekly AP/AR status report sent to Director of Operations every Friday.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { system: 'QuickBooks Online', role: 'P&L, balance sheets, budget vs. actual', status: 'Active', color: '#10b981' },
+            { system: 'Alliance Bank', role: 'Banking, ACH payments, daily balance checks', status: 'Active', color: '#3b6bf5' },
+            { system: 'ADP', role: '1099 payroll, tax filings, W-9 collection', status: 'Active', color: '#7c3aed' },
+            { system: 'Amex', role: 'Receipt reconciliation, travel reimbursements', status: 'Manual', color: '#c9942b' },
+          ].map(s => (
+            <div key={s.system} style={{
+              padding: '10px 12px', borderRadius: 8,
+              background: `${s.color}08`, border: `1px solid ${s.color}20`,
+            }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: s.color }}>{s.system}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{s.role}</div>
+              <span style={{
+                fontSize: '0.65rem', fontWeight: 700, padding: '1px 6px', borderRadius: 4, marginTop: 4, display: 'inline-block',
+                background: s.status === 'Active' ? '#10b98120' : '#c9942b20',
+                color: s.status === 'Active' ? '#10b981' : '#c9942b',
+              }}>{s.status}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, padding: '8px 12px', borderRadius: 6, background: '#ef444408', border: '1px solid #ef444420' }}>
+          <CreditCard size={14} color="#ef4444" />
+          <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>
+            <strong style={{ color: '#ef4444' }}>Pain point:</strong> Client payments still deposited via physical checks at Alliance Bank. Remote/mobile deposit capability recommended.
+          </span>
+        </div>
+      </div>
+
       {insight && <AIInsightCard>{insight.text}</AIInsightCard>}
     </PhoenixPage>
   );
