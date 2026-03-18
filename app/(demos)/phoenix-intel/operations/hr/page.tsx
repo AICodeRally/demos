@@ -56,37 +56,37 @@ export default function HRCompliancePage() {
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Team Roster</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>{TEAM_ROSTER.length} team members</p>
+            <h3 className="pi-section-title" style={{ marginBottom: 4 }}>Team Roster</h3>
+            <p className="pi-body-muted">{TEAM_ROSTER.length} team members</p>
           </div>
-          <div style={{ display: 'flex', gap: 12, fontSize: '0.85rem' }}>
-            <span style={{ color: 'var(--pi-text-muted)' }}><strong style={{ color: '#10b981' }}>{TEAM_ROSTER.filter(t => t.type === 'Full-Time').length}</strong> FT</span>
-            <span style={{ color: 'var(--pi-text-muted)' }}><strong style={{ color: '#3b6bf5' }}>{TEAM_ROSTER.filter(t => t.type === 'Part-Time').length}</strong> PT</span>
+          <div className="pi-body-muted" style={{ display: 'flex', gap: 12 }}>
+            <span><strong style={{ color: '#10b981' }}>{TEAM_ROSTER.filter(t => t.type === 'Full-Time').length}</strong> FT</span>
+            <span><strong style={{ color: '#3b6bf5' }}>{TEAM_ROSTER.filter(t => t.type === 'Part-Time').length}</strong> PT</span>
           </div>
         </div>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
                 {['Name', 'Title', 'Type', 'Since', 'Compliance'].map(h => (
-                  <th key={h} style={{ textAlign: 'left', padding: '8px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase' }}>{h}</th>
+                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {TEAM_ROSTER.map((m, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '10px 8px', fontWeight: 700, color: 'var(--pi-text)' }}>{m.name}</td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)' }}>{m.title}</td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-muted)' }}>{m.type}</td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-faint)' }}>{m.since}</td>
+                  <td className="pi-label" style={{ padding: '10px 8px' }}>{m.name}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.title}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.type}</td>
+                  <td className="pi-caption" style={{ padding: '10px 8px' }}>{m.since}</td>
                   <td style={{ padding: '10px 8px' }}>
                     {m.compliance === 'current' ? (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10b981', fontSize: '0.8rem', fontWeight: 600 }}>
+                      <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10b981', textTransform: 'none' }}>
                         <CheckCircle2 size={14} /> Current
                       </span>
                     ) : (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#c9942b', fontSize: '0.8rem', fontWeight: 600 }}>
+                      <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#c9942b', textTransform: 'none' }}>
                         <AlertTriangle size={14} /> Due Soon
                       </span>
                     )}
@@ -103,7 +103,7 @@ export default function HRCompliancePage() {
         <div className="phoenix-card">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
             <Shield size={18} color="#f59e0b" />
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Compliance Tracker</h3>
+            <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Compliance Tracker</h3>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {COMPLIANCE_ITEMS.map((item, i) => (
@@ -119,12 +119,12 @@ export default function HRCompliancePage() {
                   <Circle size={16} color="var(--pi-text-faint)" />
                 )}
                 <div style={{ flex: 1 }}>
-                  <div style={{
-                    fontSize: '0.875rem', fontWeight: 600,
+                  <div className="pi-body" style={{
                     color: item.status === 'complete' ? 'var(--pi-text-muted)' : 'var(--pi-text)',
                     textDecoration: item.status === 'complete' ? 'line-through' : 'none',
+                    fontWeight: 600,
                   }}>{item.name}</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)' }}>
+                  <div className="pi-caption">
                     Due: {item.dueDate} · {item.assignedTo}
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function HRCompliancePage() {
         <div className="phoenix-card">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
             <Users size={18} color="#3b6bf5" />
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Onboarding Templates</h3>
+            <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Onboarding Templates</h3>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {ONBOARDING_TEMPLATES.map((t, i) => (
@@ -146,9 +146,9 @@ export default function HRCompliancePage() {
                 background: 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
                 border: '1px solid var(--pi-border-faint)',
               }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 4 }}>{t.name}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginBottom: 8 }}>{t.description}</div>
-                <div style={{ display: 'flex', gap: 16, fontSize: '0.8rem', color: 'var(--pi-text-faint)' }}>
+                <div className="pi-label" style={{ marginBottom: 4 }}>{t.name}</div>
+                <div className="pi-body-muted" style={{ marginBottom: 8 }}>{t.description}</div>
+                <div className="pi-caption" style={{ display: 'flex', gap: 16 }}>
                   <span>{t.steps} steps</span>
                   <span>~{t.avgDays} days</span>
                 </div>
@@ -162,16 +162,16 @@ export default function HRCompliancePage() {
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
           <Laptop size={18} color="#7c3aed" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Technology Inventory</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Technology Inventory</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {IT_ASSETS.map((cat) => (
             <div key={cat.category}>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--pi-text-muted)', textTransform: 'uppercase', marginBottom: 8 }}>{cat.category}</div>
+              <div className="pi-overline" style={{ marginBottom: 8 }}>{cat.category}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {cat.tools.map(tool => (
-                  <span key={tool} style={{
-                    fontSize: '0.85rem', color: 'var(--pi-text-secondary)', padding: '4px 8px',
+                  <span key={tool} className="pi-body-muted" style={{
+                    padding: '4px 8px',
                     borderRadius: 6, background: 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
                   }}>
                     {tool}

@@ -14,7 +14,7 @@ const COLORS = [
   { name: 'Gold (Accent)', value: '#c9942b', var: '--pi-gold' },
   { name: 'Purpose', value: '#facc15', var: '--pi-purpose' },
   { name: 'People', value: '#7c3aed', var: '--pi-people' },
-  { name: 'Process', value: '#3b6bf5', var: '--pi-process' },
+  { name: 'Process', value: '#2563eb', var: '--pi-process' },
   { name: 'Practice', value: '#c026d3', var: '--pi-practice' },
   { name: 'Pipeline', value: '#db2777', var: '--pi-pipeline' },
   { name: 'Profit', value: '#10b981', var: '--pi-profit' },
@@ -89,15 +89,15 @@ export default function StyleGuidePage() {
               <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{fontSize}px (min 15px)</div>
             </div>
             {[
-              { label: 'Heading 1', size: '1.75rem', weight: 700 },
-              { label: 'Heading 2', size: '1.25rem', weight: 700 },
-              { label: 'Body', size: '0.9rem', weight: 400 },
-              { label: 'Caption', size: '0.75rem', weight: 600 },
-              { label: 'Overline', size: '0.65rem', weight: 700 },
+              { label: 'Heading', cls: 'pi-heading', token: '--pi-fs-heading (1.75rem / 800)' },
+              { label: 'Subheading', cls: 'pi-subheading', token: '--pi-fs-subheading (1.1rem / 700)' },
+              { label: 'Body', cls: 'pi-body', token: '--pi-fs-body (0.9rem / 400)' },
+              { label: 'Caption', cls: 'pi-caption', token: '--pi-fs-caption (0.8rem / faint)' },
+              { label: 'Overline', cls: 'pi-overline', token: '--pi-fs-overline (0.7rem / 700 / uppercase)' },
             ].map(t => (
               <div key={t.label}>
-                <span style={{ fontSize: '0.875rem', color: 'var(--pi-text-faint)' }}>{t.label} — {t.size} / {t.weight}</span>
-                <div style={{ fontSize: t.size, fontWeight: t.weight, color: 'var(--pi-text)' }}>{sampleText}</div>
+                <span className="pi-caption">{t.label} — <code style={{ fontFamily: 'monospace' }}>.{t.cls}</code> — {t.token}</span>
+                <div className={t.cls}>{sampleText}</div>
               </div>
             ))}
           </div>

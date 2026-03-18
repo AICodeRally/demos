@@ -135,7 +135,7 @@ export default function SalesProcessPage() {
     <PhoenixPage title="Sales Process" subtitle="Multi-step business development workflow with moves management" accentColor="#3b6bf5">
       {/* Process Steps Visual */}
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>
+        <h3 className="pi-section-title" style={{ marginBottom: 16 }}>
           Business Development Lifecycle
         </h3>
         <div style={{ display: 'flex', gap: 4, overflowX: 'auto', paddingBottom: 8 }}>
@@ -163,10 +163,10 @@ export default function SalesProcessPage() {
               }}>
                 {i + 1}
               </div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--pi-text)', lineHeight: 1.3 }}>
+              <div className="pi-label" style={{ lineHeight: 1.3 }}>
                 {step.name}
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 4 }}>
+              <div className="pi-overline" style={{ textTransform: 'none', marginTop: 4 }}>
                 ~{step.avgDays > 0 ? `${step.avgDays} days` : 'Ongoing'}
               </div>
               {i < SALES_PROCESS_STEPS.length - 1 && (
@@ -193,19 +193,19 @@ export default function SalesProcessPage() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                 <div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 4 }}>{step.name}</h4>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)' }}>{step.description}</p>
+                  <h4 className="pi-section-title" style={{ marginBottom: 4 }}>{step.name}</h4>
+                  <p className="pi-body-muted">{step.description}</p>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.85rem', color: STAGE_COLORS[step.id], fontWeight: 600, whiteSpace: 'nowrap' }}>
+                <div className="pi-label" style={{ display: 'flex', alignItems: 'center', gap: 6, color: STAGE_COLORS[step.id], whiteSpace: 'nowrap' }}>
                   <User size={14} />
                   {step.owner}
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {step.actions.map((action, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.875rem' }}>
+                  <div key={i} className="pi-body" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--pi-text-secondary)' }}>
                     <CheckCircle2 size={14} color={STAGE_COLORS[step.id]} style={{ flexShrink: 0 }} />
-                    <span style={{ color: 'var(--pi-text-secondary)' }}>{action}</span>
+                    {action}
                   </div>
                 ))}
               </div>
@@ -216,18 +216,18 @@ export default function SalesProcessPage() {
 
       {/* Moves Management Tracker */}
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 4 }}>
+        <h3 className="pi-section-title" style={{ marginBottom: 4 }}>
           Moves Management Tracker
         </h3>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 16 }}>
+        <p className="pi-body-muted" style={{ marginBottom: 16 }}>
           Active prospects with next steps, owners, and contact cadence
         </p>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
                 {['Prospect', 'Contact', 'Stage', 'Last Touch', 'Next Action', 'Due', 'Owner'].map(h => (
-                  <th key={h} style={{ textAlign: 'left', padding: '8px 8px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase' }}>{h}</th>
+                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 8px' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -237,26 +237,25 @@ export default function SalesProcessPage() {
                 const urgencyColor = daysUntil <= 1 ? '#ef4444' : daysUntil <= 3 ? '#c9942b' : 'var(--pi-text-faint)';
                 return (
                   <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                    <td style={{ padding: '10px 8px', fontWeight: 700, color: 'var(--pi-text)' }}>{m.prospect}</td>
-                    <td style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)' }}>{m.contact}</td>
+                    <td className="pi-label" style={{ padding: '10px 8px' }}>{m.prospect}</td>
+                    <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.contact}</td>
                     <td style={{ padding: '10px 8px' }}>
-                      <span style={{
-                        padding: '2px 8px', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700,
+                      <span className="pi-badge" style={{
                         background: `${STAGE_COLORS[m.stage]}20`, color: STAGE_COLORS[m.stage],
                         textTransform: 'capitalize',
                       }}>
                         {m.stage}
                       </span>
                     </td>
-                    <td style={{ padding: '10px 8px', color: 'var(--pi-text-faint)' }}>{m.lastTouch}</td>
-                    <td style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)', fontWeight: 600 }}>{m.nextAction}</td>
+                    <td className="pi-caption" style={{ padding: '10px 8px' }}>{m.lastTouch}</td>
+                    <td className="pi-label-muted" style={{ padding: '10px 8px' }}>{m.nextAction}</td>
                     <td style={{ padding: '10px 8px', color: urgencyColor, fontWeight: 700 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <span className="pi-body" style={{ display: 'flex', alignItems: 'center', gap: 4, color: urgencyColor, fontWeight: 700 }}>
                         {daysUntil <= 1 ? <AlertCircle size={13} /> : daysUntil <= 3 ? <Clock size={13} /> : <Circle size={13} />}
                         {m.nextDate}
                       </span>
                     </td>
-                    <td style={{ padding: '10px 8px', color: 'var(--pi-text-muted)' }}>{m.owner}</td>
+                    <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.owner}</td>
                   </tr>
                 );
               })}
@@ -267,8 +266,8 @@ export default function SalesProcessPage() {
 
       {/* Engagement Lifecycle */}
       <div className="phoenix-card" style={{ marginBottom: 24, borderLeft: '3px solid #10b981' }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>Engagement Lifecycle — 5-7 Year Campaigns</h3>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+        <h3 className="pi-section-title">Engagement Lifecycle — 5-7 Year Campaigns</h3>
+        <p className="pi-body-muted" style={{ marginBottom: 12 }}>
           Phoenix engagements are long-term partnerships — campaign work typically spans 5-7 years. Revenue phases shift from high-touch planning to steady management.
         </p>
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
@@ -281,10 +280,10 @@ export default function SalesProcessPage() {
               flex: '1 1 200px', padding: '12px 14px', borderRadius: 8,
               background: `${p.color}08`, border: `1px solid ${p.color}20`,
             }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: p.color, marginBottom: 2 }}>{p.phase}</div>
-              <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--pi-text)', marginBottom: 2 }}>{p.label}</div>
-              <div style={{ fontSize: '1rem', fontWeight: 800, color: p.color, marginBottom: 4 }}>{p.revenue}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)' }}>{p.desc}</div>
+              <div className="pi-overline" style={{ color: p.color, textTransform: 'none', marginBottom: 2 }}>{p.phase}</div>
+              <div className="pi-label" style={{ marginBottom: 2 }}>{p.label}</div>
+              <div className="pi-section-title" style={{ color: p.color, marginBottom: 4 }}>{p.revenue}</div>
+              <div className="pi-caption">{p.desc}</div>
             </div>
           ))}
         </div>
@@ -299,9 +298,9 @@ export default function SalesProcessPage() {
           { label: 'Pipeline Value', value: '$298K', sub: '5 open deals' },
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{m.sub}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-label-muted" style={{ marginTop: 2 }}>{m.label}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.sub}</div>
           </div>
         ))}
       </div>

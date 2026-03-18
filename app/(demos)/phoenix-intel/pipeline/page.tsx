@@ -10,7 +10,7 @@ import type { PipelineStage } from '@/data/phoenix-intel/nonprofit-data';
 
 const STAGE_COLORS: Record<string, string> = {
   Inquiry: '#94a3b8',
-  Qualified: '#3b6bf5',
+  Qualified: '#2563eb',
   'Proposal Sent': '#6366f1',
   Negotiation: '#c026d3',
   Contract: '#c9942b',

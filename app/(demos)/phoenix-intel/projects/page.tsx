@@ -41,9 +41,9 @@ export default function ProjectsPage() {
   return (
     <PhoenixPage title="Projects" subtitle="Project management view — replacing Kelly's Gantt charts and Excel tracking" accentColor="#10b981">
       {/* Pain Point */}
-      <div style={{
+      <div className="pi-body-muted" style={{
         display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420', fontSize: '0.85rem', color: 'var(--pi-text-muted)',
+        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
       }}>
         <AlertTriangle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
         <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Project tracking previously relied on Kelly&apos;s Excel Gantt charts, proposal tracking grids, and linked workbooks. Status updates required manual copy-paste across 8-9 systems.</span>
@@ -59,8 +59,8 @@ export default function ProjectsPage() {
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
             <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
           </div>
         ))}
       </div>
@@ -75,12 +75,11 @@ export default function ProjectsPage() {
             <div key={proj.id} className="phoenix-card" style={{ borderLeft: `3px solid ${cfg.color}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                 <div>
-                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{proj.clientName}</h3>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{proj.title}</div>
+                  <h3 className="pi-label">{proj.clientName}</h3>
+                  <div className="pi-caption" style={{ marginTop: 2 }}>{proj.title}</div>
                 </div>
-                <span style={{
+                <span className="pi-badge" style={{
                   display: 'flex', alignItems: 'center', gap: 4,
-                  padding: '2px 8px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700,
                   background: cfg.bg, color: cfg.color,
                 }}>
                   <StatusIcon size={10} /> {cfg.label}
@@ -89,28 +88,28 @@ export default function ProjectsPage() {
 
               {/* Progress bar */}
               <div style={{ marginBottom: 8 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: 3 }}>
-                  <span style={{ color: 'var(--pi-text-muted)' }}>Progress</span>
+                <div className="pi-overline" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3, textTransform: 'none' }}>
+                  <span>Progress</span>
                   <span style={{ fontWeight: 700, color: 'var(--pi-text)' }}>{proj.progress}%</span>
                 </div>
-                <div style={{ height: 6, borderRadius: 3, background: 'var(--pi-border-faint)', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${proj.progress}%`, borderRadius: 3, background: cfg.color }} />
+                <div className="pi-bar-track" style={{ height: 6, borderRadius: 3 }}>
+                  <div className="pi-bar-fill" style={{ width: `${proj.progress}%`, borderRadius: 3, background: cfg.color }} />
                 </div>
               </div>
 
               {/* Budget burn */}
               <div style={{ marginBottom: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: 3 }}>
-                  <span style={{ color: 'var(--pi-text-muted)' }}>Budget Burn</span>
+                <div className="pi-overline" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3, textTransform: 'none' }}>
+                  <span>Budget Burn</span>
                   <span style={{ fontWeight: 700, color: 'var(--pi-text)' }}>{budgetPct.toFixed(0)}% (${(proj.spent / 1000).toFixed(1)}K / ${(proj.budget / 1000).toFixed(0)}K)</span>
                 </div>
-                <div style={{ height: 6, borderRadius: 3, background: 'var(--pi-border-faint)', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${budgetPct}%`, borderRadius: 3, background: budgetPct > 90 ? '#ef4444' : '#64748b' }} />
+                <div className="pi-bar-track" style={{ height: 6, borderRadius: 3 }}>
+                  <div className="pi-bar-fill" style={{ width: `${budgetPct}%`, borderRadius: 3, background: budgetPct > 90 ? '#ef4444' : '#64748b' }} />
                 </div>
               </div>
 
               {/* Details */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, fontSize: '0.75rem', color: 'var(--pi-text-muted)', paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
+              <div className="pi-overline" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)', textTransform: 'none' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><Users size={10} /> {proj.leadConsultant}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><DollarSign size={10} /> ${(proj.budget / 1000).toFixed(0)}K</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><FileText size={10} /> {proj.completedDeliverables}/{proj.deliverables} deliverables</span>

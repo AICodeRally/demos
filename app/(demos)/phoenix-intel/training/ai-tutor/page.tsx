@@ -87,11 +87,11 @@ export default function AITutorPage() {
           {messages.length === 0 && (
             <div style={{ textAlign: 'center', padding: 40 }}>
               <GraduationCap size={48} color="#7c3aed" style={{ margin: '0 auto 16px', opacity: 0.5 }} />
-              <p style={{ fontSize: '0.9rem', color: 'var(--pi-text-muted)', marginBottom: 16 }}>Welcome to the AI Tutor! Ask any question about fundraising and nonprofit advancement.</p>
+              <p className="pi-body-muted" style={{ marginBottom: 16 }}>Welcome to the AI Tutor! Ask any question about fundraising and nonprofit advancement.</p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
                 {suggestions.map(s => (
-                  <button key={s} onClick={() => setInput(s)} style={{
-                    padding: '8px 14px', borderRadius: 8, fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer',
+                  <button key={s} onClick={() => setInput(s)} className="pi-label" style={{
+                    padding: '8px 14px', borderRadius: 8, cursor: 'pointer',
                     border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text-secondary)',
                   }}>
                     {s}
@@ -103,11 +103,11 @@ export default function AITutorPage() {
 
           {messages.map((msg, i) => (
             <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-              <div style={{
+              <div className="pi-body" style={{
                 maxWidth: '85%', padding: '10px 14px', borderRadius: 12,
                 background: msg.role === 'user' ? '#7c3aed' : 'var(--pi-card-alt)',
                 color: msg.role === 'user' ? '#fff' : 'var(--pi-text)',
-                fontSize: '0.95rem', lineHeight: 1.7, whiteSpace: 'pre-wrap',
+                lineHeight: 1.7, whiteSpace: 'pre-wrap',
                 border: msg.role === 'assistant' ? '1px solid var(--pi-border)' : 'none',
               }}>
                 {msg.content.split('**').map((part, j) =>
@@ -134,7 +134,8 @@ export default function AITutorPage() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !isTyping && sendMessage()}
             placeholder="Ask about fundraising concepts..."
-            style={{ flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.95rem', outline: 'none' }}
+            className="pi-body"
+            style={{ flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', outline: 'none' }}
           />
           <button onClick={sendMessage} disabled={isTyping} style={{
             padding: '10px 16px', borderRadius: 8, border: 'none', background: isTyping ? 'var(--pi-border)' : '#7c3aed',

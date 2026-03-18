@@ -33,19 +33,19 @@ export default function CatalogPage() {
     <PhoenixPage title="Course Catalog" subtitle={`${COURSES.length} courses available`} accentColor="#7c3aed">
       {/* Filters */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: '0.875rem' }}>
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Category:</span>
-            <select value={filterCategory} onChange={e => setFilterCategory(e.target.value as CourseCategory | 'All')} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text)', fontSize: '0.875rem' }}>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Category:</span>
+            <select value={filterCategory} onChange={e => setFilterCategory(e.target.value as CourseCategory | 'All')} className="pi-body" style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text)' }}>
               <option value="All">All</option>
               {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Level:</span>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Level:</span>
             {(['All', ...levels] as const).map(l => (
-              <button key={l} onClick={() => setFilterLevel(l)} style={{
-                padding: '4px 10px', borderRadius: 6, fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', border: 'none', marginRight: 4,
+              <button key={l} onClick={() => setFilterLevel(l)} className="pi-body" style={{
+                padding: '4px 10px', borderRadius: 6, fontWeight: 600, cursor: 'pointer', border: 'none', marginRight: 4,
                 background: filterLevel === l ? (l === 'All' ? 'var(--pi-sapphire)' : LEVEL_COLORS[l]) : 'var(--pi-card)',
                 color: filterLevel === l ? '#fff' : 'var(--pi-text-muted)',
               }}>
@@ -54,10 +54,10 @@ export default function CatalogPage() {
             ))}
           </div>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Format:</span>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Format:</span>
             {(['All', ...formats] as const).map(f => (
-              <button key={f} onClick={() => setFilterFormat(f)} style={{
-                padding: '4px 10px', borderRadius: 6, fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', border: 'none', marginRight: 4,
+              <button key={f} onClick={() => setFilterFormat(f)} className="pi-body" style={{
+                padding: '4px 10px', borderRadius: 6, fontWeight: 600, cursor: 'pointer', border: 'none', marginRight: 4,
                 background: filterFormat === f ? (f === 'All' ? 'var(--pi-sapphire)' : FORMAT_COLORS[f]) : 'var(--pi-card)',
                 color: filterFormat === f ? '#fff' : 'var(--pi-text-muted)',
               }}>
@@ -75,20 +75,20 @@ export default function CatalogPage() {
             <div className="phoenix-card" style={{ cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                 <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{course.title}</div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginTop: 4 }}>{course.category} — {course.instructor}</div>
+                  <div className="pi-label">{course.title}</div>
+                  <div className="pi-body-muted" style={{ marginTop: 4 }}>{course.category} — {course.instructor}</div>
                 </div>
               </div>
-              <p style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)', marginBottom: 10, lineHeight: 1.5 }}>{course.description}</p>
+              <p className="pi-body-muted" style={{ marginBottom: 10, lineHeight: 1.5 }}>{course.description}</p>
               <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-                <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: '0.75rem', fontWeight: 700, background: `${LEVEL_COLORS[course.level]}20`, color: LEVEL_COLORS[course.level] }}>
+                <span className="pi-badge" style={{ background: `${LEVEL_COLORS[course.level]}20`, color: LEVEL_COLORS[course.level] }}>
                   {course.level}
                 </span>
-                <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: '0.75rem', fontWeight: 700, background: `${FORMAT_COLORS[course.format]}20`, color: FORMAT_COLORS[course.format] }}>
+                <span className="pi-badge" style={{ background: `${FORMAT_COLORS[course.format]}20`, color: FORMAT_COLORS[course.format] }}>
                   {course.format}
                 </span>
               </div>
-              <div style={{ display: 'flex', gap: 12, fontSize: '0.85rem', color: 'var(--pi-text-faint)', paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
+              <div className="pi-caption" style={{ display: 'flex', gap: 12, paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><Clock size={10} /> {course.duration}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><Users size={10} /> {course.enrollmentCount}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><Star size={10} /> {course.rating}</span>

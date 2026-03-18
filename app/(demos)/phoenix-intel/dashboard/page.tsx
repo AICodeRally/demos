@@ -54,9 +54,9 @@ export default function DashboardPage() {
                 <div style={{ background: `${kpi.color}18`, borderRadius: 8, padding: 6, display: 'flex' }}>
                   <Icon size={18} color={kpi.color} />
                 </div>
-                <span style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)', fontWeight: 600 }}>{kpi.label}</span>
+                <span className="pi-label-muted">{kpi.label}</span>
               </div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{kpi.value}</div>
+              <div className="pi-value">{kpi.value}</div>
             </div>
           );
         })}
@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
       {/* 6P Pillars */}
       <div className="mb-8">
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>6P Framework Health</h2>
+        <h2 className="pi-subheading" style={{ marginBottom: 12 }}>6P Framework Health</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {PILLARS.map((p, i) => (
             <PillarCard key={p.pillar} {...p} delay={i * 0.06} />
@@ -75,13 +75,13 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Pipeline Funnel */}
         <div className="phoenix-card">
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Deal Pipeline</h3>
+          <h3 className="pi-section-title">Deal Pipeline</h3>
           <PipelineFunnel stages={stages} />
         </div>
 
         {/* Performance Rings */}
         <div className="phoenix-card">
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Key Performance Indicators</h3>
+          <h3 className="pi-section-title">Key Performance Indicators</h3>
           <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 16 }}>
             <PerformanceRing value={ANNUAL_SUMMARY.profitMargin} label="Profit Margin" color="#10b981" />
             <PerformanceRing value={78} label="Completion Rate" color="#3b6bf5" />
@@ -92,7 +92,7 @@ export default function DashboardPage() {
 
       {/* Firm Health Indicators */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Firm Health Indicators</h3>
+        <h3 className="pi-section-title">Firm Health Indicators</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: 'BD Concentration', value: '70-75%', sub: 'Richard generates — target <50%', icon: AlertTriangle, color: '#ef4444', alert: true },
@@ -100,15 +100,14 @@ export default function DashboardPage() {
             { label: 'Repeat Business', value: '60%', sub: 'Strong retention', icon: UserCheck, color: '#10b981', alert: false },
             { label: 'Client Satisfaction', value: '98%', sub: 'Survey-based', icon: Star, color: '#3b6bf5', alert: false },
           ].map(m => (
-            <div key={m.label} style={{
-              padding: '12px 10px', borderRadius: 8, textAlign: 'center',
+            <div key={m.label} className="pi-metric-tile" style={{
               background: m.alert ? `${m.color}08` : 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
               border: `1px solid ${m.alert ? `${m.color}30` : 'var(--pi-border-faint)'}`,
             }}>
               <m.icon size={18} color={m.color} style={{ margin: '0 auto 6px' }} />
-              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: m.color }}>{m.value}</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{m.sub}</div>
+              <div className="pi-value-sm" style={{ color: m.color }}>{m.value}</div>
+              <div className="pi-overline" style={{ marginTop: 2 }}>{m.label}</div>
+              <div className="pi-caption" style={{ marginTop: 2 }}>{m.sub}</div>
             </div>
           ))}
         </div>

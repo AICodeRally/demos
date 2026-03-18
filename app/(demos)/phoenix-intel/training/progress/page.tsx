@@ -22,9 +22,9 @@ export default function ProgressPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: 'var(--pi-card)', borderRadius: 8, border: '1px solid var(--pi-border)', flex: 1, maxWidth: 400 }}>
           <Search size={14} color="var(--pi-text-muted)" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by learner or course..." style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--pi-text)' }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by learner or course..." className="pi-body" style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: 'var(--pi-text)' }} />
         </div>
-        <button onClick={() => setShowForm(!showForm)} style={{ padding: '8px 16px', borderRadius: 8, border: 'none', background: '#7c3aed', color: '#fff', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer' }}>
+        <button onClick={() => setShowForm(!showForm)} className="pi-label" style={{ padding: '8px 16px', borderRadius: 8, border: 'none', background: '#7c3aed', color: '#fff', cursor: 'pointer' }}>
           + Log Completion
         </button>
       </div>
@@ -32,24 +32,24 @@ export default function ProgressPage() {
       {/* Quick form */}
       {showForm && (
         <div className="phoenix-card" style={{ marginBottom: 20 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Log a Completion</h3>
+          <h3 className="pi-section-title">Log a Completion</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Learner Name</label>
-              <input placeholder="Full name" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.9rem' }} />
+              <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Learner Name</label>
+              <input placeholder="Full name" className="pi-body" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }} />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Course</label>
-              <select style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.9rem' }}>
+              <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Course</label>
+              <select className="pi-body" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }}>
                 {COURSES.map(c => <option key={c.id} value={c.id}>{c.title}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Score (%)</label>
-              <input type="number" placeholder="0-100" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.9rem' }} />
+              <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Score (%)</label>
+              <input type="number" placeholder="0-100" className="pi-body" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }} />
             </div>
           </div>
-          <button style={{ marginTop: 12, padding: '8px 20px', borderRadius: 8, border: 'none', background: '#10b981', color: '#fff', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer' }}>
+          <button className="pi-label" style={{ marginTop: 12, padding: '8px 20px', borderRadius: 8, border: 'none', background: '#10b981', color: '#fff', cursor: 'pointer' }}>
             Save Completion
           </button>
         </div>
@@ -58,24 +58,24 @@ export default function ProgressPage() {
       {/* Completions table */}
       <div className="phoenix-card">
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
                 {['Learner', 'Organization', 'Course', 'Score', 'Date', 'Certificate'].map(h => (
-                  <th key={h} style={{ textAlign: 'left', padding: '10px 8px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>{h}</th>
+                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '10px 8px' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(comp => (
                 <tr key={comp.id} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '10px 8px', fontWeight: 700, color: 'var(--pi-text)' }}>{comp.learnerName}</td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)' }}>{comp.learnerOrg}</td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)' }}>{comp.courseTitle}</td>
+                  <td className="pi-label" style={{ padding: '10px 8px' }}>{comp.learnerName}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{comp.learnerOrg}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{comp.courseTitle}</td>
                   <td style={{ padding: '10px 8px' }}>
                     <span style={{ fontWeight: 700, color: comp.score >= 90 ? '#10b981' : comp.score >= 80 ? '#c9942b' : '#ef4444' }}>{comp.score}%</span>
                   </td>
-                  <td style={{ padding: '10px 8px', color: 'var(--pi-text-faint)' }}>{comp.completedDate}</td>
+                  <td className="pi-caption" style={{ padding: '10px 8px' }}>{comp.completedDate}</td>
                   <td style={{ padding: '10px 8px' }}>
                     {comp.certificateIssued && <CheckCircle size={16} color="#10b981" />}
                   </td>

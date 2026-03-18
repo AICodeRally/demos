@@ -49,28 +49,28 @@ export default function AdminPage() {
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
           <Users size={18} color="var(--pi-sapphire)" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Team Members</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Team Members</h3>
         </div>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
                 {['Name', 'Title', 'Specialty', 'Utilization', 'Engagements', 'Email'].map(h => (
-                  <th key={h} style={{ textAlign: 'left', padding: '8px 6px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>{h}</th>
+                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 6px' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {CONSULTANTS.map(c => (
                 <tr key={c.id} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '10px 6px', fontWeight: 700, color: 'var(--pi-text)' }}>{c.name}</td>
-                  <td style={{ padding: '10px 6px', color: 'var(--pi-text-secondary)' }}>{c.title}</td>
-                  <td style={{ padding: '10px 6px', color: 'var(--pi-text-muted)' }}>{c.specialty}</td>
+                  <td className="pi-label" style={{ padding: '10px 6px' }}>{c.name}</td>
+                  <td className="pi-body" style={{ padding: '10px 6px', color: 'var(--pi-text-secondary)' }}>{c.title}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 6px' }}>{c.specialty}</td>
                   <td style={{ padding: '10px 6px' }}>
-                    <span style={{ fontWeight: 700, color: c.utilization > 90 ? '#ef4444' : c.utilization > 80 ? '#c9942b' : '#10b981' }}>{c.utilization}%</span>
+                    <span className="pi-label" style={{ color: c.utilization > 90 ? '#ef4444' : c.utilization > 80 ? '#c9942b' : '#10b981' }}>{c.utilization}%</span>
                   </td>
-                  <td style={{ padding: '10px 6px', color: 'var(--pi-text)' }}>{c.activeEngagements}</td>
-                  <td style={{ padding: '10px 6px', color: 'var(--pi-text-faint)' }}>{c.email}</td>
+                  <td className="pi-body" style={{ padding: '10px 6px' }}>{c.activeEngagements}</td>
+                  <td className="pi-caption" style={{ padding: '10px 6px' }}>{c.email}</td>
                 </tr>
               ))}
             </tbody>
@@ -82,7 +82,7 @@ export default function AdminPage() {
       <div className="mb-8">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
           <Link2 size={18} color="var(--pi-sapphire)" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Connectors</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Connectors</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {CONNECTORS.map(conn => {
@@ -94,16 +94,16 @@ export default function AdminPage() {
                   <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                     <span style={{ fontSize: '1.5rem' }}>{conn.icon}</span>
                     <div>
-                      <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{conn.name}</div>
-                      <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{conn.data}</div>
+                      <div className="pi-label">{conn.name}</div>
+                      <div className="pi-body-muted" style={{ marginTop: 2 }}>{conn.data}</div>
                     </div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)' }}>Last sync: {conn.lastSync}</span>
-                  <span style={{
-                    display: 'flex', alignItems: 'center', gap: 4, padding: '3px 10px', borderRadius: 6,
-                    fontSize: '0.8rem', fontWeight: 700, background: config.bg, color: config.color,
+                  <span className="pi-caption">Last sync: {conn.lastSync}</span>
+                  <span className="pi-badge" style={{
+                    display: 'flex', alignItems: 'center', gap: 4,
+                    background: config.bg, color: config.color,
                   }}>
                     <StatusIcon size={12} /> {config.label}
                   </span>
@@ -118,7 +118,7 @@ export default function AdminPage() {
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
           <ArrowRight size={18} color="#3b6bf5" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Active Data Migrations</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Active Data Migrations</h3>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {DATA_MIGRATIONS.map((m, i) => (
@@ -129,21 +129,20 @@ export default function AdminPage() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{m.source}</span>
+                  <span className="pi-label">{m.source}</span>
                   <ArrowRight size={14} color="var(--pi-text-faint)" />
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#3b6bf5' }}>{m.target}</span>
+                  <span className="pi-label" style={{ color: '#3b6bf5' }}>{m.target}</span>
                 </div>
-                <span style={{
-                  padding: '2px 8px', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700,
+                <span className="pi-badge" style={{
                   background: m.progress > 25 ? '#3b6bf520' : '#c9942b20',
                   color: m.progress > 25 ? '#3b6bf5' : '#c9942b',
                 }}>{m.status}</span>
               </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginBottom: 6 }}>{m.records}</div>
-              <div style={{ height: 6, background: 'var(--pi-border-faint)', borderRadius: 3, marginBottom: 6 }}>
-                <div style={{ height: '100%', width: `${m.progress}%`, background: '#3b6bf5', borderRadius: 3, transition: 'width 0.8s' }} />
+              <div className="pi-caption" style={{ marginBottom: 6 }}>{m.records}</div>
+              <div className="pi-bar-track" style={{ height: 6, borderRadius: 3, marginBottom: 6 }}>
+                <div className="pi-bar-fill" style={{ width: `${m.progress}%`, background: '#3b6bf5', borderRadius: 3 }} />
               </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)' }}>{m.note}</div>
+              <div className="pi-caption">{m.note}</div>
             </div>
           ))}
         </div>
@@ -153,18 +152,18 @@ export default function AdminPage() {
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <Fingerprint size={18} color="#7c3aed" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>AI Contact Deduplication</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>AI Contact Deduplication</h3>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+        <p className="pi-body-muted" style={{ marginBottom: 12 }}>
           Machine learning model scores potential duplicates across Knack, Constant Contact, and Outlook contacts.
           Human review required for matches below 90% confidence.
         </p>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
                 {['Record A', 'Record B', 'Source', 'Confidence', 'Action'].map(h => (
-                  <th key={h} style={{ textAlign: 'left', padding: '8px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>{h}</th>
+                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -177,18 +176,16 @@ export default function AdminPage() {
                 { a: 'Jennifer Nguyen', b: 'Jenny Nguyen-Park', source: 'CC ↔ CC', confidence: 58, action: 'Review' },
               ].map((row, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '8px', fontWeight: 600, color: 'var(--pi-text)' }}>{row.a}</td>
-                  <td style={{ padding: '8px', color: 'var(--pi-text-secondary)' }}>{row.b}</td>
-                  <td style={{ padding: '8px', color: 'var(--pi-text-muted)', fontSize: '0.8rem' }}>{row.source}</td>
+                  <td className="pi-label" style={{ padding: '8px', fontWeight: 600 }}>{row.a}</td>
+                  <td className="pi-body" style={{ padding: '8px', color: 'var(--pi-text-secondary)' }}>{row.b}</td>
+                  <td className="pi-caption" style={{ padding: '8px' }}>{row.source}</td>
                   <td style={{ padding: '8px' }}>
-                    <span style={{
-                      fontWeight: 700,
+                    <span className="pi-label" style={{
                       color: row.confidence >= 90 ? '#10b981' : row.confidence >= 70 ? '#c9942b' : '#ef4444',
                     }}>{row.confidence}%</span>
                   </td>
                   <td style={{ padding: '8px' }}>
-                    <span style={{
-                      padding: '2px 8px', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700,
+                    <span className="pi-badge" style={{
                       background: row.action === 'Auto-merge' ? '#10b98120' : '#c9942b20',
                       color: row.action === 'Auto-merge' ? '#10b981' : '#c9942b',
                     }}>{row.action}</span>
@@ -198,7 +195,7 @@ export default function AdminPage() {
             </tbody>
           </table>
         </div>
-        <div style={{ display: 'flex', gap: 16, marginTop: 12, fontSize: '0.85rem', color: 'var(--pi-text-faint)', borderTop: '1px solid var(--pi-border-faint)', paddingTop: 10 }}>
+        <div className="pi-caption" style={{ display: 'flex', gap: 16, marginTop: 12, borderTop: '1px solid var(--pi-border-faint)', paddingTop: 10 }}>
           <span><strong style={{ color: 'var(--pi-text)' }}>127</strong> potential dupes flagged</span>
           <span><strong style={{ color: '#10b981' }}>84</strong> auto-merged (&gt;90%)</span>
           <span><strong style={{ color: '#c9942b' }}>43</strong> awaiting review</span>
@@ -209,9 +206,9 @@ export default function AdminPage() {
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <Lock size={18} color="#ef4444" />
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>Data Compliance & Privacy</h3>
+          <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Data Compliance & Privacy</h3>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
+        <p className="pi-body-muted" style={{ marginBottom: 12 }}>
           Phoenix handles sensitive donor data across education, healthcare, and faith-based nonprofits. AI capabilities require private LLM deployment — no client data may traverse public APIs.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ marginBottom: 16 }}>
@@ -225,14 +222,13 @@ export default function AdminPage() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                   <FIcon size={14} color={f.status === 'target' ? '#ef4444' : '#c9942b'} />
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{f.name}</span>
-                  <span style={{
-                    padding: '1px 6px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700,
+                  <span className="pi-label">{f.name}</span>
+                  <span className="pi-badge" style={{
                     background: f.status === 'target' ? '#ef444420' : '#c9942b20',
                     color: f.status === 'target' ? '#ef4444' : '#c9942b',
                   }}>{f.status === 'target' ? 'Target' : 'Awareness'}</span>
                 </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>{f.desc}</div>
+                <div className="pi-caption">{f.desc}</div>
               </div>
             );
           })}
@@ -243,9 +239,9 @@ export default function AdminPage() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
             <Shield size={14} color="#7c3aed" />
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#7c3aed' }}>Private LLM Requirement</span>
+            <span className="pi-label" style={{ color: '#7c3aed' }}>Private LLM Requirement</span>
           </div>
-          <p style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', margin: 0 }}>
+          <p className="pi-caption" style={{ margin: 0 }}>
             All AI features (advisor, dedup, auto-tagging) run on a private, SOC 2-compliant LLM deployment. No donor PII, engagement data, or financial information is sent to public AI APIs. Model hosted within Phoenix&apos;s Azure tenant with RBAC access controls.
           </p>
         </div>

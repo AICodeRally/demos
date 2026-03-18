@@ -56,9 +56,9 @@ export default function ReportsPage() {
       {/* Manual Process Pain Point */}
       <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #ef4444' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-          <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ef4444' }}>Current State: Manual Report Production</span>
+          <span className="pi-label" style={{ color: '#ef4444' }}>Current State: Manual Report Production</span>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 8 }}>
+        <p className="pi-body-muted" style={{ marginBottom: 8 }}>
           Kelly (Director of Client Services) maintains proposal tracking grids, Gantt charts, client total contracts, and Strategic Plan Metrics — all in Excel with manual copy-paste between linked workbooks. Cassandra (Business Manager) compiles P&amp;L and balance sheets in QuickBooks, then manually formats transaction lists by client/state in Excel for CPA upload. The &ldquo;game of telephone&rdquo; effect spans 8-9 tracking locations.
         </p>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
@@ -70,15 +70,13 @@ export default function ReportsPage() {
             'Projections Comparison (Excel)',
             'Satisfaction Surveys (Formsite)',
           ].map(r => (
-            <span key={r} style={{
-              padding: '3px 8px', borderRadius: 6, fontSize: '0.7rem', fontWeight: 700,
+            <span key={r} className="pi-badge" style={{
               background: '#ef444420', color: '#ef4444',
             }}>{r}</span>
           ))}
         </div>
-        <div style={{
+        <div className="pi-caption" style={{
           padding: '8px 12px', borderRadius: 6, background: '#7c3aed08', border: '1px solid #7c3aed20',
-          fontSize: '0.8rem', color: 'var(--pi-text-muted)',
         }}>
           <strong style={{ color: '#7c3aed' }}>Items of the Day (IoTD):</strong> Natalie (Executive Coordinator) currently sends a daily manual email to the President outlining meetings, tasks, project updates, travel, presentations, and action items. The AI-generated IoTD replaces this with real-time data.
         </div>
@@ -91,23 +89,23 @@ export default function ReportsPage() {
               <div style={{ display: 'flex', gap: 10 }}>
                 <FileText size={18} color="var(--pi-sapphire)" />
                 <div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{report.name}</div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{report.description}</div>
+                  <div className="pi-label">{report.name}</div>
+                  <div className="pi-body-muted" style={{ marginTop: 2 }}>{report.description}</div>
                 </div>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
-              <div style={{ display: 'flex', gap: 12, fontSize: '0.85rem', color: 'var(--pi-text-faint)' }}>
+              <div className="pi-caption" style={{ display: 'flex', gap: 12 }}>
                 <span><Clock size={10} style={{ display: 'inline', verticalAlign: 'middle' }} /> {report.frequency}</span>
                 <span>Last: {report.lastGenerated}</span>
                 <span>{report.views} views</span>
               </div>
               <button
                 onClick={() => handleGenerate(report.id)}
+                className="phoenix-btn"
                 style={{
-                  padding: '6px 12px', borderRadius: 6, border: 'none', background: 'var(--pi-sapphire)',
-                  color: '#fff', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 4,
+                  padding: '6px 12px', background: 'var(--pi-sapphire)',
+                  color: '#fff', display: 'flex', alignItems: 'center', gap: 4,
                 }}
               >
                 <Sparkles size={12} /> Generate
@@ -117,18 +115,17 @@ export default function ReportsPage() {
         ))}
       </div>
 
-      {/* Generated report preview */}
       {generating && (
         <div className="phoenix-card" style={{ textAlign: 'center', padding: 40 }}>
           <Sparkles size={32} color="var(--pi-sapphire)" style={{ margin: '0 auto 12px', animation: 'pi-fade-in 0.6s ease-in-out infinite alternate' }} />
-          <p style={{ fontSize: '0.9rem', color: 'var(--pi-text-muted)' }}>Generating report with AI...</p>
+          <p className="pi-body-muted">Generating report with AI...</p>
         </div>
       )}
 
       {selectedReport && !generating && (
         <div className="phoenix-card">
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Generated Report Preview</h3>
-          <div style={{ whiteSpace: 'pre-wrap', fontSize: '0.95rem', color: 'var(--pi-text-secondary)', lineHeight: 1.7 }}>
+          <h3 className="pi-section-title">Generated Report Preview</h3>
+          <div className="pi-body" style={{ whiteSpace: 'pre-wrap', color: 'var(--pi-text-secondary)', lineHeight: 1.7 }}>
             {SAMPLE_IOTD.split('**').map((part, i) => (
               i % 2 === 0
                 ? <span key={i}>{part}</span>
