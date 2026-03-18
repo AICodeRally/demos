@@ -14,18 +14,20 @@ interface Props {
   slug: string;
 }
 
-export function NavSection({ section, collapsible = true, defaultExpanded = true, slug }: Props) {
-  const [expanded, setExpanded] = useState(defaultExpanded);
+export function NavSection({ section, collapsible = true, defaultExpanded, slug }: Props) {
   const pathname = usePathname();
+  const hasActiveItem = section.items.some(item => pathname === item.href || pathname.startsWith(item.href + '/'));
+  const [userToggled, setUserToggled] = useState<boolean | null>(null);
+  const expanded = userToggled ?? (defaultExpanded !== undefined ? defaultExpanded : hasActiveItem);
 
   return (
     <div className="mb-1">
       <button
-        onClick={() => collapsible && setExpanded(!expanded)}
+        onClick={() => collapsible && setUserToggled(expanded ? false : true)}
         className="flex w-full items-center justify-between px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--comp-nav-section-label)]"
         style={{ cursor: collapsible ? 'pointer' : 'default' }}
       >
-        <span className="text-white/70">
+        <span className="truncate text-white/70">
           {section.section}
         </span>
         {collapsible && (

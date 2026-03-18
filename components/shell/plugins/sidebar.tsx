@@ -23,7 +23,6 @@ function SidebarLayout({ config, children, parts }: {
           key={section.section}
           section={section}
           collapsible
-          defaultExpanded
           slug={config.slug}
         />
       ))}
