@@ -28,6 +28,7 @@ export default defineDemo({
         { label: 'Pipeline', href: '/phoenix-intel/pipeline', icon: 'GitBranch' },
         { label: 'Sales Process', href: '/phoenix-intel/sales-process', icon: 'ListChecks' },
         { label: 'Scoping / CPQ', href: '/phoenix-intel/scoping', icon: 'SlidersHorizontal' },
+        { label: 'Rate Card', href: '/phoenix-intel/rate-card', icon: 'CreditCard' },
         { label: 'Proposals', href: '/phoenix-intel/proposals', icon: 'FileText' },
       ],
     },
@@ -36,6 +37,7 @@ export default defineDemo({
       color: '#d4a030',
       items: [
         { label: 'Engagements', href: '/phoenix-intel/engagements', icon: 'Briefcase' },
+        { label: 'Deliverables', href: '/phoenix-intel/deliverables', icon: 'ListChecks' },
         { label: 'Clients', href: '/phoenix-intel/clients', icon: 'Building2' },
         { label: 'Reports', href: '/phoenix-intel/reports', icon: 'BarChart3' },
       ],
@@ -54,6 +56,8 @@ export default defineDemo({
       color: '#f59e0b',
       items: [
         { label: 'Overview', href: '/phoenix-intel/operations', icon: 'Settings' },
+        { label: 'Utilization', href: '/phoenix-intel/operations/utilization', icon: 'Activity' },
+        { label: 'Timesheets', href: '/phoenix-intel/operations/timesheets', icon: 'Timer' },
         { label: 'Time & Expense', href: '/phoenix-intel/operations/time-expense', icon: 'Clock' },
         { label: 'HR & Compliance', href: '/phoenix-intel/operations/hr', icon: 'UserCog' },
         { label: 'Finance', href: '/phoenix-intel/finance', icon: 'DollarSign' },

@@ -82,6 +82,18 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
   'admin': {
     text: '4 active migrations: Knack→DB (35%), Dropbox→SharePoint, Intervals→Telemetry, Zoom→Teams ($7,500/yr savings). AI dedup flagged 127 dupes (84 auto-merged). New connectors: Alliance Bank (daily balance), ADP (payroll), Formsite (surveys). Timmesse\'s tech recommendation: Monday.com for project tracking, DocuSign for contracts, LastPass for president credentials. Physical bank deposits still happening — remote deposit recommended.',
   },
+  'operations/utilization': {
+    text: 'Jennifer Blake at 92% utilization — approaching burnout threshold with 4 active engagements and Mountain View Phase 2 incoming. Recommend shifting 1 engagement to Sarah Kim (85%). Thomas Park (65%) and Evelyn Torres (60%) have significant capacity. Team average at 77% — 3 points below 80% target. Hiring or redistributing before Q2 pipeline converts is critical.',
+  },
+  'operations/timesheets': {
+    text: 'Passive telemetry captured 82% of this week\'s hours automatically — email, document, and meeting time auto-tagged to engagements via M365. Only 18% required manual entry (site visits, phone calls). Intervals is fully deprecated. Billable utilization at 74% — 6 points below target. Auto-tagging accuracy hit 94% this week, up from 89% at launch.',
+  },
+  'deliverables': {
+    text: 'Heritage Arts assessment (88%) and Faith & Light stewardship (82%) are approaching final deliverable milestones — transition to renewal conversations within 30 days. Mountain View $25M campaign has 8 of 15 deliverables complete at 55% progress — on track. Key risk: scope-to-deliverable mapping was previously manual across 8-9 systems.',
+  },
+  'rate-card': {
+    text: 'Advisory services (assessments, feasibility, strategic planning) have highest margin at 55-65%. Training has highest scalability potential — 45% margin with digital delivery could add $120K in Year 1. Operational retainers (campaign management at $8,500/mo) provide predictable recurring revenue. Consider annual rate review tied to CPI + 2%.',
+  },
   'style-guide': {
     text: 'The Sapphire & Gold design system uses Space Grotesk for modern readability. Primary sapphire (#3b6bf5) for trust and intelligence, gold accent (#c9942b) for warmth and premium positioning.',
     label: 'Design Notes',
