@@ -2,6 +2,9 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { SERVICE_RATES } from '@/data/phoenix-intel/nonprofit-data';
 import { DollarSign, TrendingUp, FileText, Tag } from 'lucide-react';
@@ -19,65 +22,43 @@ export default function RateCardPage() {
   return (
     <PhoenixPage title="Rate Card" subtitle="Service line pricing, rate types, and margin analysis" accentColor="#c9942b">
       {/* Billing Context */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 20,
-        borderRadius: 8, background: '#c9942b08', border: '1px solid #c9942b20',
-      }}>
-        <DollarSign size={14} color="#c9942b" style={{ flexShrink: 0 }} />
-        <span>All rates are <strong style={{ color: 'var(--pi-text)' }}>pre-negotiation list prices</strong>. Actual engagement pricing configured in Scoping / CPQ. Hourly rates billed monthly. Fixed fees divided over engagement duration.</span>
-      </div>
+      <Alert variant="warning" icon={DollarSign}>
+        All rates are <strong style={{ color: 'var(--pi-text)' }}>pre-negotiation list prices</strong>. Actual engagement pricing configured in Scoping / CPQ. Hourly rates billed monthly. Fixed fees divided over engagement duration.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Services', value: String(SERVICE_RATES.length), icon: FileText, color: '#3b6bf5' },
-          { label: 'Advisory', value: String(SERVICE_RATES.filter(r => r.category === 'Advisory').length), icon: Tag, color: '#3b6bf5' },
-          { label: 'Operational', value: String(SERVICE_RATES.filter(r => r.category === 'Operational').length), icon: Tag, color: '#10b981' },
-          { label: 'Training', value: String(SERVICE_RATES.filter(r => r.category === 'Training').length), icon: Tag, color: '#7c3aed' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Rate card summary">
+        <MetricCard label="Total Services" value={String(SERVICE_RATES.length)} icon={FileText} color="#3b6bf5" />
+        <MetricCard label="Advisory" value={String(SERVICE_RATES.filter(r => r.category === 'Advisory').length)} icon={Tag} color="#3b6bf5" />
+        <MetricCard label="Operational" value={String(SERVICE_RATES.filter(r => r.category === 'Operational').length)} icon={Tag} color="#10b981" />
+        <MetricCard label="Training" value={String(SERVICE_RATES.filter(r => r.category === 'Training').length)} icon={Tag} color="#7c3aed" />
       </div>
 
       {/* Rate Cards by Category */}
       {categories.map(cat => (
-        <div key={cat} className="phoenix-card" style={{ marginBottom: 20 }}>
+        <div key={cat} className="phoenix-card" style={{ marginBottom: 20 }} role="region" aria-label={`${cat} services`}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <div style={{ width: 4, height: 20, borderRadius: 2, background: CATEGORY_COLORS[cat] }} />
+            <div style={{ width: 4, height: 20, borderRadius: 2, background: CATEGORY_COLORS[cat] }} aria-hidden="true" />
             <h3 className="pi-section-title" style={{ marginBottom: 0 }}>{cat} Services</h3>
           </div>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                  {['Service', 'Rate Type', 'Price', 'Description'].map(h => (
-                    <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {SERVICE_RATES.filter(r => r.category === cat).map(r => (
-                  <tr key={r.service} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                    <td className="pi-label" style={{ padding: '10px 8px' }}>{r.service}</td>
-                    <td style={{ padding: '10px 8px' }}>
-                      <span className="pi-badge" style={{
-                        background: `${CATEGORY_COLORS[cat]}15`, color: CATEGORY_COLORS[cat],
-                        textTransform: 'capitalize',
-                      }}>{r.rateType}</span>
-                    </td>
-                    <td style={{ padding: '10px 8px', fontWeight: 800, color: 'var(--pi-text)' }}>
-                      ${r.rate.toLocaleString()}{r.rateType === 'hourly' ? '/hr' : r.rateType === 'retainer' ? '/mo' : ''}
-                    </td>
-                    <td className="pi-caption" style={{ padding: '10px 8px' }}>{r.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            data={SERVICE_RATES.filter(r => r.category === cat)}
+            keyFn={(r) => r.service}
+            columns={[
+              { key: 'service', header: 'Service', render: (r) => <span className="pi-label">{r.service}</span> },
+              { key: 'rateType', header: 'Rate Type', render: (r) => (
+                <span className="pi-badge" style={{ background: `${CATEGORY_COLORS[cat]}15`, color: CATEGORY_COLORS[cat], textTransform: 'capitalize' }}>
+                  {r.rateType}
+                </span>
+              )},
+              { key: 'price', header: 'Price', render: (r) => (
+                <span className="pi-label" style={{ fontWeight: 800 }}>
+                  ${r.rate.toLocaleString()}{r.rateType === 'hourly' ? '/hr' : r.rateType === 'retainer' ? '/mo' : ''}
+                </span>
+              )},
+              { key: 'description', header: 'Description', hideSm: true, render: (r) => <span className="pi-caption">{r.description}</span> },
+            ]}
+          />
         </div>
       ))}
 

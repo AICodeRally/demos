@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { SERVICE_RATES } from '@/data/phoenix-intel/nonprofit-data';
 import type { ServiceRate } from '@/data/phoenix-intel/nonprofit-data';
@@ -86,46 +88,32 @@ export default function ProposalsPage() {
             </div>
           ))}
         </div>
-        <div className="pi-caption" style={{
-          marginTop: 12, padding: '8px 12px', borderRadius: 6,
-          background: '#ef444408', border: '1px solid #ef444420',
-        }}>
+        <Alert variant="danger">
           <strong style={{ color: '#ef4444' }}>Pain point:</strong> Kelly (Director of Client Services) currently tracks RFP deadlines manually and monitors Arizona Procurement Portal. State registrations managed through InCorp — foreign entity and fundraising counsel filings required per state. Natalie (Executive Coordinator) now handles initial RFP vetting and inquiry screening.
-        </div>
+        </Alert>
       </div>
 
       {/* Active Proposals */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card" style={{ marginBottom: 24 }} role="region" aria-label="Active proposals">
         <h3 className="pi-section-title">Active Proposals</h3>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Client', 'Title', 'Value', 'Status', 'Template', 'Owner', 'Days'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {ACTIVE_PROPOSALS.map((p, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td className="pi-label" style={{ padding: '10px 8px' }}>{p.client}</td>
-                  <td className="pi-body" style={{ padding: '10px 8px', color: 'var(--pi-text-secondary)' }}>{p.title}</td>
-                  <td className="pi-label" style={{ padding: '10px 8px' }}>${(p.value / 1000).toFixed(0)}K</td>
-                  <td style={{ padding: '10px 8px' }}>
-                    <span className="pi-badge" style={{
-                      background: p.status === 'Awaiting Response' ? '#c9942b20' : p.status === 'Discovery' ? '#2563eb20' : '#c026d320',
-                      color: p.status === 'Awaiting Response' ? '#c9942b' : p.status === 'Discovery' ? '#2563eb' : '#c026d3',
-                    }}>{p.status}</span>
-                  </td>
-                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{p.template}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{p.owner}</td>
-                  <td className="pi-label" style={{ padding: '10px 8px', color: p.daysOpen > 10 ? '#ef4444' : 'var(--pi-text-faint)' }}>{p.daysOpen}d</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={ACTIVE_PROPOSALS}
+          keyFn={(_, i) => String(i)}
+          columns={[
+            { key: 'client', header: 'Client', render: (p) => <span className="pi-label">{p.client}</span> },
+            { key: 'title', header: 'Title', hideSm: true, render: (p) => <span className="pi-body-muted">{p.title}</span> },
+            { key: 'value', header: 'Value', render: (p) => <span className="pi-label">${(p.value / 1000).toFixed(0)}K</span> },
+            { key: 'status', header: 'Status', render: (p) => (
+              <span className="pi-badge" style={{
+                background: p.status === 'Awaiting Response' ? '#c9942b20' : p.status === 'Discovery' ? '#2563eb20' : '#c026d320',
+                color: p.status === 'Awaiting Response' ? '#c9942b' : p.status === 'Discovery' ? '#2563eb' : '#c026d3',
+              }}>{p.status}</span>
+            )},
+            { key: 'template', header: 'Template', hideSm: true, render: (p) => <span className="pi-body-muted">{p.template}</span> },
+            { key: 'owner', header: 'Owner', hideSm: true, render: (p) => <span className="pi-body-muted">{p.owner}</span> },
+            { key: 'days', header: 'Days', render: (p) => <span className="pi-label" style={{ color: p.daysOpen > 10 ? '#ef4444' : 'var(--pi-text-faint)' }}>{p.daysOpen}d</span> },
+          ]}
+        />
       </div>
 
       {/* Proposal Templates */}
