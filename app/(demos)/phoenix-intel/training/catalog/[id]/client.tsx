@@ -12,7 +12,7 @@ export default function CourseDetailClient({ params }: { params: Promise<{ id: s
 
   return (
     <PhoenixPage title={course.title} subtitle={`${course.category} — ${course.instructor}`} accentColor="#7c3aed">
-      <Link href="/phoenix-intel/training/catalog" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.9rem', color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
+      <Link href="/phoenix-intel/training/catalog" className="pi-body" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
         <ArrowLeft size={14} /> Back to Catalog
       </Link>
 
@@ -29,9 +29,9 @@ export default function CourseDetailClient({ params }: { params: Promise<{ id: s
             <div key={card.label} className="phoenix-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
                 <div style={{ background: `${card.color}18`, borderRadius: 6, padding: 4, display: 'flex' }}><Icon size={14} color={card.color} /></div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>{card.label}</span>
+                <span className="pi-overline">{card.label}</span>
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)' }}>{card.value}</div>
+              <div className="pi-label">{card.value}</div>
             </div>
           );
         })}
@@ -39,30 +39,30 @@ export default function CourseDetailClient({ params }: { params: Promise<{ id: s
 
       {/* Description */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>About This Course</h3>
-        <p style={{ fontSize: '0.95rem', color: 'var(--pi-text-secondary)', lineHeight: 1.6 }}>{course.description}</p>
+        <h3 className="pi-section-title">About This Course</h3>
+        <p className="pi-body" style={{ lineHeight: 1.6, color: 'var(--pi-text-secondary)' }}>{course.description}</p>
         <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-          <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.8rem', fontWeight: 700, background: '#7c3aed20', color: '#7c3aed' }}>{course.level}</span>
-          <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.8rem', fontWeight: 700, background: '#c9942b20', color: '#c9942b' }}>{course.format}</span>
-          <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.8rem', fontWeight: 700, background: '#3b6bf520', color: '#3b6bf5' }}>{course.category}</span>
+          <span className="pi-badge" style={{ background: '#7c3aed20', color: '#7c3aed' }}>{course.level}</span>
+          <span className="pi-badge" style={{ background: '#c9942b20', color: '#c9942b' }}>{course.format}</span>
+          <span className="pi-badge" style={{ background: '#3b6bf520', color: '#3b6bf5' }}>{course.category}</span>
         </div>
       </div>
 
       {/* Modules */}
       <div className="phoenix-card">
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Course Modules</h3>
+        <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Course Modules</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {course.modules.map((mod, mi) => (
             <div key={mi} style={{ borderLeft: '3px solid #7c3aed', paddingLeft: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>
+                <div className="pi-label">
                   Module {mi + 1}: {mod.title}
                 </div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--pi-text-faint)' }}>{mod.duration}</span>
+                <span className="pi-body-muted">{mod.duration}</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {mod.lessons.map((lesson, li) => (
-                  <div key={li} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.9rem', color: 'var(--pi-text-secondary)' }}>
+                  <div key={li} className="pi-body" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--pi-text-secondary)' }}>
                     <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--pi-border)', flexShrink: 0 }} />
                     {lesson}
                   </div>

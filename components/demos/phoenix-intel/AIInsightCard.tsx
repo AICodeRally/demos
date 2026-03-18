@@ -32,19 +32,10 @@ export function AIInsightCard({ children, label = 'AI Insight', action, compact 
       >
         <Sparkles size={compact ? 16 : 20} color="#7c3aed" style={{ flexShrink: 0, marginTop: 2 }} />
         <div style={{ flex: 1 }}>
-          <div
-            style={{
-              fontSize: '0.85rem',
-              fontWeight: 700,
-              color: '#7c3aed',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              marginBottom: 4,
-            }}
-          >
+          <div className="pi-overline" style={{ color: '#7c3aed', marginBottom: 4 }}>
             {label}
           </div>
-          <div style={{ fontSize: compact ? '0.9rem' : '0.875rem', color: 'var(--pi-text)' }}>
+          <div className="pi-body">
             {children}
           </div>
         </div>

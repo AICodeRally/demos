@@ -103,7 +103,7 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
 
   return (
     <PhoenixPage title={eng.clientName} subtitle={eng.title} accentColor="#c9942b">
-      <Link href="/phoenix-intel/engagements" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.9rem', color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
+      <Link href="/phoenix-intel/engagements" className="pi-body" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
         <ArrowLeft size={14} /> Back to Engagements
       </Link>
 
@@ -120,9 +120,9 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
             <div key={card.label} className="phoenix-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                 <div style={{ background: `${card.color}18`, borderRadius: 6, padding: 4, display: 'flex' }}><Icon size={14} color={card.color} /></div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>{card.label}</span>
+                <span className="pi-overline">{card.label}</span>
               </div>
-              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{card.value}</div>
+              <div className="pi-label">{card.value}</div>
             </div>
           );
         })}
@@ -130,23 +130,23 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
 
       {/* Progress & Budget */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Progress & Budget</h3>
+        <h3 className="pi-section-title">Progress & Budget</h3>
         <div style={{ marginBottom: 16 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: 4 }}>
-            <span style={{ color: 'var(--pi-text-muted)' }}>Overall Progress</span>
-            <span style={{ fontWeight: 700, color: 'var(--pi-text)' }}>{eng.progress}%</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+            <span className="pi-body-muted">Overall Progress</span>
+            <span className="pi-label">{eng.progress}%</span>
           </div>
-          <div style={{ height: 10, background: 'var(--pi-border-faint)', borderRadius: 5 }}>
-            <div style={{ height: '100%', width: `${eng.progress}%`, background: '#3b6bf5', borderRadius: 5 }} />
+          <div className="pi-bar-track" style={{ height: 10, borderRadius: 5 }}>
+            <div className="pi-bar-fill" style={{ width: `${eng.progress}%`, background: '#3b6bf5', borderRadius: 5 }} />
           </div>
         </div>
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: 4 }}>
-            <span style={{ color: 'var(--pi-text-muted)' }}>Budget Burn: ${(eng.spent / 1000).toFixed(1)}K of ${(eng.budget / 1000).toFixed(0)}K</span>
-            <span style={{ fontWeight: 700, color: budgetPct > 90 ? '#ef4444' : '#10b981' }}>{budgetPct.toFixed(0)}%</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+            <span className="pi-body-muted">Budget Burn: ${(eng.spent / 1000).toFixed(1)}K of ${(eng.budget / 1000).toFixed(0)}K</span>
+            <span className="pi-label" style={{ color: budgetPct > 90 ? '#ef4444' : '#10b981' }}>{budgetPct.toFixed(0)}%</span>
           </div>
-          <div style={{ height: 10, background: 'var(--pi-border-faint)', borderRadius: 5 }}>
-            <div style={{ height: '100%', width: `${budgetPct}%`, background: budgetPct > 90 ? '#ef4444' : '#10b981', borderRadius: 5 }} />
+          <div className="pi-bar-track" style={{ height: 10, borderRadius: 5 }}>
+            <div className="pi-bar-fill" style={{ width: `${budgetPct}%`, background: budgetPct > 90 ? '#ef4444' : '#10b981', borderRadius: 5 }} />
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* Deliverables Checklist */}
         <div className="phoenix-card">
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <h3 className="pi-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <FileText size={16} color="#c9942b" /> Deliverables
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -164,14 +164,13 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
               return (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 0' }}>
                   <Icon size={14} color={STATUS_COLOR[d.status]} />
-                  <span style={{
-                    fontSize: '0.85rem',
+                  <span className="pi-body" style={{
                     color: d.status === 'complete' ? 'var(--pi-text-muted)' : 'var(--pi-text)',
                     textDecoration: d.status === 'complete' ? 'line-through' : 'none',
                     fontWeight: d.status === 'in-progress' ? 600 : 400,
                   }}>{d.name}</span>
                   {d.status === 'in-progress' && (
-                    <span style={{ fontSize: '0.7rem', padding: '1px 6px', borderRadius: 4, background: '#f59e0b20', color: '#f59e0b', fontWeight: 700 }}>IN PROGRESS</span>
+                    <span className="pi-badge" style={{ background: '#f59e0b20', color: '#f59e0b', fontSize: 'var(--pi-fs-overline)' }}>IN PROGRESS</span>
                   )}
                 </div>
               );
@@ -181,7 +180,7 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
 
         {/* Scope & Contract */}
         <div className="phoenix-card">
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <h3 className="pi-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Briefcase size={16} color="#3b6bf5" /> Scope & Contract
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -193,12 +192,12 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
               { label: 'Status', value: eng.status.charAt(0).toUpperCase() + eng.status.slice(1) },
             ].map(row => (
               <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 8, borderBottom: '1px solid var(--pi-border-faint)' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', fontWeight: 600 }}>{row.label}</span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--pi-text)' }}>{row.value}</span>
+                <span className="pi-label-muted">{row.label}</span>
+                <span className="pi-label">{row.value}</span>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 6, background: '#7c3aed08', border: '1px solid #7c3aed20', fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>
+          <div className="pi-caption" style={{ marginTop: 12, padding: '8px 12px', borderRadius: 6, background: '#7c3aed08', border: '1px solid #7c3aed20' }}>
             <strong style={{ color: '#7c3aed' }}>Auto-populated:</strong> PM worksheet, billing schedule, and deliverable tracker generated from signed engagement letter.
           </div>
         </div>
@@ -207,7 +206,7 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
       {/* Team Mini-Section */}
       {consultant && (
         <div className="phoenix-card" style={{ marginBottom: 20 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <h3 className="pi-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Users size={16} color="#7c3aed" /> Team
           </h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -215,21 +214,21 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
               {consultant.name.split(' ').map(n => n[0]).join('')}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{consultant.name}</div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>{consultant.title} &middot; {consultant.specialty}</div>
+              <div className="pi-label">{consultant.name}</div>
+              <div className="pi-body-muted">{consultant.title} &middot; {consultant.specialty}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
                 <Activity size={12} color={consultant.utilization > 90 ? '#ef4444' : '#10b981'} />
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: consultant.utilization > 90 ? '#ef4444' : 'var(--pi-text)' }}>{consultant.utilization}%</span>
+                <span className="pi-label" style={{ color: consultant.utilization > 90 ? '#ef4444' : 'var(--pi-text)' }}>{consultant.utilization}%</span>
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)' }}>Utilization</div>
+              <div className="pi-overline" style={{ textTransform: 'none' }}>Utilization</div>
               {consultant.utilization > 90 && (
-                <div style={{ fontSize: '0.65rem', color: '#ef4444', fontWeight: 600, marginTop: 2 }}>Near capacity</div>
+                <div className="pi-overline" style={{ color: '#ef4444', textTransform: 'none', marginTop: 2 }}>Near capacity</div>
               )}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 12, marginTop: 10, fontSize: '0.75rem', color: 'var(--pi-text-faint)' }}>
+          <div className="pi-caption" style={{ display: 'flex', gap: 12, marginTop: 10 }}>
             <span>{consultant.activeEngagements} active engagements</span>
             <span>{consultant.yearsExperience} years experience</span>
           </div>
@@ -238,7 +237,7 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
 
       {/* Activity Feed / Timeline */}
       <div className="phoenix-card">
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <h3 className="pi-section-title" style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
           <Clock size={16} color="#c9942b" /> Activity Feed
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -249,13 +248,13 @@ export default function EngagementDetailClient({ params }: { params: Promise<{ i
                 background: t.type === 'milestone' ? '#3b6bf5' : t.type === 'deliverable' ? '#10b981' : t.type === 'review' ? '#7c3aed' : '#c9942b',
               }} />
               <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-faint)', fontWeight: 600 }}>{t.date}</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--pi-text-secondary)' }}>{t.event}</div>
+                <div className="pi-label-muted">{t.date}</div>
+                <div className="pi-body">{t.event}</div>
               </div>
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: 16, marginTop: 16, paddingTop: 12, borderTop: '1px solid var(--pi-border-faint)', fontSize: '0.7rem', color: 'var(--pi-text-faint)' }}>
+        <div className="pi-overline" style={{ display: 'flex', gap: 16, marginTop: 16, paddingTop: 12, borderTop: '1px solid var(--pi-border-faint)', textTransform: 'none' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#3b6bf5' }} /> Milestone</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }} /> Deliverable</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#7c3aed' }} /> Review</span>

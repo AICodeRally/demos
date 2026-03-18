@@ -41,10 +41,10 @@
   --pi-ai-bg: rgba(124,58,237,0.08);
   --pi-ai-fill: #f3effe;
 
-  /* 6P colors */
+  /* 6P colors — each pillar must be visually distinct from UI sapphire */
   --pi-purpose: #facc15;
   --pi-people: #7c3aed;
-  --pi-process: #3b6bf5;
+  --pi-process: #2563eb;
   --pi-practice: #c026d3;
   --pi-pipeline: #db2777;
   --pi-profit: #10b981;
@@ -232,6 +232,133 @@
 .phoenix-card select:focus-visible {
   outline: 2px solid var(--pi-sapphire);
   outline-offset: 2px;
+}
+
+/* ── Typography system ────────────────────────
+   5 stops only. Never use arbitrary rem values in inline styles.
+   heading:    page titles, hero numbers
+   subheading: section headers, card titles
+   body:       default text, descriptions
+   caption:    metadata, secondary labels
+   overline:   tags, badges, uppercase labels
+   ──────────────────────────────────────────── */
+
+/* Type scale tokens */
+:root {
+  --pi-fs-heading: 1.75rem;
+  --pi-fs-subheading: 1.1rem;
+  --pi-fs-body: 0.9rem;
+  --pi-fs-caption: 0.8rem;
+  --pi-fs-overline: 0.7rem;
+}
+
+/* Utility classes */
+.pi-heading {
+  font-size: var(--pi-fs-heading);
+  font-weight: 800;
+  color: var(--pi-text);
+  line-height: 1.2;
+}
+
+.pi-subheading {
+  font-size: var(--pi-fs-subheading);
+  font-weight: 700;
+  color: var(--pi-text);
+  line-height: 1.3;
+}
+
+.pi-body {
+  font-size: var(--pi-fs-body);
+  color: var(--pi-text);
+  line-height: 1.6;
+}
+
+.pi-body-muted {
+  font-size: var(--pi-fs-body);
+  color: var(--pi-text-muted);
+  line-height: 1.6;
+}
+
+.pi-caption {
+  font-size: var(--pi-fs-caption);
+  color: var(--pi-text-faint);
+  line-height: 1.4;
+}
+
+.pi-overline {
+  font-size: var(--pi-fs-overline);
+  font-weight: 700;
+  color: var(--pi-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+/* Value display — large metric numbers */
+.pi-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--pi-text);
+  line-height: 1.1;
+}
+
+.pi-value-sm {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--pi-text);
+  line-height: 1.1;
+}
+
+/* Label — bold body-size for KPI labels, card headers */
+.pi-label {
+  font-size: var(--pi-fs-body);
+  font-weight: 700;
+  color: var(--pi-text);
+}
+
+.pi-label-muted {
+  font-size: var(--pi-fs-body);
+  font-weight: 600;
+  color: var(--pi-text-muted);
+}
+
+/* Section header — used for card section titles */
+.pi-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pi-text);
+  margin-bottom: 12px;
+}
+
+/* Badge — colored pill for status indicators */
+.pi-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: var(--pi-fs-caption);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Progress bar track */
+.pi-bar-track {
+  height: 6px;
+  background: var(--pi-border-faint);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pi-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+}
+
+/* Metric tile — small stat cards used in grids */
+.pi-metric-tile {
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 /* ── Light-mode sidebar — force readable on white ── */

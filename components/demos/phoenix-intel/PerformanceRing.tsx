@@ -33,8 +33,8 @@ export function PerformanceRing({ value, max = 100, size = 100, strokeWidth = 8,
         />
       </svg>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--pi-text)' }}>{value}%</div>
-        <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>{label}</div>
+        <div className="pi-value-sm">{value}%</div>
+        <div className="pi-overline">{label}</div>
       </div>
     </div>
   );

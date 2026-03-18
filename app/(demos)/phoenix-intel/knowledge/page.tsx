@@ -26,7 +26,7 @@ export default function KnowledgePage() {
     if (filterTopic !== 'all' && doc.topic !== filterTopic) return false;
     if (filterSector !== 'all' && doc.sector !== filterSector && doc.sector !== 'all') return false;
     return true;
-  }).slice(0, 30); // Show first 30
+  }).slice(0, 30);
 
   const types = Object.keys(CONTENT_TYPE_LABELS) as ContentType[];
   const topics = Object.keys(TOPIC_LABELS) as Topic[];
@@ -46,23 +46,23 @@ export default function KnowledgePage() {
           />
         </div>
 
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: '0.875rem' }}>
+        <div className="pi-body" style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Type:</span>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Type:</span>
             <select value={filterType} onChange={e => setFilterType(e.target.value as ContentType | 'all')} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text)', fontSize: '0.875rem' }}>
               <option value="all">All Types</option>
               {types.map(t => <option key={t} value={t}>{CONTENT_TYPE_LABELS[t]}</option>)}
             </select>
           </div>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Topic:</span>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Topic:</span>
             <select value={filterTopic} onChange={e => setFilterTopic(e.target.value as Topic | 'all')} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text)', fontSize: '0.875rem' }}>
               <option value="all">All Topics</option>
               {topics.map(t => <option key={t} value={t}>{TOPIC_LABELS[t]}</option>)}
             </select>
           </div>
           <div>
-            <span style={{ color: 'var(--pi-text-muted)', fontWeight: 600, marginRight: 6 }}>Sector:</span>
+            <span className="pi-label-muted" style={{ marginRight: 6 }}>Sector:</span>
             <select value={filterSector} onChange={e => setFilterSector(e.target.value as Sector | 'all')} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text)', fontSize: '0.875rem' }}>
               <option value="all">All Sectors</option>
               {sectors.map(s => <option key={s} value={s}>{SECTOR_LABELS[s]}</option>)}
@@ -79,26 +79,26 @@ export default function KnowledgePage() {
               <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flex: 1 }}>
                 <FileText size={16} color={TYPE_COLORS[doc.type]} style={{ marginTop: 2, flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{doc.title}</div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{doc.summary}</div>
+                  <div className="pi-label">{doc.title}</div>
+                  <div className="pi-body-muted" style={{ marginTop: 2 }}>{doc.summary}</div>
                   <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
-                    <span style={{ padding: '1px 6px', borderRadius: 3, fontSize: '0.8rem', fontWeight: 600, background: `${TYPE_COLORS[doc.type]}20`, color: TYPE_COLORS[doc.type] }}>
+                    <span className="pi-badge" style={{ background: `${TYPE_COLORS[doc.type]}20`, color: TYPE_COLORS[doc.type] }}>
                       {CONTENT_TYPE_LABELS[doc.type]}
                     </span>
-                    <span style={{ padding: '1px 6px', borderRadius: 3, fontSize: '0.8rem', fontWeight: 600, background: 'var(--pi-sapphire-bg)', color: 'var(--pi-sapphire)' }}>
+                    <span className="pi-badge" style={{ background: 'var(--pi-sapphire-bg)', color: 'var(--pi-sapphire)' }}>
                       {TOPIC_LABELS[doc.topic]}
                     </span>
                   </div>
                 </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.85rem', color: 'var(--pi-text-faint)', flexShrink: 0 }}>
+              <div className="pi-caption" style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
                 <Download size={12} /> {doc.downloads}
               </div>
             </div>
           </div>
         ))}
         {filtered.length === 30 && (
-          <p style={{ fontSize: '0.9rem', color: 'var(--pi-text-muted)', textAlign: 'center', padding: 12 }}>
+          <p className="pi-body-muted" style={{ textAlign: 'center', padding: 12 }}>
             Showing first 30 of {KNOWLEDGE_DOCS.filter(doc => {
               if (search && !doc.title.toLowerCase().includes(search.toLowerCase())) return false;
               if (filterType !== 'all' && doc.type !== filterType) return false;

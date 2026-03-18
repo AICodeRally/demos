@@ -72,14 +72,15 @@ export default function AIAdvisorPage() {
           {messages.length === 0 && (
             <div style={{ textAlign: 'center', padding: 40 }}>
               <Brain size={48} color="var(--pi-sapphire)" style={{ margin: '0 auto 16px', opacity: 0.5 }} />
-              <p style={{ fontSize: '0.9rem', color: 'var(--pi-text-muted)', marginBottom: 16 }}>Ask the AI Advisor about fundraising, board engagement, campaigns, or any advancement topic.</p>
+              <p className="pi-body-muted" style={{ marginBottom: 16 }}>Ask the AI Advisor about fundraising, board engagement, campaigns, or any advancement topic.</p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
                 {suggestions.map(s => (
                   <button
                     key={s}
                     onClick={() => { setInput(s); }}
+                    className="pi-label"
                     style={{
-                      padding: '8px 14px', borderRadius: 8, fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer',
+                      padding: '8px 14px', borderRadius: 8, cursor: 'pointer',
                       border: '1px solid var(--pi-border)', background: 'var(--pi-card)', color: 'var(--pi-text-secondary)',
                     }}
                   >
@@ -92,11 +93,10 @@ export default function AIAdvisorPage() {
 
           {messages.map((msg, i) => (
             <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-              <div style={{
+              <div className="pi-body" style={{
                 maxWidth: '80%', padding: '10px 14px', borderRadius: 12,
                 background: msg.role === 'user' ? 'var(--pi-sapphire)' : 'var(--pi-card-alt)',
                 color: msg.role === 'user' ? '#fff' : 'var(--pi-text)',
-                fontSize: '0.95rem', lineHeight: 1.6,
                 border: msg.role === 'assistant' ? '1px solid var(--pi-border)' : 'none',
               }}>
                 {msg.content}
@@ -111,7 +111,7 @@ export default function AIAdvisorPage() {
                   <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--pi-text-muted)', animation: `pi-fade-in 0.6s ease-in-out infinite alternate`, animationDelay: `${i * 0.2}s` }} />
                 ))}
               </div>
-              <span style={{ fontSize: '0.875rem', color: 'var(--pi-text-muted)' }}>AI Advisor is thinking...</span>
+              <span className="pi-caption">AI Advisor is thinking...</span>
             </div>
           )}
 
@@ -125,9 +125,10 @@ export default function AIAdvisorPage() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && sendMessage()}
             placeholder="Ask about fundraising, boards, campaigns..."
+            className="pi-body"
             style={{
               flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid var(--pi-border)',
-              background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.95rem', outline: 'none',
+              background: 'var(--pi-bg)', color: 'var(--pi-text)', outline: 'none',
             }}
           />
           <button

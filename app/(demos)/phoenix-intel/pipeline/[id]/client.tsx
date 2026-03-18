@@ -18,7 +18,7 @@ export default function DealDetailClient({ params }: { params: Promise<{ id: str
 
   return (
     <PhoenixPage title={deal.clientName} subtitle={deal.title} accentColor={STAGE_COLORS[deal.stage]}>
-      <Link href="/phoenix-intel/pipeline" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.9rem', color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
+      <Link href="/phoenix-intel/pipeline" className="pi-body" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--pi-sapphire)', textDecoration: 'none', marginBottom: 16 }}>
         <ArrowLeft size={14} /> Back to Pipeline
       </Link>
 
@@ -33,7 +33,7 @@ export default function DealDetailClient({ params }: { params: Promise<{ id: str
             }} />
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>
+        <div className="pi-caption" style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--pi-text-muted)' }}>
           {PIPELINE_STAGES.map((stage) => (
             <span key={stage} style={{ fontWeight: stage === deal.stage ? 700 : 400, color: stage === deal.stage ? STAGE_COLORS[deal.stage] : undefined }}>{stage}</span>
           ))}
@@ -42,22 +42,22 @@ export default function DealDetailClient({ params }: { params: Promise<{ id: str
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="phoenix-card">
-          <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: 4 }}>Deal Value</div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>${(deal.value / 1000).toFixed(0)}K</div>
+          <div className="pi-label-muted" style={{ textTransform: 'uppercase', marginBottom: 4 }}>Deal Value</div>
+          <div className="pi-value">${(deal.value / 1000).toFixed(0)}K</div>
         </div>
         <div className="phoenix-card">
-          <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: 4 }}>Probability</div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{deal.probability}%</div>
+          <div className="pi-label-muted" style={{ textTransform: 'uppercase', marginBottom: 4 }}>Probability</div>
+          <div className="pi-value">{deal.probability}%</div>
         </div>
         <div className="phoenix-card">
-          <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, textTransform: 'uppercase', marginBottom: 4 }}>Source</div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{deal.source}</div>
+          <div className="pi-label-muted" style={{ textTransform: 'uppercase', marginBottom: 4 }}>Source</div>
+          <div className="pi-value">{deal.source}</div>
         </div>
       </div>
 
       {/* Contact info */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 12 }}>Contact</h3>
+        <h3 className="pi-section-title">Contact</h3>
         <div style={{ fontSize: '0.95rem', color: 'var(--pi-text-secondary)' }}>
           <div style={{ fontWeight: 600 }}>{deal.contactName}</div>
           <div style={{ color: 'var(--pi-text-muted)', marginTop: 2 }}>Next Step: {deal.nextStep}</div>
@@ -66,13 +66,13 @@ export default function DealDetailClient({ params }: { params: Promise<{ id: str
 
       {/* Activity timeline */}
       <div className="phoenix-card">
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Activity History</h3>
+        <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Activity History</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {deal.history.map((event, i) => (
             <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--pi-sapphire)', marginTop: 6, flexShrink: 0 }} />
               <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--pi-text-faint)', fontWeight: 600 }}>{event.date}</div>
+                <div className="pi-caption" style={{ fontWeight: 600 }}>{event.date}</div>
                 <div style={{ fontSize: '0.95rem', color: 'var(--pi-text-secondary)' }}>{event.event}</div>
               </div>
             </div>

@@ -8,7 +8,7 @@ import { CLIENTS, ENGAGEMENTS } from '@/data/phoenix-intel/nonprofit-data';
 import { Building2, Heart, MapPin } from 'lucide-react';
 
 const SECTOR_COLORS: Record<string, string> = {
-  community: '#3b6bf5', healthcare: '#10b981', 'arts-culture': '#c026d3',
+  community: '#2563eb', healthcare: '#10b981', 'arts-culture': '#c026d3',
   education: '#c9942b', 'faith-based': '#7c3aed', 'social-services': '#db2777',
 };
 
@@ -23,7 +23,7 @@ export default function ClientsPage() {
         {CLIENTS.map((client, i) => {
           const engagementCount = ENGAGEMENTS.filter(e => e.clientId === client.id).length;
           const activeCount = ENGAGEMENTS.filter(e => e.clientId === client.id && e.status === 'active').length;
-          const sectorColor = SECTOR_COLORS[client.sector] || '#3b6bf5';
+          const sectorColor = SECTOR_COLORS[client.sector] || '#2563eb';
 
           return (
             <div
@@ -43,36 +43,36 @@ export default function ClientsPage() {
                     <Building2 size={20} color={sectorColor} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{client.name}</div>
-                    <div style={{ fontSize: '0.85rem', color: sectorColor, fontWeight: 600, textTransform: 'uppercase' }}>{client.sector.replace('-', ' ')}</div>
+                    <div className="pi-label">{client.name}</div>
+                    <div className="pi-overline" style={{ color: sectorColor }}>{client.sector.replace('-', ' ')}</div>
                   </div>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: 12, marginBottom: 12, fontSize: '0.875rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--pi-text-muted)' }}>
+              <div className="pi-body-muted" style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <MapPin size={12} /> {client.state}
                 </div>
-                <div style={{ color: 'var(--pi-text-muted)' }}>{client.size} budget</div>
+                <div>{client.size} budget</div>
               </div>
 
               {/* Health score */}
               <div style={{ marginBottom: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: 4 }}>
-                  <span style={{ color: 'var(--pi-text-muted)' }}>Health Score</span>
-                  <span style={{ fontWeight: 700, color: client.healthScore >= 90 ? '#10b981' : client.healthScore >= 75 ? '#c9942b' : '#ef4444' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <span className="pi-label-muted">Health Score</span>
+                  <span className="pi-label" style={{ color: client.healthScore >= 90 ? '#10b981' : client.healthScore >= 75 ? '#c9942b' : '#ef4444' }}>
                     {client.healthScore}/100
                   </span>
                 </div>
-                <div style={{ height: 6, background: 'var(--pi-border-faint)', borderRadius: 3 }}>
-                  <div style={{
-                    height: '100%', width: `${client.healthScore}%`, borderRadius: 3,
+                <div className="pi-bar-track">
+                  <div className="pi-bar-fill" style={{
+                    width: `${client.healthScore}%`,
                     background: client.healthScore >= 90 ? '#10b981' : client.healthScore >= 75 ? '#c9942b' : '#ef4444',
                   }} />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--pi-text-faint)', paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
+              <div className="pi-caption" style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, borderTop: '1px solid var(--pi-border-faint)' }}>
                 <span>{engagementCount} engagements ({activeCount} active)</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <Heart size={10} color={sectorColor} />

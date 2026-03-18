@@ -61,9 +61,9 @@ export default function OnboardingPage() {
   return (
     <PhoenixPage title="Client Onboarding" subtitle="Standardized onboarding workflows for new engagements" accentColor="#3b6bf5">
       {/* Workflow reference */}
-      <div style={{
+      <div className="pi-body-muted" style={{
         display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#7c3aed08', border: '1px solid #7c3aed20', fontSize: '0.85rem', color: 'var(--pi-text-muted)',
+        borderRadius: 8, background: '#7c3aed08', border: '1px solid #7c3aed20',
       }}>
         <ListChecks size={14} color="#7c3aed" style={{ flexShrink: 0 }} />
         <span><strong style={{ color: '#7c3aed' }}>Workflow:</strong> Kelly drafts contracts &#8594; consultant reviews &#8594; Kelly finalizes &#8594; auto-populates engagement record and PM worksheet downstream.</span>
@@ -79,8 +79,8 @@ export default function OnboardingPage() {
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
             <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
           </div>
         ))}
       </div>
@@ -92,19 +92,21 @@ export default function OnboardingPage() {
           <div key={client.id} className="phoenix-card" style={{ marginBottom: 16 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
               <div>
-                <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{client.clientName}</h3>
-                <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>
+                <h3 className="pi-label">{client.clientName}</h3>
+                <div className="pi-caption">
                   Contact: {client.contactName} &middot; ${(client.dealValue / 1000).toFixed(0)}K engagement &middot; Start: {client.startDate}
                 </div>
               </div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: client.status === 'in-progress' ? '#3b6bf5' : 'var(--pi-text-faint)', textTransform: 'uppercase' }}>
+              <div className="pi-overline" style={{
+                color: client.status === 'in-progress' ? '#3b6bf5' : 'var(--pi-text-faint)',
+              }}>
                 {client.status === 'in-progress' ? 'In Progress' : 'Pending'}
               </div>
             </div>
 
             {/* Progress bar */}
-            <div style={{ height: 6, borderRadius: 3, background: 'var(--pi-border-faint)', marginBottom: 12, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: '#3b6bf5' }} />
+            <div className="pi-bar-track" style={{ height: 6, borderRadius: 3, marginBottom: 12 }}>
+              <div className="pi-bar-fill" style={{ width: `${pct}%`, borderRadius: 3, background: '#3b6bf5' }} />
             </div>
 
             {/* Checklist */}
@@ -116,8 +118,7 @@ export default function OnboardingPage() {
                   <div key={step.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '4px 0' }}>
                     <Icon size={14} color={STATUS_COLOR[status]} style={{ flexShrink: 0, marginTop: 2 }} />
                     <div style={{ flex: 1 }}>
-                      <span style={{
-                        fontSize: '0.85rem',
+                      <span className="pi-body" style={{
                         color: status === 'complete' ? 'var(--pi-text-muted)' : 'var(--pi-text)',
                         textDecoration: status === 'complete' ? 'line-through' : 'none',
                         fontWeight: status === 'in-progress' ? 600 : 400,
@@ -125,9 +126,9 @@ export default function OnboardingPage() {
                         {step.name}
                       </span>
                       {status === 'in-progress' && (
-                        <span style={{ fontSize: '0.7rem', padding: '1px 6px', borderRadius: 4, background: '#f59e0b20', color: '#f59e0b', fontWeight: 700, marginLeft: 6 }}>IN PROGRESS</span>
+                        <span className="pi-badge" style={{ background: '#f59e0b20', color: '#f59e0b', fontSize: 'var(--pi-fs-overline)', marginLeft: 6 }}>IN PROGRESS</span>
                       )}
-                      <div style={{ fontSize: '0.75rem', color: 'var(--pi-text-faint)', marginTop: 1 }}>
+                      <div className="pi-overline" style={{ textTransform: 'none', marginTop: 1 }}>
                         {step.description} &middot; <em>{step.owner}</em>
                       </div>
                     </div>

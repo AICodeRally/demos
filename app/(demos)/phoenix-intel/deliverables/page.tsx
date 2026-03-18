@@ -44,9 +44,9 @@ export default function DeliverablesPage() {
   return (
     <PhoenixPage title="Deliverables" subtitle="Track project deliverables across all active engagements" accentColor="#10b981">
       {/* Pain Point */}
-      <div style={{
+      <div className="pi-body-muted" style={{
         display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420', fontSize: '0.85rem', color: 'var(--pi-text-muted)',
+        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
       }}>
         <AlertCircle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
         <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Deliverables previously tracked across 8-9 separate systems. This unified view replaces Excel Gantt charts, email threads, and spreadsheet trackers.</span>
@@ -62,8 +62,8 @@ export default function DeliverablesPage() {
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
             <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
           </div>
         ))}
       </div>
@@ -73,16 +73,16 @@ export default function DeliverablesPage() {
         <div key={eng.id} className="phoenix-card" style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
             <div>
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{eng.clientName}</h3>
-              <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)' }}>{eng.title} — {eng.leadConsultant}</div>
+              <h3 className="pi-label">{eng.clientName}</h3>
+              <div className="pi-caption">{eng.title} — {eng.leadConsultant}</div>
             </div>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#10b981' }}>
+            <div className="pi-caption" style={{ fontWeight: 700, color: '#10b981' }}>
               {eng.completedDeliverables}/{eng.deliverables}
             </div>
           </div>
           {/* Progress bar */}
-          <div style={{ height: 6, borderRadius: 3, background: 'var(--pi-border-faint)', marginBottom: 10, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${(eng.completedDeliverables / eng.deliverables) * 100}%`, borderRadius: 3, background: '#10b981' }} />
+          <div className="pi-bar-track" style={{ height: 6, borderRadius: 3, marginBottom: 10 }}>
+            <div className="pi-bar-fill" style={{ width: `${(eng.completedDeliverables / eng.deliverables) * 100}%`, background: '#10b981', borderRadius: 3 }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {eng.items.map(d => {
@@ -90,14 +90,13 @@ export default function DeliverablesPage() {
               return (
                 <div key={d.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}>
                   <Icon size={14} color={STATUS_COLOR[d.status]} />
-                  <span style={{
-                    fontSize: '0.85rem',
+                  <span className="pi-body" style={{
                     color: d.status === 'complete' ? 'var(--pi-text-muted)' : 'var(--pi-text)',
                     textDecoration: d.status === 'complete' ? 'line-through' : 'none',
                     fontWeight: d.status === 'in-progress' ? 600 : 400,
                   }}>{d.name}</span>
                   {d.status === 'in-progress' && (
-                    <span style={{ fontSize: '0.7rem', padding: '1px 6px', borderRadius: 4, background: '#f59e0b20', color: '#f59e0b', fontWeight: 700 }}>IN PROGRESS</span>
+                    <span className="pi-badge" style={{ background: '#f59e0b20', color: '#f59e0b', fontSize: 'var(--pi-fs-overline)' }}>IN PROGRESS</span>
                   )}
                 </div>
               );

@@ -34,19 +34,11 @@ const DOCUMENTS: Document[] = [
 ];
 
 const TYPE_LABEL: Record<Document['type'], string> = {
-  template: 'Template',
-  contract: 'Contract',
-  proposal: 'Proposal',
-  report: 'Report',
-  policy: 'Policy',
+  template: 'Template', contract: 'Contract', proposal: 'Proposal', report: 'Report', policy: 'Policy',
 };
 
 const TYPE_COLOR: Record<Document['type'], string> = {
-  template: '#7c3aed',
-  contract: '#3b6bf5',
-  proposal: '#10b981',
-  report: '#c9942b',
-  policy: '#64748b',
+  template: '#7c3aed', contract: '#3b6bf5', proposal: '#10b981', report: '#c9942b', policy: '#64748b',
 };
 
 const STATUS_ICON = { draft: File, active: FileCheck, archived: Archive };
@@ -63,9 +55,9 @@ export default function DocumentsPage() {
   return (
     <PhoenixPage title="Document Library" subtitle="Centralized document management for Phoenix Philanthropy Group" accentColor="#7c3aed">
       {/* Pain Point */}
-      <div style={{
+      <div className="pi-body-muted" style={{
         display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420', fontSize: '0.85rem', color: 'var(--pi-text-muted)',
+        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
       }}>
         <AlertCircle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
         <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Documents previously scattered across Dropbox, email attachments, and local drives. Kelly (Director of Client Services) manages contracts manually — version confusion and missed renewals are common.</span>
@@ -81,20 +73,20 @@ export default function DocumentsPage() {
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
             <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
           </div>
         ))}
       </div>
 
       {/* Document Table */}
       <div className="phoenix-card" style={{ overflowX: 'auto' }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>All Documents</h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+        <h3 className="pi-section-title">All Documents</h3>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '2px solid var(--pi-border-faint)' }}>
               {['Name', 'Type', 'Client', 'Last Modified', 'Owner', 'Status'].map(h => (
-                <th key={h} style={{ textAlign: 'left', padding: '8px 10px', color: 'var(--pi-text-muted)', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>{h}</th>
+                <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 10px' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -103,19 +95,19 @@ export default function DocumentsPage() {
               const SIcon = STATUS_ICON[doc.status];
               return (
                 <tr key={doc.id} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td style={{ padding: '10px 10px', color: 'var(--pi-text)', fontWeight: 600 }}>{doc.name}</td>
+                  <td className="pi-label" style={{ padding: '10px 10px', fontWeight: 600 }}>{doc.name}</td>
                   <td style={{ padding: '10px 10px' }}>
-                    <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: '0.7rem', fontWeight: 700, background: `${TYPE_COLOR[doc.type]}18`, color: TYPE_COLOR[doc.type] }}>
+                    <span className="pi-badge" style={{ background: `${TYPE_COLOR[doc.type]}18`, color: TYPE_COLOR[doc.type] }}>
                       {TYPE_LABEL[doc.type]}
                     </span>
                   </td>
-                  <td style={{ padding: '10px 10px', color: 'var(--pi-text-muted)' }}>{doc.client}</td>
-                  <td style={{ padding: '10px 10px', color: 'var(--pi-text-muted)' }}>{doc.lastModified}</td>
-                  <td style={{ padding: '10px 10px', color: 'var(--pi-text-muted)' }}>{doc.owner}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.client}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.lastModified}</td>
+                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.owner}</td>
                   <td style={{ padding: '10px 10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                       <SIcon size={12} color={STATUS_COLOR[doc.status]} />
-                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: STATUS_COLOR[doc.status], textTransform: 'capitalize' }}>{doc.status}</span>
+                      <span className="pi-overline" style={{ color: STATUS_COLOR[doc.status], textTransform: 'capitalize' }}>{doc.status}</span>
                     </div>
                   </td>
                 </tr>

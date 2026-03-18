@@ -19,12 +19,12 @@ export default function UtilizationPage() {
     <PhoenixPage title="Team Utilization" subtitle="Consultant workload, capacity planning, and burnout risk monitoring" accentColor="#f59e0b">
       {/* Burnout Alert */}
       {atRisk.length > 0 && (
-        <div style={{
+        <div className="pi-body-muted" style={{
           display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', marginBottom: 20,
           borderRadius: 8, background: '#ef444412', border: '1px solid #ef444430',
         }}>
           <AlertTriangle size={16} color="#ef4444" style={{ flexShrink: 0 }} />
-          <span style={{ fontSize: '0.85rem', color: 'var(--pi-text)' }}>
+          <span style={{ color: 'var(--pi-text)' }}>
             <strong style={{ color: '#ef4444' }}>Burnout risk:</strong>{' '}
             {atRisk.map(c => `${c.name} (${c.utilization}%)`).join(', ')} — above {BURNOUT_THRESHOLD}% utilization threshold.
             Recommend redistributing 1+ engagement to maintain sustainable workloads.
@@ -42,15 +42,15 @@ export default function UtilizationPage() {
         ].map(m => (
           <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
             <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--pi-text)' }}>{m.value}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
+            <div className="pi-value">{m.value}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
           </div>
         ))}
       </div>
 
       {/* Utilization Bars */}
       <div className="phoenix-card" style={{ marginBottom: 24 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16 }}>Consultant Utilization</h3>
+        <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Consultant Utilization</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {[...CONSULTANTS].sort((a, b) => b.utilization - a.utilization).map(c => {
             const barColor = c.utilization >= BURNOUT_THRESHOLD ? '#ef4444' : c.utilization >= UTILIZATION_TARGET ? '#10b981' : '#f59e0b';
@@ -59,12 +59,12 @@ export default function UtilizationPage() {
               <div key={c.id}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                   <div>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-text)' }}>{c.name}</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--pi-text-muted)', marginLeft: 8 }}>{c.title}</span>
+                    <span className="pi-label">{c.name}</span>
+                    <span className="pi-body-muted" style={{ marginLeft: 8 }}>{c.title}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--pi-text-muted)' }}>{engagements.length} active</span>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 800, color: barColor }}>{c.utilization}%</span>
+                    <span className="pi-caption">{engagements.length} active</span>
+                    <span className="pi-label" style={{ color: barColor }}>{c.utilization}%</span>
                   </div>
                 </div>
                 <div style={{ height: 8, borderRadius: 4, background: 'var(--pi-border-faint)', overflow: 'hidden', position: 'relative' }}>
@@ -75,7 +75,7 @@ export default function UtilizationPage() {
             );
           })}
         </div>
-        <div style={{ display: 'flex', gap: 16, marginTop: 12, fontSize: '0.75rem', color: 'var(--pi-text-faint)' }}>
+        <div className="pi-caption" style={{ display: 'flex', gap: 16, marginTop: 12 }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#ef4444' }} /> Burnout risk (&gt;90%)</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#10b981' }} /> On target (80-90%)</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#f59e0b' }} /> Under target (&lt;80%)</span>
@@ -84,15 +84,15 @@ export default function UtilizationPage() {
 
       {/* Capacity Recommendations */}
       <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #f59e0b' }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 8 }}>Capacity Recommendations</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: '0.85rem' }}>
+        <h3 className="pi-section-title">Capacity Recommendations</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {atRisk.map(c => {
             const lowUtil = CONSULTANTS.filter(x => x.utilization < UTILIZATION_TARGET && x.id !== c.id).sort((a, b) => a.utilization - b.utilization);
             const candidate = lowUtil[0];
             return (
-              <div key={c.id} style={{ padding: '8px 12px', borderRadius: 6, background: '#ef444408', border: '1px solid #ef444420' }}>
+              <div key={c.id} className="pi-body-muted" style={{ padding: '8px 12px', borderRadius: 6, background: '#ef444408', border: '1px solid #ef444420' }}>
                 <strong style={{ color: '#ef4444' }}>{c.name} ({c.utilization}%)</strong>
-                <span style={{ color: 'var(--pi-text-muted)' }}>
+                <span>
                   {' '}— {c.activeEngagements} active engagements.
                   {candidate ? ` Recommend shifting 1 to ${candidate.name} (${candidate.utilization}%).` : ' No available capacity on team.'}
                 </span>
@@ -100,7 +100,7 @@ export default function UtilizationPage() {
             );
           })}
           {atRisk.length === 0 && (
-            <div style={{ color: '#10b981' }}>All consultants within sustainable utilization range.</div>
+            <div className="pi-body" style={{ color: '#10b981' }}>All consultants within sustainable utilization range.</div>
           )}
         </div>
       </div>

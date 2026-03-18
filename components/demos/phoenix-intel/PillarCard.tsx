@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 const PILLAR_COLORS: Record<string, string> = {
   Purpose: '#facc15',
   People: '#7c3aed',
-  Process: '#3b6bf5',
+  Process: '#2563eb',
   Practice: '#c026d3',
   Pipeline: '#db2777',
   Profit: '#10b981',
@@ -40,14 +40,14 @@ export function PillarCard({ pillar, score, trend, sparkline = [], delay = 0 }: 
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <span style={{ fontSize: '0.875rem', fontWeight: 700, color, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <span className="pi-overline" style={{ color }}>
           {pillar}
         </span>
-        <span style={{ fontSize: '0.875rem', fontWeight: 600, color: trendColor }}>
+        <span className="pi-caption" style={{ fontWeight: 600, color: trendColor }}>
           {trendIcon} {Math.abs(trend)}%
         </span>
       </div>
-      <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--pi-text)', marginBottom: 8 }}>
+      <div className="pi-heading" style={{ marginBottom: 8 }}>
         {score}
       </div>
       {sparkline.length > 0 && (

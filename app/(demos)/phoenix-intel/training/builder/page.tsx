@@ -168,31 +168,31 @@ export default function BuilderPage() {
 
       {/* Input form */}
       <div className="phoenix-card" style={{ marginBottom: 20 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <h3 className="pi-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Wand2 size={18} color="#7c3aed" /> Configure Training Package
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Training Topic</label>
-            <input value={topic} onChange={e => setTopic(e.target.value)} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.95rem' }} />
+            <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Training Topic</label>
+            <input value={topic} onChange={e => setTopic(e.target.value)} className="pi-body" style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }} />
           </div>
           <div>
-            <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Client</label>
-            <select value={client} onChange={e => setClient(e.target.value)} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.95rem' }}>
+            <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Client</label>
+            <select value={client} onChange={e => setClient(e.target.value)} className="pi-body" style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }}>
               {CLIENTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', fontWeight: 600, display: 'block', marginBottom: 4 }}>Assessment Basis</label>
-            <select value={assessment} onChange={e => setAssessment(e.target.value)} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)', fontSize: '0.95rem' }}>
+            <label className="pi-label-muted" style={{ display: 'block', marginBottom: 4 }}>Assessment Basis</label>
+            <select value={assessment} onChange={e => setAssessment(e.target.value)} className="pi-body" style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--pi-border)', background: 'var(--pi-bg)', color: 'var(--pi-text)' }}>
               {ASSESSMENT_TEMPLATES.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
             </select>
           </div>
         </div>
-        <button onClick={handleGenerate} disabled={generating} style={{
+        <button onClick={handleGenerate} disabled={generating} className="pi-label" style={{
           marginTop: 16, padding: '10px 24px', borderRadius: 8, border: 'none',
           background: generating ? 'var(--pi-border)' : '#7c3aed', color: '#fff',
-          fontSize: '0.95rem', fontWeight: 700, cursor: generating ? 'not-allowed' : 'pointer',
+          cursor: generating ? 'not-allowed' : 'pointer',
           display: 'flex', alignItems: 'center', gap: 8,
         }}>
           <Sparkles size={16} />
@@ -209,8 +209,9 @@ export default function BuilderPage() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
+                className="pi-label"
                 style={{
-                  padding: '10px 20px', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 700,
+                  padding: '10px 20px', border: 'none', cursor: 'pointer',
                   background: activeTab === tab.key ? '#7c3aed' : 'transparent',
                   color: activeTab === tab.key ? '#fff' : 'var(--pi-text-muted)',
                   borderRadius: '8px 8px 0 0',
@@ -222,11 +223,11 @@ export default function BuilderPage() {
           </div>
 
           {/* Content */}
-          <div style={{ whiteSpace: 'pre-wrap', fontSize: '0.95rem', color: 'var(--pi-text-secondary)', lineHeight: 1.7, fontFamily: 'var(--font-space-grotesk), system-ui' }}>
+          <div className="pi-body" style={{ whiteSpace: 'pre-wrap', color: 'var(--pi-text-secondary)', lineHeight: 1.7, fontFamily: 'var(--font-space-grotesk), system-ui' }}>
             {tabContent[activeTab].split('\n').map((line, i) => {
-              if (line.startsWith('# ')) return <h2 key={i} style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--pi-text)', marginTop: 16, marginBottom: 8 }}>{line.slice(2)}</h2>;
-              if (line.startsWith('## ')) return <h3 key={i} style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--pi-text)', marginTop: 14, marginBottom: 6 }}>{line.slice(3)}</h3>;
-              if (line.startsWith('### ')) return <h4 key={i} style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--pi-sapphire)', marginTop: 12, marginBottom: 4 }}>{line.slice(4)}</h4>;
+              if (line.startsWith('# ')) return <h2 key={i} className="pi-subheading" style={{ marginTop: 16, marginBottom: 8, fontWeight: 800 }}>{line.slice(2)}</h2>;
+              if (line.startsWith('## ')) return <h3 key={i} className="pi-section-title" style={{ marginTop: 14, marginBottom: 6 }}>{line.slice(3)}</h3>;
+              if (line.startsWith('### ')) return <h4 key={i} className="pi-label" style={{ color: 'var(--pi-sapphire)', marginTop: 12, marginBottom: 4 }}>{line.slice(4)}</h4>;
               if (line.startsWith('- ')) return <div key={i} style={{ paddingLeft: 16, marginBottom: 2 }}>{line}</div>;
               if (line.startsWith('- [ ]')) return <div key={i} style={{ paddingLeft: 16, marginBottom: 2 }}>{line}</div>;
               if (line.trim() === '') return <div key={i} style={{ height: 8 }} />;

@@ -83,7 +83,7 @@ const SHARED_TOKENS: Record<string, string> = {
   '--pi-gold': '#c9942b',
   '--pi-purpose': '#facc15',
   '--pi-people': '#7c3aed',
-  '--pi-process': '#3b6bf5',
+  '--pi-process': '#2563eb',
   '--pi-practice': '#c026d3',
   '--pi-pipeline': '#db2777',
   '--pi-profit': '#10b981',
@@ -95,7 +95,8 @@ export function PhoenixThemeProvider({ children }: { children: React.ReactNode }
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const shellTheme = localStorage.getItem('proofline-theme') as Theme | null;
+    // Shell uses 'demo-shell-theme'; fall back to legacy 'proofline-theme' for compat
+    const shellTheme = (localStorage.getItem('demo-shell-theme') ?? localStorage.getItem('proofline-theme')) as Theme | null;
     const ownTheme = localStorage.getItem('phoenix-theme') as Theme | null;
     const resolved = shellTheme ?? ownTheme;
     if (resolved === 'light' || resolved === 'dark') setTheme(resolved);
@@ -105,13 +106,13 @@ export function PhoenixThemeProvider({ children }: { children: React.ReactNode }
 
     const handleShellToggle = () => {
       queueMicrotask(() => {
-        const t = localStorage.getItem('proofline-theme') as Theme | null;
+        const t = (localStorage.getItem('demo-shell-theme') ?? localStorage.getItem('proofline-theme')) as Theme | null;
         if (t === 'light' || t === 'dark') setTheme(t);
       });
     };
     window.addEventListener('shell-theme-change', handleShellToggle);
     const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'proofline-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+      if ((e.key === 'demo-shell-theme' || e.key === 'proofline-theme') && (e.newValue === 'light' || e.newValue === 'dark')) {
         setTheme(e.newValue);
       }
     };
