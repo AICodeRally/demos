@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
-import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
+import { StatusBadge, GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import { ALL_POLICIES, getPolicyStats } from '@/data/prizym-governance/policies';
-import { Search } from 'lucide-react';
+import { Search, Shield, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 
 export default function PoliciesPage() {
+  const [mounted, setMounted] = useState(false);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  useEffect(() => { setMounted(true); }, []);
   const stats = getPolicyStats();
 
   const filtered = ALL_POLICIES.filter(p => {
@@ -18,30 +20,53 @@ export default function PoliciesPage() {
   });
 
   const FILTERS = [
-    { key: 'all', label: `All (${stats.total})` },
-    { key: 'APPROVED', label: `Approved (${stats.approved})` },
-    { key: 'DRAFT', label: `Draft (${stats.draft})` },
-    { key: 'UNDER_REVIEW', label: `Review (${stats.review})` },
+    { key: 'all', label: `All (${stats.total})`, color: 'var(--pg-cyan)' },
+    { key: 'APPROVED', label: `Approved (${stats.approved})`, color: '#10b981' },
+    { key: 'DRAFT', label: `Draft (${stats.draft})`, color: '#f59e0b' },
+    { key: 'UNDER_REVIEW', label: `Review (${stats.review})`, color: '#8b5cf6' },
   ];
 
   return (
     <PrizymPage title="Policy Library" subtitle="17 SCP policies governing sales compensation programs" mode="operate">
+      {/* Stats row */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {[
+          { icon: Shield, label: 'Total Policies', value: stats.total, color: '#06b6d4' },
+          { icon: CheckCircle2, label: 'Approved', value: stats.approved, color: '#10b981' },
+          { icon: AlertCircle, label: 'Drafts', value: stats.draft, color: '#f59e0b' },
+          { icon: Clock, label: 'Under Review', value: stats.review, color: '#8b5cf6' },
+        ].map((s, i) => (
+          <div
+            key={s.label}
+            className="pg-card"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 12,
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: `${i * 0.08}s`,
+            }}
+          >
+            <div className="pg-icon-bubble" style={{ background: `${s.color}18` }}>
+              <s.icon size={18} color={s.color} />
+            </div>
+            <div>
+              <div className="pg-value-sm" style={{ color: s.color }}>{s.value}</div>
+              <div className="pg-caption">{s.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Filters */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         {FILTERS.map(f => (
           <button
             key={f.key}
+            className="pg-filter-btn"
+            data-active={filter === f.key ? 'true' : undefined}
             onClick={() => setFilter(f.key)}
-            style={{
-              padding: '6px 14px',
-              borderRadius: 6,
-              border: `1px solid ${filter === f.key ? 'var(--pg-cyan)' : 'var(--pg-border)'}`,
-              background: filter === f.key ? 'var(--pg-cyan-bg)' : 'transparent',
-              color: filter === f.key ? 'var(--pg-cyan)' : 'var(--pg-text-muted)',
-              fontWeight: 600,
-              fontSize: 'var(--pg-fs-caption)',
-              cursor: 'pointer',
-            }}
+            style={filter === f.key ? { borderColor: f.color, background: `${f.color}12`, color: f.color } : undefined}
           >
             {f.label}
           </button>
@@ -53,15 +78,7 @@ export default function PoliciesPage() {
             placeholder="Search policies..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            style={{
-              padding: '6px 10px 6px 30px',
-              borderRadius: 6,
-              border: '1px solid var(--pg-border)',
-              background: 'var(--pg-surface-alt)',
-              color: 'var(--pg-text)',
-              fontSize: 'var(--pg-fs-caption)',
-              width: 200,
-            }}
+            className="pg-search"
           />
         </div>
       </div>

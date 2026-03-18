@@ -2,19 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
-import { MetricCard } from '@/components/demos/prizym-governance/StatusBadge';
+import { MetricCard, GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import {
   GOVERNANCE_KPIS, CASE_VOLUME_BY_TYPE, APPROVAL_DECISIONS,
   RISK_DISTRIBUTION, TOP_PERFORMERS, POLICY_COVERAGE_HEALTH,
 } from '@/data/prizym-governance/analytics';
-import { BarChart3, Shield, Users, AlertTriangle, CheckCircle2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { CheckCircle2, TrendingUp, TrendingDown, Minus, AlertTriangle, Shield, BarChart3, Users } from 'lucide-react';
 
 export default function AnalyticsPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
   return (
-    <PrizymPage title="Governance Analytics" subtitle="KPIs, trends, and performance metrics across governance operations">
+    <PrizymPage title="Governance Analytics" subtitle="KPIs, trends, and performance metrics across governance operations" mode="oversee">
       {/* Top KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[
@@ -27,44 +27,47 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Risk Distribution */}
-        <div className="pg-card" role="region" aria-label="Risk distribution">
-          <h3 className="pg-section-title">Risk Distribution</h3>
-          {RISK_DISTRIBUTION.map(r => (
-            <div key={r.category} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <span className="pg-label" style={{ minWidth: 70 }}>{r.category}</span>
-              <div className="pg-bar-track" style={{ flex: 1 }}>
-                <div className="pg-bar-fill" style={{ width: `${r.percentage}%`, background: r.color }} />
+        <div className="pg-card lg:col-span-2" role="region" aria-label="Risk distribution">
+          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <BarChart3 size={16} color="var(--pg-cyan)" />
+            Risk Distribution
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {RISK_DISTRIBUTION.map(r => (
+              <div key={r.category} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="pg-label" style={{ minWidth: 70 }}>{r.category}</span>
+                <div className="pg-bar-track-lg" style={{ flex: 1 }}>
+                  <div className="pg-bar-fill" style={{ width: mounted ? `${r.percentage}%` : '0%', background: r.color, height: '100%', borderRadius: 6 }} />
+                </div>
+                <span className="pg-value-sm" style={{ minWidth: 30, textAlign: 'right', color: r.color }}>{r.count}</span>
               </div>
-              <span className="pg-caption" style={{ minWidth: 30, textAlign: 'right' }}>{r.count}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Policy Coverage Health */}
-        <div className="pg-card" role="region" aria-label="Policy coverage health">
-          <h3 className="pg-section-title">Policy Coverage Health</h3>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 24, flexWrap: 'wrap', padding: '16px 0' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div className="pg-value" style={{ fontSize: '2.5rem', color: POLICY_COVERAGE_HEALTH.coveragePercentage >= 90 ? '#10b981' : '#f59e0b' }}>
-                {POLICY_COVERAGE_HEALTH.coveragePercentage}%
-              </div>
-              <div className="pg-caption" style={{ marginTop: 4 }}>Coverage Rate</div>
+        {/* Policy Coverage Gauge */}
+        <div className="pg-card-elevated" role="region" aria-label="Policy coverage health" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <h3 className="pg-section-title" style={{ alignSelf: 'flex-start' }}>Coverage Health</h3>
+          <GaugeChart
+            value={POLICY_COVERAGE_HEALTH.coveragePercentage}
+            size={130}
+            strokeWidth={10}
+            color={POLICY_COVERAGE_HEALTH.coveragePercentage >= 90 ? '#10b981' : '#f59e0b'}
+          />
+          <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <CheckCircle2 size={13} color="#10b981" />
+              <span className="pg-caption">{POLICY_COVERAGE_HEALTH.fullCoverage} fully covered</span>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <CheckCircle2 size={14} color="#10b981" />
-                <span className="pg-body">{POLICY_COVERAGE_HEALTH.fullCoverage} fully covered</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <AlertTriangle size={14} color="#f59e0b" />
-                <span className="pg-body">{POLICY_COVERAGE_HEALTH.gaps} gaps ({POLICY_COVERAGE_HEALTH.highPriorityGaps} high priority)</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Shield size={14} color="#10b981" />
-                <span className="pg-body">{POLICY_COVERAGE_HEALTH.criticalGaps} critical gaps</span>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <AlertTriangle size={13} color="#f59e0b" />
+              <span className="pg-caption">{POLICY_COVERAGE_HEALTH.gaps} gaps ({POLICY_COVERAGE_HEALTH.highPriorityGaps} high priority)</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Shield size={13} color="#10b981" />
+              <span className="pg-caption">{POLICY_COVERAGE_HEALTH.criticalGaps} critical gaps</span>
             </div>
           </div>
         </div>
@@ -72,7 +75,10 @@ export default function AnalyticsPage() {
 
       {/* Top Performers */}
       <div className="pg-card mb-6" role="region" aria-label="Top performers">
-        <h3 className="pg-section-title">Top Reviewers & Approvers</h3>
+        <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Users size={16} color="var(--pg-cyan)" />
+          Top Reviewers & Approvers
+        </h3>
         <div className="pg-table-wrap">
           <table className="pg-table">
             <thead>
@@ -82,18 +88,31 @@ export default function AnalyticsPage() {
                 <th>Role</th>
                 <th>Decisions</th>
                 <th>Avg Days</th>
+                <th>Efficiency</th>
               </tr>
             </thead>
             <tbody>
-              {TOP_PERFORMERS.map((p, i) => (
-                <tr key={p.name}>
-                  <td><span className="pg-label" style={{ color: i < 3 ? '#06b6d4' : 'var(--pg-text-faint)' }}>{i + 1}</span></td>
-                  <td><span className="pg-label">{p.name}</span></td>
-                  <td><span className="pg-caption">{p.role}</span></td>
-                  <td><span className="pg-value-sm">{p.decisions}</span></td>
-                  <td><span className="pg-caption">{p.avgDays} days</span></td>
-                </tr>
-              ))}
+              {TOP_PERFORMERS.map((p, i) => {
+                const efficiency = Math.min(100, Math.round((1 - p.avgDays / 14) * 100));
+                const effColor = efficiency >= 70 ? '#10b981' : efficiency >= 50 ? '#f59e0b' : '#ef4444';
+                return (
+                  <tr key={p.name}>
+                    <td><span className="pg-label" style={{ color: i < 3 ? '#06b6d4' : 'var(--pg-text-faint)' }}>{i + 1}</span></td>
+                    <td><span className="pg-label">{p.name}</span></td>
+                    <td><span className="pg-caption">{p.role}</span></td>
+                    <td><span className="pg-value-sm" style={{ color: '#06b6d4' }}>{p.decisions}</span></td>
+                    <td><span className="pg-caption">{p.avgDays} days</span></td>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div className="pg-bar-track" style={{ width: 60 }}>
+                          <div className="pg-bar-fill" style={{ width: mounted ? `${efficiency}%` : '0%', background: effColor }} />
+                        </div>
+                        <span className="pg-caption" style={{ color: effColor, fontWeight: 700 }}>{efficiency}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -103,29 +122,33 @@ export default function AnalyticsPage() {
         {/* Case Volume */}
         <div className="pg-card" role="region" aria-label="Case volume">
           <h3 className="pg-section-title">Case Volume by Type</h3>
-          {CASE_VOLUME_BY_TYPE.map(c => (
-            <div key={c.category} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <span className="pg-label" style={{ minWidth: 130 }}>{c.category}</span>
-              <div className="pg-bar-track" style={{ flex: 1 }}>
-                <div className="pg-bar-fill" style={{ width: `${c.percentage}%`, background: c.color }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {CASE_VOLUME_BY_TYPE.map(c => (
+              <div key={c.category} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="pg-label" style={{ minWidth: 130 }}>{c.category}</span>
+                <div className="pg-bar-track" style={{ flex: 1 }}>
+                  <div className="pg-bar-fill" style={{ width: mounted ? `${c.percentage}%` : '0%', background: c.color }} />
+                </div>
+                <span className="pg-value-sm" style={{ minWidth: 30, textAlign: 'right', color: c.color }}>{c.count}</span>
               </div>
-              <span className="pg-caption" style={{ minWidth: 30, textAlign: 'right' }}>{c.count}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Approval Breakdown */}
         <div className="pg-card" role="region" aria-label="Approval breakdown">
           <h3 className="pg-section-title">Approval Decisions (YTD)</h3>
-          {APPROVAL_DECISIONS.map(d => (
-            <div key={d.category} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <span className="pg-label" style={{ minWidth: 160 }}>{d.category}</span>
-              <div className="pg-bar-track" style={{ flex: 1 }}>
-                <div className="pg-bar-fill" style={{ width: `${d.percentage}%`, background: d.color }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {APPROVAL_DECISIONS.map(d => (
+              <div key={d.category} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="pg-label" style={{ minWidth: 160 }}>{d.category}</span>
+                <div className="pg-bar-track" style={{ flex: 1 }}>
+                  <div className="pg-bar-fill" style={{ width: mounted ? `${d.percentage}%` : '0%', background: d.color }} />
+                </div>
+                <span className="pg-value-sm" style={{ minWidth: 30, textAlign: 'right', color: d.color }}>{d.count}</span>
               </div>
-              <span className="pg-caption" style={{ minWidth: 30, textAlign: 'right' }}>{d.count}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </PrizymPage>
