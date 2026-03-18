@@ -1,5 +1,5 @@
-/* Prizym Governance — Light/Dark CSS Custom Properties
-   Summit Navy & Cyan theme for SPM governance
+/* Prizym Governance — Premium Dark Theme
+   Summit Navy & Cyan with glass morphism, gradients, depth
 */
 
 /* ── Light mode (default) ─────────────────────── */
@@ -14,7 +14,10 @@
   --pg-card-alt: #f7fafc;
   --pg-border: #e2e8f0;
   --pg-border-faint: #edf2f7;
-  --pg-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --pg-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --pg-shadow-lg: 0 8px 24px rgba(6,182,212,0.08);
+  --pg-shadow-xl: 0 12px 36px rgba(6,182,212,0.12);
   --pg-hover: rgba(0,0,0,0.04);
   --pg-stripe: #f1f5f9;
   --pg-surface-alt: #f1f5f9;
@@ -28,6 +31,12 @@
 
   --pg-header-bg: rgba(255,255,255,0.95);
   --pg-footer-bg: #ffffff;
+
+  /* Gradients */
+  --pg-gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0e4d6e 100%);
+  --pg-gradient-accent: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+  --pg-gradient-subtle: linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(139,92,246,0.06) 100%);
+  --pg-gradient-card-hover: linear-gradient(135deg, rgba(6,182,212,0.03) 0%, rgba(139,92,246,0.03) 100%);
 
   /* Brand colors */
   --pg-navy: #0f172a;
@@ -84,15 +93,18 @@
   --pg-text-muted: #94a3b8;
   --pg-text-faint: #64748b;
 
-  --pg-bg: #0f172a;
-  --pg-card: #1e293b;
-  --pg-card-alt: #162032;
-  --pg-border: #334155;
-  --pg-border-faint: #1e293b;
-  --pg-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --pg-bg: #0a0f1e;
+  --pg-card: rgba(30,41,59,0.7);
+  --pg-card-alt: rgba(22,32,50,0.7);
+  --pg-border: rgba(100,116,139,0.25);
+  --pg-border-faint: rgba(100,116,139,0.12);
+  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --pg-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --pg-shadow-lg: 0 8px 24px rgba(6,182,212,0.1);
+  --pg-shadow-xl: 0 12px 36px rgba(6,182,212,0.15);
   --pg-hover: rgba(255,255,255,0.04);
   --pg-stripe: rgba(255,255,255,0.03);
-  --pg-surface-alt: #1e293b;
+  --pg-surface-alt: rgba(255,255,255,0.04);
 
   --pg-sidebar-bg-start: #1e293b;
   --pg-sidebar-bg-end: #0f172a;
@@ -101,8 +113,13 @@
   --pg-sidebar-active-bg: rgba(6,182,212,0.12);
   --pg-sidebar-border: rgba(6,182,212,0.12);
 
-  --pg-header-bg: rgba(15,23,42,0.95);
-  --pg-footer-bg: #0f172a;
+  --pg-header-bg: rgba(10,15,30,0.95);
+  --pg-footer-bg: #0a0f1e;
+
+  --pg-gradient-hero: linear-gradient(135deg, #0a0f1e 0%, #0f2035 40%, #0e3050 70%, #0f172a 100%);
+  --pg-gradient-accent: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+  --pg-gradient-subtle: linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(139,92,246,0.08) 100%);
+  --pg-gradient-card-hover: linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(139,92,246,0.06) 100%);
 
   --pg-cyan-bg: rgba(6,182,212,0.12);
   --pg-gold-bg: rgba(201,148,43,0.12);
@@ -116,7 +133,7 @@
   --pl-surface-hover: rgba(255,255,255,0.08);
   --pl-card-bg: rgba(255,255,255,0.05);
   --pl-card-border: rgba(255,255,255,0.12);
-  --pl-bar-bg: rgba(15,23,42,0.96);
+  --pl-bar-bg: rgba(10,15,30,0.96);
   --pl-bar-border: rgba(6,182,212,0.3);
   --pl-content-bg: var(--pg-bg);
   --pl-page-bg: var(--pg-bg);
@@ -143,8 +160,32 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes pg-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pg-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pg-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(6,182,212,0); }
+  50% { box-shadow: 0 0 20px 4px rgba(6,182,212,0.15); }
+}
+
+@keyframes pg-bar-grow {
+  from { width: 0; }
+}
+
 .pg-animate-in {
   animation: pg-fade-in 0.3s ease-out both;
+}
+
+.pg-animate-slide {
+  animation: pg-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ── Typography ──────────────────────────────── */
@@ -210,6 +251,13 @@
   line-height: 1.1;
 }
 
+.pg-value-lg {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
 .pg-label {
   font-size: var(--pg-fs-body);
   font-weight: 700;
@@ -229,19 +277,76 @@
   margin-bottom: 12px;
 }
 
-/* ── Card ─────────────────────────────────────── */
+/* ── Card system (glass morphism) ─────────────── */
 .pg-card {
   background: var(--pg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--pg-border);
   border-radius: 12px;
   padding: 20px;
   box-shadow: var(--pg-shadow);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-  border-color: var(--pg-cyan);
+  box-shadow: var(--pg-shadow-lg);
+  border-color: rgba(6,182,212,0.3);
+  transform: translateY(-1px);
+}
+
+.pg-card-elevated {
+  background: var(--pg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--pg-border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--pg-shadow-lg);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pg-card-elevated:hover {
+  box-shadow: var(--pg-shadow-xl);
+  border-color: rgba(6,182,212,0.4);
+  transform: translateY(-2px);
+}
+
+/* Hero banner card with gradient background */
+.pg-hero-card {
+  background: var(--pg-gradient-hero);
+  border: 1px solid rgba(6,182,212,0.2);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: var(--pg-shadow-lg);
+  position: relative;
+  overflow: hidden;
+  color: #f1f5f9;
+}
+
+.pg-hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(6,182,212,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at bottom left, rgba(139,92,246,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Gradient accent border card */
+.pg-card-gradient {
+  position: relative;
+  padding: 2px;
+  border-radius: 14px;
+  background: var(--pg-gradient-accent);
+  background-size: 200% 200%;
+  animation: pg-gradient-shift 8s ease infinite;
+}
+
+.pg-card-gradient > * {
+  background: var(--pg-card);
+  border-radius: 12px;
+  padding: 20px;
 }
 
 /* ── Badge ────────────────────────────────────── */
@@ -271,10 +376,15 @@
 
 .pg-table tbody tr {
   border-bottom: 1px solid var(--pg-border-faint);
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .pg-table tbody tr:hover td {
   background: var(--pg-hover);
+}
+
+.pg-table tbody tr:hover {
+  border-left: 3px solid var(--pg-cyan);
 }
 
 .pg-table th {
@@ -295,23 +405,120 @@
 
 /* ── Metric tile ─────────────────────────────── */
 .pg-metric-tile {
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   text-align: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Bar ──────────────────────────────────────── */
+.pg-metric-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pg-shadow-lg);
+}
+
+/* ── Bar charts ──────────────────────────────── */
 .pg-bar-track {
-  height: 6px;
+  height: 8px;
   background: var(--pg-border-faint);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .pg-bar-fill {
   height: 100%;
-  border-radius: 3px;
-  transition: width 0.8s ease-out;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pg-bar-grow 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pg-bar-track-lg {
+  height: 12px;
+  background: var(--pg-border-faint);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* ── Icon bubble ────────────────────────────── */
+.pg-icon-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.pg-icon-bubble-sm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Filter button ──────────────────────────── */
+.pg-filter-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: var(--pg-fs-caption);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--pg-border);
+  background: transparent;
+  color: var(--pg-text-muted);
+}
+
+.pg-filter-btn:hover {
+  background: var(--pg-hover);
+  border-color: var(--pg-text-faint);
+}
+
+.pg-filter-btn[data-active="true"] {
+  border-color: var(--pg-cyan);
+  background: var(--pg-cyan-bg);
+  color: var(--pg-cyan);
+  box-shadow: 0 0 12px rgba(6,182,212,0.15);
+}
+
+/* ── Search input ───────────────────────────── */
+.pg-search {
+  padding: 8px 12px 8px 32px;
+  border-radius: 8px;
+  border: 1px solid var(--pg-border);
+  background: var(--pg-surface-alt);
+  color: var(--pg-text);
+  font-size: var(--pg-fs-caption);
+  width: 220px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pg-search:focus {
+  border-color: var(--pg-cyan);
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.1);
+  outline: none;
+}
+
+/* ── Circular gauge ─────────────────────────── */
+.pg-gauge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-gauge svg {
+  transform: rotate(-90deg);
+}
+
+.pg-gauge-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ── Responsive ──────────────────────────────── */
@@ -321,6 +528,9 @@
   }
   .pg-card {
     padding: 16px;
+  }
+  .pg-hero-card {
+    padding: 20px;
   }
 }
 
@@ -365,4 +575,54 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+/* ── Highlight row ──────────────────────────── */
+.pg-highlight-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.pg-highlight-row:hover {
+  transform: translateX(4px);
+}
+
+/* ── Tag pill ───────────────────────────────── */
+.pg-tag {
+  padding: 2px 10px;
+  border-radius: 6px;
+  background: var(--pg-surface-alt);
+  border: 1px solid var(--pg-border-faint);
+  font-size: var(--pg-fs-overline);
+  color: var(--pg-text-faint);
+  transition: all 0.15s;
+}
+
+.pg-tag:hover {
+  border-color: var(--pg-cyan);
+  color: var(--pg-cyan);
+}
+
+/* ── Divider ────────────────────────────────── */
+.pg-divider {
+  height: 1px;
+  background: var(--pg-border-faint);
+  margin: 16px 0;
+}
+
+/* ── Skeleton loading shimmer ───────────────── */
+@keyframes pg-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.pg-skeleton {
+  background: linear-gradient(90deg, var(--pg-surface-alt) 25%, var(--pg-hover) 50%, var(--pg-surface-alt) 75%);
+  background-size: 200% 100%;
+  animation: pg-shimmer 1.5s infinite;
+  border-radius: 6px;
 }

@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { ALL_DOCUMENTS, DOCUMENT_COUNTS, DOC_TYPE_COLORS } from '@/data/prizym-governance/documents';
-import { Search } from 'lucide-react';
+import { Search, FileText } from 'lucide-react';
 
 export default function DocumentsPage() {
+  const [mounted, setMounted] = useState(false);
   const [typeFilter, setTypeFilter] = useState('all');
   const [search, setSearch] = useState('');
+  useEffect(() => { setMounted(true); }, []);
 
   const filtered = ALL_DOCUMENTS.filter(d => {
     if (typeFilter !== 'all' && d.documentType !== typeFilter) return false;
@@ -28,8 +30,8 @@ export default function DocumentsPage() {
   return (
     <PrizymPage title="Document Library" subtitle={`${DOCUMENT_COUNTS.TOTAL} governance documents across 6 categories`} mode="operate">
       {/* Type stats bar */}
-      <div className="pg-card mb-4" role="region" aria-label="Document type breakdown">
-        <div style={{ display: 'flex', gap: 0, borderRadius: 6, overflow: 'hidden', height: 8 }}>
+      <div className="pg-card mb-5" role="region" aria-label="Document type breakdown">
+        <div style={{ display: 'flex', gap: 0, borderRadius: 8, overflow: 'hidden', height: 10 }}>
           {Object.entries(DOCUMENT_COUNTS).filter(([k]) => k !== 'TOTAL').map(([type, count]) => (
             <div
               key={type}
@@ -37,15 +39,16 @@ export default function DocumentsPage() {
                 width: `${(count / DOCUMENT_COUNTS.TOTAL) * 100}%`,
                 background: DOC_TYPE_COLORS[type] ?? '#64748b',
                 minWidth: count > 0 ? 4 : 0,
+                transition: 'width 1s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
           ))}
         </div>
-        <div style={{ display: 'flex', gap: 12, marginTop: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 14, marginTop: 10, flexWrap: 'wrap' }}>
           {Object.entries(DOCUMENT_COUNTS).filter(([k]) => k !== 'TOTAL').map(([type, count]) => (
-            <div key={type} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 8, height: 8, borderRadius: 2, background: DOC_TYPE_COLORS[type] ?? '#64748b' }} />
-              <span className="pg-caption">{type.charAt(0) + type.slice(1).toLowerCase()} ({count})</span>
+            <div key={type} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 10, height: 10, borderRadius: 3, background: DOC_TYPE_COLORS[type] ?? '#64748b' }} />
+              <span className="pg-caption" style={{ fontWeight: 600 }}>{type.charAt(0) + type.slice(1).toLowerCase()} ({count})</span>
             </div>
           ))}
         </div>
@@ -56,17 +59,14 @@ export default function DocumentsPage() {
         {TYPE_FILTERS.map(f => (
           <button
             key={f.key}
+            className="pg-filter-btn"
+            data-active={typeFilter === f.key ? 'true' : undefined}
             onClick={() => setTypeFilter(f.key)}
-            style={{
-              padding: '6px 14px',
-              borderRadius: 6,
-              border: `1px solid ${typeFilter === f.key ? (DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)') : 'var(--pg-border)'}`,
-              background: typeFilter === f.key ? `${DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)'}18` : 'transparent',
-              color: typeFilter === f.key ? (DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)') : 'var(--pg-text-muted)',
-              fontWeight: 600,
-              fontSize: 'var(--pg-fs-caption)',
-              cursor: 'pointer',
-            }}
+            style={typeFilter === f.key ? {
+              borderColor: DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)',
+              background: `${DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)'}12`,
+              color: DOC_TYPE_COLORS[f.key] ?? 'var(--pg-cyan)',
+            } : undefined}
           >
             {f.label}
           </button>
@@ -78,15 +78,7 @@ export default function DocumentsPage() {
             placeholder="Search documents..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            style={{
-              padding: '6px 10px 6px 30px',
-              borderRadius: 6,
-              border: '1px solid var(--pg-border)',
-              background: 'var(--pg-surface-alt)',
-              color: 'var(--pg-text)',
-              fontSize: 'var(--pg-fs-caption)',
-              width: 200,
-            }}
+            className="pg-search"
           />
         </div>
       </div>
