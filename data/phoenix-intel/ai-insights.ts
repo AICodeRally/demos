@@ -60,7 +60,7 @@ export const AI_INSIGHTS: Record<string, AIInsight> = {
     label: 'AI Advisor',
   },
   'training': {
-    text: 'Content Repository Modernization underway: ~500 files across ~20 modules, all in Dropbox with no version control. Pain ratings 4-5/5 across the board. CSU Chancellor\'s Office pilot in progress. AI handles drafts, tagging, dedup, and stale flagging (human review required for final content). Academy monetization: $120K Year 1 at 45% margin via async courses and LinkedIn badges. Target completion: August 2026.',
+    text: 'Content Repository Modernization underway: ~130 files across ~13 presentation modules, all in Dropbox with no version control. Pain ratings 4-5/5 across the board. AI handles drafts, tagging, dedup, and stale flagging (human review required for final content). Academy monetization: $120K Year 1 at 45% margin via async courses and LinkedIn badges. Target completion: August 2026.',
   },
   'training/catalog': {
     text: 'Workshop format courses have 2.3x higher completion rates than webinars. Consider converting top-performing webinars (Introduction to Fundraising, Donor Stewardship Excellence) to hybrid workshop format.',

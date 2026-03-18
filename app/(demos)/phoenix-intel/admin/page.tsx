@@ -14,14 +14,14 @@ const CONNECTORS = [
   { name: 'Outlook', data: 'Richard personal + Phoenix org — email, scheduling, contact sync', status: 'connected' as const, lastSync: '2026-03-16 07:00', icon: '📬' },
   { name: 'Constant Contact', data: 'Email marketing, newsletters, subscriber lists', status: 'connected' as const, lastSync: '2026-03-16 06:45', icon: '📨' },
   { name: 'Formsite', data: 'Client satisfaction surveys — sent/received/ratings tracking', status: 'connected' as const, lastSync: '2026-03-14 09:00', icon: '📋' },
-  { name: 'Knack (NAC)', data: 'CRM data, 3,940 contacts — migrating to relational DB', status: 'migrating' as const, lastSync: '2026-03-12 14:00', icon: '🗃️' },
+  { name: 'Knack', data: 'CRM data, 2,500-3,000 contacts — migrating to relational DB', status: 'migrating' as const, lastSync: '2026-03-12 14:00', icon: '🗃️' },
   { name: 'Intervals', data: 'DEPRECATED — replaced by passive telemetry time capture', status: 'deprecated' as const, lastSync: 'Sunset', icon: '⏱️' },
   { name: 'Dropbox', data: 'Legacy file storage — migrating to SharePoint', status: 'deprecated' as const, lastSync: 'Sunset', icon: '📁' },
   { name: 'Zoom', data: 'Video conferencing — migrating to MS Teams (saves $7,500/yr)', status: 'deprecated' as const, lastSync: 'Sunset', icon: '📹' },
 ];
 
 const DATA_MIGRATIONS = [
-  { source: 'Knack (NAC)', target: 'Relational Database', records: '3,940 contacts / 22 categories', status: 'In Progress', progress: 35, note: 'AI dedup running — 127 potential duplicates flagged' },
+  { source: 'Knack', target: 'Relational Database', records: '2,500-3,000 contacts', status: 'In Progress', progress: 35, note: 'AI dedup running — 127 potential duplicates flagged' },
   { source: 'Dropbox', target: 'SharePoint / M365', records: '~8,200 files', status: 'Planning', progress: 10, note: 'MCP connector configured for automated migration' },
   { source: 'Intervals', target: 'Passive Telemetry', records: '18 months history', status: 'Mapping', progress: 20, note: 'Historical data export complete, mapping project codes' },
 ];

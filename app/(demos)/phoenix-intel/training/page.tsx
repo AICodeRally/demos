@@ -151,7 +151,7 @@ export default function TrainingPage() {
           <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#3b6bf5' }}>Content Repository Modernization — In Progress</h3>
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)', marginBottom: 12 }}>
-          ~20 modules, ~500 files, ~20 years of accumulated content — all in Dropbox with inconsistent naming, no version control, and no tagging.
+          ~13 presentation modules, ~130 content files, ~20 years of accumulated content — all in Dropbox with inconsistent naming, no version control, and no tagging.
           Biggest frustration: inability to find the latest content or formatting when creating new content.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3" style={{ marginBottom: 12 }}>
@@ -180,7 +180,7 @@ export default function TrainingPage() {
           ))}
         </div>
         <div style={{ fontSize: '0.8rem', color: 'var(--pi-text-faint)', borderTop: '1px solid var(--pi-border-faint)', paddingTop: 8 }}>
-          Pilot: CSU Chancellor&apos;s Office modules · Taxonomy: Track / Module / Topic · Target: August 2026 · SMEs: Richard, Michal, Kelly
+          Taxonomy: Track / Module / Topic · Target: August 2026 · SMEs: Richard, Michal, Kelly
         </div>
       </div>
 
