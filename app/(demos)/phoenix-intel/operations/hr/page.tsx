@@ -2,8 +2,9 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { CheckCircle2, Circle, AlertTriangle, Shield, Users, Calendar, Laptop } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Circle, Shield, Users, Laptop } from 'lucide-react';
 
 const TEAM_ROSTER = [
   { name: 'Richard Tollefson', title: 'President', status: 'active', type: 'Full-Time', since: '2008', compliance: 'current' },
@@ -53,7 +54,7 @@ export default function HRCompliancePage() {
   return (
     <PhoenixPage title="HR & Compliance" subtitle="Team roster, compliance tracking, onboarding, and technology inventory" accentColor="#f59e0b">
       {/* Team Roster */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card pi-card-section" role="region" aria-label="Team roster">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div>
             <h3 className="pi-section-title" style={{ marginBottom: 4 }}>Team Roster</h3>
@@ -64,45 +65,36 @@ export default function HRCompliancePage() {
             <span><strong style={{ color: '#3b6bf5' }}>{TEAM_ROSTER.filter(t => t.type === 'Part-Time').length}</strong> PT</span>
           </div>
         </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Name', 'Title', 'Type', 'Since', 'Compliance'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {TEAM_ROSTER.map((m, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td className="pi-label" style={{ padding: '10px 8px' }}>{m.name}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.title}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.type}</td>
-                  <td className="pi-caption" style={{ padding: '10px 8px' }}>{m.since}</td>
-                  <td style={{ padding: '10px 8px' }}>
-                    {m.compliance === 'current' ? (
-                      <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10b981', textTransform: 'none' }}>
-                        <CheckCircle2 size={14} /> Current
-                      </span>
-                    ) : (
-                      <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#c9942b', textTransform: 'none' }}>
-                        <AlertTriangle size={14} /> Due Soon
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={TEAM_ROSTER}
+          keyFn={(_, i) => String(i)}
+          columns={[
+            { key: 'name', header: 'Name', render: (m) => <span className="pi-label">{m.name}</span> },
+            { key: 'title', header: 'Title', render: (m) => <span className="pi-body-muted">{m.title}</span> },
+            { key: 'type', header: 'Type', hideSm: true, render: (m) => <span className="pi-body-muted">{m.type}</span> },
+            { key: 'since', header: 'Since', hideSm: true, render: (m) => <span className="pi-caption">{m.since}</span> },
+            {
+              key: 'compliance',
+              header: 'Compliance',
+              render: (m) => m.compliance === 'current' ? (
+                <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10b981', textTransform: 'none' }}>
+                  <CheckCircle2 size={14} aria-hidden="true" /> Current
+                </span>
+              ) : (
+                <span className="pi-overline" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#c9942b', textTransform: 'none' }}>
+                  <AlertTriangle size={14} aria-hidden="true" /> Due Soon
+                </span>
+              ),
+            },
+          ]}
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Compliance Tracker */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Compliance tracker">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <Shield size={18} color="#f59e0b" />
+            <Shield size={18} color="#f59e0b" aria-hidden="true" />
             <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Compliance Tracker</h3>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -112,11 +104,11 @@ export default function HRCompliancePage() {
                 borderBottom: '1px solid var(--pi-border-faint)',
               }}>
                 {item.status === 'complete' ? (
-                  <CheckCircle2 size={16} color="#10b981" />
+                  <CheckCircle2 size={16} color="#10b981" aria-label="Complete" />
                 ) : item.status === 'due-soon' ? (
-                  <AlertTriangle size={16} color="#c9942b" />
+                  <AlertTriangle size={16} color="#c9942b" aria-label="Due soon" />
                 ) : (
-                  <Circle size={16} color="var(--pi-text-faint)" />
+                  <Circle size={16} color="var(--pi-text-faint)" aria-label="Upcoming" />
                 )}
                 <div style={{ flex: 1 }}>
                   <div className="pi-body" style={{
@@ -134,9 +126,9 @@ export default function HRCompliancePage() {
         </div>
 
         {/* Onboarding Templates */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Onboarding templates">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <Users size={18} color="#3b6bf5" />
+            <Users size={18} color="#3b6bf5" aria-hidden="true" />
             <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Onboarding Templates</h3>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -159,12 +151,12 @@ export default function HRCompliancePage() {
       </div>
 
       {/* Technology Inventory */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card pi-card-section" role="region" aria-label="Technology inventory">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-          <Laptop size={18} color="#7c3aed" />
+          <Laptop size={18} color="#7c3aed" aria-hidden="true" />
           <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Technology Inventory</h3>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pi-stack-sm">
           {IT_ASSETS.map((cat) => (
             <div key={cat.category}>
               <div className="pi-overline" style={{ marginBottom: 8 }}>{cat.category}</div>

@@ -6,6 +6,7 @@ import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { PillarCard } from '@/components/demos/phoenix-intel/PillarCard';
 import { PerformanceRing } from '@/components/demos/phoenix-intel/PerformanceRing';
 import { PipelineFunnel } from '@/components/demos/phoenix-intel/PipelineFunnel';
+import { MetricCardWithIcon } from '@/components/demos/phoenix-intel/MetricCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { ANNUAL_SUMMARY } from '@/data/phoenix-intel/financial-data';
 import { getPipelineStages, ENGAGEMENTS, CLIENTS } from '@/data/phoenix-intel/nonprofit-data';
@@ -36,34 +37,22 @@ export default function DashboardPage() {
   return (
     <PhoenixPage title="Executive Dashboard" subtitle="The Phoenix Philanthropy Group — Advancement Intelligence" accentColor="#3b6bf5">
       {/* Hero KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {HERO_KPIS.map((kpi, i) => {
-          const Icon = kpi.icon;
-          return (
-            <div
-              key={kpi.label}
-              className="phoenix-card"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${i * 0.08}s`,
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                <div style={{ background: `${kpi.color}18`, borderRadius: 8, padding: 6, display: 'flex' }}>
-                  <Icon size={18} color={kpi.color} />
-                </div>
-                <span className="pi-label-muted">{kpi.label}</span>
-              </div>
-              <div className="pi-value">{kpi.value}</div>
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Key performance indicators">
+        {HERO_KPIS.map((kpi, i) => (
+          <MetricCardWithIcon
+            key={kpi.label}
+            label={kpi.label}
+            value={kpi.value}
+            icon={kpi.icon}
+            color={kpi.color}
+            mounted={mounted}
+            delay={i * 0.08}
+          />
+        ))}
       </div>
 
       {/* 6P Pillars */}
-      <div className="mb-8">
+      <div className="mb-8" role="region" aria-label="6P Framework health scores">
         <h2 className="pi-subheading" style={{ marginBottom: 12 }}>6P Framework Health</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {PILLARS.map((p, i) => (
@@ -74,13 +63,13 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Pipeline Funnel */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Deal pipeline">
           <h3 className="pi-section-title">Deal Pipeline</h3>
           <PipelineFunnel stages={stages} />
         </div>
 
         {/* Performance Rings */}
-        <div className="phoenix-card">
+        <div className="phoenix-card" role="region" aria-label="Key performance rings">
           <h3 className="pi-section-title">Key Performance Indicators</h3>
           <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 16 }}>
             <PerformanceRing value={ANNUAL_SUMMARY.profitMargin} label="Profit Margin" color="#10b981" />
@@ -91,9 +80,9 @@ export default function DashboardPage() {
       </div>
 
       {/* Firm Health Indicators */}
-      <div className="phoenix-card" style={{ marginBottom: 20 }}>
+      <div className="phoenix-card" style={{ marginBottom: 20 }} role="region" aria-label="Firm health indicators">
         <h3 className="pi-section-title">Firm Health Indicators</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pi-stack-sm">
           {[
             { label: 'BD Concentration', value: '70-75%', sub: 'Richard generates — target <50%', icon: AlertTriangle, color: '#ef4444', alert: true },
             { label: 'Contact Database', value: '2,500-3K', sub: 'After 20 years — needs growth', icon: Database, color: '#c9942b', alert: true },
@@ -104,7 +93,7 @@ export default function DashboardPage() {
               background: m.alert ? `${m.color}08` : 'var(--pi-surface-alt, rgba(255,255,255,0.03))',
               border: `1px solid ${m.alert ? `${m.color}30` : 'var(--pi-border-faint)'}`,
             }}>
-              <m.icon size={18} color={m.color} style={{ margin: '0 auto 6px' }} />
+              <m.icon size={18} color={m.color} style={{ margin: '0 auto 6px' }} aria-hidden="true" />
               <div className="pi-value-sm" style={{ color: m.color }}>{m.value}</div>
               <div className="pi-overline" style={{ marginTop: 2 }}>{m.label}</div>
               <div className="pi-caption" style={{ marginTop: 2 }}>{m.sub}</div>

@@ -361,6 +361,257 @@
   text-align: center;
 }
 
+/* ── Spacing scale ──────────────────────────────
+   Consistent spacing tokens for cards, sections, gaps.
+   4px base: 4, 8, 12, 16, 20, 24, 32, 48
+   ──────────────────────────────────────────────── */
+:root {
+  --pi-space-xs: 4px;
+  --pi-space-sm: 8px;
+  --pi-space-md: 12px;
+  --pi-space-lg: 16px;
+  --pi-space-xl: 20px;
+  --pi-space-2xl: 24px;
+  --pi-space-3xl: 32px;
+  --pi-space-4xl: 48px;
+}
+
+/* Card spacing normalization — all phoenix-cards get consistent padding */
+.phoenix-card {
+  padding: var(--pi-space-xl);
+}
+
+/* Card section gap — consistent bottom margin between card sections */
+.pi-card-section {
+  margin-bottom: var(--pi-space-2xl);
+}
+
+/* ── Responsive ─────────────────────────────────
+   Table overflow, flex wrap, stack-on-mobile
+   ──────────────────────────────────────────────── */
+
+/* Scrollable table wrapper — prevents horizontal page overflow */
+.pi-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--pi-space-xl));
+  padding: 0 var(--pi-space-xl);
+}
+
+/* Table base styles — consistent padding and borders */
+.pi-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pi-table thead tr {
+  border-bottom: 2px solid var(--pi-border);
+}
+
+.pi-table tbody tr {
+  border-bottom: 1px solid var(--pi-border-faint);
+}
+
+.pi-table th {
+  text-align: left;
+  padding: var(--pi-space-sm) 10px;
+  font-size: var(--pi-fs-overline);
+  font-weight: 700;
+  color: var(--pi-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.pi-table td {
+  padding: 10px;
+}
+
+/* Stack grid columns on small screens */
+@media (max-width: 640px) {
+  .pi-stack-sm {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce card padding on mobile */
+  .phoenix-card {
+    padding: var(--pi-space-lg);
+  }
+
+  /* Hide non-essential table columns */
+  .pi-table .pi-hide-sm {
+    display: none;
+  }
+
+  /* Full-width badges on mobile */
+  .pi-badge {
+    font-size: var(--pi-fs-overline);
+  }
+}
+
+@media (max-width: 768px) {
+  .pi-stack-md {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Flex wrap helper for responsive flex layouts */
+.pi-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pi-space-sm);
+}
+
+/* ── Accessibility ──────────────────────────────
+   Focus indicators, contrast, screen reader utils
+   ──────────────────────────────────────────────── */
+
+/* Screen reader only */
+.pi-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Global focus-visible ring — applies to ALL interactive elements in phoenix pages */
+.phoenix-page a:focus-visible,
+.phoenix-page button:focus-visible,
+.phoenix-page input:focus-visible,
+.phoenix-page select:focus-visible,
+.phoenix-page textarea:focus-visible,
+.phoenix-page [tabindex]:focus-visible {
+  outline: 2px solid var(--pi-sapphire);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content link — keyboard users see this first */
+.pi-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  padding: 8px 16px;
+  background: var(--pi-sapphire);
+  color: #fff;
+  border-radius: 0 0 8px 8px;
+  font-weight: 700;
+  font-size: var(--pi-fs-body);
+  z-index: 9999;
+  transition: top 0.2s;
+}
+
+.pi-skip-link:focus {
+  top: 0;
+}
+
+/* Table row focus for keyboard navigation */
+.pi-table tbody tr:focus-within {
+  outline: 2px solid var(--pi-sapphire);
+  outline-offset: -2px;
+}
+
+/* Ensure minimum touch target size for mobile */
+@media (pointer: coarse) {
+  .phoenix-card button,
+  .phoenix-card a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ── Empty & loading states ─────────────────── */
+
+/* Skeleton shimmer animation */
+@keyframes pi-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.pi-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--pi-border-faint) 25%,
+    var(--pi-border) 50%,
+    var(--pi-border-faint) 75%
+  );
+  background-size: 200% 100%;
+  animation: pi-shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.pi-skeleton-text {
+  height: 0.9em;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.pi-skeleton-heading {
+  height: 1.5em;
+  width: 60%;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+.pi-skeleton-card {
+  height: 120px;
+  border-radius: 12px;
+}
+
+/* Empty state container */
+.pi-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pi-space-4xl) var(--pi-space-xl);
+  text-align: center;
+  color: var(--pi-text-faint);
+}
+
+.pi-empty-state svg {
+  margin-bottom: var(--pi-space-lg);
+  opacity: 0.4;
+}
+
+/* ── Alert banners ──────────────────────────── */
+.pi-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--pi-space-md) var(--pi-space-lg);
+  border-radius: 8px;
+  font-size: var(--pi-fs-body);
+  color: var(--pi-text);
+  line-height: 1.6;
+  margin-bottom: var(--pi-space-xl);
+}
+
+.pi-alert-info {
+  background: rgba(59,107,245,0.06);
+  border: 1px solid rgba(59,107,245,0.15);
+}
+
+.pi-alert-success {
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.15);
+}
+
+.pi-alert-warning {
+  background: rgba(201,148,43,0.06);
+  border: 1px solid rgba(201,148,43,0.15);
+}
+
+.pi-alert-danger {
+  background: rgba(239,68,68,0.06);
+  border: 1px solid rgba(239,68,68,0.15);
+}
+
 /* ── Light-mode sidebar — force readable on white ── */
 /* Logo: DemoShell hardcodes white gradient text, invisible on white sidebar.
    Inline styles require !important to override. Multiple selectors for safety. */

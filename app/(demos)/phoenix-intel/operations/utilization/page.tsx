@@ -2,6 +2,8 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { CONSULTANTS, ENGAGEMENTS } from '@/data/phoenix-intel/nonprofit-data';
 import { AlertTriangle, TrendingUp, Users, Clock } from 'lucide-react';
@@ -19,37 +21,23 @@ export default function UtilizationPage() {
     <PhoenixPage title="Team Utilization" subtitle="Consultant workload, capacity planning, and burnout risk monitoring" accentColor="#f59e0b">
       {/* Burnout Alert */}
       {atRisk.length > 0 && (
-        <div className="pi-body-muted" style={{
-          display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', marginBottom: 20,
-          borderRadius: 8, background: '#ef444412', border: '1px solid #ef444430',
-        }}>
-          <AlertTriangle size={16} color="#ef4444" style={{ flexShrink: 0 }} />
-          <span style={{ color: 'var(--pi-text)' }}>
-            <strong style={{ color: '#ef4444' }}>Burnout risk:</strong>{' '}
-            {atRisk.map(c => `${c.name} (${c.utilization}%)`).join(', ')} — above {BURNOUT_THRESHOLD}% utilization threshold.
-            Recommend redistributing 1+ engagement to maintain sustainable workloads.
-          </span>
-        </div>
+        <Alert variant="danger" icon={AlertTriangle}>
+          <strong style={{ color: '#ef4444' }}>Burnout risk:</strong>{' '}
+          {atRisk.map(c => `${c.name} (${c.utilization}%)`).join(', ')} — above {BURNOUT_THRESHOLD}% utilization threshold.
+          Recommend redistributing 1+ engagement to maintain sustainable workloads.
+        </Alert>
       )}
 
       {/* Summary Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Avg Utilization', value: `${avgUtilization}%`, icon: TrendingUp, color: avgUtilization >= UTILIZATION_TARGET ? '#10b981' : '#f59e0b' },
-          { label: 'Above Target', value: `${overTarget}/${CONSULTANTS.length}`, icon: Users, color: '#3b6bf5' },
-          { label: 'At Risk (>90%)', value: String(atRisk.length), icon: AlertTriangle, color: atRisk.length > 0 ? '#ef4444' : '#10b981' },
-          { label: 'Target', value: `${UTILIZATION_TARGET}%`, icon: Clock, color: '#64748b' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Utilization summary">
+        <MetricCard label="Avg Utilization" value={`${avgUtilization}%`} icon={TrendingUp} color={avgUtilization >= UTILIZATION_TARGET ? '#10b981' : '#f59e0b'} />
+        <MetricCard label="Above Target" value={`${overTarget}/${CONSULTANTS.length}`} icon={Users} color="#3b6bf5" />
+        <MetricCard label={`At Risk (>${BURNOUT_THRESHOLD}%)`} value={String(atRisk.length)} icon={AlertTriangle} color={atRisk.length > 0 ? '#ef4444' : '#10b981'} />
+        <MetricCard label="Target" value={`${UTILIZATION_TARGET}%`} icon={Clock} color="#64748b" />
       </div>
 
       {/* Utilization Bars */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card pi-card-section" role="region" aria-label="Consultant utilization bars">
         <h3 className="pi-section-title" style={{ marginBottom: 16 }}>Consultant Utilization</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {[...CONSULTANTS].sort((a, b) => b.utilization - a.utilization).map(c => {
@@ -67,7 +55,13 @@ export default function UtilizationPage() {
                     <span className="pi-label" style={{ color: barColor }}>{c.utilization}%</span>
                   </div>
                 </div>
-                <div style={{ height: 8, borderRadius: 4, background: 'var(--pi-border-faint)', overflow: 'hidden', position: 'relative' }}>
+                <div style={{ height: 8, borderRadius: 4, background: 'var(--pi-border-faint)', overflow: 'hidden', position: 'relative' }}
+                  role="progressbar"
+                  aria-valuenow={c.utilization}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`${c.name} utilization: ${c.utilization}%`}
+                >
                   <div style={{ position: 'absolute', left: `${UTILIZATION_TARGET}%`, top: 0, bottom: 0, width: 2, background: 'var(--pi-text-faint)', zIndex: 1 }} />
                   <div style={{ height: '100%', width: `${c.utilization}%`, borderRadius: 4, background: barColor, transition: 'width 0.3s' }} />
                 </div>
@@ -75,15 +69,15 @@ export default function UtilizationPage() {
             );
           })}
         </div>
-        <div className="pi-caption" style={{ display: 'flex', gap: 16, marginTop: 12 }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#ef4444' }} /> Burnout risk (&gt;90%)</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#10b981' }} /> On target (80-90%)</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#f59e0b' }} /> Under target (&lt;80%)</span>
+        <div className="pi-caption" style={{ display: 'flex', gap: 16, marginTop: 12, flexWrap: 'wrap' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#ef4444' }} aria-hidden="true" /> Burnout risk (&gt;90%)</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#10b981' }} aria-hidden="true" /> On target (80-90%)</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#f59e0b' }} aria-hidden="true" /> Under target (&lt;80%)</span>
         </div>
       </div>
 
       {/* Capacity Recommendations */}
-      <div className="phoenix-card" style={{ marginBottom: 20, borderLeft: '3px solid #f59e0b' }}>
+      <div className="phoenix-card" style={{ borderLeft: '3px solid #f59e0b' }} role="region" aria-label="Capacity recommendations">
         <h3 className="pi-section-title">Capacity Recommendations</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {atRisk.map(c => {

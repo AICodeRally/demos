@@ -2,8 +2,11 @@
 
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Alert } from '@/components/demos/phoenix-intel/Alert';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { FolderOpen, FileText, AlertCircle, File, FileCheck, Archive } from 'lucide-react';
+import { FolderOpen, FileText, File, FileCheck, Archive } from 'lucide-react';
 
 interface Document {
   id: string;
@@ -54,67 +57,73 @@ export default function DocumentsPage() {
 
   return (
     <PhoenixPage title="Document Library" subtitle="Centralized document management for Phoenix Philanthropy Group" accentColor="#7c3aed">
-      {/* Pain Point */}
-      <div className="pi-body-muted" style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', marginBottom: 16,
-        borderRadius: 8, background: '#ef444408', border: '1px solid #ef444420',
-      }}>
-        <AlertCircle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
-        <span><strong style={{ color: '#ef4444' }}>Pain point:</strong> Documents previously scattered across Dropbox, email attachments, and local drives. Kelly (Director of Client Services) manages contracts manually — version confusion and missed renewals are common.</span>
-      </div>
+      <Alert variant="danger">
+        <strong style={{ color: '#ef4444' }}>Pain point:</strong> Documents previously scattered across Dropbox, email attachments, and local drives. Kelly (Director of Client Services) manages contracts manually — version confusion and missed renewals are common.
+      </Alert>
 
       {/* Summary */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total Documents', value: String(total), icon: FolderOpen, color: '#7c3aed' },
-          { label: 'Templates', value: String(templates), icon: FileText, color: '#3b6bf5' },
-          { label: 'Contracts', value: String(contracts), icon: FileCheck, color: '#10b981' },
-          { label: 'Proposals', value: String(proposals), icon: File, color: '#c9942b' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <m.icon size={20} color={m.color} style={{ margin: '0 auto 8px' }} />
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Document summary">
+        <MetricCard label="Total Documents" value={String(total)} icon={FolderOpen} color="#7c3aed" />
+        <MetricCard label="Templates" value={String(templates)} icon={FileText} color="#3b6bf5" />
+        <MetricCard label="Contracts" value={String(contracts)} icon={FileCheck} color="#10b981" />
+        <MetricCard label="Proposals" value={String(proposals)} icon={File} color="#c9942b" />
       </div>
 
       {/* Document Table */}
-      <div className="phoenix-card" style={{ overflowX: 'auto' }}>
+      <div className="phoenix-card">
         <h3 className="pi-section-title">All Documents</h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ borderBottom: '2px solid var(--pi-border-faint)' }}>
-              {['Name', 'Type', 'Client', 'Last Modified', 'Owner', 'Status'].map(h => (
-                <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 10px' }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {DOCUMENTS.map(doc => {
-              const SIcon = STATUS_ICON[doc.status];
-              return (
-                <tr key={doc.id} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td className="pi-label" style={{ padding: '10px 10px', fontWeight: 600 }}>{doc.name}</td>
-                  <td style={{ padding: '10px 10px' }}>
-                    <span className="pi-badge" style={{ background: `${TYPE_COLOR[doc.type]}18`, color: TYPE_COLOR[doc.type] }}>
-                      {TYPE_LABEL[doc.type]}
-                    </span>
-                  </td>
-                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.client}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.lastModified}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 10px' }}>{doc.owner}</td>
-                  <td style={{ padding: '10px 10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <SIcon size={12} color={STATUS_COLOR[doc.status]} />
-                      <span className="pi-overline" style={{ color: STATUS_COLOR[doc.status], textTransform: 'capitalize' }}>{doc.status}</span>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <DataTable
+          data={DOCUMENTS}
+          keyFn={(doc) => doc.id}
+          emptyMessage="No documents found"
+          columns={[
+            {
+              key: 'name',
+              header: 'Name',
+              render: (doc) => <span className="pi-label" style={{ fontWeight: 600 }}>{doc.name}</span>,
+            },
+            {
+              key: 'type',
+              header: 'Type',
+              render: (doc) => (
+                <span className="pi-badge" style={{ background: `${TYPE_COLOR[doc.type]}18`, color: TYPE_COLOR[doc.type] }}>
+                  {TYPE_LABEL[doc.type]}
+                </span>
+              ),
+            },
+            {
+              key: 'client',
+              header: 'Client',
+              hideSm: true,
+              render: (doc) => <span className="pi-body-muted">{doc.client}</span>,
+            },
+            {
+              key: 'lastModified',
+              header: 'Last Modified',
+              hideSm: true,
+              render: (doc) => <span className="pi-body-muted">{doc.lastModified}</span>,
+            },
+            {
+              key: 'owner',
+              header: 'Owner',
+              hideSm: true,
+              render: (doc) => <span className="pi-body-muted">{doc.owner}</span>,
+            },
+            {
+              key: 'status',
+              header: 'Status',
+              render: (doc) => {
+                const SIcon = STATUS_ICON[doc.status];
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <SIcon size={12} color={STATUS_COLOR[doc.status]} aria-hidden="true" />
+                    <span className="pi-overline" style={{ color: STATUS_COLOR[doc.status], textTransform: 'capitalize' }}>{doc.status}</span>
+                  </div>
+                );
+              },
+            },
+          ]}
+        />
       </div>
 
       {insight && <div style={{ marginTop: 20 }}><AIInsightCard>{insight.text}</AIInsightCard></div>}
