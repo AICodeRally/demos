@@ -6,6 +6,7 @@ import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { DEALS, PIPELINE_STAGES } from '@/data/phoenix-intel/nonprofit-data';
+import { EmptyState } from '@/components/demos/phoenix-intel/EmptyState';
 import type { PipelineStage } from '@/data/phoenix-intel/nonprofit-data';
 
 const STAGE_COLORS: Record<string, string> = {
@@ -40,9 +41,9 @@ export default function PipelinePage() {
             padding: '10px 12px', borderRadius: 8, textAlign: 'center',
             background: `${m.color}08`, border: `1px solid ${m.color}20`,
           }}>
-            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: m.color }}>{m.value}</div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--pi-text-muted)', marginTop: 2 }}>{m.label}</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--pi-text-faint)', marginTop: 2 }}>{m.sub}</div>
+            <div className="pi-value-sm" style={{ color: m.color }}>{m.value}</div>
+            <div className="pi-label-muted" style={{ marginTop: 2 }}>{m.label}</div>
+            <div className="pi-caption" style={{ marginTop: 2 }}>{m.sub}</div>
           </div>
         ))}
       </div>
@@ -50,6 +51,7 @@ export default function PipelinePage() {
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
         <button
           onClick={() => setFilterStage('All')}
+          aria-pressed={filterStage === 'All'}
           style={{
             padding: '6px 14px', borderRadius: 8, fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', border: 'none',
             background: filterStage === 'All' ? 'var(--pi-sapphire)' : 'var(--pi-card)',
@@ -64,6 +66,7 @@ export default function PipelinePage() {
             <button
               key={stage}
               onClick={() => setFilterStage(stage)}
+              aria-pressed={filterStage === stage}
               style={{
                 padding: '6px 14px', borderRadius: 8, fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', border: 'none',
                 background: filterStage === stage ? STAGE_COLORS[stage] : 'var(--pi-card)',
@@ -83,35 +86,39 @@ export default function PipelinePage() {
             <div className="phoenix-card" style={{ cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                 <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--pi-text)' }}>{deal.clientName}</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--pi-text-muted)', marginTop: 2 }}>{deal.title}</div>
+                  <div className="pi-label">{deal.clientName}</div>
+                  <div className="pi-body-muted" style={{ marginTop: 2 }}>{deal.title}</div>
                 </div>
-                <span style={{
-                  padding: '3px 10px', borderRadius: 6, fontSize: '0.9rem', fontWeight: 700,
+                <span className="pi-badge" style={{
                   background: `${STAGE_COLORS[deal.stage]}20`, color: STAGE_COLORS[deal.stage],
                 }}>
                   {deal.stage}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
-                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--pi-text)' }}>
+                <span className="pi-value-sm">
                   ${(deal.value / 1000).toFixed(0)}K
                 </span>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>
+                  <span className="pi-caption">
                     {deal.probability}% prob
                   </span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--pi-text-muted)' }}>
+                  <span className="pi-caption">
                     {deal.source}
                   </span>
                 </div>
               </div>
-              <div style={{ fontSize: '0.875rem', color: 'var(--pi-text-faint)', marginTop: 8, borderTop: '1px solid var(--pi-border-faint)', paddingTop: 8 }}>
+              <div className="pi-caption" style={{ color: 'var(--pi-text-faint)', marginTop: 8, borderTop: '1px solid var(--pi-border-faint)', paddingTop: 8 }}>
                 Next: {deal.nextStep}
               </div>
             </div>
           </Link>
         ))}
+        {filtered.length === 0 && (
+          <div className="col-span-full">
+            <EmptyState title="No deals in this stage" message="Try selecting a different pipeline stage" />
+          </div>
+        )}
       </div>
 
       {insight && <AIInsightCard>{insight.text}</AIInsightCard>}

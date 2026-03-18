@@ -41,9 +41,10 @@ export default function AIAdvisorPage() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    const userMsg: Message = { role: 'user', content: input.trim() };
+  const sendMessage = (text?: string) => {
+    const msg = (text ?? input).trim();
+    if (!msg) return;
+    const userMsg: Message = { role: 'user', content: msg };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
@@ -77,7 +78,7 @@ export default function AIAdvisorPage() {
                 {suggestions.map(s => (
                   <button
                     key={s}
-                    onClick={() => { setInput(s); }}
+                    onClick={() => { sendMessage(s); }}
                     className="pi-label"
                     style={{
                       padding: '8px 14px', borderRadius: 8, cursor: 'pointer',
@@ -132,7 +133,7 @@ export default function AIAdvisorPage() {
             }}
           />
           <button
-            onClick={sendMessage}
+            onClick={() => sendMessage()}
             style={{
               padding: '10px 16px', borderRadius: 8, border: 'none', background: 'var(--pi-sapphire)',
               color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,

@@ -6,6 +6,7 @@ import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
 import { TRAINING_KPIS, COMPLETIONS, COURSES } from '@/data/phoenix-intel/training-data';
+import { MetricCardWithIcon, MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
 import { GraduationCap, Users, CheckCircle, Star, DollarSign, Award, MonitorPlay, Globe } from 'lucide-react';
 
 export default function TrainingPage() {
@@ -23,22 +24,10 @@ export default function TrainingPage() {
   return (
     <PhoenixPage title="Advancement Academy" subtitle="Training, certification, and professional development" accentColor="#7c3aed">
       {/* KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {kpis.map((kpi, i) => {
-          const Icon = kpi.icon;
-          return (
-            <div key={kpi.label} className="phoenix-card" style={{
-              opacity: mounted ? 1 : 0, transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-              transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: `${i * 0.08}s`,
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <div style={{ background: `${kpi.color}18`, borderRadius: 8, padding: 6, display: 'flex' }}><Icon size={16} color={kpi.color} /></div>
-                <span className="pi-label-muted">{kpi.label}</span>
-              </div>
-              <div className="pi-value">{kpi.value}</div>
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Training KPIs">
+        {kpis.map((kpi, i) => (
+          <MetricCardWithIcon key={kpi.label} label={kpi.label} value={kpi.value} icon={kpi.icon} color={kpi.color} mounted={mounted} delay={i * 0.08} />
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -109,18 +98,11 @@ export default function TrainingPage() {
       </div>
 
       {/* Revenue Potential */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {[
-          { label: 'Course Price (avg)', value: '$295', color: '#10b981' },
-          { label: 'Org License (annual)', value: '$2,400', color: '#3b6bf5' },
-          { label: 'Est. Year 1 Revenue', value: '$120K', color: '#7c3aed' },
-          { label: 'Margin', value: '45%', color: '#c9942b' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <div className="pi-value-sm" style={{ color: m.color }}>{m.value}</div>
-            <div className="pi-caption" style={{ marginTop: 4 }}>{m.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" role="region" aria-label="Revenue potential">
+        <MetricCard label="Course Price (avg)" value="$295" color="#10b981" />
+        <MetricCard label="Org License (annual)" value="$2,400" color="#3b6bf5" />
+        <MetricCard label="Est. Year 1 Revenue" value="$120K" color="#7c3aed" />
+        <MetricCard label="Margin" value="45%" color="#c9942b" />
       </div>
 
       {/* Popular Courses */}
@@ -155,10 +137,10 @@ export default function TrainingPage() {
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3" style={{ marginBottom: 12 }}>
           {[
-            { label: 'Find Content', rating: '5/5', desc: 'Critical blocker', color: '#ef4444' },
-            { label: 'Version Confusion', rating: '4/5', desc: 'Multiple versions', color: '#c9942b' },
-            { label: 'Inconsistent Format', rating: '5/5', desc: 'No standard branding', color: '#ef4444' },
-            { label: 'Manual Updates', rating: '5/5', desc: 'Cross-module effort', color: '#ef4444' },
+            { label: 'Content Discovery', rating: 'High', desc: 'Key priority', color: '#ef4444' },
+            { label: 'Version Management', rating: 'Med', desc: 'Standardization needed', color: '#c9942b' },
+            { label: 'Brand Standardization', rating: 'High', desc: 'Template system planned', color: '#ef4444' },
+            { label: 'Cross-Module Updates', rating: 'High', desc: 'Automation roadmap', color: '#ef4444' },
           ].map(p => (
             <div key={p.label} className="pi-metric-tile" style={{
               background: `${p.color}08`, border: `1px solid ${p.color}20`,
@@ -177,7 +159,7 @@ export default function TrainingPage() {
           ))}
         </div>
         <div className="pi-caption" style={{ borderTop: '1px solid var(--pi-border-faint)', paddingTop: 8 }}>
-          Taxonomy: Track / Module / Topic · Target: August 2026 · SMEs: Richard, Michal, Kelly
+          Taxonomy: Track / Module / Topic · Target: August 2026 · Team: Content & Operations
         </div>
       </div>
 

@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
+import { MetricCard } from '@/components/demos/phoenix-intel/MetricCard';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { ArrowRight, CheckCircle2, Circle, Clock, AlertCircle, User } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Circle, Clock, AlertCircle, User, Target, Users, TrendingUp, DollarSign } from 'lucide-react';
 
 interface ProcessStep {
   id: string;
@@ -123,7 +125,7 @@ const STAGE_COLORS: Record<string, string> = {
 
 function getDaysUntil(dateStr: string) {
   const d = new Date(dateStr);
-  const now = new Date('2026-03-17');
+  const now = new Date();
   return Math.ceil((d.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 }
 
@@ -215,53 +217,39 @@ export default function SalesProcessPage() {
       </div>
 
       {/* Moves Management Tracker */}
-      <div className="phoenix-card" style={{ marginBottom: 24 }}>
+      <div className="phoenix-card" style={{ marginBottom: 24 }} role="region" aria-label="Moves management tracker">
         <h3 className="pi-section-title" style={{ marginBottom: 4 }}>
           Moves Management Tracker
         </h3>
         <p className="pi-body-muted" style={{ marginBottom: 16 }}>
           Active prospects with next steps, owners, and contact cadence
         </p>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Prospect', 'Contact', 'Stage', 'Last Touch', 'Next Action', 'Due', 'Owner'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 8px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {MOVES_TRACKER.map((m, i) => {
-                const daysUntil = getDaysUntil(m.nextDate);
-                const urgencyColor = daysUntil <= 1 ? '#ef4444' : daysUntil <= 3 ? '#c9942b' : 'var(--pi-text-faint)';
-                return (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                    <td className="pi-label" style={{ padding: '10px 8px' }}>{m.prospect}</td>
-                    <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.contact}</td>
-                    <td style={{ padding: '10px 8px' }}>
-                      <span className="pi-badge" style={{
-                        background: `${STAGE_COLORS[m.stage]}20`, color: STAGE_COLORS[m.stage],
-                        textTransform: 'capitalize',
-                      }}>
-                        {m.stage}
-                      </span>
-                    </td>
-                    <td className="pi-caption" style={{ padding: '10px 8px' }}>{m.lastTouch}</td>
-                    <td className="pi-label-muted" style={{ padding: '10px 8px' }}>{m.nextAction}</td>
-                    <td style={{ padding: '10px 8px', color: urgencyColor, fontWeight: 700 }}>
-                      <span className="pi-body" style={{ display: 'flex', alignItems: 'center', gap: 4, color: urgencyColor, fontWeight: 700 }}>
-                        {daysUntil <= 1 ? <AlertCircle size={13} /> : daysUntil <= 3 ? <Clock size={13} /> : <Circle size={13} />}
-                        {m.nextDate}
-                      </span>
-                    </td>
-                    <td className="pi-body-muted" style={{ padding: '10px 8px' }}>{m.owner}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={MOVES_TRACKER}
+          keyFn={(_, i) => String(i)}
+          columns={[
+            { key: 'prospect', header: 'Prospect', render: (m) => <span className="pi-label">{m.prospect}</span> },
+            { key: 'contact', header: 'Contact', hideSm: true, render: (m) => <span className="pi-body-muted">{m.contact}</span> },
+            { key: 'stage', header: 'Stage', render: (m) => (
+              <span className="pi-badge" style={{ background: `${STAGE_COLORS[m.stage]}20`, color: STAGE_COLORS[m.stage], textTransform: 'capitalize' }}>
+                {m.stage}
+              </span>
+            )},
+            { key: 'lastTouch', header: 'Last Touch', hideSm: true, render: (m) => <span className="pi-caption">{m.lastTouch}</span> },
+            { key: 'nextAction', header: 'Next Action', render: (m) => <span className="pi-label-muted">{m.nextAction}</span> },
+            { key: 'due', header: 'Due', render: (m) => {
+              const daysUntil = getDaysUntil(m.nextDate);
+              const urgencyColor = daysUntil <= 1 ? '#ef4444' : daysUntil <= 3 ? '#c9942b' : 'var(--pi-text-faint)';
+              return (
+                <span className="pi-body" style={{ display: 'flex', alignItems: 'center', gap: 4, color: urgencyColor, fontWeight: 700 }}>
+                  {daysUntil <= 1 ? <AlertCircle size={13} aria-hidden="true" /> : daysUntil <= 3 ? <Clock size={13} aria-hidden="true" /> : <Circle size={13} aria-hidden="true" />}
+                  {m.nextDate}
+                </span>
+              );
+            }},
+            { key: 'owner', header: 'Owner', hideSm: true, render: (m) => <span className="pi-body-muted">{m.owner}</span> },
+          ]}
+        />
       </div>
 
       {/* Engagement Lifecycle */}
@@ -290,19 +278,11 @@ export default function SalesProcessPage() {
       </div>
 
       {/* Process Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Avg. Days to Close', value: '57', sub: 'Identify → Contract' },
-          { label: 'Active Prospects', value: '6', sub: 'Across all stages' },
-          { label: 'Win Rate', value: '68%', sub: 'Last 12 months' },
-          { label: 'Pipeline Value', value: '$298K', sub: '5 open deals' },
-        ].map(m => (
-          <div key={m.label} className="phoenix-card" style={{ textAlign: 'center' }}>
-            <div className="pi-value">{m.value}</div>
-            <div className="pi-label-muted" style={{ marginTop: 2 }}>{m.label}</div>
-            <div className="pi-caption" style={{ marginTop: 2 }}>{m.sub}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Sales process metrics">
+        <MetricCard label="Avg. Days to Close" value="57" icon={Target} color="#3b6bf5" sub="Identify → Contract" />
+        <MetricCard label="Active Prospects" value="6" icon={Users} color="#c9942b" sub="Across all stages" />
+        <MetricCard label="Win Rate" value="68%" icon={TrendingUp} color="#10b981" sub="Last 12 months" />
+        <MetricCard label="Pipeline Value" value="$298K" icon={DollarSign} color="#7c3aed" sub="5 open deals" />
       </div>
 
       {insight && <AIInsightCard>{insight.text}</AIInsightCard>}

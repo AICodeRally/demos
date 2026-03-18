@@ -3,21 +3,23 @@
 import { PhoenixPage } from '@/components/demos/phoenix-intel/PhoenixPage';
 import { AIInsightCard } from '@/components/demos/phoenix-intel/AIInsightCard';
 import { getInsight } from '@/data/phoenix-intel/ai-insights';
-import { Shield, Link2, Users, CheckCircle, Clock, AlertCircle, ArrowRight, Fingerprint, AlertTriangle, Lock, Globe } from 'lucide-react';
+import { DataTable } from '@/components/demos/phoenix-intel/DataTable';
+import { Shield, Link2, Users, CheckCircle, Clock, AlertCircle, ArrowRight, Fingerprint, AlertTriangle, Lock, Globe, BarChart3, Landmark, DollarSign, Mail, Inbox, Send, ClipboardList, Database, Timer, FolderOpen, Video } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { CONSULTANTS } from '@/data/phoenix-intel/nonprofit-data';
 
-const CONNECTORS = [
-  { name: 'QuickBooks Online', data: 'P&L, AR/AP, invoices, bank transactions, budget vs. actuals', status: 'connected' as const, lastSync: '2026-03-16 08:30', icon: '📊' },
-  { name: 'Alliance Bank', data: 'Daily balance monitoring, ACH payments, check deposits (still physical)', status: 'connected' as const, lastSync: '2026-03-17 06:00', icon: '🏦' },
-  { name: 'ADP Payroll', data: '1099 contractor payments, tax filings, fringe benefit documentation', status: 'connected' as const, lastSync: '2026-03-16 12:00', icon: '💰' },
-  { name: 'MS365 / SharePoint', data: 'Calendar, email, docs, file storage (replacing Dropbox)', status: 'connected' as const, lastSync: '2026-03-16 07:00', icon: '📧' },
-  { name: 'Outlook', data: 'Richard personal + Phoenix org — email, scheduling, contact sync', status: 'connected' as const, lastSync: '2026-03-16 07:00', icon: '📬' },
-  { name: 'Constant Contact', data: 'Email marketing, newsletters, subscriber lists', status: 'connected' as const, lastSync: '2026-03-16 06:45', icon: '📨' },
-  { name: 'Formsite', data: 'Client satisfaction surveys — sent/received/ratings tracking', status: 'connected' as const, lastSync: '2026-03-14 09:00', icon: '📋' },
-  { name: 'Knack', data: 'CRM data, 2,500-3,000 contacts — migrating to relational DB', status: 'migrating' as const, lastSync: '2026-03-12 14:00', icon: '🗃️' },
-  { name: 'Intervals', data: 'DEPRECATED — replaced by passive telemetry time capture', status: 'deprecated' as const, lastSync: 'Sunset', icon: '⏱️' },
-  { name: 'Dropbox', data: 'Legacy file storage — migrating to SharePoint', status: 'deprecated' as const, lastSync: 'Sunset', icon: '📁' },
-  { name: 'Zoom', data: 'Video conferencing — migrating to MS Teams (saves $7,500/yr)', status: 'deprecated' as const, lastSync: 'Sunset', icon: '📹' },
+const CONNECTORS: { name: string; data: string; status: 'connected' | 'pending' | 'migrating' | 'deprecated'; lastSync: string; icon: LucideIcon }[] = [
+  { name: 'QuickBooks Online', data: 'P&L, AR/AP, invoices, bank transactions, budget vs. actuals', status: 'connected', lastSync: '2026-03-16 08:30', icon: BarChart3 },
+  { name: 'Alliance Bank', data: 'Daily balance monitoring, ACH payments, check deposits (still physical)', status: 'connected', lastSync: '2026-03-17 06:00', icon: Landmark },
+  { name: 'ADP Payroll', data: '1099 contractor payments, tax filings, fringe benefit documentation', status: 'connected', lastSync: '2026-03-16 12:00', icon: DollarSign },
+  { name: 'MS365 / SharePoint', data: 'Calendar, email, docs, file storage (replacing Dropbox)', status: 'connected', lastSync: '2026-03-16 07:00', icon: Mail },
+  { name: 'Outlook', data: 'Richard personal + Phoenix org — email, scheduling, contact sync', status: 'connected', lastSync: '2026-03-16 07:00', icon: Inbox },
+  { name: 'Constant Contact', data: 'Email marketing, newsletters, subscriber lists', status: 'connected', lastSync: '2026-03-16 06:45', icon: Send },
+  { name: 'Formsite', data: 'Client satisfaction surveys — sent/received/ratings tracking', status: 'connected', lastSync: '2026-03-14 09:00', icon: ClipboardList },
+  { name: 'Knack', data: 'CRM data, 2,500-3,000 contacts — migrating to relational DB', status: 'migrating', lastSync: '2026-03-12 14:00', icon: Database },
+  { name: 'Intervals', data: 'DEPRECATED — replaced by passive telemetry time capture', status: 'deprecated', lastSync: 'Sunset', icon: Timer },
+  { name: 'Dropbox', data: 'Legacy file storage — migrating to SharePoint', status: 'deprecated', lastSync: 'Sunset', icon: FolderOpen },
+  { name: 'Zoom', data: 'Video conferencing — migrating to MS Teams (saves $7,500/yr)', status: 'deprecated', lastSync: 'Sunset', icon: Video },
 ];
 
 const DATA_MIGRATIONS = [
@@ -51,31 +53,20 @@ export default function AdminPage() {
           <Users size={18} color="var(--pi-sapphire)" />
           <h3 className="pi-section-title" style={{ marginBottom: 0 }}>Team Members</h3>
         </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Name', 'Title', 'Specialty', 'Utilization', 'Engagements', 'Email'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px 6px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {CONSULTANTS.map(c => (
-                <tr key={c.id} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td className="pi-label" style={{ padding: '10px 6px' }}>{c.name}</td>
-                  <td className="pi-body" style={{ padding: '10px 6px', color: 'var(--pi-text-secondary)' }}>{c.title}</td>
-                  <td className="pi-body-muted" style={{ padding: '10px 6px' }}>{c.specialty}</td>
-                  <td style={{ padding: '10px 6px' }}>
-                    <span className="pi-label" style={{ color: c.utilization > 90 ? '#ef4444' : c.utilization > 80 ? '#c9942b' : '#10b981' }}>{c.utilization}%</span>
-                  </td>
-                  <td className="pi-body" style={{ padding: '10px 6px' }}>{c.activeEngagements}</td>
-                  <td className="pi-caption" style={{ padding: '10px 6px' }}>{c.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={CONSULTANTS}
+          keyFn={(c) => c.id}
+          columns={[
+            { key: 'name', header: 'Name', render: (c) => <span className="pi-label">{c.name}</span> },
+            { key: 'title', header: 'Title', hideSm: true, render: (c) => <span className="pi-body-muted">{c.title}</span> },
+            { key: 'specialty', header: 'Specialty', hideSm: true, render: (c) => <span className="pi-body-muted">{c.specialty}</span> },
+            { key: 'utilization', header: 'Utilization', render: (c) => (
+              <span className="pi-label" style={{ color: c.utilization > 90 ? '#ef4444' : c.utilization > 80 ? '#c9942b' : '#10b981' }}>{c.utilization}%</span>
+            )},
+            { key: 'engagements', header: 'Engagements', render: (c) => <span className="pi-body">{c.activeEngagements}</span> },
+            { key: 'email', header: 'Email', hideSm: true, render: (c) => <span className="pi-caption">{c.email}</span> },
+          ]}
+        />
       </div>
 
       {/* Connectors */}
@@ -92,7 +83,7 @@ export default function AdminPage() {
               <div key={conn.name} className="phoenix-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                   <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    <span style={{ fontSize: '1.5rem' }}>{conn.icon}</span>
+                    <conn.icon size={24} color="var(--pi-text-muted)" />
                     <div>
                       <div className="pi-label">{conn.name}</div>
                       <div className="pi-body-muted" style={{ marginTop: 2 }}>{conn.data}</div>
@@ -158,43 +149,27 @@ export default function AdminPage() {
           Machine learning model scores potential duplicates across Knack, Constant Contact, and Outlook contacts.
           Human review required for matches below 90% confidence.
         </p>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid var(--pi-border)' }}>
-                {['Record A', 'Record B', 'Source', 'Confidence', 'Action'].map(h => (
-                  <th key={h} className="pi-overline" style={{ textAlign: 'left', padding: '8px' }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { a: 'Dr. Sarah Mitchell', b: 'Sarah M. Mitchell', source: 'Knack ↔ CC', confidence: 97, action: 'Auto-merge' },
-                { a: 'Heritage Arts Collective', b: 'Heritage Arts Coll.', source: 'Knack ↔ Outlook', confidence: 94, action: 'Auto-merge' },
-                { a: 'Robert Chen', b: 'Bob Chen', source: 'CC ↔ Outlook', confidence: 82, action: 'Review' },
-                { a: 'Mountain View Academy', b: 'MV Academy Foundation', source: 'Knack ↔ Knack', confidence: 71, action: 'Review' },
-                { a: 'Jennifer Nguyen', b: 'Jenny Nguyen-Park', source: 'CC ↔ CC', confidence: 58, action: 'Review' },
-              ].map((row, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--pi-border-faint)' }}>
-                  <td className="pi-label" style={{ padding: '8px', fontWeight: 600 }}>{row.a}</td>
-                  <td className="pi-body" style={{ padding: '8px', color: 'var(--pi-text-secondary)' }}>{row.b}</td>
-                  <td className="pi-caption" style={{ padding: '8px' }}>{row.source}</td>
-                  <td style={{ padding: '8px' }}>
-                    <span className="pi-label" style={{
-                      color: row.confidence >= 90 ? '#10b981' : row.confidence >= 70 ? '#c9942b' : '#ef4444',
-                    }}>{row.confidence}%</span>
-                  </td>
-                  <td style={{ padding: '8px' }}>
-                    <span className="pi-badge" style={{
-                      background: row.action === 'Auto-merge' ? '#10b98120' : '#c9942b20',
-                      color: row.action === 'Auto-merge' ? '#10b981' : '#c9942b',
-                    }}>{row.action}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={[
+            { a: 'Dr. Sarah Mitchell', b: 'Sarah M. Mitchell', source: 'Knack ↔ CC', confidence: 97, action: 'Auto-merge' },
+            { a: 'Heritage Arts Collective', b: 'Heritage Arts Coll.', source: 'Knack ↔ Outlook', confidence: 94, action: 'Auto-merge' },
+            { a: 'Robert Chen', b: 'Bob Chen', source: 'CC ↔ Outlook', confidence: 82, action: 'Review' },
+            { a: 'Mountain View Academy', b: 'MV Academy Foundation', source: 'Knack ↔ Knack', confidence: 71, action: 'Review' },
+            { a: 'Jennifer Nguyen', b: 'Jenny Nguyen-Park', source: 'CC ↔ CC', confidence: 58, action: 'Review' },
+          ]}
+          keyFn={(_, i) => String(i)}
+          columns={[
+            { key: 'a', header: 'Record A', render: (r) => <span className="pi-label" style={{ fontWeight: 600 }}>{r.a}</span> },
+            { key: 'b', header: 'Record B', render: (r) => <span className="pi-body-muted">{r.b}</span> },
+            { key: 'source', header: 'Source', hideSm: true, render: (r) => <span className="pi-caption">{r.source}</span> },
+            { key: 'confidence', header: 'Confidence', render: (r) => (
+              <span className="pi-label" style={{ color: r.confidence >= 90 ? '#10b981' : r.confidence >= 70 ? '#c9942b' : '#ef4444' }}>{r.confidence}%</span>
+            )},
+            { key: 'action', header: 'Action', render: (r) => (
+              <span className="pi-badge" style={{ background: r.action === 'Auto-merge' ? '#10b98120' : '#c9942b20', color: r.action === 'Auto-merge' ? '#10b981' : '#c9942b' }}>{r.action}</span>
+            )},
+          ]}
+        />
         <div className="pi-caption" style={{ display: 'flex', gap: 16, marginTop: 12, borderTop: '1px solid var(--pi-border-faint)', paddingTop: 10 }}>
           <span><strong style={{ color: 'var(--pi-text)' }}>127</strong> potential dupes flagged</span>
           <span><strong style={{ color: '#10b981' }}>84</strong> auto-merged (&gt;90%)</span>

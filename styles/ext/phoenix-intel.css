@@ -17,6 +17,7 @@
   --pi-shadow: 0 1px 3px rgba(0,0,0,0.06);
   --pi-hover: rgba(0,0,0,0.04);
   --pi-stripe: #f1f5f9;
+  --pi-surface-alt: #f1f5f9;
 
   --pi-sidebar-bg-start: #ffffff;
   --pi-sidebar-bg-end: #f1f5f9;
@@ -96,6 +97,7 @@
   --pi-shadow: 0 1px 3px rgba(0,0,0,0.3);
   --pi-hover: rgba(255,255,255,0.04);
   --pi-stripe: rgba(255,255,255,0.03);
+  --pi-surface-alt: #1e293b;
 
   --pi-sidebar-bg-start: #1e293b;
   --pi-sidebar-bg-end: #0f172a;
