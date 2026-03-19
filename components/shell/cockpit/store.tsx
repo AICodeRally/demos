@@ -45,9 +45,46 @@ const RALLY_STARTER_SCOPE: ModuleScope[] = [
   { id: 's-migration', department: 'Operations', moduleName: 'Data Migration', description: 'Knack → relational DB, Dropbox → SharePoint, Intervals → passive telemetry. AI contact dedup', priority: 15 },
 ];
 
+// --- BHG Edge Rally Starter Data ---
+
+const BHG_STARTER_TEAM: OrgMember[] = [
+  { id: 'bhg-tl', name: 'Todd LeBaron', title: 'AI & Product', company: 'Blue Horizons Group', role: 'Sponsor', weight: 3 },
+  { id: 'bhg-br', name: 'Brad', title: 'Head of Sales', company: 'Blue Horizons Group', role: 'Sponsor', weight: 3 },
+  { id: 'bhg-mi', name: 'Michele', title: 'Head of Ops', company: 'Blue Horizons Group', role: 'Champion', weight: 2 },
+  { id: 'bhg-je', name: 'Jennifer', title: 'Head of Marketing', company: 'Blue Horizons Group', role: 'Champion', weight: 2 },
+  { id: 'bhg-to', name: 'Tommy', title: 'Head of IT', company: 'Blue Horizons Group', role: 'Champion', weight: 2 },
+  { id: 'bhg-ma', name: 'Mausam', title: 'Head of Services / Xactly Services', company: 'Blue Horizons Group', role: 'Champion', weight: 2 },
+  { id: 'bhg-ji', name: 'Jimit', title: 'Advisory Services', company: 'Blue Horizons Group', role: 'User', weight: 1 },
+  { id: 'bhg-st', name: 'Stacy', title: 'Varicent Services', company: 'Blue Horizons Group', role: 'User', weight: 1 },
+  { id: 'bhg-jo', name: 'Jon', title: 'CaptivateIQ Services', company: 'Blue Horizons Group', role: 'User', weight: 1 },
+];
+
+const BHG_STARTER_PERSONAS: Persona[] = [
+  { id: 'bp-sales', name: 'Sales Leader', role: 'Sales Leadership', painPoints: ['Manual pipeline tracking in spreadsheets', 'Spreadsheet-based forecasting with no real-time visibility', 'Commission disputes due to lack of transparency'], goals: ['Real-time pipeline dashboard with stage gates', 'Automated forecasting from pipeline data', 'Transparent commission calculations with audit trail'] },
+  { id: 'bp-services', name: 'Services Consultant', role: 'ICM Services Delivery', painPoints: ['Scoping done via email with no standard workflow', 'No unified delivery framework across ICM vendors', 'SOW creation is manual and inconsistent'], goals: ['Repeatable scoping workflow with templates', 'Unified delivery framework for Xactly/Varicent/CaptivateIQ', 'Auto-generated SOWs from scoping data'] },
+  { id: 'bp-ops', name: 'Operations Manager', role: 'Operations', painPoints: ['Manual reporting across disconnected systems', 'No visibility into project health or resource utilization', 'Commission calculations done in spreadsheets'], goals: ['Unified operations dashboard', 'Automated commission calculations via SWIC engine', 'Project health monitoring with alerts'] },
+  { id: 'bp-icm', name: 'ICM Platform Specialist', role: 'Platform Services', painPoints: ['Each vendor (Xactly/Varicent/CaptivateIQ) has separate workflow and tools', 'Assessment templates recreated per engagement', 'No shared knowledge base across platform teams'], goals: ['Unified delivery framework with vendor-specific modules', 'Reusable assessment and implementation templates', 'Shared knowledge base for cross-platform learnings'] },
+];
+
+const BHG_STARTER_SCOPE: ModuleScope[] = [
+  { id: 'bs-pipeline', department: 'Sales', moduleName: 'Sales Pipeline & CRM', description: 'Pipeline management with 7-stage flow (Prospect→Qualification→Discovery→Scoping→Proposal→Negotiation→Won/Lost). CRM integration for contacts and opportunities', priority: 1 },
+  { id: 'bs-commissions', department: 'Sales', moduleName: 'Commission Design & Calculation', description: 'SWIC engine integration for real-time commission calculations. Config-driven comp plans, audit trail, dispute resolution', priority: 2 },
+  { id: 'bs-icm', department: 'Services', moduleName: 'ICM Services Delivery', description: 'Unified delivery framework supporting Xactly, Varicent, and CaptivateIQ implementations. Standard scoping, assessment, and delivery workflow across all three vendors', priority: 3 },
+  { id: 'bs-scoping', department: 'Operations', moduleName: 'Project Scoping & SOW', description: 'Full scoping lifecycle: Discover→Estimate→Propose→Contract→Handoff. Rate cards, cost engine, catalog management, auto-generated SOWs', priority: 4 },
+  { id: 'bs-territories', department: 'Sales', moduleName: 'Territory Management', description: 'Territory definitions, assignments, and performance tracking. Geo and account-based territory models', priority: 5 },
+  { id: 'bs-forecasting', department: 'Sales', moduleName: 'Forecasting & Quota Planning', description: 'Pipeline-driven forecasting, quota setting, attainment tracking. Historical trend analysis', priority: 6 },
+  { id: 'bs-reporting', department: 'Operations', moduleName: 'Reporting & Analytics', description: 'Unified reporting across sales, services, and operations. Dashboard widgets, scheduled reports, export capabilities', priority: 7 },
+  { id: 'bs-documents', department: 'Operations', moduleName: 'Document Management', description: 'Centralized document storage for proposals, SOWs, contracts, and deliverables. Version control and access management', priority: 8 },
+  { id: 'bs-marketing', department: 'Marketing', moduleName: 'Marketing & Lead Gen', description: 'Campaign management, lead generation tracking, marketing analytics. Lead→Pipeline handoff workflow', priority: 9 },
+  { id: 'bs-partners', department: 'Sales', moduleName: 'Channel Partner Portal', description: 'Sub-client management for channel partners (Royal, Henry Schein, Jamf, KPMG, Verizon). Branded dashboards per partner', priority: 10 },
+  { id: 'bs-training', department: 'Services', moduleName: 'Training & Enablement', description: 'SPM methodology training, ICM platform certification tracks, onboarding materials for new consultants', priority: 11 },
+  { id: 'bs-admin', department: 'IT', moduleName: 'Platform Admin & Security', description: 'User management, role-based access, Azure AD SSO, audit logging, security policies. Department-scoped permissions', priority: 12 },
+];
+
 function createEmptySession(slug: string): RallySession {
   const now = new Date().toISOString();
   const isRallyStarter = slug === 'phoenix-intel';
+  const isBhgEdge = slug === 'bhg-edge';
   return {
     id: crypto.randomUUID(),
     slug,
@@ -56,10 +93,12 @@ function createEmptySession(slug: string): RallySession {
     context: {
       identity: isRallyStarter
         ? { projectName: 'Phoenix Intelligence Platform', brandColor: '#c9942b', tagline: 'Nonprofit Advisory OS' }
+        : isBhgEdge
+        ? { projectName: 'BHG Edge — SPM Operations Platform', brandColor: '#1E40AF', tagline: 'Sales Performance Management Consulting' }
         : { projectName: '' },
-      org: isRallyStarter ? RALLY_STARTER_TEAM : [],
-      personas: isRallyStarter ? RALLY_STARTER_PERSONAS : [],
-      scope: isRallyStarter ? RALLY_STARTER_SCOPE : [],
+      org: isRallyStarter ? RALLY_STARTER_TEAM : isBhgEdge ? BHG_STARTER_TEAM : [],
+      personas: isRallyStarter ? RALLY_STARTER_PERSONAS : isBhgEdge ? BHG_STARTER_PERSONAS : [],
+      scope: isRallyStarter ? RALLY_STARTER_SCOPE : isBhgEdge ? BHG_STARTER_SCOPE : [],
       roadmap: [],
       artifacts: [],
     },
