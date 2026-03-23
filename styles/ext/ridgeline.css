@@ -1,0 +1,97 @@
+/* RIDGELINE — SRS Distribution RevOps & SPM Demo
+   Slate blue + steel palette for building products distribution.
+   Light values are defaults. Dark values activate under .dark class.
+*/
+
+/* ── Light mode (default) ─────────────────────── */
+:root {
+  /* Font */
+  --rl-font: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Text — high contrast for readability */
+  --rl-text: #0F172A;
+  --rl-text-secondary: #1E293B;
+  --rl-text-muted: #334155;
+  --rl-text-faint: #64748B;
+
+  /* Surfaces */
+  --rl-bg: #F8FAFC;
+  --rl-card: #FFFFFF;
+  --rl-card-alt: #F7FAFC;
+  --rl-border: #E2E8F0;
+  --rl-border-faint: #EDF2F7;
+  --rl-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --rl-hover: rgba(0,0,0,0.04);
+  --rl-stripe: #F1F5F9;
+
+  /* Brand colors — slate blue + steel */
+  --rl-primary: #1E3A5F;
+  --rl-primary-light: #2D5A8E;
+  --rl-accent: #D97706;
+  --rl-accent-light: #F59E0B;
+
+  /* Sidebar */
+  --rl-sidebar-bg-start: #F1F5F9;
+  --rl-sidebar-bg-end: #FFFFFF;
+  --rl-sidebar-text: #1A1A2E;
+  --rl-sidebar-text-muted: #64748B;
+  --rl-sidebar-active-bg: rgba(0,0,0,0.06);
+  --rl-sidebar-border: #E2E8F0;
+
+  /* Header / Footer */
+  --rl-header-bg: rgba(255,255,255,0.95);
+  --rl-footer-bg: #FFFFFF;
+
+  /* Chart-specific */
+  --rl-chart-grid: #E2E8F0;
+  --rl-chart-tooltip-bg: #FFFFFF;
+  --rl-chart-tooltip-border: #E2E8F0;
+  --rl-chart-bar-track: #F1F5F9;
+}
+
+/* ── Dark mode ────────────────────────────────── */
+.dark {
+  --rl-text: #F1F5F9;
+  --rl-text-secondary: #CBD5E0;
+  --rl-text-muted: #94A3B8;
+  --rl-text-faint: #64748B;
+
+  --rl-bg: #0F172A;
+  --rl-card: #1E293B;
+  --rl-card-alt: #162032;
+  --rl-border: #334155;
+  --rl-border-faint: #1E293B;
+  --rl-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --rl-hover: rgba(255,255,255,0.04);
+  --rl-stripe: rgba(255,255,255,0.03);
+
+  --rl-primary: #60A5FA;
+  --rl-primary-light: #93C5FD;
+  --rl-accent: #F59E0B;
+  --rl-accent-light: #FBBF24;
+
+  --rl-sidebar-bg-start: #1E293B;
+  --rl-sidebar-bg-end: #0F172A;
+  --rl-sidebar-text: #FFFFFF;
+  --rl-sidebar-text-muted: rgba(255,255,255,0.65);
+  --rl-sidebar-active-bg: rgba(255,255,255,0.10);
+  --rl-sidebar-border: rgba(96,165,250,0.12);
+
+  --rl-header-bg: rgba(15,23,42,0.95);
+  --rl-footer-bg: #0F172A;
+
+  --rl-chart-grid: #334155;
+  --rl-chart-tooltip-bg: #1E293B;
+  --rl-chart-tooltip-border: #334155;
+  --rl-chart-bar-track: rgba(255,255,255,0.06);
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes rl-fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rl-animate-fade-in {
+  animation: rl-fade-slide-in 0.3s ease-out both;
+}
