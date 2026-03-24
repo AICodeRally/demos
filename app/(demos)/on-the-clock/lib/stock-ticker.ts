@@ -114,9 +114,9 @@ export function updateStockPrices(
 
     let priceMultiplier = 1;
 
-    // Same position scarcity boost
+    // Same position scarcity boost (capped to prevent absurd late-round prices)
     if (stock.position === draftedPosition) {
-      priceMultiplier += SCARCITY_BOOST * positionDraftedCount;
+      priceMultiplier += SCARCITY_BOOST * Math.min(positionDraftedCount, 5);
 
       // Position run bonus
       if (isPositionRun) {

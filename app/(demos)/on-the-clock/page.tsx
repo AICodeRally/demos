@@ -116,16 +116,15 @@ export default function OnTheClockPage() {
     });
   }, [draftComplete, bettingEnabled, picks]);
 
-  // Save to leaderboard when draft completes
+  // Save to leaderboard when predictions are settled (predictionScore becomes non-null)
+  const bettingStateRef = useRef(bettingState);
+  bettingStateRef.current = bettingState;
   useEffect(() => {
     if (!draftComplete || !bettingEnabled) return;
     // Delay slightly so settled state is used
     const timeout = setTimeout(() => {
-      setBettingState((prev) => {
-        const entry = saveToLeaderboard(prev, userTeamAbbr, picks.length);
-        setLatestLeaderboardEntry(entry);
-        return prev;
-      });
+      const entry = saveToLeaderboard(bettingStateRef.current, userTeamAbbr, picks.length);
+      setLatestLeaderboardEntry(entry);
     }, 500);
     return () => clearTimeout(timeout);
   }, [draftComplete, bettingEnabled, userTeamAbbr, picks.length]);
@@ -161,20 +160,14 @@ export default function OnTheClockPage() {
         teamName: activeTeam.name,
         player,
       };
-      setPicks((prev) => {
-        const updated = [...prev, newPick];
+      setPicks((prev) => [...prev, newPick]);
 
-        // Settle live bets for this pick
-        if (bettingEnabled) {
-          const reaction = getPickReaction(player.grade, currentSlot.overall);
-          setBettingState((bs) => settleLiveBet(bs, currentSlot.overall, newPick, reaction.label));
-
-          // Update stock prices
-          setStocks((prevStocks) => updateStockPrices(prevStocks, newPick, updated, TEAM_NEEDS));
-        }
-
-        return updated;
-      });
+      // Settle live bets and update stocks at the same batching level (not nested inside setPicks)
+      if (bettingEnabled) {
+        const reaction = getPickReaction(player.grade, currentSlot.overall);
+        setBettingState((bs) => settleLiveBet(bs, currentSlot.overall, newPick, reaction.label));
+        setStocks((prevStocks) => updateStockPrices(prevStocks, newPick, [...picksRef.current, newPick], TEAM_NEEDS));
+      }
 
       if (soundEnabled) draftSounds.pickIsIn();
 
@@ -261,6 +254,7 @@ export default function OnTheClockPage() {
     setCpuDrafting(false);
     setUserTeamAbbr(null);
     // Reset betting
+    setBettingEnabled(false);
     setBettingState(createInitialBettingState());
     setStocks([]);
     setShowPredictions(false);

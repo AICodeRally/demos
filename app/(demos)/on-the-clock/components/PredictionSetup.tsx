@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { DRAFT_PLAYERS, POSITION_COLORS } from '../data/players';
 import type { DraftPlayer } from '../data/players';
 import type { BettingState, PropTemplate, PropBetSide } from '../lib/betting';
@@ -26,7 +26,7 @@ export default function PredictionSetup({ bettingState, onBettingStateChange }: 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSlot, setActiveSlot] = useState<number | null>(null);
 
-  const propTemplates = generatePropTemplates();
+  const propTemplates = useMemo(() => generatePropTemplates(), []);
 
   return (
     <div className="w-full max-w-[520px] mx-auto">
@@ -216,8 +216,6 @@ function PropsTab({
     Object.fromEntries(templates.map((t) => [t.id, 500]))
   );
 
-  const placedBetIds = new Set(bettingState.propBets.map((b) => b.id.split('-').slice(1, -1).join('-')));
-
   function handlePlace(template: PropTemplate, side: PropBetSide) {
     const amount = amounts[template.id] ?? 500;
     onBettingStateChange(placePropBet(bettingState, template, side, amount));
@@ -230,7 +228,7 @@ function PropsTab({
       </p>
 
       {templates.map((template) => {
-        const alreadyPlaced = bettingState.propBets.some((b) => b.description.includes(template.description));
+        const alreadyPlaced = bettingState.propBets.some((b) => b.id.startsWith(`prop-${template.id}-`));
         const amount = amounts[template.id] ?? 500;
         const posColor = POSITION_COLORS[template.position] ?? '#64748b';
 
@@ -257,7 +255,7 @@ function PropsTab({
 
             {alreadyPlaced ? (
               <div className="text-[10px] text-emerald-400 font-bold">
-                Bet placed! {bettingState.propBets.find((b) => b.description.includes(template.description))?.description}
+                Bet placed! {bettingState.propBets.find((b) => b.id.startsWith(`prop-${template.id}-`))?.description}
               </div>
             ) : (
               <div className="flex items-center gap-2">
