@@ -90,14 +90,6 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "layout": "sidebar"
   },
   {
-    "name": "SRS BLT",
-    "slug": "srs-blt",
-    "industry": "Specialty Trade Distribution",
-    "tagline": "Branch Leadership Team — 982 branches, dual divisions, persona-based comp & territory management",
-    "color": "#0F2942",
-    "layout": "sidebar"
-  },
-  {
     "name": "STEEPLE",
     "slug": "steeple",
     "industry": "Church Management",
