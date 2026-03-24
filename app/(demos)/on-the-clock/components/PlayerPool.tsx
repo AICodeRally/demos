@@ -77,7 +77,7 @@ export default function PlayerPool({
       )}
 
       {/* Header */}
-      <div className="px-4 py-2.5 border-b border-white/5 bg-[#0a0e1a]">
+      <div className="px-4 py-2.5 border-b border-white/5 bg-[var(--otc-bg)]">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-black text-white uppercase tracking-wider">Player Pool</h2>
           <div className="flex items-center gap-2">
@@ -135,7 +135,7 @@ export default function PlayerPool({
       )}
 
       {/* Position filter pills */}
-      <div className="flex gap-1 px-3 py-2 overflow-x-auto border-b border-white/5 bg-[#0a0e1a]/50">
+      <div className="flex gap-1 px-3 py-2 overflow-x-auto border-b border-white/5 bg-[var(--otc-bg)]/50">
         {POSITIONS.map((pos) => {
           const isNeed = teamNeeds.includes(pos);
           const isActive = posFilter === pos;

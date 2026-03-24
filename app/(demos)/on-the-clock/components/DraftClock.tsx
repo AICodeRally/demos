@@ -96,8 +96,8 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
           style={{
             inset: 'clamp(20px, 5%, 40px)',
             background: noPicks
-              ? 'radial-gradient(circle at center, #1a1f2e 0%, #0a0e1a 100%)'
-              : `radial-gradient(circle at center, ${activeTeam.color}12 0%, #0a0e1a 70%)`,
+              ? 'radial-gradient(circle at center, #1a1f2e 0%, var(--otc-bg) 100%)'
+              : `radial-gradient(circle at center, ${activeTeam.color}12 0%, var(--otc-bg) 70%)`,
             border: '3px solid rgba(255,255,255,0.06)',
             boxShadow: 'inset 0 0 60px rgba(0,0,0,0.5)',
           }}
@@ -636,7 +636,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
       )}
 
       {/* Speed + Start row — sticky so it's always visible */}
-      <div className="flex items-center gap-3 shrink-0 sticky bottom-0 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a] to-transparent pt-4 pb-1">
+      <div className="flex items-center gap-3 shrink-0 sticky bottom-0 bg-gradient-to-t from-[var(--otc-bg)] via-[var(--otc-bg)] to-transparent pt-4 pb-1">
         <div className="flex gap-1">
           {SPEED_OPTIONS.map((opt) => (
             <button
