@@ -11,16 +11,16 @@ const MARKET_DATA = [
 ];
 
 const COMPETITIVE = [
-  { name: 'ABC Supply', revenue: 16.2, branches: 900, color: '#94A3B8', isSrs: false },
-  { name: 'SRS Distribution', revenue: 12.8, branches: 982, color: '#1E3A5F', isSrs: true },
-  { name: 'Beacon Roofing', revenue: 9.8, branches: 600, color: '#94A3B8', isSrs: false },
-  { name: 'US LBM', revenue: 8.5, branches: 450, color: '#94A3B8', isSrs: false },
-  { name: 'Allied Building', revenue: 3.2, branches: 210, color: '#94A3B8', isSrs: false },
+  { name: 'ABC Supply', revenue: 16.2, branches: 900, color: '#94A3B8', isHighlighted: false },
+  { name: 'Ridgeline Supply', revenue: 12.8, branches: 982, color: '#1E3A5F', isHighlighted: true },
+  { name: 'Beacon Roofing', revenue: 9.8, branches: 600, color: '#94A3B8', isHighlighted: false },
+  { name: 'US LBM', revenue: 8.5, branches: 450, color: '#94A3B8', isHighlighted: false },
+  { name: 'Allied Building', revenue: 3.2, branches: 210, color: '#94A3B8', isHighlighted: false },
 ];
 
 const STRENGTHS = [
   { title: 'Local Density + National Platform', desc: 'Local branches provide jobsite fulfillment. National platform provides supplier leverage and shared systems.', icon: '🎯' },
-  { title: 'Multi-Brand Go-to-Market', desc: 'Heritage and SRS Core brands serve distinct markets while sharing infrastructure and purchasing power.', icon: '🏷️' },
+  { title: 'Multi-Brand Go-to-Market', desc: 'Summit and Ridgeline Core brands serve distinct markets while sharing infrastructure and purchasing power.', icon: '🏷️' },
   { title: 'Digital Enablement (Roof Hub)', desc: 'Contractor portal with ordering, invoice history, delivery tracking, and live pricing integration.', icon: '💻' },
   { title: 'Acquisition Integration Engine', desc: 'Proven 90-day playbook for integrating local distributors — territory, comp plans, and reporting.', icon: '🚀' },
 ];
@@ -116,7 +116,7 @@ export default function MarketPositionPage() {
               </div>
               <div className="flex items-center gap-6 text-[12px] tabular-nums">
                 <span style={{ color: 'var(--rl-text-muted)' }}>Market: <strong style={{ color: seg.color }}>{seg.size}</strong></span>
-                <span style={{ color: 'var(--rl-text-muted)' }}>SRS Share: <strong style={{ color: seg.color }}>{seg.share}%</strong></span>
+                <span style={{ color: 'var(--rl-text-muted)' }}>Ridgeline Share: <strong style={{ color: seg.color }}>{seg.share}%</strong></span>
                 <span style={{ color: '#10B981' }}>Trend: <strong>{seg.trend}</strong></span>
               </div>
             </div>
@@ -138,27 +138,27 @@ export default function MarketPositionPage() {
             <div key={c.name} className="flex items-center gap-4" style={{ animation: `slideRight ${0.3 + i * 0.12}s ease-out` }}>
               <div
                 className="w-36 text-[13px] font-bold truncate"
-                style={{ color: c.isSrs ? '#1E3A5F' : 'var(--rl-text)' }}
+                style={{ color: c.isHighlighted ? '#1E3A5F' : 'var(--rl-text)' }}
               >
-                {c.isSrs ? '★ ' : ''}{c.name}
+                {c.isHighlighted ? '★ ' : ''}{c.name}
               </div>
               <div className="flex-1 h-10 rounded-lg overflow-hidden" style={{ background: 'var(--rl-stripe)' }}>
                 <div
                   className="h-full rounded-lg flex items-center px-3 relative"
                   style={{
                     width: `${(c.revenue / maxRevenue) * 100}%`,
-                    background: c.isSrs
+                    background: c.isHighlighted
                       ? 'linear-gradient(90deg, #1E3A5F, #2563EB)'
                       : `linear-gradient(90deg, ${c.color}60, ${c.color})`,
                     animation: `barReveal 0.8s ease-out ${i * 0.15}s both`,
-                    boxShadow: c.isSrs ? '0 0 12px rgba(30,58,95,0.3)' : 'none',
+                    boxShadow: c.isHighlighted ? '0 0 12px rgba(30,58,95,0.3)' : 'none',
                   }}
                 >
                   <span className="text-[12px] font-extrabold text-white">${c.revenue}B</span>
                 </div>
               </div>
               <div className="w-20 text-right">
-                <div className="text-[12px] font-bold tabular-nums" style={{ color: c.isSrs ? '#2563EB' : 'var(--rl-text-muted)' }}>
+                <div className="text-[12px] font-bold tabular-nums" style={{ color: c.isHighlighted ? '#2563EB' : 'var(--rl-text-muted)' }}>
                   {c.branches}
                 </div>
                 <div className="text-[9px]" style={{ color: 'var(--rl-text-muted)' }}>locations</div>

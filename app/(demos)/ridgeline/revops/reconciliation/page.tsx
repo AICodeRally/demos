@@ -24,7 +24,7 @@ const VARIANCE_ITEMS = [
 ];
 
 const RECONCILIATION_STEPS = [
-  { step: 1, name: 'Transaction Ingestion', desc: 'ERP → Varicent feed validated', status: 'complete', records: '14,820', time: '12m', icon: '📥' },
+  { step: 1, name: 'Transaction Ingestion', desc: 'ERP → Legacy ICM feed validated', status: 'complete', records: '14,820', time: '12m', icon: '📥' },
   { step: 2, name: 'Territory Resolution', desc: 'Match transactions to territories', status: 'complete', records: '14,573', time: '8m', icon: '🗺️' },
   { step: 3, name: 'Commission Calculation', desc: 'Apply plans, tiers, SPIFFs', status: 'complete', records: '847 reps', time: '15m', icon: '🧮' },
   { step: 4, name: 'Accrual Comparison', desc: 'Expected vs actual variance', status: 'complete', records: '$42K var', time: '3m', icon: '📊' },

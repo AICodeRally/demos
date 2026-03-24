@@ -1,4 +1,4 @@
-// SRS Distribution — Vendor Rebate Data
+// Ridgeline Supply Co. — Vendor Rebate Data
 // Manufacturer rebate programs, attribution, and performance tracking
 
 export interface VendorRebate {
@@ -94,8 +94,8 @@ export const VENDOR_REBATES: VendorRebate[] = [
   {
     id: 'reb-004',
     vendor: 'TAMKO',
-    programName: 'TAMKO Heritage Mix Incentive',
-    category: 'Heritage Shingles',
+    programName: 'TAMKO Premium Mix Incentive',
+    category: 'Premium Shingles',
     rebateType: 'mix',
     tierStructure: [
       { threshold: 0, rate: 0.02, label: 'Standard' },

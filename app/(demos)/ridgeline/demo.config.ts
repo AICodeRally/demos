@@ -5,7 +5,7 @@ export default defineDemo({
   slug: 'ridgeline',
   darkMode: false,
   client: {
-    name: 'SRS Distribution',
+    name: 'Ridgeline Supply Co.',
     tagline: 'Specialty Trade Distribution RevOps',
     region: '48 States — 982 Branches',
     logo: Mountain,
@@ -69,7 +69,7 @@ export default defineDemo({
     },
   ],
   footer: {
-    copyright: '\u00A9 2026 SRS Distribution',
+    copyright: '\u00A9 2026 Ridgeline Supply Co.',
     poweredBy: 'AICR',
   },
   meta: {

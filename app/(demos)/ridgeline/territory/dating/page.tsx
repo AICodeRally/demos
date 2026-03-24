@@ -8,14 +8,14 @@ import { fmtM } from '@/lib/utils';
 /* -- Timeline data ------------------------------------------ */
 
 const TIMELINE_EVENTS = [
-  { date: '2025-01-01', label: 'FY2025 Territory Plan', type: 'plan' as const, detail: 'Initial territory assignments for FY2025. Heritage division operated independently.', impact: 'high' as const },
-  { date: '2025-06-15', label: 'GMS Acquisition Closed', type: 'acquisition' as const, detail: 'Home Depot completes GMS acquisition through SRS. 200+ new locations added to platform.', impact: 'critical' as const },
-  { date: '2025-09-01', label: 'Heritage Integration Phase 1', type: 'integration' as const, detail: 'Heritage East and Heritage South branches begin integration into SRS reporting. Dual-comp period starts.', impact: 'high' as const },
-  { date: '2025-12-31', label: 'Heritage TX Consolidated', type: 'consolidation' as const, detail: 'Heritage TX territory archived. Branches moved to South Central region under existing RVP.', impact: 'high' as const },
+  { date: '2025-01-01', label: 'FY2025 Territory Plan', type: 'plan' as const, detail: 'Initial territory assignments for FY2025. Summit division operated independently.', impact: 'high' as const },
+  { date: '2025-06-15', label: 'Summit Acquisition Closed', type: 'acquisition' as const, detail: 'Ridgeline completes Summit Materials acquisition. 200+ new locations added to platform.', impact: 'critical' as const },
+  { date: '2025-09-01', label: 'Summit Integration Phase 1', type: 'integration' as const, detail: 'Summit East and Summit South branches begin integration into Ridgeline reporting. Dual-comp period starts.', impact: 'high' as const },
+  { date: '2025-12-31', label: 'Summit TX Consolidated', type: 'consolidation' as const, detail: 'Summit TX territory archived. Branches moved to South Central region under existing RVP.', impact: 'high' as const },
   { date: '2026-01-01', label: 'FY2026 Territory Plan', type: 'plan' as const, detail: 'Unified territory structure goes live. 10 regions across 2 divisions. Effective-dated master data.', impact: 'critical' as const },
-  { date: '2026-01-15', label: 'Heritage Branch Reassignment', type: 'reassignment' as const, detail: '3 Heritage East branches reassigned to TX North territory. Quota pro-rated.', impact: 'medium' as const },
+  { date: '2026-01-15', label: 'Summit Branch Reassignment', type: 'reassignment' as const, detail: '3 Summit East branches reassigned to TX North territory. Quota pro-rated.', impact: 'medium' as const },
   { date: '2026-02-01', label: 'Q1 Mid-Quarter Adjustment', type: 'adjustment' as const, detail: 'New effective date for expanded territories. Comp plans updated retroactively.', impact: 'high' as const },
-  { date: '2026-04-01', label: 'Q2 Territory Refresh', type: 'plan' as const, detail: 'Planned: Quarterly territory review. Address coverage gaps in Mountain and Heritage West regions.', impact: 'medium' as const },
+  { date: '2026-04-01', label: 'Q2 Territory Refresh', type: 'plan' as const, detail: 'Planned: Quarterly territory review. Address coverage gaps in Mountain and Summit West regions.', impact: 'medium' as const },
 ];
 
 const TYPE_CONFIG: Record<string, { color: string; icon: string; label: string }> = {
@@ -111,10 +111,10 @@ export default function EffectiveDatingPage() {
           </h2>
           <div className="flex items-center gap-3 text-[9px]" style={{ color: 'var(--rl-text-muted)' }}>
             <span className="flex items-center gap-1">
-              <span className="w-4 h-2 rounded-sm" style={{ background: '#1E3A5F' }} /> SRS Core
+              <span className="w-4 h-2 rounded-sm" style={{ background: '#1E3A5F' }} /> Ridgeline Core
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-4 h-2 rounded-sm border border-dashed" style={{ borderColor: '#7C3AED', background: '#7C3AED30' }} /> Heritage
+              <span className="w-4 h-2 rounded-sm border border-dashed" style={{ borderColor: '#7C3AED', background: '#7C3AED30' }} /> Summit
             </span>
             <span className="flex items-center gap-1">
               <span className="w-4 h-2 rounded-sm" style={{ background: '#94A3B8', opacity: 0.4 }} /> Archived
@@ -172,7 +172,7 @@ export default function EffectiveDatingPage() {
           {/* Territory bars */}
           {TERRITORIES.map((t, i) => {
             const region = REGIONS.find((r) => r.id === t.regionId);
-            const isHeritage = t.divisionId === 'heritage';
+            const isSummit = t.divisionId === 'summit';
             const isArchived = t.status === 'archived';
             const startPct = dateToPercent(t.effectiveStart);
             const endPct = t.effectiveEnd ? dateToPercent(t.effectiveEnd) : dateToPercent('2026-06-30');
@@ -207,10 +207,10 @@ export default function EffectiveDatingPage() {
                       width: `${widthPct}%`,
                       background: isArchived
                         ? 'linear-gradient(90deg, #94A3B840, #94A3B820)'
-                        : isHeritage
+                        : isSummit
                           ? `linear-gradient(90deg, ${region?.color}80, ${region?.color}50)`
                           : `linear-gradient(90deg, ${region?.color}CC, ${region?.color}90)`,
-                      border: isHeritage ? `1px dashed ${region?.color}80` : `1px solid ${region?.color}40`,
+                      border: isSummit ? `1px dashed ${region?.color}80` : `1px solid ${region?.color}40`,
                       animationDelay: `${i * 0.15}s`,
                       boxShadow: isHovered ? `0 0 12px ${region?.color}40` : undefined,
                       transition: 'box-shadow 0.2s ease',
@@ -439,11 +439,11 @@ export default function EffectiveDatingPage() {
       {/* Why Effective Dating callout */}
       <div className="rounded-xl px-6 py-5 mt-6" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.06), rgba(124,58,237,0.04))', borderLeft: '4px solid #2563EB' }}>
         <p className="text-[13px] leading-relaxed" style={{ color: 'var(--rl-text-secondary)' }}>
-          <strong>Why Effective Dating Matters at SRS Scale:</strong> With 982 branches under continuous acquisition integration,
+          <strong>Why Effective Dating Matters at Ridgeline Scale:</strong> With 982 branches under continuous acquisition integration,
           territory assignments, pricing, product hierarchies, and plan rules change constantly. Without effective-dated
           master data, retro-rate errors multiply and dispute volume explodes. Every change carries a valid-from/valid-to
           timestamp, enabling accurate historical comp calculations and SOX-compliant audit trails. The Gantt above shows
-          how Heritage TX was archived while Heritage East persists — each with clean date boundaries.
+          how Summit TX was archived while Summit East persists — each with clean date boundaries.
         </p>
       </div>
     </>

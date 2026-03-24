@@ -1,4 +1,4 @@
-// SRS Distribution — Dispute & Inquiry Data
+// Ridgeline Supply Co. — Dispute & Inquiry Data
 // Commission disputes, payout inquiries, chargeback resolutions
 
 export type DisputeStatus = 'open' | 'under_review' | 'escalated' | 'resolved' | 'rejected';
@@ -37,7 +37,7 @@ export const DISPUTES: Dispute[] = [
     type: 'commission_error',
     status: 'open',
     amount: 3420,
-    description: 'Q1 commission on GAF shingle order #SRS-84721 not credited. Order shipped 3/12, invoice confirmed.',
+    description: 'Q1 commission on GAF shingle order #RL-84721 not credited. Order shipped 3/12, invoice confirmed.',
     submittedDate: '2026-03-15',
     resolvedDate: null,
     assignedTo: 'Holley Morris',
@@ -88,7 +88,7 @@ export const DISPUTES: Dispute[] = [
     assignedTo: 'Holley Morris',
     branchId: 'b-001',
     priority: 'medium',
-    resolution: 'SPIFF credit applied. Varicent data feed had a 48-hour lag on product category mapping.',
+    resolution: 'SPIFF credit applied. Legacy ICM data feed had a 48-hour lag on product category mapping.',
   },
   {
     id: 'disp-005',
@@ -97,7 +97,7 @@ export const DISPUTES: Dispute[] = [
     type: 'quota_adjustment',
     status: 'resolved',
     amount: 0,
-    description: 'Q1 quota does not reflect Heritage branch integration. 3 new branches added to territory mid-quarter.',
+    description: 'Q1 quota does not reflect Summit branch integration. 3 new branches added to territory mid-quarter.',
     submittedDate: '2026-02-15',
     resolvedDate: '2026-02-25',
     assignedTo: 'Jack Egan',

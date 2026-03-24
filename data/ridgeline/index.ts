@@ -1,4 +1,4 @@
-// RIDGELINE — SRS Distribution RevOps & SPM Demo Data Barrel
+// RIDGELINE — Ridgeline Supply Co. RevOps & SPM Demo Data Barrel
 // All data modules re-exported from a single entry point.
 
 export {

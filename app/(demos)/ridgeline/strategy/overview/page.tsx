@@ -37,7 +37,7 @@ export default function DivisionOverviewPage() {
             Division Overview
           </h1>
           <p className="text-[13px]" style={{ color: 'var(--rl-text-muted)' }}>
-            {COMPANY.name} &middot; {COMPANY.hq} &middot; A {COMPANY.parentCompany} Company
+            {COMPANY.name} &middot; {COMPANY.hq}
           </p>
         </div>
       </div>

@@ -41,7 +41,7 @@ export default function CompPlansPage() {
             Compensation Plans
           </h1>
           <p className="text-[13px]" style={{ color: 'var(--rl-text-muted)' }}>
-            FY2026 plans by role &middot; Varicent-managed ICM &middot; Click any role to drill
+            FY2026 plans by role &middot; Enterprise ICM &middot; Click any role to drill
           </p>
         </div>
       </div>
