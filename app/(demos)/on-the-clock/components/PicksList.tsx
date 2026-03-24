@@ -54,7 +54,7 @@ export default function PicksList({ picks, currentPick, userTeamAbbr, activeTeam
   return (
     <div className="flex flex-col h-full">
       {/* Tab bar */}
-      <div className="flex border-b border-white/5 bg-[#0a0e1a] shrink-0">
+      <div className="flex border-b border-white/5 bg-[var(--otc-bg)] shrink-0">
         {tabs.map((tab) => (
           <button
             key={tab.key}
@@ -342,7 +342,7 @@ function PicksView({ picks }: { picks: DraftPick[] }) {
         return (
           <div key={round}>
             {/* Round header */}
-            <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#0a0e1a] border-b border-white/10 flex items-center justify-between">
+            <div className="sticky top-0 z-10 px-4 py-1.5 bg-[var(--otc-bg)] border-b border-white/10 flex items-center justify-between">
               <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest">Round {round}</span>
               <span className="text-[10px] text-slate-600 font-bold tabular-nums">{roundPicks.length}/32</span>
             </div>

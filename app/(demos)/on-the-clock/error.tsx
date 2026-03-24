@@ -8,7 +8,7 @@ export default function OnTheClockError({
   reset: () => void;
 }) {
   return (
-    <div className="h-screen bg-[#0a0e1a] flex items-center justify-center">
+    <div className="h-screen bg-[var(--otc-bg)] flex items-center justify-center">
       <div className="text-center">
         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
           <span className="text-2xl">🏈</span>

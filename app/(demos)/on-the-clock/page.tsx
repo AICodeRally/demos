@@ -270,7 +270,7 @@ export default function OnTheClockPage() {
   const currentPickNumber = currentSlot?.overall ?? 1;
 
   return (
-    <div className="h-screen bg-[#0a0e1a] flex flex-col overflow-hidden">
+    <div className="h-screen bg-[var(--otc-bg)] flex flex-col overflow-hidden">
       {/* ── TOP BAR — broadcast-style team on the clock ── */}
       {draftStarted && <header className="relative shrink-0 overflow-hidden">
         {/* Team color wash background */}
@@ -278,8 +278,8 @@ export default function OnTheClockPage() {
           className="absolute inset-0 transition-colors duration-700"
           style={{
             background: draftComplete
-              ? 'linear-gradient(90deg, #064e3b 0%, #0a0e1a 50%, #064e3b 100%)'
-              : `linear-gradient(90deg, ${activeTeam.color}40 0%, #0a0e1a 40%, #0a0e1a 60%, ${activeTeam.color}40 100%)`,
+              ? 'linear-gradient(90deg, #064e3b 0%, var(--otc-bg) 50%, #064e3b 100%)'
+              : `linear-gradient(90deg, ${activeTeam.color}40 0%, var(--otc-bg) 40%, var(--otc-bg) 60%, ${activeTeam.color}40 100%)`,
           }}
         />
         {/* Animated scan line */}
@@ -524,7 +524,7 @@ export default function OnTheClockPage() {
 
       {/* ── LEADERBOARD OVERLAY ── */}
       {showLeaderboard && (
-        <div className="absolute inset-0 z-40 bg-[#0a0e1a]/95 backdrop-blur-sm flex items-center justify-center">
+        <div className="absolute inset-0 z-40 bg-[var(--otc-bg)]/95 backdrop-blur-sm flex items-center justify-center">
           <div className="w-full max-w-[520px] h-[80vh] bg-[#0d1117] border border-white/10 rounded-xl overflow-hidden">
             <BettingLeaderboard
               latestEntry={latestLeaderboardEntry}
@@ -536,7 +536,7 @@ export default function OnTheClockPage() {
 
       {/* ── MOBILE TAB BAR (visible < lg when draft started) ── */}
       {draftStarted && (
-        <div className="flex lg:hidden border-b border-white/5 bg-[#0a0e1a] shrink-0">
+        <div className="flex lg:hidden border-b border-white/5 bg-[var(--otc-bg)] shrink-0">
           {([
             ['clock', 'Clock'],
             ['board', 'Board'],
@@ -574,7 +574,7 @@ export default function OnTheClockPage() {
           } lg:flex w-full lg:w-[320px] border-r border-white/5 bg-[#0d1117] overflow-hidden flex-col shrink-0`}>
             {/* Desktop panel toggle */}
             {bettingEnabled && (
-              <div className="hidden lg:flex border-b border-white/5 bg-[#0a0e1a] shrink-0">
+              <div className="hidden lg:flex border-b border-white/5 bg-[var(--otc-bg)] shrink-0">
                 <button
                   onClick={() => setLeftPanel('board')}
                   className={`flex-1 px-2 py-1.5 text-[10px] font-bold text-center uppercase tracking-wider transition-all ${
@@ -648,13 +648,13 @@ export default function OnTheClockPage() {
           <div
             className="absolute inset-0 transition-all duration-700"
             style={{
-              background: `radial-gradient(circle at center, ${activeTeam.color}10 0%, transparent 50%), radial-gradient(circle at center, #0a0e1a 0%, #060810 100%)`,
+              background: `radial-gradient(circle at center, ${activeTeam.color}10 0%, transparent 50%), radial-gradient(circle at center, var(--otc-bg) 0%, var(--otc-bg-deep) 100%)`,
             }}
           />
 
           {/* Prediction setup overlay (before draft starts) */}
           {!draftStarted && showPredictions && (
-            <div className="absolute inset-0 z-30 bg-[#0a0e1a]/95 flex items-center justify-center p-4 overflow-y-auto">
+            <div className="absolute inset-0 z-30 bg-[var(--otc-bg)]/95 flex items-center justify-center p-4 overflow-y-auto">
               <div className="w-full max-w-[540px]">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-black text-white">Pre-Draft Predictions</h2>
@@ -748,7 +748,7 @@ export default function OnTheClockPage() {
 
       {/* ── BOTTOM TICKER (compact on mobile, full on desktop) ── */}
       {draftStarted && picks.length > 0 && (
-        <div className="flex md:hidden h-6 bg-[#060810] border-t border-white/5 items-center overflow-hidden shrink-0 px-3">
+        <div className="flex md:hidden h-6 bg-[var(--otc-bg-deep)] border-t border-white/5 items-center overflow-hidden shrink-0 px-3">
           <span className="text-[10px] font-black text-amber-500 mr-2 shrink-0">LAST</span>
           <span className="text-[10px] text-slate-400 truncate">
             <span className="font-bold" style={{ color: picks[picks.length - 1].teamColor === '#000000' ? '#A5ACAF' : picks[picks.length - 1].teamColor }}>
@@ -758,7 +758,7 @@ export default function OnTheClockPage() {
           </span>
         </div>
       )}
-      {draftStarted && <div className="hidden md:flex h-7 bg-[#060810] border-t border-white/5 items-center overflow-hidden shrink-0">
+      {draftStarted && <div className="hidden md:flex h-7 bg-[var(--otc-bg-deep)] border-t border-white/5 items-center overflow-hidden shrink-0">
         <div className="flex items-center gap-2 px-3 shrink-0 bg-amber-500 h-full">
           <span className="text-[10px] font-black text-black uppercase tracking-wider">
             {bettingEnabled && stocks.length > 0 ? 'Stocks' : 'Live'}
@@ -787,6 +787,7 @@ export default function OnTheClockPage() {
       </div>}
 
       <style>{`
+        :root { --otc-bg: #0a0e1a; --otc-bg-deep: #060810; }
         @keyframes pickFlash {
           0% { background: rgba(6,8,16,0); }
           6% { background: rgba(6,8,16,0.95); }

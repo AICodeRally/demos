@@ -69,7 +69,7 @@ export default function BettingHub({
   return (
     <div className="flex flex-col h-full">
       {/* Balance bar */}
-      <div className="px-4 py-2 border-b border-white/5 bg-[#0a0e1a] flex items-center justify-between">
+      <div className="px-4 py-2 border-b border-white/5 bg-[var(--otc-bg)] flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold">Draft Bucks</span>
           <span className={`text-sm font-black tabular-nums ${
@@ -90,7 +90,7 @@ export default function BettingHub({
       </div>
 
       {/* Tab bar */}
-      <div className="flex border-b border-white/5 bg-[#0a0e1a] shrink-0">
+      <div className="flex border-b border-white/5 bg-[var(--otc-bg)] shrink-0">
         {tabs.map((t) => (
           <button
             key={t.key}
