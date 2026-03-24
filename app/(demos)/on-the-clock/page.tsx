@@ -696,10 +696,10 @@ export default function OnTheClockPage() {
 
             {/* Betting toggle (below clock, before draft starts) */}
             {!draftStarted && !showPredictions && (
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-3">
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex flex-wrap items-center justify-center gap-2 px-4">
                 <button
                   onClick={() => setBettingEnabled((e) => !e)}
-                  className={`px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider transition-all ${
+                  className={`px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider transition-all ${
                     bettingEnabled
                       ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30'
                       : 'bg-white/5 text-slate-500 hover:bg-white/10'
@@ -710,14 +710,14 @@ export default function OnTheClockPage() {
                 {bettingEnabled && (
                   <button
                     onClick={() => setShowPredictions(true)}
-                    className="px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all"
+                    className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all"
                   >
                     Predictions ({bettingState.predictions.length}/5)
                   </button>
                 )}
                 <button
                   onClick={() => setShowLeaderboard(true)}
-                  className="px-3 py-1.5 rounded-full text-[11px] font-bold text-slate-600 hover:text-slate-400 bg-white/5 hover:bg-white/10 transition-all"
+                  className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-bold text-slate-600 hover:text-slate-400 bg-white/5 hover:bg-white/10 transition-all"
                 >
                   Leaderboard
                 </button>

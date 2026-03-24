@@ -33,14 +33,14 @@ export default function BettingLeaderboard({ latestEntry, onClose }: BettingLead
           {entries.length > 0 && (
             <button
               onClick={handleClear}
-              className="text-[10px] text-red-400/50 hover:text-red-400 font-bold transition-colors"
+              className="text-xs text-red-400/50 hover:text-red-400 font-bold px-3 py-2 min-h-[44px] transition-colors"
             >
               Clear
             </button>
           )}
           <button
             onClick={onClose}
-            className="text-[10px] text-slate-500 hover:text-white font-bold px-2 py-1 rounded bg-white/5 hover:bg-white/10 transition-all"
+            className="text-xs text-slate-500 hover:text-white font-bold px-4 py-2 min-h-[44px] rounded-lg bg-white/5 hover:bg-white/10 transition-all"
           >
             Back
           </button>
