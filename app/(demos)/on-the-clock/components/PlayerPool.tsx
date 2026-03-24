@@ -33,6 +33,7 @@ export default function PlayerPool({
 }: PlayerPoolProps) {
   const [posFilter, setPosFilter] = useState('ALL');
   const [showLegend, setShowLegend] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState<DraftPlayer | null>(null);
 
   const available = DRAFT_PLAYERS.filter((p) => !draftedPlayerIds.has(p.id));
   const filtered = posFilter === 'ALL' ? available : available.filter((p) => p.position === posFilter);
@@ -167,6 +168,56 @@ export default function PlayerPool({
         })}
       </div>
 
+      {/* Selected player detail panel */}
+      {selectedPlayer && (
+        <div
+          className="px-4 py-3 border-b space-y-2 shrink-0"
+          style={{ backgroundColor: `${activeTeam.color}08`, borderColor: `${activeTeam.color}20` }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span
+                className="text-xs font-black px-2 py-0.5 rounded text-white"
+                style={{ backgroundColor: POSITION_COLORS[selectedPlayer.position] ?? '#64748b' }}
+              >
+                {selectedPlayer.position}
+              </span>
+              <span className="text-base font-black text-white">{selectedPlayer.name}</span>
+            </div>
+            <button
+              onClick={() => setSelectedPlayer(null)}
+              className="text-xs text-slate-500 hover:text-white px-2 py-0.5 rounded bg-white/5"
+            >
+              Close
+            </button>
+          </div>
+          <p className="text-sm text-slate-300">{selectedPlayer.school} &middot; {selectedPlayer.height} / {selectedPlayer.weight}lbs &middot; Grade: <span className="text-emerald-400 font-bold">{selectedPlayer.grade}</span></p>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider mb-1">Strengths</p>
+              {selectedPlayer.strengths.map((s, i) => (
+                <p key={i} className="text-sm text-slate-300 leading-snug">+ {s}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider mb-1">Weaknesses</p>
+              {selectedPlayer.weaknesses.map((w, i) => (
+                <p key={i} className="text-sm text-slate-300 leading-snug">- {w}</p>
+              ))}
+            </div>
+          </div>
+          {!disabled && (
+            <button
+              onClick={() => { onSelectPlayer(selectedPlayer); setSelectedPlayer(null); }}
+              className="w-full py-2 rounded-lg font-black text-sm text-white transition-all hover:brightness-110"
+              style={{ backgroundColor: activeTeam.color, boxShadow: `0 0 10px ${activeTeam.color}40` }}
+            >
+              DRAFT {selectedPlayer.name.toUpperCase()}
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Player list */}
       <div className="flex-1 overflow-y-auto">
         {sorted.map((player, rank) => {
@@ -177,10 +228,12 @@ export default function PlayerPool({
               player={player}
               rank={rank + 1}
               onSelect={() => onSelectPlayer(player)}
+              onInfo={() => setSelectedPlayer(selectedPlayer?.id === player.id ? null : player)}
               disabled={disabled}
               isNeed={isNeed}
               teamColor={activeTeam.color}
               isBest={player.id === bestAvailable?.id}
+              isSelected={selectedPlayer?.id === player.id}
             />
           );
         })}
@@ -198,35 +251,38 @@ function PlayerRow({
   player,
   rank,
   onSelect,
+  onInfo,
   disabled,
   isNeed,
   teamColor,
   isBest,
+  isSelected,
 }: {
   player: DraftPlayer;
   rank: number;
   onSelect: () => void;
+  onInfo: () => void;
   disabled: boolean;
   isNeed: boolean;
   teamColor: string;
   isBest: boolean;
+  isSelected: boolean;
 }) {
   const posColor = POSITION_COLORS[player.position] ?? '#64748b';
 
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      disabled={disabled}
+    <div
       className={`w-full flex items-center gap-3 px-4 py-2.5 border-b transition-all text-left group ${
         disabled
-          ? 'opacity-40 cursor-not-allowed border-white/5'
-          : 'cursor-pointer border-white/5 hover:bg-white/[0.06]'
+          ? 'opacity-40 border-white/5'
+          : isSelected
+            ? 'bg-white/[0.08] border-white/10'
+            : 'border-white/5 hover:bg-white/[0.06]'
       }`}
       style={{
         borderLeftWidth: isNeed && !disabled ? '3px' : undefined,
         borderLeftColor: isNeed && !disabled ? teamColor : undefined,
-        backgroundColor: isNeed && !disabled ? `${teamColor}08` : undefined,
+        backgroundColor: isSelected ? `${teamColor}15` : isNeed && !disabled ? `${teamColor}08` : undefined,
       }}
     >
       {/* Rank */}
@@ -245,10 +301,14 @@ function PlayerRow({
         {player.position}
       </span>
 
-      {/* Player info */}
-      <div className="flex-1 min-w-0">
+      {/* Player info — clickable for detail */}
+      <button
+        type="button"
+        onClick={onInfo}
+        className="flex-1 min-w-0 text-left cursor-pointer"
+      >
         <div className="flex items-center gap-1.5">
-          <p className="text-sm font-bold text-slate-200 truncate group-hover:text-white transition-colors">
+          <p className="text-base font-bold text-white truncate">
             {player.name}
           </p>
           {isNeed && (
@@ -265,7 +325,7 @@ function PlayerRow({
             </span>
           )}
         </div>
-        <p className="text-[11px] text-slate-300 flex items-center gap-1.5">
+        <p className="text-sm text-slate-300 flex items-center gap-1.5">
           <span className="truncate">{player.school}</span>
           <span className="text-slate-500">&middot;</span>
           <span className="truncate">{player.height} / {player.weight}</span>
@@ -276,28 +336,28 @@ function PlayerRow({
                 ? 'text-emerald-400'
                 : player.grade >= 90
                   ? 'text-blue-400'
-                  : player.grade >= 85
-                    ? 'text-slate-400'
-                    : 'text-slate-400'
+                  : 'text-slate-400'
             }`}
           >
             {player.grade}
           </span>
         </p>
-      </div>
+      </button>
 
-      {/* Draft button — always visible on mobile, hover on desktop */}
+      {/* Draft button */}
       {!disabled && (
-        <div
-          className="shrink-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity text-[10px] font-black text-white px-2 py-1 rounded"
+        <button
+          type="button"
+          onClick={onSelect}
+          className="shrink-0 text-[10px] font-black text-white px-2.5 py-1.5 rounded transition-all hover:brightness-110"
           style={{
             backgroundColor: teamColor,
             boxShadow: `0 0 10px ${teamColor}40`,
           }}
         >
           DRAFT
-        </div>
+        </button>
       )}
-    </button>
+    </div>
   );
 }

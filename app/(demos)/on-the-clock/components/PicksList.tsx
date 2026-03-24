@@ -92,7 +92,8 @@ export default function PicksList({ picks, currentPick, userTeamAbbr, activeTeam
 
 // ── Teams Tab ───────────────────────────────────
 function TeamsView({ currentPick, picks, userTeamAbbr }: { currentPick: number; picks: DraftPick[]; userTeamAbbr?: string | null }) {
-  // Group all picks by team abbreviation (works across all rounds)
+  const [expanded, setExpanded] = useState<string | null>(null);
+
   const picksByTeam = new Map<string, DraftPick[]>();
   for (const p of picks) {
     const existing = picksByTeam.get(p.teamAbbr) ?? [];
@@ -106,66 +107,116 @@ function TeamsView({ currentPick, picks, userTeamAbbr }: { currentPick: number; 
         const teamPicks = picksByTeam.get(team.abbr) ?? [];
         const hasPicks = teamPicks.length > 0;
         const needs = TEAM_NEEDS[team.abbr] ?? [];
+        const strategy = TEAM_STRATEGY[team.abbr] ?? '';
+        const isExpanded = expanded === team.abbr;
 
         return (
-          <div
-            key={team.abbr}
-            className={`flex items-center gap-3 px-4 py-2 border-b transition-all duration-500 ${
-              hasPicks
-                ? 'bg-white/[0.02] border-white/5'
-                : 'bg-transparent border-white/5'
-            }`}
-          >
-            {/* Team badge */}
-            <div className="flex items-center gap-2 shrink-0">
+          <div key={team.abbr}>
+            <button
+              type="button"
+              onClick={() => setExpanded(isExpanded ? null : team.abbr)}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 border-b transition-all duration-300 text-left ${
+                isExpanded
+                  ? 'bg-white/[0.06] border-white/10'
+                  : hasPicks
+                    ? 'bg-white/[0.02] border-white/5 hover:bg-white/[0.04]'
+                    : 'bg-transparent border-white/5 hover:bg-white/[0.02]'
+              }`}
+            >
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
+                className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300"
                 style={{
                   backgroundColor: team.color,
-                  opacity: hasPicks ? 1 : 0.6,
+                  opacity: hasPicks || isExpanded ? 1 : 0.6,
+                  boxShadow: isExpanded ? `0 0 12px ${team.color}40` : undefined,
                 }}
               >
-                <span className="text-[9px] font-black" style={{ color: team.colorAlt }}>
+                <span className="text-[10px] font-black" style={{ color: team.colorAlt }}>
                   {team.abbr}
                 </span>
               </div>
-            </div>
 
-            {/* Team info */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`text-sm font-bold truncate ${hasPicks ? 'text-slate-300' : 'text-slate-300'}`}
-                >
-                  {team.city} {team.name}
-                </span>
-                {userTeamAbbr && team.abbr === userTeamAbbr && (
-                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 shrink-0">
-                    YOU
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className={`text-base font-bold truncate ${hasPicks || isExpanded ? 'text-white' : 'text-slate-200'}`}>
+                    {team.city} {team.name}
                   </span>
-                )}
-                {hasPicks && (
-                  <span className="text-[9px] text-slate-400 font-bold shrink-0">
-                    {teamPicks.length} pick{teamPicks.length > 1 ? 's' : ''}
-                  </span>
+                  {userTeamAbbr && team.abbr === userTeamAbbr && (
+                    <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 shrink-0">YOU</span>
+                  )}
+                  {hasPicks && (
+                    <span className="text-[10px] text-slate-400 font-bold shrink-0">
+                      {teamPicks.length} pick{teamPicks.length > 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
+                {!isExpanded && (
+                  hasPicks ? (
+                    <p className="text-sm text-slate-300 truncate">
+                      {teamPicks.map((p) => `${p.player.name} (${p.player.position})`).join(', ')}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-slate-500 truncate">{needs.join(' / ') || '—'}</p>
+                  )
                 )}
               </div>
-              {hasPicks ? (
-                <div className="space-y-0.5">
-                  {teamPicks.map((p) => (
-                    <p key={p.pickNumber} className="text-[11px] text-slate-300 truncate">
-                      <span className="text-slate-400 font-mono">R{p.round}#{p.pickInRound}</span>{' '}
-                      <span className="font-medium text-slate-400">{p.player.name}</span>{' '}
-                      <span className="text-slate-400">{p.player.position}</span>
-                    </p>
-                  ))}
+
+              <span className="text-slate-500 text-xs shrink-0">{isExpanded ? '▲' : '▼'}</span>
+            </button>
+
+            {/* Expanded detail */}
+            {isExpanded && (
+              <div
+                className="px-4 py-3 border-b space-y-3"
+                style={{ backgroundColor: `${team.color}08`, borderColor: `${team.color}20` }}
+              >
+                {/* Needs */}
+                <div>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1.5">Needs</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {needs.map((pos, i) => (
+                      <span
+                        key={pos}
+                        className="text-xs font-black px-2 py-0.5 rounded text-white"
+                        style={{ backgroundColor: i === 0 ? team.color : (POSITION_COLORS[pos] ?? '#64748b') }}
+                      >
+                        {pos}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              ) : (
-                <p className="text-[11px] text-slate-400 truncate">
-                  {needs.join(' / ') || '—'}
-                </p>
-              )}
-            </div>
+
+                {/* Strategy */}
+                {strategy && (
+                  <div>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Strategy</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{strategy}</p>
+                  </div>
+                )}
+
+                {/* Picks */}
+                {hasPicks && (
+                  <div>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1.5">Selections</p>
+                    <div className="space-y-1.5">
+                      {teamPicks.map((p) => (
+                        <div key={p.pickNumber} className="flex items-center gap-2">
+                          <span className="text-xs text-slate-400 font-mono w-12 shrink-0">R{p.round} #{p.pickInRound}</span>
+                          <span
+                            className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0"
+                            style={{ backgroundColor: POSITION_COLORS[p.player.position] ?? '#64748b' }}
+                          >
+                            {p.player.position}
+                          </span>
+                          <span className="text-base font-bold text-white truncate">{p.player.name}</span>
+                          <span className="text-sm text-slate-400 truncate">{p.player.school}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         );
       })}
@@ -366,10 +417,10 @@ function PicksView({ picks }: { picks: DraftPick[] }) {
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-white truncate">
+                    <p className="text-base font-bold text-white truncate">
                       {pick.player.name}
                     </p>
-                    <p className="text-xs text-slate-300 truncate flex items-center gap-1.5">
+                    <p className="text-sm text-slate-300 truncate flex items-center gap-1.5">
                       <span className="font-bold" style={{ color: pick.teamColor === '#000000' ? '#A5ACAF' : pick.teamColor }}>
                         {pick.teamAbbr}
                       </span>
