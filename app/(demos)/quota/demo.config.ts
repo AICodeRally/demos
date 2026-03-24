@@ -4,9 +4,9 @@ export default defineDemo({
   slug: 'quota',
   layout: 'topnav',
   client: { name: 'Prizym', tagline: 'RevOps Suite' },
-  product: { name: 'QUOTA', badge: 'Demo Data' },
+  product: { name: 'Prizym SQM — Sales Quota Manager', badge: 'Demo Data' },
   suite: { name: 'PRIZYM', tagline: 'RevOps Suite' },
-  module: { code: 'QTA', name: 'QUOTA', description: 'Quota Planning and Attainment' },
+  module: { code: 'SQM', name: 'Sales Quota Manager', description: 'Quota Planning and Attainment' },
   gradient: { start: '#F59E0B', mid: '#F97316', end: '#EF4444' },
   theme: 'prizym-navy',
   nav: [
@@ -75,8 +75,8 @@ export default defineDemo({
     poweredBy: 'AICR',
   },
   meta: {
-    industry: 'Prizym RevOps',
-    tagline: 'Quota planning and attainment for the modern CRO',
+    industry: 'Sales Performance Management',
+    tagline: 'Sales quota planning and attainment for the modern CRO',
     color: '#f59e0b',
   },
 });
