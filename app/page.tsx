@@ -8,7 +8,7 @@ const SPM_DEMO_SLUGS = new Set([
   'quota',
 ]);
 
-const TOOL_DEMO_SLUGS = new Set<string>([]);
+const TOOL_DEMO_SLUGS = new Set(['on-the-clock']);
 
 function groupDemos() {
   const visibleDemos = demoRegistry.filter((demo) => !PRIVATE_RALLY_DEMO_SLUGS.has(demo.slug));
