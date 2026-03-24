@@ -32,7 +32,7 @@ export default function PredictionSetup({ bettingState, onBettingStateChange }: 
     <div className="w-full max-w-[520px] mx-auto">
       {/* Balance display */}
       <div className="flex items-center justify-center gap-3 mb-3">
-        <span className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Draft Bucks</span>
+        <span className="text-[10px] text-slate-300 uppercase tracking-wider font-bold">Draft Bucks</span>
         <span className="text-lg font-black text-amber-400 tabular-nums">
           ${bettingState.balance.toLocaleString()}
         </span>
@@ -47,7 +47,7 @@ export default function PredictionSetup({ bettingState, onBettingStateChange }: 
             className={`px-3 py-1 text-[10px] font-bold rounded-md uppercase tracking-wider transition-all ${
               tab === t
                 ? 'bg-amber-500 text-black'
-                : 'bg-white/5 text-slate-500 hover:bg-white/10'
+                : 'bg-white/5 text-slate-300 hover:bg-white/10'
             }`}
           >
             {t === 'predictions' ? 'Top 5 Picks' : 'Prop Bets'}
@@ -114,7 +114,7 @@ function PredictionsTab({
 
   return (
     <div>
-      <p className="text-[10px] text-slate-500 text-center mb-2">
+      <p className="text-[10px] text-slate-300 text-center mb-2">
         Predict who goes #1 through #5. 500 credits per correct pick!
       </p>
 
@@ -135,7 +135,7 @@ function PredictionsTab({
               }`}
               onClick={() => setActiveSlot(isActive ? null : slot)}
             >
-              <span className="text-lg font-black text-slate-600 w-6 text-center">#{slot}</span>
+              <span className="text-lg font-black text-slate-400 w-6 text-center">#{slot}</span>
               {pred ? (
                 <div className="flex-1 flex items-center gap-2">
                   <span
@@ -156,7 +156,7 @@ function PredictionsTab({
                   </button>
                 </div>
               ) : (
-                <span className="text-xs text-slate-600 italic">
+                <span className="text-xs text-slate-400 italic">
                   {isActive ? 'Select a player below...' : 'Tap to predict'}
                 </span>
               )}
@@ -173,7 +173,7 @@ function PredictionsTab({
             placeholder="Search players..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-3 py-2 bg-white/5 text-sm text-white placeholder:text-slate-600 outline-none border-b border-white/5"
+            className="w-full px-3 py-2 bg-white/5 text-sm text-white placeholder:text-slate-400 outline-none border-b border-white/5"
             autoFocus
           />
           <div className="max-h-[160px] overflow-y-auto">
@@ -190,7 +190,7 @@ function PredictionsTab({
                   {player.position}
                 </span>
                 <span className="text-xs font-bold text-slate-300 truncate">{player.name}</span>
-                <span className="text-[10px] text-slate-600 truncate">{player.school}</span>
+                <span className="text-[10px] text-slate-400 truncate">{player.school}</span>
                 <span className="text-[10px] font-bold text-emerald-400/70 tabular-nums ml-auto">{player.grade}</span>
               </button>
             ))}
@@ -223,7 +223,7 @@ function PropsTab({
 
   return (
     <div className="space-y-2">
-      <p className="text-[10px] text-slate-500 text-center mb-2">
+      <p className="text-[10px] text-slate-300 text-center mb-2">
         Over/Under bets on Round 1 positions. Settled after Round 1 completes.
       </p>
 
@@ -270,7 +270,7 @@ function PropsTab({
                     onChange={(e) => setAmounts({ ...amounts, [template.id]: Number(e.target.value) })}
                     className="w-full h-1 appearance-none bg-white/10 rounded-full accent-amber-500"
                   />
-                  <div className="text-[9px] text-slate-500 tabular-nums text-center">${amount}</div>
+                  <div className="text-[9px] text-slate-300 tabular-nums text-center">${amount}</div>
                 </div>
 
                 {/* Over/Under buttons */}

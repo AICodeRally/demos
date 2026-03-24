@@ -282,16 +282,6 @@ export default function OnTheClockPage() {
               : `linear-gradient(90deg, ${activeTeam.color}40 0%, var(--otc-bg) 40%, var(--otc-bg) 60%, ${activeTeam.color}40 100%)`,
           }}
         />
-        {/* Animated scan line */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute top-0 left-0 w-full h-[1px] opacity-20"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${activeTeam.color}, transparent)`,
-              animation: 'scanLine 3s linear infinite',
-            }}
-          />
-        </div>
 
         <div className="relative flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5">
           {/* Left: Logo + title + reset */}
@@ -307,7 +297,7 @@ export default function OnTheClockPage() {
             <div className="hidden sm:block">
               <h1 className="text-sm font-black text-white leading-tight tracking-tight">ON THE CLOCK</h1>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] text-slate-500 font-medium">2026 NFL DRAFT</span>
+                <span className="text-[10px] text-slate-300 font-medium">2026 NFL DRAFT</span>
                 {userTeamAbbr && (
                   <span
                     className="text-[9px] font-black px-1.5 py-0.5 rounded"
@@ -319,7 +309,7 @@ export default function OnTheClockPage() {
                     GM: {userTeamAbbr}
                   </span>
                 )}
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-slate-500 uppercase">
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-slate-300 uppercase">
                   {speed}
                 </span>
                 {/* Betting indicator */}
@@ -331,7 +321,7 @@ export default function OnTheClockPage() {
                 {/* Sound toggle */}
                 <button
                   onClick={() => setSoundEnabled((s) => !s)}
-                  className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-slate-500 hover:text-slate-300 transition-colors"
+                  className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-slate-300 hover:text-white transition-colors"
                   title={soundEnabled ? 'Mute' : 'Unmute'}
                   aria-label={soundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
                 >
@@ -347,7 +337,7 @@ export default function OnTheClockPage() {
               <>
                 {/* Timer/CPU — hidden on smallest screens */}
                 <div className="hidden md:flex flex-col items-center mr-2">
-                  <span className="text-[9px] uppercase tracking-widest text-slate-500 font-bold">
+                  <span className="text-[9px] uppercase tracking-widest text-slate-300 font-bold">
                     {isUserPick ? 'Time' : 'CPU'}
                   </span>
                   {isUserPick ? (
@@ -386,7 +376,7 @@ export default function OnTheClockPage() {
                   </p>
                   <div className="flex items-center justify-center gap-2">
                     {activeTeam.tradeNote && (
-                      <span className="text-[9px] md:text-[10px] text-slate-500 italic hidden sm:inline">({activeTeam.tradeNote})</span>
+                      <span className="text-[9px] md:text-[10px] text-slate-300 italic hidden sm:inline">({activeTeam.tradeNote})</span>
                     )}
                     <p className="text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-black">
                       {isSpinning ? (
@@ -406,7 +396,7 @@ export default function OnTheClockPage() {
             ) : (
               <div className="flex flex-col items-center">
                 <p className="text-lg md:text-2xl font-black text-emerald-400 tracking-tight">Draft Complete!</p>
-                <p className="text-[9px] md:text-[10px] text-slate-500 uppercase tracking-widest">All {totalPicks} picks are in</p>
+                <p className="text-[9px] md:text-[10px] text-slate-300 uppercase tracking-widest">All {totalPicks} picks are in</p>
               </div>
             )}
           </div>
@@ -425,7 +415,7 @@ export default function OnTheClockPage() {
                 {draftComplete ? 'DONE' : `${pickInRound}/32`}
               </span>
               {!draftComplete && (
-                <span className="text-[8px] md:text-[9px] text-slate-600 mt-0.5 uppercase tracking-wider">
+                <span className="text-[8px] md:text-[9px] text-slate-400 mt-0.5 uppercase tracking-wider">
                   {getRoundLabel(currentRound)}
                 </span>
               )}
@@ -453,18 +443,17 @@ export default function OnTheClockPage() {
         </div>
       </header>}
 
-      {/* ── PICK ANNOUNCEMENT FLASH OVERLAY ── */}
+      {/* ── PICK ANNOUNCEMENT OVERLAY ── */}
       {lastPickFlash && lastPick && lastPickGrade && (
         <div
           className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
-          style={{ animation: 'pickFlash 2.4s ease-out forwards' }}
+          style={{ animation: 'pickReveal 1.8s ease-out forwards' }}
         >
-          {/* Team color burst */}
+          {/* Subtle team color wash */}
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(circle at center, ${lastPick.teamColor}30 0%, transparent 60%)`,
-              animation: 'colorBurst 2.4s ease-out forwards',
+              background: `radial-gradient(circle at center, ${lastPick.teamColor}18 0%, transparent 50%)`,
             }}
           />
           {/* Staggered text reveal */}
@@ -498,7 +487,7 @@ export default function OnTheClockPage() {
               {lastPick.player.name}
             </p>
             <p
-              className="text-sm md:text-base text-white/50 mt-1.5 md:mt-2"
+              className="text-sm md:text-base text-white/80 mt-1.5 md:mt-2"
               style={{ animation: 'slideUp 0.3s ease-out 0.85s both' }}
             >
               {lastPick.player.position} &mdash; {lastPick.player.school}
@@ -558,7 +547,7 @@ export default function OnTheClockPage() {
                 <span className="ml-1 w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
               )}
               {key === 'board' && picks.length > 0 && (
-                <span className="ml-1 text-[10px] text-slate-500">{picks.length}</span>
+                <span className="ml-1 text-[10px] text-slate-300">{picks.length}</span>
               )}
             </button>
           ))}
@@ -578,7 +567,7 @@ export default function OnTheClockPage() {
                 <button
                   onClick={() => setLeftPanel('board')}
                   className={`flex-1 px-2 py-1.5 text-[10px] font-bold text-center uppercase tracking-wider transition-all ${
-                    leftPanel === 'board' ? 'text-white border-b-2 border-white/30' : 'text-slate-600'
+                    leftPanel === 'board' ? 'text-white border-b-2 border-white/30' : 'text-slate-400'
                   }`}
                 >
                   Board
@@ -586,7 +575,7 @@ export default function OnTheClockPage() {
                 <button
                   onClick={() => setLeftPanel('bets')}
                   className={`flex-1 px-2 py-1.5 text-[10px] font-bold text-center uppercase tracking-wider transition-all ${
-                    leftPanel === 'bets' ? 'text-amber-400 border-b-2 border-amber-500' : 'text-slate-600'
+                    leftPanel === 'bets' ? 'text-amber-400 border-b-2 border-amber-500' : 'text-slate-400'
                   }`}
                 >
                   Bets ${bettingState.balance.toLocaleString()}
@@ -660,7 +649,7 @@ export default function OnTheClockPage() {
                   <h2 className="text-lg font-black text-white">Pre-Draft Predictions</h2>
                   <button
                     onClick={() => setShowPredictions(false)}
-                    className="text-xs font-bold text-slate-500 hover:text-white px-3 py-1 rounded bg-white/5 hover:bg-white/10 transition-all"
+                    className="text-xs font-bold text-slate-300 hover:text-white px-3 py-1 rounded bg-white/5 hover:bg-white/10 transition-all"
                   >
                     Close
                   </button>
@@ -699,7 +688,7 @@ export default function OnTheClockPage() {
                     className={`px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider transition-all ${
                       bettingEnabled
                         ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30'
-                        : 'bg-white/5 text-slate-500 hover:bg-white/10'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/10'
                     }`}
                     aria-label={bettingEnabled ? 'Disable betting mode' : 'Enable betting mode'}
                   >
@@ -720,7 +709,7 @@ export default function OnTheClockPage() {
                     Leaderboard
                   </button>
                 </div>
-                <p className="text-[10px] text-slate-600 text-center">
+                <p className="text-[10px] text-slate-400 text-center">
                   Predict picks · Place prop bets · Trade player stocks
                 </p>
               </div>
@@ -769,7 +758,7 @@ export default function OnTheClockPage() {
             {bettingEnabled && stocks.some((s) => s.change !== 0) ? (
               <StockTickerBar stocks={stocks} />
             ) : picks.length === 0 ? (
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-300">
                 2026 NFL Draft {getRoundLabel(currentRound)} — {activeTeam.city} {activeTeam.name} are on the clock
               </span>
             ) : (
@@ -788,17 +777,11 @@ export default function OnTheClockPage() {
 
       <style>{`
         :root { --otc-bg: #0a0e1a; --otc-bg-deep: #060810; }
-        @keyframes pickFlash {
-          0% { background: rgba(6,8,16,0); }
-          6% { background: rgba(6,8,16,0.95); }
-          70% { background: rgba(6,8,16,0.95); }
-          100% { background: rgba(6,8,16,0); }
-        }
-        @keyframes colorBurst {
-          0% { opacity: 0; transform: scale(0.5); }
-          15% { opacity: 1; transform: scale(1.2); }
-          70% { opacity: 1; transform: scale(1); }
-          100% { opacity: 0; transform: scale(1.5); }
+        @keyframes pickReveal {
+          0% { opacity: 0; }
+          8% { opacity: 1; }
+          75% { opacity: 1; }
+          100% { opacity: 0; }
         }
         @keyframes slideUp {
           0% { opacity: 0; transform: translateY(20px); }
@@ -807,14 +790,6 @@ export default function OnTheClockPage() {
         @keyframes scaleIn {
           0% { opacity: 0; transform: scale(0.5); }
           100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes scanLine {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(60px); }
-        }
-        @keyframes pulseRing {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.02); }
         }
         @keyframes pulse {
           0%, 100% { opacity: 1; }
