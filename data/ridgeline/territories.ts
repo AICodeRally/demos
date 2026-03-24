@@ -1,4 +1,4 @@
-// SRS Distribution — Territory Data
+// Ridgeline Supply Co. — Territory Data
 // Effective-dated territory assignments supporting acquisition rollups
 
 import type { EmployeeRole } from './employees';
@@ -36,9 +36,9 @@ export const TERRITORIES: Territory[] = [
   // SVP territories (division-level)
   {
     id: 't-svp-001',
-    name: 'SRS Core Division',
+    name: 'Ridgeline Core Division',
     regionId: 'all',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-svp-001',
     managerRole: 'SVP',
     branchIds: ['b-001', 'b-002', 'b-003', 'b-004', 'b-005', 'b-006', 'b-007', 'b-008', 'b-009', 'b-010', 'b-011', 'b-012', 'b-013', 'b-014', 'b-015'],
@@ -54,7 +54,7 @@ export const TERRITORIES: Territory[] = [
     id: 't-rvp-001',
     name: 'South Central Region',
     regionId: 'south-central',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-rvp-001',
     managerRole: 'RVP',
     branchIds: ['b-001', 'b-002', 'b-003', 'b-004', 'b-005', 'b-006', 'b-007', 'b-008'],
@@ -69,7 +69,7 @@ export const TERRITORIES: Territory[] = [
     id: 't-rvp-002',
     name: 'Southeast Region',
     regionId: 'southeast',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-rvp-002',
     managerRole: 'RVP',
     branchIds: ['b-009', 'b-010', 'b-011', 'b-012'],
@@ -84,7 +84,7 @@ export const TERRITORIES: Territory[] = [
     id: 't-rvp-003',
     name: 'West Region',
     regionId: 'west',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-rvp-003',
     managerRole: 'RVP',
     branchIds: ['b-013', 'b-014', 'b-015'],
@@ -100,7 +100,7 @@ export const TERRITORIES: Territory[] = [
     id: 't-rsm-001',
     name: 'TX North',
     regionId: 'south-central',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-rsm-001',
     managerRole: 'RSM',
     branchIds: ['b-001', 'b-002', 'b-003'],
@@ -115,7 +115,7 @@ export const TERRITORIES: Territory[] = [
     id: 't-rsm-002',
     name: 'TX South',
     regionId: 'south-central',
-    divisionId: 'srs-core',
+    divisionId: 'ridgeline-core',
     managerId: 'e-rsm-002',
     managerRole: 'RSM',
     branchIds: ['b-004', 'b-005', 'b-006'],
@@ -126,12 +126,12 @@ export const TERRITORIES: Territory[] = [
     annualQuota: 610000000,
     ytdActual: 167000000,
   },
-  // Heritage territory (pending — acquisition integration)
+  // Summit territory (pending — acquisition integration)
   {
     id: 't-rvp-004',
-    name: 'Heritage East Region',
-    regionId: 'heritage-east',
-    divisionId: 'heritage',
+    name: 'Summit East Region',
+    regionId: 'summit-east',
+    divisionId: 'summit',
     managerId: 'e-rvp-004',
     managerRole: 'RVP',
     branchIds: ['b-016', 'b-017', 'b-018'],
@@ -145,9 +145,9 @@ export const TERRITORIES: Territory[] = [
   // Archived territory (post-acquisition consolidation)
   {
     id: 't-legacy-001',
-    name: 'Heritage TX (Consolidated)',
-    regionId: 'heritage-west',
-    divisionId: 'heritage',
+    name: 'Summit TX (Consolidated)',
+    regionId: 'summit-west',
+    divisionId: 'summit',
     managerId: 'e-rvp-001',
     managerRole: 'RVP',
     branchIds: [],

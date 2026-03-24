@@ -1,4 +1,4 @@
-// SRS Distribution — Platform Architecture Data
+// Ridgeline Supply Co. — Platform Architecture Data
 // Microservices, integration systems, and data feed topology
 
 export interface IntegrationSystem {
@@ -47,7 +47,7 @@ export const INTEGRATION_SYSTEMS: IntegrationSystem[] = [
     category: 'erp',
     vendor: 'SAP',
     status: 'connected',
-    description: 'Core ERP — order management, pricing, invoicing, AR, purchasing. Multi-entity across SRS Core and Heritage divisions.',
+    description: 'Core ERP — order management, pricing, invoicing, AR, purchasing. Multi-entity across Ridgeline Core and Summit divisions.',
     dataFlows: ['Orders', 'Invoices', 'Credit Memos', 'Returns', 'Product Master', 'Customer Master'],
     lastSync: '2026-03-23T06:00:00Z',
     syncFrequency: 'Every 15 min',
@@ -67,9 +67,9 @@ export const INTEGRATION_SYSTEMS: IntegrationSystem[] = [
   },
   {
     id: 'sys-spm',
-    name: 'Varicent ICM',
+    name: 'Legacy ICM Platform',
     category: 'spm',
-    vendor: 'Varicent',
+    vendor: 'Legacy ICM',
     status: 'connected',
     description: 'Incentive compensation management — plan configuration, commission calculations, payout processing, dispute tracking.',
     dataFlows: ['Transaction Feed (in)', 'Territory Master (in)', 'Payout Results (out)', 'Dispute Status (out)'],
@@ -93,7 +93,7 @@ export const INTEGRATION_SYSTEMS: IntegrationSystem[] = [
     id: 'sys-portal',
     name: 'Roof Hub',
     category: 'portal',
-    vendor: 'SRS (Internal)',
+    vendor: 'Ridgeline (Internal)',
     status: 'connected',
     description: 'B2B contractor portal — ordering, invoice history, delivery tracking, live pricing from local branches.',
     dataFlows: ['Digital Orders', 'Self-Service Returns', 'Pricing Requests'],
@@ -142,7 +142,7 @@ export const INTEGRATION_SYSTEMS: IntegrationSystem[] = [
 export const DATA_FEEDS: DataFeed[] = [
   {
     id: 'feed-001',
-    name: 'ERP → Varicent Transaction Feed',
+    name: 'ERP → Legacy ICM Transaction Feed',
     sourceSystem: 'sys-erp',
     targetSystem: 'sys-spm',
     direction: 'inbound',
@@ -156,7 +156,7 @@ export const DATA_FEEDS: DataFeed[] = [
   },
   {
     id: 'feed-002',
-    name: 'Workday → Varicent Employee Sync',
+    name: 'Workday → Legacy ICM Employee Sync',
     sourceSystem: 'sys-hr',
     targetSystem: 'sys-spm',
     direction: 'inbound',
@@ -170,7 +170,7 @@ export const DATA_FEEDS: DataFeed[] = [
   },
   {
     id: 'feed-003',
-    name: 'Varicent → Payroll Export',
+    name: 'Legacy ICM → Payroll Export',
     sourceSystem: 'sys-spm',
     targetSystem: 'sys-finance',
     direction: 'outbound',
@@ -226,7 +226,7 @@ export const DATA_FEEDS: DataFeed[] = [
   },
   {
     id: 'feed-007',
-    name: 'Varicent → Dispute Status Feed',
+    name: 'Legacy ICM → Dispute Status Feed',
     sourceSystem: 'sys-spm',
     targetSystem: 'sys-portal',
     direction: 'outbound',

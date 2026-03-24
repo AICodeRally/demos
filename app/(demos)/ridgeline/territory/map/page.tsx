@@ -15,7 +15,7 @@ import { BRANCHES, getBranchesByRegion } from '@/data/ridgeline';
 import { fmtM } from '@/lib/utils';
 
 /* -- SVG US Region Coordinates -------------------------------- */
-// Simplified polygon regions for SRS's 4 active regions + Heritage
+// Simplified polygon regions for Ridgeline's 4 active regions + Summit
 
 const REGION_PATHS: Record<string, { path: string; labelX: number; labelY: number }> = {
   'south-central': {
@@ -30,7 +30,7 @@ const REGION_PATHS: Record<string, { path: string; labelX: number; labelY: numbe
     path: 'M 30 140 L 130 100 L 150 200 L 140 320 L 80 340 L 20 280 Z',
     labelX: 85, labelY: 220,
   },
-  'heritage-east': {
+  'summit-east': {
     path: 'M 440 140 L 540 120 L 570 200 L 550 280 L 480 290 L 430 240 Z',
     labelX: 495, labelY: 210,
   },
@@ -46,15 +46,15 @@ const REGION_PATHS: Record<string, { path: string; labelX: number; labelY: numbe
     path: 'M 100 80 L 200 60 L 240 120 L 220 200 L 150 220 L 90 180 Z',
     labelX: 165, labelY: 145,
   },
-  'heritage-central': {
+  'summit-central': {
     path: 'M 340 180 L 430 170 L 440 240 L 420 280 L 340 290 L 320 250 Z',
     labelX: 380, labelY: 230,
   },
-  'heritage-south': {
+  'summit-south': {
     path: 'M 340 300 L 420 280 L 460 320 L 470 400 L 400 430 L 340 410 Z',
     labelX: 400, labelY: 360,
   },
-  'heritage-west': {
+  'summit-west': {
     path: 'M 140 280 L 240 260 L 260 310 L 240 380 L 180 400 L 130 360 Z',
     labelX: 195, labelY: 330,
   },
@@ -63,7 +63,7 @@ const REGION_PATHS: Record<string, { path: string; labelX: number; labelY: numbe
 // Branch dot positions (approximate within region polygons)
 const BRANCH_DOTS: Record<string, { x: number; y: number; name: string; revenue: number }[]> = {
   'south-central': [
-    { x: 200, y: 335, name: 'McKinney', revenue: 18.4 },
+    { x: 200, y: 335, name: 'Denver HQ', revenue: 18.4 },
     { x: 220, y: 350, name: 'Dallas North', revenue: 22.1 },
     { x: 190, y: 360, name: 'Fort Worth', revenue: 15.8 },
     { x: 240, y: 370, name: 'Austin', revenue: 19.7 },
@@ -83,7 +83,7 @@ const BRANCH_DOTS: Record<string, { x: number; y: number; name: string; revenue:
     { x: 45, y: 200, name: 'LA', revenue: 28.9 },
     { x: 90, y: 180, name: 'Denver', revenue: 19.1 },
   ],
-  'heritage-east': [
+  'summit-east': [
     { x: 500, y: 190, name: 'Philly', revenue: 14.2 },
     { x: 520, y: 220, name: 'NoVA', revenue: 16.8 },
     { x: 530, y: 170, name: 'Long Island', revenue: 15.5 },
@@ -183,7 +183,7 @@ export default function TerritoryMapPage() {
 
             {/* Title */}
             <text x="300" y="30" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--rl-text-muted)" letterSpacing="3">
-              SRS DISTRIBUTION — NATIONAL FOOTPRINT
+              RIDGELINE SUPPLY CO. — NATIONAL FOOTPRINT
             </text>
 
             {/* Region polygons */}
@@ -191,7 +191,7 @@ export default function TerritoryMapPage() {
               const geo = REGION_PATHS[region.id];
               if (!geo) return null;
               const isActive = activeRegion === region.id;
-              const isHeritage = region.divisionId === 'heritage';
+              const isSummit = region.divisionId === 'summit';
               return (
                 <g key={region.id} onClick={() => setActiveRegion(isActive ? null : region.id)}>
                   {/* Fill */}
@@ -213,7 +213,7 @@ export default function TerritoryMapPage() {
                     fill="none"
                     stroke={region.color}
                     strokeWidth={isActive ? 2.5 : 1.2}
-                    strokeDasharray={isHeritage ? '6 3' : 'none'}
+                    strokeDasharray={isSummit ? '6 3' : 'none'}
                     style={{
                       opacity: isActive ? 0.9 : 0.4,
                       transition: 'all 0.3s ease',
@@ -316,10 +316,10 @@ export default function TerritoryMapPage() {
             <g transform="translate(20, 440)">
               <rect x="-5" y="-12" width="200" height="42" rx="6" fill="var(--rl-stripe)" opacity="0.6" />
               <circle cx="8" cy="0" r="4" fill="#1E3A5F" />
-              <text x="18" y="3" fontSize="9" fill="var(--rl-text-muted)">SRS Core — {DIVISIONS[0].branchCount} branches</text>
+              <text x="18" y="3" fontSize="9" fill="var(--rl-text-muted)">Ridgeline Core — {DIVISIONS[0].branchCount} branches</text>
               <circle cx="8" cy="18" r="4" fill="#7C3AED" />
               <line x1="4" y1="18" x2="12" y2="18" stroke="#7C3AED" strokeWidth="2" strokeDasharray="2 1" />
-              <text x="18" y="21" fontSize="9" fill="var(--rl-text-muted)">Heritage — {DIVISIONS[1].branchCount} branches (dashed = integrating)</text>
+              <text x="18" y="21" fontSize="9" fill="var(--rl-text-muted)">Summit — {DIVISIONS[1].branchCount} branches (dashed = integrating)</text>
             </g>
 
             {/* Scale indicator */}
@@ -521,9 +521,9 @@ export default function TerritoryMapPage() {
       {/* Architecture Note */}
       <div className="rounded-lg px-6 py-4" style={{ background: 'rgba(37,99,235,0.05)', borderLeft: '3px solid #2563EB' }}>
         <p className="text-[13px] leading-relaxed" style={{ color: 'var(--rl-text-secondary)' }}>
-          <strong>Territory Architecture:</strong> SRS operates a dual-division structure (SRS Core + Heritage) with {REGIONS.length} regions
+          <strong>Territory Architecture:</strong> Ridgeline operates a dual-division structure (Ridgeline Core + Summit) with {REGIONS.length} regions
           across {COMPANY.totalStates} states. Post-acquisition integration uses effective-dated territory assignments
-          to prevent retro-rate errors during consolidation. Heritage regions (dashed borders) are progressively merging
+          to prevent retro-rate errors during consolidation. Summit regions (dashed borders) are progressively merging
           into the unified reporting structure.
         </p>
       </div>

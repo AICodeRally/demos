@@ -1,5 +1,5 @@
-// SRS Distribution — Compensation Plans & SPIFFs
-// Based on domain pack: Varicent-managed ICM with tiered incentives
+// Ridgeline Supply Co. — Compensation Plans & SPIFFs
+// Synthetic demo data: ICM with tiered incentives
 
 import type { EmployeeRole } from './employees';
 
@@ -153,9 +153,9 @@ export const SPIFF_PROGRAMS: SpiffProgram[] = [
   },
   {
     id: 'spiff-004',
-    name: 'TAMKO Heritage Promo',
+    name: 'TAMKO Summit Promo',
     vendor: 'TAMKO',
-    productCategory: 'Heritage Shingles',
+    productCategory: 'Premium Shingles',
     startDate: '2026-01-01',
     endDate: '2026-03-31',
     status: 'expired',
