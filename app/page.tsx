@@ -1,12 +1,7 @@
 import Link from 'next/link';
 import { demoRegistry, type DemoRegistryEntry } from '@/data/demo-registry';
 
-const PRIVATE_RALLY_DEMO_SLUGS = new Set([
-  'bhg-edge',
-  'routeiq-royal',
-  'routeiq-route',
-  'phoenix-intel',
-]);
+const PRIVATE_RALLY_DEMO_SLUGS = new Set<string>([]);
 
 const SPM_DEMO_SLUGS = new Set([
   'prizym-governance',

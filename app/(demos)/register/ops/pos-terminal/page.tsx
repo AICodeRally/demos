@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Wifi, ShoppingCart, PauseCircle, Send, Sparkles, MessageSquare, User } from 'lucide-react';
-import { TabletFrame } from '@/components/demos/routeiq-route/TabletFrame';
+import { TabletFrame } from '@/components/shell/parts/TabletFrame';
 import { useRegisterTheme } from '@/components/demos/register/ThemeProvider';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
 import { ShowroomCatalog } from '@/components/demos/register/pos/ShowroomCatalog';
