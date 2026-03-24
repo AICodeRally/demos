@@ -71,7 +71,7 @@ export default function BettingHub({
       {/* Balance bar */}
       <div className="px-4 py-2 border-b border-white/5 bg-[#0a0e1a] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold">Bankroll</span>
+          <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold">Draft Bucks</span>
           <span className={`text-sm font-black tabular-nums ${
             bettingState.balance >= STARTING_BALANCE ? 'text-emerald-400' : 'text-red-400'
           }`}>
@@ -218,12 +218,15 @@ function LiveBettingTab({
 
       {/* Pick Value Betting */}
       <div>
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-1">
           <span className="text-[10px] font-black text-white uppercase tracking-wider">Pick #{currentPickNumber} Value</span>
           <span className="text-[9px] text-slate-600">
             {activeTeam.city} {activeTeam.name}
           </span>
         </div>
+        <p className="text-[9px] text-slate-600 mb-2">
+          STEAL = great value · SOLID = expected · REACH = overdrafted
+        </p>
 
         {alreadyBetPickValue ? (
           <div className="text-xs text-emerald-400 font-bold px-3 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 animate-[fadeIn_0.3s_ease-out]">
@@ -489,6 +492,14 @@ function MyBetsTab({ bettingState }: { bettingState: BettingState }) {
 
 // ── Results Tab ──────────────────────────────────────────────────
 
+function getPerformanceReaction(profitLoss: number): { label: string; color: string } {
+  if (profitLoss >= 2000) return { label: 'LEGENDARY', color: '#f59e0b' };
+  if (profitLoss >= 500) return { label: 'NICE RUN', color: '#10b981' };
+  if (profitLoss >= 0) return { label: 'BROKE EVEN', color: '#64748b' };
+  if (profitLoss >= -1000) return { label: 'ROUGH DAY', color: '#ef4444' };
+  return { label: 'BUSTED', color: '#ef4444' };
+}
+
 function ResultsTab({ bettingState }: { bettingState: BettingState }) {
   const profitLoss = bettingState.balance - STARTING_BALANCE;
   const totalBets = bettingState.liveBets.length + bettingState.propBets.length;
@@ -497,11 +508,17 @@ function ResultsTab({ bettingState }: { bettingState: BettingState }) {
 
   const correctPredictions = bettingState.predictions.filter((p) => p.correct === true).length;
   const totalPredictions = bettingState.predictions.length;
+  const reaction = getPerformanceReaction(profitLoss);
 
   return (
     <div className="p-4 space-y-4">
       <div className="text-center">
-        <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-2">Final Results</p>
+        <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Final Results</p>
+
+        {/* Reaction */}
+        <p className="text-sm font-black uppercase tracking-widest mb-2" style={{ color: reaction.color }}>
+          {reaction.label}
+        </p>
 
         {/* P/L Hero */}
         <div className={`text-3xl font-black ${profitLoss >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>

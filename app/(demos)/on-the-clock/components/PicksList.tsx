@@ -268,7 +268,12 @@ function StrategyView({
           borderColor: `${team.color}20`,
         }}
       >
-        {strategy}
+        {strategy.includes('.') ? (
+          <>
+            <span className="font-bold text-white">{strategy.slice(0, strategy.indexOf('.') + 1)}</span>
+            {strategy.slice(strategy.indexOf('.') + 1)}
+          </>
+        ) : strategy}
       </div>
 
       <div>
