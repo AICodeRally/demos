@@ -150,7 +150,7 @@ function PredictionsTab({
                       e.stopPropagation();
                       onBettingStateChange(removePrediction(bettingState, slot));
                     }}
-                    className="ml-auto text-[10px] text-red-400/60 hover:text-red-400 font-bold"
+                    className="ml-auto text-xs text-red-400/60 hover:text-red-400 font-bold w-8 h-8 min-w-[44px] min-h-[44px] flex items-center justify-center"
                   >
                     X
                   </button>
@@ -181,7 +181,7 @@ function PredictionsTab({
               <button
                 key={player.id}
                 onClick={() => handleSelectPlayer(player)}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-white/5 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2.5 min-h-[44px] text-left hover:bg-white/5 transition-colors"
               >
                 <span
                   className="text-[9px] font-black px-1.5 py-0.5 rounded text-white w-10 text-center"
@@ -279,14 +279,14 @@ function PropsTab({
                 <button
                   onClick={() => handlePlace(template, 'over')}
                   disabled={bettingState.balance < amount}
-                  className="px-2.5 py-1 text-[10px] font-black rounded bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all disabled:opacity-30"
+                  className="px-3 py-2 min-h-[44px] text-xs font-black rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all disabled:opacity-30"
                 >
                   OVER {template.overOdds}x
                 </button>
                 <button
                   onClick={() => handlePlace(template, 'under')}
                   disabled={bettingState.balance < amount}
-                  className="px-2.5 py-1 text-[10px] font-black rounded bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all disabled:opacity-30"
+                  className="px-3 py-2 min-h-[44px] text-xs font-black rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all disabled:opacity-30"
                 >
                   UNDER {template.underOdds}x
                 </button>

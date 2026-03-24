@@ -205,7 +205,7 @@ function LiveBettingTab({
         </div>
 
         {alreadyBetPickValue ? (
-          <div className="text-[10px] text-emerald-400 font-bold px-3 py-2 rounded bg-emerald-500/10">
+          <div className="text-xs text-emerald-400 font-bold px-3 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 animate-[fadeIn_0.3s_ease-out]">
             Bet placed! Waiting for pick...
           </div>
         ) : (
@@ -227,7 +227,7 @@ function LiveBettingTab({
                     );
                   }}
                   disabled={bettingState.balance < betAmount}
-                  className={`flex-1 ${c.bg} ${c.text} ${c.hover} rounded-lg py-2 px-2 text-center transition-all disabled:opacity-30`}
+                  className={`flex-1 ${c.bg} ${c.text} ${c.hover} rounded-lg py-3 px-2 min-h-[44px] text-center transition-all disabled:opacity-30`}
                 >
                   <div className="text-xs font-black uppercase">{type}</div>
                   <div className="text-[10px] font-bold opacity-70">{odds}x</div>
@@ -245,7 +245,7 @@ function LiveBettingTab({
         </div>
 
         {alreadyBetNextPick ? (
-          <div className="text-[10px] text-emerald-400 font-bold px-3 py-2 rounded bg-emerald-500/10">
+          <div className="text-xs text-emerald-400 font-bold px-3 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 animate-[fadeIn_0.3s_ease-out]">
             Prediction placed! Waiting for pick...
           </div>
         ) : (
@@ -261,7 +261,7 @@ function LiveBettingTab({
                     );
                   }}
                   disabled={bettingState.balance < betAmount}
-                  className="w-full flex items-center gap-2 px-3 py-1.5 rounded border border-white/5 hover:border-white/15 hover:bg-white/[0.03] transition-all disabled:opacity-30"
+                  className="w-full flex items-center gap-2 px-3 py-2.5 min-h-[44px] rounded-lg border border-white/5 hover:border-white/15 hover:bg-white/[0.03] transition-all disabled:opacity-30"
                 >
                   <span
                     className="text-[9px] font-black px-1.5 py-0.5 rounded text-white w-10 text-center"
@@ -289,6 +289,15 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
 
   const { gainers, losers } = useMemo(() => getTopMovers(stocks, 8), [stocks]);
   const byValue = useMemo(() => getByValue(stocks).slice(0, 20), [stocks]);
+
+  if (stocks.length === 0) {
+    return (
+      <div className="p-6 text-center">
+        <p className="text-sm text-slate-500">Stock market initializing...</p>
+        <p className="text-xs text-slate-600 mt-1">Prices appear once the draft begins</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-3">
