@@ -56,6 +56,7 @@ export default function OnTheClockPage() {
   const [pickTimer, setPickTimer] = useState(300);
   const [showConfetti, setShowConfetti] = useState(false);
   const [cpuDrafting, setCpuDrafting] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   // Mobile tab state
   const [mobileTab, setMobileTab] = useState<MobileTab>('clock');
@@ -202,9 +203,9 @@ export default function OnTheClockPage() {
     [isSpinning, draftComplete, cpuDrafting, isUserPick, userTeamAbbr, executePick]
   );
 
-  // CPU auto-draft: triggers when it's not the user's pick
+  // CPU auto-draft: triggers when it's not the user's pick (respects pause)
   useEffect(() => {
-    if (!draftStarted || draftComplete || isSpinning) return;
+    if (!draftStarted || draftComplete || isSpinning || paused) return;
     if (isUserPick) {
       setCpuDrafting(false);
       return;
@@ -225,7 +226,7 @@ export default function OnTheClockPage() {
     cpuTimeoutRef.current = timeoutId;
 
     return () => clearTimeout(timeoutId);
-  }, [draftStarted, currentPick, draftComplete, isSpinning, isUserPick, speed, executePick, activeTeam, currentSlot]);
+  }, [draftStarted, currentPick, draftComplete, isSpinning, isUserPick, speed, executePick, activeTeam, currentSlot, paused]);
 
   // Start the draft from setup screen
   const handleStartDraft = useCallback((teamAbbr: string | null, selectedSpeed: DraftSpeed) => {
@@ -252,6 +253,7 @@ export default function OnTheClockPage() {
     setPickTimer(300);
     setShowConfetti(false);
     setCpuDrafting(false);
+    setPaused(false);
     setUserTeamAbbr(null);
     // Reset betting
     setBettingEnabled(false);
@@ -327,6 +329,21 @@ export default function OnTheClockPage() {
                 >
                   {soundEnabled ? '🔊' : '🔇'}
                 </button>
+                {/* Pause/Resume */}
+                {!draftComplete && (
+                  <button
+                    onClick={() => setPaused((p) => !p)}
+                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded transition-colors ${
+                      paused
+                        ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+                        : 'bg-white/5 text-slate-300 hover:text-white'
+                    }`}
+                    title={paused ? 'Resume draft' : 'Pause draft'}
+                    aria-label={paused ? 'Resume draft' : 'Pause draft'}
+                  >
+                    {paused ? '▶ Resume' : '⏸ Pause'}
+                  </button>
+                )}
               </div>
             </div>
           </div>
