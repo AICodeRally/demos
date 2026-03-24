@@ -50,6 +50,14 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "layout": "sidebar"
   },
   {
+    "name": "On The Clock — 2026 NFL Draft Simulator",
+    "slug": "on-the-clock",
+    "industry": "Sports & Entertainment",
+    "tagline": "Simulate the 2026 NFL Draft — spin the wheel, pick your players, build every team's roster",
+    "color": "#f59e0b",
+    "layout": "sidebar"
+  },
+  {
     "name": "Prizym SGM — Sales Governance Manager",
     "slug": "prizym-governance",
     "industry": "Sales Performance Management",
