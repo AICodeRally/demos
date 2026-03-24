@@ -1,4 +1,7 @@
 import { redirect } from 'next/navigation';
-export default function PrizymGovernanceHome() {
-  redirect('/prizym-governance/dashboard');
+
+const VERCEL_URL = 'https://governance.prizym.aicoderally.com';
+
+export default function PrizymGovernanceRedirect() {
+  redirect(VERCEL_URL);
 }
