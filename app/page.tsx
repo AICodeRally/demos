@@ -6,7 +6,6 @@ const PRIVATE_RALLY_DEMO_SLUGS = new Set([
   'proofline-andrews',
   'proofline-route',
   'phoenix-intel',
-  'srs-blt', // SRS-BLT is Brad's prototype — Ridgeline is the public SRS Distribution demo
 ]);
 
 const SPM_DEMO_SLUGS = new Set([
