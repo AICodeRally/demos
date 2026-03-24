@@ -6,7 +6,7 @@ const PRIVATE_RALLY_DEMO_SLUGS = new Set([
   'routeiq-royal',
   'routeiq-route',
   'phoenix-intel',
-  'ridgeline', // SRS-BLT replaces Ridgeline as the single SRS Distribution demo
+  'srs-blt', // SRS-BLT is Brad's prototype — Ridgeline is the public SRS Distribution demo
 ]);
 
 const SPM_DEMO_SLUGS = new Set([
