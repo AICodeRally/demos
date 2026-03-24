@@ -299,7 +299,8 @@ export default function OnTheClockPage() {
             <button
               onClick={handleReset}
               className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30 hover:scale-110 transition-transform shrink-0"
-              title="Back to setup"
+              title="New Draft"
+              aria-label="Start a new draft"
             >
               <span className="text-[9px] md:text-[10px] font-black text-black tracking-tight">OTC</span>
             </button>
@@ -332,6 +333,7 @@ export default function OnTheClockPage() {
                   onClick={() => setSoundEnabled((s) => !s)}
                   className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-slate-500 hover:text-slate-300 transition-colors"
                   title={soundEnabled ? 'Mute' : 'Unmute'}
+                  aria-label={soundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
                 >
                   {soundEnabled ? '🔊' : '🔇'}
                 </button>
@@ -660,7 +662,7 @@ export default function OnTheClockPage() {
                     onClick={() => setShowPredictions(false)}
                     className="text-xs font-bold text-slate-500 hover:text-white px-3 py-1 rounded bg-white/5 hover:bg-white/10 transition-all"
                   >
-                    Back to Draft
+                    Close
                   </button>
                 </div>
                 <PredictionSetup
@@ -690,31 +692,37 @@ export default function OnTheClockPage() {
 
             {/* Betting toggle (below clock, before draft starts) */}
             {!draftStarted && !showPredictions && (
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex flex-wrap items-center justify-center gap-2 px-4">
-                <button
-                  onClick={() => setBettingEnabled((e) => !e)}
-                  className={`px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider transition-all ${
-                    bettingEnabled
-                      ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30'
-                      : 'bg-white/5 text-slate-500 hover:bg-white/10'
-                  }`}
-                >
-                  {bettingEnabled ? 'Betting ON' : 'Enable Betting'}
-                </button>
-                {bettingEnabled && (
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[420px] flex flex-col items-center gap-2 px-4">
+                <div className="flex flex-wrap items-center justify-center gap-2">
                   <button
-                    onClick={() => setShowPredictions(true)}
-                    className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all"
+                    onClick={() => setBettingEnabled((e) => !e)}
+                    className={`px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider transition-all ${
+                      bettingEnabled
+                        ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30'
+                        : 'bg-white/5 text-slate-500 hover:bg-white/10'
+                    }`}
+                    aria-label={bettingEnabled ? 'Disable betting mode' : 'Enable betting mode'}
                   >
-                    Predictions ({bettingState.predictions.length}/5)
+                    {bettingEnabled ? 'Betting ON' : 'Enable Betting'}
                   </button>
-                )}
-                <button
-                  onClick={() => setShowLeaderboard(true)}
-                  className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-bold text-slate-600 hover:text-slate-400 bg-white/5 hover:bg-white/10 transition-all"
-                >
-                  Leaderboard
-                </button>
+                  {bettingEnabled && (
+                    <button
+                      onClick={() => setShowPredictions(true)}
+                      className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all"
+                    >
+                      Predictions ({bettingState.predictions.length}/5)
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setShowLeaderboard(true)}
+                    className="px-4 py-2.5 min-h-[44px] rounded-full text-xs font-bold text-slate-600 hover:text-slate-400 bg-white/5 hover:bg-white/10 transition-all"
+                  >
+                    Leaderboard
+                  </button>
+                </div>
+                <p className="text-[10px] text-slate-600 text-center">
+                  Predict picks · Place prop bets · Trade player stocks
+                </p>
               </div>
             )}
           </div>
@@ -738,7 +746,18 @@ export default function OnTheClockPage() {
         )}
       </div>
 
-      {/* ── BOTTOM TICKER (hidden on mobile) ── */}
+      {/* ── BOTTOM TICKER (compact on mobile, full on desktop) ── */}
+      {draftStarted && picks.length > 0 && (
+        <div className="flex md:hidden h-6 bg-[#060810] border-t border-white/5 items-center overflow-hidden shrink-0 px-3">
+          <span className="text-[10px] font-black text-amber-500 mr-2 shrink-0">LAST</span>
+          <span className="text-[10px] text-slate-400 truncate">
+            <span className="font-bold" style={{ color: picks[picks.length - 1].teamColor === '#000000' ? '#A5ACAF' : picks[picks.length - 1].teamColor }}>
+              {picks[picks.length - 1].teamAbbr}
+            </span>
+            {' '}&mdash; {picks[picks.length - 1].player.name} ({picks[picks.length - 1].player.position})
+          </span>
+        </div>
+      )}
       {draftStarted && <div className="hidden md:flex h-7 bg-[#060810] border-t border-white/5 items-center overflow-hidden shrink-0">
         <div className="flex items-center gap-2 px-3 shrink-0 bg-amber-500 h-full">
           <span className="text-[10px] font-black text-black uppercase tracking-wider">

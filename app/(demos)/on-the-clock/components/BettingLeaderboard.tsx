@@ -27,7 +27,7 @@ export default function BettingLeaderboard({ latestEntry, onClose }: BettingLead
       <div className="flex items-center justify-between w-full max-w-[460px] mb-4">
         <div>
           <p className="text-lg font-black text-white tracking-tight">Leaderboard</p>
-          <p className="text-[10px] text-slate-500">Your best draft betting performances</p>
+          <p className="text-[10px] text-slate-500">Your best draft betting performances (Local)</p>
         </div>
         <div className="flex items-center gap-2">
           {entries.length > 0 && (
@@ -112,8 +112,8 @@ export default function BettingLeaderboard({ latestEntry, onClose }: BettingLead
                 <span className="w-10 text-right text-xs font-bold text-slate-500">
                   {entry.teamAbbr ?? 'SIM'}
                 </span>
-                <span className="w-20 text-right text-[10px] text-slate-600">
-                  {new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                <span className="w-20 text-right text-[10px] text-slate-600" title={new Date(entry.date).toLocaleString()}>
+                  {new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
                 </span>
               </div>
             );

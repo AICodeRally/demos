@@ -17,6 +17,11 @@ interface PlayerPoolProps {
 
 const POSITIONS = ['ALL', 'QB', 'WR', 'RB', 'TE', 'OT', 'OG', 'EDGE', 'DT', 'LB', 'CB', 'S'];
 
+const POSITION_GROUPS: Record<string, string[]> = {
+  Offense: ['QB', 'WR', 'RB', 'TE', 'OT', 'OG'],
+  Defense: ['EDGE', 'DT', 'LB', 'CB', 'S'],
+};
+
 export default function PlayerPool({
   draftedPlayerIds,
   onSelectPlayer,
@@ -27,6 +32,7 @@ export default function PlayerPool({
   userTeamAbbr,
 }: PlayerPoolProps) {
   const [posFilter, setPosFilter] = useState('ALL');
+  const [showLegend, setShowLegend] = useState(false);
 
   const available = DRAFT_PLAYERS.filter((p) => !draftedPlayerIds.has(p.id));
   const filtered = posFilter === 'ALL' ? available : available.filter((p) => p.position === posFilter);
@@ -74,8 +80,35 @@ export default function PlayerPool({
       <div className="px-4 py-2.5 border-b border-white/5 bg-[#0a0e1a]">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-black text-white uppercase tracking-wider">Player Pool</h2>
-          <span className="text-[10px] text-slate-500 font-bold tabular-nums">{available.length} left</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowLegend((v) => !v)}
+              className="text-[9px] font-bold text-slate-600 hover:text-slate-400 transition-colors"
+              aria-label="Toggle position legend"
+            >
+              {showLegend ? 'Hide' : 'Positions'}
+            </button>
+            <span className="text-[10px] text-slate-500 font-bold tabular-nums">{available.length} left</span>
+          </div>
         </div>
+        {showLegend && (
+          <div className="mt-2 space-y-1.5">
+            {Object.entries(POSITION_GROUPS).map(([group, positions]) => (
+              <div key={group} className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8px] text-slate-600 uppercase tracking-wider font-bold w-10">{group}</span>
+                {positions.map((pos) => (
+                  <span
+                    key={pos}
+                    className="text-[8px] font-black px-1.5 py-0.5 rounded text-white"
+                    style={{ backgroundColor: POSITION_COLORS[pos] ?? '#64748b' }}
+                  >
+                    {pos}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Best Available banner */}
@@ -111,6 +144,7 @@ export default function PlayerPool({
               key={pos}
               onClick={() => setPosFilter(pos)}
               aria-pressed={isActive}
+              aria-label={`Filter by ${pos === 'ALL' ? 'all positions' : pos}${isNeed ? ' (team need)' : ''}`}
               className={`px-2 py-1 text-[10px] font-bold rounded-md whitespace-nowrap transition-all ${
                 isActive
                   ? 'text-white shadow-sm'
@@ -252,10 +286,10 @@ function PlayerRow({
         </p>
       </div>
 
-      {/* Draft button — appears on hover */}
+      {/* Draft button — always visible on mobile, hover on desktop */}
       {!disabled && (
         <div
-          className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-black text-white px-2 py-1 rounded"
+          className="shrink-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity text-[10px] font-black text-white px-2 py-1 rounded"
           style={{
             backgroundColor: teamColor,
             boxShadow: `0 0 10px ${teamColor}40`,

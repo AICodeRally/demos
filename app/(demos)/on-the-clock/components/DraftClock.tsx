@@ -155,7 +155,7 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
                   className="text-base md:text-2xl font-black tracking-tight transition-colors duration-500"
                   style={{ color: activeTeam.color === '#000000' ? '#A5ACAF' : activeTeam.color }}
                 >
-                  {activeTeam.city}
+                  <span className="hidden sm:inline">{activeTeam.city} </span><span className="sm:hidden">{activeTeam.abbr}</span>
                 </p>
                 <p className="text-lg md:text-3xl font-black text-white tracking-tight -mt-0.5 md:-mt-1">
                   {activeTeam.name}
@@ -558,7 +558,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                 <button
                   key={team.abbr}
                   onClick={() => setSelected(isSelected ? null : team.abbr)}
-                  className="flex flex-col items-center gap-0.5 p-1 rounded-md transition-all"
+                  className="flex flex-col items-center gap-0.5 p-1.5 rounded-md transition-all min-h-[44px]"
                   style={{
                     backgroundColor: isSelected ? `${team.color}35` : 'rgba(255,255,255,0.02)',
                     border: isSelected ? `1.5px solid ${team.color}` : '1.5px solid transparent',
@@ -567,10 +567,10 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                   }}
                 >
                   <div
-                    className="w-6 h-6 rounded-full flex items-center justify-center"
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
                     style={{ backgroundColor: team.color }}
                   >
-                    <TeamLogo abbr={team.abbr} size={16} />
+                    <TeamLogo abbr={team.abbr} size={18} />
                   </div>
                   <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-600'}`}>
                     {team.name}
@@ -592,7 +592,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                 <button
                   key={team.abbr}
                   onClick={() => setSelected(isSelected ? null : team.abbr)}
-                  className="flex flex-col items-center gap-0.5 p-1 rounded-md transition-all"
+                  className="flex flex-col items-center gap-0.5 p-1.5 rounded-md transition-all min-h-[44px]"
                   style={{
                     backgroundColor: isSelected ? `${team.color}35` : 'rgba(255,255,255,0.02)',
                     border: isSelected ? `1.5px solid ${team.color}` : '1.5px solid transparent',
@@ -601,10 +601,10 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                   }}
                 >
                   <div
-                    className="w-6 h-6 rounded-full flex items-center justify-center"
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
                     style={{ backgroundColor: team.color }}
                   >
-                    <TeamLogo abbr={team.abbr} size={16} />
+                    <TeamLogo abbr={team.abbr} size={18} />
                   </div>
                   <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-600'}`}>
                     {team.name}
@@ -635,8 +635,8 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
         </div>
       )}
 
-      {/* Speed + Start row */}
-      <div className="flex items-center gap-3 shrink-0">
+      {/* Speed + Start row — sticky so it's always visible */}
+      <div className="flex items-center gap-3 shrink-0 sticky bottom-0 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a] to-transparent pt-4 pb-1">
         <div className="flex gap-1">
           {SPEED_OPTIONS.map((opt) => (
             <button

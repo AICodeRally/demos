@@ -101,12 +101,12 @@ export default function DraftExport({ picks, userTeamAbbr }: DraftExportProps) {
     <button
       onClick={handleCopy}
       disabled={picks.length === 0}
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all ${
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold transition-all ${
         copied
           ? 'bg-emerald-500/20 text-emerald-400'
           : picks.length === 0
             ? 'bg-white/5 text-slate-600 cursor-not-allowed'
-            : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-300'
+            : 'bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 hover:text-amber-300'
       }`}
     >
       {copied ? (
