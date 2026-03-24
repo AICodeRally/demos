@@ -135,7 +135,7 @@ function TeamsView({ currentPick, picks, userTeamAbbr }: { currentPick: number; 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <span
-                  className={`text-sm font-bold truncate ${hasPicks ? 'text-slate-300' : 'text-slate-500'}`}
+                  className={`text-sm font-bold truncate ${hasPicks ? 'text-slate-300' : 'text-slate-300'}`}
                 >
                   {team.city} {team.name}
                 </span>
@@ -145,7 +145,7 @@ function TeamsView({ currentPick, picks, userTeamAbbr }: { currentPick: number; 
                   </span>
                 )}
                 {hasPicks && (
-                  <span className="text-[9px] text-slate-600 font-bold shrink-0">
+                  <span className="text-[9px] text-slate-400 font-bold shrink-0">
                     {teamPicks.length} pick{teamPicks.length > 1 ? 's' : ''}
                   </span>
                 )}
@@ -153,15 +153,15 @@ function TeamsView({ currentPick, picks, userTeamAbbr }: { currentPick: number; 
               {hasPicks ? (
                 <div className="space-y-0.5">
                   {teamPicks.map((p) => (
-                    <p key={p.pickNumber} className="text-[11px] text-slate-500 truncate">
-                      <span className="text-slate-600 font-mono">R{p.round}#{p.pickInRound}</span>{' '}
+                    <p key={p.pickNumber} className="text-[11px] text-slate-300 truncate">
+                      <span className="text-slate-400 font-mono">R{p.round}#{p.pickInRound}</span>{' '}
                       <span className="font-medium text-slate-400">{p.player.name}</span>{' '}
-                      <span className="text-slate-600">{p.player.position}</span>
+                      <span className="text-slate-400">{p.player.position}</span>
                     </p>
                   ))}
                 </div>
               ) : (
-                <p className="text-[11px] text-slate-600 truncate">
+                <p className="text-[11px] text-slate-400 truncate">
                   {needs.join(' / ') || '—'}
                 </p>
               )}
@@ -192,7 +192,7 @@ function NeedsView({ needs, team }: { needs: string[]; team: (typeof NFL_TEAMS)[
         </div>
         <div>
           <p className="text-sm font-black text-white">{team.city} {team.name}</p>
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider">Position Needs</p>
+          <p className="text-[10px] text-slate-300 uppercase tracking-wider">Position Needs</p>
         </div>
       </div>
 
@@ -257,7 +257,7 @@ function StrategyView({
         </div>
         <div>
           <p className="text-sm font-black text-white">{team.city} {team.name}</p>
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider">Draft Strategy</p>
+          <p className="text-[10px] text-slate-300 uppercase tracking-wider">Draft Strategy</p>
         </div>
       </div>
 
@@ -277,7 +277,7 @@ function StrategyView({
       </div>
 
       <div>
-        <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">
+        <p className="text-[10px] text-slate-300 uppercase tracking-wider font-bold mb-2">
           Target Positions
         </p>
         <div className="flex flex-wrap gap-2">
@@ -311,7 +311,7 @@ function PicksView({ picks }: { picks: DraftPick[] }) {
           <span className="text-2xl">🏈</span>
         </div>
         <p className="text-sm font-bold text-slate-400">No picks made yet</p>
-        <p className="text-xs text-slate-600 mt-1">Click a player on the right to start the draft</p>
+        <p className="text-xs text-slate-400 mt-1">Click a player on the right to start the draft</p>
         <div className="mt-4 flex justify-center gap-1">
           {[0, 1, 2].map((i) => (
             <div
@@ -344,7 +344,7 @@ function PicksView({ picks }: { picks: DraftPick[] }) {
             {/* Round header */}
             <div className="sticky top-0 z-10 px-4 py-1.5 bg-[var(--otc-bg)] border-b border-white/10 flex items-center justify-between">
               <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest">Round {round}</span>
-              <span className="text-[10px] text-slate-600 font-bold tabular-nums">{roundPicks.length}/32</span>
+              <span className="text-[10px] text-slate-400 font-bold tabular-nums">{roundPicks.length}/32</span>
             </div>
             {roundPicks.map((pick, idx) => {
               const posColor = POSITION_COLORS[pick.player.position] ?? '#64748b';
@@ -369,19 +369,19 @@ function PicksView({ picks }: { picks: DraftPick[] }) {
                     <p className="text-sm font-bold text-white truncate">
                       {pick.player.name}
                     </p>
-                    <p className="text-xs text-slate-500 truncate flex items-center gap-1.5">
+                    <p className="text-xs text-slate-300 truncate flex items-center gap-1.5">
                       <span className="font-bold" style={{ color: pick.teamColor === '#000000' ? '#A5ACAF' : pick.teamColor }}>
                         {pick.teamAbbr}
                       </span>
-                      <span className="text-slate-700">&middot;</span>
+                      <span className="text-slate-500">&middot;</span>
                       <span
                         className="font-bold text-white px-1 py-0.5 rounded text-[10px]"
                         style={{ backgroundColor: posColor }}
                       >
                         {pick.player.position}
                       </span>
-                      <span className="text-slate-700">&middot;</span>
-                      <span className="text-slate-500">{pick.player.school}</span>
+                      <span className="text-slate-500">&middot;</span>
+                      <span className="text-slate-300">{pick.player.school}</span>
                     </p>
                   </div>
                 </div>

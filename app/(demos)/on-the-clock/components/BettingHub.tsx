@@ -71,7 +71,7 @@ export default function BettingHub({
       {/* Balance bar */}
       <div className="px-4 py-2 border-b border-white/5 bg-[var(--otc-bg)] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold">Draft Bucks</span>
+          <span className="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Draft Bucks</span>
           <span className={`text-sm font-black tabular-nums ${
             bettingState.balance >= STARTING_BALANCE ? 'text-emerald-400' : 'text-red-400'
           }`}>
@@ -79,7 +79,7 @@ export default function BettingHub({
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold">P/L</span>
+          <span className="text-[9px] text-slate-400 uppercase tracking-wider font-bold">P/L</span>
           <span className={`text-xs font-black tabular-nums ${
             bettingState.balance - STARTING_BALANCE >= 0 ? 'text-emerald-400' : 'text-red-400'
           }`}>
@@ -185,7 +185,7 @@ function LiveBettingTab({
     return (
       <div className="p-6 text-center">
         <p className="text-sm text-amber-400 font-bold">It&apos;s your pick!</p>
-        <p className="text-xs text-slate-500 mt-1">Betting is disabled when you&apos;re on the clock.</p>
+        <p className="text-xs text-slate-300 mt-1">Betting is disabled when you&apos;re on the clock.</p>
       </div>
     );
   }
@@ -194,7 +194,7 @@ function LiveBettingTab({
     return (
       <div className="p-6 text-center">
         <p className="text-sm text-red-400 font-bold">Insufficient Funds</p>
-        <p className="text-xs text-slate-500 mt-1">You need at least ${MIN_BET} to place a bet.</p>
+        <p className="text-xs text-slate-300 mt-1">You need at least ${MIN_BET} to place a bet.</p>
       </div>
     );
   }
@@ -203,7 +203,7 @@ function LiveBettingTab({
     <div className="p-3 space-y-4">
       {/* Bet amount control */}
       <div className="flex items-center gap-2">
-        <span className="text-[9px] text-slate-600 uppercase tracking-wider font-bold shrink-0">Wager</span>
+        <span className="text-[9px] text-slate-400 uppercase tracking-wider font-bold shrink-0">Wager</span>
         <input
           type="range"
           min={MIN_BET}
@@ -220,11 +220,11 @@ function LiveBettingTab({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <span className="text-[10px] font-black text-white uppercase tracking-wider">Pick #{currentPickNumber} Value</span>
-          <span className="text-[9px] text-slate-600">
+          <span className="text-[9px] text-slate-400">
             {activeTeam.city} {activeTeam.name}
           </span>
         </div>
-        <p className="text-[9px] text-slate-600 mb-2">
+        <p className="text-[9px] text-slate-400 mb-2">
           STEAL = great value · SOLID = expected · REACH = overdrafted
         </p>
 
@@ -294,7 +294,7 @@ function LiveBettingTab({
                     {player.position}
                   </span>
                   <span className="text-xs font-bold text-slate-300 flex-1 text-left truncate">{player.name}</span>
-                  <span className="text-[10px] text-slate-500 tabular-nums">{Math.round(probability * 100)}%</span>
+                  <span className="text-[10px] text-slate-300 tabular-nums">{Math.round(probability * 100)}%</span>
                   <span className="text-[10px] font-black text-amber-400 tabular-nums">{odds}x</span>
                 </button>
               );
@@ -317,8 +317,8 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
   if (stocks.length === 0) {
     return (
       <div className="p-6 text-center">
-        <p className="text-sm text-slate-500">Stock market initializing...</p>
-        <p className="text-xs text-slate-600 mt-1">Prices appear once the draft begins</p>
+        <p className="text-sm text-slate-300">Stock market initializing...</p>
+        <p className="text-xs text-slate-400 mt-1">Prices appear once the draft begins</p>
       </div>
     );
   }
@@ -329,7 +329,7 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
         <button
           onClick={() => setView('movers')}
           className={`px-2.5 py-1 text-[10px] font-bold rounded uppercase tracking-wider transition-all ${
-            view === 'movers' ? 'bg-amber-500 text-black' : 'bg-white/5 text-slate-500'
+            view === 'movers' ? 'bg-amber-500 text-black' : 'bg-white/5 text-slate-300'
           }`}
         >
           Top Movers
@@ -337,7 +337,7 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
         <button
           onClick={() => setView('value')}
           className={`px-2.5 py-1 text-[10px] font-bold rounded uppercase tracking-wider transition-all ${
-            view === 'value' ? 'bg-amber-500 text-black' : 'bg-white/5 text-slate-500'
+            view === 'value' ? 'bg-amber-500 text-black' : 'bg-white/5 text-slate-300'
           }`}
         >
           By Value
@@ -350,7 +350,7 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
           <div>
             <div className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-1.5">Rising</div>
             {gainers.length === 0 ? (
-              <p className="text-[10px] text-slate-600 italic">No movers yet — draft hasn&apos;t started</p>
+              <p className="text-[10px] text-slate-400 italic">No movers yet — draft hasn&apos;t started</p>
             ) : (
               gainers.map((stock) => <StockRow key={stock.playerId} stock={stock} />)
             )}
@@ -360,7 +360,7 @@ function StockTickerTab({ stocks }: { stocks: StockEntry[] }) {
           <div>
             <div className="text-[9px] font-black text-red-400 uppercase tracking-widest mb-1.5">Falling</div>
             {losers.length === 0 ? (
-              <p className="text-[10px] text-slate-600 italic">No drops yet</p>
+              <p className="text-[10px] text-slate-400 italic">No drops yet</p>
             ) : (
               losers.map((stock) => <StockRow key={stock.playerId} stock={stock} />)
             )}
@@ -385,7 +385,7 @@ function StockRow({ stock, rank }: { stock: StockEntry; rank?: number }) {
   return (
     <div className="flex items-center gap-2 py-1.5 border-b border-white/5">
       {rank !== undefined && (
-        <span className="text-[10px] font-mono text-slate-600 w-5 text-right">{rank}</span>
+        <span className="text-[10px] font-mono text-slate-400 w-5 text-right">{rank}</span>
       )}
       <span
         className="text-[9px] font-black px-1 py-0.5 rounded text-white w-9 text-center"
@@ -396,7 +396,7 @@ function StockRow({ stock, rank }: { stock: StockEntry; rank?: number }) {
       <span className="text-xs font-bold text-slate-300 flex-1 truncate">{stock.playerName}</span>
       <span className="text-xs font-black text-white tabular-nums">{formatPrice(stock.currentPrice)}</span>
       <span className={`text-[10px] font-bold tabular-nums w-14 text-right ${
-        isUp ? 'text-emerald-400' : isDown ? 'text-red-400' : 'text-slate-600'
+        isUp ? 'text-emerald-400' : isDown ? 'text-red-400' : 'text-slate-400'
       }`}>
         {stock.change !== 0 ? formatChangePercent(stock.changePercent) : '—'}
       </span>
@@ -435,8 +435,8 @@ function MyBetsTab({ bettingState }: { bettingState: BettingState }) {
   if (allBets.length === 0 && predictions.length === 0) {
     return (
       <div className="p-6 text-center">
-        <p className="text-sm text-slate-500">No bets placed yet</p>
-        <p className="text-xs text-slate-600 mt-1">Use the Live tab to place bets during the draft</p>
+        <p className="text-sm text-slate-300">No bets placed yet</p>
+        <p className="text-xs text-slate-400 mt-1">Use the Live tab to place bets during the draft</p>
       </div>
     );
   }
@@ -449,10 +449,10 @@ function MyBetsTab({ bettingState }: { bettingState: BettingState }) {
           <div className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Predictions</div>
           {predictions.map((pred) => (
             <div key={pred.slot} className="flex items-center gap-2 py-1 border-b border-white/5">
-              <span className="text-xs font-black text-slate-600 w-6">#{pred.slot}</span>
+              <span className="text-xs font-black text-slate-400 w-6">#{pred.slot}</span>
               <span className="text-xs font-bold text-slate-300 flex-1">{pred.playerName}</span>
               {pred.correct === null ? (
-                <span className="text-[10px] text-slate-600">Pending</span>
+                <span className="text-[10px] text-slate-400">Pending</span>
               ) : pred.correct ? (
                 <span className="text-[10px] font-black text-emerald-400">CORRECT +500</span>
               ) : (
@@ -473,7 +473,7 @@ function MyBetsTab({ bettingState }: { bettingState: BettingState }) {
             <div key={bet.id} className="flex items-center gap-2 py-1.5 border-b border-white/5">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-bold text-slate-300 truncate">{bet.description}</p>
-                <p className="text-[10px] text-slate-600">${bet.amount} @ {bet.odds}x</p>
+                <p className="text-[10px] text-slate-400">${bet.amount} @ {bet.odds}x</p>
               </div>
               {!bet.settled ? (
                 <span className="text-[10px] text-amber-400/60 font-bold px-2 py-0.5 rounded bg-amber-500/10">LIVE</span>
@@ -513,7 +513,7 @@ function ResultsTab({ bettingState }: { bettingState: BettingState }) {
   return (
     <div className="p-4 space-y-4">
       <div className="text-center">
-        <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Final Results</p>
+        <p className="text-xs text-slate-300 uppercase tracking-widest font-bold mb-1">Final Results</p>
 
         {/* Reaction */}
         <p className="text-sm font-black uppercase tracking-widest mb-2" style={{ color: reaction.color }}>
@@ -524,7 +524,7 @@ function ResultsTab({ bettingState }: { bettingState: BettingState }) {
         <div className={`text-3xl font-black ${profitLoss >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
           {profitLoss >= 0 ? '+' : ''}${profitLoss.toLocaleString()}
         </div>
-        <p className="text-[10px] text-slate-600">
+        <p className="text-[10px] text-slate-400">
           Started $10,000 &middot; Ended ${bettingState.balance.toLocaleString()}
         </p>
       </div>
@@ -543,14 +543,14 @@ function ResultsTab({ bettingState }: { bettingState: BettingState }) {
           <p className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-2">Pick Predictions</p>
           {bettingState.predictions.map((pred) => (
             <div key={pred.slot} className="flex items-center gap-2 py-1 border-b border-white/5">
-              <span className="text-xs font-black text-slate-600 w-6">#{pred.slot}</span>
-              <span className={`text-xs font-bold flex-1 ${pred.correct ? 'text-emerald-400' : 'text-slate-500'}`}>
+              <span className="text-xs font-black text-slate-400 w-6">#{pred.slot}</span>
+              <span className={`text-xs font-bold flex-1 ${pred.correct ? 'text-emerald-400' : 'text-slate-300'}`}>
                 {pred.playerName}
               </span>
               {pred.correct ? (
                 <span className="text-[10px] font-black text-emerald-400">NAILED IT</span>
               ) : (
-                <span className="text-[10px] text-slate-600">Actual: {pred.actualPlayerName}</span>
+                <span className="text-[10px] text-slate-400">Actual: {pred.actualPlayerName}</span>
               )}
             </div>
           ))}
@@ -563,9 +563,9 @@ function ResultsTab({ bettingState }: { bettingState: BettingState }) {
 function StatBox({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="bg-white/[0.03] border border-white/5 rounded-lg p-3 text-center">
-      <p className="text-[9px] text-slate-600 uppercase tracking-wider font-bold mb-1">{label}</p>
+      <p className="text-[9px] text-slate-400 uppercase tracking-wider font-bold mb-1">{label}</p>
       <p className="text-lg font-black text-white">{value}</p>
-      {sub && <p className="text-[10px] text-slate-500">{sub}</p>}
+      {sub && <p className="text-[10px] text-slate-300">{sub}</p>}
     </div>
   );
 }

@@ -1,13 +1,11 @@
 'use client';
 
-import { useMemo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NFL_TEAMS, ALL_NFL_FRANCHISES, NO_FIRST_ROUND_PICK, getPickSlots } from '../data/teams';
 import type { NFLTeam } from '../data/teams';
-import { TEAM_NEEDS, TEAM_STRATEGY } from '../data/team-needs';
-import { POSITION_COLORS } from '../data/players';
 import type { DraftPick } from './PicksList';
 import type { DraftSpeed } from '../lib/cpu-draft';
-import { expectedGrade, pickValue, getGrade } from '../lib/grading';
+import { pickValue, getGrade } from '../lib/grading';
 import TeamLogo from './TeamLogo';
 
 interface DraftClockProps {
@@ -37,8 +35,6 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
 
   // Use activeTeam from parent (correct for all rounds) — fallback to R1 for pre-draft
   const activeTeam = activeTeamProp ?? NFL_TEAMS[0];
-  const needs = TEAM_NEEDS[activeTeam.abbr] ?? [];
-  const strategy = TEAM_STRATEGY[activeTeam.abbr] ?? '';
 
   // Hand points to current pick position within the round
   useEffect(() => {
@@ -55,15 +51,7 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
     }
   }, [clockPosition, isSpinning, sliceAngle]);
 
-  // Outer bezel gradient — thin ring of team colors
-  const bezelGradient = useMemo(() => {
-    const stops = NFL_TEAMS.map((team, i) => {
-      const start = i * sliceAngle;
-      const end = (i + 1) * sliceAngle;
-      return `${team.color} ${start}deg ${end}deg`;
-    });
-    return `conic-gradient(from -${sliceAngle / 2}deg, ${stops.join(', ')})`;
-  }, [sliceAngle]);
+  // Bezel color — clean single-color ring matching active team
 
   // Which bezel slots are done (for current round only)
   const currentRoundPicks = picks.filter((p) => p.round === currentRound);
@@ -81,12 +69,17 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
           height: 'min(85vw, min(88vh, 820px))',
         }}
       >
-        {/* ── OUTER BEZEL — team color ring ── */}
+        {/* ── OUTER BEZEL — clean single-color ring ── */}
         <div
-          className="absolute inset-0 rounded-full"
+          className="absolute inset-0 rounded-full transition-all duration-700"
           style={{
-            background: bezelGradient,
-            boxShadow: `0 0 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.3)`,
+            background: noPicks
+              ? 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+              : `linear-gradient(135deg, ${activeTeam.color}30 0%, ${activeTeam.color}10 100%)`,
+            boxShadow: noPicks
+              ? '0 0 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.3)'
+              : `0 0 40px ${activeTeam.color}15, inset 0 0 20px rgba(0,0,0,0.3)`,
+            border: noPicks ? '2px solid rgba(255,255,255,0.08)' : `2px solid ${activeTeam.color}25`,
           }}
         />
 
@@ -117,10 +110,8 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
                 style={{ opacity: showContent ? 1 : 0, transform: showContent ? 'scale(1)' : 'scale(0.95)' }}
               >
                 {/* Round + Pick number */}
-                <div className="flex items-center gap-2 mb-3">
-                  <span
-                    className="text-[10px] font-black text-amber-400 uppercase tracking-[0.15em] px-2 py-0.5 rounded bg-amber-500/10"
-                  >
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-[10px] font-black text-amber-400 uppercase tracking-[0.15em] px-2 py-0.5 rounded bg-amber-500/10">
                     Rd {currentRound}
                   </span>
                   <span
@@ -134,20 +125,20 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
                     #{(pickInRoundProp ?? currentPick) + 1}
                   </span>
                   {activeTeam.tradeNote && currentRound === 1 && (
-                    <span className="text-[10px] text-white/25 italic">({activeTeam.tradeNote})</span>
+                    <span className="text-[10px] text-white/60 italic">({activeTeam.tradeNote})</span>
                   )}
                 </div>
 
-                {/* Team badge with logo */}
+                {/* Large team logo — the dominant visual element */}
                 <div
-                  className="w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-all duration-500"
+                  className="w-24 h-24 md:w-36 md:h-36 rounded-full flex items-center justify-center mb-3 md:mb-4 transition-all duration-500"
                   style={{
                     backgroundColor: activeTeam.color,
-                    boxShadow: `0 0 30px ${activeTeam.color}50, 0 0 60px ${activeTeam.color}20`,
-                    border: `2px solid ${activeTeam.colorAlt}30`,
+                    boxShadow: `0 0 40px ${activeTeam.color}30`,
+                    border: `3px solid ${activeTeam.colorAlt}20`,
                   }}
                 >
-                  <TeamLogo abbr={activeTeam.abbr} size={28} />
+                  <TeamLogo abbr={activeTeam.abbr} size={64} />
                 </div>
 
                 {/* Team name */}
@@ -157,43 +148,9 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
                 >
                   <span className="hidden sm:inline">{activeTeam.city} </span><span className="sm:hidden">{activeTeam.abbr}</span>
                 </p>
-                <p className="text-lg md:text-3xl font-black text-white tracking-tight -mt-0.5 md:-mt-1">
+                <p className="text-xl md:text-4xl font-black text-white tracking-tight -mt-0.5 md:-mt-1">
                   {activeTeam.name}
                 </p>
-
-                {/* Needs pills */}
-                <div className="flex items-center gap-2 mt-4">
-                  <span className="text-[9px] text-white/30 uppercase tracking-wider font-bold mr-1">Needs</span>
-                  {needs.map((pos, i) => {
-                    const posColor = POSITION_COLORS[pos] ?? '#64748b';
-                    return (
-                      <span
-                        key={pos}
-                        className="text-[11px] font-black px-2 py-0.5 rounded text-white"
-                        style={{
-                          backgroundColor: i === 0 ? activeTeam.color : posColor,
-                          boxShadow: i === 0 ? `0 0 8px ${activeTeam.color}40` : undefined,
-                          opacity: i === 0 ? 1 : 0.8,
-                        }}
-                      >
-                        {pos}
-                      </span>
-                    );
-                  })}
-                </div>
-
-                {/* Strategy blurb — hidden on small clocks */}
-                {strategy && (
-                  <div
-                    className="mt-3 md:mt-4 max-w-[360px] text-[11px] md:text-[13px] text-white/50 leading-relaxed text-center px-3 md:px-4 py-2 md:py-3 rounded-lg hidden sm:block"
-                    style={{
-                      backgroundColor: `${activeTeam.color}08`,
-                      border: `1px solid ${activeTeam.color}12`,
-                    }}
-                  >
-                    {strategy}
-                  </div>
-                )}
 
                 {/* On the clock indicator */}
                 <div className="mt-4 flex items-center gap-2">
@@ -201,11 +158,11 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
                     className="w-2 h-2 rounded-full"
                     style={{
                       backgroundColor: isUserPick ? '#f59e0b' : activeTeam.color,
-                      animation: 'pulse 2s ease-in-out infinite',
+                      animation: 'pulse 3s ease-in-out infinite',
                     }}
                   />
                   <span
-                    className="text-[10px] font-black uppercase tracking-[0.15em]"
+                    className="text-[11px] font-black uppercase tracking-[0.15em]"
                     style={{
                       color: isSpinning
                         ? '#10b981'
@@ -245,17 +202,16 @@ export default function DraftClock({ currentPick, pickInRound: pickInRoundProp, 
               }}
             >
               <span
-                className="absolute text-[9px] font-black leading-none transition-all duration-300"
+                className="absolute font-black leading-none transition-all duration-300"
                 style={{
-                  // Position on the outer bezel ring
                   left: '0',
-                  top: '-5px',
+                  top: '-6px',
                   transform: `translateX(min(42.5vh, 396px)) rotate(-${angle + sliceAngle / 2}deg)`,
-                  color: isCurrent ? '#fff' : isPicked ? team.colorAlt + '60' : team.colorAlt,
+                  fontSize: isCurrent ? '12px' : '11px',
+                  color: isCurrent ? '#fff' : isPicked ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.75)',
                   textShadow: isCurrent
-                    ? `0 0 10px ${team.color}, 0 1px 3px rgba(0,0,0,0.9)`
-                    : '0 1px 2px rgba(0,0,0,0.8)',
-                  opacity: isPicked && !isCurrent ? 0.4 : 1,
+                    ? `0 0 10px ${activeTeam.color}, 0 1px 3px rgba(0,0,0,0.9)`
+                    : '0 1px 3px rgba(0,0,0,0.9)',
                 }}
               >
                 {team.abbr}
@@ -443,7 +399,7 @@ function DraftGradeReport({ picks, userTeamAbbr }: { picks: DraftPick[]; userTea
     <div className="flex flex-col items-center w-full h-full px-3 md:px-6 overflow-y-auto py-3 md:py-4">
       {/* Header */}
       <p className="text-emerald-400 text-base md:text-xl font-black tracking-tight mb-0.5">Draft Complete!</p>
-      <p className="text-[10px] text-white/30 mb-1">{picks.length} picks &middot; Draft class avg: <span className="text-white/50 font-bold">{overallAvg >= 0 ? '+' : ''}{overallAvg.toFixed(1)}</span></p>
+      <p className="text-[10px] text-white/70 mb-1">{picks.length} picks &middot; Draft class avg: <span className="text-white/80 font-bold">{overallAvg >= 0 ? '+' : ''}{overallAvg.toFixed(1)}</span></p>
 
       {/* User team hero grade */}
       {userGrade ? (
@@ -465,8 +421,8 @@ function DraftGradeReport({ picks, userTeamAbbr }: { picks: DraftPick[]; userTea
               <span className="text-sm text-white/60 font-bold">Your Draft</span>
             </div>
             {userGrade.picks.map((p) => (
-              <p key={p.pickNumber} className="text-[11px] text-white/40">
-                #{p.pickNumber} {p.playerName} <span className="text-white/25">({p.position})</span>{' '}
+              <p key={p.pickNumber} className="text-[11px] text-white/70">
+                #{p.pickNumber} {p.playerName} <span className="text-white/60">({p.position})</span>{' '}
                 <span style={{ color: p.value >= 0 ? '#10b981' : '#ef4444' }}>
                   {p.value >= 0 ? '+' : ''}{p.value}
                 </span>
@@ -475,12 +431,12 @@ function DraftGradeReport({ picks, userTeamAbbr }: { picks: DraftPick[]; userTea
           </div>
         </div>
       ) : (
-        <p className="text-white/30 text-xs mb-3">All 32 picks are in</p>
+        <p className="text-white/70 text-xs mb-3">All 32 picks are in</p>
       )}
 
       {/* All teams leaderboard */}
       <div className="w-full max-w-[460px]">
-        <p className="text-[9px] text-white/30 uppercase tracking-widest font-bold mb-2 text-center">Draft Grades</p>
+        <p className="text-[9px] text-white/70 uppercase tracking-widest font-bold mb-2 text-center">Draft Grades</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1">
           {grades.map((g, i) => {
             const isUser = g.abbr === userTeamAbbr;
@@ -493,14 +449,14 @@ function DraftGradeReport({ picks, userTeamAbbr }: { picks: DraftPick[]; userTea
                   border: isUser ? `1px solid ${g.color}30` : '1px solid transparent',
                 }}
               >
-                <span className="text-[10px] text-white/20 font-mono w-4 text-right">{i + 1}</span>
+                <span className="text-[10px] text-white/60 font-mono w-4 text-right">{i + 1}</span>
                 <div
                   className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: g.color }}
                 >
                   <span className="text-[6px] font-black" style={{ color: g.colorAlt }}>{g.abbr}</span>
                 </div>
-                <span className={`text-[11px] font-bold flex-1 truncate ${isUser ? 'text-white' : 'text-white/50'}`}>
+                <span className={`text-[11px] font-bold flex-1 truncate ${isUser ? 'text-white' : 'text-white/80'}`}>
                   {g.abbr}
                 </span>
                 <span
@@ -542,7 +498,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
       {/* Title */}
       <div className="text-center mb-3 shrink-0">
         <p className="text-white font-black text-lg tracking-tight">2026 NFL Draft</p>
-        <p className="text-white/30 text-[11px]">Pick your team or run a full sim</p>
+        <p className="text-white/70 text-[11px]">Pick your team or run a full sim</p>
       </div>
 
       {/* Conference columns — side-by-side on md+, stacked on small */}
@@ -572,7 +528,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                   >
                     <TeamLogo abbr={team.abbr} size={18} />
                   </div>
-                  <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-600'}`}>
+                  <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-400'}`}>
                     {team.name}
                   </span>
                 </button>
@@ -606,7 +562,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
                   >
                     <TeamLogo abbr={team.abbr} size={18} />
                   </div>
-                  <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-600'}`}>
+                  <span className={`text-[7px] font-bold truncate w-full text-center ${isSelected ? 'text-white' : 'text-slate-400'}`}>
                     {team.name}
                   </span>
                 </button>
@@ -628,7 +584,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
           {hasNoPick ? (
             <span className="text-[10px] text-red-400/80 ml-2">No 1st round pick (traded)</span>
           ) : (
-            <span className="text-[10px] text-slate-500 ml-2">
+            <span className="text-[10px] text-slate-300 ml-2">
               Pick{selectedSlots.length > 1 ? 's' : ''}: {selectedSlots.map((s) => `#${s}`).join(', ')}
             </span>
           )}
@@ -643,7 +599,7 @@ function TeamSelector({ onStart }: { onStart?: (abbr: string | null, speed: Draf
               key={opt.key}
               onClick={() => setSpeed(opt.key)}
               className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all ${
-                speed === opt.key ? 'text-black' : 'bg-white/5 text-slate-500 hover:bg-white/10'
+                speed === opt.key ? 'text-black' : 'bg-white/5 text-slate-300 hover:bg-white/10'
               }`}
               style={speed === opt.key ? { backgroundColor: '#f59e0b' } : undefined}
             >

@@ -88,14 +88,14 @@ export default function PlayerPool({
             >
               {showLegend ? 'Hide' : 'Positions'}
             </button>
-            <span className="text-[10px] text-slate-500 font-bold tabular-nums">{available.length} left</span>
+            <span className="text-[10px] text-slate-300 font-bold tabular-nums">{available.length} left</span>
           </div>
         </div>
         {showLegend && (
           <div className="mt-2 space-y-1.5">
             {Object.entries(POSITION_GROUPS).map(([group, positions]) => (
               <div key={group} className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[8px] text-slate-600 uppercase tracking-wider font-bold w-10">{group}</span>
+                <span className="text-[8px] text-slate-400 uppercase tracking-wider font-bold w-10">{group}</span>
                 {positions.map((pos) => (
                   <span
                     key={pos}
@@ -150,7 +150,7 @@ export default function PlayerPool({
                   ? 'text-white shadow-sm'
                   : isNeed
                     ? 'text-white'
-                    : 'bg-white/5 text-slate-500 hover:bg-white/10 hover:text-slate-300'
+                    : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
               }`}
               style={
                 isActive
@@ -185,7 +185,7 @@ export default function PlayerPool({
           );
         })}
         {sorted.length === 0 && (
-          <div className="p-6 text-center text-slate-600 text-sm">
+          <div className="p-6 text-center text-slate-400 text-sm">
             No players available at this position
           </div>
         )}
@@ -230,7 +230,7 @@ function PlayerRow({
       }}
     >
       {/* Rank */}
-      <span className="text-xs font-mono text-slate-600 w-5 text-right shrink-0 tabular-nums">
+      <span className="text-xs font-mono text-slate-400 w-5 text-right shrink-0 tabular-nums">
         {rank}
       </span>
 
@@ -265,11 +265,11 @@ function PlayerRow({
             </span>
           )}
         </div>
-        <p className="text-[11px] text-slate-500 flex items-center gap-1.5">
+        <p className="text-[11px] text-slate-300 flex items-center gap-1.5">
           <span className="truncate">{player.school}</span>
-          <span className="text-slate-700">&middot;</span>
+          <span className="text-slate-500">&middot;</span>
           <span className="truncate">{player.height} / {player.weight}</span>
-          <span className="text-slate-700">&middot;</span>
+          <span className="text-slate-500">&middot;</span>
           <span
             className={`font-bold tabular-nums shrink-0 ${
               player.grade >= 95
@@ -278,7 +278,7 @@ function PlayerRow({
                   ? 'text-blue-400'
                   : player.grade >= 85
                     ? 'text-slate-400'
-                    : 'text-slate-600'
+                    : 'text-slate-400'
             }`}
           >
             {player.grade}

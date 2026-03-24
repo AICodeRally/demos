@@ -30,6 +30,11 @@ export const TEAM_NEEDS: Record<string, string[]> = {
   HOU: ['OT', 'EDGE', 'CB'],
   NE: ['WR', 'OT', 'EDGE'],
   SEA: ['DT', 'CB', 'OG'],
+  ATL: ['EDGE', 'OT', 'S'],
+  GB: ['WR', 'DT', 'EDGE'],
+  JAX: ['OT', 'WR', 'CB'],
+  IND: ['QB', 'WR', 'CB'],
+  DEN: ['QB', 'OT', 'EDGE'],
 };
 
 // AI strategy blurbs per team — keyed by abbr
@@ -66,4 +71,9 @@ export const TEAM_STRATEGY: Record<string, string> = {
   MIA_30: 'Dolphins\' second pick (from DEN). LB or EDGE to complement what they got at #11.',
   NE: 'Patriots need weapons for Drake Maye. WR is the dream, OT if the top receivers are gone.',
   SEA: 'Seahawks need interior defense badly. DT first, CB second.',
+  ATL: 'Falcons traded their 1st to the Rams. In Round 2+, they target pass rush help and O-line depth for Kirk Cousins.',
+  GB: 'Packers traded their 1st to Dallas. Round 2+ focus is weapons for Jordan Love and interior defensive line.',
+  JAX: 'Jaguars traded their 1st to Cleveland. Need to rebuild the O-line and find weapons for Trevor Lawrence.',
+  IND: 'Colts traded their 1st to the Jets. Desperately need a QB of the future and playmakers on offense.',
+  DEN: 'Broncos traded their 1st to Miami. Need a franchise QB and better protection up front.',
 };
