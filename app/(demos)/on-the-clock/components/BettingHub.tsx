@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { DRAFT_PLAYERS, POSITION_COLORS } from '../data/players';
 import type { DraftPlayer } from '../data/players';
 import type { NFLTeam } from '../data/teams';
@@ -53,6 +53,11 @@ export default function BettingHub({
   draftStarted,
 }: BettingHubProps) {
   const [tab, setTab] = useState<BettingTab>(draftComplete ? 'results' : 'live');
+
+  // Auto-switch to results when draft completes
+  useEffect(() => {
+    if (draftComplete) setTab('results');
+  }, [draftComplete]);
 
   const tabs: { key: BettingTab; label: string; badge?: string }[] = [
     { key: 'live', label: 'Live' },
@@ -149,6 +154,13 @@ function LiveBettingTab({
 }) {
   const [betAmount, setBetAmount] = useState(500);
 
+  // Clamp bet amount when balance drops below current bet
+  useEffect(() => {
+    if (betAmount > bettingState.balance) {
+      setBetAmount(Math.max(MIN_BET, Math.min(betAmount, bettingState.balance)));
+    }
+  }, [bettingState.balance, betAmount]);
+
   const availablePlayers = DRAFT_PLAYERS.filter((p) => !draftedPlayerIds.has(p.id));
   const pickValueOdds = getPickValueOdds(activeTeam.abbr, teamNeeds, availablePlayers, currentPickNumber);
   const candidates = getNextPickCandidates(activeTeam.abbr, teamNeeds, availablePlayers, currentPickNumber);
@@ -174,6 +186,15 @@ function LiveBettingTab({
       <div className="p-6 text-center">
         <p className="text-sm text-amber-400 font-bold">It&apos;s your pick!</p>
         <p className="text-xs text-slate-500 mt-1">Betting is disabled when you&apos;re on the clock.</p>
+      </div>
+    );
+  }
+
+  if (bettingState.balance < MIN_BET) {
+    return (
+      <div className="p-6 text-center">
+        <p className="text-sm text-red-400 font-bold">Insufficient Funds</p>
+        <p className="text-xs text-slate-500 mt-1">You need at least ${MIN_BET} to place a bet.</p>
       </div>
     );
   }

@@ -123,6 +123,9 @@ export function removePrediction(state: BettingState, slot: number): BettingStat
 }
 
 export function settlePredictions(state: BettingState, picks: DraftPick[]): BettingState {
+  // Guard: don't re-settle if already scored
+  if (state.predictionScore !== null) return state;
+
   const settled = state.predictions.map((pred) => {
     const actualPick = picks.find((p) => p.pickNumber === pred.slot);
     if (!actualPick) return pred;
@@ -224,10 +227,6 @@ export function settlePropBets(state: BettingState, picks: DraftPick[]): Betting
 
     return { ...bet, settled: true, won, payout };
   });
-
-  const newWinnings = settled.reduce((sum, b) => sum + (b.settled && !state.propBets.find((ob) => ob.id === b.id)?.settled ? b.payout : 0), 0);
-  // Recalculate from scratch to avoid double-counting
-  const totalPayout = settled.filter((b) => b.won).reduce((sum, b) => sum + b.payout, 0);
 
   return {
     ...state,
@@ -353,6 +352,8 @@ export function getNextPickCandidates(
 
   // Convert scores to probabilities
   const totalScore = top5.reduce((s, t) => s + t.score, 0);
+  if (top5.length === 0 || totalScore <= 0) return [];
+
   return top5.map(({ player, score }) => {
     const probability = score / totalScore;
     // Odds = 1 / probability, capped at reasonable range
