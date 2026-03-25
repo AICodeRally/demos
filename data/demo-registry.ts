@@ -106,6 +106,14 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "layout": "sidebar"
   },
   {
+    "name": "Prizym SWIC — Sales What-If Calculator",
+    "slug": "swic",
+    "industry": "Sales Performance Management",
+    "tagline": "Interactive what-if scenario modeling for sales compensation — test changes before they go live",
+    "color": "#10b981",
+    "layout": "sidebar"
+  },
+  {
     "name": "WELLSPRING",
     "slug": "wellspring",
     "industry": "Oil & Gas",

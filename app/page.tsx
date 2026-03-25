@@ -6,6 +6,8 @@ const PRIVATE_RALLY_DEMO_SLUGS = new Set<string>([]);
 const SPM_DEMO_SLUGS = new Set([
   'prizym-governance',
   'quota',
+  'swic',
+  'register',
 ]);
 
 const TOOL_DEMO_SLUGS = new Set(['on-the-clock']);
