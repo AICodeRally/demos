@@ -80,6 +80,6 @@ export default defineDemo({
   meta: {
     industry: 'Retail Operations',
     tagline: 'Retail revenue intelligence from floor to boardroom — comp, scheduling, analytics',
-    color: '#64748B',
+    color: '#8BA3BE',
   },
 });

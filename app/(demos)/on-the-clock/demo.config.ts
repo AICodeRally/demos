@@ -26,6 +26,6 @@ export default defineDemo({
   meta: {
     industry: 'Sports & Entertainment',
     tagline: 'Simulate the 2026 NFL Draft — spin the wheel, pick your players, build every team\'s roster',
-    color: '#f59e0b',
+    color: '#22C55E',
   },
 });

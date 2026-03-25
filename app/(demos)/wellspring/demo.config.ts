@@ -87,6 +87,6 @@ export default defineDemo({
   meta: {
     industry: 'Oil & Gas',
     tagline: 'Field operations intelligence for upstream oil and gas producers',
-    color: '#B45309',
+    color: '#D97706',
   },
 });

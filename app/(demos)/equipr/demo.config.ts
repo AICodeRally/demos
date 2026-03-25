@@ -71,6 +71,6 @@ export default defineDemo({
   meta: {
     industry: 'Equipment Rental',
     tagline: 'AI-powered fleet intelligence and utilization analytics for rental operations',
-    color: '#F59E0B',
+    color: '#E87040',
   },
 });
