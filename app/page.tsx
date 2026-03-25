@@ -176,26 +176,26 @@ export default function PortfolioPage() {
 
       <DemoSection
         title="RevOS Industry Demos"
-        subtitle={`${revOsIndustryDemos.length} demos grouped by industry use case`}
+        subtitle="Vertical solutions built for specific industries"
         demos={revOsIndustryDemos}
       />
 
       <DemoSection
         title="SPM Application Demos"
-        subtitle={`${spmApplicationDemos.length} demos focused on SPM applications`}
+        subtitle="Prizym suite — compensation, governance, quotas, and what-if modeling"
         demos={spmApplicationDemos}
       />
 
       <DemoSection
         title="Tool Demos"
-        subtitle={toolDemos.length > 0 ? `${toolDemos.length} demos focused on tools` : 'To be added'}
+        subtitle="Standalone tools and interactive experiences"
         demos={toolDemos}
       />
 
       <footer className="relative bg-[#090909] pb-8 pt-10">
         <div className="absolute left-0 right-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg, #f97316, #fbbf24)' }} />
         <div className="mx-auto max-w-6xl px-6 lg:px-12">
-          <div className="flex items-center justify-center border-t border-[#222] pt-6">
+          <div className="flex items-center justify-center pt-6">
             <p className="text-base text-[#ccc]">
               &copy; {new Date().getFullYear()} AI Code Rally &middot; Powered by{' '}
               <span className="bg-gradient-to-r from-[#f97316] to-[#fbbf24] bg-clip-text font-bold text-transparent">

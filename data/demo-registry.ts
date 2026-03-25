@@ -22,7 +22,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "charter",
     "industry": "Credit Unions",
     "tagline": "Member-owned financial intelligence for community institutions",
-    "color": "#8B7355",
+    "color": "#B8976A",
     "layout": "sidebar"
   },
   {
@@ -38,7 +38,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "equipr",
     "industry": "Equipment Rental",
     "tagline": "AI-powered fleet intelligence and utilization analytics for rental operations",
-    "color": "#F59E0B",
+    "color": "#E87040",
     "layout": "sidebar"
   },
   {
@@ -46,7 +46,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "meridian",
     "industry": "Private Equity",
     "tagline": "Carried interest compensation and fund waterfall for M&A-focused PE firms",
-    "color": "#D4A847",
+    "color": "#3B82F6",
     "layout": "sidebar"
   },
   {
@@ -54,7 +54,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "on-the-clock",
     "industry": "Sports & Entertainment",
     "tagline": "Simulate the 2026 NFL Draft — spin the wheel, pick your players, build every team's roster",
-    "color": "#f59e0b",
+    "color": "#22C55E",
     "layout": "sidebar"
   },
   {
@@ -86,7 +86,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "register",
     "industry": "Retail Operations",
     "tagline": "Retail revenue intelligence from floor to boardroom — comp, scheduling, analytics",
-    "color": "#64748B",
+    "color": "#8BA3BE",
     "layout": "sidebar"
   },
   {
@@ -118,7 +118,7 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "slug": "wellspring",
     "industry": "Oil & Gas",
     "tagline": "Field operations intelligence for upstream oil and gas producers",
-    "color": "#B45309",
+    "color": "#D97706",
     "layout": "sidebar"
   }
 ];

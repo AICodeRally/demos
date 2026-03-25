@@ -72,6 +72,6 @@ export default defineDemo({
   meta: {
     industry: 'Credit Unions',
     tagline: 'Member-owned financial intelligence for community institutions',
-    color: '#8B7355',
+    color: '#B8976A',
   },
 });

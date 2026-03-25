@@ -90,6 +90,6 @@ export default defineDemo({
   meta: {
     industry: 'Private Equity',
     tagline: 'Carried interest compensation and fund waterfall for M&A-focused PE firms',
-    color: '#D4A847',
+    color: '#3B82F6',
   },
 });
