@@ -75,6 +75,6 @@ export default defineDemo({
   meta: {
     industry: 'Specialty Trade Distribution',
     tagline: 'RevOps & SPM for specialty trade distribution — territory, comp, branch operations',
-    color: '#1E3A5F',
+    color: '#5B8CB8',
   },
 });
