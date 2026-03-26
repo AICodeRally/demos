@@ -60,7 +60,7 @@ export function DemoShell({ config, children }: Props) {
   const layout = getLayout(resolved.layout);
 
   const content = (
-    <div style={cssVars as React.CSSProperties}>
+    <div className="demo-shell" style={cssVars as React.CSSProperties}>
       {layout.render({ config: resolved, children, parts })}
 
       <Link
