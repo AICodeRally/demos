@@ -172,8 +172,8 @@ function DemoSection({
   demos: DemoRegistryEntry[];
 }) {
   return (
-    <section style={{ padding: '0 48px 56px' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+    <section style={{ padding: '0 5vw 56px' }}>
+      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
         <div style={{ marginBottom: 28 }}>
           <h2 style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 0 }}>{title}</h2>
           <p style={{ fontSize: 14, color: '#8d8d8d', margin: '4px 0 0' }}>{subtitle}</p>
@@ -184,7 +184,7 @@ function DemoSection({
             style={{
               display: 'grid',
               gap: 24,
-              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
             }}
           >
             {demos.map((demo) => (
@@ -310,7 +310,7 @@ export default function PortfolioPage() {
             background: 'linear-gradient(90deg, #f97316, #fbbf24)',
           }}
         />
-        <div style={{ maxWidth: 1152, margin: '0 auto', padding: '24px 24px 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: 1440, margin: '0 auto', padding: '24px 24px 0', textAlign: 'center' }}>
           <p style={{ fontSize: 16, color: '#ccc', margin: 0 }}>
             &copy; {new Date().getFullYear()} AI Code Rally &middot; Powered by{' '}
             <span
