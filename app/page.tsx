@@ -20,16 +20,10 @@ function groupDemos() {
     (demo) => !SPM_DEMO_SLUGS.has(demo.slug) && !TOOL_DEMO_SLUGS.has(demo.slug),
   );
 
-  return {
-    visibleDemos,
-    revOsIndustryDemos,
-    spmApplicationDemos,
-    toolDemos,
-  };
+  return { visibleDemos, revOsIndustryDemos, spmApplicationDemos, toolDemos };
 }
 
 function splitName(name: string): { primary: string; subtitle: string | null } {
-  // "Prizym SGM — Sales Governance Manager" → primary: "Prizym SGM", subtitle: "Sales Governance Manager"
   const dashIdx = name.indexOf(' — ');
   if (dashIdx !== -1) return { primary: name.slice(0, dashIdx), subtitle: name.slice(dashIdx + 3) };
   return { primary: name, subtitle: null };
@@ -41,52 +35,119 @@ function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
   return (
     <Link
       href={`/${demo.slug}`}
-      className="group flex h-[380px] flex-col overflow-hidden rounded-2xl border border-[#222] bg-[#111] transition-all duration-300 hover:border-[#333] hover:bg-[#141414]"
+      style={{
+        textDecoration: 'none',
+        color: 'inherit',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 380,
+        overflow: 'hidden',
+        borderRadius: 16,
+        border: '1px solid #222',
+        background: '#111',
+        transition: 'border-color 0.3s, background 0.3s',
+      }}
     >
+      {/* Header band */}
       <div
-        className="relative flex h-32 flex-col items-center justify-center px-6"
         style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 128,
+          padding: '0 24px',
+          position: 'relative',
           background: `linear-gradient(135deg, ${demo.color}20 0%, ${demo.color}05 100%)`,
         }}
       >
+        {/* Grid overlay */}
         <div
-          className="absolute inset-0 opacity-[0.06]"
           style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.06,
             backgroundImage: `linear-gradient(${demo.color} 1px, transparent 1px), linear-gradient(90deg, ${demo.color} 1px, transparent 1px)`,
             backgroundSize: '24px 24px',
           }}
         />
         <span
-          className="relative text-center text-xl font-extrabold tracking-wider transition-transform duration-300 group-hover:scale-105"
-          style={{ color: demo.color }}
+          style={{
+            color: demo.color,
+            fontSize: 20,
+            fontWeight: 800,
+            letterSpacing: '0.05em',
+            textAlign: 'center',
+            position: 'relative',
+          }}
         >
           {primary}
         </span>
         {subtitle && (
-          <span className="relative mt-1 text-center text-[11px] font-medium tracking-wide text-[#999]">
+          <span
+            style={{
+              fontSize: 11,
+              fontWeight: 500,
+              letterSpacing: '0.05em',
+              color: '#999',
+              marginTop: 4,
+              textAlign: 'center',
+              position: 'relative',
+            }}
+          >
             {subtitle}
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: demo.color }}>
+      {/* Body */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 20 }}>
+        <p
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: demo.color,
+            margin: '0 0 6px 0',
+          }}
+        >
           {demo.industry}
         </p>
-        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-[#d7d7d7]">
+        <p
+          style={{
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: '#d7d7d7',
+            margin: '0 0 16px 0',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
+        >
           {demo.tagline}
         </p>
 
-        <div className="mt-auto">
+        <div style={{ marginTop: 'auto' }}>
           <div
-            className="flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-white transition-all group-hover:brightness-110"
             style={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              borderRadius: 8,
+              padding: '10px 0',
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#fff',
               background: `linear-gradient(135deg, ${demo.color}, ${demo.color}cc)`,
             }}
           >
             Launch Demo
             <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              style={{ width: 16, height: 16 }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -111,21 +172,40 @@ function DemoSection({
   demos: DemoRegistryEntry[];
 }) {
   return (
-    <section className="px-6 pb-14 lg:px-12">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-7">
-          <h2 className="text-2xl font-bold text-white">{title}</h2>
-          <p className="mt-1 text-sm text-[#8d8d8d]">{subtitle}</p>
+    <section style={{ padding: '0 24px 56px' }}>
+      <div style={{ maxWidth: 1152, margin: '0 auto' }}>
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 0 }}>{title}</h2>
+          <p style={{ fontSize: 14, color: '#8d8d8d', margin: '4px 0 0' }}>{subtitle}</p>
         </div>
 
         {demos.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            style={{
+              display: 'grid',
+              gap: 24,
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            }}
+          >
             {demos.map((demo) => (
               <DemoCard key={demo.slug} demo={demo} />
             ))}
           </div>
         ) : (
-          <div className="flex h-[360px] items-center justify-center rounded-2xl border border-dashed border-[#2c2c2c] bg-[#101010] px-6 text-center text-[#8d8d8d]">
+          <div
+            style={{
+              display: 'flex',
+              height: 360,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 16,
+              border: '1px dashed #2c2c2c',
+              background: '#101010',
+              padding: '0 24px',
+              textAlign: 'center',
+              color: '#8d8d8d',
+            }}
+          >
             Tool demos are planned and will appear here.
           </div>
         )}
@@ -138,38 +218,64 @@ export default function PortfolioPage() {
   const { visibleDemos, revOsIndustryDemos, spmApplicationDemos, toolDemos } = groupDemos();
 
   return (
-    <main className="min-h-screen bg-[#090909]">
-      <section className="relative flex items-center justify-center overflow-hidden pb-12 pt-20">
+    <main style={{ minHeight: '100vh', background: '#090909', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Hero */}
+      <section
+        style={{
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          padding: '80px 0 48px',
+        }}
+      >
+        {/* Gradient bg */}
         <div
-          className="absolute inset-0"
           style={{
+            position: 'absolute',
+            inset: 0,
             background: 'linear-gradient(to top, #f9731620 0%, #f9731608 35%, transparent 70%)',
           }}
         />
+        {/* Grid bg */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
           style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.03,
             backgroundImage:
               'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
             backgroundSize: '80px 80px',
           }}
         />
-        <div className="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
-          <h1 className="mb-4 text-5xl font-extrabold tracking-tight text-white lg:text-7xl">
-            <span className="bg-gradient-to-b from-[#fbbf24] to-[#f97316] bg-clip-text text-transparent">
+        <div style={{ position: 'relative', maxWidth: 960, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
+          <h1 style={{ fontSize: 'clamp(48px, 8vw, 72px)', fontWeight: 800, letterSpacing: '-0.02em', color: '#fff', margin: '0 0 16px' }}>
+            <span
+              style={{
+                background: 'linear-gradient(to bottom, #fbbf24, #f97316)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
               Demo
             </span>{' '}
             Showcase
           </h1>
-          <p className="mx-auto max-w-3xl text-lg font-light leading-relaxed text-[#cfcfcf] sm:text-xl">
+          <p style={{ maxWidth: 720, margin: '0 auto', fontSize: 'clamp(18px, 2.5vw, 20px)', fontWeight: 300, lineHeight: 1.6, color: '#cfcfcf' }}>
             Unified catalog of industry, application, and tool experiences.
           </p>
-          <p className="mx-auto mt-2 max-w-3xl text-sm text-[#8d8d8d]">
+          <p style={{ maxWidth: 720, margin: '8px auto 0', fontSize: 14, color: '#8d8d8d' }}>
             {visibleDemos.length} public demos in the showcase.
           </p>
           <div
-            className="mx-auto mt-8 h-[1px] w-72"
-            style={{ background: 'linear-gradient(90deg, transparent, #f97316 20%, #fbbf24 80%, transparent)' }}
+            style={{
+              width: 288,
+              height: 1,
+              margin: '32px auto 0',
+              background: 'linear-gradient(90deg, transparent, #f97316 20%, #fbbf24 80%, transparent)',
+            }}
           />
         </div>
       </section>
@@ -192,17 +298,33 @@ export default function PortfolioPage() {
         demos={toolDemos}
       />
 
-      <footer className="relative bg-[#090909] pb-8 pt-10">
-        <div className="absolute left-0 right-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg, #f97316, #fbbf24)' }} />
-        <div className="mx-auto max-w-6xl px-6 lg:px-12">
-          <div className="flex items-center justify-center pt-6">
-            <p className="text-base text-[#ccc]">
-              &copy; {new Date().getFullYear()} AI Code Rally &middot; Powered by{' '}
-              <span className="bg-gradient-to-r from-[#f97316] to-[#fbbf24] bg-clip-text font-bold text-transparent">
-                AICR
-              </span>
-            </p>
-          </div>
+      {/* Footer */}
+      <footer style={{ position: 'relative', background: '#090909', padding: '40px 0 32px' }}>
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 2,
+            background: 'linear-gradient(90deg, #f97316, #fbbf24)',
+          }}
+        />
+        <div style={{ maxWidth: 1152, margin: '0 auto', padding: '24px 24px 0', textAlign: 'center' }}>
+          <p style={{ fontSize: 16, color: '#ccc', margin: 0 }}>
+            &copy; {new Date().getFullYear()} AI Code Rally &middot; Powered by{' '}
+            <span
+              style={{
+                fontWeight: 700,
+                background: 'linear-gradient(90deg, #f97316, #fbbf24)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              AICR
+            </span>
+          </p>
         </div>
       </footer>
     </main>
