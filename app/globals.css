@@ -19,9 +19,12 @@
 }
 
 /* Any element with font-size below ~13px gets bumped.
-   This uses CSS clamp as a floor.
+   This uses CSS clamp as a floor. Scoped to demo pages only —
+   the homepage showcase uses its own Tailwind sizing.
    POS terminal opts out — it's a tablet UI with its own sizing. */
-p, span, td, th, li, label, div, a, button, input, select, textarea {
+.demo-shell p, .demo-shell span, .demo-shell td, .demo-shell th,
+.demo-shell li, .demo-shell label, .demo-shell div, .demo-shell a,
+.demo-shell button, .demo-shell input, .demo-shell select, .demo-shell textarea {
   font-size: max(var(--demo-font-floor, 0.72rem), inherit);
 }
 
