@@ -5,7 +5,8 @@ import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
 import { getInsight } from '@/data/register/ai-insights';
 import { SPIFF_CALENDAR } from '@/data/register/comp-data';
-import { Calendar, TrendingUp } from 'lucide-react';
+import { HeatMap } from '@/components/demos/register/HeatMap';
+import { Calendar, TrendingUp, Grid3X3 } from 'lucide-react';
 
 const MONTHLY_INDEX = [
   { month: 'Jan', index: 72 },
@@ -27,6 +28,24 @@ const HOLIDAYS = [
   { name: 'Memorial Day', lift: '+18%', month: 'May', color: '#06B6D4' },
   { name: 'Labor Day', lift: '+15%', month: 'Sep', color: '#8B5CF6' },
   { name: 'Black Friday', lift: '+35%', month: 'Nov', color: '#10B981' },
+];
+
+/* ── Department × Month Heatmap Data ──────────────────── */
+const DEPT_ROWS = ['King Premium', 'Queen Value', 'Adjustable Bases', 'Kids & Twin', 'Accessories', 'Outlet Corner'];
+const DEPT_COLS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DEPT_HEATMAP = [
+  // King Premium — spikes on holidays, steady mid-range
+  [55, 78, 62, 58, 82, 60, 65, 52, 75, 55, 95, 70],
+  // Queen Value — steady performer, slight summer dip
+  [60, 70, 65, 62, 72, 55, 52, 48, 68, 58, 80, 65],
+  // Adjustable Bases — growing category, strong Q4
+  [35, 45, 42, 38, 55, 40, 45, 38, 52, 42, 72, 55],
+  // Kids & Twin — back-to-school spike, holiday bump
+  [30, 25, 28, 22, 35, 40, 55, 78, 65, 35, 50, 42],
+  // Accessories — follows mattress trends with lag
+  [42, 55, 48, 45, 60, 45, 48, 40, 58, 45, 75, 55],
+  // Outlet Corner — inverse premium pattern, strong clearance months
+  [68, 45, 55, 70, 40, 72, 65, 75, 42, 68, 35, 85],
 ];
 
 export default function SeasonalStrategy() {
@@ -60,7 +79,7 @@ export default function SeasonalStrategy() {
             opacity: 0.3,
             pointerEvents: 'none',
           }}>
-            <span style={{ position: 'absolute', right: 0, top: -8, fontSize: '0.55rem', color: 'var(--register-text-dim)' }}>avg</span>
+            <span style={{ position: 'absolute', right: 0, top: -8, fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>avg</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 160 }}>
             {MONTHLY_INDEX.map((m, i) => {
@@ -140,6 +159,44 @@ export default function SeasonalStrategy() {
         ))}
       </div>
 
+      {/* Department × Month Revenue Heatmap */}
+      <div className="register-section" style={{
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        transitionDelay: '0.5s',
+      }}>
+        <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
+          <Grid3X3 size={16} color="#8B5CF6" />
+          <h2 className="register-section-header" style={{ marginBottom: 0 }}>
+            Revenue Intensity by Department
+          </h2>
+        </div>
+        <p className="text-sm mb-4" style={{ color: 'var(--register-text-muted)' }}>
+          Index 0–100 showing relative sales volume per department per month. Brighter = higher volume.
+        </p>
+        <HeatMap
+          rows={DEPT_ROWS}
+          cols={DEPT_COLS}
+          data={DEPT_HEATMAP}
+          colorScale={{ low: '#1E293B', mid: '#1E3A5F', high: '#06B6D4' }}
+        />
+        <div className="flex items-center gap-4 mt-4">
+          <div className="flex items-center gap-2">
+            <div style={{ width: 16, height: 10, borderRadius: 2, background: '#1E293B' }} />
+            <span className="text-xs" style={{ color: 'var(--register-text-muted)' }}>Low</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div style={{ width: 16, height: 10, borderRadius: 2, background: '#1E3A5F' }} />
+            <span className="text-xs" style={{ color: 'var(--register-text-muted)' }}>Medium</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div style={{ width: 16, height: 10, borderRadius: 2, background: '#06B6D4' }} />
+            <span className="text-xs" style={{ color: 'var(--register-text-muted)' }}>High</span>
+          </div>
+        </div>
+      </div>
+
       {/* SPIFF Calendar Timeline */}
       <div className="register-section" style={{
         opacity: mounted ? 1 : 0,
@@ -153,7 +210,6 @@ export default function SeasonalStrategy() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {SPIFF_CALENDAR.map((s, idx) => {
             const isPast = !s.active && new Date(s.endDate) < new Date('2026-03-13');
-            const borderColor = s.active ? '#10B981' : isPast ? 'var(--register-border)' : '#06B6D4';
             const opacity = isPast ? 0.5 : 1;
             return (
               <div

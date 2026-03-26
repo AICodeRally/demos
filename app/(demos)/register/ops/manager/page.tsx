@@ -54,7 +54,7 @@ function CoachingCardView({ card, onPush, pushed }: {
           <span
             style={{
               display: 'inline-flex', padding: '2px 6px', borderRadius: 4,
-              fontSize: '0.6rem', fontWeight: 700, color: '#FFFFFF',
+              fontSize: '0.7rem', fontWeight: 700, color: '#FFFFFF',
               background: cfg.color,
             }}
           >
@@ -312,7 +312,7 @@ export default function ManagerConsole() {
                     position: 'absolute', top: 8, right: 8,
                     display: 'flex', alignItems: 'center', gap: 4,
                     padding: '4px 8px', borderRadius: 6,
-                    fontSize: '0.6rem', fontWeight: 600, color: '#FFFFFF',
+                    fontSize: '0.7rem', fontWeight: 600, color: '#FFFFFF',
                     background: 'var(--register-primary)', border: 'none', cursor: 'pointer',
                     opacity: 0.85,
                   }}

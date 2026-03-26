@@ -69,8 +69,8 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Sync with DemoShell's theme (routeiq-theme key) or fall back to own key
-    const shellTheme = localStorage.getItem('routeiq-theme') as Theme | null;
+    // Sync with DemoShell's theme (demo-theme key) or fall back to own key
+    const shellTheme = localStorage.getItem('demo-theme') as Theme | null;
     const ownTheme = localStorage.getItem('register-theme') as Theme | null;
     const resolved = shellTheme ?? ownTheme;
     if (resolved === 'light' || resolved === 'dark') setTheme(resolved);
@@ -79,14 +79,20 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
     setMounted(true);
 
     // Listen for DemoShell theme changes (same-tab custom event)
-    const handleShellToggle = () => {
-      const t = localStorage.getItem('routeiq-theme') as Theme | null;
-      if (t === 'light' || t === 'dark') setTheme(t);
+    const handleShellToggle = (e: Event) => {
+      const dark = (e as CustomEvent).detail?.dark;
+      if (typeof dark === 'boolean') {
+        setTheme(dark ? 'dark' : 'light');
+      } else {
+        // Fallback: read from localStorage
+        const t = localStorage.getItem('demo-theme') as Theme | null;
+        if (t === 'light' || t === 'dark') setTheme(t);
+      }
     };
     window.addEventListener('shell-theme-change', handleShellToggle);
     // Cross-tab sync
     const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'routeiq-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+      if (e.key === 'demo-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
         setTheme(e.newValue);
       }
     };

@@ -81,8 +81,8 @@ export function HeatMap({
             className="flex items-end justify-center pb-1"
           >
             <span
-              className="text-[10px] leading-tight text-center"
-              style={{ color: '#A8A29E' }}
+              className="text-xs leading-tight text-center"
+              style={{ color: 'var(--register-text-muted, #A8A29E)' }}
             >
               {col}
             </span>
@@ -97,8 +97,8 @@ export function HeatMap({
               className="flex items-center pr-2"
             >
               <span
-                className="text-[11px] truncate w-[120px]"
-                style={{ color: '#57534E' }}
+                className="text-xs truncate w-[120px]"
+                style={{ color: 'var(--register-text, #57534E)' }}
                 title={row}
               >
                 {row}
@@ -118,7 +118,7 @@ export function HeatMap({
                   style={{ backgroundColor: bg }}
                 >
                   <span
-                    className="text-[9px] font-mono"
+                    className="text-xs font-mono"
                     style={{ color: textColor }}
                   >
                     {value}

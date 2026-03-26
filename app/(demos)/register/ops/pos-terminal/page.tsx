@@ -24,6 +24,60 @@ type PosTab = 'lines' | 'rewards' | 'coaching' | 'd365';
 const REP = POS_REPS[0]; // Sarah Johnson
 const PERIOD = SAMPLE_PERIODS['rep-sarah'];
 
+/* ── Simulated Recent Transactions Ticker ─────────────── */
+
+const TICKER_ITEMS = [
+  { id: 'T-4471', time: '9:41a', item: 'King DreamCloud 14"', total: '$2,899', rep: 'Sarah K.' },
+  { id: 'T-4470', time: '9:28a', item: 'Queen Hybrid + Adj Base', total: '$3,450', rep: 'Marcus T.' },
+  { id: 'T-4469', time: '9:15a', item: 'Pillow 2-Pack + Protector', total: '$189', rep: 'Casey M.' },
+  { id: 'T-4468', time: '9:02a', item: 'Twin XL Student Bundle', total: '$1,299', rep: 'Sarah K.' },
+  { id: 'T-4467', time: '8:48a', item: 'King TempurPedic Adapt', total: '$3,999', rep: 'Marcus T.' },
+  { id: 'T-4466', time: '8:33a', item: 'Outlet Queen Firm', total: '$599', rep: 'Casey M.' },
+];
+
+function TransactionTicker() {
+  const [visible, setVisible] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible((v) => (v + 1) % TICKER_ITEMS.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const tx = TICKER_ITEMS[visible];
+
+  return (
+    <div
+      style={{
+        display: 'flex', alignItems: 'center', gap: 8,
+        padding: '4px 12px',
+        background: 'rgba(16, 185, 129, 0.08)',
+        borderBottom: '1px solid rgba(16, 185, 129, 0.15)',
+        fontSize: '0.72rem',
+        overflow: 'hidden',
+      }}
+    >
+      <span className="reg-live-dot" style={{ width: 5, height: 5, flexShrink: 0 }} />
+      <span style={{ fontWeight: 700, color: '#10B981', flexShrink: 0 }}>LAST SALE</span>
+      <div
+        key={tx.id}
+        style={{
+          display: 'flex', gap: 8, alignItems: 'center',
+          animation: 'reg-slideIn 0.3s ease-out',
+          color: 'var(--register-text-muted)',
+        }}
+      >
+        <span style={{ fontWeight: 600, color: 'var(--register-accent)' }}>{tx.id}</span>
+        <span>{tx.item}</span>
+        <span style={{ fontWeight: 700, color: 'var(--register-text)' }}>{tx.total}</span>
+        <span style={{ opacity: 0.6 }}>{tx.rep}</span>
+        <span style={{ opacity: 0.4 }}>{tx.time}</span>
+      </div>
+    </div>
+  );
+}
+
 /* ── Toast ───────────────────────────────────────────────── */
 
 function Toast({ message, onClose }: { message: string; onClose: () => void }) {
@@ -201,13 +255,16 @@ export default function POSTerminal() {
           >
             <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#FFFFFF' }}>Summit Sleep</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)' }}>Store: Galleria #247</span>
-              <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)' }}>Terminal: 115</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.65rem', color: '#10B981' }}>
+              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.7)' }}>Store: Galleria #247</span>
+              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.7)' }}>Terminal: 115</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.7rem', color: '#10B981' }}>
                 <Wifi size={12} /> D365 Connected
               </span>
             </div>
           </div>
+
+          {/* ── Live Transaction Ticker ───────────── */}
+          <TransactionTicker />
 
           {/* ── Main Split ──────────────────────────── */}
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
