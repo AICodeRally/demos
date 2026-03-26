@@ -27,7 +27,7 @@ export function NavSection({ section, collapsible = true, defaultExpanded, slug 
         className="flex w-full items-center justify-between px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--comp-nav-section-label)]"
         style={{ cursor: collapsible ? 'pointer' : 'default' }}
       >
-        <span className="truncate text-white/70">
+        <span className="truncate" style={{ color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.7))' }}>
           {section.section}
         </span>
         {collapsible && (

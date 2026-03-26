@@ -127,3 +127,58 @@
     transform: none;
   }
 }
+
+/* ── Register Entry Animations ─────────────────────────── */
+@keyframes reg-fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reg-barReveal {
+  from { width: 0; }
+}
+
+@keyframes reg-scaleIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes reg-slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reg-livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50%      { opacity: 0.6; box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+.reg-fade-up {
+  animation: reg-fadeUp 0.5s ease-out both;
+}
+
+/* Stagger delays via CSS custom property */
+.reg-stagger-1 { animation-delay: 0.1s; }
+.reg-stagger-2 { animation-delay: 0.2s; }
+.reg-stagger-3 { animation-delay: 0.3s; }
+.reg-stagger-4 { animation-delay: 0.4s; }
+.reg-stagger-5 { animation-delay: 0.5s; }
+.reg-stagger-6 { animation-delay: 0.6s; }
+
+.reg-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: reg-livePulse 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reg-fade-up, [style*="reg-fadeUp"], [style*="reg-barReveal"],
+  [style*="reg-scaleIn"], [style*="reg-slideIn"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reg-live-dot { animation: none; }
+}
