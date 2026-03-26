@@ -55,7 +55,7 @@ export function ShowroomCatalog({ items, onAddItem }: ShowroomCatalogProps) {
               border: '1px solid var(--register-border)',
               background: category === cat ? 'var(--register-ai)' : 'var(--register-bg-surface)',
               color: category === cat ? '#FFFFFF' : 'var(--register-text-muted)',
-              fontSize: '0.65rem',
+              fontSize: '0.7rem',
               fontWeight: 600,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
@@ -79,7 +79,7 @@ export function ShowroomCatalog({ items, onAddItem }: ShowroomCatalogProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '8px 12px',
+                padding: '10px 12px',
                 borderRadius: 10,
                 border: '1px solid var(--register-border)',
                 background: 'var(--register-bg-elevated)',
@@ -88,15 +88,15 @@ export function ShowroomCatalog({ items, onAddItem }: ShowroomCatalogProps) {
                 gap: 8,
               }}
             >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)' }}>
+              <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, lineHeight: 1.3 }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {item.name}
                   </span>
                   {hasSpiff && (
                     <span style={{
                       display: 'inline-flex', alignItems: 'center', gap: 2,
-                      padding: '1px 6px', borderRadius: 4, fontSize: '0.6rem', fontWeight: 700,
+                      padding: '1px 6px', borderRadius: 4, fontSize: '0.65rem', fontWeight: 700,
                       background: 'rgba(245,158,11,0.15)', color: '#F59E0B',
                     }}>
                       <Sparkles size={8} /> SPIFF
@@ -104,16 +104,18 @@ export function ShowroomCatalog({ items, onAddItem }: ShowroomCatalogProps) {
                   )}
                   {isPremium && (
                     <span style={{
-                      padding: '1px 6px', borderRadius: 4, fontSize: '0.6rem', fontWeight: 700,
+                      padding: '1px 6px', borderRadius: 4, fontSize: '0.65rem', fontWeight: 700,
                       background: 'rgba(139,92,246,0.12)', color: '#A78BFA',
                     }}>
                       PREMIUM
                     </span>
                   )}
                 </div>
-                <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
-                  {item.category}
-                </span>
+                {category === 'All' && (
+                  <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', lineHeight: 1.2, display: 'block', marginTop: 2 }}>
+                    {item.category}
+                  </span>
+                )}
               </div>
               <span style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'monospace', color: 'var(--register-text)', whiteSpace: 'nowrap' }}>
                 ${item.price.toLocaleString()}
