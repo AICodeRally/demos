@@ -40,7 +40,7 @@ function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
         color: 'inherit',
         display: 'flex',
         flexDirection: 'column',
-        height: 380,
+        height: 420,
         overflow: 'hidden',
         borderRadius: 16,
         border: '1px solid #222',
@@ -172,8 +172,8 @@ function DemoSection({
   demos: DemoRegistryEntry[];
 }) {
   return (
-    <section style={{ padding: '0 24px 56px' }}>
-      <div style={{ maxWidth: 1152, margin: '0 auto' }}>
+    <section style={{ padding: '0 48px 56px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ marginBottom: 28 }}>
           <h2 style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 0 }}>{title}</h2>
           <p style={{ fontSize: 14, color: '#8d8d8d', margin: '4px 0 0' }}>{subtitle}</p>
@@ -184,7 +184,7 @@ function DemoSection({
             style={{
               display: 'grid',
               gap: 24,
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(3, 1fr)',
             }}
           >
             {demos.map((demo) => (
