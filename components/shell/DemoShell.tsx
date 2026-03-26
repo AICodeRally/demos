@@ -65,7 +65,12 @@ export function DemoShell({ config, children }: Props) {
 
       <Link
         href="/"
-        className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 rounded-full bg-black/80 px-3 py-1.5 text-xs text-white/80 backdrop-blur transition-colors hover:text-white"
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs backdrop-blur transition-colors"
+        style={{
+          background: 'var(--sem-bg-secondary, rgba(0,0,0,0.8))',
+          color: 'var(--sem-text-secondary, rgba(255,255,255,0.8))',
+          border: '1px solid var(--sem-border-subtle, transparent)',
+        }}
       >
         <ArrowLeft className="h-3 w-3" />
         All Demos

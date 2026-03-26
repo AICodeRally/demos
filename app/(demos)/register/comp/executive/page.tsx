@@ -48,7 +48,7 @@ function RadialGauge({ pct, size = 110, stroke = 10 }: { pct: number; size?: num
       {/* Background ring */}
       <circle
         cx={size / 2} cy={size / 2} r={radius}
-        fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={stroke}
+        fill="none" stroke="var(--register-border, rgba(255,255,255,0.06))" strokeWidth={stroke}
       />
       {/* Animated arc */}
       <circle
@@ -147,7 +147,7 @@ function SankeyConnectors() {
             key={i}
             d={`M 0 ${20 + i * 42} C 16 ${20 + i * 42}, 16 ${30 + ((i * 37) % 160)}, 32 ${30 + ((i * 37) % 160)}`}
             fill="none"
-            stroke="rgba(255,255,255,0.08)"
+            stroke="var(--register-border, rgba(255,255,255,0.08))"
             strokeWidth="2"
           />
         ))}
@@ -274,7 +274,7 @@ export default function ExecutiveViewPage() {
         </div>
 
         {/* Bar track */}
-        <div style={{ position: 'relative', height: 32, borderRadius: 16, background: 'rgba(255,255,255,0.04)', overflow: 'visible' }}>
+        <div style={{ position: 'relative', height: 32, borderRadius: 16, background: 'var(--register-bg-surface, rgba(255,255,255,0.04))', overflow: 'visible' }}>
           {/* Actual spend fill */}
           <div
             style={{

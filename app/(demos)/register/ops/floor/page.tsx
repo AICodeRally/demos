@@ -55,10 +55,7 @@ function StoreFloorPlan() {
           Store Floor Plan — Flagship #12
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span className="floor-live-dot" style={{
-            width: 6, height: 6, borderRadius: '50%', background: '#10B981',
-            display: 'inline-block',
-          }} />
+          <span className="reg-live-dot" style={{ width: 6, height: 6 }} />
           <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>
             Live — 3 reps, 4 customers
           </span>
@@ -241,14 +238,7 @@ function StoreFloorPlan() {
         .floor-rep-pulse {
           animation: repPulse 2.5s ease-in-out infinite;
         }
-        @keyframes liveDot {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-        .floor-live-dot {
-          animation: liveDot 2s ease-in-out infinite;
-        }
-      `}</style>
+`}</style>
     </div>
   );
 }
@@ -274,11 +264,11 @@ export default function FloorDashboard() {
 
       {/* Stat Cards */}
       <div className="register-kpi-strip">
-        {stats.map((stat) => (
+        {stats.map((stat, i) => (
           <div
             key={stat.label}
-            className="register-card"
-            style={{ padding: '16px 18px' }}
+            className="register-card reg-fade-up"
+            style={{ padding: '16px 18px', animationDelay: `${i * 0.1}s` }}
           >
             <p className="register-meta-label" style={{ margin: 0 }}>
               {stat.label}
@@ -294,7 +284,7 @@ export default function FloorDashboard() {
       <StoreFloorPlan />
 
       {/* Shift Sales Table */}
-      <div className="register-section">
+      <div className="register-section reg-fade-up reg-stagger-3">
         <p className="register-section-header">
           Shift Sales
         </p>
@@ -308,7 +298,7 @@ export default function FloorDashboard() {
                   style={{
                     textAlign: h === 'Total' || h === 'Attach %' ? 'right' : 'left',
                     padding: '8px 10px',
-                    fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
+                    fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
                     color: 'var(--register-text-dim)',
                     borderBottom: '1px solid var(--register-border)',
                   }}
@@ -352,16 +342,17 @@ export default function FloorDashboard() {
           Rep Status
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-          {REPS.map((rep) => {
+          {REPS.map((rep, i) => {
             const status = getRepStatus(rep.id);
             const dotColor = status ? STATUS_DOT[status.statusColor] : '#10B981';
             return (
               <div
                 key={rep.id}
-                className="register-card register-card-hover"
+                className="register-card register-card-hover reg-fade-up"
                 style={{
                   padding: 14,
                   display: 'flex', alignItems: 'center', gap: 12,
+                  animationDelay: `${0.4 + i * 0.1}s`,
                 }}
               >
                 <span style={{ width: 10, height: 10, borderRadius: 5, background: dotColor, flexShrink: 0 }} />

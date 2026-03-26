@@ -1,29 +1,25 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { Clock, Award, Zap, Target } from 'lucide-react';
+import { Award, Zap, Target } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { SAMPLE_PERIODS } from '@/data/register/summit-sleep';
 
 const ACCENT = '#10B981';
 
-/* ── Mock data ───────────────────────────────────────────── */
+/* ── What-If scenario data ────────────────────────────────── */
 
-const VARICENT_PROJECTED = {
-  total: 3847,
-  components: [
-    { name: 'Base Salary', amount: 1384.62 },
-    { name: 'Mattress Commission', amount: 873.60 },
-    { name: 'Accessory Commission', amount: 111.00 },
-    { name: 'Volume Tier Bonus', amount: 963.00 },
-    { name: 'SPIFF Bonus', amount: 50.00 },
-    { name: 'Prior Period Adj.', amount: 7.00 },
-  ],
-};
+const BASE_SALARY_BIWEEKLY = 1384.62;
 
-const LIVE_BASE_EARNINGS = 3389.22;
+const COMP_COMPONENTS = [
+  { name: 'Mattress Commission', weight: 0.36, color: '#1E3A5F' },
+  { name: 'Accessory Commission', weight: 0.05, color: '#06B6D4' },
+  { name: 'Volume Tier Bonus', weight: 0.40, color: '#10B981' },
+  { name: 'SPIFF Bonus', weight: 0.12, color: '#F59E0B' },
+  { name: 'Attach Accelerator', weight: 0.07, color: '#8B5CF6' },
+];
 
 const RECENT_SALES = [
   { time: '2:47 PM', item: 'King Hybrid + Adj Base + Protector', amount: 5247, commission: 236.12, components: 'Base 4.5% + SPIFF $25 + Bundle $75' },
@@ -33,219 +29,318 @@ const RECENT_SALES = [
   { time: '9:02 AM', item: 'Queen Medium + Sheets', amount: 1428, commission: 64.26, components: 'Base 4.5%' },
 ];
 
-/* ── Tier progress data ──────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────────── */
 
-const caseyRevenue = SAMPLE_PERIODS['rep-casey'].revenue; // $21,400
-const currentTier = COMP_TIERS.find((t) => caseyRevenue >= t.minRevenue && caseyRevenue <= t.maxRevenue) ?? COMP_TIERS[0];
-const nextTier = COMP_TIERS[COMP_TIERS.indexOf(currentTier) + 1] ?? null;
-const amountToNext = nextTier ? nextTier.minRevenue - caseyRevenue : 0;
-const tierProgress = nextTier
-  ? ((caseyRevenue - currentTier.minRevenue) / (nextTier.minRevenue - currentTier.minRevenue)) * 100
-  : 100;
+function fmtCurrency(n: number) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
 
-/* ── SVG Tier Ring ───────────────────────────────────────── */
+function getTierForRevenue(revenue: number) {
+  return COMP_TIERS.find((t) => revenue >= t.minRevenue && revenue <= t.maxRevenue) ?? COMP_TIERS[0];
+}
 
-function TierRing({ progress, animatedProgress }: { progress: number; animatedProgress: number }) {
-  const size = 200;
-  const strokeWidth = 14;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const dashOffset = circumference - (animatedProgress / 100) * circumference;
+/* ── SVG Gauge ────────────────────────────────────────────── */
+
+function AttainmentGauge({ revenue, maxRevenue }: { revenue: number; maxRevenue: number }) {
+  const pct = Math.min(revenue / maxRevenue, 1);
+  const tier = getTierForRevenue(revenue);
+  const nextTier = COMP_TIERS[COMP_TIERS.indexOf(tier) + 1] ?? null;
+
+  // Arc: 0% = -135deg, 100% = +135deg (270deg sweep)
+  const needleAngle = -135 + pct * 270;
 
   return (
-    <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        {/* Background ring */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="var(--register-border)"
-          strokeWidth={strokeWidth}
-        />
-        {/* Progress ring */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke={ACCENT}
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={dashOffset}
-          strokeLinecap="round"
-          style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-        />
-        {/* Glow filter */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke={ACCENT}
-          strokeWidth={2}
-          strokeDasharray={circumference}
-          strokeDashoffset={dashOffset}
-          strokeLinecap="round"
-          opacity={0.4}
-          style={{ filter: 'blur(4px)', transition: 'stroke-dashoffset 0.5s ease' }}
-        />
+    <div
+      className="rounded-xl p-5 flex flex-col items-center justify-center reg-fade-up reg-stagger-2"
+      style={{ background: 'var(--register-bg-elevated)', border: '1px solid var(--register-border)' }}
+    >
+      <svg viewBox="0 0 100 65" className="w-full" style={{ maxWidth: 280 }}>
+        {/* Background arc */}
+        <path d="M 10 55 A 40 40 0 0 1 90 55" fill="none" stroke="var(--register-border)" strokeWidth="6" strokeLinecap="round" />
+
+        {/* Tier color segments */}
+        {COMP_TIERS.map((t) => {
+          const startPct = Math.min(t.minRevenue / maxRevenue, 1);
+          const endPct = Math.min((t.maxRevenue === Infinity ? maxRevenue : t.maxRevenue) / maxRevenue, 1);
+          const startAngle = -135 + startPct * 270;
+          const endAngle = -135 + endPct * 270;
+          const startRad = (startAngle * Math.PI) / 180;
+          const endRad = (endAngle * Math.PI) / 180;
+          const cx = 50, cy = 55, r = 40;
+          const x1 = cx + r * Math.cos(startRad);
+          const y1 = cy + r * Math.sin(startRad);
+          const x2 = cx + r * Math.cos(endRad);
+          const y2 = cy + r * Math.sin(endRad);
+          const largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+          const isActive = tier.tier === t.tier;
+          return (
+            <path
+              key={t.tier}
+              d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`}
+              fill="none"
+              stroke={t.color}
+              strokeWidth="6"
+              strokeLinecap="round"
+              opacity={isActive ? 1 : 0.25}
+              style={{ transition: 'opacity 0.3s' }}
+            />
+          );
+        })}
+
+        {/* Needle */}
+        <g style={{ transformOrigin: '50px 55px', transform: `rotate(${needleAngle}deg)`, transition: 'transform 0.8s ease-out' }}>
+          <line x1="50" y1="55" x2="82" y2="55" stroke={tier.color} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="50" cy="55" r="3" fill={tier.color} />
+        </g>
+
+        {/* Center text */}
+        <text x="50" y="48" textAnchor="middle" fontSize="9" fontWeight="800" fill={tier.color}>
+          {fmtCurrency(revenue)}
+        </text>
+        <text x="50" y="56" textAnchor="middle" fontSize="4" fill="var(--register-text-muted)">
+          monthly revenue
+        </text>
+
+        {/* Labels */}
+        <text x="8" y="62" textAnchor="start" fontSize="3.5" fill="var(--register-text-muted)">$0</text>
+        <text x="92" y="62" textAnchor="end" fontSize="3.5" fill="var(--register-text-muted)">{fmtCurrency(maxRevenue)}</text>
       </svg>
-      {/* Center text */}
+
+      {/* Tier badge */}
       <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        className="mt-2 px-4 py-1.5 rounded-full text-sm font-bold"
+        style={{ background: `${tier.color}18`, color: tier.color, transition: 'all 0.3s' }}
       >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 4,
-            padding: '3px 10px',
-            borderRadius: 6,
-            background: `${currentTier.color}20`,
-            marginBottom: 4,
-          }}
-        >
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: currentTier.color }} />
-          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--register-text)' }}>
-            {currentTier.tier}
-          </span>
-        </div>
-        <span className="register-kpi-value" style={{ fontSize: '1.4rem', color: ACCENT }}>
-          ${(amountToNext / 1000).toFixed(1)}K
-        </span>
-        <span style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)' }}>
-          to {nextTier?.tier ?? 'Max'}
-        </span>
+        {tier.tier} Tier — {(tier.rate * 100).toFixed(1)}% rate
       </div>
+      {nextTier && (
+        <p className="text-xs mt-2" style={{ color: 'var(--register-text-muted)' }}>
+          {fmtCurrency(nextTier.minRevenue - revenue)} to {nextTier.tier}
+        </p>
+      )}
     </div>
   );
 }
 
-/* ── Main Page ───────────────────────────────────────────── */
+/* ── Main Page ────────────────────────────────────────────── */
 
 export default function CalculatorPage() {
-  /* ── Animated earnings counter ─────────────────────────── */
-  const [liveEarnings, setLiveEarnings] = useState(LIVE_BASE_EARNINGS);
-  const [ringProgress, setRingProgress] = useState(0);
+  const caseyBase = SAMPLE_PERIODS['rep-casey'].revenue;
+  const [revenueSlider, setRevenueSlider] = useState(caseyBase);
+  const [liveEarnings, setLiveEarnings] = useState(3389.22);
 
-  // Slowly tick up the live earnings counter
+  const MAX_REVENUE = 100000;
+  const tier = getTierForRevenue(revenueSlider);
+  const incentiveEarned = Math.round(revenueSlider * tier.rate);
+  const totalComp = Math.round(BASE_SALARY_BIWEEKLY + incentiveEarned);
+
+  // Waterfall values
+  const waterfall = COMP_COMPONENTS.map((comp) => ({
+    ...comp,
+    value: Math.round(incentiveEarned * comp.weight),
+  }));
+
+  // Animated live counter
   useEffect(() => {
     const id = setInterval(() => {
-      setLiveEarnings((prev) => {
-        const increment = 0.12 + Math.random() * 0.35;
-        return parseFloat((prev + increment).toFixed(2));
-      });
+      setLiveEarnings((prev) => parseFloat((prev + 0.12 + Math.random() * 0.35).toFixed(2)));
     }, 2000);
     return () => clearInterval(id);
   }, []);
 
-  // Animate ring on mount
-  useEffect(() => {
-    const timeout = setTimeout(() => setRingProgress(tierProgress), 300);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  /* ── Format helpers ────────────────────────────────────── */
-  const fmtCurrency = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtFull = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <RegisterPage title="Commission Calculator" subtitle="Live Floor Earnings vs. Varicent Projection" accentColor={ACCENT}>
-      {/* ── Split View: Varicent vs Live ─────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* LEFT: Varicent Projected Statement */}
+    <>
+      <style>{`
+        @keyframes stackGrow { from { height: 0 } }
+        @keyframes shimmer { 0% { transform: translateX(-50%); } 100% { transform: translateX(50%); } }
+      `}</style>
+
+      <RegisterPage title="Commission Calculator" subtitle="What-If Modeling + Live Floor Earnings" accentColor={ACCENT}>
+
+        {/* ── What-If Controls ──────────────────────────────── */}
         <div
-          className="register-section"
-          style={{ background: 'var(--register-bg-surface)', marginBottom: 0 }}
+          className="register-section reg-fade-up"
+          style={{ borderTop: `3px solid ${ACCENT}` }}
         >
           <div className="flex items-center gap-3 mb-5">
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: 'rgba(148, 163, 184, 0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Clock size={16} color="#94A3B8" />
-            </div>
+            <Target size={20} color={ACCENT} />
             <div>
-              <p style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--register-text-muted)', margin: 0 }}>
-                Projected Varicent Statement
+              <p className="text-base font-bold" style={{ color: 'var(--register-text)', margin: 0 }}>
+                What-If Scenario Builder
               </p>
-              <p style={{ fontSize: '0.6rem', color: 'var(--register-text-dim)', margin: 0 }}>
-                Month-end projection -- updated at close of business
+              <p className="text-sm" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
+                Drag the slider to model commission at any revenue level
               </p>
             </div>
           </div>
 
-          {/* Projected total */}
-          <div
-            style={{
-              textAlign: 'center',
-              padding: '16px 0',
-              marginBottom: 16,
-              borderBottom: '1px dashed var(--register-border)',
-            }}
-          >
-            <p className="register-meta-label" style={{ margin: '0 0 4px' }}>
-              Projected Payout
-            </p>
-            <p className="register-kpi-value" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
-              {fmtCurrency(VARICENT_PROJECTED.total)}
-            </p>
-          </div>
-
-          {/* Component lines (document-style) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {VARICENT_PROJECTED.components.map((comp, i) => (
-              <div
-                key={comp.name}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '8px 0',
-                  borderBottom: i < VARICENT_PROJECTED.components.length - 1 ? '1px dotted var(--register-border)' : 'none',
-                }}
-              >
-                <span style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)' }}>{comp.name}</span>
-                <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text-muted)' }}>
-                  {fmtCurrency(comp.amount)}
+          {/* Revenue slider */}
+          <div className="mb-4">
+            <div className="flex justify-between mb-2">
+              <span className="text-sm font-semibold" style={{ color: 'var(--register-text-muted)' }}>Monthly Revenue</span>
+              <span className="text-xl font-extrabold tabular-nums" style={{ color: tier.color, transition: 'color 0.3s' }}>
+                {fmtCurrency(revenueSlider)}
+              </span>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={MAX_REVENUE}
+              step={500}
+              value={revenueSlider}
+              onChange={(e) => setRevenueSlider(parseInt(e.target.value))}
+              className="w-full h-3 rounded-lg appearance-none cursor-pointer"
+              style={{
+                accentColor: tier.color,
+                background: `linear-gradient(90deg, #CD7F32 0%, #C0C0C0 25%, #FFD700 50%, #E5E4E2 75%, #10B981 100%)`,
+              }}
+            />
+            <div className="flex justify-between text-xs mt-1 tabular-nums" style={{ color: 'var(--register-text-muted)' }}>
+              {COMP_TIERS.map((t) => (
+                <span
+                  key={t.tier}
+                  style={{ fontWeight: tier.tier === t.tier ? 800 : 400, color: tier.tier === t.tier ? t.color : undefined }}
+                >
+                  {t.tier} ({fmtCurrency(t.minRevenue)}+)
                 </span>
-              </div>
-            ))}
-          </div>
-
-          <div
-            style={{
-              marginTop: 12,
-              padding: '8px 12px',
-              borderRadius: 8,
-              background: 'rgba(148, 163, 184, 0.08)',
-              textAlign: 'center',
-            }}
-          >
-            <span style={{ fontSize: '0.65rem', color: 'var(--register-text-dim)' }}>
-              Next Varicent sync: March 31 at 11:59 PM
-            </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* RIGHT: Live Floor Earnings */}
+        {/* ── Gauge + Result Cards ──────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 mb-8">
+          <AttainmentGauge revenue={revenueSlider} maxRevenue={MAX_REVENUE} />
+
+          {/* Result cards */}
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { label: 'Base Salary', value: fmtFull(BASE_SALARY_BIWEEKLY), sub: 'Bi-weekly ($36K/yr)', color: '#1E3A5F' },
+              { label: 'Incentive Earned', value: fmtCurrency(incentiveEarned), sub: `${tier.tier} (${(tier.rate * 100).toFixed(1)}%)`, color: tier.color },
+              { label: 'Total Comp', value: fmtCurrency(totalComp), sub: `At ${fmtCurrency(revenueSlider)} revenue`, color: ACCENT },
+              { label: 'Effective Rate', value: revenueSlider > 0 ? `${((incentiveEarned / revenueSlider) * 100).toFixed(1)}%` : '0%', sub: 'Incentive / Revenue', color: '#06B6D4' },
+            ].map((card, i) => (
+              <div
+                key={card.label}
+                className="rounded-xl border p-5 text-center reg-fade-up"
+                style={{
+                  background: 'var(--register-bg-elevated)',
+                  borderColor: 'var(--register-border)',
+                  borderTop: `3px solid ${card.color}`,
+                  animationDelay: `${0.2 + i * 0.1}s`,
+                }}
+              >
+                <p className="text-xs uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--register-text-muted)' }}>
+                  {card.label}
+                </p>
+                <p className="text-2xl font-extrabold tabular-nums" style={{ color: card.color, transition: 'color 0.3s' }}>
+                  {card.value}
+                </p>
+                <p className="text-xs" style={{ color: 'var(--register-text-muted)' }}>
+                  {card.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Component Waterfall ────────────────────────────── */}
+        <div className="register-section reg-fade-up reg-stagger-4">
+          <h2 className="register-section-header">
+            Incentive Breakdown at {fmtCurrency(revenueSlider)}
+          </h2>
+          <div className="flex items-end gap-3" style={{ height: 200 }}>
+            {/* Base column */}
+            <div className="flex-1 flex flex-col items-center">
+              <p className="text-xs font-bold tabular-nums mb-1" style={{ color: '#1E3A5F' }}>
+                {fmtFull(BASE_SALARY_BIWEEKLY)}
+              </p>
+              <div
+                className="w-full rounded-t-lg"
+                style={{
+                  height: `${totalComp > 0 ? Math.max((BASE_SALARY_BIWEEKLY / totalComp) * 100, 8) : 0}%`,
+                  background: 'linear-gradient(180deg, #1E3A5F, #1E3A5F80)',
+                  animation: 'stackGrow 0.6s ease-out both',
+                  transition: 'height 0.5s ease',
+                }}
+              />
+              <p className="text-xs mt-1 font-semibold" style={{ color: 'var(--register-text-muted)' }}>Base</p>
+            </div>
+
+            {/* Component columns */}
+            {waterfall.map((comp, i) => (
+              <div key={comp.name} className="flex-1 flex flex-col items-center">
+                <p className="text-xs font-bold tabular-nums mb-1" style={{ color: comp.color }}>
+                  {fmtCurrency(comp.value)}
+                </p>
+                <div
+                  className="w-full rounded-t-lg"
+                  style={{
+                    height: `${Math.max(totalComp > 0 ? (comp.value / totalComp) * 100 : 0, 4)}%`,
+                    background: `linear-gradient(180deg, ${comp.color}, ${comp.color}80)`,
+                    animation: `stackGrow 0.5s ease-out ${0.2 + i * 0.1}s both`,
+                    transition: 'height 0.5s ease',
+                    minHeight: 4,
+                  }}
+                />
+                <p className="text-xs mt-1 font-semibold text-center leading-tight" style={{ color: 'var(--register-text-muted)' }}>
+                  {comp.name.split(' ').slice(0, 2).join(' ')}
+                </p>
+              </div>
+            ))}
+
+            {/* Total column */}
+            <div className="flex-1 flex flex-col items-center">
+              <p className="text-xs font-extrabold tabular-nums mb-1" style={{ color: ACCENT }}>
+                {fmtCurrency(totalComp)}
+              </p>
+              <div
+                className="w-full rounded-t-lg"
+                style={{
+                  height: '100%',
+                  background: `linear-gradient(180deg, ${ACCENT}, ${ACCENT}80)`,
+                  animation: 'stackGrow 0.6s ease-out 0.7s both',
+                  transition: 'height 0.5s ease',
+                }}
+              />
+              <p className="text-xs mt-1 font-extrabold" style={{ color: ACCENT }}>TOTAL</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Active Tier Scale ──────────────────────────────── */}
+        <div className="register-section reg-fade-up reg-stagger-5">
+          <h2 className="register-section-header">Tier Scale</h2>
+          <div className="flex gap-2" style={{ height: 72 }}>
+            {COMP_TIERS.map((t) => {
+              const isActive = tier.tier === t.tier;
+              const width = t.maxRevenue === Infinity ? 25 : ((t.maxRevenue - t.minRevenue) / MAX_REVENUE) * 100;
+              return (
+                <div
+                  key={t.tier}
+                  className="rounded-lg flex flex-col items-center justify-center transition-all"
+                  style={{
+                    flex: Math.max(width, 15),
+                    background: isActive ? t.color : `${t.color}15`,
+                    color: isActive ? 'white' : t.color,
+                    border: isActive ? `2px solid ${t.color}` : '2px solid transparent',
+                    boxShadow: isActive ? `0 0 16px ${t.color}40` : 'none',
+                  }}
+                >
+                  <p className="text-sm font-bold">{t.tier}</p>
+                  <p className="text-lg font-extrabold">{(t.rate * 100).toFixed(1)}%</p>
+                  <p className="text-xs">{fmtCurrency(t.minRevenue)}+</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Live Floor Earnings ────────────────────────────── */}
         <div
-          className="rounded-xl p-6"
+          className="rounded-xl p-6 mb-8 reg-fade-up reg-stagger-6"
           style={{
             background: 'linear-gradient(135deg, rgba(16,185,129,0.04), rgba(16,185,129,0.12))',
             border: '2px solid rgba(16,185,129,0.3)',
@@ -253,286 +348,107 @@ export default function CalculatorPage() {
             overflow: 'hidden',
           }}
         >
-          {/* Animated shimmer */}
+          {/* Shimmer */}
           <div
             style={{
-              position: 'absolute',
-              top: 0,
-              left: '-100%',
-              width: '200%',
-              height: '100%',
+              position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%',
               background: 'linear-gradient(90deg, transparent, rgba(16,185,129,0.03), transparent)',
-              animation: 'shimmer 3s infinite',
-              pointerEvents: 'none',
+              animation: 'shimmer 3s infinite', pointerEvents: 'none',
             }}
           />
-          <style>{`
-            @keyframes shimmer {
-              0% { transform: translateX(-50%); }
-              100% { transform: translateX(50%); }
-            }
-            @keyframes pulse-dot {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0.4; }
-            }
-          `}</style>
 
           <div className="flex items-center gap-3 mb-5" style={{ position: 'relative' }}>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: 'rgba(16,185,129,0.2)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(16,185,129,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Zap size={16} color={ACCENT} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <p style={{ fontSize: '0.85rem', fontWeight: 800, color: ACCENT, margin: 0 }}>
-                  Live Floor Earnings
-                </p>
-                <div
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
-                    background: ACCENT,
-                    animation: 'pulse-dot 1.5s ease-in-out infinite',
-                  }}
-                />
+                <p className="text-base font-extrabold" style={{ color: ACCENT, margin: 0 }}>Live Floor Earnings</p>
+                <div className="reg-live-dot" />
               </div>
-              <p style={{ fontSize: '0.6rem', color: 'var(--register-text-muted)', margin: 0 }}>
+              <p className="text-sm" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
                 Updating in real time from POS
               </p>
             </div>
           </div>
 
-          {/* Live total — animated counter */}
-          <div
-            style={{
-              textAlign: 'center',
-              padding: '20px 0',
-              marginBottom: 16,
-              borderBottom: '1px solid rgba(16,185,129,0.2)',
-            }}
-          >
-            <p className="register-meta-label" style={{ margin: '0 0 4px' }}>
-              Earned Right Now
-            </p>
+          <div style={{ textAlign: 'center', padding: '16px 0', marginBottom: 16, borderBottom: '1px solid rgba(16,185,129,0.2)' }}>
+            <p className="register-meta-label" style={{ margin: '0 0 4px' }}>Earned Right Now</p>
             <p className="register-kpi-value" style={{ fontSize: '2.5rem', color: ACCENT, margin: 0 }}>
-              {fmtCurrency(liveEarnings)}
+              {fmtFull(liveEarnings)}
             </p>
           </div>
 
-          {/* Delta from Varicent */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 24,
-              marginBottom: 16,
-            }}
-          >
+          <div className="flex justify-center gap-8">
             <div style={{ textAlign: 'center' }}>
-              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
-                vs Varicent
-              </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: liveEarnings < VARICENT_PROJECTED.total ? '#F59E0B' : ACCENT }}>
-                {liveEarnings < VARICENT_PROJECTED.total ? '-' : '+'}
-                {fmtCurrency(Math.abs(liveEarnings - VARICENT_PROJECTED.total))}
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>vs Varicent</p>
+              <p className="text-lg font-extrabold tabular-nums" style={{ margin: 0, color: liveEarnings < 3847 ? '#F59E0B' : ACCENT }}>
+                {liveEarnings < 3847 ? '-' : '+'}{fmtFull(Math.abs(liveEarnings - 3847))}
               </p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
-                Today&apos;s Sales
-              </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: 'var(--register-text)' }}>
-                5
-              </p>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>Today&apos;s Sales</p>
+              <p className="text-lg font-extrabold tabular-nums" style={{ margin: 0, color: 'var(--register-text)' }}>5</p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>
-                Eff. Rate
-              </p>
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', margin: 0, color: '#06B6D4' }}>
-                4.8%
-              </p>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>Eff. Rate</p>
+              <p className="text-lg font-extrabold tabular-nums" style={{ margin: 0, color: '#06B6D4' }}>4.8%</p>
             </div>
-          </div>
-
-          {/* "Varicent only knows what happened at month-end" callout */}
-          <div
-            style={{
-              padding: '10px 14px',
-              borderRadius: 8,
-              background: 'rgba(16,185,129,0.1)',
-              textAlign: 'center',
-            }}
-          >
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: ACCENT, fontStyle: 'italic' }}>
-              Varicent only knows what happened at month-end. You see it NOW.
-            </span>
           </div>
         </div>
-      </div>
 
-      {/* ── Tier Progress Ring ───────────────────────────────── */}
-      <div className="register-section">
-        <h2 className="register-section-header">
-          Tier Progress
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Ring */}
-          <TierRing progress={tierProgress} animatedProgress={ringProgress} />
+        {/* ── Recent Sale Impact ─────────────────────────────── */}
+        <div className="register-section reg-fade-up">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="register-section-header" style={{ marginBottom: 0 }}>Recent Sale Impact</h2>
+            <span className="text-sm" style={{ color: 'var(--register-text-muted)' }}>Today, March 13</span>
+          </div>
 
-          {/* Info panel */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {/* Header */}
+            <div
+              className="grid gap-3"
+              style={{ gridTemplateColumns: '60px 1fr 90px 90px 1fr', padding: '8px 12px', borderBottom: '2px solid var(--register-border)' }}
+            >
+              {['Time', 'Item', 'Sale', 'Commission', 'Components'].map((h) => (
+                <span key={h} className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--register-text-muted)' }}>
+                  {h}
+                </span>
+              ))}
+            </div>
+
+            {/* Rows */}
+            {RECENT_SALES.map((sale, i) => (
               <div
+                key={sale.time}
+                className="grid gap-3"
                 style={{
-                  padding: '6px 12px',
-                  borderRadius: 8,
-                  background: `${currentTier.color}20`,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
+                  gridTemplateColumns: '60px 1fr 90px 90px 1fr',
+                  padding: '10px 12px',
+                  borderBottom: i < RECENT_SALES.length - 1 ? '1px solid var(--register-border)' : 'none',
+                  background: i === 0 ? 'rgba(16,185,129,0.04)' : 'transparent',
+                  animation: `reg-fadeUp 0.4s ease-out ${0.1 * i}s both`,
                 }}
               >
-                <Award size={14} color={currentTier.color} />
-                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--register-text)' }}>
-                  {currentTier.tier} Tier
-                </span>
+                <span className="text-sm tabular-nums" style={{ color: 'var(--register-text-muted)' }}>{sale.time}</span>
+                <span className="text-sm font-medium" style={{ color: 'var(--register-text)' }}>{sale.item}</span>
+                <span className="text-sm tabular-nums font-semibold" style={{ color: 'var(--register-text)' }}>${sale.amount.toLocaleString()}</span>
+                <span className="text-sm tabular-nums font-bold" style={{ color: ACCENT }}>+${sale.commission.toFixed(2)}</span>
+                <span className="text-xs" style={{ color: 'var(--register-text-muted)' }}>{sale.components}</span>
               </div>
-              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>
-                {(currentTier.rate * 100).toFixed(1)}% rate
-              </span>
-            </div>
-
-            <p style={{ fontSize: '0.85rem', color: 'var(--register-text)', lineHeight: 1.6, margin: '0 0 16px' }}>
-              Casey is <strong style={{ fontVariantNumeric: 'tabular-nums' }}>${amountToNext.toLocaleString()}</strong> away from{' '}
-              <strong style={{ color: nextTier?.color ?? ACCENT }}>{nextTier?.tier ?? 'Max'}</strong> tier at{' '}
-              <strong>{nextTier ? (nextTier.rate * 100).toFixed(1) : '--'}%</strong>.
-            </p>
-
-            {/* Next sale unlock callout */}
-            <div
-              style={{
-                padding: '12px 16px',
-                borderRadius: 10,
-                background: 'rgba(6, 182, 212, 0.08)',
-                borderLeft: '3px solid #06B6D4',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <Target size={14} color="#06B6D4" />
-                <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#06B6D4', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  Next Tier Unlock
-                </span>
-              </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--register-text)', margin: 0 }}>
-                One sale of <strong style={{ color: '#06B6D4' }}>$2,800+</strong> unlocks{' '}
-                <strong>{nextTier?.tier}</strong> tier —{' '}
-                <strong style={{ color: ACCENT }}>+$1,200</strong> in accelerator bonus.
-              </p>
-            </div>
-
-            {/* Revenue bar */}
-            <div style={{ marginTop: 16 }}>
-              <div className="flex justify-between mb-1">
-                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
-                  ${caseyRevenue.toLocaleString()} MTD
-                </span>
-                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
-                  ${nextTier?.minRevenue.toLocaleString() ?? '--'} target
-                </span>
-              </div>
-              <div style={{ height: 8, borderRadius: 4, background: 'var(--register-bg-surface)', overflow: 'hidden' }}>
-                <div
-                  style={{
-                    height: '100%',
-                    width: `${Math.min(tierProgress, 100)}%`,
-                    borderRadius: 4,
-                    background: `linear-gradient(90deg, ${currentTier.color}, ${ACCENT})`,
-                    transition: 'width 1s ease',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Recent Sale Impact List ──────────────────────────── */}
-      <div className="register-section">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="register-section-header" style={{ marginBottom: 0 }}>
-            Recent Sale Impact
-          </h2>
-          <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
-            Today, March 13
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          {/* Header */}
-          <div
-            className="grid gap-3"
-            style={{
-              gridTemplateColumns: '60px 1fr 90px 90px 1fr',
-              padding: '8px 12px',
-              borderBottom: '2px solid var(--register-border)',
-            }}
-          >
-            {['Time', 'Item', 'Sale', 'Commission', 'Components'].map((h) => (
-              <span key={h} style={{ fontSize: '0.6rem', fontWeight: 700, color: 'var(--register-text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                {h}
-              </span>
             ))}
           </div>
-
-          {/* Rows */}
-          {RECENT_SALES.map((sale, i) => (
-            <div
-              key={sale.time}
-              className="grid gap-3"
-              style={{
-                gridTemplateColumns: '60px 1fr 90px 90px 1fr',
-                padding: '10px 12px',
-                borderBottom: i < RECENT_SALES.length - 1 ? '1px solid var(--register-border)' : 'none',
-                background: i === 0 ? 'rgba(16,185,129,0.04)' : 'transparent',
-              }}
-            >
-              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)' }}>
-                {sale.time}
-              </span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--register-text)', fontWeight: 500 }}>
-                {sale.item}
-              </span>
-              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 600, color: 'var(--register-text)' }}>
-                ${sale.amount.toLocaleString()}
-              </span>
-              <span style={{ fontSize: '0.75rem', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: ACCENT }}>
-                +${sale.commission.toFixed(2)}
-              </span>
-              <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>
-                {sale.components}
-              </span>
-            </div>
-          ))}
         </div>
-      </div>
 
-      {/* ── AI Insight ───────────────────────────────────────── */}
-      <AIInsightCard label="AI Pace Forecast">
-        At current pace, Casey reaches <strong style={{ color: nextTier?.color ?? ACCENT }}>{nextTier?.tier ?? 'max'}</strong> tier
-        by <strong>March 22</strong>. One additional <strong style={{ color: '#06B6D4' }}>$3K+ sale</strong> this
-        week would accelerate by <strong>4 days</strong> — unlocking the higher rate on all remaining March revenue.
-      </AIInsightCard>
-    </RegisterPage>
+        {/* ── AI Insight ────────────────────────────────────── */}
+        <div className="reg-fade-up reg-stagger-6">
+          <AIInsightCard label="AI Pace Forecast">
+            At current pace, Casey reaches <strong style={{ color: '#FFD700' }}>Gold</strong> tier
+            by <strong>March 22</strong>. One additional <strong style={{ color: '#06B6D4' }}>$3K+ sale</strong> this
+            week would accelerate by <strong>4 days</strong> — unlocking the higher rate on all remaining March revenue.
+          </AIInsightCard>
+        </div>
+      </RegisterPage>
+    </>
   );
 }
