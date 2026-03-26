@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { Award, Zap, Target } from 'lucide-react';
+import { Award, Zap, Target, Plus, X, GitCompareArrows } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { SAMPLE_PERIODS } from '@/data/register/summit-sleep';
 
@@ -129,6 +129,31 @@ export default function CalculatorPage() {
   const [revenueSlider, setRevenueSlider] = useState(caseyBase);
   const [liveEarnings, setLiveEarnings] = useState(3389.22);
 
+  // Scenario comparison
+  interface Scenario { label: string; revenue: number; }
+  const [scenarios, setScenarios] = useState<Scenario[]>([
+    { label: 'Current Pace', revenue: caseyBase },
+    { label: 'Push to Gold', revenue: 40000 },
+  ]);
+  const [showComparison, setShowComparison] = useState(false);
+
+  const addScenario = useCallback(() => {
+    if (scenarios.length >= 4) return;
+    setScenarios((prev) => [...prev, { label: `Scenario ${prev.length + 1}`, revenue: revenueSlider }]);
+  }, [scenarios.length, revenueSlider]);
+
+  const removeScenario = useCallback((idx: number) => {
+    setScenarios((prev) => prev.filter((_, i) => i !== idx));
+  }, []);
+
+  const updateScenarioRevenue = useCallback((idx: number, revenue: number) => {
+    setScenarios((prev) => prev.map((s, i) => i === idx ? { ...s, revenue } : s));
+  }, []);
+
+  const updateScenarioLabel = useCallback((idx: number, label: string) => {
+    setScenarios((prev) => prev.map((s, i) => i === idx ? { ...s, label } : s));
+  }, []);
+
   const MAX_REVENUE = 100000;
   const tier = getTierForRevenue(revenueSlider);
   const incentiveEarned = Math.round(revenueSlider * tier.rate);
@@ -208,6 +233,123 @@ export default function CalculatorPage() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* ── Scenario Comparison ─────────────────────────────── */}
+        <div className="register-section reg-fade-up reg-stagger-2 mb-8">
+          <button
+            onClick={() => setShowComparison(!showComparison)}
+            className="flex items-center gap-2 mb-4 text-sm font-bold"
+            style={{ color: '#8B5CF6', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <GitCompareArrows size={18} />
+            {showComparison ? 'Hide' : 'Show'} Scenario Comparison
+          </button>
+
+          {showComparison && (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm" style={{ color: 'var(--register-text-muted)', margin: 0 }}>
+                  Compare up to 4 revenue scenarios side by side
+                </p>
+                {scenarios.length < 4 && (
+                  <button
+                    onClick={addScenario}
+                    className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg"
+                    style={{ background: 'rgba(139,92,246,0.12)', color: '#8B5CF6', border: 'none', cursor: 'pointer' }}
+                  >
+                    <Plus size={12} /> Add Scenario
+                  </button>
+                )}
+              </div>
+
+              <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${scenarios.length}, 1fr)` }}>
+                {scenarios.map((sc, idx) => {
+                  const scTier = getTierForRevenue(sc.revenue);
+                  const scIncentive = Math.round(sc.revenue * scTier.rate);
+                  const scTotal = Math.round(BASE_SALARY_BIWEEKLY + scIncentive);
+                  const baseTier = getTierForRevenue(scenarios[0].revenue);
+                  const baseTotal = Math.round(BASE_SALARY_BIWEEKLY + scenarios[0].revenue * baseTier.rate);
+                  const diff = scTotal - baseTotal;
+
+                  return (
+                    <div
+                      key={idx}
+                      className="rounded-xl p-4"
+                      style={{
+                        background: 'var(--register-bg-elevated)',
+                        border: `2px solid ${scTier.color}30`,
+                        borderTop: `3px solid ${scTier.color}`,
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <input
+                          value={sc.label}
+                          onChange={(e) => updateScenarioLabel(idx, e.target.value)}
+                          className="text-sm font-bold bg-transparent border-none outline-none"
+                          style={{ color: 'var(--register-text)', width: '100%' }}
+                        />
+                        {scenarios.length > 1 && (
+                          <button
+                            onClick={() => removeScenario(idx)}
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2 }}
+                          >
+                            <X size={14} color="var(--register-text-muted)" />
+                          </button>
+                        )}
+                      </div>
+
+                      <input
+                        type="range"
+                        min={0}
+                        max={100000}
+                        step={500}
+                        value={sc.revenue}
+                        onChange={(e) => updateScenarioRevenue(idx, parseInt(e.target.value))}
+                        className="w-full h-2 rounded-lg appearance-none cursor-pointer mb-3"
+                        style={{ accentColor: scTier.color }}
+                      />
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span style={{ color: 'var(--register-text-muted)' }}>Revenue</span>
+                          <span className="font-bold tabular-nums" style={{ color: 'var(--register-text)' }}>{fmtCurrency(sc.revenue)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span style={{ color: 'var(--register-text-muted)' }}>Tier</span>
+                          <span className="font-bold" style={{ color: scTier.color }}>{scTier.tier} ({(scTier.rate * 100).toFixed(1)}%)</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span style={{ color: 'var(--register-text-muted)' }}>Incentive</span>
+                          <span className="font-bold tabular-nums" style={{ color: scTier.color }}>{fmtCurrency(scIncentive)}</span>
+                        </div>
+                        <div
+                          className="flex justify-between text-sm font-extrabold pt-2 mt-1"
+                          style={{ borderTop: `1px solid var(--register-border)` }}
+                        >
+                          <span style={{ color: 'var(--register-text)' }}>Total Comp</span>
+                          <span className="tabular-nums" style={{ color: scTier.color }}>{fmtCurrency(scTotal)}</span>
+                        </div>
+                        {idx > 0 && diff !== 0 && (
+                          <div className="text-center pt-1">
+                            <span
+                              className="text-xs font-bold px-2 py-0.5 rounded-full"
+                              style={{
+                                background: diff > 0 ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
+                                color: diff > 0 ? '#10B981' : '#EF4444',
+                              }}
+                            >
+                              {diff > 0 ? '+' : ''}{fmtCurrency(diff)} vs {scenarios[0].label}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ── Gauge + Result Cards ──────────────────────────── */}
