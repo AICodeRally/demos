@@ -32,7 +32,7 @@ function SidebarLayout({ config, children, parts }: {
   return (
     <div className="flex h-screen">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex w-[280px] shrink-0 flex-col border-r border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-bg)] overflow-y-auto">
+      <aside className="hidden lg:flex w-[300px] shrink-0 flex-col border-r border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-bg)] overflow-y-auto">
         <div className="flex items-center gap-3 border-b border-[var(--comp-sidebar-border)] px-4 py-3">
           {Logo && <Logo className="h-6 w-6 text-[var(--comp-sidebar-active-accent)]" />}
           <div>
