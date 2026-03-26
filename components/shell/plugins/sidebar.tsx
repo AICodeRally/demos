@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Menu, Rocket } from 'lucide-react';
+import { useState, useRef, useCallback } from 'react';
+import { Menu, Rocket, GripVertical } from 'lucide-react';
 import Link from 'next/link';
 import { registerLayout } from '../registry';
 import type { ResolvedDemoConfig } from '../config/types';
@@ -14,7 +14,33 @@ function SidebarLayout({ config, children, parts }: {
   parts: SharedParts;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(300);
+  const isResizing = useRef(false);
   const Logo = config.client.logo;
+
+  const startResize = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    isResizing.current = true;
+    const startX = e.clientX;
+    const startWidth = sidebarWidth;
+
+    const onMouseMove = (ev: MouseEvent) => {
+      if (!isResizing.current) return;
+      const newWidth = Math.min(Math.max(startWidth + ev.clientX - startX, 200), 480);
+      setSidebarWidth(newWidth);
+    };
+    const onMouseUp = () => {
+      isResizing.current = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, [sidebarWidth]);
 
   const sidebarContent = (
     <nav className="flex flex-col gap-1 p-2 pt-4">
@@ -31,8 +57,11 @@ function SidebarLayout({ config, children, parts }: {
 
   return (
     <div className="flex h-screen">
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:flex w-[300px] shrink-0 flex-col border-r border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-bg)] overflow-y-auto">
+      {/* Desktop sidebar — resizable */}
+      <aside
+        className="hidden lg:flex shrink-0 flex-col border-r border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-bg)] overflow-y-auto relative"
+        style={{ width: sidebarWidth }}
+      >
         <div className="flex items-center gap-3 border-b border-[var(--comp-sidebar-border)] px-4 py-3">
           {Logo && <Logo className="h-6 w-6 text-[var(--comp-sidebar-active-accent)]" />}
           <div>
@@ -52,6 +81,14 @@ function SidebarLayout({ config, children, parts }: {
             Rally Cockpit
           </Link>
         )}
+        {/* Resize handle */}
+        <div
+          onMouseDown={startResize}
+          className="absolute top-0 right-0 w-2 h-full cursor-col-resize group flex items-center justify-center"
+          style={{ zIndex: 10 }}
+        >
+          <div className="w-0.5 h-8 rounded-full bg-[var(--comp-sidebar-border)] opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
       </aside>
 
       <div className="flex flex-1 flex-col overflow-hidden">
