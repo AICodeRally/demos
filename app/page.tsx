@@ -9,7 +9,7 @@ const SPM_DEMO_SLUGS = new Set([
   'swic',
 ]);
 
-const TOOL_DEMO_SLUGS = new Set(['on-the-clock']);
+const TOOL_DEMO_SLUGS = new Set(['on-the-clock', 'knil']);
 
 function groupDemos() {
   const visibleDemos = demoRegistry.filter((demo) => !PRIVATE_RALLY_DEMO_SLUGS.has(demo.slug));
@@ -31,10 +31,15 @@ function splitName(name: string): { primary: string; subtitle: string | null } {
 
 function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
   const { primary, subtitle } = splitName(demo.name);
+  const isExternal = !!demo.externalUrl;
+  const href = isExternal ? demo.externalUrl! : `/${demo.slug}`;
+  const Wrapper = isExternal ? 'a' : Link;
+  const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
   return (
-    <Link
-      href={`/${demo.slug}`}
+    <Wrapper
+      href={href}
+      {...extraProps}
       style={{
         textDecoration: 'none',
         color: 'inherit',
@@ -61,6 +66,27 @@ function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
           background: `linear-gradient(135deg, ${demo.color}20 0%, ${demo.color}05 100%)`,
         }}
       >
+        {/* Badge */}
+        {demo.badge && (
+          <span
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 12,
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              color: demo.color,
+              background: `${demo.color}20`,
+              padding: '3px 8px',
+              borderRadius: 6,
+              zIndex: 1,
+            }}
+          >
+            {demo.badge}
+          </span>
+        )}
         {/* Grid overlay */}
         <div
           style={{
@@ -145,7 +171,7 @@ function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
               background: `linear-gradient(135deg, ${demo.color}, ${demo.color}cc)`,
             }}
           >
-            Launch Demo
+            {isExternal ? 'Launch App' : 'Launch Demo'}
             <svg
               style={{ width: 16, height: 16 }}
               fill="none"
@@ -153,12 +179,12 @@ function DemoCard({ demo }: { demo: DemoRegistryEntry }) {
               stroke="currentColor"
               strokeWidth={2}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <path strokeLinecap="round" strokeLinejoin="round" d={isExternal ? "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : "M13 7l5 5m0 0l-5 5m5-5H6"} />
             </svg>
           </div>
         </div>
       </div>
-    </Link>
+    </Wrapper>
   );
 }
 
