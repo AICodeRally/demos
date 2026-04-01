@@ -2,6 +2,7 @@ import { defineDemo } from '@/components/shell';
 
 export default defineDemo({
   slug: 'prizym-governance',
+  layout: 'focus',
   client: {
     name: 'Prizym Suite',
     tagline: '',
@@ -26,6 +27,6 @@ export default defineDemo({
     industry: 'Sales Performance Management',
     tagline: 'Enterprise governance platform for sales compensation programs — policies, plans, approvals, and audit trails',
     color: '#06b6d4',
-    externalUrl: 'https://governance.prizym.aicoderally.com',
+    externalUrl: 'https://sgm.aicoderally.com',
   },
 });
