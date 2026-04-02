@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
   RECON_ORDERS,
   RECON_STATUS_COLORS,
@@ -7,6 +8,9 @@ import {
   VEHICLES,
   type ReconStatus,
 } from '@/data/lotos';
+import { DetailPanel, VehicleDetail, DealDetail } from '@/components/demos/lotos';
+
+type PanelEntity = { type: 'vehicle' | 'deal'; id: string } | null;
 
 const KANBAN_COLUMNS: ReconStatus[] = [
   'needs-assessment',
@@ -16,8 +20,30 @@ const KANBAN_COLUMNS: ReconStatus[] = [
   'complete',
 ];
 
+const TECHS = ['Mike Torres', 'Carlos Ruiz', 'Unassigned'];
+
+function buildInitialColumns(): Record<ReconStatus, string[]> {
+  const map: Record<string, string[]> = {};
+  for (const col of KANBAN_COLUMNS) map[col] = [];
+  for (const order of RECON_ORDERS) {
+    map[order.status].push(order.id);
+  }
+  return map as Record<ReconStatus, string[]>;
+}
+
+function buildInitialAssignments(): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const order of RECON_ORDERS) {
+    map[order.id] = order.assignedTo;
+  }
+  return map;
+}
+
 export default function LotosReconPage() {
-  // Summary stats (only active recon, not complete)
+  const [columns, setColumns] = useState<Record<ReconStatus, string[]>>(buildInitialColumns);
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+  const [techAssignments, setTechAssignments] = useState<Record<string, string>>(buildInitialAssignments);
+
   const activeOrders = RECON_ORDERS.filter((r) => r.status !== 'complete');
   const unitsInRecon = activeOrders.length;
 
@@ -33,10 +59,35 @@ export default function LotosReconPage() {
       : '0';
 
   const getVehicle = (vehicleId: string) => VEHICLES.find((v) => v.id === vehicleId);
+  const getOrder = (orderId: string) => RECON_ORDERS.find((o) => o.id === orderId);
+
+  function handleDragStart(e: React.DragEvent, orderId: string) {
+    e.dataTransfer.setData('text/plain', orderId);
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function handleDrop(e: React.DragEvent, targetStatus: ReconStatus) {
+    e.preventDefault();
+    const orderId = e.dataTransfer.getData('text/plain');
+    if (!orderId) return;
+
+    setColumns((prev) => {
+      const next = { ...prev };
+      for (const status of KANBAN_COLUMNS) {
+        next[status] = prev[status].filter((id) => id !== orderId);
+      }
+      next[targetStatus] = [...next[targetStatus], orderId];
+      return next;
+    });
+  }
+
+  function handleDragOver(e: React.DragEvent) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }
 
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
-      {/* Page Header */}
       <div style={{ marginBottom: '24px' }}>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Recon Board
@@ -46,7 +97,6 @@ export default function LotosReconPage() {
         </p>
       </div>
 
-      {/* Summary Bar */}
       <div
         style={{
           display: 'flex',
@@ -85,7 +135,6 @@ export default function LotosReconPage() {
         </div>
       </div>
 
-      {/* Kanban Board */}
       <div
         style={{
           display: 'grid',
@@ -95,13 +144,12 @@ export default function LotosReconPage() {
         }}
       >
         {KANBAN_COLUMNS.map((status) => {
-          const orders = RECON_ORDERS.filter((r) => r.status === status);
+          const orderIds = columns[status];
           const columnColor = RECON_STATUS_COLORS[status];
           const label = RECON_STATUS_LABELS[status];
 
           return (
             <div key={status}>
-              {/* Column Header */}
               <div
                 style={{
                   borderRadius: '8px 8px 0 0',
@@ -125,12 +173,13 @@ export default function LotosReconPage() {
                     fontWeight: 700,
                   }}
                 >
-                  {orders.length}
+                  {orderIds.length}
                 </span>
               </div>
 
-              {/* Column Body */}
               <div
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, status)}
                 style={{
                   background: '#F1F5F9',
                   borderRadius: '0 0 8px 8px',
@@ -141,19 +190,21 @@ export default function LotosReconPage() {
                   gap: '10px',
                 }}
               >
-                {orders.length === 0 ? (
+                {orderIds.length === 0 ? (
                   <div
                     style={{
                       textAlign: 'center',
                       padding: '24px 8px',
                       color: '#A8A29E',
-                      fontSize: '13px',
+                      fontSize: '14px',
                     }}
                   >
                     No orders
                   </div>
                 ) : (
-                  orders.map((order) => {
+                  orderIds.map((orderId) => {
+                    const order = getOrder(orderId);
+                    if (!order) return null;
                     const vehicle = getVehicle(order.vehicleId);
                     const costDisplay =
                       order.actualCost !== null
@@ -165,33 +216,57 @@ export default function LotosReconPage() {
                     return (
                       <div
                         key={order.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, order.id)}
+                        onClick={() => setPanelEntity({ type: 'vehicle', id: order.vehicleId })}
                         style={{
                           background: '#FFFFFF',
                           border: '1px solid #E7E5E4',
                           borderRadius: '8px',
                           padding: '12px',
+                          cursor: 'grab',
                         }}
                       >
-                        {/* Vehicle */}
                         <div style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>
                           {order.vehicleId}
                         </div>
                         {vehicle && (
-                          <div style={{ fontSize: '13px', color: '#57534E', marginBottom: '8px' }}>
+                          <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '8px' }}>
                             {vehicle.year} {vehicle.make} {vehicle.model}
                           </div>
                         )}
 
-                        {/* Items */}
                         <ul style={{ margin: '0 0 8px 0', padding: '0 0 0 16px' }}>
                           {order.items.map((item, i) => (
-                            <li key={i} style={{ fontSize: '13px', color: '#57534E' }}>
+                            <li key={i} style={{ fontSize: '14px', color: '#57534E' }}>
                               {item}
                             </li>
                           ))}
                         </ul>
 
-                        {/* Meta row */}
+                        <div style={{ marginBottom: '8px' }} onClick={(e) => e.stopPropagation()}>
+                          <select
+                            value={techAssignments[order.id] || 'Unassigned'}
+                            onChange={(e) =>
+                              setTechAssignments((prev) => ({ ...prev, [order.id]: e.target.value }))
+                            }
+                            style={{
+                              width: '100%',
+                              padding: '4px 8px',
+                              borderRadius: '6px',
+                              border: '1px solid #E7E5E4',
+                              fontSize: '14px',
+                              color: '#1C1917',
+                              background: '#F8FAFC',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {TECHS.map((tech) => (
+                              <option key={tech} value={tech}>{tech}</option>
+                            ))}
+                          </select>
+                        </div>
+
                         <div
                           style={{
                             display: 'flex',
@@ -199,20 +274,13 @@ export default function LotosReconPage() {
                             alignItems: 'center',
                             borderTop: '1px solid #F1F5F9',
                             paddingTop: '8px',
-                            marginTop: '4px',
                           }}
                         >
-                          <span
-                            style={{
-                              fontSize: '12px',
-                              fontWeight: 700,
-                              color: columnColor,
-                            }}
-                          >
+                          <span style={{ fontSize: '14px', fontWeight: 700, color: columnColor }}>
                             {costDisplay}
                           </span>
-                          <span style={{ fontSize: '12px', color: '#78716C' }}>
-                            {order.cycleDays}d · {order.assignedTo.split(' ')[0]}
+                          <span style={{ fontSize: '14px', color: '#78716C' }}>
+                            {order.cycleDays}d
                           </span>
                         </div>
                       </div>
@@ -224,6 +292,11 @@ export default function LotosReconPage() {
           );
         })}
       </div>
+
+      <DetailPanel open={!!panelEntity} onClose={() => setPanelEntity(null)} title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : 'Deal Details'}>
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+      </DetailPanel>
     </div>
   );
 }
