@@ -1,6 +1,9 @@
 'use client';
 
-import { VEHICLES } from '@/data/lotos';
+import { useState } from 'react';
+import { VEHICLES, PAYMENTS, PAYMENT_STATUS_COLORS } from '@/data/lotos';
+import { DataTable, type Column, DetailPanel, VehicleDetail, DealDetail, CustomerDetail, StatusBadge } from '@/components/demos/lotos';
+import type { Vehicle } from '@/data/lotos';
 
 const APR = 0.065;
 
@@ -18,19 +21,41 @@ function daysBetween(dateA: string, dateB: string): number {
 
 const TODAY = '2026-04-01';
 
+type PanelEntity = { type: 'vehicle' | 'customer' | 'deal'; id: string } | null;
+
+interface FloorplanRow extends Vehicle {
+  curtailDate: string;
+  daysLeft: number;
+  monthlyInterest: number;
+}
+
+const pulseKeyframes = `
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+`;
+
 export default function FloorplanPage() {
-  // Non-sold vehicles; assume auction purchases are on floorplan, trade-ins are cash
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+
   const activeVehicles = VEHICLES.filter(v => v.status !== 'sold' && v.status !== 'wholesale');
 
-  const floorplanVehicles = activeVehicles.filter(v =>
-    v.source === 'auction-manheim' || v.source === 'auction-adesa'
-  );
+  const floorplanVehicles: FloorplanRow[] = activeVehicles
+    .filter(v => v.source === 'auction-manheim' || v.source === 'auction-adesa')
+    .map(v => {
+      const curtailDate = calcCurtailmentDate(v.acquiredDate);
+      const daysLeft = daysBetween(TODAY, curtailDate);
+      const monthlyInterest = Math.round((v.acquisitionCost * APR) / 12);
+      return { ...v, curtailDate, daysLeft, monthlyInterest };
+    });
+
   const cashVehicles = activeVehicles.filter(v =>
     v.source === 'trade-in' || v.source === 'private-party'
   );
 
   const totalFloorplanBalance = floorplanVehicles.reduce((sum, v) => sum + v.acquisitionCost, 0);
-  const monthlyInterestTotal = floorplanVehicles.reduce((sum, v) => sum + Math.round((v.acquisitionCost * APR) / 12), 0);
+  const monthlyInterestTotal = floorplanVehicles.reduce((sum, v) => sum + v.monthlyInterest, 0);
   const avgDaysOnPlan = floorplanVehicles.length > 0
     ? Math.round(floorplanVehicles.reduce((sum, v) => sum + v.daysOnLot, 0) / floorplanVehicles.length)
     : 0;
@@ -41,9 +66,87 @@ export default function FloorplanPage() {
     return { label: 'Urgent', bg: '#FEE2E2', color: '#DC2626' };
   }
 
+  const floorplanColumns: Column<FloorplanRow>[] = [
+    {
+      key: 'id',
+      label: 'Stock #',
+      render: (v) => <span style={{ fontWeight: 700, color: '#1C1917' }}>{v.id}</span>,
+      sortFn: (a, b) => a.id.localeCompare(b.id),
+    },
+    {
+      key: 'vehicle',
+      label: 'Vehicle',
+      render: (v) => <span>{v.year} {v.make} {v.model} {v.trim}</span>,
+    },
+    {
+      key: 'daysOnLot',
+      label: 'Days on Lot',
+      align: 'right',
+      sortFn: (a, b) => a.daysOnLot - b.daysOnLot,
+      render: (v) => <span>{v.daysOnLot}</span>,
+    },
+    {
+      key: 'acquisitionCost',
+      label: 'Floorplan Amt',
+      align: 'right',
+      sortFn: (a, b) => a.acquisitionCost - b.acquisitionCost,
+      render: (v) => <span style={{ fontWeight: 600, color: '#1C1917' }}>${v.acquisitionCost.toLocaleString()}</span>,
+    },
+    {
+      key: 'monthlyInterest',
+      label: 'Mo. Interest',
+      align: 'right',
+      sortFn: (a, b) => a.monthlyInterest - b.monthlyInterest,
+      render: (v) => <span style={{ color: '#D97706' }}>${v.monthlyInterest.toLocaleString()}</span>,
+    },
+    {
+      key: 'curtailDate',
+      label: 'Curtailment Date',
+      align: 'center',
+      render: (v) => <span>{v.curtailDate}</span>,
+    },
+    {
+      key: 'daysLeft',
+      label: 'Days Left',
+      align: 'right',
+      sortFn: (a, b) => a.daysLeft - b.daysLeft,
+      render: (v) => (
+        <span
+          style={{
+            fontWeight: 700,
+            color: v.daysLeft < 15 ? '#DC2626' : v.daysLeft < 30 ? '#D97706' : '#16A34A',
+          }}
+        >
+          {v.daysLeft}d
+        </span>
+      ),
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      align: 'center',
+      render: (v) => {
+        const status = curtailmentStatus(v.daysLeft);
+        return (
+          <span
+            className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+            style={{
+              backgroundColor: status.bg,
+              color: status.color,
+              animation: v.daysLeft < 15 ? 'urgentPulse 1.5s ease-in-out infinite' : undefined,
+            }}
+          >
+            {status.label}
+          </span>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
+      <style dangerouslySetInnerHTML={{ __html: pulseKeyframes }} />
+
       <div>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Floorplan Tracker
@@ -53,7 +156,6 @@ export default function FloorplanPage() {
         </p>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
@@ -93,77 +195,73 @@ export default function FloorplanPage() {
         </div>
       </div>
 
-      {/* Floorplan Table */}
       <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
         <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
           <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
             Floorplan Detail
           </h2>
           <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
-            Auction-sourced vehicles — 90-day curtailment window
+            Auction-sourced vehicles — 90-day curtailment window — click row for details
           </p>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Stock #</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Vehicle</th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Days on Lot</th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Floorplan Amt</th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Mo. Interest</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Curtailment Date</th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Days Left</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {floorplanVehicles.map((v, i) => {
-              const curtailDate = calcCurtailmentDate(v.acquiredDate);
-              const daysLeft = daysBetween(TODAY, curtailDate);
-              const status = curtailmentStatus(daysLeft);
-              const monthlyInterest = Math.round((v.acquisitionCost * APR) / 12);
-              return (
-                <tr key={v.id} style={{ borderBottom: i < floorplanVehicles.length - 1 ? '1px solid #F5F5F4' : undefined }}>
-                  <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>{v.id}</td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>{v.year} {v.make} {v.model} {v.trim}</td>
-                  <td className="px-4 py-3 text-right" style={{ color: '#57534E' }}>{v.daysOnLot}</td>
-                  <td className="px-4 py-3 text-right font-semibold" style={{ color: '#1C1917' }}>${v.acquisitionCost.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right" style={{ color: '#D97706' }}>${monthlyInterest.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-center" style={{ color: '#57534E' }}>{curtailDate}</td>
-                  <td
-                    className="px-4 py-3 text-right font-semibold"
-                    style={{ color: daysLeft < 15 ? '#DC2626' : daysLeft < 30 ? '#D97706' : '#16A34A' }}
-                  >
-                    {daysLeft}d
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-                      style={{ backgroundColor: status.bg, color: status.color }}
-                    >
-                      {status.label}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-          <tfoot>
-            <tr style={{ backgroundColor: '#F8FAFC', borderTop: '2px solid #E7E5E4' }}>
-              <td className="px-4 py-3 font-bold text-sm" colSpan={3} style={{ color: '#1C1917' }}>Totals</td>
-              <td className="px-4 py-3 text-right font-bold text-sm" style={{ color: '#1C1917' }}>
-                ${totalFloorplanBalance.toLocaleString()}
-              </td>
-              <td className="px-4 py-3 text-right font-bold text-sm" style={{ color: '#D97706' }}>
-                ${monthlyInterestTotal.toLocaleString()}
-              </td>
-              <td colSpan={3} />
-            </tr>
-          </tfoot>
-        </table>
+        <DataTable
+          columns={floorplanColumns}
+          data={floorplanVehicles}
+          keyFn={(v) => v.id}
+          onRowClick={(v) => setPanelEntity({ type: 'vehicle', id: v.id })}
+        />
+        <div className="px-6 py-3 flex justify-between" style={{ borderTop: '2px solid #E7E5E4', backgroundColor: '#F8FAFC' }}>
+          <span className="text-sm font-bold" style={{ color: '#1C1917' }}>Totals</span>
+          <div className="flex gap-12">
+            <span className="text-sm font-bold" style={{ color: '#1C1917' }}>${totalFloorplanBalance.toLocaleString()}</span>
+            <span className="text-sm font-bold" style={{ color: '#D97706' }}>${monthlyInterestTotal.toLocaleString()}/mo</span>
+          </div>
+        </div>
       </div>
 
-      {/* Cash vs Floorplan Comparison */}
+      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
+        <h2 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>
+          BHPH Collections
+        </h2>
+        <p className="text-sm mb-4" style={{ color: '#57534E' }}>
+          Payment schedule for Buy-Here-Pay-Here accounts
+        </p>
+        {PAYMENTS.length === 0 ? (
+          <p style={{ fontSize: '14px', color: '#78716C', fontStyle: 'italic' }}>No payments scheduled.</p>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {PAYMENTS.map((pmt) => (
+              <div
+                key={pmt.id}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '12px 16px',
+                  background: '#FAFAF9',
+                  borderRadius: '10px',
+                  border: '1px solid #E7E5E4',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>{pmt.id}</span>
+                  <span style={{ fontSize: '14px', color: '#57534E' }}>Deal: {pmt.dealId}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <span style={{ fontSize: '14px', color: '#57534E' }}>Due: {pmt.dueDate}</span>
+                  {pmt.paidDate && <span style={{ fontSize: '14px', color: '#78716C' }}>Paid: {pmt.paidDate}</span>}
+                  <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>${pmt.amount}</span>
+                  <StatusBadge
+                    label={pmt.status.charAt(0).toUpperCase() + pmt.status.slice(1)}
+                    color={PAYMENT_STATUS_COLORS[pmt.status]}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>
           Cash vs Floorplan Mix
@@ -195,6 +293,16 @@ export default function FloorplanPage() {
           Monthly interest cost of <strong style={{ color: '#D97706' }}>${monthlyInterestTotal.toLocaleString()}</strong> incentivizes faster turnover on aged units.
         </p>
       </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : panelEntity?.type === 'customer' ? 'Customer Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'customer' && <CustomerDetail customerId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })} />}
+      </DetailPanel>
     </div>
   );
 }

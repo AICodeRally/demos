@@ -1,8 +1,8 @@
 'use client';
 
-import { DEALS, DEAL_STATUS_COLORS } from '@/data/lotos';
-import { VEHICLES } from '@/data/lotos';
-import { CUSTOMERS } from '@/data/lotos';
+import { useState } from 'react';
+import { DEALS, DEAL_STATUS_COLORS, VEHICLES, CUSTOMERS } from '@/data/lotos';
+import { DetailPanel, DealDetail, VehicleDetail, CustomerDetail, Toast } from '@/components/demos/lotos';
 
 type DocStatus = 'complete' | 'pending' | 'missing';
 
@@ -28,23 +28,46 @@ const DOC_STATUS_STYLES: Record<DocStatus, { color: string; bg: string; border: 
   missing: { color: '#DC2626', bg: '#FEF2F2', border: '#FECACA', label: 'Missing' },
 };
 
+const STATUS_CYCLE: DocStatus[] = ['complete', 'pending', 'missing'];
+
+type PanelEntity = { type: 'vehicle' | 'customer' | 'deal'; id: string } | null;
+
 export default function ContractingPage() {
-  // Featured funded deal for document checklist
-  const featuredDeal = DEALS.find((d) => d.id === 'DL-2026-003')!;
+  const [selectedDealId, setSelectedDealId] = useState('DL-2026-003');
+  const [docStatus, setDocStatus] = useState<DocItem[]>(() => DOC_CHECKLIST.map((d) => ({ ...d })));
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  const featuredDeal = DEALS.find((d) => d.id === selectedDealId)!;
   const featuredVehicle = VEHICLES.find((v) => v.id === featuredDeal.vehicleId)!;
   const featuredCustomer = CUSTOMERS.find((c) => c.id === featuredDeal.customerId)!;
 
-  // Pending deals with funding countdown
-  const pendingDeals = DEALS.filter((d) => d.status === 'pending' || d.status === 'submitted');
+  const handleDealChange = (dealId: string) => {
+    setSelectedDealId(dealId);
+    setDocStatus(DOC_CHECKLIST.map((d) => ({ ...d })));
+  };
 
-  // All deals sorted by date desc
+  const cycleDocStatus = (index: number) => {
+    setDocStatus((prev) => {
+      const next = [...prev];
+      const currentIdx = STATUS_CYCLE.indexOf(next[index].status);
+      next[index] = { ...next[index], status: STATUS_CYCLE[(currentIdx + 1) % STATUS_CYCLE.length] };
+      return next;
+    });
+    setToastMsg('Status updated');
+  };
+
+  const pendingDeals = DEALS.filter((d) => d.status === 'pending' || d.status === 'submitted');
   const allDeals = [...DEALS].sort(
     (a, b) => new Date(b.closedDate).getTime() - new Date(a.closedDate).getTime()
   );
 
-  const completedDocs = DOC_CHECKLIST.filter((d) => d.status === 'complete').length;
-  const totalDocs = DOC_CHECKLIST.length;
+  const completedDocs = docStatus.filter((d) => d.status === 'complete').length;
+  const totalDocs = docStatus.length;
   const completionPct = Math.round((completedDocs / totalDocs) * 100);
+
+  const today = new Date('2026-04-01');
+  const daysSinceClose = Math.floor((today.getTime() - new Date(featuredDeal.closedDate).getTime()) / (1000 * 60 * 60 * 24));
 
   const getVehicleLabel = (vehicleId: string) => {
     const v = VEHICLES.find((v) => v.id === vehicleId);
@@ -58,42 +81,72 @@ export default function ContractingPage() {
 
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
-      {/* Page Header */}
-      <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
-          Contracting
-        </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
-          Document checklist, funding status, and deal summary
-        </p>
+      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+            Contracting
+          </h1>
+          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+            Document checklist, funding status, and deal summary
+          </p>
+        </div>
+        <select
+          value={selectedDealId}
+          onChange={(e) => handleDealChange(e.target.value)}
+          style={{
+            padding: '8px 14px',
+            borderRadius: '8px',
+            border: '1.5px solid #E7E5E4',
+            fontSize: '14px',
+            fontWeight: 600,
+            color: '#1C1917',
+            background: '#FFFFFF',
+            cursor: 'pointer',
+          }}
+        >
+          {DEALS.map((d) => {
+            const v = VEHICLES.find((veh) => veh.id === d.vehicleId);
+            return (
+              <option key={d.id} value={d.id}>
+                {d.id} — {v ? `${v.year} ${v.make} ${v.model}` : d.vehicleId}
+              </option>
+            );
+          })}
+        </select>
       </div>
 
-      {/* Top Two-Column: Deal Summary + Doc Checklist */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-        {/* Deal Summary Card */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 className="text-xl font-bold" style={{ color: '#1C1917' }}>
               Deal Summary
             </h2>
-            <span
-              className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-              style={{
-                background: DEAL_STATUS_COLORS[featuredDeal.status] + '20',
-                color: DEAL_STATUS_COLORS[featuredDeal.status],
-                border: `1px solid ${DEAL_STATUS_COLORS[featuredDeal.status]}40`,
-                textTransform: 'capitalize',
-              }}
-            >
-              {featuredDeal.status}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span
+                className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+                style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}
+              >
+                {daysSinceClose} days since close
+              </span>
+              <span
+                className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+                style={{
+                  background: DEAL_STATUS_COLORS[featuredDeal.status] + '20',
+                  color: DEAL_STATUS_COLORS[featuredDeal.status],
+                  border: `1px solid ${DEAL_STATUS_COLORS[featuredDeal.status]}40`,
+                  textTransform: 'capitalize',
+                }}
+              >
+                {featuredDeal.status}
+              </span>
+            </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {[
-              { label: 'Deal', value: featuredDeal.id, bold: true },
-              { label: 'Vehicle', value: `${featuredVehicle.year} ${featuredVehicle.make} ${featuredVehicle.model} ${featuredVehicle.trim}` },
-              { label: 'Customer', value: `${featuredCustomer.firstName} ${featuredCustomer.lastName}` },
+              { label: 'Deal', value: featuredDeal.id, bold: true, clickable: true, onClick: () => setPanelEntity({ type: 'deal', id: featuredDeal.id }) },
+              { label: 'Vehicle', value: `${featuredVehicle.year} ${featuredVehicle.make} ${featuredVehicle.model} ${featuredVehicle.trim}`, clickable: true, onClick: () => setPanelEntity({ type: 'vehicle', id: featuredVehicle.id }) },
+              { label: 'Customer', value: `${featuredCustomer.firstName} ${featuredCustomer.lastName}`, clickable: true, onClick: () => setPanelEntity({ type: 'customer', id: featuredCustomer.id }) },
               { label: 'Sale Price', value: `$${featuredDeal.salePrice.toLocaleString()}` },
               { label: 'Trade Allowance', value: `$${featuredDeal.tradeAllowance.toLocaleString()}` },
               { label: 'Down Payment', value: `$${featuredDeal.downPayment.toLocaleString()}` },
@@ -117,9 +170,11 @@ export default function ContractingPage() {
                   style={{
                     fontSize: '14px',
                     fontWeight: row.bold ? 700 : 600,
-                    color: '#1C1917',
+                    color: row.clickable ? '#2563EB' : '#1C1917',
                     textAlign: 'right',
+                    cursor: row.clickable ? 'pointer' : undefined,
                   }}
+                  onClick={row.onClick}
                 >
                   {row.value}
                 </span>
@@ -128,7 +183,6 @@ export default function ContractingPage() {
           </div>
         </div>
 
-        {/* Document Checklist */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
             <h2 className="text-xl font-bold" style={{ color: '#1C1917' }}>
@@ -139,7 +193,6 @@ export default function ContractingPage() {
             </span>
           </div>
 
-          {/* Progress Bar */}
           <div
             style={{
               height: '8px',
@@ -161,11 +214,12 @@ export default function ContractingPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {DOC_CHECKLIST.map((doc) => {
+            {docStatus.map((doc, idx) => {
               const style = DOC_STATUS_STYLES[doc.status];
               return (
                 <div
                   key={doc.name}
+                  onClick={() => cycleDocStatus(idx)}
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -174,6 +228,8 @@ export default function ContractingPage() {
                     borderRadius: '8px',
                     background: style.bg,
                     border: `1px solid ${style.border}`,
+                    cursor: 'pointer',
+                    transition: 'background 0.15s',
                   }}
                 >
                   <span style={{ fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>
@@ -193,10 +249,10 @@ export default function ContractingPage() {
               );
             })}
           </div>
+          <p style={{ fontSize: '14px', color: '#78716C', marginTop: '12px' }}>Click any item to cycle status</p>
         </div>
       </div>
 
-      {/* Funding Countdown */}
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4', marginBottom: '20px' }}>
         <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
           Funding Status
@@ -204,7 +260,6 @@ export default function ContractingPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
           {pendingDeals.map((deal) => {
             const closedDate = new Date(deal.closedDate);
-            const today = new Date('2026-04-01');
             const daysSinceClosed = Math.floor((today.getTime() - closedDate.getTime()) / (1000 * 60 * 60 * 24));
             const targetDays = 5;
             const progress = Math.min((daysSinceClosed / targetDays) * 100, 100);
@@ -219,15 +274,17 @@ export default function ContractingPage() {
                   borderRadius: '10px',
                   padding: '16px',
                   background: '#FAFAF9',
+                  cursor: 'pointer',
                 }}
+                onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '15px', color: '#1C1917' }}>{deal.id}</div>
-                    <div style={{ fontSize: '13px', color: '#57534E', marginTop: '2px' }}>
+                    <div style={{ fontSize: '14px', color: '#57534E', marginTop: '2px' }}>
                       {vehicle ? `${vehicle.year} ${vehicle.make} ${vehicle.model}` : deal.vehicleId}
                     </div>
-                    <div style={{ fontSize: '13px', color: '#57534E' }}>
+                    <div style={{ fontSize: '14px', color: '#57534E' }}>
                       {customer ? `${customer.firstName} ${customer.lastName}` : deal.customerId}
                     </div>
                   </div>
@@ -267,8 +324,8 @@ export default function ContractingPage() {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px' }}>
-                  <span style={{ fontSize: '12px', color: '#78716C' }}>Closed {deal.closedDate}</span>
-                  <span style={{ fontSize: '12px', color: '#78716C', fontWeight: 600 }}>
+                  <span style={{ fontSize: '14px', color: '#78716C' }}>Closed {deal.closedDate}</span>
+                  <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>
                     Lender: {deal.lender}
                   </span>
                 </div>
@@ -284,7 +341,6 @@ export default function ContractingPage() {
         </div>
       </div>
 
-      {/* All Deals Table */}
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
           All Deals
@@ -300,7 +356,7 @@ export default function ContractingPage() {
                       style={{
                         padding: '10px 12px',
                         textAlign: 'left',
-                        fontSize: '12px',
+                        fontSize: '14px',
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
                         fontWeight: 600,
@@ -321,7 +377,9 @@ export default function ContractingPage() {
                   style={{
                     borderBottom: '1px solid #F1F5F9',
                     background: idx % 2 === 0 ? '#FFFFFF' : '#FAFAF9',
+                    cursor: 'pointer',
                   }}
+                  onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
                 >
                   <td style={{ padding: '12px', fontSize: '14px', fontWeight: 700, color: '#1C1917', whiteSpace: 'nowrap' }}>
                     {deal.id}
@@ -364,6 +422,18 @@ export default function ContractingPage() {
           </table>
         </div>
       </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : panelEntity?.type === 'customer' ? 'Customer Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'customer' && <CustomerDetail customerId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })} />}
+      </DetailPanel>
+
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
     </div>
   );
 }
