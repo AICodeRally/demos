@@ -1,4 +1,8 @@
-// On The Clock is a full-screen 3-panel app — no DemoShell sidebar needed
+'use client';
+
+import { DemoShell } from '@/components/shell';
+import demoConfig from './demo.config';
+
 export default function OnTheClockLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <DemoShell config={demoConfig}>{children}</DemoShell>;
 }

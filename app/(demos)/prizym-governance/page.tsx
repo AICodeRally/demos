@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
-const CF_URL = 'https://sgm.aicoderally.com';
+const URL = 'https://governance.prizym.aicoderally.com';
 
 export default function PrizymGovernanceRedirect() {
-  redirect(CF_URL);
+  redirect(URL);
 }

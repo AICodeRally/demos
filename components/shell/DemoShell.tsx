@@ -19,6 +19,7 @@ import { CockpitProvider } from './cockpit/store';
 import './plugins/sidebar';
 import './plugins/topnav';
 import './plugins/wizard';
+import './plugins/focus';
 
 const parts: SharedParts = { NavSection, Footer, MobileDrawer, ThemeToggle, Icon };
 

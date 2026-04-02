@@ -1,0 +1,50 @@
+{
+  "deepLinkRoutes": [
+    "/equipr/ara",
+    "/meridian/cockpit",
+    "/routeiq/ops/ai/forecasting",
+    "/routeiq/ops/ai/pricing",
+    "/routeiq/ops/day-planner/stop/[id]",
+    "/routeiq/ops/manager/rep/[id]",
+    "/routeiq/strategy/territories/[hometown]",
+    "/register/ops/manager/coaching/[id]"
+  ],
+  "markerAllowlist": [
+    {
+      "path": "app/(demos)/register/comp/admin/page.tsx",
+      "contains": "Formula TBD"
+    },
+    {
+      "path": "app/(demos)/register/comp/admin/page.tsx",
+      "contains": "RULE_TYPE_CONFIG.placeholder"
+    },
+    {
+      "path": "app/(demos)/register/comp/admin/page.tsx",
+      "contains": "=== 'placeholder'"
+    },
+    {
+      "path": "data/routeiq/day-plans.ts",
+      "contains": "TBD — not yet contacted"
+    },
+    {
+      "path": "app/(demos)/wellspring/ops/pads/page.tsx",
+      "contains": "placeholder"
+    },
+    {
+      "path": "app/(demos)/wellspring/hse/flares/page.tsx",
+      "contains": "Placeholder"
+    },
+    {
+      "path": "app/(demos)/equipr/ai/damage/page.tsx",
+      "contains": "photo placeholder"
+    },
+    {
+      "path": "app/(demos)/equipr/inspections/page.tsx",
+      "contains": "Photo placeholders"
+    },
+    {
+      "path": "app/(demos)/meridian/deals/diligence/page.tsx",
+      "contains": "'TBD'"
+    }
+  ]
+}

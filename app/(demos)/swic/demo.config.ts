@@ -2,6 +2,7 @@ import { defineDemo } from '@/components/shell';
 
 export default defineDemo({
   slug: 'swic',
+  layout: 'focus',
   client: {
     name: 'Prizym Suite',
     tagline: '',

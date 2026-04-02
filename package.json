@@ -9,7 +9,11 @@
     "build": "next build",
     "start": "npx serve out -p 3100",
     "typecheck": "tsc --noEmit",
-    "verify": "pnpm generate:registry && pnpm typecheck && next build"
+    "verify": "pnpm generate:registry && pnpm typecheck && pnpm verify:demo-standard && next build",
+    "scaffold:demo": "tsx scripts/scaffold-demo.ts",
+    "check:demo:routes": "tsx scripts/check-demo-routes.ts",
+    "check:demo:markers": "tsx scripts/check-demo-markers.ts",
+    "verify:demo-standard": "pnpm check:demo:routes && pnpm check:demo:markers"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
