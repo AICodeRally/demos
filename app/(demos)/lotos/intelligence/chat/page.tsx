@@ -1,77 +1,78 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { AI_RESPONSES } from '@/data/lotos';
+import { MarkdownRenderer } from '@/components/demos/lotos';
 
 const chatResponses = AI_RESPONSES.filter((r) => r.category === 'chat');
 
-function renderMarkdown(text: string): React.ReactNode {
-  const parts: React.ReactNode[] = [];
-  const lines = text.split('\n');
-  let key = 0;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    if (line.trim() === '') {
-      parts.push(<br key={key++} />);
-      continue;
-    }
-
-    // Numbered list item
-    if (/^\d+\./.test(line.trim())) {
-      const content = line.replace(/^\d+\.\s*/, '');
-      parts.push(
-        <div key={key++} className="flex gap-2 mt-1">
-          <span style={{ color: '#DC2626', fontWeight: 700, minWidth: 20 }}>
-            {line.match(/^(\d+)/)?.[1]}.
-          </span>
-          <span>{renderInline(content)}</span>
-        </div>
-      );
-      continue;
-    }
-
-    parts.push(<span key={key++}>{renderInline(line)}<br /></span>);
-  }
-
-  return <>{parts}</>;
-}
-
-function renderInline(text: string): React.ReactNode {
-  const segments = text.split(/(\*\*[^*]+\*\*)/g);
-  return (
-    <>
-      {segments.map((seg, i) => {
-        if (seg.startsWith('**') && seg.endsWith('**')) {
-          return <strong key={i} style={{ color: '#1C1917' }}>{seg.slice(2, -2)}</strong>;
-        }
-        return <span key={i}>{seg}</span>;
-      })}
-    </>
-  );
+interface ChatMessage {
+  role: 'user' | 'ai';
+  text: string;
 }
 
 const QUICK_ACTIONS = [
-  { label: 'What should I wholesale?', targetId: 'msg-ai-001' },
-  { label: 'Turn rate analysis', targetId: 'msg-ai-002' },
-  { label: 'Subprime strategies', targetId: 'msg-ai-003' },
+  { label: 'What should I wholesale?', keyword: 'wholesale' },
+  { label: 'Turn rate analysis', keyword: 'turn rate' },
+  { label: 'Subprime strategies', keyword: 'subprime' },
 ];
 
+function findMatchingResponse(input: string): string | null {
+  const lower = input.toLowerCase();
+  for (const response of chatResponses) {
+    const qLower = response.question.toLowerCase();
+    const words = lower.split(/\s+/);
+    for (const word of words) {
+      if (word.length > 3 && qLower.includes(word)) return response.answer;
+    }
+    if (qLower.includes(lower) || lower.includes(qLower.split(' ').slice(0, 3).join(' '))) {
+      return response.answer;
+    }
+  }
+  return null;
+}
+
 export default function AskLotosChatPage() {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: 'ai', text: 'Welcome to AskLotOS! I can help with inventory analysis, deal structuring, market intelligence, and more. Ask me anything about your dealership.' },
+  ]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  function scrollToMessage(id: string) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
+
+  function handleSend() {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    setMessages((prev) => [...prev, { role: 'user', text: trimmed }]);
+    setInput('');
+    setIsTyping(true);
+
+    setTimeout(() => {
+      const match = findMatchingResponse(trimmed);
+      const aiText = match ?? "I'll research that and get back to you.";
+      setMessages((prev) => [...prev, { role: 'ai', text: aiText }]);
+      setIsTyping(false);
+    }, 1000);
+  }
+
+  function handleQuickAction(action: typeof QUICK_ACTIONS[number]) {
+    const match = chatResponses.find((r) => r.question.toLowerCase().includes(action.keyword));
+    if (!match) return;
+    setMessages((prev) => [...prev, { role: 'user', text: match.question }]);
+    setIsTyping(true);
+
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { role: 'ai', text: match.answer }]);
+      setIsTyping(false);
+    }, 1000);
   }
 
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
@@ -93,13 +94,12 @@ export default function AskLotosChatPage() {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <div className="flex flex-wrap gap-2">
         <span className="text-sm font-semibold self-center" style={{ color: '#78716C' }}>Quick questions:</span>
         {QUICK_ACTIONS.map((action) => (
           <button
-            key={action.targetId}
-            onClick={() => scrollToMessage(action.targetId)}
+            key={action.keyword}
+            onClick={() => handleQuickAction(action)}
             className="rounded-full px-4 py-2 text-sm font-medium transition-colors"
             style={{
               backgroundColor: '#F5F5F4',
@@ -122,55 +122,84 @@ export default function AskLotosChatPage() {
         ))}
       </div>
 
-      {/* Chat Messages */}
-      <div className="space-y-6">
-        {chatResponses.map((response) => (
-          <div key={response.id} className="space-y-3" id={`msg-${response.id}`}>
-            {/* User Message */}
-            <div className="flex justify-end">
-              <div
-                className="max-w-2xl rounded-2xl rounded-tr-md px-5 py-4"
-                style={{
-                  backgroundColor: 'rgba(232, 93, 44, 0.1)',
-                  border: '1px solid rgba(232, 93, 44, 0.2)',
-                }}
-              >
-                <p className="text-base font-medium" style={{ color: '#1C1917' }}>
-                  {response.question}
-                </p>
+      <div className="space-y-6" style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '8px' }}>
+        {messages.map((msg, idx) => (
+          <div key={idx}>
+            {msg.role === 'user' ? (
+              <div className="flex justify-end">
+                <div
+                  className="max-w-2xl rounded-2xl rounded-tr-md px-5 py-4"
+                  style={{
+                    backgroundColor: 'rgba(232, 93, 44, 0.1)',
+                    border: '1px solid rgba(232, 93, 44, 0.2)',
+                  }}
+                >
+                  <p className="text-base font-medium" style={{ color: '#1C1917' }}>
+                    {msg.text}
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex gap-3">
+                <div
+                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                  style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+                >
+                  AI
+                </div>
+                <div
+                  className="flex-1 rounded-2xl rounded-tl-md px-5 py-4"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid #E7E5E4',
+                  }}
+                >
+                  <div className="text-sm font-semibold mb-2" style={{ color: '#DC2626' }}>
+                    AskLotOS
+                  </div>
+                  <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
+                    <MarkdownRenderer text={msg.text} />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
 
-            {/* AI Response */}
-            <div className="flex gap-3">
-              <div
-                className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
-              >
-                AI
-              </div>
-              <div
-                className="flex-1 rounded-2xl rounded-tl-md px-5 py-4"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid #E7E5E4',
-                }}
-              >
-                <div className="text-sm font-semibold mb-2" style={{ color: '#DC2626' }}>
-                  AskLotOS
-                </div>
-                <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
-                  {renderMarkdown(response.answer)}
-                </div>
+        {isTyping && (
+          <div className="flex gap-3">
+            <div
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+              style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+            >
+              AI
+            </div>
+            <div
+              className="rounded-2xl rounded-tl-md px-5 py-4"
+              style={{
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E7E5E4',
+              }}
+            >
+              <div className="flex gap-1.5 items-center" style={{ height: '24px' }}>
+                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0s' }} />
+                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0.2s' }} />
+                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0.4s' }} />
               </div>
             </div>
           </div>
-        ))}
+        )}
 
         <div ref={chatEndRef} />
       </div>
 
-      {/* Input Bar */}
+      <style>{`
+        @keyframes lotos-bounce {
+          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+          40% { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
+
       <div
         className="sticky bottom-0 rounded-2xl p-4"
         style={{
@@ -184,6 +213,7 @@ export default function AskLotosChatPage() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
             placeholder="Ask LotOS anything about your dealership..."
             className="flex-1 rounded-xl px-4 py-3 text-base outline-none"
             style={{
@@ -193,6 +223,7 @@ export default function AskLotosChatPage() {
             }}
           />
           <button
+            onClick={handleSend}
             className="rounded-xl px-5 py-3 text-sm font-bold transition-opacity"
             style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
           >
@@ -200,7 +231,7 @@ export default function AskLotosChatPage() {
           </button>
         </div>
         <p className="text-xs mt-2 text-center" style={{ color: '#78716C' }}>
-          This demo shows pre-populated AI conversations. Powered by AskLotOS AI — responses are illustrative.
+          AI-powered assistant. Responses match pre-loaded dealership data.
         </p>
       </div>
     </div>

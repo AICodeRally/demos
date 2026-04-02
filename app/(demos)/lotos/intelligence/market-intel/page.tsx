@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import { AI_RESPONSES } from '@/data/lotos';
+import { MarkdownRenderer, Toast } from '@/components/demos/lotos';
 
-const marketResponse = AI_RESPONSES.find((r) => r.id === 'ai-006')!;
+const marketBriefs = AI_RESPONSES.filter((r) => r.category === 'market-intel');
 
 const KEY_METRICS = [
   { label: 'Price Trend', value: '-1.2%', detail: 'Week-over-week', color: '#DC2626', bg: '#FEF2F2' },
@@ -34,100 +36,42 @@ const ACTION_ITEMS = [
   },
 ];
 
-function parseBriefSections(text: string): { type: 'heading' | 'bullet' | 'numbered' | 'bold-line' | 'paragraph' | 'blank'; content: string }[] {
-  const lines = text.split('\n');
-  return lines.map((line) => {
-    if (line.startsWith('## ')) return { type: 'heading', content: line.slice(3) };
-    if (/^[-•]\s/.test(line.trim())) return { type: 'bullet', content: line.replace(/^[-•]\s*/, '') };
-    if (/^\d+\.\s/.test(line.trim())) return { type: 'numbered', content: line };
-    if (line.trim() === '') return { type: 'blank', content: '' };
-    return { type: 'paragraph', content: line };
-  });
-}
-
-function renderInline(text: string): React.ReactNode {
-  const segments = text.split(/(\*\*[^*]+\*\*)/g);
-  return (
-    <>
-      {segments.map((seg, i) => {
-        if (seg.startsWith('**') && seg.endsWith('**')) {
-          return <strong key={i} style={{ color: '#1C1917' }}>{seg.slice(2, -2)}</strong>;
-        }
-        return <span key={i}>{seg}</span>;
-      })}
-    </>
-  );
-}
-
-function RenderBrief({ text }: { text: string }) {
-  const sections = parseBriefSections(text);
-  const elements: React.ReactNode[] = [];
-  let key = 0;
-  let numberedBuffer: string[] = [];
-
-  const flushNumbered = () => {
-    if (numberedBuffer.length > 0) {
-      elements.push(
-        <ol key={key++} className="space-y-1 my-2 ml-2">
-          {numberedBuffer.map((item, i) => {
-            const content = item.replace(/^\d+\.\s*/, '');
-            return (
-              <li key={i} className="flex gap-2">
-                <span style={{ color: '#DC2626', fontWeight: 700, minWidth: 20 }}>{i + 1}.</span>
-                <span>{renderInline(content)}</span>
-              </li>
-            );
-          })}
-        </ol>
-      );
-      numberedBuffer = [];
-    }
-  };
-
-  for (const section of sections) {
-    if (section.type !== 'numbered' && numberedBuffer.length > 0) {
-      flushNumbered();
-    }
-
-    if (section.type === 'heading') {
-      elements.push(
-        <div
-          key={key++}
-          className="mt-5 mb-2 pl-4 py-2 rounded-r-lg"
-          style={{ borderLeft: '4px solid #DC2626', backgroundColor: '#FEF2F2' }}
-        >
-          <h3 className="text-base font-bold" style={{ color: '#1C1917' }}>{section.content}</h3>
-        </div>
-      );
-    } else if (section.type === 'bullet') {
-      elements.push(
-        <div key={key++} className="flex gap-2 my-1 ml-2">
-          <span style={{ color: '#DC2626', fontWeight: 700 }}>•</span>
-          <span className="text-base" style={{ color: '#57534E' }}>{renderInline(section.content)}</span>
-        </div>
-      );
-    } else if (section.type === 'numbered') {
-      numberedBuffer.push(section.content);
-    } else if (section.type === 'paragraph' && section.content.trim()) {
-      elements.push(
-        <p key={key++} className="text-base leading-relaxed" style={{ color: '#57534E' }}>
-          {renderInline(section.content)}
-        </p>
-      );
-    } else if (section.type === 'blank') {
-      elements.push(<div key={key++} className="h-2" />);
-    }
-  }
-
-  if (numberedBuffer.length > 0) flushNumbered();
-
-  return <>{elements}</>;
-}
-
 export default function MarketIntelPage() {
+  const [briefIndex, setBriefIndex] = useState(0);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [checkedItems, setCheckedItems] = useState<boolean[]>(ACTION_ITEMS.map(() => false));
+
+  const currentBrief = marketBriefs[briefIndex % marketBriefs.length];
+
+  const handleGenerateNew = useCallback(() => {
+    setBriefIndex((prev) => (prev + 1) % marketBriefs.length);
+  }, []);
+
+  const handleShare = useCallback(() => {
+    if (currentBrief) {
+      navigator.clipboard.writeText(currentBrief.answer).catch(() => {});
+      setToastMsg('Brief copied to clipboard');
+    }
+  }, [currentBrief]);
+
+  const toggleCheck = useCallback((idx: number) => {
+    setCheckedItems((prev) => {
+      const next = [...prev];
+      next[idx] = !next[idx];
+      return next;
+    });
+  }, []);
+
+  const briefTitle = currentBrief?.question === 'Weekly market brief'
+    ? 'Weekly Market Brief — April 1, 2026'
+    : currentBrief?.question === 'Weekly market brief (Mar 25)'
+    ? 'Weekly Market Brief — March 25, 2026'
+    : 'Weekly Market Brief — March 18, 2026';
+
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
+
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
@@ -139,12 +83,14 @@ export default function MarketIntelPage() {
         </div>
         <div className="flex gap-2">
           <button
+            onClick={handleShare}
             className="rounded-xl px-4 py-2 text-sm font-bold transition-colors"
             style={{ backgroundColor: '#F5F5F4', color: '#1C1917', border: '1px solid #E7E5E4' }}
           >
             Share Brief
           </button>
           <button
+            onClick={handleGenerateNew}
             className="rounded-xl px-4 py-2 text-sm font-bold"
             style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
           >
@@ -153,7 +99,6 @@ export default function MarketIntelPage() {
         </div>
       </div>
 
-      {/* Date Header */}
       <div
         className="rounded-xl px-6 py-4 flex items-center justify-between"
         style={{ backgroundColor: '#FEF2F2', border: '1px solid #FECACA' }}
@@ -166,8 +111,8 @@ export default function MarketIntelPage() {
             AI
           </div>
           <div>
-            <p className="text-base font-bold" style={{ color: '#1C1917' }}>Weekly Market Brief — April 1, 2026</p>
-            <p className="text-sm" style={{ color: '#78716C' }}>Generated by AskLotOS AI · Phoenix Metro · Sora Auto</p>
+            <p className="text-base font-bold" style={{ color: '#1C1917' }}>{briefTitle}</p>
+            <p className="text-sm" style={{ color: '#78716C' }}>Generated by AskLotOS AI · Phoenix Metro · Sora Auto · Brief {briefIndex + 1} of {marketBriefs.length}</p>
           </div>
         </div>
         <div
@@ -179,9 +124,7 @@ export default function MarketIntelPage() {
         </div>
       </div>
 
-      {/* Key Metrics + Brief Side-by-Side */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-        {/* Key Metrics Sidebar */}
         <div className="lg:col-span-1 space-y-3">
           <h2 className="text-base font-bold" style={{ color: '#1C1917' }}>Key Metrics</h2>
           {KEY_METRICS.map((metric) => (
@@ -197,13 +140,11 @@ export default function MarketIntelPage() {
           ))}
         </div>
 
-        {/* Brief Content */}
         <div className="lg:col-span-3 rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-          <RenderBrief text={marketResponse.answer} />
+          <MarkdownRenderer text={currentBrief?.answer ?? ''} />
         </div>
       </div>
 
-      {/* Action Items */}
       <div>
         <h2 className="text-lg font-bold mb-3" style={{ color: '#1C1917' }}>Action Items</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -214,6 +155,26 @@ export default function MarketIntelPage() {
               style={{ borderColor: '#E7E5E4' }}
             >
               <div className="flex items-center gap-2 mb-3">
+                <button
+                  onClick={() => toggleCheck(i)}
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '4px',
+                    border: checkedItems[i] ? '2px solid #16A34A' : '2px solid #E7E5E4',
+                    background: checkedItems[i] ? '#16A34A' : '#FFFFFF',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#FFFFFF',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {checkedItems[i] ? '\u2713' : ''}
+                </button>
                 <span
                   className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                   style={{ backgroundColor: item.priorityBg, color: item.priorityColor }}
@@ -222,8 +183,25 @@ export default function MarketIntelPage() {
                 </span>
                 <span className="text-xs font-semibold" style={{ color: '#78716C' }}>Action {i + 1}</span>
               </div>
-              <p className="text-base font-bold" style={{ color: '#1C1917' }}>{item.title}</p>
-              <p className="text-sm mt-2 leading-relaxed" style={{ color: '#57534E' }}>{item.detail}</p>
+              <p
+                className="text-base font-bold"
+                style={{
+                  color: '#1C1917',
+                  textDecoration: checkedItems[i] ? 'line-through' : 'none',
+                  opacity: checkedItems[i] ? 0.6 : 1,
+                }}
+              >
+                {item.title}
+              </p>
+              <p
+                className="text-sm mt-2 leading-relaxed"
+                style={{
+                  color: '#57534E',
+                  opacity: checkedItems[i] ? 0.6 : 1,
+                }}
+              >
+                {item.detail}
+              </p>
             </div>
           ))}
         </div>
