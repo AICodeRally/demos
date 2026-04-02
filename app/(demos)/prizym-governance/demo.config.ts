@@ -27,6 +27,6 @@ export default defineDemo({
     industry: 'Sales Performance Management',
     tagline: 'Enterprise governance platform for sales compensation programs — policies, plans, approvals, and audit trails',
     color: '#06b6d4',
-    externalUrl: 'https://sgm.aicoderally.com',
+    externalUrl: 'https://governance.prizym.aicoderally.com',
   },
 });

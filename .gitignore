@@ -5,3 +5,7 @@ out/
 .env*
 .DS_Store
 data/demo-registry.ts
+
+# Claude Code local artifacts
+.claude/
+.superpowers/

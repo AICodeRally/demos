@@ -3,6 +3,7 @@ import { Clock } from 'lucide-react';
 
 export default defineDemo({
   slug: 'on-the-clock',
+  layout: 'focus',
   client: {
     name: 'NFL Draft 2026',
     tagline: 'Interactive Draft Simulator',
