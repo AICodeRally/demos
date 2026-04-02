@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { VEHICLES } from '@/data/lotos';
+import { DetailPanel, VehicleDetail, Toast } from '@/components/demos/lotos';
 
 type AgeBucket = '0-30' | '31-60' | '61-90' | '90+';
 
@@ -35,18 +37,20 @@ function getDaysBadgeColor(days: number): { color: string; bg: string } {
 }
 
 const BUCKET_CONFIG: Record<AgeBucket, { label: string; color: string; bg: string; border: string }> = {
-  '0-30':  { label: '0–30 Days',  color: '#16A34A', bg: '#F0FDF4',  border: '#BBF7D0' },
-  '31-60': { label: '31–60 Days', color: '#D97706', bg: '#FFFBEB',  border: '#FDE68A' },
-  '61-90': { label: '61–90 Days', color: '#DC2626', bg: '#FEF2F2',  border: '#FCA5A5' },
+  '0-30':  { label: '0-30 Days',  color: '#16A34A', bg: '#F0FDF4',  border: '#BBF7D0' },
+  '31-60': { label: '31-60 Days', color: '#D97706', bg: '#FFFBEB',  border: '#FDE68A' },
+  '61-90': { label: '61-90 Days', color: '#DC2626', bg: '#FEF2F2',  border: '#FCA5A5' },
   '90+':   { label: '90+ Days',   color: '#7F1D1D', bg: '#FEE2E2',  border: '#FCA5A5' },
 };
 
 export default function LotosAgingPage() {
-  // Only non-sold vehicles
+  const [activeBucket, setActiveBucket] = useState<string | null>(null);
+  const [panelEntity, setPanelEntity] = useState<{ type: 'vehicle'; id: string } | null>(null);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
   const activeVehicles = VEHICLES.filter((v) => v.status !== 'sold');
   const sortedByAge = [...activeVehicles].sort((a, b) => b.daysOnLot - a.daysOnLot);
 
-  // Bucket summaries
   const buckets: Record<AgeBucket, { count: number; totalInvestment: number }> = {
     '0-30': { count: 0, totalInvestment: 0 },
     '31-60': { count: 0, totalInvestment: 0 },
@@ -59,7 +63,6 @@ export default function LotosAgingPage() {
     buckets[b].totalInvestment += v.acquisitionCost + v.reconCost;
   });
 
-  // Compute unrealized losses
   const vehiclesWithLoss = sortedByAge.map((v) => {
     const marketValue = getMarketValue(v.askingPrice, v.daysOnLot);
     const totalCost = v.acquisitionCost + v.reconCost;
@@ -67,11 +70,29 @@ export default function LotosAgingPage() {
     return { ...v, marketValue, totalCost, unrealizedLoss };
   });
 
+  const filteredVehicles = activeBucket
+    ? vehiclesWithLoss.filter((v) => getAgeBucket(v.daysOnLot) === activeBucket)
+    : vehiclesWithLoss;
+
   const totalUnrealizedLoss = vehiclesWithLoss.reduce((sum, v) => sum + v.unrealizedLoss, 0);
+
+  function handleWholesale(v: typeof vehiclesWithLoss[0]) {
+    const wholesaleOffer = Math.round(v.marketValue * 0.85);
+    setToastMsg(`Wholesale offer: $${wholesaleOffer.toLocaleString()} from Manheim Phoenix`);
+  }
 
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
-      {/* Page Header */}
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
+
+      <DetailPanel
+        open={panelEntity !== null}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? `Vehicle ${panelEntity.id}` : ''}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} />}
+      </DetailPanel>
+
       <div style={{ marginBottom: '24px' }}>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Aging Report
@@ -81,7 +102,6 @@ export default function LotosAgingPage() {
         </p>
       </div>
 
-      {/* Bucket Summary Cards */}
       <div
         style={{
           display: 'grid',
@@ -93,11 +113,19 @@ export default function LotosAgingPage() {
         {(Object.keys(BUCKET_CONFIG) as AgeBucket[]).map((bucket) => {
           const cfg = BUCKET_CONFIG[bucket];
           const data = buckets[bucket];
+          const isActive = activeBucket === bucket;
           return (
             <div
               key={bucket}
               className="rounded-xl border p-6"
-              style={{ background: cfg.bg, borderColor: cfg.border }}
+              style={{
+                background: cfg.bg,
+                borderColor: isActive ? cfg.color : cfg.border,
+                borderWidth: isActive ? '2px' : '1px',
+                cursor: 'pointer',
+                boxShadow: isActive ? `0 0 0 2px ${cfg.color}40` : 'none',
+              }}
+              onClick={() => setActiveBucket(isActive ? null : bucket)}
             >
               <div style={{ fontSize: '14px', fontWeight: 600, color: cfg.color, marginBottom: '6px' }}>
                 {cfg.label}
@@ -108,12 +136,16 @@ export default function LotosAgingPage() {
               <div style={{ fontSize: '14px', fontWeight: 600, color: '#57534E' }}>
                 ${data.totalInvestment.toLocaleString()} invested
               </div>
+              {isActive && (
+                <div style={{ fontSize: '14px', color: cfg.color, marginTop: '4px', fontWeight: 600 }}>
+                  Filtered
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
-      {/* Total Unrealized Loss */}
       {totalUnrealizedLoss > 0 && (
         <div
           style={{
@@ -128,11 +160,11 @@ export default function LotosAgingPage() {
           }}
         >
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Total Unrealized Loss
             </div>
             <div style={{ fontSize: '28px', fontWeight: 800, color: '#DC2626', marginTop: '2px' }}>
-              −${totalUnrealizedLoss.toLocaleString()}
+              -${totalUnrealizedLoss.toLocaleString()}
             </div>
           </div>
           <div style={{ fontSize: '14px', color: '#991B1B', maxWidth: '400px' }}>
@@ -142,7 +174,28 @@ export default function LotosAgingPage() {
         </div>
       )}
 
-      {/* Aging Table */}
+      {activeBucket && (
+        <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '14px', color: '#78716C' }}>
+            Showing {filteredVehicles.length} vehicles in {BUCKET_CONFIG[activeBucket as AgeBucket]?.label ?? activeBucket} bucket
+          </span>
+          <button
+            onClick={() => setActiveBucket(null)}
+            style={{
+              padding: '4px 12px',
+              borderRadius: '6px',
+              border: '1px solid #E7E5E4',
+              background: '#FFFFFF',
+              color: '#57534E',
+              fontSize: '14px',
+              cursor: 'pointer',
+            }}
+          >
+            Clear Filter
+          </button>
+        </div>
+      )}
+
       <div
         className="rounded-xl bg-white border"
         style={{ borderColor: '#E7E5E4', overflowX: 'auto' }}
@@ -179,11 +232,16 @@ export default function LotosAgingPage() {
             </tr>
           </thead>
           <tbody>
-            {vehiclesWithLoss.map((v) => {
+            {filteredVehicles.map((v) => {
               const action = getRecommendedAction(v.daysOnLot);
               const daysStyle = getDaysBadgeColor(v.daysOnLot);
+              const isWholesale = action.label.toLowerCase().includes('wholesale');
               return (
-                <tr key={v.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                <tr
+                  key={v.id}
+                  style={{ borderBottom: '1px solid #F1F5F9', cursor: 'pointer' }}
+                  onClick={() => setPanelEntity({ type: 'vehicle', id: v.id })}
+                >
                   <td
                     style={{
                       padding: '12px 14px',
@@ -199,7 +257,7 @@ export default function LotosAgingPage() {
                     <div style={{ fontWeight: 600 }}>
                       {v.year} {v.make} {v.model}
                     </div>
-                    <div style={{ fontSize: '13px', color: '#78716C' }}>{v.trim}</div>
+                    <div style={{ fontSize: '14px', color: '#78716C' }}>{v.trim}</div>
                   </td>
                   <td style={{ padding: '12px 14px' }}>
                     <span
@@ -240,20 +298,36 @@ export default function LotosAgingPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {v.unrealizedLoss > 0 ? `−$${v.unrealizedLoss.toLocaleString()}` : '—'}
+                    {v.unrealizedLoss > 0 ? `-$${v.unrealizedLoss.toLocaleString()}` : '-'}
                   </td>
                   <td style={{ padding: '12px 14px' }}>
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-                      style={{
-                        background: action.bg,
-                        color: action.color,
-                        border: `1px solid ${action.color}30`,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {action.label}
-                    </span>
+                    {isWholesale ? (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleWholesale(v); }}
+                        className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+                        style={{
+                          background: action.bg,
+                          color: action.color,
+                          border: `1px solid ${action.color}30`,
+                          whiteSpace: 'nowrap',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {action.label}
+                      </button>
+                    ) : (
+                      <span
+                        className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+                        style={{
+                          background: action.bg,
+                          color: action.color,
+                          border: `1px solid ${action.color}30`,
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {action.label}
+                      </span>
+                    )}
                   </td>
                 </tr>
               );

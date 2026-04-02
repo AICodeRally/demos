@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { VEHICLES } from '@/data/lotos';
+import { Toast } from '@/components/demos/lotos';
 
 const MARKET_COMPS = [
   { source: 'CarGurus', vehicle: '2023 Mazda CX-5 Preferred', miles: 22000, price: 29500, daysListed: 18 },
@@ -11,17 +12,24 @@ const MARKET_COMPS = [
   { source: 'Manheim', vehicle: '2023 Mazda CX-5 Preferred', miles: 25000, price: 23800, daysListed: 0 },
 ];
 
+const COMP_DETAILS = [
+  { link: 'cargurus.com/listing/cx5-pref-2023', listedAgo: '18d ago', condition: 'Excellent — no visible wear' },
+  { link: 'autotrader.com/listing/cx5-tour-2023', listedAgo: '22d ago', condition: 'Good — minor tire wear' },
+  { link: 'cars.com/listing/cx5-sel-2023', listedAgo: '15d ago', condition: 'Good — minor wear' },
+  { link: 'dealertrade.com/listing/cx5-pref-2022', listedAgo: '28d ago', condition: 'Fair — small dent rear quarter' },
+  { link: 'manheim.com/auction/cx5-pref-2023', listedAgo: 'Auction', condition: 'Good — minor wear' },
+];
+
 const AI_SUGGESTED_MIN = 28900;
 const AI_SUGGESTED_MAX = 30500;
 const AI_SUGGESTED_MIDPOINT = 29700;
 
-// days-to-sell estimates by price adjustment band
 function getDaysToSell(adjustment: number): string {
-  if (adjustment <= -10) return '8–12 days';
-  if (adjustment <= -5) return '12–18 days';
-  if (adjustment === 0) return '18–25 days';
-  if (adjustment <= 5) return '28–35 days';
-  return '40–55 days';
+  if (adjustment <= -10) return '8-12 days';
+  if (adjustment <= -5) return '12-18 days';
+  if (adjustment === 0) return '18-25 days';
+  if (adjustment <= 5) return '28-35 days';
+  return '40-55 days';
 }
 
 const frontlineVehicles = VEHICLES.filter((v) => v.status === 'frontline');
@@ -29,15 +37,20 @@ const frontlineVehicles = VEHICLES.filter((v) => v.status === 'frontline');
 export default function LotosPricingPage() {
   const [selectedId, setSelectedId] = useState('STK-018');
   const [adjustment, setAdjustment] = useState(0);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [localPrices, setLocalPrices] = useState<Record<string, number>>(() => {
+    const prices: Record<string, number> = {};
+    VEHICLES.forEach((v) => { prices[v.id] = v.askingPrice; });
+    return prices;
+  });
+  const [expandedComp, setExpandedComp] = useState<number | null>(null);
 
   const vehicle = VEHICLES.find((v) => v.id === selectedId) ?? VEHICLES.find((v) => v.id === 'STK-018')!;
 
-  // Derived pricing
-  const currentAsk = vehicle.askingPrice;
+  const currentAsk = localPrices[vehicle.id] ?? vehicle.askingPrice;
   const adjustedAsk = Math.round(currentAsk * (1 + adjustment / 100));
   const daysToSell = getDaysToSell(adjustment);
 
-  // For the price bar — compute positions
   const barMin = 22000;
   const barMax = 34000;
   const barRange = barMax - barMin;
@@ -47,9 +60,16 @@ export default function LotosPricingPage() {
   const sugMaxPct = toPercent(AI_SUGGESTED_MAX);
   const askPct = toPercent(adjustedAsk);
 
+  function handleApplyPrice() {
+    setLocalPrices((prev) => ({ ...prev, [vehicle.id]: adjustedAsk }));
+    setToastMsg(`Price updated to $${adjustedAsk.toLocaleString()}`);
+    setAdjustment(0);
+  }
+
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
-      {/* Page Header */}
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
+
       <div style={{ marginBottom: '24px' }}>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           AI Pricing Engine
@@ -59,7 +79,6 @@ export default function LotosPricingPage() {
         </p>
       </div>
 
-      {/* Vehicle Selector */}
       <div
         className="rounded-xl bg-white border p-6"
         style={{ borderColor: '#E7E5E4', marginBottom: '24px' }}
@@ -94,34 +113,30 @@ export default function LotosPricingPage() {
           </select>
         </div>
 
-        {/* Selected vehicle summary */}
         <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', marginTop: '8px' }}>
           {[
-            { label: 'Asking Price', value: `$${vehicle.askingPrice.toLocaleString()}` },
+            { label: 'Asking Price', value: `$${currentAsk.toLocaleString()}` },
             { label: 'Acq + Recon', value: `$${(vehicle.acquisitionCost + vehicle.reconCost).toLocaleString()}` },
             { label: 'Mileage', value: `${vehicle.mileage.toLocaleString()} mi` },
             { label: 'Days on Lot', value: `${vehicle.daysOnLot} days` },
             { label: 'Color', value: vehicle.color },
           ].map(({ label, value }) => (
             <div key={label}>
-              <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600, marginBottom: '2px' }}>{label}</div>
+              <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '2px' }}>{label}</div>
               <div style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917' }}>{value}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Two-column layout: comps + pricing */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
-
-        {/* Market Comp Table */}
         <div
           className="rounded-xl bg-white border"
           style={{ borderColor: '#E7E5E4', overflow: 'hidden' }}
         >
           <div style={{ padding: '16px 20px', borderBottom: '1px solid #F1F5F9' }}>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917' }}>Market Comparables</h2>
-            <p style={{ fontSize: '13px', color: '#78716C', marginTop: '2px' }}>Based on 2023 Mazda CX-5 segment</p>
+            <p style={{ fontSize: '14px', color: '#78716C', marginTop: '2px' }}>Based on 2023 Mazda CX-5 segment</p>
           </div>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
@@ -145,30 +160,65 @@ export default function LotosPricingPage() {
               </tr>
             </thead>
             <tbody>
-              {MARKET_COMPS.map((comp) => (
-                <tr key={comp.source} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                  <td style={{ padding: '10px 14px', fontSize: '13px', fontWeight: 600, color: '#1C1917' }}>
-                    {comp.source}
-                  </td>
-                  <td style={{ padding: '10px 14px', fontSize: '13px', color: '#57534E' }}>
-                    {comp.vehicle}
-                  </td>
-                  <td style={{ padding: '10px 14px', fontSize: '13px', color: '#57534E', whiteSpace: 'nowrap' }}>
-                    {comp.miles.toLocaleString()}
-                  </td>
-                  <td style={{ padding: '10px 14px', fontSize: '13px', fontWeight: 700, color: '#1C1917', whiteSpace: 'nowrap' }}>
-                    ${comp.price.toLocaleString()}
-                  </td>
-                  <td style={{ padding: '10px 14px', fontSize: '13px', color: comp.daysListed === 0 ? '#78716C' : '#57534E' }}>
-                    {comp.daysListed === 0 ? 'Auction' : `${comp.daysListed}d`}
-                  </td>
-                </tr>
+              {MARKET_COMPS.map((comp, idx) => (
+                <>
+                  <tr
+                    key={comp.source}
+                    style={{ borderBottom: expandedComp === idx ? 'none' : '1px solid #F1F5F9', cursor: 'pointer', background: expandedComp === idx ? '#F8FAFC' : 'transparent' }}
+                    onClick={() => setExpandedComp(expandedComp === idx ? null : idx)}
+                  >
+                    <td style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>
+                      {comp.source}
+                    </td>
+                    <td style={{ padding: '10px 14px', fontSize: '14px', color: '#57534E' }}>
+                      {comp.vehicle}
+                    </td>
+                    <td style={{ padding: '10px 14px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                      {comp.miles.toLocaleString()}
+                    </td>
+                    <td style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 700, color: '#1C1917', whiteSpace: 'nowrap' }}>
+                      ${comp.price.toLocaleString()}
+                    </td>
+                    <td style={{ padding: '10px 14px', fontSize: '14px', color: comp.daysListed === 0 ? '#78716C' : '#57534E' }}>
+                      {comp.daysListed === 0 ? 'Auction' : `${comp.daysListed}d`}
+                    </td>
+                  </tr>
+                  {expandedComp === idx && (
+                    <tr key={`${comp.source}-detail`} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                      <td colSpan={5} style={{ padding: '0 14px 12px 14px' }}>
+                        <div
+                          style={{
+                            background: '#F0FDF4',
+                            border: '1px solid #BBF7D0',
+                            borderRadius: '8px',
+                            padding: '12px 16px',
+                            display: 'flex',
+                            gap: '24px',
+                            flexWrap: 'wrap',
+                          }}
+                        >
+                          <div>
+                            <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600 }}>Source Link</div>
+                            <div style={{ fontSize: '14px', color: '#2563EB', fontWeight: 600 }}>{COMP_DETAILS[idx].link}</div>
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600 }}>Listed</div>
+                            <div style={{ fontSize: '14px', color: '#1C1917', fontWeight: 600 }}>{COMP_DETAILS[idx].listedAgo}</div>
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600 }}>Condition</div>
+                            <div style={{ fontSize: '14px', color: '#1C1917', fontWeight: 600 }}>{COMP_DETAILS[idx].condition}</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* AI Price Suggestion */}
         <div
           className="rounded-xl bg-white border p-6"
           style={{ borderColor: '#E7E5E4' }}
@@ -191,15 +241,13 @@ export default function LotosPricingPage() {
             <span style={{ fontSize: '18px', fontWeight: 800, color: '#16A34A' }}>
               ${AI_SUGGESTED_MIN.toLocaleString()} — ${AI_SUGGESTED_MAX.toLocaleString()}
             </span>
-            <span style={{ fontSize: '13px', color: '#16A34A', fontWeight: 600 }}>
+            <span style={{ fontSize: '14px', color: '#16A34A', fontWeight: 600 }}>
               · 87% confidence
             </span>
           </div>
 
-          {/* Price bar visualization */}
           <div style={{ marginBottom: '24px' }}>
             <div style={{ position: 'relative', height: '40px', marginBottom: '8px' }}>
-              {/* Track */}
               <div
                 style={{
                   position: 'absolute',
@@ -212,7 +260,6 @@ export default function LotosPricingPage() {
                   transform: 'translateY(-50%)',
                 }}
               />
-              {/* AI suggested range */}
               <div
                 style={{
                   position: 'absolute',
@@ -226,7 +273,6 @@ export default function LotosPricingPage() {
                   border: '1px solid #16A34A',
                 }}
               />
-              {/* AI midpoint tick */}
               <div
                 style={{
                   position: 'absolute',
@@ -239,7 +285,6 @@ export default function LotosPricingPage() {
                   transform: 'translate(-50%, -50%)',
                 }}
               />
-              {/* Current ask marker */}
               <div
                 style={{
                   position: 'absolute',
@@ -256,25 +301,24 @@ export default function LotosPricingPage() {
                 }}
               />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#78716C' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#78716C' }}>
               <span>${barMin.toLocaleString()}</span>
               <span>${barMax.toLocaleString()}</span>
             </div>
             <div style={{ display: 'flex', gap: '16px', marginTop: '8px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <div style={{ width: '12px', height: '8px', background: '#BBF7D0', border: '1px solid #16A34A', borderRadius: '2px' }} />
-                <span style={{ fontSize: '12px', color: '#57534E' }}>AI Suggested Range</span>
+                <span style={{ fontSize: '14px', color: '#57534E' }}>AI Suggested Range</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <div style={{ width: '10px', height: '10px', background: '#2563EB', borderRadius: '50%' }} />
-                <span style={{ fontSize: '12px', color: '#57534E' }}>
+                <span style={{ fontSize: '14px', color: '#57534E' }}>
                   Current Ask (${adjustedAsk.toLocaleString()})
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Insight */}
           <div
             style={{
               background: '#FEF3C7',
@@ -285,14 +329,13 @@ export default function LotosPricingPage() {
               color: '#92400E',
             }}
           >
-            Current asking price <strong>${vehicle.askingPrice.toLocaleString()}</strong> is{' '}
-            {vehicle.askingPrice > AI_SUGGESTED_MAX ? 'above' : vehicle.askingPrice < AI_SUGGESTED_MIN ? 'below' : 'within'} the
-            AI-suggested range. {vehicle.askingPrice > AI_SUGGESTED_MAX ? 'Consider a $500–$1,000 reduction to align with market.' : vehicle.askingPrice < AI_SUGGESTED_MIN ? 'Room to increase — market supports a higher price.' : 'Price is well-positioned for current market conditions.'}
+            Current asking price <strong>${currentAsk.toLocaleString()}</strong> is{' '}
+            {currentAsk > AI_SUGGESTED_MAX ? 'above' : currentAsk < AI_SUGGESTED_MIN ? 'below' : 'within'} the
+            AI-suggested range. {currentAsk > AI_SUGGESTED_MAX ? 'Consider a $500-$1,000 reduction to align with market.' : currentAsk < AI_SUGGESTED_MIN ? 'Room to increase — market supports a higher price.' : 'Price is well-positioned for current market conditions.'}
           </div>
         </div>
       </div>
 
-      {/* What-If Section */}
       <div
         className="rounded-xl bg-white border p-6"
         style={{ borderColor: '#E7E5E4' }}
@@ -304,8 +347,7 @@ export default function LotosPricingPage() {
           Adjust price to see projected days-to-sell impact
         </p>
 
-        {/* Adjustment Buttons */}
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
           {[-10, -5, 0, 5, 10].map((pct) => (
             <button
               key={pct}
@@ -324,22 +366,36 @@ export default function LotosPricingPage() {
               {pct === 0 ? 'Current' : pct > 0 ? `+${pct}%` : `${pct}%`}
             </button>
           ))}
+          <button
+            onClick={handleApplyPrice}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              background: '#16A34A',
+              color: '#FFFFFF',
+              fontSize: '15px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: 'none',
+            }}
+          >
+            Apply Price
+          </button>
         </div>
 
-        {/* Results */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
           <div
             className="rounded-xl border p-5"
             style={{ borderColor: '#E7E5E4', background: '#F8FAFC' }}
           >
-            <div style={{ fontSize: '13px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
               Adjusted Asking Price
             </div>
             <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
               ${adjustedAsk.toLocaleString()}
             </div>
             {adjustment !== 0 && (
-              <div style={{ fontSize: '13px', color: adjustment < 0 ? '#DC2626' : '#16A34A', marginTop: '2px', fontWeight: 600 }}>
+              <div style={{ fontSize: '14px', color: adjustment < 0 ? '#DC2626' : '#16A34A', marginTop: '2px', fontWeight: 600 }}>
                 {adjustment > 0 ? '+' : ''}${(adjustedAsk - currentAsk).toLocaleString()} vs current
               </div>
             )}
@@ -349,7 +405,7 @@ export default function LotosPricingPage() {
             className="rounded-xl border p-5"
             style={{ borderColor: '#E7E5E4', background: '#F8FAFC' }}
           >
-            <div style={{ fontSize: '13px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
               Projected Days to Sell
             </div>
             <div
@@ -364,7 +420,7 @@ export default function LotosPricingPage() {
             className="rounded-xl border p-5"
             style={{ borderColor: '#E7E5E4', background: '#F8FAFC' }}
           >
-            <div style={{ fontSize: '13px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
               Gross Profit (Est.)
             </div>
             <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
@@ -376,7 +432,7 @@ export default function LotosPricingPage() {
             className="rounded-xl border p-5"
             style={{ borderColor: '#E7E5E4', background: '#F8FAFC' }}
           >
-            <div style={{ fontSize: '13px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
               vs AI Suggested Range
             </div>
             <div

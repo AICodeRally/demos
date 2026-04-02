@@ -2,60 +2,42 @@
 
 import { useState } from 'react';
 import { AI_RESPONSES, DEALS, VEHICLES, CUSTOMERS, DEAL_STATUS_COLORS } from '@/data/lotos';
+import { MarkdownRenderer, Toast } from '@/components/demos/lotos';
 
 const optimizerResponse = AI_RESPONSES.find((r) => r.id === 'ai-004')!;
 
-function renderMarkdown(text: string): React.ReactNode {
-  const parts: React.ReactNode[] = [];
+function parseRecommendationSections(text: string): Array<{ header: string; body: string }> {
+  const sections: Array<{ header: string; body: string }> = [];
   const lines = text.split('\n');
-  let key = 0;
+  let currentHeader = '';
+  let currentBody: string[] = [];
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    if (line.trim() === '') {
-      parts.push(<br key={key++} />);
-      continue;
+  for (const line of lines) {
+    const match = line.match(/^\d+\.\s+\*\*(.+?)\*\*\s*[-—]?\s*(.*)/);
+    if (match) {
+      if (currentHeader) {
+        sections.push({ header: currentHeader, body: currentBody.join('\n') });
+      }
+      currentHeader = match[1];
+      currentBody = match[2] ? [match[2]] : [];
+    } else if (currentHeader && line.trim()) {
+      currentBody.push(line);
     }
-
-    // Numbered list item
-    if (/^\d+\./.test(line.trim())) {
-      const content = line.replace(/^\d+\.\s*/, '');
-      parts.push(
-        <div key={key++} className="flex gap-2 mt-2">
-          <span style={{ color: '#DC2626', fontWeight: 700, minWidth: 20 }}>
-            {line.match(/^(\d+)/)?.[1]}.
-          </span>
-          <span>{renderInline(content)}</span>
-        </div>
-      );
-      continue;
-    }
-
-    parts.push(<span key={key++}>{renderInline(line)}<br /></span>);
   }
-
-  return <>{parts}</>;
-}
-
-function renderInline(text: string): React.ReactNode {
-  const segments = text.split(/(\*\*[^*]+\*\*)/g);
-  return (
-    <>
-      {segments.map((seg, i) => {
-        if (seg.startsWith('**') && seg.endsWith('**')) {
-          return <strong key={i} style={{ color: '#1C1917' }}>{seg.slice(2, -2)}</strong>;
-        }
-        return <span key={i}>{seg}</span>;
-      })}
-    </>
-  );
+  if (currentHeader) {
+    sections.push({ header: currentHeader, body: currentBody.join('\n') });
+  }
+  return sections;
 }
 
 export default function DealOptimizerPage() {
   const [selectedDealId, setSelectedDealId] = useState('DL-2026-005');
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [optimizedGross, setOptimizedGross] = useState<number | null>(null);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [expandedSection, setExpandedSection] = useState<number | null>(null);
+  const [grossFlash, setGrossFlash] = useState(false);
 
   const deal = DEALS.find((d) => d.id === selectedDealId);
   const vehicle = deal ? VEHICLES.find((v) => v.id === deal.vehicleId) : null;
@@ -63,18 +45,31 @@ export default function DealOptimizerPage() {
 
   const isOptimizableDeal = selectedDealId === 'DL-2026-005';
 
+  const recommendationSections = parseRecommendationSections(optimizerResponse.answer);
+
   function handleRunOptimizer() {
     setLoading(true);
     setShowResults(false);
+    setOptimizedGross(null);
     setTimeout(() => {
       setLoading(false);
       setShowResults(true);
     }, 900);
   }
 
+  function handleApplyRecommendations() {
+    if (!deal) return;
+    const newGross = deal.totalGross + 2560;
+    setOptimizedGross(newGross);
+    setGrossFlash(true);
+    setToastMsg(`Optimized gross: $${newGross.toLocaleString()} (+$2,560)`);
+    setTimeout(() => setGrossFlash(false), 1500);
+  }
+
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
+
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
@@ -93,7 +88,6 @@ export default function DealOptimizerPage() {
         </div>
       </div>
 
-      {/* Deal Selector */}
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>Select Deal</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -104,7 +98,7 @@ export default function DealOptimizerPage() {
             return (
               <button
                 key={d.id}
-                onClick={() => { setSelectedDealId(d.id); setShowResults(false); }}
+                onClick={() => { setSelectedDealId(d.id); setShowResults(false); setOptimizedGross(null); }}
                 className="rounded-xl p-4 text-left transition-all"
                 style={{
                   border: isSelected ? '2px solid #DC2626' : '1px solid #E7E5E4',
@@ -130,7 +124,6 @@ export default function DealOptimizerPage() {
         </div>
       </div>
 
-      {/* Current Deal Details */}
       {deal && vehicle && customer && (
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
           <div className="flex items-start justify-between mb-5">
@@ -151,32 +144,38 @@ export default function DealOptimizerPage() {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {[
               { label: 'Sale Price', value: `$${deal.salePrice.toLocaleString()}` },
-              { label: 'Trade Allowance', value: deal.tradeAllowance > 0 ? `$${deal.tradeAllowance.toLocaleString()}` : '—' },
+              { label: 'Trade Allowance', value: deal.tradeAllowance > 0 ? `$${deal.tradeAllowance.toLocaleString()}` : '-' },
               { label: 'Down Payment', value: `$${deal.downPayment.toLocaleString()}` },
               { label: 'Front Gross', value: `$${deal.frontGross.toLocaleString()}`, highlight: true },
               { label: 'F&I Gross', value: `$${deal.fniGross.toLocaleString()}`, highlight: true },
-              { label: 'Total Gross', value: `$${deal.totalGross.toLocaleString()}`, big: true },
+              { label: 'Total Gross', value: optimizedGross ? `$${optimizedGross.toLocaleString()}` : `$${deal.totalGross.toLocaleString()}`, big: true },
               { label: 'Lender', value: deal.lender },
-              { label: 'Credit Tier', value: customer.creditTier.replace('-', ' ').replace(/\b\w/g, (c) => c.toUpperCase()) },
+              { label: 'Credit Tier', value: customer.creditTier.replace('-', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) },
             ].map((item) => (
               <div
                 key={item.label}
                 className="rounded-lg p-4"
-                style={{ backgroundColor: item.big ? '#F0FDF4' : '#F8FAFC', border: '1px solid #E7E5E4' }}
+                style={{
+                  backgroundColor: item.big ? (grossFlash ? '#DCFCE7' : '#F0FDF4') : '#F8FAFC',
+                  border: '1px solid #E7E5E4',
+                  transition: 'background-color 0.5s',
+                }}
               >
                 <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>{item.label}</p>
                 <p
                   className={`mt-1 font-bold ${item.big ? 'text-2xl' : 'text-lg'}`}
-                  style={{ color: item.big ? '#16A34A' : item.highlight ? '#1C1917' : '#1C1917' }}
+                  style={{ color: item.big ? '#16A34A' : '#1C1917' }}
                 >
                   {item.value}
                 </p>
+                {item.big && optimizedGross && (
+                  <p className="text-xs font-bold mt-1" style={{ color: '#16A34A' }}>+$2,560 from optimization</p>
+                )}
               </div>
             ))}
           </div>
 
-          {/* Run Optimizer Button */}
-          <div className="mt-6">
+          <div className="mt-6 flex gap-3">
             <button
               onClick={handleRunOptimizer}
               disabled={loading}
@@ -187,10 +186,10 @@ export default function DealOptimizerPage() {
                 opacity: loading ? 0.7 : 1,
               }}
             >
-              {loading ? '⏳ Analyzing deal...' : '⚡ Run Optimizer'}
+              {loading ? 'Analyzing deal...' : 'Run Optimizer'}
             </button>
             {!isOptimizableDeal && (
-              <p className="mt-2 text-sm" style={{ color: '#78716C' }}>
+              <p className="mt-2 text-sm self-center" style={{ color: '#78716C' }}>
                 Full optimization detail available for DL-2026-005. Other deals show summary analysis.
               </p>
             )}
@@ -198,10 +197,8 @@ export default function DealOptimizerPage() {
         </div>
       )}
 
-      {/* Optimizer Results */}
       {showResults && (
         <div className="space-y-4">
-          {/* Before / After Comparison */}
           <div className="grid grid-cols-3 gap-4">
             <div className="rounded-xl border p-6" style={{ backgroundColor: '#FFF7ED', borderColor: '#FED7AA' }}>
               <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#78716C' }}>Current Total Gross</p>
@@ -216,7 +213,7 @@ export default function DealOptimizerPage() {
                 className="rounded-full w-16 h-16 flex items-center justify-center text-2xl font-black"
                 style={{ backgroundColor: '#DCFCE7', color: '#16A34A', border: '2px solid #86EFAC' }}
               >
-                ↑
+                +
               </div>
               <p className="text-2xl font-black mt-3" style={{ color: '#16A34A' }}>+$2,560</p>
               <p className="text-sm font-semibold mt-1" style={{ color: '#57534E' }}>Improvement</p>
@@ -229,23 +226,58 @@ export default function DealOptimizerPage() {
             </div>
           </div>
 
-          {/* AI Recommendation */}
           <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                  style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+                >
+                  AI
+                </div>
+                <div>
+                  <p className="text-sm font-bold" style={{ color: '#DC2626' }}>AskLotOS Recommendation</p>
+                  <p className="text-xs" style={{ color: '#78716C' }}>{optimizerResponse.question}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleApplyRecommendations}
+                className="rounded-xl px-5 py-2.5 text-sm font-bold"
+                style={{ backgroundColor: '#16A34A', color: '#FFFFFF', cursor: 'pointer', border: 'none' }}
               >
-                AI
-              </div>
-              <div>
-                <p className="text-sm font-bold" style={{ color: '#DC2626' }}>AskLotOS Recommendation</p>
-                <p className="text-xs" style={{ color: '#78716C' }}>{optimizerResponse.question}</p>
-              </div>
+                Apply Recommendations
+              </button>
             </div>
-            <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
-              {renderMarkdown(optimizerResponse.answer)}
-            </div>
+
+            {recommendationSections.length > 0 ? (
+              <div className="space-y-2">
+                {recommendationSections.map((section, idx) => (
+                  <div key={idx} className="rounded-lg border" style={{ borderColor: '#E7E5E4' }}>
+                    <button
+                      onClick={() => setExpandedSection(expandedSection === idx ? null : idx)}
+                      className="w-full text-left px-4 py-3 flex items-center justify-between"
+                      style={{ background: expandedSection === idx ? '#F8FAFC' : '#FFFFFF', borderRadius: '8px' }}
+                    >
+                      <span className="text-sm font-bold" style={{ color: '#1C1917' }}>
+                        {idx + 1}. {section.header}
+                      </span>
+                      <span style={{ color: '#78716C', fontSize: '18px' }}>{expandedSection === idx ? '-' : '+'}</span>
+                    </button>
+                    {expandedSection === idx && (
+                      <div className="px-4 pb-3">
+                        <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
+                          <MarkdownRenderer text={section.body} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
+                <MarkdownRenderer text={optimizerResponse.answer} />
+              </div>
+            )}
           </div>
         </div>
       )}
