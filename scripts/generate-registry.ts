@@ -17,6 +17,8 @@ interface RegistryEntry {
   tagline: string;
   color: string;
   layout: string;
+  badge?: string;
+  externalUrl?: string;
 }
 
 async function main() {
@@ -77,6 +79,8 @@ Examples:
         tagline: config.meta.tagline,
         color: config.meta.color ?? config.colors?.primary ?? '#6B7280',
         layout: config.layout ?? 'sidebar',
+        badge: config.product?.badge,
+        externalUrl: config.meta?.externalUrl,
       });
     } catch (err) {
       errors.push(`${dir}: failed to import — ${err}`);
@@ -102,6 +106,8 @@ export interface DemoRegistryEntry {
   tagline: string;
   color: string;
   layout: string;
+  badge?: string;
+  externalUrl?: string;
 }
 
 export const demoRegistry: DemoRegistryEntry[] = ${JSON.stringify(entries, null, 2)};
