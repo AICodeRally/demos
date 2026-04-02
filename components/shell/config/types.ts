@@ -37,6 +37,7 @@ interface DemoConfigBase {
     industry: string;
     tagline: string;
     color?: string;
+    externalUrl?: string;
   };
   extensionVars?: string;
   cockpit?: boolean | import('../cockpit/types').CockpitConfig;
@@ -44,6 +45,10 @@ interface DemoConfigBase {
 
 export interface SidebarDemoConfig extends DemoConfigBase {
   layout?: 'sidebar';
+}
+
+export interface FocusDemoConfig extends DemoConfigBase {
+  layout: 'focus';
 }
 
 export interface TopnavDemoConfig extends DemoConfigBase {
@@ -69,10 +74,10 @@ export interface WizardDemoConfig extends DemoConfigBase {
   };
 }
 
-export type DemoConfig = SidebarDemoConfig | TopnavDemoConfig | WizardDemoConfig;
+export type DemoConfig = SidebarDemoConfig | FocusDemoConfig | TopnavDemoConfig | WizardDemoConfig;
 
 export interface ResolvedDemoConfig extends Omit<DemoConfigBase, 'theme' | 'footer'> {
-  layout: 'sidebar' | 'topnav' | 'wizard';
+  layout: 'sidebar' | 'focus' | 'topnav' | 'wizard';
   nav: NavSection[];
   footer: { copyright: string; poweredBy: string };
   suite?: TopnavDemoConfig['suite'];
