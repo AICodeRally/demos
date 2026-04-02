@@ -1,6 +1,8 @@
 'use client';
 
-import { VEHICLES } from '@/data/lotos';
+import { useState, useMemo } from 'react';
+import { VEHICLES, CUSTOMERS } from '@/data/lotos';
+import { DataTable, DetailPanel, CustomerDetail, VehicleDetail, DealDetail, type Column } from '@/components/demos/lotos';
 
 type Outcome = 'purchased' | 'interested' | 'follow-up' | 'not-interested';
 
@@ -33,18 +35,33 @@ const OUTCOME_CONFIG: Record<Outcome, { label: string; color: string; bg: string
   'not-interested': { label: 'Not Interested', color: '#6B7280', bg: '#F9FAFB' },
 };
 
+const ALL_OUTCOMES: Outcome[] = ['purchased', 'interested', 'follow-up', 'not-interested'];
+const SALESPEOPLE = ['Jake Moreno', 'Lisa Park'];
+
 function getVehicleLabel(stockId: string): string {
   const v = VEHICLES.find((v) => v.id === stockId);
   if (!v) return stockId;
   return `${v.year} ${v.make} ${v.model} ${v.trim}`;
 }
 
+function findCustomerByName(name: string): string | null {
+  const parts = name.split(' ');
+  if (parts.length < 2) return null;
+  const firstName = parts[0];
+  const lastName = parts.slice(1).join(' ');
+  const c = CUSTOMERS.find(c => c.firstName === firstName && c.lastName === lastName);
+  return c ? c.id : null;
+}
+
 export default function TestDrivesPage() {
+  const [outcomeFilter, setOutcomeFilter] = useState<Outcome | 'all'>('all');
+  const [salespersonFilter, setSalespersonFilter] = useState<string>('all');
+  const [panelEntity, setPanelEntity] = useState<{ type: 'customer' | 'vehicle' | 'deal'; id: string } | null>(null);
+
   const totalDrives = TEST_DRIVES.length;
   const purchased = TEST_DRIVES.filter((d) => d.outcome === 'purchased').length;
   const conversionRate = Math.round((purchased / totalDrives) * 100);
 
-  // Parse duration minutes for average
   const totalMinutes = TEST_DRIVES.reduce((sum, d) => {
     return sum + parseInt(d.duration);
   }, 0);
@@ -55,19 +72,87 @@ export default function TestDrivesPage() {
     { purchased: 0, interested: 0, 'follow-up': 0, 'not-interested': 0 }
   );
 
+  const filteredDrives = useMemo(() => {
+    return TEST_DRIVES.filter(d => {
+      const matchOutcome = outcomeFilter === 'all' || d.outcome === outcomeFilter;
+      const matchSalesperson = salespersonFilter === 'all' || d.salesperson === salespersonFilter;
+      return matchOutcome && matchSalesperson;
+    });
+  }, [outcomeFilter, salespersonFilter]);
+
+  const columns: Column<TestDrive>[] = [
+    {
+      key: 'date',
+      label: 'Date',
+      width: '120px',
+      render: (row) => <span style={{ color: '#57534E' }}>{row.date}</span>,
+      sortFn: (a, b) => a.date.localeCompare(b.date),
+    },
+    {
+      key: 'customer',
+      label: 'Customer',
+      render: (row) => <span className="font-semibold" style={{ color: '#1C1917' }}>{row.customer}</span>,
+      sortFn: (a, b) => a.customer.localeCompare(b.customer),
+    },
+    {
+      key: 'vehicle',
+      label: 'Vehicle',
+      render: (row) => (
+        <div>
+          <p className="font-medium" style={{ color: '#1C1917' }}>{getVehicleLabel(row.vehicle)}</p>
+          <p className="text-xs" style={{ color: '#78716C' }}>{row.vehicle}</p>
+        </div>
+      ),
+      sortFn: (a, b) => a.vehicle.localeCompare(b.vehicle),
+    },
+    {
+      key: 'salesperson',
+      label: 'Salesperson',
+      render: (row) => <span style={{ color: '#57534E' }}>{row.salesperson}</span>,
+      sortFn: (a, b) => a.salesperson.localeCompare(b.salesperson),
+    },
+    {
+      key: 'duration',
+      label: 'Duration',
+      render: (row) => <span style={{ color: '#57534E' }}>{row.duration}</span>,
+      sortFn: (a, b) => parseInt(a.duration) - parseInt(b.duration),
+    },
+    {
+      key: 'outcome',
+      label: 'Outcome',
+      render: (row) => {
+        const cfg = OUTCOME_CONFIG[row.outcome];
+        return (
+          <span
+            className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+            style={{ color: cfg.color, backgroundColor: cfg.bg, border: `1px solid ${cfg.color}20` }}
+          >
+            {cfg.label}
+          </span>
+        );
+      },
+      sortFn: (a, b) => a.outcome.localeCompare(b.outcome),
+    },
+  ];
+
+  function handleRowClick(row: TestDrive) {
+    const customerId = findCustomerByName(row.customer);
+    if (customerId) {
+      setPanelEntity({ type: 'customer', id: customerId });
+    }
+  }
+
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Test Drive Log
         </h1>
         <p className="mt-1 text-base" style={{ color: '#57534E' }}>
-          {totalDrives} test drives recorded — March 2026
+          {totalDrives} test drives recorded - March 2026
         </p>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
@@ -98,7 +183,6 @@ export default function TestDrivesPage() {
         </div>
       </div>
 
-      {/* Outcome Breakdown */}
       <div className="grid grid-cols-4 gap-3">
         {(Object.entries(OUTCOME_CONFIG) as [Outcome, typeof OUTCOME_CONFIG[Outcome]][]).map(([outcome, cfg]) => (
           <div
@@ -110,76 +194,92 @@ export default function TestDrivesPage() {
               {cfg.label}
             </p>
             <p className="text-2xl font-bold mt-1" style={{ color: cfg.color }}>
-              {outcomeCounts[outcome]}
+              {outcomeCounts[outcome as Outcome]}
             </p>
           </div>
         ))}
       </div>
 
-      {/* Test Drive Table */}
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-        <table className="w-full text-sm">
-          <thead>
-            <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-              <th className="text-left px-5 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Date
-              </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Customer
-              </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Vehicle
-              </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Salesperson
-              </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Duration
-              </th>
-              <th className="text-left px-5 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
-                Outcome
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {TEST_DRIVES.map((drive, i) => {
-              const cfg = OUTCOME_CONFIG[drive.outcome];
-              const vehicleLabel = getVehicleLabel(drive.vehicle);
-              return (
-                <tr
-                  key={i}
-                  style={{ borderBottom: i < TEST_DRIVES.length - 1 ? '1px solid #F5F5F4' : undefined }}
-                >
-                  <td className="px-5 py-3" style={{ color: '#57534E' }}>
-                    {drive.date}
-                  </td>
-                  <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>
-                    {drive.customer}
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="font-medium" style={{ color: '#1C1917' }}>{vehicleLabel}</p>
-                    <p className="text-xs" style={{ color: '#78716C' }}>{drive.vehicle}</p>
-                  </td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>
-                    {drive.salesperson}
-                  </td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>
-                    {drive.duration}
-                  </td>
-                  <td className="px-5 py-3">
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-                      style={{ color: cfg.color, backgroundColor: cfg.bg, border: `1px solid ${cfg.color}20` }}
-                    >
-                      {cfg.label}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => setOutcomeFilter('all')}
+            className="rounded-full px-4 py-2 text-sm font-semibold border transition-colors"
+            style={{
+              backgroundColor: outcomeFilter === 'all' ? '#1E3A5F' : '#FFFFFF',
+              color: outcomeFilter === 'all' ? '#FFFFFF' : '#1E3A5F',
+              borderColor: '#1E3A5F',
+            }}
+          >
+            All ({totalDrives})
+          </button>
+          {ALL_OUTCOMES.map(outcome => {
+            const cfg = OUTCOME_CONFIG[outcome];
+            const isActive = outcomeFilter === outcome;
+            return (
+              <button
+                key={outcome}
+                onClick={() => setOutcomeFilter(outcome)}
+                className="rounded-full px-4 py-2 text-sm font-semibold border transition-colors"
+                style={{
+                  backgroundColor: isActive ? cfg.color : '#FFFFFF',
+                  color: isActive ? '#FFFFFF' : cfg.color,
+                  borderColor: cfg.color,
+                }}
+              >
+                {cfg.label} ({outcomeCounts[outcome]})
+              </button>
+            );
+          })}
+        </div>
+        <select
+          value={salespersonFilter}
+          onChange={(e) => setSalespersonFilter(e.target.value)}
+          className="rounded-lg border px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+          style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+        >
+          <option value="all">All Salespeople</option>
+          {SALESPEOPLE.map(sp => (
+            <option key={sp} value={sp}>{sp}</option>
+          ))}
+        </select>
       </div>
+
+      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
+        <DataTable
+          columns={columns}
+          data={filteredDrives}
+          onRowClick={handleRowClick}
+          keyFn={(row) => `${row.date}-${row.customer}`}
+        />
+      </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'customer' ? 'Customer Details' : panelEntity?.type === 'vehicle' ? 'Vehicle Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'customer' && (
+          <CustomerDetail
+            customerId={panelEntity.id}
+            onDealClick={(id) => setPanelEntity({ type: 'deal', id })}
+            onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })}
+          />
+        )}
+        {panelEntity?.type === 'vehicle' && (
+          <VehicleDetail
+            vehicleId={panelEntity.id}
+            onDealClick={(id) => setPanelEntity({ type: 'deal', id })}
+          />
+        )}
+        {panelEntity?.type === 'deal' && (
+          <DealDetail
+            dealId={panelEntity.id}
+            onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })}
+            onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })}
+          />
+        )}
+      </DetailPanel>
     </div>
   );
 }
