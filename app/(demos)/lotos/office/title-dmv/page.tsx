@@ -1,8 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import { DEALS, VEHICLES, CUSTOMERS } from '@/data/lotos';
+import { DetailPanel, DealDetail, VehicleDetail, CustomerDetail, Toast } from '@/components/demos/lotos';
 
-const TITLE_PIPELINE = [
+type PanelEntity = { type: 'vehicle' | 'customer' | 'deal'; id: string } | null;
+
+interface PipelineEntry {
+  dealId: string;
+  titleReceived: boolean;
+  dmvSubmitted: boolean;
+  registered: boolean;
+}
+
+const INITIAL_PIPELINE: PipelineEntry[] = [
   { dealId: 'DL-2026-001', titleReceived: true, dmvSubmitted: true, registered: true },
   { dealId: 'DL-2026-002', titleReceived: true, dmvSubmitted: true, registered: false },
   { dealId: 'DL-2026-003', titleReceived: true, dmvSubmitted: false, registered: false },
@@ -12,34 +23,47 @@ const TITLE_PIPELINE = [
   { dealId: 'DL-2026-007', titleReceived: false, dmvSubmitted: false, registered: false },
 ];
 
-const CUSTOMER_NAMES: Record<string, string> = {
-  'CUS-001': 'Marcus Rivera',
-  'CUS-002': 'Sarah Chen',
-  'CUS-005': 'David Thompson',
-  'CUS-006': 'Ashley Brown',
-  'CUS-007': 'Robert Martinez',
-  'CUS-008': 'Jennifer Lee',
-  'CUS-010': 'Nicole Anderson',
-};
+const TODAY = new Date('2026-04-01');
 
-function StageIcon({ complete, inProgress }: { complete: boolean; inProgress: boolean }) {
-  if (complete) return <span className="text-base font-bold" style={{ color: '#16A34A' }}>✓</span>;
-  if (inProgress) return <span className="text-base" style={{ color: '#2563EB' }}>◐</span>;
-  return <span className="text-base" style={{ color: '#D1D5DB' }}>○</span>;
+function StageIcon({ complete, inProgress, onClick }: { complete: boolean; inProgress: boolean; onClick?: () => void }) {
+  const base = onClick ? { cursor: 'pointer' as const } : {};
+  if (complete) return <span className="text-base font-bold" style={{ color: '#16A34A', ...base }} onClick={onClick}>✓</span>;
+  if (inProgress) return <span className="text-base" style={{ color: '#2563EB', ...base }} onClick={onClick}>◐</span>;
+  return <span className="text-base" style={{ color: '#D1D5DB', ...base }} onClick={onClick}>○</span>;
 }
 
 export default function TitleDmvPage() {
+  const [stages, setStages] = useState<PipelineEntry[]>(() => INITIAL_PIPELINE.map((p) => ({ ...p })));
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
   const dealMap = Object.fromEntries(DEALS.map(d => [d.id, d]));
   const vehicleMap = Object.fromEntries(VEHICLES.map(v => [v.id, v]));
+  const customerMap = Object.fromEntries(CUSTOMERS.map(c => [c.id, c]));
 
-  // Pipeline stage counts
-  const dealClosed = TITLE_PIPELINE.length;
-  const titleReceived = TITLE_PIPELINE.filter(p => p.titleReceived).length;
-  const dmvSubmitted = TITLE_PIPELINE.filter(p => p.dmvSubmitted).length;
-  const registered = TITLE_PIPELINE.filter(p => p.registered).length;
+  const advanceStage = (index: number) => {
+    setStages((prev) => {
+      const next = [...prev];
+      const entry = { ...next[index] };
+      if (!entry.titleReceived) {
+        entry.titleReceived = true;
+      } else if (!entry.dmvSubmitted) {
+        entry.dmvSubmitted = true;
+      } else if (!entry.registered) {
+        entry.registered = true;
+      }
+      next[index] = entry;
+      return next;
+    });
+    setToastMsg('Stage advanced');
+  };
 
-  // Average days to title for completed ones (deals with registered = true and a fundedDate)
-  const completedDeals = TITLE_PIPELINE
+  const dealClosed = stages.length;
+  const titleReceived = stages.filter(p => p.titleReceived).length;
+  const dmvSubmitted = stages.filter(p => p.dmvSubmitted).length;
+  const registered = stages.filter(p => p.registered).length;
+
+  const completedDeals = stages
     .filter(p => p.registered)
     .map(p => dealMap[p.dealId])
     .filter(d => d && d.fundedDate && d.closedDate);
@@ -48,12 +72,12 @@ export default function TitleDmvPage() {
     ? Math.round(
         completedDeals.reduce((sum, d) => {
           const days = Math.round((new Date(d!.fundedDate!).getTime() - new Date(d!.closedDate).getTime()) / (1000 * 60 * 60 * 24));
-          return sum + days + 12; // add processing time offset
+          return sum + days + 12;
         }, 0) / completedDeals.length
       )
     : 14;
 
-  const stages = [
+  const stagesSummary = [
     { label: 'Deal Closed', count: dealClosed },
     { label: 'Title Received', count: titleReceived },
     { label: 'DMV Submitted', count: dmvSubmitted },
@@ -62,7 +86,6 @@ export default function TitleDmvPage() {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Title &amp; DMV
@@ -72,7 +95,6 @@ export default function TitleDmvPage() {
         </p>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
@@ -104,16 +126,14 @@ export default function TitleDmvPage() {
         </div>
       </div>
 
-      {/* Pipeline Stage Progress Bar */}
       <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
         <h2 className="text-lg font-bold mb-5" style={{ color: '#1C1917' }}>
           Pipeline Stages
         </h2>
         <div className="flex items-center gap-0">
-          {stages.map((stage, i) => (
+          {stagesSummary.map((stage, i) => (
             <div key={stage.label} className="flex items-center flex-1">
               <div className="flex-1 flex flex-col items-center gap-2">
-                {/* Bubble */}
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
                   style={{
@@ -128,10 +148,10 @@ export default function TitleDmvPage() {
                   {Math.round((stage.count / dealClosed) * 100)}% of deals
                 </p>
               </div>
-              {i < stages.length - 1 && (
+              {i < stagesSummary.length - 1 && (
                 <div
                   className="h-1 flex-1 mx-1"
-                  style={{ backgroundColor: stages[i + 1].count > 0 ? '#2563EB' : '#E7E5E4', maxWidth: '60px' }}
+                  style={{ backgroundColor: stagesSummary[i + 1].count > 0 ? '#2563EB' : '#E7E5E4', maxWidth: '60px' }}
                 />
               )}
             </div>
@@ -139,14 +159,13 @@ export default function TitleDmvPage() {
         </div>
       </div>
 
-      {/* Per-Deal Tracker Table */}
       <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
         <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
           <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
             Per-Deal Title Tracker
           </h2>
           <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
-            Stage-by-stage status for each deal in the transfer pipeline
+            Click a stage icon to advance — click a row to view deal details
           </p>
         </div>
         <table className="w-full text-sm">
@@ -156,6 +175,7 @@ export default function TitleDmvPage() {
               <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Vehicle</th>
               <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Customer</th>
               <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Close Date</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Days in Stage</th>
               <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Deal Closed</th>
               <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Title Received</th>
               <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>DMV Submitted</th>
@@ -163,34 +183,61 @@ export default function TitleDmvPage() {
             </tr>
           </thead>
           <tbody>
-            {TITLE_PIPELINE.map((pipeline, i) => {
+            {stages.map((pipeline, i) => {
               const deal = dealMap[pipeline.dealId];
               if (!deal) return null;
               const vehicle = vehicleMap[deal.vehicleId];
+              const customer = customerMap[deal.customerId];
+              const daysInStage = Math.floor((TODAY.getTime() - new Date(deal.closedDate).getTime()) / (1000 * 60 * 60 * 24));
               return (
-                <tr key={pipeline.dealId} style={{ borderBottom: i < TITLE_PIPELINE.length - 1 ? '1px solid #F5F5F4' : undefined }}>
+                <tr
+                  key={pipeline.dealId}
+                  style={{
+                    borderBottom: i < stages.length - 1 ? '1px solid #F5F5F4' : undefined,
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
+                >
                   <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>{deal.id}</td>
                   <td className="px-4 py-3" style={{ color: '#57534E' }}>
                     {vehicle ? `${vehicle.year} ${vehicle.make} ${vehicle.model}` : deal.vehicleId}
                   </td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>{CUSTOMER_NAMES[deal.customerId] || deal.customerId}</td>
+                  <td className="px-4 py-3" style={{ color: '#57534E' }}>
+                    {customer ? `${customer.firstName} ${customer.lastName}` : deal.customerId}
+                  </td>
                   <td className="px-4 py-3 text-center" style={{ color: '#57534E' }}>{deal.closedDate}</td>
                   <td className="px-4 py-3 text-center">
+                    <span
+                      style={{
+                        fontWeight: 700,
+                        color: daysInStage > 10 ? '#DC2626' : daysInStage > 5 ? '#D97706' : '#16A34A',
+                      }}
+                    >
+                      {daysInStage}d
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
                     <StageIcon complete={true} inProgress={false} />
                   </td>
-                  <td className="px-4 py-3 text-center">
-                    <StageIcon complete={pipeline.titleReceived} inProgress={!pipeline.titleReceived} />
+                  <td className="px-4 py-3 text-center" onClick={(e) => { e.stopPropagation(); if (!pipeline.titleReceived) advanceStage(i); }}>
+                    <StageIcon
+                      complete={pipeline.titleReceived}
+                      inProgress={!pipeline.titleReceived}
+                      onClick={!pipeline.titleReceived ? () => advanceStage(i) : undefined}
+                    />
                   </td>
-                  <td className="px-4 py-3 text-center">
+                  <td className="px-4 py-3 text-center" onClick={(e) => { e.stopPropagation(); if (pipeline.titleReceived && !pipeline.dmvSubmitted) advanceStage(i); }}>
                     <StageIcon
                       complete={pipeline.dmvSubmitted}
                       inProgress={pipeline.titleReceived && !pipeline.dmvSubmitted}
+                      onClick={pipeline.titleReceived && !pipeline.dmvSubmitted ? () => advanceStage(i) : undefined}
                     />
                   </td>
-                  <td className="px-4 py-3 text-center">
+                  <td className="px-4 py-3 text-center" onClick={(e) => { e.stopPropagation(); if (pipeline.dmvSubmitted && !pipeline.registered) advanceStage(i); }}>
                     <StageIcon
                       complete={pipeline.registered}
                       inProgress={pipeline.dmvSubmitted && !pipeline.registered}
+                      onClick={pipeline.dmvSubmitted && !pipeline.registered ? () => advanceStage(i) : undefined}
                     />
                   </td>
                 </tr>
@@ -203,13 +250,25 @@ export default function TitleDmvPage() {
             <span style={{ color: '#16A34A', fontWeight: 700 }}>✓</span> Complete
           </span>
           <span className="text-sm flex items-center gap-1.5" style={{ color: '#57534E' }}>
-            <span style={{ color: '#2563EB' }}>◐</span> In Progress
+            <span style={{ color: '#2563EB' }}>◐</span> In Progress (click to advance)
           </span>
           <span className="text-sm flex items-center gap-1.5" style={{ color: '#57534E' }}>
             <span style={{ color: '#D1D5DB' }}>○</span> Pending
           </span>
         </div>
       </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : panelEntity?.type === 'customer' ? 'Customer Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'customer' && <CustomerDetail customerId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })} />}
+      </DetailPanel>
+
+      {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
     </div>
   );
 }

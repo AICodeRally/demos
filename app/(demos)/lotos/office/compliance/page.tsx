@@ -1,6 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { CUSTOMERS } from '@/data/lotos';
+import { DetailPanel, CustomerDetail, DealDetail, VehicleDetail } from '@/components/demos/lotos';
+
+type PanelEntity = { type: 'vehicle' | 'customer' | 'deal'; id: string } | null;
 
 const TILA_CHECKLIST = [
   { item: 'APR Disclosure', status: 'Complete', required: true },
@@ -38,10 +42,32 @@ function resultBadge(result: string) {
   return { bg: '#FEE2E2', color: '#DC2626' };
 }
 
+type DateRange = '7d' | '30d' | 'all';
+
+function filterAuditByRange(range: DateRange) {
+  if (range === 'all') return AUDIT_TRAIL;
+  const now = new Date('2026-04-01T23:59:59');
+  const days = range === '7d' ? 7 : 30;
+  const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  return AUDIT_TRAIL.filter((e) => new Date(e.timestamp) >= cutoff);
+}
+
 export default function CompliancePage() {
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+  const [screeningStatus, setScreeningStatus] = useState<Record<string, 'idle' | 'loading' | 'clear'>>({});
+  const [dateRange, setDateRange] = useState<DateRange>('7d');
+
+  const filteredAudit = filterAuditByRange(dateRange);
+
+  const runOfacScreen = (customerId: string) => {
+    setScreeningStatus((prev) => ({ ...prev, [customerId]: 'loading' }));
+    setTimeout(() => {
+      setScreeningStatus((prev) => ({ ...prev, [customerId]: 'clear' }));
+    }, 500);
+  };
+
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Compliance
@@ -52,7 +78,6 @@ export default function CompliancePage() {
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* OFAC Screening */}
         <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -67,32 +92,73 @@ export default function CompliancePage() {
             </span>
           </div>
           <div className="grid grid-cols-2 gap-2">
-            {CUSTOMERS.map(customer => (
-              <div
-                key={customer.id}
-                className="flex items-center justify-between rounded-lg px-3 py-2"
-                style={{ backgroundColor: '#F8FAFC', border: '1px solid #E7E5E4' }}
-              >
-                <div>
-                  <p className="text-sm font-semibold" style={{ color: '#1C1917' }}>
-                    {customer.firstName} {customer.lastName}
-                  </p>
-                  <p className="text-xs" style={{ color: '#78716C' }}>{customer.id}</p>
-                </div>
-                <span
-                  className="rounded-full px-2 py-0.5 text-xs font-bold"
-                  style={{ backgroundColor: '#DCFCE7', color: '#16A34A' }}
+            {CUSTOMERS.map(customer => {
+              const status = screeningStatus[customer.id] || 'idle';
+              return (
+                <div
+                  key={customer.id}
+                  className="flex items-center justify-between rounded-lg px-3 py-2"
+                  style={{ backgroundColor: '#F8FAFC', border: '1px solid #E7E5E4' }}
                 >
-                  Clear
-                </span>
-              </div>
-            ))}
+                  <div>
+                    <p
+                      className="text-sm font-semibold"
+                      style={{ color: '#2563EB', cursor: 'pointer' }}
+                      onClick={() => setPanelEntity({ type: 'customer', id: customer.id })}
+                    >
+                      {customer.firstName} {customer.lastName}
+                    </p>
+                    <p className="text-xs" style={{ color: '#78716C' }}>{customer.id}</p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {status === 'clear' ? (
+                      <span
+                        className="rounded-full px-2 py-0.5 text-xs font-bold"
+                        style={{ backgroundColor: '#DCFCE7', color: '#16A34A' }}
+                      >
+                        Clear
+                      </span>
+                    ) : status === 'loading' ? (
+                      <span
+                        className="rounded-full px-2 py-0.5 text-xs font-bold"
+                        style={{ backgroundColor: '#EFF6FF', color: '#2563EB' }}
+                      >
+                        Screening...
+                      </span>
+                    ) : (
+                      <>
+                        <span
+                          className="rounded-full px-2 py-0.5 text-xs font-bold"
+                          style={{ backgroundColor: '#DCFCE7', color: '#16A34A' }}
+                        >
+                          Clear
+                        </span>
+                        <button
+                          onClick={() => runOfacScreen(customer.id)}
+                          style={{
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: '#2563EB',
+                            background: '#EFF6FF',
+                            border: '1px solid #BFDBFE',
+                            borderRadius: '6px',
+                            padding: '2px 8px',
+                            cursor: 'pointer',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          Re-screen
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* TILA + AZ Requirements stacked */}
         <div className="flex flex-col gap-6">
-          {/* TILA Disclosure Checklist */}
           <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
             <h2 className="text-lg font-bold mb-3" style={{ color: '#1C1917' }}>
               TILA Disclosure Checklist
@@ -119,7 +185,6 @@ export default function CompliancePage() {
             </div>
           </div>
 
-          {/* Arizona State Requirements */}
           <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
             <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
               <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>Arizona Requirements</h2>
@@ -157,13 +222,35 @@ export default function CompliancePage() {
         </div>
       </div>
 
-      {/* Audit Trail */}
       <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-        <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-          <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>Compliance Audit Trail</h2>
-          <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
-            Recent compliance events, screens, and verifications
-          </p>
+        <div className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #E7E5E4' }}>
+          <div>
+            <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>Compliance Audit Trail</h2>
+            <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+              Recent compliance events, screens, and verifications
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {([['7d', 'Last 7d'], ['30d', 'Last 30d'], ['all', 'All']] as [DateRange, string][]).map(([value, label]) => (
+              <button
+                key={value}
+                onClick={() => setDateRange(value)}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  border: '1px solid #E7E5E4',
+                  background: dateRange === value ? '#2563EB' : '#FFFFFF',
+                  color: dateRange === value ? '#FFFFFF' : '#57534E',
+                  cursor: 'pointer',
+                  transition: 'background 0.15s, color 0.15s',
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
         <table className="w-full text-sm">
           <thead>
@@ -176,10 +263,10 @@ export default function CompliancePage() {
             </tr>
           </thead>
           <tbody>
-            {AUDIT_TRAIL.map((entry, i) => {
+            {filteredAudit.map((entry, i) => {
               const badge = resultBadge(entry.result);
               return (
-                <tr key={i} style={{ borderBottom: i < AUDIT_TRAIL.length - 1 ? '1px solid #F5F5F4' : undefined }}>
+                <tr key={i} style={{ borderBottom: i < filteredAudit.length - 1 ? '1px solid #F5F5F4' : undefined }}>
                   <td className="px-4 py-3 font-mono text-xs" style={{ color: '#78716C' }}>{entry.timestamp}</td>
                   <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>{entry.action}</td>
                   <td className="px-4 py-3" style={{ color: '#57534E' }}>{entry.entity}</td>
@@ -195,9 +282,26 @@ export default function CompliancePage() {
                 </tr>
               );
             })}
+            {filteredAudit.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-4 py-8 text-center text-sm" style={{ color: '#A8A29E' }}>
+                  No audit entries in this date range.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : panelEntity?.type === 'customer' ? 'Customer Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'customer' && <CustomerDetail customerId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })} />}
+      </DetailPanel>
     </div>
   );
 }

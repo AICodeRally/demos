@@ -1,9 +1,18 @@
 'use client';
 
-import { DEALS, DEAL_STATUS_COLORS, VEHICLES, MONTHLY_KPIS } from '@/data/lotos';
+import { useState } from 'react';
+import { DEALS, DEAL_STATUS_COLORS, VEHICLES, CUSTOMERS, MONTHLY_KPIS } from '@/data/lotos';
+import { DataTable, type Column, DetailPanel, DealDetail, VehicleDetail, CustomerDetail } from '@/components/demos/lotos';
+import type { Deal } from '@/data/lotos';
+
+type PanelEntity = { type: 'vehicle' | 'customer' | 'deal'; id: string } | null;
 
 export default function AccountingPage() {
-  // Compute GL values from data
+  const [selectedMonth, setSelectedMonth] = useState(MONTHLY_KPIS[MONTHLY_KPIS.length - 2].month);
+  const [panelEntity, setPanelEntity] = useState<PanelEntity>(null);
+
+  const selectedKpi = MONTHLY_KPIS.find((k) => k.month === selectedMonth)!;
+
   const fundedDeals = DEALS.filter(d => d.status === 'funded');
   const totalRevenue = fundedDeals.reduce((sum, d) => sum + d.salePrice, 0);
 
@@ -13,11 +22,8 @@ export default function AccountingPage() {
 
   const grossProfit = totalRevenue - cogs;
   const operatingExpenses = 45000;
-  const netProfit = grossProfit - operatingExpenses;
 
-  // Most recent month P&L
-  const mostRecentKpi = MONTHLY_KPIS[MONTHLY_KPIS.length - 1];
-  const plRevenue = mostRecentKpi.totalRevenue;
+  const plRevenue = selectedKpi.totalRevenue;
   const plCogs = Math.round(plRevenue * 0.62);
   const plGrossProfit = plRevenue - plCogs;
   const payroll = 28000;
@@ -32,30 +38,80 @@ export default function AccountingPage() {
     { label: 'Total Revenue', value: plRevenue, bold: false, color: '#1C1917' },
     { label: 'Cost of Goods Sold (COGS)', value: -plCogs, bold: false, color: '#DC2626' },
     { label: 'Gross Profit', value: plGrossProfit, bold: true, color: '#16A34A' },
-    { label: '', value: null, bold: false, color: '#1C1917', divider: true },
+    { label: '', value: null as number | null, bold: false, color: '#1C1917', divider: true },
     { label: 'Payroll', value: -payroll, bold: false, color: '#57534E' },
     { label: 'Rent', value: -rent, bold: false, color: '#57534E' },
     { label: 'Floor Plan Interest', value: -floorPlanInterest, bold: false, color: '#57534E' },
     { label: 'Marketing', value: -marketing, bold: false, color: '#57534E' },
     { label: 'Utilities', value: -utilities, bold: false, color: '#57534E' },
     { label: 'Total Expenses', value: -totalExpenses, bold: true, color: '#DC2626' },
-    { label: '', value: null, bold: false, color: '#1C1917', divider: true },
+    { label: '', value: null as number | null, bold: false, color: '#1C1917', divider: true },
     { label: 'Net Profit', value: plNetProfit, bold: true, color: plNetProfit >= 0 ? '#16A34A' : '#DC2626' },
+  ];
+
+  const dealColumns: Column<Deal>[] = [
+    {
+      key: 'id',
+      label: 'Deal #',
+      sortFn: (a, b) => a.id.localeCompare(b.id),
+      render: (d) => <span style={{ fontWeight: 700, color: '#1C1917' }}>{d.id}</span>,
+    },
+    {
+      key: 'customer',
+      label: 'Customer',
+      render: (d) => {
+        const c = CUSTOMERS.find((cust) => cust.id === d.customerId);
+        return <span>{c ? `${c.firstName} ${c.lastName}` : d.customerId}</span>;
+      },
+    },
+    {
+      key: 'salePrice',
+      label: 'Sale Price',
+      align: 'right',
+      sortFn: (a, b) => a.salePrice - b.salePrice,
+      render: (d) => <span style={{ fontWeight: 600, color: '#1C1917' }}>${d.salePrice.toLocaleString()}</span>,
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      align: 'center',
+      render: (d) => (
+        <span
+          className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+          style={{ backgroundColor: `${DEAL_STATUS_COLORS[d.status]}20`, color: DEAL_STATUS_COLORS[d.status] }}
+        >
+          {d.status.charAt(0).toUpperCase() + d.status.slice(1)}
+        </span>
+      ),
+    },
+    {
+      key: 'posted',
+      label: 'Posted to GL',
+      align: 'center',
+      render: (d) => d.status === 'funded' ? (
+        <span className="text-base font-bold" style={{ color: '#16A34A' }}>✓</span>
+      ) : (
+        <span
+          className="rounded-full px-2.5 py-0.5 text-xs font-bold"
+          style={{ backgroundColor: '#FEF9C3', color: '#D97706' }}
+        >
+          Pending
+        </span>
+      ),
+    },
   ];
 
   return (
     <div className="p-6 space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
           Accounting
         </h1>
         <p className="mt-1 text-base" style={{ color: '#57534E' }}>
-          General ledger summary, deal posting, and monthly P&L — April 2026
+          General ledger summary, deal posting, and monthly P&L
         </p>
       </div>
 
-      {/* GL Summary Cards */}
       <div className="grid grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
@@ -82,7 +138,7 @@ export default function AccountingPage() {
           <p className="text-3xl font-bold mt-1" style={{ color: '#16A34A' }}>
             ${grossProfit.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{Math.round((grossProfit / totalRevenue) * 100)}% margin</p>
+          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{totalRevenue > 0 ? Math.round((grossProfit / totalRevenue) * 100) : 0}% margin</p>
         </div>
         <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
@@ -96,15 +152,34 @@ export default function AccountingPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Monthly P&L Table */}
         <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-          <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-            <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
-              Monthly P&amp;L
-            </h2>
-            <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
-              {mostRecentKpi.month} — {mostRecentKpi.unitsSold} units sold
-            </p>
+          <div className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #E7E5E4' }}>
+            <div>
+              <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+                Monthly P&amp;L
+              </h2>
+              <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+                {selectedKpi.month} — {selectedKpi.unitsSold} units sold
+              </p>
+            </div>
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              style={{
+                padding: '6px 12px',
+                borderRadius: '8px',
+                border: '1.5px solid #E7E5E4',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: '#1C1917',
+                background: '#FFFFFF',
+                cursor: 'pointer',
+              }}
+            >
+              {MONTHLY_KPIS.map((k) => (
+                <option key={k.month} value={k.month}>{k.month}</option>
+              ))}
+            </select>
           </div>
           <table className="w-full text-sm">
             <tbody>
@@ -140,71 +215,35 @@ export default function AccountingPage() {
           </table>
         </div>
 
-        {/* Deal Posting Status */}
         <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
           <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
             <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
               Deal Posting Status
             </h2>
             <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
-              GL posting status for active deals
+              GL posting status for active deals — click row for details
             </p>
           </div>
-          <table className="w-full text-sm">
-            <thead>
-              <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Deal #</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Customer</th>
-                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Sale Price</th>
-                <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Status</th>
-                <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Posted to GL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DEALS.map((deal, i) => {
-                const customer = ['CUS-002', 'CUS-001', 'CUS-008', 'CUS-005', 'CUS-006', 'CUS-007', 'CUS-010'][i] || deal.customerId;
-                const customerNames: Record<string, string> = {
-                  'CUS-001': 'Marcus Rivera',
-                  'CUS-002': 'Sarah Chen',
-                  'CUS-005': 'David Thompson',
-                  'CUS-006': 'Ashley Brown',
-                  'CUS-007': 'Robert Martinez',
-                  'CUS-008': 'Jennifer Lee',
-                  'CUS-010': 'Nicole Anderson',
-                };
-                const posted = deal.status === 'funded';
-                return (
-                  <tr key={deal.id} style={{ borderBottom: i < DEALS.length - 1 ? '1px solid #F5F5F4' : undefined }}>
-                    <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>{deal.id}</td>
-                    <td className="px-4 py-3" style={{ color: '#57534E' }}>{customerNames[deal.customerId] || deal.customerId}</td>
-                    <td className="px-4 py-3 text-right font-semibold" style={{ color: '#1C1917' }}>${deal.salePrice.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-center">
-                      <span
-                        className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-                        style={{ backgroundColor: `${DEAL_STATUS_COLORS[deal.status]}20`, color: DEAL_STATUS_COLORS[deal.status] }}
-                      >
-                        {deal.status.charAt(0).toUpperCase() + deal.status.slice(1)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {posted ? (
-                        <span className="text-base font-bold" style={{ color: '#16A34A' }}>✓</span>
-                      ) : (
-                        <span
-                          className="rounded-full px-2.5 py-0.5 text-xs font-bold"
-                          style={{ backgroundColor: '#FEF9C3', color: '#D97706' }}
-                        >
-                          Pending
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="px-2">
+            <DataTable
+              columns={dealColumns}
+              data={DEALS}
+              keyFn={(d) => d.id}
+              onRowClick={(d) => setPanelEntity({ type: 'deal', id: d.id })}
+            />
+          </div>
         </div>
       </div>
+
+      <DetailPanel
+        open={!!panelEntity}
+        onClose={() => setPanelEntity(null)}
+        title={panelEntity?.type === 'vehicle' ? 'Vehicle Details' : panelEntity?.type === 'customer' ? 'Customer Details' : 'Deal Details'}
+      >
+        {panelEntity?.type === 'vehicle' && <VehicleDetail vehicleId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} />}
+        {panelEntity?.type === 'customer' && <CustomerDetail customerId={panelEntity.id} onDealClick={(id) => setPanelEntity({ type: 'deal', id })} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} />}
+        {panelEntity?.type === 'deal' && <DealDetail dealId={panelEntity.id} onVehicleClick={(id) => setPanelEntity({ type: 'vehicle', id })} onCustomerClick={(id) => setPanelEntity({ type: 'customer', id })} />}
+      </DetailPanel>
     </div>
   );
 }
