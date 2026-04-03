@@ -190,7 +190,7 @@ export default function CRMPage() {
               <>
                 <tr
                   key={c.id}
-                  className="cursor-pointer hover:bg-slate-50 transition-colors"
+                  className="cursor-pointer transition-colors"
                   style={{
                     borderBottom: editingNote === c.id ? undefined : (i < filtered.length - 1 ? '1px solid var(--lot-border-faint)' : undefined),
                   }}
