@@ -44,29 +44,20 @@ export default function FniMenuPage() {
   const TARGET_PENETRATION = 70;
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             F&amp;I Menu
           </h1>
-          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+          <p className="lot-description">
             Select products to present — running gross updates in real time
           </p>
         </div>
         <select
           value={selectedDealId}
           onChange={(e) => setSelectedDealId(e.target.value)}
-          style={{
-            padding: '8px 14px',
-            borderRadius: '8px',
-            border: '1.5px solid #E7E5E4',
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#1C1917',
-            background: '#FFFFFF',
-            cursor: 'pointer',
-          }}
+          className="lot-input"
         >
           {DEALS.map((d) => (
             <option key={d.id} value={d.id}>
@@ -85,9 +76,9 @@ export default function FniMenuPage() {
             return (
               <div
                 key={product.id}
-                className="rounded-xl bg-white border"
+                className="lot-card lot-animate-in"
                 style={{
-                  borderColor: isSelected ? '#2563EB' : '#E7E5E4',
+                  borderColor: isSelected ? '#2563EB' : 'var(--lot-border)',
                   borderWidth: isSelected ? '2px' : '1px',
                   transition: 'border-color 0.15s',
                 }}
@@ -99,14 +90,14 @@ export default function FniMenuPage() {
                         style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px', cursor: 'pointer' }}
                         onClick={() => setExpandedProduct(isExpanded ? null : product.id)}
                       >
-                        <span style={{ fontWeight: 700, fontSize: '16px', color: '#1C1917' }}>
+                        <span style={{ fontWeight: 700, fontSize: '16px', color: 'var(--lot-text)' }}>
                           {product.name}
                         </span>
                         <span
                           style={{
                             fontSize: '14px',
-                            color: '#78716C',
-                            background: '#F1F5F9',
+                            color: 'var(--lot-text-muted)',
+                            background: 'var(--lot-border-faint)',
                             borderRadius: '4px',
                             padding: '2px 8px',
                             fontWeight: 500,
@@ -114,29 +105,29 @@ export default function FniMenuPage() {
                         >
                           {product.id}
                         </span>
-                        <span style={{ fontSize: '14px', color: '#78716C', marginLeft: 'auto' }}>
+                        <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginLeft: 'auto' }}>
                           {isExpanded ? '▾' : '▸'}
                         </span>
                       </div>
-                      <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '12px' }}>
+                      <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginBottom: '12px' }}>
                         {product.description}
                       </div>
 
                       <div style={{ display: 'flex', gap: '20px', marginBottom: '12px', flexWrap: 'wrap' }}>
                         <div>
-                          <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Retail Price</div>
-                          <div style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917' }}>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Retail Price</div>
+                          <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text)' }}>
                             ${product.retailPrice.toLocaleString()}
                           </div>
                         </div>
                         <div>
-                          <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Dealer Cost</div>
-                          <div style={{ fontSize: '16px', fontWeight: 700, color: '#57534E' }}>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Dealer Cost</div>
+                          <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text-secondary)' }}>
                             ${product.dealerCost.toLocaleString()}
                           </div>
                         </div>
                         <div>
-                          <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Dealer Gross</div>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Dealer Gross</div>
                           <div style={{ fontSize: '16px', fontWeight: 700, color: '#16A34A' }}>
                             ${product.dealerGross.toLocaleString()}
                           </div>
@@ -145,7 +136,7 @@ export default function FniMenuPage() {
 
                       <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                          <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>
+                          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>
                             Penetration Rate
                           </span>
                           <span style={{ fontSize: '14px', fontWeight: 700, color: '#2563EB' }}>
@@ -155,7 +146,7 @@ export default function FniMenuPage() {
                         <div
                           style={{
                             height: '8px',
-                            background: '#F1F5F9',
+                            background: 'var(--lot-border-faint)',
                             borderRadius: '4px',
                             overflow: 'hidden',
                             position: 'relative',
@@ -177,13 +168,13 @@ export default function FniMenuPage() {
                               left: `${TARGET_PENETRATION}%`,
                               width: '2px',
                               height: '100%',
-                              borderLeft: '2px dashed #1C1917',
+                              borderLeft: '2px dashed var(--lot-text)',
                               opacity: 0.5,
                             }}
                           />
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '2px' }}>
-                          <span style={{ fontSize: '14px', color: '#78716C' }}>Target: {TARGET_PENETRATION}%</span>
+                          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>Target: {TARGET_PENETRATION}%</span>
                         </div>
                       </div>
                     </div>
@@ -212,13 +203,13 @@ export default function FniMenuPage() {
                             width: '20px',
                             height: '20px',
                             borderRadius: '50%',
-                            background: '#FFFFFF',
+                            background: 'var(--lot-card)',
                             transition: 'left 0.2s',
                             boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
                           }}
                         />
                       </button>
-                      <span style={{ fontSize: '14px', color: isSelected ? '#2563EB' : '#78716C', fontWeight: 600 }}>
+                      <span style={{ fontSize: '14px', color: isSelected ? '#2563EB' : 'var(--lot-text-muted)', fontWeight: 600 }}>
                         {isSelected ? 'ON' : 'OFF'}
                       </span>
                     </div>
@@ -228,21 +219,21 @@ export default function FniMenuPage() {
                 {isExpanded && details && (
                   <div
                     style={{
-                      borderTop: '1px solid #E7E5E4',
+                      borderTop: '1px solid var(--lot-border)',
                       padding: '16px 20px',
-                      background: '#FAFAF9',
+                      background: 'var(--lot-card-alt)',
                       borderBottomLeftRadius: '12px',
                       borderBottomRightRadius: '12px',
                     }}
                   >
-                    <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '8px' }}>
-                      <strong style={{ color: '#1C1917' }}>Full Description:</strong> {product.description}
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginBottom: '8px' }}>
+                      <strong style={{ color: 'var(--lot-text)' }}>Full Description:</strong> {product.description}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '8px' }}>
-                      <strong style={{ color: '#1C1917' }}>Term:</strong> {details.termInfo}
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginBottom: '8px' }}>
+                      <strong style={{ color: 'var(--lot-text)' }}>Term:</strong> {details.termInfo}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#57534E' }}>
-                      <strong style={{ color: '#1C1917' }}>Recommended For:</strong> {details.recommendedFor}
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
+                      <strong style={{ color: 'var(--lot-text)' }}>Recommended For:</strong> {details.recommendedFor}
                     </div>
                     <div style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '6px', background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
                       <span style={{ fontSize: '14px', fontWeight: 600, color: '#2563EB' }}>
@@ -257,8 +248,8 @@ export default function FniMenuPage() {
         </div>
 
         <div style={{ position: 'sticky', top: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-            <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+          <div className="lot-card lot-animate-in">
+            <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
               Running Total
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -268,10 +259,10 @@ export default function FniMenuPage() {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   paddingBottom: '8px',
-                  borderBottom: '1px solid #F1F5F9',
+                  borderBottom: '1px solid var(--lot-border-faint)',
                 }}
               >
-                <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>Products Selected</span>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>Products Selected</span>
                 <span
                   className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                   style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}
@@ -280,8 +271,8 @@ export default function FniMenuPage() {
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>Total Retail</span>
-                <span style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917' }}>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>Total Retail</span>
+                <span style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text)' }}>
                   ${totalRetail.toLocaleString()}
                 </span>
               </div>
@@ -290,11 +281,11 @@ export default function FniMenuPage() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  borderTop: '2px solid #E7E5E4',
+                  borderTop: '2px solid var(--lot-border)',
                   paddingTop: '12px',
                 }}
               >
-                <span style={{ fontSize: '15px', color: '#1C1917', fontWeight: 700 }}>Total Dealer Gross</span>
+                <span style={{ fontSize: '15px', color: 'var(--lot-text)', fontWeight: 700 }}>Total Dealer Gross</span>
                 <span style={{ fontSize: '22px', fontWeight: 800, color: '#16A34A' }}>
                   ${totalGross.toLocaleString()}
                 </span>
@@ -302,13 +293,13 @@ export default function FniMenuPage() {
             </div>
           </div>
 
-          <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917', marginBottom: '12px' }}>
+          <div className="lot-card lot-animate-in">
+            <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text)', marginBottom: '12px' }}>
               Benchmark
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <div>
-                <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '2px' }}>
+                <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600, marginBottom: '2px' }}>
                   Avg F&amp;I / Deal (Funded)
                 </div>
                 <div style={{ fontSize: '22px', fontWeight: 800, color: '#7C3AED' }}>
@@ -316,7 +307,7 @@ export default function FniMenuPage() {
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+                <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600, marginBottom: '4px' }}>
                   This Deal vs Avg
                 </div>
                 {totalGross >= avgFniPerDeal ? (
@@ -339,8 +330,8 @@ export default function FniMenuPage() {
           </div>
 
           {selected.size > 0 && (
-            <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-              <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917', marginBottom: '12px' }}>
+            <div className="lot-card lot-animate-in">
+              <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text)', marginBottom: '12px' }}>
                 Selected Products
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -352,10 +343,10 @@ export default function FniMenuPage() {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       padding: '6px 0',
-                      borderBottom: '1px solid #F1F5F9',
+                      borderBottom: '1px solid var(--lot-border-faint)',
                     }}
                   >
-                    <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>{p.name}</span>
+                    <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>{p.name}</span>
                     <span style={{ fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>
                       ${p.dealerGross.toLocaleString()}
                     </span>

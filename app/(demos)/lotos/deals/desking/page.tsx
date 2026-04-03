@@ -46,8 +46,8 @@ export default function DeskingPage() {
   const totalGrossProjection = deal.frontGross + estFniGross;
 
   const inputStyle = {
-    background: '#F8FAFC',
-    border: '1px solid #E7E5E4',
+    background: 'var(--lot-card-alt)',
+    border: '1px solid var(--lot-border)',
     borderRadius: '6px',
     padding: '6px 12px',
     fontSize: '15px',
@@ -58,29 +58,20 @@ export default function DeskingPage() {
   };
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             Desking Tool
           </h1>
-          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+          <p className="lot-description">
             Deal structuring and payment scenario comparison
           </p>
         </div>
         <select
           value={selectedDealId}
           onChange={(e) => handleDealChange(e.target.value)}
-          style={{
-            padding: '8px 14px',
-            borderRadius: '8px',
-            border: '1.5px solid #E7E5E4',
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#1C1917',
-            background: '#FFFFFF',
-            cursor: 'pointer',
-          }}
+          className="lot-input"
         >
           {DEALS.map((d) => {
             const v = VEHICLES.find((veh) => veh.id === d.vehicleId);
@@ -94,13 +85,13 @@ export default function DeskingPage() {
       </div>
 
       <div
-        className="rounded-xl bg-white border p-6"
-        style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#2563EB', marginBottom: '20px' }}
+        className="lot-card lot-animate-in"
+        style={{ borderLeftWidth: '4px', borderLeftColor: '#2563EB', marginBottom: '20px' }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-              <span className="text-xl font-bold" style={{ color: '#1C1917' }}>{deal.id}</span>
+              <span className="text-xl font-bold" style={{ color: 'var(--lot-text)' }}>{deal.id}</span>
               <span
                 className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                 style={{
@@ -119,41 +110,41 @@ export default function DeskingPage() {
             >
               {vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}
             </div>
-            <div style={{ fontSize: '15px', color: '#57534E', marginTop: '2px' }}>
+            <div style={{ fontSize: '15px', color: 'var(--lot-text-secondary)', marginTop: '2px' }}>
               STK: {vehicle.id} &middot; {vehicle.mileage.toLocaleString()} mi &middot; {vehicle.color}
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Customer</div>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Customer</div>
             <div
               style={{ fontSize: '17px', fontWeight: 700, color: '#2563EB', cursor: 'pointer' }}
               onClick={() => setPanelEntity({ type: 'customer', id: customer.id })}
             >
               {customer.firstName} {customer.lastName}
             </div>
-            <div style={{ fontSize: '14px', color: '#57534E' }}>{customer.email}</div>
-            <div style={{ fontSize: '14px', color: '#57534E' }}>{customer.phone}</div>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{customer.email}</div>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{customer.phone}</div>
           </div>
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '20px', marginBottom: '20px' }}>
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-          <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+        <div className="lot-card lot-animate-in">
+          <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
             Deal Structure
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>Sale Price</span>
+              <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>Sale Price</span>
               <input
                 type="number"
                 value={editablePrice}
                 onChange={(e) => setEditablePrice(Number(e.target.value))}
-                style={{ ...inputStyle, color: '#1C1917' }}
+                style={{ ...inputStyle, color: 'var(--lot-text)' }}
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>Trade Allowance</span>
+              <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>Trade Allowance</span>
               <input
                 type="number"
                 value={editableTrade}
@@ -162,7 +153,7 @@ export default function DeskingPage() {
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 500 }}>Down Payment</span>
+              <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 500 }}>Down Payment</span>
               <input
                 type="number"
                 value={editableDown}
@@ -172,14 +163,14 @@ export default function DeskingPage() {
             </div>
             <div
               style={{
-                borderTop: '2px solid #E7E5E4',
+                borderTop: '2px solid var(--lot-border)',
                 paddingTop: '12px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}
             >
-              <span style={{ fontSize: '15px', color: '#1C1917', fontWeight: 700 }}>Amt Financed</span>
+              <span style={{ fontSize: '15px', color: 'var(--lot-text)', fontWeight: 700 }}>Amt Financed</span>
               <div
                 style={{
                   background: '#EFF6FF',
@@ -199,8 +190,8 @@ export default function DeskingPage() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-          <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+        <div className="lot-card lot-animate-in">
+          <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
             Lender Scenarios
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
@@ -212,40 +203,40 @@ export default function DeskingPage() {
                 <div
                   key={s.lender.id}
                   style={{
-                    border: '1.5px solid #E7E5E4',
+                    border: '1.5px solid var(--lot-border)',
                     borderRadius: '10px',
                     padding: '16px',
-                    background: '#FAFAF9',
+                    background: 'var(--lot-card-alt)',
                   }}
                 >
-                  <div style={{ fontWeight: 700, fontSize: '15px', color: '#1C1917', marginBottom: '4px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--lot-text)', marginBottom: '4px' }}>
                     {s.lender.name}
                   </div>
-                  <div style={{ fontSize: '14px', color: '#78716C', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginBottom: '12px' }}>
                     {s.term}-month term
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '14px', color: '#57534E' }}>Buy Rate</span>
-                      <span style={{ fontSize: '14px', fontWeight: 700, color: '#1C1917' }}>
+                      <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>Buy Rate</span>
+                      <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)' }}>
                         {s.lender.avgBuyRate}%
                       </span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '14px', color: '#57534E' }}>Monthly Pmt</span>
+                      <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>Monthly Pmt</span>
                       <span style={{ fontSize: '15px', fontWeight: 800, color: '#2563EB' }}>
                         ${Math.round(monthly).toLocaleString()}
                       </span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '14px', color: '#57534E' }}>Total Interest</span>
+                      <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>Total Interest</span>
                       <span style={{ fontSize: '14px', fontWeight: 600, color: '#DC2626' }}>
                         ${Math.round(totalInterest).toLocaleString()}
                       </span>
                     </div>
                     <div style={{ marginTop: '8px' }}>
-                      <div style={{ fontSize: '14px', color: '#78716C', marginBottom: '4px', fontWeight: 600 }}>
+                      <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginBottom: '4px', fontWeight: 600 }}>
                         Approval Likelihood
                       </div>
                       <span
@@ -267,39 +258,39 @@ export default function DeskingPage() {
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Gross Projection
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
           <div
-            className="rounded-xl border p-5"
-            style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#2563EB' }}
+            className="lot-card"
+            style={{ borderLeftWidth: '4px', borderLeftColor: '#2563EB' }}
           >
-            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600, marginBottom: '4px' }}>
               Front Gross
             </div>
-            <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+            <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)' }}>
               ${deal.frontGross.toLocaleString()}
             </div>
           </div>
           <div
-            className="rounded-xl border p-5"
-            style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#7C3AED' }}
+            className="lot-card"
+            style={{ borderLeftWidth: '4px', borderLeftColor: '#7C3AED' }}
           >
-            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600, marginBottom: '4px' }}>
               Est. F&amp;I Gross
             </div>
-            <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+            <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)' }}>
               ${estFniGross.toLocaleString()}
             </div>
-            <div style={{ fontSize: '14px', color: '#78716C', marginTop: '2px' }}>based on avg penetration</div>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '2px' }}>based on avg penetration</div>
           </div>
           <div
-            className="rounded-xl border p-5"
-            style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#16A34A' }}
+            className="lot-card"
+            style={{ borderLeftWidth: '4px', borderLeftColor: '#16A34A' }}
           >
-            <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600, marginBottom: '4px' }}>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600, marginBottom: '4px' }}>
               Total Gross Projection
             </div>
             <div className="text-3xl font-bold" style={{ color: '#16A34A' }}>

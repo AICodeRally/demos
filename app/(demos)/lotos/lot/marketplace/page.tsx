@@ -51,18 +51,18 @@ export default function LotosMarketplacePage() {
   const getVehicle = (vehicleId: string) => VEHICLES.find((v) => v.id === vehicleId);
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Marketplace Sync
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           Listing health, views, and leads across all marketplaces
         </p>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4', marginBottom: '28px' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in" style={{ marginBottom: '28px' }}>
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Acquisition Source ROI
         </h2>
         <div
@@ -72,7 +72,7 @@ export default function LotosMarketplacePage() {
             gap: '16px',
           }}
         >
-          {INVENTORY_SOURCES.map((src) => (
+          {INVENTORY_SOURCES.map((src, index) => (
             <StatCard
               key={src.id}
               label={src.name}
@@ -80,6 +80,7 @@ export default function LotosMarketplacePage() {
               trendValue={`${src.unitsThisMonth} units/mo`}
               trend="up"
               color={SOURCE_COLORS[src.type] || '#1E3A5F'}
+              animationDelay={index}
             />
           ))}
         </div>
@@ -93,7 +94,7 @@ export default function LotosMarketplacePage() {
           marginBottom: '28px',
         }}
       >
-        {MARKETPLACES.map((mp) => {
+        {MARKETPLACES.map((mp, index) => {
           const mpListings = LISTINGS.filter((l) => l.marketplace === mp && l.status === 'active');
           const totalViews = mpListings.reduce((sum, l) => sum + l.views, 0);
           const totalLeads = mpListings.reduce((sum, l) => sum + l.leads, 0);
@@ -102,11 +103,11 @@ export default function LotosMarketplacePage() {
           return (
             <div
               key={mp}
-              className="rounded-xl bg-white border p-6"
+              className="lot-card lot-animate-in"
               style={{
-                borderColor: '#E7E5E4',
                 borderTopWidth: '4px',
                 borderTopColor: color,
+                animationDelay: `${index * 0.06}s`,
               }}
             >
               <div style={{ fontWeight: 700, fontSize: '16px', color: color, marginBottom: '12px' }}>
@@ -121,16 +122,16 @@ export default function LotosMarketplacePage() {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '22px', fontWeight: 700, color: '#1C1917' }}>{mpListings.length}</div>
-                  <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Active</div>
+                  <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--lot-text)' }}>{mpListings.length}</div>
+                  <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Active</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '22px', fontWeight: 700, color: '#1C1917' }}>{totalViews.toLocaleString()}</div>
-                  <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Views</div>
+                  <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--lot-text)' }}>{totalViews.toLocaleString()}</div>
+                  <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Views</div>
                 </div>
                 <div>
                   <div style={{ fontSize: '22px', fontWeight: 700, color: '#16A34A' }}>{totalLeads}</div>
-                  <div style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Leads</div>
+                  <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Leads</div>
                 </div>
               </div>
             </div>
@@ -163,10 +164,10 @@ export default function LotosMarketplacePage() {
                     flexShrink: 0,
                   }}
                 />
-                <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#1C1917' }}>
+                <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--lot-text)' }}>
                   {MARKETPLACE_LABELS[mp]}
                 </h2>
-                <span style={{ fontSize: '14px', color: '#78716C' }}>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>
                   ({mpListings.length} listing{mpListings.length !== 1 ? 's' : ''})
                 </span>
               </div>
@@ -178,7 +179,7 @@ export default function LotosMarketplacePage() {
                   gap: '14px',
                 }}
               >
-                {mpListings.map((listing) => {
+                {mpListings.map((listing, index) => {
                   const vehicle = getVehicle(listing.vehicleId);
                   const isSynced = syncStatus[listing.id] ?? false;
                   const displayStatusColor = isSynced
@@ -189,8 +190,8 @@ export default function LotosMarketplacePage() {
                   return (
                     <div
                       key={listing.id}
-                      className="rounded-xl bg-white border p-5"
-                      style={{ borderColor: '#E7E5E4', cursor: 'pointer' }}
+                      className="lot-card lot-animate-in"
+                      style={{ cursor: 'pointer', animationDelay: `${index * 0.06}s` }}
                       onClick={() => setPanelEntity({ type: 'vehicle', id: listing.vehicleId })}
                     >
                       <div
@@ -201,7 +202,7 @@ export default function LotosMarketplacePage() {
                           marginBottom: '6px',
                         }}
                       >
-                        <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>
+                        <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--lot-text)' }}>
                           {listing.vehicleId}
                         </span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -252,7 +253,7 @@ export default function LotosMarketplacePage() {
                       </div>
 
                       {vehicle && (
-                        <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '12px' }}>
+                        <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginBottom: '12px' }}>
                           {vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}
                         </div>
                       )}
@@ -267,16 +268,16 @@ export default function LotosMarketplacePage() {
                       >
                         <div
                           style={{
-                            background: '#F8FAFC',
+                            background: 'var(--lot-card-alt)',
                             borderRadius: '6px',
                             padding: '8px',
                             textAlign: 'center',
                           }}
                         >
-                          <div style={{ fontSize: '18px', fontWeight: 700, color: '#1C1917' }}>
+                          <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--lot-text)' }}>
                             {listing.views.toLocaleString()}
                           </div>
-                          <div style={{ fontSize: '14px', color: '#78716C' }}>Views</div>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>Views</div>
                         </div>
                         <div
                           style={{
@@ -289,7 +290,7 @@ export default function LotosMarketplacePage() {
                           <div style={{ fontSize: '18px', fontWeight: 700, color: '#16A34A' }}>
                             {listing.leads}
                           </div>
-                          <div style={{ fontSize: '14px', color: '#78716C' }}>Leads</div>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>Leads</div>
                         </div>
                       </div>
 
@@ -297,10 +298,10 @@ export default function LotosMarketplacePage() {
                         style={{
                           display: 'flex',
                           justifyContent: 'space-between',
-                          borderTop: '1px solid #F1F5F9',
+                          borderTop: '1px solid var(--lot-border-faint)',
                           paddingTop: '8px',
                           fontSize: '14px',
-                          color: '#78716C',
+                          color: 'var(--lot-text-muted)',
                         }}
                       >
                         <span>{listing.daysListed}d listed</span>

@@ -98,13 +98,13 @@ export default function AppointmentsPage() {
   const selectedApptData = selectedAppt !== null ? appointments[selectedAppt] : null;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             Appointments
           </h1>
-          <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+          <p className="lot-description">
             Week of March 30 - April 5, 2026 - {totalCount} appointments scheduled
           </p>
         </div>
@@ -118,9 +118,9 @@ export default function AppointmentsPage() {
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        {(Object.entries(TYPE_CONFIG) as [AppointmentType, typeof TYPE_CONFIG[AppointmentType]][]).map(([type, cfg]) => (
-          <div key={type} className="rounded-xl bg-white border p-4" style={{ borderColor: '#E7E5E4' }}>
-            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        {(Object.entries(TYPE_CONFIG) as [AppointmentType, typeof TYPE_CONFIG[AppointmentType]][]).map(([type, cfg], index) => (
+          <div key={type} className="lot-card lot-animate-in" style={{ animationDelay: `${index * 0.06}s` }}>
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
               {cfg.label}
             </p>
             <p className="text-3xl font-bold mt-1" style={{ color: cfg.color }}>
@@ -130,20 +130,20 @@ export default function AppointmentsPage() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden relative" style={{ borderColor: '#E7E5E4' }}>
-        <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-          <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>Week View</h2>
+      <div className="lot-card !p-0 overflow-hidden relative">
+        <div className="px-6 py-4" style={{ borderBottom: '1px solid var(--lot-border)' }}>
+          <h2 className="lot-subheading">Week View</h2>
         </div>
 
         <div className="overflow-x-auto">
           <div className="min-w-[760px]">
             <div className="grid" style={{ gridTemplateColumns: '56px repeat(6, 1fr)' }}>
-              <div style={{ borderBottom: '1px solid #E7E5E4', borderRight: '1px solid #E7E5E4' }} />
+              <div style={{ borderBottom: '1px solid var(--lot-border)', borderRight: '1px solid var(--lot-border)' }} />
               {DAYS.map((day) => (
                 <div
                   key={day}
                   className="py-3 text-center text-sm font-bold"
-                  style={{ color: '#1C1917', borderBottom: '1px solid #E7E5E4', borderRight: '1px solid #E7E5E4' }}
+                  style={{ color: 'var(--lot-text)', borderBottom: '1px solid var(--lot-border)', borderRight: '1px solid var(--lot-border)' }}
                 >
                   {DAY_LABELS[day]}
                 </div>
@@ -156,9 +156,9 @@ export default function AppointmentsPage() {
                   <div
                     key={h}
                     className="flex items-start justify-end pr-2 pt-1"
-                    style={{ height: `${HOUR_HEIGHT}px`, borderBottom: '1px solid #F5F5F4' }}
+                    style={{ height: `${HOUR_HEIGHT}px`, borderBottom: '1px solid var(--lot-border-faint)' }}
                   >
-                    <span className="text-xs font-medium" style={{ color: '#78716C' }}>
+                    <span className="text-xs font-medium" style={{ color: 'var(--lot-text-muted)' }}>
                       {formatHour(h)}
                     </span>
                   </div>
@@ -173,12 +173,12 @@ export default function AppointmentsPage() {
                   <div
                     key={day}
                     className="relative"
-                    style={{ borderRight: '1px solid #E7E5E4' }}
+                    style={{ borderRight: '1px solid var(--lot-border)' }}
                   >
                     {HOURS.map((h) => (
                       <div
                         key={h}
-                        style={{ height: `${HOUR_HEIGHT}px`, borderBottom: '1px solid #F5F5F4' }}
+                        style={{ height: `${HOUR_HEIGHT}px`, borderBottom: '1px solid var(--lot-border-faint)' }}
                       />
                     ))}
                     {dayAppts.map((appt) => {
@@ -227,7 +227,7 @@ export default function AppointmentsPage() {
               className="w-4 h-4 rounded"
               style={{ backgroundColor: cfg.bg, border: `1px solid ${cfg.border}` }}
             />
-            <span className="text-sm font-medium" style={{ color: '#57534E' }}>
+            <span className="text-sm font-medium" style={{ color: 'var(--lot-text-secondary)' }}>
               {cfg.label}
             </span>
           </div>
@@ -236,9 +236,8 @@ export default function AppointmentsPage() {
 
       {selectedApptData && (
         <div
-          className="fixed z-50 rounded-xl bg-white border shadow-xl p-5"
+          className="fixed z-50 lot-card shadow-xl"
           style={{
-            borderColor: '#E7E5E4',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -247,18 +246,18 @@ export default function AppointmentsPage() {
           }}
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-bold" style={{ color: '#1C1917' }}>Appointment Details</h3>
+            <h3 className="text-lg font-bold" style={{ color: 'var(--lot-text)' }}>Appointment Details</h3>
             <button
               onClick={() => setSelectedAppt(null)}
               className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-lg"
-              style={{ color: '#57534E' }}
+              style={{ color: 'var(--lot-text-secondary)' }}
             >
               x
             </button>
           </div>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-base font-semibold" style={{ color: '#1C1917' }}>{selectedApptData.customer}</span>
+              <span className="text-base font-semibold" style={{ color: 'var(--lot-text)' }}>{selectedApptData.customer}</span>
               <span
                 className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                 style={{
@@ -270,16 +269,16 @@ export default function AppointmentsPage() {
                 {TYPE_CONFIG[selectedApptData.type].label}
               </span>
             </div>
-            <p className="text-sm" style={{ color: '#57534E' }}>
+            <p className="text-sm" style={{ color: 'var(--lot-text-secondary)' }}>
               {DAY_LABELS[selectedApptData.day]}, {selectedApptData.time} ({selectedApptData.duration}h)
             </p>
             {selectedApptData.vehicle && (
-              <p className="text-sm" style={{ color: '#57534E' }}>
-                Vehicle: <span className="font-semibold" style={{ color: '#1C1917' }}>{selectedApptData.vehicle}</span>
+              <p className="text-sm" style={{ color: 'var(--lot-text-secondary)' }}>
+                Vehicle: <span className="font-semibold" style={{ color: 'var(--lot-text)' }}>{selectedApptData.vehicle}</span>
               </p>
             )}
             {selectedApptData.note && (
-              <p className="text-sm" style={{ color: '#57534E' }}>
+              <p className="text-sm" style={{ color: 'var(--lot-text-secondary)' }}>
                 Note: {selectedApptData.note}
               </p>
             )}
@@ -287,7 +286,7 @@ export default function AppointmentsPage() {
           <button
             onClick={() => setSelectedAppt(null)}
             className="mt-4 w-full rounded-lg px-4 py-2 text-sm font-semibold border transition-colors hover:bg-gray-50"
-            style={{ color: '#57534E', borderColor: '#E7E5E4' }}
+            style={{ color: 'var(--lot-text-secondary)', borderColor: 'var(--lot-border)' }}
           >
             Close
           </button>
@@ -301,9 +300,8 @@ export default function AppointmentsPage() {
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setShowNewForm(false)} />
           <div
-            className="fixed z-50 rounded-xl bg-white border shadow-xl p-6"
+            className="fixed z-50 lot-card shadow-xl"
             style={{
-              borderColor: '#E7E5E4',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
@@ -311,15 +309,14 @@ export default function AppointmentsPage() {
               maxWidth: '440px',
             }}
           >
-            <h3 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>New Appointment</h3>
+            <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--lot-text)' }}>New Appointment</h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-semibold mb-1" style={{ color: '#1C1917' }}>Customer</label>
+                <label className="block text-sm font-semibold mb-1" style={{ color: 'var(--lot-text)' }}>Customer</label>
                 <select
                   value={newCustomer}
                   onChange={(e) => setNewCustomer(e.target.value)}
-                  className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                  style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+                  className="lot-input w-full"
                 >
                   <option value="">Select customer...</option>
                   {CUSTOMERS.map(c => (
@@ -328,12 +325,11 @@ export default function AppointmentsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-1" style={{ color: '#1C1917' }}>Type</label>
+                <label className="block text-sm font-semibold mb-1" style={{ color: 'var(--lot-text)' }}>Type</label>
                 <select
                   value={newType}
                   onChange={(e) => setNewType(e.target.value as AppointmentType)}
-                  className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                  style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+                  className="lot-input w-full"
                 >
                   {(Object.entries(TYPE_CONFIG) as [AppointmentType, typeof TYPE_CONFIG[AppointmentType]][]).map(([type, cfg]) => (
                     <option key={type} value={type}>{cfg.label}</option>
@@ -342,12 +338,11 @@ export default function AppointmentsPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold mb-1" style={{ color: '#1C1917' }}>Day</label>
+                  <label className="block text-sm font-semibold mb-1" style={{ color: 'var(--lot-text)' }}>Day</label>
                   <select
                     value={newDay}
                     onChange={(e) => setNewDay(e.target.value)}
-                    className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+                    className="lot-input w-full"
                   >
                     {DAYS.map(d => (
                       <option key={d} value={d}>{DAY_LABELS[d]}</option>
@@ -355,14 +350,13 @@ export default function AppointmentsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold mb-1" style={{ color: '#1C1917' }}>Time</label>
+                  <label className="block text-sm font-semibold mb-1" style={{ color: 'var(--lot-text)' }}>Time</label>
                   <input
                     type="text"
                     value={newTime}
                     onChange={(e) => setNewTime(e.target.value)}
                     placeholder="10:00"
-                    className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+                    className="lot-input w-full"
                   />
                 </div>
               </div>
@@ -378,7 +372,7 @@ export default function AppointmentsPage() {
               <button
                 onClick={() => setShowNewForm(false)}
                 className="flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold border transition-colors hover:bg-gray-50"
-                style={{ color: '#57534E', borderColor: '#E7E5E4' }}
+                style={{ color: 'var(--lot-text-secondary)', borderColor: 'var(--lot-border)' }}
               >
                 Cancel
               </button>

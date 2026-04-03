@@ -80,7 +80,7 @@ export default function LotosInventoryPage() {
       label: 'Stock #',
       sortFn: (a, b) => a.id.localeCompare(b.id),
       render: (v) => (
-        <span style={{ fontWeight: 700, color: '#1C1917', whiteSpace: 'nowrap' }}>{v.id}</span>
+        <span style={{ fontWeight: 700, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>{v.id}</span>
       ),
     },
     {
@@ -89,8 +89,8 @@ export default function LotosInventoryPage() {
       sortFn: (a, b) => `${a.year} ${a.make} ${a.model}`.localeCompare(`${b.year} ${b.make} ${b.model}`),
       render: (v) => (
         <div>
-          <div style={{ fontWeight: 600, color: '#1C1917' }}>{v.year} {v.make} {v.model}</div>
-          <div style={{ fontSize: '14px', color: '#78716C' }}>{v.trim}</div>
+          <div style={{ fontWeight: 600, color: 'var(--lot-text)' }}>{v.year} {v.make} {v.model}</div>
+          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>{v.trim}</div>
         </div>
       ),
     },
@@ -98,14 +98,14 @@ export default function LotosInventoryPage() {
       key: 'color',
       label: 'Color',
       sortFn: (a, b) => a.color.localeCompare(b.color),
-      render: (v) => <span style={{ color: '#57534E' }}>{v.color}</span>,
+      render: (v) => <span style={{ color: 'var(--lot-text-secondary)' }}>{v.color}</span>,
     },
     {
       key: 'mileage',
       label: 'Mileage',
       sortFn: (a, b) => a.mileage - b.mileage,
       align: 'right',
-      render: (v) => <span style={{ color: '#57534E', whiteSpace: 'nowrap' }}>{v.mileage.toLocaleString()} mi</span>,
+      render: (v) => <span style={{ color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>{v.mileage.toLocaleString()} mi</span>,
     },
     {
       key: 'status',
@@ -139,14 +139,14 @@ export default function LotosInventoryPage() {
       label: 'Acq Cost',
       sortFn: (a, b) => a.acquisitionCost - b.acquisitionCost,
       align: 'right',
-      render: (v) => <span style={{ color: '#57534E', whiteSpace: 'nowrap' }}>${v.acquisitionCost.toLocaleString()}</span>,
+      render: (v) => <span style={{ color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>${v.acquisitionCost.toLocaleString()}</span>,
     },
     {
       key: 'askingPrice',
       label: 'Asking Price',
       sortFn: (a, b) => a.askingPrice - b.askingPrice,
       align: 'right',
-      render: (v) => <span style={{ fontWeight: 600, color: '#1C1917', whiteSpace: 'nowrap' }}>${v.askingPrice.toLocaleString()}</span>,
+      render: (v) => <span style={{ fontWeight: 600, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>${v.askingPrice.toLocaleString()}</span>,
     },
     {
       key: 'spread',
@@ -165,37 +165,27 @@ export default function LotosInventoryPage() {
   ];
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Inventory
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           Full vehicle list with status, pricing, and lot age
         </p>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '24px',
-          background: '#FFFFFF',
-          border: '1px solid #E7E5E4',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          marginBottom: '20px',
-        }}
-      >
+      <div className="lot-card" style={{ display: 'flex', gap: '24px', marginBottom: '20px' }}>
         <div>
-          <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Total Units: </span>
-          <span style={{ fontSize: '14px', fontWeight: 700, color: '#1C1917' }}>{inStock.length} in stock</span>
+          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Total Units: </span>
+          <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)' }}>{inStock.length} in stock</span>
         </div>
-        <div style={{ borderLeft: '1px solid #E7E5E4', paddingLeft: '24px' }}>
-          <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Avg Days on Lot: </span>
-          <span style={{ fontSize: '14px', fontWeight: 700, color: '#1C1917' }}>{avgDaysOnLot} days</span>
+        <div style={{ borderLeft: '1px solid var(--lot-border)', paddingLeft: '24px' }}>
+          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Avg Days on Lot: </span>
+          <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)' }}>{avgDaysOnLot} days</span>
         </div>
-        <div style={{ borderLeft: '1px solid #E7E5E4', paddingLeft: '24px' }}>
-          <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Total Inventory Value: </span>
+        <div style={{ borderLeft: '1px solid var(--lot-border)', paddingLeft: '24px' }}>
+          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Total Inventory Value: </span>
           <span style={{ fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>${totalInventoryValue.toLocaleString()}</span>
         </div>
       </div>
@@ -206,17 +196,8 @@ export default function LotosInventoryPage() {
           placeholder="Search by stock #, make, model, trim, or color..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: '100%',
-            maxWidth: '480px',
-            padding: '10px 14px',
-            border: '1px solid #E7E5E4',
-            borderRadius: '8px',
-            fontSize: '15px',
-            color: '#1C1917',
-            background: '#FFFFFF',
-            outline: 'none',
-          }}
+          className="lot-input"
+          style={{ maxWidth: '480px' }}
         />
       </div>
 
@@ -228,25 +209,14 @@ export default function LotosInventoryPage() {
             <button
               key={tab.key}
               onClick={() => setActiveFilter(tab.key)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 14px',
-                borderRadius: '8px',
-                border: isActive ? '2px solid #2563EB' : '2px solid #E7E5E4',
-                background: isActive ? '#EFF6FF' : '#FFFFFF',
-                color: isActive ? '#2563EB' : '#57534E',
-                fontSize: '14px',
-                fontWeight: isActive ? 700 : 500,
-                cursor: 'pointer',
-              }}
+              className={isActive ? 'lot-btn lot-btn-active' : 'lot-btn'}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
             >
               {tab.label}
               <span
                 style={{
-                  background: isActive ? '#2563EB' : '#F1F5F9',
-                  color: isActive ? '#FFFFFF' : '#57534E',
+                  background: isActive ? '#2563EB' : 'var(--lot-card-alt)',
+                  color: isActive ? '#FFFFFF' : 'var(--lot-text-secondary)',
                   borderRadius: '999px',
                   padding: '1px 7px',
                   fontSize: '12px',
@@ -262,7 +232,7 @@ export default function LotosInventoryPage() {
 
       {selectedRows.size > 0 && (
         <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', alignItems: 'center' }}>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)' }}>
             {selectedRows.size} selected
           </span>
           <button
@@ -304,7 +274,7 @@ export default function LotosInventoryPage() {
         </div>
       )}
 
-      <div className="rounded-xl bg-white border" style={{ borderColor: '#E7E5E4' }}>
+      <div className="lot-card" style={{ padding: 0 }}>
         <DataTable<Vehicle>
           columns={columns}
           data={filtered}

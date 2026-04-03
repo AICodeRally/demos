@@ -72,12 +72,12 @@ export default function LosDashboardPage() {
   };
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '28px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Lot Dashboard
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           Real-time inventory health and recent activity
         </p>
       </div>
@@ -87,16 +87,7 @@ export default function LosDashboardPage() {
           <button
             key={tr}
             onClick={() => setTimeRange(tr)}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '8px',
-              border: timeRange === tr ? '2px solid #2563EB' : '2px solid #E7E5E4',
-              background: timeRange === tr ? '#EFF6FF' : '#FFFFFF',
-              color: timeRange === tr ? '#2563EB' : '#57534E',
-              fontSize: '14px',
-              fontWeight: timeRange === tr ? 700 : 500,
-              cursor: 'pointer',
-            }}
+            className={timeRange === tr ? 'lot-btn lot-btn-active' : 'lot-btn'}
           >
             {timeRangeLabel[tr]}
           </button>
@@ -111,76 +102,66 @@ export default function LosDashboardPage() {
           marginBottom: '28px',
         }}
       >
-        <StatCard label="Units in Stock" value={String(unitsInStock)} color="#2563EB" />
-        <StatCard label="Avg Days on Lot" value={String(avgDaysOnLot)} color="#7C3AED" />
-        <StatCard label="Frontline Ready" value={String(frontlineReady)} color="#16A34A" />
-        <StatCard label="Recon in Progress" value={String(reconInProgress)} color="#D97706" />
+        <StatCard label="Units in Stock" value={String(unitsInStock)} color="#2563EB" animationDelay={0} />
+        <StatCard label="Avg Days on Lot" value={String(avgDaysOnLot)} color="#7C3AED" animationDelay={1} />
+        <StatCard label="Frontline Ready" value={String(frontlineReady)} color="#16A34A" animationDelay={2} />
+        <StatCard label="Recon in Progress" value={String(reconInProgress)} color="#D97706" animationDelay={3} />
         <StatCard
           label={`Gross (${timeRangeLabel[timeRange]})`}
           value={`$${monthGross.toLocaleString()}`}
           color="#0891B2"
+          animationDelay={4}
         />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-          <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.3s' }}>
+          <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
             Aging Distribution
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 600 }}>0–30 Days</span>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 600 }}>0–30 Days</span>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>{aged0_30} units</span>
               </div>
-              <div style={{ height: '12px', background: '#F1F5F9', borderRadius: '6px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${(aged0_30 / inStock.length) * 100}%`, background: '#16A34A', borderRadius: '6px' }} />
+              <div className="lot-progress-track">
+                <div className="lot-progress-fill" style={{ width: `${(aged0_30 / inStock.length) * 100}%`, background: '#16A34A' }} />
               </div>
             </div>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 600 }}>31–60 Days</span>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 600 }}>31–60 Days</span>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#D97706' }}>{aged31_60} units</span>
               </div>
-              <div style={{ height: '12px', background: '#F1F5F9', borderRadius: '6px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${(aged31_60 / inStock.length) * 100}%`, background: '#D97706', borderRadius: '6px' }} />
+              <div className="lot-progress-track">
+                <div className="lot-progress-fill" style={{ width: `${(aged31_60 / inStock.length) * 100}%`, background: '#D97706' }} />
               </div>
             </div>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '14px', color: '#57534E', fontWeight: 600 }}>61+ Days</span>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', fontWeight: 600 }}>61+ Days</span>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#DC2626' }}>{aged61_90} units</span>
               </div>
-              <div style={{ height: '12px', background: '#F1F5F9', borderRadius: '6px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${(aged61_90 / inStock.length) * 100}%`, background: '#DC2626', borderRadius: '6px' }} />
+              <div className="lot-progress-track">
+                <div className="lot-progress-fill" style={{ width: `${(aged61_90 / inStock.length) * 100}%`, background: '#DC2626' }} />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-          <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.36s' }}>
+          <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
             Alerts
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {agedCount > 0 && (
               <a href="/lotos/lot/inventory" style={{ textDecoration: 'none' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '10px',
-                    background: '#FEF2F2',
-                    border: '1px solid #FECACA',
-                    borderRadius: '8px',
-                    padding: '12px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <div className="lot-alert lot-alert-danger">
                   <span style={{ fontSize: '18px' }}>⚠️</span>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '14px', color: '#DC2626' }}>Aged Inventory</div>
-                    <div style={{ fontSize: '14px', color: '#57534E' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
                       {agedCount} vehicle{agedCount !== 1 ? 's' : ''} aged over 60 days — consider price reduction or wholesale
                     </div>
                   </div>
@@ -189,22 +170,11 @@ export default function LosDashboardPage() {
             )}
             {needsAssessmentCount > 0 && (
               <a href="/lotos/lot/recon" style={{ textDecoration: 'none' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '10px',
-                    background: '#FFFBEB',
-                    border: '1px solid #FDE68A',
-                    borderRadius: '8px',
-                    padding: '12px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <div className="lot-alert lot-alert-warning">
                   <span style={{ fontSize: '18px' }}>🔧</span>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '14px', color: '#D97706' }}>Recon Needs Assessment</div>
-                    <div style={{ fontSize: '14px', color: '#57534E' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
                       {needsAssessmentCount} recon order{needsAssessmentCount !== 1 ? 's' : ''} waiting for inspection
                     </div>
                   </div>
@@ -212,21 +182,11 @@ export default function LosDashboardPage() {
               </a>
             )}
             {bhphDeals > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '10px',
-                  background: '#EFF6FF',
-                  border: '1px solid #BFDBFE',
-                  borderRadius: '8px',
-                  padding: '12px',
-                }}
-              >
+              <div className="lot-alert lot-alert-info">
                 <span style={{ fontSize: '18px' }}>💳</span>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: '14px', color: '#2563EB' }}>BHPH Payment Due</div>
-                  <div style={{ fontSize: '14px', color: '#57534E' }}>
+                  <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
                     {bhphDeals} in-house account{bhphDeals !== 1 ? 's' : ''} — next payment cycle due today
                   </div>
                 </div>
@@ -236,27 +196,16 @@ export default function LosDashboardPage() {
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in" style={{ animationDelay: '0.42s' }}>
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Recent Deals
         </h2>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="lot-table">
             <thead>
-              <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+              <tr>
                 {['Deal #', 'Vehicle', 'Sale Price', 'Total Gross', 'Status', 'Days to Fund'].map((h) => (
-                  <th
-                    key={h}
-                    style={{
-                      padding: '8px 12px',
-                      textAlign: 'left',
-                      fontSize: '12px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      fontWeight: 600,
-                      color: '#78716C',
-                    }}
-                  >
+                  <th key={h}>
                     {h}
                   </th>
                 ))}
@@ -266,26 +215,25 @@ export default function LosDashboardPage() {
               {recentDeals.map((deal) => (
                 <tr
                   key={deal.id}
-                  style={{ borderBottom: '1px solid #F1F5F9', cursor: 'pointer' }}
+                  style={{ cursor: 'pointer' }}
                   onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
-                  className="hover:bg-slate-50 transition-colors"
                 >
-                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 600, color: '#2563EB', cursor: 'pointer' }}>
+                  <td style={{ fontWeight: 600, color: '#2563EB', cursor: 'pointer' }}>
                     {deal.id}
                   </td>
                   <td
-                    style={{ padding: '12px', fontSize: '14px', color: '#2563EB', cursor: 'pointer', fontWeight: 500 }}
+                    style={{ color: '#2563EB', cursor: 'pointer', fontWeight: 500 }}
                     onClick={(e) => { e.stopPropagation(); setPanelEntity({ type: 'vehicle', id: deal.vehicleId }); }}
                   >
                     {getVehicleLabel(deal.vehicleId)}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E' }}>
+                  <td style={{ color: 'var(--lot-text-secondary)' }}>
                     ${deal.salePrice.toLocaleString()}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>
+                  <td style={{ fontWeight: 700, color: '#16A34A' }}>
                     ${deal.totalGross.toLocaleString()}
                   </td>
-                  <td style={{ padding: '12px' }}>
+                  <td>
                     <span
                       className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                       style={{
@@ -298,7 +246,7 @@ export default function LosDashboardPage() {
                       {deal.status}
                     </span>
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E' }}>
+                  <td style={{ color: 'var(--lot-text-secondary)' }}>
                     {deal.daysToFund !== null ? `${deal.daysToFund} days` : '—'}
                   </td>
                 </tr>

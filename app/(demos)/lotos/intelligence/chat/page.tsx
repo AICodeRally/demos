@@ -72,167 +72,147 @@ export default function AskLotosChatPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
-            AskLotOS Chat
-          </h1>
-          <p className="mt-1 text-base" style={{ color: '#57534E' }}>
-            AI-powered dealership intelligence — ask anything about your inventory, deals, and performance
-          </p>
-        </div>
-        <div
-          className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold"
-          style={{ backgroundColor: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA' }}
-        >
-          <span
-            className="inline-block w-2 h-2 rounded-full"
-            style={{ backgroundColor: '#DC2626' }}
-          />
-          Powered by AskLotOS AI
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        <span className="text-sm font-semibold self-center" style={{ color: '#78716C' }}>Quick questions:</span>
-        {QUICK_ACTIONS.map((action) => (
-          <button
-            key={action.keyword}
-            onClick={() => handleQuickAction(action)}
-            className="rounded-full px-4 py-2 text-sm font-medium transition-colors"
-            style={{
-              backgroundColor: '#F5F5F4',
-              color: '#1C1917',
-              border: '1px solid #E7E5E4',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#FEF2F2';
-              (e.currentTarget as HTMLButtonElement).style.color = '#DC2626';
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#FECACA';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#F5F5F4';
-              (e.currentTarget as HTMLButtonElement).style.color = '#1C1917';
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#E7E5E4';
-            }}
-          >
-            {action.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="space-y-6" style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '8px' }}>
-        {messages.map((msg, idx) => (
-          <div key={idx}>
-            {msg.role === 'user' ? (
-              <div className="flex justify-end">
-                <div
-                  className="max-w-2xl rounded-2xl rounded-tr-md px-5 py-4"
-                  style={{
-                    backgroundColor: 'rgba(232, 93, 44, 0.1)',
-                    border: '1px solid rgba(232, 93, 44, 0.2)',
-                  }}
-                >
-                  <p className="text-base font-medium" style={{ color: '#1C1917' }}>
-                    {msg.text}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="flex gap-3">
-                <div
-                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
-                  style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
-                >
-                  AI
-                </div>
-                <div
-                  className="flex-1 rounded-2xl rounded-tl-md px-5 py-4"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    border: '1px solid #E7E5E4',
-                  }}
-                >
-                  <div className="text-sm font-semibold mb-2" style={{ color: '#DC2626' }}>
-                    AskLotOS
-                  </div>
-                  <div className="text-base leading-relaxed" style={{ color: '#57534E' }}>
-                    <MarkdownRenderer text={msg.text} />
-                  </div>
-                </div>
-              </div>
-            )}
+    <div className="lot-page" style={{ padding: '24px' }}>
+      <div className="space-y-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="lot-heading">
+              AskLotOS Chat
+            </h1>
+            <p className="lot-description">
+              AI-powered dealership intelligence — ask anything about your inventory, deals, and performance
+            </p>
           </div>
-        ))}
+          <div
+            className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold"
+            style={{ backgroundColor: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA' }}
+          >
+            <span
+              className="inline-block w-2 h-2 rounded-full"
+              style={{ backgroundColor: '#DC2626' }}
+            />
+            Powered by AskLotOS AI
+          </div>
+        </div>
 
-        {isTyping && (
-          <div className="flex gap-3">
-            <div
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+        <div className="flex flex-wrap gap-2">
+          <span className="text-sm font-semibold self-center" style={{ color: 'var(--lot-text-muted)' }}>Quick questions:</span>
+          {QUICK_ACTIONS.map((action) => (
+            <button
+              key={action.keyword}
+              onClick={() => handleQuickAction(action)}
+              className="lot-btn"
+            >
+              {action.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-6" style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '8px', background: 'var(--lot-card-alt)', borderRadius: '12px', padding: '16px' }}>
+          {messages.map((msg, idx) => (
+            <div key={idx} className="lot-animate-in">
+              {msg.role === 'user' ? (
+                <div className="flex justify-end">
+                  <div
+                    className="max-w-2xl rounded-2xl rounded-tr-md px-5 py-4"
+                    style={{
+                      backgroundColor: 'rgba(232, 93, 44, 0.1)',
+                      border: '1px solid rgba(232, 93, 44, 0.2)',
+                    }}
+                  >
+                    <p className="text-base font-medium" style={{ color: 'var(--lot-text)' }}>
+                      {msg.text}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-3">
+                  <div
+                    className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                    style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+                  >
+                    AI
+                  </div>
+                  <div
+                    className="flex-1 rounded-2xl rounded-tl-md px-5 py-4"
+                    style={{
+                      backgroundColor: 'var(--lot-card)',
+                      border: '1px solid var(--lot-border)',
+                    }}
+                  >
+                    <div className="text-sm font-semibold mb-2" style={{ color: '#DC2626' }}>
+                      AskLotOS
+                    </div>
+                    <div className="text-base leading-relaxed" style={{ color: 'var(--lot-text-secondary)' }}>
+                      <MarkdownRenderer text={msg.text} />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {isTyping && (
+            <div className="flex gap-3">
+              <div
+                className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
+              >
+                AI
+              </div>
+              <div
+                className="rounded-2xl rounded-tl-md px-5 py-4"
+                style={{
+                  backgroundColor: 'var(--lot-card)',
+                  border: '1px solid var(--lot-border)',
+                }}
+              >
+                <div className="flex gap-1.5 items-center" style={{ height: '24px' }}>
+                  <span className="inline-block w-2.5 h-2.5 rounded-full lot-bounce" style={{ backgroundColor: '#DC2626', animationDelay: '0s' }} />
+                  <span className="inline-block w-2.5 h-2.5 rounded-full lot-bounce" style={{ backgroundColor: '#DC2626', animationDelay: '0.2s' }} />
+                  <span className="inline-block w-2.5 h-2.5 rounded-full lot-bounce" style={{ backgroundColor: '#DC2626', animationDelay: '0.4s' }} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div ref={chatEndRef} />
+        </div>
+
+        <style>{`
+          @keyframes lotos-bounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
+
+        <div
+          className="lot-card sticky bottom-0 rounded-2xl p-4"
+          style={{
+            boxShadow: '0 -4px 24px rgba(0,0,0,0.06)',
+          }}
+        >
+          <div className="flex gap-3 items-center">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+              placeholder="Ask LotOS anything about your dealership..."
+              className="lot-input flex-1"
+            />
+            <button
+              onClick={handleSend}
+              className="rounded-xl px-5 py-3 text-sm font-bold transition-opacity"
               style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
             >
-              AI
-            </div>
-            <div
-              className="rounded-2xl rounded-tl-md px-5 py-4"
-              style={{
-                backgroundColor: '#FFFFFF',
-                border: '1px solid #E7E5E4',
-              }}
-            >
-              <div className="flex gap-1.5 items-center" style={{ height: '24px' }}>
-                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0s' }} />
-                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0.2s' }} />
-                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#DC2626', animation: 'lotos-bounce 1.4s infinite ease-in-out', animationDelay: '0.4s' }} />
-              </div>
-            </div>
+              Send
+            </button>
           </div>
-        )}
-
-        <div ref={chatEndRef} />
-      </div>
-
-      <style>{`
-        @keyframes lotos-bounce {
-          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-          40% { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
-
-      <div
-        className="sticky bottom-0 rounded-2xl p-4"
-        style={{
-          backgroundColor: '#FFFFFF',
-          border: '1px solid #E7E5E4',
-          boxShadow: '0 -4px 24px rgba(0,0,0,0.06)',
-        }}
-      >
-        <div className="flex gap-3 items-center">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
-            placeholder="Ask LotOS anything about your dealership..."
-            className="flex-1 rounded-xl px-4 py-3 text-base outline-none"
-            style={{
-              backgroundColor: '#F8FAFC',
-              border: '1px solid #E7E5E4',
-              color: '#1C1917',
-            }}
-          />
-          <button
-            onClick={handleSend}
-            className="rounded-xl px-5 py-3 text-sm font-bold transition-opacity"
-            style={{ backgroundColor: '#DC2626', color: '#FFFFFF' }}
-          >
-            Send
-          </button>
+          <p className="text-xs mt-2 text-center" style={{ color: 'var(--lot-text-muted)' }}>
+            AI-powered assistant. Responses match pre-loaded dealership data.
+          </p>
         </div>
-        <p className="text-xs mt-2 text-center" style={{ color: '#78716C' }}>
-          AI-powered assistant. Responses match pre-loaded dealership data.
-        </p>
       </div>
     </div>
   );

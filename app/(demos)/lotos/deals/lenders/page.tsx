@@ -53,7 +53,7 @@ export default function LendersPage() {
     {
       key: 'name',
       label: 'Lender',
-      render: (l) => <span style={{ fontWeight: 700, color: '#1C1917', fontSize: '15px' }}>{l.name}</span>,
+      render: (l) => <span style={{ fontWeight: 700, color: 'var(--lot-text)', fontSize: '15px' }}>{l.name}</span>,
       sortFn: (a, b) => a.name.localeCompare(b.name),
     },
     {
@@ -91,7 +91,7 @@ export default function LendersPage() {
       label: 'Avg Buy Rate',
       align: 'right',
       sortFn: (a, b) => a.avgBuyRate - b.avgBuyRate,
-      render: (l) => <span style={{ fontWeight: 700, color: '#1C1917' }}>{l.avgBuyRate}%</span>,
+      render: (l) => <span style={{ fontWeight: 700, color: 'var(--lot-text)' }}>{l.avgBuyRate}%</span>,
     },
     {
       key: 'avgDaysToFund',
@@ -106,7 +106,7 @@ export default function LendersPage() {
       sortFn: (a, b) => a.approvalRate - b.approvalRate,
       render: (l) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '120px' }}>
-          <div style={{ flex: 1, height: '8px', background: '#F1F5F9', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: '8px', background: 'var(--lot-border-faint)', borderRadius: '4px', overflow: 'hidden' }}>
             <div
               style={{
                 height: '100%',
@@ -116,7 +116,7 @@ export default function LendersPage() {
               }}
             />
           </div>
-          <span style={{ fontSize: '14px', fontWeight: 700, color: '#1C1917', minWidth: '36px' }}>{l.approvalRate}%</span>
+          <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)', minWidth: '36px' }}>{l.approvalRate}%</span>
         </div>
       ),
     },
@@ -153,29 +153,20 @@ export default function LendersPage() {
     DEALS.filter((d) => d.lender === lenderName);
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             Lender Matching
           </h1>
-          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+          <p className="lot-description">
             Ranked by approval rate — matched to {customer.firstName} {customer.lastName} (est. {creditScore} credit score, {customer.creditTier})
           </p>
         </div>
         <select
           value={selectedCustomerId}
           onChange={(e) => { setSelectedCustomerId(e.target.value); setExpandedLender(null); }}
-          style={{
-            padding: '8px 14px',
-            borderRadius: '8px',
-            border: '1.5px solid #E7E5E4',
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#1C1917',
-            background: '#FFFFFF',
-            cursor: 'pointer',
-          }}
+          className="lot-input"
         >
           {CUSTOMERS.map((c) => (
             <option key={c.id} value={c.id}>
@@ -194,42 +185,42 @@ export default function LendersPage() {
         }}
       >
         <div
-          className="rounded-xl bg-white border p-6"
-          style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#2563EB' }}
+          className="lot-card lot-animate-in"
+          style={{ borderLeftWidth: '4px', borderLeftColor: '#2563EB' }}
         >
-          <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)' }}>
             {avgApprovalRate}%
           </div>
-          <div style={{ fontSize: '14px', color: '#57534E', marginTop: '4px', fontWeight: 500 }}>
+          <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginTop: '4px', fontWeight: 500 }}>
             Avg Approval Rate
           </div>
         </div>
         <div
-          className="rounded-xl bg-white border p-6"
-          style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#16A34A' }}
+          className="lot-card lot-animate-in"
+          style={{ borderLeftWidth: '4px', borderLeftColor: '#16A34A' }}
         >
-          <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)' }}>
             {fastestFunder.avgDaysToFund === 0 ? 'Same Day' : `${fastestFunder.avgDaysToFund} day`}
           </div>
-          <div style={{ fontSize: '14px', color: '#57534E', marginTop: '4px', fontWeight: 500 }}>
+          <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginTop: '4px', fontWeight: 500 }}>
             Fastest Funder ({fastestFunder.name})
           </div>
         </div>
         <div
-          className="rounded-xl bg-white border p-6"
-          style={{ borderColor: '#E7E5E4', borderLeftWidth: '4px', borderLeftColor: '#7C3AED' }}
+          className="lot-card lot-animate-in"
+          style={{ borderLeftWidth: '4px', borderLeftColor: '#7C3AED' }}
         >
-          <div className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)' }}>
             {bestRate.avgBuyRate}%
           </div>
-          <div style={{ fontSize: '14px', color: '#57534E', marginTop: '4px', fontWeight: 500 }}>
+          <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginTop: '4px', fontWeight: 500 }}>
             Best Buy Rate ({bestRate.name})
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Lender Comparison
         </h2>
         <DataTable
@@ -248,16 +239,16 @@ export default function LendersPage() {
               style={{
                 marginTop: '12px',
                 padding: '16px',
-                background: '#FAFAF9',
+                background: 'var(--lot-card-alt)',
                 borderRadius: '10px',
-                border: '1.5px solid #E7E5E4',
+                border: '1.5px solid var(--lot-border)',
               }}
             >
-              <h3 style={{ fontWeight: 700, fontSize: '16px', color: '#1C1917', marginBottom: '12px' }}>
+              <h3 style={{ fontWeight: 700, fontSize: '16px', color: 'var(--lot-text)', marginBottom: '12px' }}>
                 Recent Deals — {lender.name}
               </h3>
               {deals.length === 0 ? (
-                <p style={{ fontSize: '14px', color: '#78716C', fontStyle: 'italic' }}>No deals funded through this lender.</p>
+                <p style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontStyle: 'italic' }}>No deals funded through this lender.</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {deals.map((d) => {
@@ -270,21 +261,21 @@ export default function LendersPage() {
                           justifyContent: 'space-between',
                           alignItems: 'center',
                           padding: '10px 14px',
-                          background: '#FFFFFF',
+                          background: 'var(--lot-card)',
                           borderRadius: '8px',
-                          border: '1px solid #E7E5E4',
+                          border: '1px solid var(--lot-border)',
                           cursor: 'pointer',
                         }}
                         onClick={() => setPanelEntity({ type: 'deal', id: d.id })}
                       >
                         <div>
-                          <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>{d.id}</span>
-                          <span style={{ fontSize: '14px', color: '#57534E', marginLeft: '10px' }}>
+                          <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--lot-text)' }}>{d.id}</span>
+                          <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginLeft: '10px' }}>
                             {v ? `${v.year} ${v.make} ${v.model}` : d.vehicleId}
                           </span>
                         </div>
                         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                          <span style={{ fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>${d.salePrice.toLocaleString()}</span>
+                          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)' }}>${d.salePrice.toLocaleString()}</span>
                           <span
                             className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                             style={{
@@ -305,9 +296,9 @@ export default function LendersPage() {
           );
         })()}
 
-        <div style={{ marginTop: '16px', padding: '12px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid #E7E5E4' }}>
-          <div style={{ fontSize: '14px', color: '#78716C' }}>
-            <strong style={{ color: '#57534E' }}>Match Logic:</strong> Green = lender min score ≤ customer est. score ({creditScore}).
+        <div style={{ marginTop: '16px', padding: '12px', background: 'var(--lot-card-alt)', borderRadius: '8px', border: '1px solid var(--lot-border)' }}>
+          <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>
+            <strong style={{ color: 'var(--lot-text-secondary)' }}>Match Logic:</strong> Green = lender min score ≤ customer est. score ({creditScore}).
             Amber = within 30 points. Red = does not qualify.
           </div>
         </div>
