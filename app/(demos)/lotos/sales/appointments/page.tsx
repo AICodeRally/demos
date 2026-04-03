@@ -249,7 +249,9 @@ export default function AppointmentsPage() {
             <h3 className="text-lg font-bold" style={{ color: 'var(--lot-text)' }}>Appointment Details</h3>
             <button
               onClick={() => setSelectedAppt(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-lg"
+              className="w-8 h-8 flex items-center justify-center rounded-full text-lg transition-colors"
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--lot-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               style={{ color: 'var(--lot-text-secondary)' }}
             >
               x
@@ -285,7 +287,7 @@ export default function AppointmentsPage() {
           </div>
           <button
             onClick={() => setSelectedAppt(null)}
-            className="mt-4 w-full rounded-lg px-4 py-2 text-sm font-semibold border transition-colors hover:bg-gray-50"
+            className="mt-4 w-full rounded-lg px-4 py-2 text-sm font-semibold border transition-colors lot-btn"
             style={{ color: 'var(--lot-text-secondary)', borderColor: 'var(--lot-border)' }}
           >
             Close
@@ -371,7 +373,7 @@ export default function AppointmentsPage() {
               </button>
               <button
                 onClick={() => setShowNewForm(false)}
-                className="flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold border transition-colors hover:bg-gray-50"
+                className="flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold border transition-colors lot-btn"
                 style={{ color: 'var(--lot-text-secondary)', borderColor: 'var(--lot-border)' }}
               >
                 Cancel

@@ -195,7 +195,7 @@ export default function LotosKpiDashboardPage() {
                       y1={benchmarkY}
                       x2={expandedWidth}
                       y2={benchmarkY}
-                      stroke="#78716C"
+                      stroke="var(--lot-text-muted)"
                       strokeWidth="1.5"
                       strokeDasharray="6 4"
                     />
