@@ -126,7 +126,7 @@ export default function LosDashboardPage() {
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>{aged0_30} units</span>
               </div>
               <div className="lot-progress-track">
-                <div className="lot-progress-fill" style={{ width: `${(aged0_30 / inStock.length) * 100}%`, background: '#16A34A' }} />
+                <div className="lot-progress-fill" style={{ width: `${inStock.length > 0 ? (aged0_30 / inStock.length) * 100 : 0}%`, background: '#16A34A' }} />
               </div>
             </div>
             <div>
@@ -135,7 +135,7 @@ export default function LosDashboardPage() {
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#D97706' }}>{aged31_60} units</span>
               </div>
               <div className="lot-progress-track">
-                <div className="lot-progress-fill" style={{ width: `${(aged31_60 / inStock.length) * 100}%`, background: '#D97706' }} />
+                <div className="lot-progress-fill" style={{ width: `${inStock.length > 0 ? (aged31_60 / inStock.length) * 100 : 0}%`, background: '#D97706' }} />
               </div>
             </div>
             <div>
@@ -144,7 +144,7 @@ export default function LosDashboardPage() {
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#DC2626' }}>{aged61_90} units</span>
               </div>
               <div className="lot-progress-track">
-                <div className="lot-progress-fill" style={{ width: `${(aged61_90 / inStock.length) * 100}%`, background: '#DC2626' }} />
+                <div className="lot-progress-fill" style={{ width: `${inStock.length > 0 ? (aged61_90 / inStock.length) * 100 : 0}%`, background: '#DC2626' }} />
               </div>
             </div>
           </div>

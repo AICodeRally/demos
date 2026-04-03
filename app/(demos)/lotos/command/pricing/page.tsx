@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { VEHICLES } from '@/data/lotos';
 import { Toast } from '@/components/demos/lotos';
 
@@ -156,9 +156,8 @@ export default function LotosPricingPage() {
             </thead>
             <tbody>
               {MARKET_COMPS.map((comp, idx) => (
-                <>
+                <Fragment key={comp.source}>
                   <tr
-                    key={comp.source}
                     style={{ borderBottom: expandedComp === idx ? 'none' : '1px solid var(--lot-border-faint)', cursor: 'pointer', background: expandedComp === idx ? 'var(--lot-card-alt)' : 'transparent' }}
                     onClick={() => setExpandedComp(expandedComp === idx ? null : idx)}
                   >
@@ -208,7 +207,7 @@ export default function LotosPricingPage() {
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               ))}
             </tbody>
           </table>

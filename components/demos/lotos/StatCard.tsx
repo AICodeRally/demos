@@ -33,24 +33,23 @@ function parseNumericValue(value: string): { num: number; prefix: string; suffix
   return { num, prefix: match[1], suffix: match[3], decimals };
 }
 
-function AnimatedValue({ value, color }: { value: string; color?: string }) {
+function AnimatedValue({ value }: { value: string }) {
   const parsed = parseNumericValue(value);
-  if (!parsed) {
-    return <span className="lot-value" style={color ? { color } : undefined}>{value}</span>;
-  }
 
   const display = useCountUp({
-    end: parsed.num,
+    end: parsed?.num ?? 0,
     duration: 800,
-    decimals: parsed.decimals,
-    prefix: parsed.prefix,
-    suffix: parsed.suffix,
+    decimals: parsed?.decimals ?? 0,
+    prefix: parsed?.prefix ?? '',
+    suffix: parsed?.suffix ?? '',
   });
 
-  // Format with commas
-  const formatted = display.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  if (!parsed) {
+    return <span className="lot-value">{value}</span>;
+  }
 
-  return <span className="lot-value" style={color ? { color } : undefined}>{formatted}</span>;
+  const formatted = display.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return <span className="lot-value">{formatted}</span>;
 }
 
 export function StatCard({ label, value, trend, trendValue, color = '#1E3A5F', sparkline, onClick, animationDelay = 0 }: StatCardProps) {
@@ -66,6 +65,7 @@ export function StatCard({ label, value, trend, trendValue, color = '#1E3A5F', s
       <p className="lot-label">{label}</p>
       <div className="mt-1">
         <AnimatedValue value={value} />
+
       </div>
       {trend && trendValue && (
         <p style={{ fontSize: 'var(--lot-font-caption)', marginTop: '4px', fontWeight: 600, color: trend === 'up' ? '#16A34A' : '#DC2626' }}>

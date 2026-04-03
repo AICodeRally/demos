@@ -157,6 +157,9 @@ export default function MarketIntelPage() {
                 <div className="flex items-center gap-2 mb-3">
                   <button
                     onClick={() => toggleCheck(i)}
+                    role="checkbox"
+                    aria-checked={checkedItems[i]}
+                    aria-label={`Mark action ${i + 1} as ${checkedItems[i] ? 'incomplete' : 'complete'}`}
                     style={{
                       width: '20px',
                       height: '20px',
