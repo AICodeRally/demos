@@ -80,29 +80,20 @@ export default function ContractingPage() {
   };
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             Contracting
           </h1>
-          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+          <p className="lot-description">
             Document checklist, funding status, and deal summary
           </p>
         </div>
         <select
           value={selectedDealId}
           onChange={(e) => handleDealChange(e.target.value)}
-          style={{
-            padding: '8px 14px',
-            borderRadius: '8px',
-            border: '1.5px solid #E7E5E4',
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#1C1917',
-            background: '#FFFFFF',
-            cursor: 'pointer',
-          }}
+          className="lot-input"
         >
           {DEALS.map((d) => {
             const v = VEHICLES.find((veh) => veh.id === d.vehicleId);
@@ -116,9 +107,9 @@ export default function ContractingPage() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
+        <div className="lot-card lot-animate-in">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 className="text-xl font-bold" style={{ color: '#1C1917' }}>
+            <h2 className="lot-subheading">
               Deal Summary
             </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -161,16 +152,16 @@ export default function ContractingPage() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  borderBottom: '1px solid #F1F5F9',
+                  borderBottom: '1px solid var(--lot-border-faint)',
                   paddingBottom: '8px',
                 }}
               >
-                <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 500 }}>{row.label}</span>
+                <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 500 }}>{row.label}</span>
                 <span
                   style={{
                     fontSize: '14px',
                     fontWeight: row.bold ? 700 : 600,
-                    color: row.clickable ? '#2563EB' : '#1C1917',
+                    color: row.clickable ? '#2563EB' : 'var(--lot-text)',
                     textAlign: 'right',
                     cursor: row.clickable ? 'pointer' : undefined,
                   }}
@@ -183,9 +174,9 @@ export default function ContractingPage() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
+        <div className="lot-card lot-animate-in">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <h2 className="text-xl font-bold" style={{ color: '#1C1917' }}>
+            <h2 className="lot-subheading">
               Document Checklist
             </h2>
             <span style={{ fontSize: '14px', fontWeight: 700, color: completionPct === 100 ? '#16A34A' : '#D97706' }}>
@@ -196,7 +187,7 @@ export default function ContractingPage() {
           <div
             style={{
               height: '8px',
-              background: '#F1F5F9',
+              background: 'var(--lot-border-faint)',
               borderRadius: '4px',
               overflow: 'hidden',
               marginBottom: '16px',
@@ -232,13 +223,13 @@ export default function ContractingPage() {
                     transition: 'background 0.15s',
                   }}
                 >
-                  <span style={{ fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)' }}>
                     {doc.name}
                   </span>
                   <span
                     className="rounded-full px-2.5 py-0.5 text-xs font-bold"
                     style={{
-                      background: '#FFFFFF',
+                      background: 'var(--lot-card)',
                       color: style.color,
                       border: `1px solid ${style.border}`,
                     }}
@@ -249,12 +240,12 @@ export default function ContractingPage() {
               );
             })}
           </div>
-          <p style={{ fontSize: '14px', color: '#78716C', marginTop: '12px' }}>Click any item to cycle status</p>
+          <p style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '12px' }}>Click any item to cycle status</p>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4', marginBottom: '20px' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in" style={{ marginBottom: '20px' }}>
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Funding Status
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
@@ -270,21 +261,21 @@ export default function ContractingPage() {
               <div
                 key={deal.id}
                 style={{
-                  border: '1.5px solid #E7E5E4',
+                  border: '1.5px solid var(--lot-border)',
                   borderRadius: '10px',
                   padding: '16px',
-                  background: '#FAFAF9',
+                  background: 'var(--lot-card-alt)',
                   cursor: 'pointer',
                 }}
                 onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '15px', color: '#1C1917' }}>{deal.id}</div>
-                    <div style={{ fontSize: '14px', color: '#57534E', marginTop: '2px' }}>
+                    <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--lot-text)' }}>{deal.id}</div>
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginTop: '2px' }}>
                       {vehicle ? `${vehicle.year} ${vehicle.make} ${vehicle.model}` : deal.vehicleId}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#57534E' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
                       {customer ? `${customer.firstName} ${customer.lastName}` : deal.customerId}
                     </div>
                   </div>
@@ -301,14 +292,14 @@ export default function ContractingPage() {
                   </span>
                 </div>
 
-                <div style={{ fontSize: '14px', fontWeight: 600, color: '#57534E', marginBottom: '6px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text-secondary)', marginBottom: '6px' }}>
                   Day {daysSinceClosed} of funding (target: {targetDays} days)
                 </div>
 
                 <div
                   style={{
                     height: '10px',
-                    background: '#F1F5F9',
+                    background: 'var(--lot-border-faint)',
                     borderRadius: '5px',
                     overflow: 'hidden',
                   }}
@@ -324,8 +315,8 @@ export default function ContractingPage() {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px' }}>
-                  <span style={{ fontSize: '14px', color: '#78716C' }}>Closed {deal.closedDate}</span>
-                  <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>
+                  <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>Closed {deal.closedDate}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>
                     Lender: {deal.lender}
                   </span>
                 </div>
@@ -334,21 +325,21 @@ export default function ContractingPage() {
           })}
 
           {pendingDeals.length === 0 && (
-            <div style={{ fontSize: '14px', color: '#78716C', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontStyle: 'italic' }}>
               No pending deals in funding pipeline.
             </div>
           )}
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-xl font-bold" style={{ color: '#1C1917', marginBottom: '16px' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           All Deals
         </h2>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+              <tr style={{ borderBottom: '2px solid var(--lot-border-faint)' }}>
                 {['Deal #', 'Vehicle', 'Customer', 'Sale Price', 'Lender', 'Status', 'Days to Fund', 'Closed'].map(
                   (h) => (
                     <th
@@ -360,7 +351,7 @@ export default function ContractingPage() {
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
                         fontWeight: 600,
-                        color: '#78716C',
+                        color: 'var(--lot-text-muted)',
                         whiteSpace: 'nowrap',
                       }}
                     >
@@ -375,25 +366,25 @@ export default function ContractingPage() {
                 <tr
                   key={deal.id}
                   style={{
-                    borderBottom: '1px solid #F1F5F9',
-                    background: idx % 2 === 0 ? '#FFFFFF' : '#FAFAF9',
+                    borderBottom: '1px solid var(--lot-border-faint)',
+                    background: idx % 2 === 0 ? 'var(--lot-card)' : 'var(--lot-card-alt)',
                     cursor: 'pointer',
                   }}
                   onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
                 >
-                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 700, color: '#1C1917', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>
                     {deal.id}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     {getVehicleLabel(deal.vehicleId)}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     {getCustomerName(deal.customerId)}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 600, color: '#1C1917', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>
                     ${deal.salePrice.toLocaleString()}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     {deal.lender}
                   </td>
                   <td style={{ padding: '12px' }}>
@@ -410,10 +401,10 @@ export default function ContractingPage() {
                       {deal.status}
                     </span>
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     {deal.daysToFund !== null ? `${deal.daysToFund} days` : '—'}
                   </td>
-                  <td style={{ padding: '12px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     {deal.closedDate}
                   </td>
                 </tr>

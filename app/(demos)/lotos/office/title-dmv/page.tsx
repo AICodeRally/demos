@@ -85,49 +85,49 @@ export default function TitleDmvPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Title &amp; DMV
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           Title transfer pipeline and registration status for all active deals
         </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+      <div className="grid grid-cols-4 gap-4 lot-animate-in">
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Deals Closed
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>{dealClosed}</p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>in pipeline</p>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>{dealClosed}</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>in pipeline</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Titles Received
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#2563EB' }}>{titleReceived}</p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>of {dealClosed} deals</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>of {dealClosed} deals</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             DMV Submitted
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#7C3AED' }}>{dmvSubmitted}</p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>submitted for registration</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>submitted for registration</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Avg Days to Title
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#16A34A' }}>{avgDaysToTitle}</p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>days for completed titles</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>days for completed titles</p>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-lg font-bold mb-5" style={{ color: '#1C1917' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading !mb-5">
           Pipeline Stages
         </h2>
         <div className="flex items-center gap-0">
@@ -137,21 +137,21 @@ export default function TitleDmvPage() {
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
                   style={{
-                    backgroundColor: stage.count === dealClosed ? '#16A34A' : stage.count > 0 ? '#2563EB' : '#E7E5E4',
-                    color: stage.count > 0 ? '#FFFFFF' : '#78716C',
+                    backgroundColor: stage.count === dealClosed ? '#16A34A' : stage.count > 0 ? '#2563EB' : 'var(--lot-border)',
+                    color: stage.count > 0 ? '#FFFFFF' : 'var(--lot-text-muted)',
                   }}
                 >
                   {stage.count}
                 </div>
-                <p className="text-sm font-semibold text-center" style={{ color: '#1C1917' }}>{stage.label}</p>
-                <p className="text-xs" style={{ color: '#78716C' }}>
+                <p className="text-sm font-semibold text-center" style={{ color: 'var(--lot-text)' }}>{stage.label}</p>
+                <p className="text-xs" style={{ color: 'var(--lot-text-muted)' }}>
                   {Math.round((stage.count / dealClosed) * 100)}% of deals
                 </p>
               </div>
               {i < stagesSummary.length - 1 && (
                 <div
                   className="h-1 flex-1 mx-1"
-                  style={{ backgroundColor: stagesSummary[i + 1].count > 0 ? '#2563EB' : '#E7E5E4', maxWidth: '60px' }}
+                  style={{ backgroundColor: stagesSummary[i + 1].count > 0 ? '#2563EB' : 'var(--lot-border)', maxWidth: '60px' }}
                 />
               )}
             </div>
@@ -159,27 +159,27 @@ export default function TitleDmvPage() {
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-        <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-          <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+      <div className="lot-card overflow-hidden !p-0 lot-animate-in">
+        <div className="px-6 py-4" style={{ borderBottom: '1px solid var(--lot-border)' }}>
+          <h2 className="lot-subheading">
             Per-Deal Title Tracker
           </h2>
-          <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--lot-text-secondary)' }}>
             Click a stage icon to advance — click a row to view deal details
           </p>
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Deal #</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Vehicle</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Customer</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Close Date</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Days in Stage</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Deal Closed</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Title Received</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>DMV Submitted</th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>Registered</th>
+            <tr style={{ backgroundColor: 'var(--lot-card-alt)', borderBottom: '1px solid var(--lot-border)' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Deal #</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Vehicle</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Customer</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Close Date</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Days in Stage</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Deal Closed</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Title Received</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>DMV Submitted</th>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>Registered</th>
             </tr>
           </thead>
           <tbody>
@@ -193,19 +193,19 @@ export default function TitleDmvPage() {
                 <tr
                   key={pipeline.dealId}
                   style={{
-                    borderBottom: i < stages.length - 1 ? '1px solid #F5F5F4' : undefined,
+                    borderBottom: i < stages.length - 1 ? '1px solid var(--lot-border-faint)' : undefined,
                     cursor: 'pointer',
                   }}
                   onClick={() => setPanelEntity({ type: 'deal', id: deal.id })}
                 >
-                  <td className="px-4 py-3 font-semibold" style={{ color: '#1C1917' }}>{deal.id}</td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>
+                  <td className="px-4 py-3 font-semibold" style={{ color: 'var(--lot-text)' }}>{deal.id}</td>
+                  <td className="px-4 py-3" style={{ color: 'var(--lot-text-secondary)' }}>
                     {vehicle ? `${vehicle.year} ${vehicle.make} ${vehicle.model}` : deal.vehicleId}
                   </td>
-                  <td className="px-4 py-3" style={{ color: '#57534E' }}>
+                  <td className="px-4 py-3" style={{ color: 'var(--lot-text-secondary)' }}>
                     {customer ? `${customer.firstName} ${customer.lastName}` : deal.customerId}
                   </td>
-                  <td className="px-4 py-3 text-center" style={{ color: '#57534E' }}>{deal.closedDate}</td>
+                  <td className="px-4 py-3 text-center" style={{ color: 'var(--lot-text-secondary)' }}>{deal.closedDate}</td>
                   <td className="px-4 py-3 text-center">
                     <span
                       style={{
@@ -245,14 +245,14 @@ export default function TitleDmvPage() {
             })}
           </tbody>
         </table>
-        <div className="px-6 py-3 flex gap-6" style={{ borderTop: '1px solid #E7E5E4', backgroundColor: '#F8FAFC' }}>
-          <span className="text-sm flex items-center gap-1.5" style={{ color: '#57534E' }}>
+        <div className="px-6 py-3 flex gap-6" style={{ borderTop: '1px solid var(--lot-border)', backgroundColor: 'var(--lot-card-alt)' }}>
+          <span className="text-sm flex items-center gap-1.5" style={{ color: 'var(--lot-text-secondary)' }}>
             <span style={{ color: '#16A34A', fontWeight: 700 }}>✓</span> Complete
           </span>
-          <span className="text-sm flex items-center gap-1.5" style={{ color: '#57534E' }}>
+          <span className="text-sm flex items-center gap-1.5" style={{ color: 'var(--lot-text-secondary)' }}>
             <span style={{ color: '#2563EB' }}>◐</span> In Progress (click to advance)
           </span>
-          <span className="text-sm flex items-center gap-1.5" style={{ color: '#57534E' }}>
+          <span className="text-sm flex items-center gap-1.5" style={{ color: 'var(--lot-text-secondary)' }}>
             <span style={{ color: '#D1D5DB' }}>○</span> Pending
           </span>
         </div>

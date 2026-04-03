@@ -87,49 +87,38 @@ export default function LotosReconPage() {
   }
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Recon Board
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           Reconditioning pipeline — track every vehicle from assessment to frontline
         </p>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '24px',
-          background: '#FFFFFF',
-          border: '1px solid #E7E5E4',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          marginBottom: '24px',
-          flexWrap: 'wrap',
-        }}
-      >
+      <div className="lot-card" style={{ display: 'flex', gap: '24px', marginBottom: '24px', flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <div style={{ fontSize: '12px', color: 'var(--lot-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Units in Recon
           </div>
-          <div style={{ fontSize: '24px', fontWeight: 700, color: '#1C1917', marginTop: '2px' }}>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--lot-text)', marginTop: '2px' }}>
             {unitsInRecon}
           </div>
         </div>
-        <div style={{ borderLeft: '1px solid #E7E5E4', paddingLeft: '24px' }}>
-          <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ borderLeft: '1px solid var(--lot-border)', paddingLeft: '24px' }}>
+          <div style={{ fontSize: '12px', color: 'var(--lot-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Avg Recon Cost
           </div>
-          <div style={{ fontSize: '24px', fontWeight: 700, color: '#1C1917', marginTop: '2px' }}>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--lot-text)', marginTop: '2px' }}>
             ${avgReconCost.toLocaleString()}
           </div>
         </div>
-        <div style={{ borderLeft: '1px solid #E7E5E4', paddingLeft: '24px' }}>
-          <div style={{ fontSize: '12px', color: '#78716C', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ borderLeft: '1px solid var(--lot-border)', paddingLeft: '24px' }}>
+          <div style={{ fontSize: '12px', color: 'var(--lot-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Avg Cycle Time
           </div>
-          <div style={{ fontSize: '24px', fontWeight: 700, color: '#1C1917', marginTop: '2px' }}>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--lot-text)', marginTop: '2px' }}>
             {avgCycleTime} days
           </div>
         </div>
@@ -181,7 +170,7 @@ export default function LotosReconPage() {
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, status)}
                 style={{
-                  background: '#F1F5F9',
+                  background: 'var(--lot-card-alt)',
                   borderRadius: '0 0 8px 8px',
                   padding: '10px',
                   minHeight: '120px',
@@ -195,7 +184,7 @@ export default function LotosReconPage() {
                     style={{
                       textAlign: 'center',
                       padding: '24px 8px',
-                      color: '#A8A29E',
+                      color: 'var(--lot-text-muted)',
                       fontSize: '14px',
                     }}
                   >
@@ -220,25 +209,25 @@ export default function LotosReconPage() {
                         onDragStart={(e) => handleDragStart(e, order.id)}
                         onClick={() => setPanelEntity({ type: 'vehicle', id: order.vehicleId })}
                         style={{
-                          background: '#FFFFFF',
-                          border: '1px solid #E7E5E4',
+                          background: 'var(--lot-card)',
+                          border: '1px solid var(--lot-border)',
                           borderRadius: '8px',
                           padding: '12px',
                           cursor: 'grab',
                         }}
                       >
-                        <div style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>
+                        <div style={{ fontWeight: 700, fontSize: '14px', color: 'var(--lot-text)' }}>
                           {order.vehicleId}
                         </div>
                         {vehicle && (
-                          <div style={{ fontSize: '14px', color: '#57534E', marginBottom: '8px' }}>
+                          <div style={{ fontSize: '14px', color: 'var(--lot-text-secondary)', marginBottom: '8px' }}>
                             {vehicle.year} {vehicle.make} {vehicle.model}
                           </div>
                         )}
 
                         <ul style={{ margin: '0 0 8px 0', padding: '0 0 0 16px' }}>
                           {order.items.map((item, i) => (
-                            <li key={i} style={{ fontSize: '14px', color: '#57534E' }}>
+                            <li key={i} style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>
                               {item}
                             </li>
                           ))}
@@ -250,16 +239,8 @@ export default function LotosReconPage() {
                             onChange={(e) =>
                               setTechAssignments((prev) => ({ ...prev, [order.id]: e.target.value }))
                             }
-                            style={{
-                              width: '100%',
-                              padding: '4px 8px',
-                              borderRadius: '6px',
-                              border: '1px solid #E7E5E4',
-                              fontSize: '14px',
-                              color: '#1C1917',
-                              background: '#F8FAFC',
-                              cursor: 'pointer',
-                            }}
+                            className="lot-input"
+                            style={{ padding: '4px 8px' }}
                           >
                             {TECHS.map((tech) => (
                               <option key={tech} value={tech}>{tech}</option>
@@ -272,14 +253,14 @@ export default function LotosReconPage() {
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            borderTop: '1px solid #F1F5F9',
+                            borderTop: '1px solid var(--lot-border-faint)',
                             paddingTop: '8px',
                           }}
                         >
                           <span style={{ fontSize: '14px', fontWeight: 700, color: columnColor }}>
                             {costDisplay}
                           </span>
-                          <span style={{ fontSize: '14px', color: '#78716C' }}>
+                          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>
                             {order.cycleDays}d
                           </span>
                         </div>

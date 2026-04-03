@@ -71,48 +71,48 @@ export default function PipelinePage() {
   const conversionRate = Math.round((totalSold / totalLeads) * 100);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Lead Pipeline
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           Funnel performance and lead source ROI — March 2026
         </p>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Total Leads (March)
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             71
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>across all sources</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>across all sources</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.06s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Conversion Rate
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#16A34A' }}>
             {conversionRate}%
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{totalSold} of {totalLeads} active leads</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>{totalSold} of {totalLeads} active leads</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.12s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Avg Days to Close
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#2563EB' }}>
             8.4
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>days from first contact</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>days from first contact</p>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-lg font-bold mb-5" style={{ color: '#1C1917' }}>
+      <div className="lot-card">
+        <h2 className="lot-subheading" style={{ marginBottom: '16px' }}>
           Sales Funnel
         </h2>
         <div className="space-y-3">
@@ -131,7 +131,7 @@ export default function PipelinePage() {
                   className="flex items-center gap-4 cursor-pointer"
                   onClick={() => setExpandedStage(isExpanded ? null : stage.label)}
                 >
-                  <div className="w-28 text-sm font-semibold text-right flex-shrink-0" style={{ color: '#1C1917' }}>
+                  <div className="w-28 text-sm font-semibold text-right flex-shrink-0" style={{ color: 'var(--lot-text)' }}>
                     {stage.label}
                   </div>
                   <div className="flex-1 relative h-10 flex items-center">
@@ -158,10 +158,10 @@ export default function PipelinePage() {
                   </div>
                 </div>
                 {isExpanded && stageCustomers.length > 0 && (
-                  <div className="ml-32 mt-2 mb-1 rounded-lg border p-3 space-y-2" style={{ backgroundColor: '#F8FAFC', borderColor: '#E7E5E4' }}>
+                  <div className="ml-32 mt-2 mb-1 rounded-lg border p-3 space-y-2" style={{ backgroundColor: 'var(--lot-card-alt)', borderColor: 'var(--lot-border)' }}>
                     {stageCustomers.map(c => (
                       <div key={c.id} className="flex items-center gap-3">
-                        <span className="text-sm font-semibold" style={{ color: '#1C1917' }}>
+                        <span className="text-sm font-semibold" style={{ color: 'var(--lot-text)' }}>
                           {c.firstName} {c.lastName}
                         </span>
                         <span
@@ -178,41 +178,41 @@ export default function PipelinePage() {
             );
           })}
         </div>
-        <div className="mt-4 pt-4" style={{ borderTop: '1px solid #E7E5E4' }}>
-          <p className="text-sm" style={{ color: '#57534E' }}>
-            Overall pipeline conversion: <strong style={{ color: '#1C1917' }}>{conversionRate}%</strong> — {totalSold} deals closed from {totalLeads} active leads this month.
+        <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--lot-border)' }}>
+          <p className="text-sm" style={{ color: 'var(--lot-text-secondary)' }}>
+            Overall pipeline conversion: <strong style={{ color: 'var(--lot-text)' }}>{conversionRate}%</strong> — {totalSold} deals closed from {totalLeads} active leads this month.
           </p>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-        <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-          <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+      <div className="lot-card !p-0 overflow-hidden">
+        <div className="px-6 py-4" style={{ borderBottom: '1px solid var(--lot-border)' }}>
+          <h2 className="lot-subheading">
             Lead Source ROI
           </h2>
-          <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--lot-text-secondary)' }}>
             Conversion rate and average gross profit by acquisition channel
           </p>
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-              <th className="text-left px-6 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+            <tr style={{ backgroundColor: 'var(--lot-card-alt)', borderBottom: '1px solid var(--lot-border)' }}>
+              <th className="text-left px-6 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Source
               </th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Leads
               </th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Closed
               </th>
-              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Conv. Rate
               </th>
-              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-center px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 6-Month Trend
               </th>
-              <th className="text-right px-6 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-right px-6 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Avg Gross / Deal
               </th>
             </tr>
@@ -221,15 +221,15 @@ export default function PipelinePage() {
             {LEAD_SOURCES.map((row, i) => (
               <tr
                 key={row.source}
-                style={{ borderBottom: i < LEAD_SOURCES.length - 1 ? '1px solid #F5F5F4' : undefined }}
+                style={{ borderBottom: i < LEAD_SOURCES.length - 1 ? '1px solid var(--lot-border-faint)' : undefined }}
               >
-                <td className="px-6 py-3 font-semibold" style={{ color: '#1C1917' }}>
+                <td className="px-6 py-3 font-semibold" style={{ color: 'var(--lot-text)' }}>
                   {row.source}
                 </td>
-                <td className="px-4 py-3 text-right" style={{ color: '#57534E' }}>
+                <td className="px-4 py-3 text-right" style={{ color: 'var(--lot-text-secondary)' }}>
                   {row.leads}
                 </td>
-                <td className="px-4 py-3 text-right font-semibold" style={{ color: '#1C1917' }}>
+                <td className="px-4 py-3 text-right font-semibold" style={{ color: 'var(--lot-text)' }}>
                   {row.closed}
                 </td>
                 <td className="px-4 py-3 text-right">
@@ -243,7 +243,7 @@ export default function PipelinePage() {
                 <td className="px-4 py-3 text-center">
                   <MiniSparkline values={SPARKLINE_DATA[row.source]} />
                 </td>
-                <td className="px-6 py-3 text-right font-semibold" style={{ color: '#1C1917' }}>
+                <td className="px-6 py-3 text-right font-semibold" style={{ color: 'var(--lot-text)' }}>
                   ${row.avgGross.toLocaleString()}
                 </td>
               </tr>

@@ -47,12 +47,12 @@ export default function LotosCashflowPage() {
   const projected90 = runningBalance.reduce((sum, r) => sum + r.net, 0);
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Cashflow Forecast
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           30 / 60 / 90-day cash position projection with weekly detail
         </p>
       </div>
@@ -62,17 +62,8 @@ export default function LotosCashflowPage() {
           <button
             key={s}
             onClick={() => setScenario(s)}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '8px',
-              border: scenario === s ? '2px solid #2563EB' : '2px solid #E7E5E4',
-              background: scenario === s ? '#EFF6FF' : '#FFFFFF',
-              color: scenario === s ? '#2563EB' : '#57534E',
-              fontSize: '15px',
-              fontWeight: scenario === s ? 700 : 500,
-              cursor: 'pointer',
-              textTransform: 'capitalize',
-            }}
+            className={scenario === s ? 'lot-btn lot-btn-active' : 'lot-btn'}
+            style={{ textTransform: 'capitalize' }}
           >
             {s} {s === 'conservative' ? '(0.8x)' : s === 'expected' ? '(1.0x)' : '(1.2x)'}
           </button>
@@ -88,23 +79,22 @@ export default function LotosCashflowPage() {
         }}
       >
         {[
-          { label: 'Current Cash Position', value: STARTING_CASH, color: '#1C1917', note: 'As of Apr 1, 2026' },
+          { label: 'Current Cash Position', value: STARTING_CASH, color: 'var(--lot-text)', note: 'As of Apr 1, 2026' },
           { label: '30-Day Projected', value: projected30, color: projected30 >= 0 ? '#16A34A' : '#DC2626', note: 'Net inflow/outflow', prefix: projected30 >= 0 ? '+' : '' },
           { label: '60-Day Projected', value: projected60, color: projected60 >= 0 ? '#16A34A' : '#DC2626', note: 'Cumulative net', prefix: projected60 >= 0 ? '+' : '' },
           { label: '90-Day Projected', value: projected90, color: projected90 >= 0 ? '#16A34A' : '#DC2626', note: 'Cumulative net', prefix: projected90 >= 0 ? '+' : '' },
         ].map(({ label, value, color, note, prefix = '' }) => (
           <div
             key={label}
-            className="rounded-xl bg-white border p-6"
-            style={{ borderColor: '#E7E5E4' }}
+            className="lot-card lot-animate-in"
           >
-            <div style={{ fontSize: '14px', fontWeight: 600, color: '#78716C', marginBottom: '6px' }}>
+            <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text-muted)', marginBottom: '6px' }}>
               {label}
             </div>
             <div className="text-3xl font-bold" style={{ color }}>
               {prefix}${Math.abs(value).toLocaleString()}
             </div>
-            <div style={{ fontSize: '14px', color: '#A8A29E', marginTop: '4px' }}>{note}</div>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '4px' }}>{note}</div>
           </div>
         ))}
       </div>
@@ -149,15 +139,15 @@ export default function LotosCashflowPage() {
       </div>
 
       <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1C1917' }}>Inflows vs Outflows</h2>
+        <h2 className="lot-subheading">Inflows vs Outflows</h2>
       </div>
       <div
-        className="rounded-xl bg-white border"
-        style={{ borderColor: '#E7E5E4', overflowX: 'auto', marginBottom: '28px' }}
+        className="lot-card"
+        style={{ overflowX: 'auto', marginBottom: '28px', padding: 0 }}
       >
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+            <tr style={{ borderBottom: '2px solid var(--lot-border-faint)' }}>
               {['Period', 'Inflows', 'Outflows', 'Net', 'Sources', 'Expenses'].map((h) => (
                 <th
                   key={h}
@@ -168,7 +158,7 @@ export default function LotosCashflowPage() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     fontWeight: 600,
-                    color: '#78716C',
+                    color: 'var(--lot-text-muted)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -187,10 +177,10 @@ export default function LotosCashflowPage() {
                 <>
                   <tr
                     key={row.period}
-                    style={{ borderBottom: isExpanded ? 'none' : '1px solid #F1F5F9', cursor: 'pointer', background: isExpanded ? '#F8FAFC' : 'transparent' }}
+                    style={{ borderBottom: isExpanded ? 'none' : '1px solid var(--lot-border-faint)', cursor: 'pointer', background: isExpanded ? 'var(--lot-card-alt)' : 'transparent' }}
                     onClick={() => setExpandedPeriod(isExpanded ? null : idx)}
                   >
-                    <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: '#1C1917', whiteSpace: 'nowrap' }}>
+                    <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>
                       {row.period}
                     </td>
                     <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 700, color: '#16A34A', whiteSpace: 'nowrap' }}>
@@ -210,15 +200,15 @@ export default function LotosCashflowPage() {
                     >
                       {net >= 0 ? '+' : '-'}${Math.abs(net).toLocaleString()}
                     </td>
-                    <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E', minWidth: '200px' }}>
+                    <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)', minWidth: '200px' }}>
                       {row.sources}
                     </td>
-                    <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E', minWidth: '180px' }}>
+                    <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)', minWidth: '180px' }}>
                       {row.expenses}
                     </td>
                   </tr>
                   {isExpanded && (
-                    <tr key={`${row.period}-detail`} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                    <tr key={`${row.period}-detail`} style={{ borderBottom: '1px solid var(--lot-border-faint)' }}>
                       <td colSpan={6} style={{ padding: '0 14px 16px 14px' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                           <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '8px', padding: '12px 16px' }}>
@@ -227,7 +217,7 @@ export default function LotosCashflowPage() {
                             </div>
                             {row.inflowItems.map((item) => (
                               <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                                <span style={{ fontSize: '14px', color: '#57534E' }}>{item.label}</span>
+                                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{item.label}</span>
                                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#16A34A' }}>+${Math.round(item.amount * mult).toLocaleString()}</span>
                               </div>
                             ))}
@@ -238,7 +228,7 @@ export default function LotosCashflowPage() {
                             </div>
                             {row.outflowItems.map((item) => (
                               <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                                <span style={{ fontSize: '14px', color: '#57534E' }}>{item.label}</span>
+                                <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{item.label}</span>
                                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#DC2626' }}>-${item.amount.toLocaleString()}</span>
                               </div>
                             ))}
@@ -255,17 +245,17 @@ export default function LotosCashflowPage() {
       </div>
 
       <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1C1917' }}>
+        <h2 className="lot-subheading">
           BHPH Collections
         </h2>
       </div>
       <div
-        className="rounded-xl bg-white border"
-        style={{ borderColor: '#E7E5E4', overflowX: 'auto', marginBottom: '28px' }}
+        className="lot-card"
+        style={{ overflowX: 'auto', marginBottom: '28px', padding: 0 }}
       >
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+            <tr style={{ borderBottom: '2px solid var(--lot-border-faint)' }}>
               {['Payment ID', 'Deal', 'Amount', 'Due Date', 'Paid Date', 'Status'].map((h) => (
                 <th
                   key={h}
@@ -276,7 +266,7 @@ export default function LotosCashflowPage() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     fontWeight: 600,
-                    color: '#78716C',
+                    color: 'var(--lot-text-muted)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -287,12 +277,12 @@ export default function LotosCashflowPage() {
           </thead>
           <tbody>
             {PAYMENTS.map((pmt) => (
-              <tr key={pmt.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
-                <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: '#1C1917' }}>{pmt.id}</td>
-                <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E' }}>{pmt.dealId}</td>
-                <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 700, color: '#1C1917' }}>${pmt.amount.toLocaleString()}</td>
-                <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E' }}>{pmt.dueDate}</td>
-                <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E' }}>{pmt.paidDate ?? '-'}</td>
+              <tr key={pmt.id} style={{ borderBottom: '1px solid var(--lot-border-faint)' }}>
+                <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)' }}>{pmt.id}</td>
+                <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{pmt.dealId}</td>
+                <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 700, color: 'var(--lot-text)' }}>${pmt.amount.toLocaleString()}</td>
+                <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{pmt.dueDate}</td>
+                <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)' }}>{pmt.paidDate ?? '-'}</td>
                 <td style={{ padding: '12px 14px' }}>
                   <StatusBadge label={pmt.status} color={PAYMENT_STATUS_COLORS[pmt.status]} />
                 </td>
@@ -303,19 +293,18 @@ export default function LotosCashflowPage() {
       </div>
 
       <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1C1917' }}>
+        <h2 className="lot-subheading">
           Cumulative Cash Position (90-Day Outlook)
         </h2>
       </div>
       <div
-        className="rounded-xl bg-white border p-6"
-        style={{ borderColor: '#E7E5E4' }}
+        className="lot-card lot-animate-in"
       >
         <div
           style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}
         >
-          <span style={{ fontSize: '14px', color: '#78716C', fontWeight: 600 }}>Starting:</span>
-          <span style={{ fontSize: '16px', fontWeight: 800, color: '#1C1917' }}>
+          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontWeight: 600 }}>Starting:</span>
+          <span style={{ fontSize: '16px', fontWeight: 800, color: 'var(--lot-text)' }}>
             ${STARTING_CASH.toLocaleString()}
           </span>
         </div>
@@ -326,7 +315,7 @@ export default function LotosCashflowPage() {
               style={{
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#1C1917',
+                color: 'var(--lot-text)',
                 marginBottom: '4px',
                 textAlign: 'center',
               }}
@@ -342,7 +331,7 @@ export default function LotosCashflowPage() {
                 minHeight: '8px',
               }}
             />
-            <div style={{ fontSize: '14px', color: '#78716C', marginTop: '4px', textAlign: 'center' }}>
+            <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '4px', textAlign: 'center' }}>
               Start
             </div>
           </div>
@@ -376,7 +365,7 @@ export default function LotosCashflowPage() {
                     minHeight: '8px',
                   }}
                 />
-                <div style={{ fontSize: '14px', color: '#78716C', marginTop: '4px', textAlign: 'center' }}>
+                <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '4px', textAlign: 'center' }}>
                   {shortLabel}
                 </div>
               </div>
@@ -384,9 +373,9 @@ export default function LotosCashflowPage() {
           })}
         </div>
 
-        <div style={{ borderTop: '2px solid #1C1917', marginTop: '0', opacity: 0.15 }} />
+        <div style={{ borderTop: '2px solid var(--lot-text)', marginTop: '0', opacity: 0.15 }} />
 
-        <div style={{ marginTop: '12px', fontSize: '14px', color: '#78716C' }}>
+        <div style={{ marginTop: '12px', fontSize: '14px', color: 'var(--lot-text-muted)' }}>
           * Projections based on pipeline data, historical averages, and BHPH payment schedules. Scenario: {scenario}.
         </div>
       </div>

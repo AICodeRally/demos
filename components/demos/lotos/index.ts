@@ -7,3 +7,5 @@ export { CustomerDetail } from './CustomerDetail';
 export { DealDetail } from './DealDetail';
 export { MarkdownRenderer } from './MarkdownRenderer';
 export { Toast } from './Toast';
+export { CollapsibleSection } from './CollapsibleSection';
+export { useCountUp } from './useCountUp';

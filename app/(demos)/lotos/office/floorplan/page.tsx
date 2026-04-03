@@ -70,7 +70,7 @@ export default function FloorplanPage() {
     {
       key: 'id',
       label: 'Stock #',
-      render: (v) => <span style={{ fontWeight: 700, color: '#1C1917' }}>{v.id}</span>,
+      render: (v) => <span style={{ fontWeight: 700, color: 'var(--lot-text)' }}>{v.id}</span>,
       sortFn: (a, b) => a.id.localeCompare(b.id),
     },
     {
@@ -90,7 +90,7 @@ export default function FloorplanPage() {
       label: 'Floorplan Amt',
       align: 'right',
       sortFn: (a, b) => a.acquisitionCost - b.acquisitionCost,
-      render: (v) => <span style={{ fontWeight: 600, color: '#1C1917' }}>${v.acquisitionCost.toLocaleString()}</span>,
+      render: (v) => <span style={{ fontWeight: 600, color: 'var(--lot-text)' }}>${v.acquisitionCost.toLocaleString()}</span>,
     },
     {
       key: 'monthlyInterest',
@@ -144,63 +144,63 @@ export default function FloorplanPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <style dangerouslySetInnerHTML={{ __html: pulseKeyframes }} />
 
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Floorplan Tracker
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           Vehicles on floorplan financing — curtailment dates and interest accruing
         </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+      <div className="grid grid-cols-4 gap-4 lot-animate-in">
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Total Floorplan Balance
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             ${totalFloorplanBalance.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{floorplanVehicles.length} units on plan</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>{floorplanVehicles.length} units on plan</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Monthly Interest
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#D97706' }}>
             ${monthlyInterestTotal.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>at 6.5% APR</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>at 6.5% APR</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Avg Days on Plan
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#2563EB' }}>
             {avgDaysOnPlan}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>days average</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>days average</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Units on Floorplan
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             {floorplanVehicles.length}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>of {activeVehicles.length} active units</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>of {activeVehicles.length} active units</p>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-        <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-          <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+      <div className="lot-card overflow-hidden !p-0 lot-animate-in">
+        <div className="px-6 py-4" style={{ borderBottom: '1px solid var(--lot-border)' }}>
+          <h2 className="lot-subheading">
             Floorplan Detail
           </h2>
-          <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--lot-text-secondary)' }}>
             Auction-sourced vehicles — 90-day curtailment window — click row for details
           </p>
         </div>
@@ -210,24 +210,24 @@ export default function FloorplanPage() {
           keyFn={(v) => v.id}
           onRowClick={(v) => setPanelEntity({ type: 'vehicle', id: v.id })}
         />
-        <div className="px-6 py-3 flex justify-between" style={{ borderTop: '2px solid #E7E5E4', backgroundColor: '#F8FAFC' }}>
-          <span className="text-sm font-bold" style={{ color: '#1C1917' }}>Totals</span>
+        <div className="px-6 py-3 flex justify-between" style={{ borderTop: '2px solid var(--lot-border)', backgroundColor: 'var(--lot-card-alt)' }}>
+          <span className="text-sm font-bold" style={{ color: 'var(--lot-text)' }}>Totals</span>
           <div className="flex gap-12">
-            <span className="text-sm font-bold" style={{ color: '#1C1917' }}>${totalFloorplanBalance.toLocaleString()}</span>
+            <span className="text-sm font-bold" style={{ color: 'var(--lot-text)' }}>${totalFloorplanBalance.toLocaleString()}</span>
             <span className="text-sm font-bold" style={{ color: '#D97706' }}>${monthlyInterestTotal.toLocaleString()}/mo</span>
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading !mb-4">
           BHPH Collections
         </h2>
-        <p className="text-sm mb-4" style={{ color: '#57534E' }}>
+        <p className="text-sm mb-4" style={{ color: 'var(--lot-text-secondary)' }}>
           Payment schedule for Buy-Here-Pay-Here accounts
         </p>
         {PAYMENTS.length === 0 ? (
-          <p style={{ fontSize: '14px', color: '#78716C', fontStyle: 'italic' }}>No payments scheduled.</p>
+          <p style={{ fontSize: '14px', color: 'var(--lot-text-muted)', fontStyle: 'italic' }}>No payments scheduled.</p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {PAYMENTS.map((pmt) => (
@@ -238,19 +238,19 @@ export default function FloorplanPage() {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '12px 16px',
-                  background: '#FAFAF9',
+                  background: 'var(--lot-card-alt)',
                   borderRadius: '10px',
-                  border: '1px solid #E7E5E4',
+                  border: '1px solid var(--lot-border)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>{pmt.id}</span>
-                  <span style={{ fontSize: '14px', color: '#57534E' }}>Deal: {pmt.dealId}</span>
+                  <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--lot-text)' }}>{pmt.id}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>Deal: {pmt.dealId}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <span style={{ fontSize: '14px', color: '#57534E' }}>Due: {pmt.dueDate}</span>
-                  {pmt.paidDate && <span style={{ fontSize: '14px', color: '#78716C' }}>Paid: {pmt.paidDate}</span>}
-                  <span style={{ fontWeight: 700, fontSize: '14px', color: '#1C1917' }}>${pmt.amount}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--lot-text-secondary)' }}>Due: {pmt.dueDate}</span>
+                  {pmt.paidDate && <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>Paid: {pmt.paidDate}</span>}
+                  <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--lot-text)' }}>${pmt.amount}</span>
                   <StatusBadge
                     label={pmt.status.charAt(0).toUpperCase() + pmt.status.slice(1)}
                     color={PAYMENT_STATUS_COLORS[pmt.status]}
@@ -262,8 +262,8 @@ export default function FloorplanPage() {
         )}
       </div>
 
-      <div className="rounded-xl bg-white border p-6" style={{ borderColor: '#E7E5E4' }}>
-        <h2 className="text-lg font-bold mb-4" style={{ color: '#1C1917' }}>
+      <div className="lot-card lot-animate-in">
+        <h2 className="lot-subheading !mb-4">
           Cash vs Floorplan Mix
         </h2>
         <div className="flex items-end gap-8 h-36">
@@ -275,21 +275,21 @@ export default function FloorplanPage() {
             const heightPct = maxCount > 0 ? Math.round((bar.count / maxCount) * 100) : 0;
             return (
               <div key={bar.label} className="flex flex-col items-center gap-2 flex-1">
-                <p className="text-sm font-bold" style={{ color: '#1C1917' }}>{bar.count} units</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--lot-text)' }}>{bar.count} units</p>
                 <div className="w-full flex items-end justify-center" style={{ height: '80px' }}>
                   <div
                     className="w-24 rounded-t-lg"
                     style={{ height: `${heightPct}%`, backgroundColor: bar.color, minHeight: '20px' }}
                   />
                 </div>
-                <p className="text-sm font-semibold text-center" style={{ color: '#57534E' }}>{bar.label}</p>
-                <p className="text-xs" style={{ color: '#78716C' }}>${bar.total.toLocaleString()} total</p>
+                <p className="text-sm font-semibold text-center" style={{ color: 'var(--lot-text-secondary)' }}>{bar.label}</p>
+                <p className="text-xs" style={{ color: 'var(--lot-text-muted)' }}>${bar.total.toLocaleString()} total</p>
               </div>
             );
           })}
         </div>
-        <p className="text-sm mt-4" style={{ color: '#57534E' }}>
-          <strong style={{ color: '#1C1917' }}>{floorplanVehicles.length} of {activeVehicles.length}</strong> active units are on floorplan financing.
+        <p className="text-sm mt-4" style={{ color: 'var(--lot-text-secondary)' }}>
+          <strong style={{ color: 'var(--lot-text)' }}>{floorplanVehicles.length} of {activeVehicles.length}</strong> active units are on floorplan financing.
           Monthly interest cost of <strong style={{ color: '#D97706' }}>${monthlyInterestTotal.toLocaleString()}</strong> incentivizes faster turnover on aged units.
         </p>
       </div>

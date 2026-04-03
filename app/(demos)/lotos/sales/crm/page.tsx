@@ -78,24 +78,24 @@ export default function CRMPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           CRM — Customers
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           {CUSTOMERS.length} customers tracked across all credit tiers
         </p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {TIERS.filter((t) => t.key !== 'all').map((t) => (
+        {TIERS.filter((t) => t.key !== 'all').map((t, index) => (
           <div
             key={t.key}
-            className="rounded-xl bg-white border p-4"
-            style={{ borderColor: '#E7E5E4' }}
+            className="lot-card lot-animate-in"
+            style={{ animationDelay: `${index * 0.06}s` }}
           >
-            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
               {t.label}
             </p>
             <p className="text-3xl font-bold mt-1" style={{ color: TIER_COLORS[t.key as CreditTier] }}>
@@ -103,11 +103,11 @@ export default function CRMPage() {
             </p>
           </div>
         ))}
-        <div className="rounded-xl bg-white border p-4" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: `${4 * 0.06}s` }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Total
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             {CUSTOMERS.length}
           </p>
         </div>
@@ -119,8 +119,7 @@ export default function CRMPage() {
           placeholder="Search by name, email, or phone..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 rounded-lg border px-4 py-2.5 text-base outline-none focus:ring-2 focus:ring-blue-500"
-          style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+          className="lot-input flex-1"
         />
         <div className="flex gap-2 flex-wrap">
           {TIERS.map((t) => {
@@ -153,12 +152,7 @@ export default function CRMPage() {
             <button
               key={s.key}
               onClick={() => setLeadSourceFilter(s.key)}
-              className="rounded-full px-4 py-2 text-sm font-semibold border transition-colors"
-              style={{
-                backgroundColor: isActive ? '#2563EB' : '#FFFFFF',
-                color: isActive ? '#FFFFFF' : '#2563EB',
-                borderColor: '#2563EB',
-              }}
+              className={`lot-btn ${isActive ? 'lot-btn-active' : ''}`}
             >
               {s.label} ({count})
             </button>
@@ -166,29 +160,29 @@ export default function CRMPage() {
         })}
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
+      <div className="lot-card !p-0 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E7E5E4' }}>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+            <tr style={{ backgroundColor: 'var(--lot-card-alt)', borderBottom: '1px solid var(--lot-border)' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Customer
               </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Contact
               </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Credit Tier
               </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Lead Source
               </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Created
               </th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }}>
                 Notes
               </th>
-              <th className="px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }} />
+              <th className="px-4 py-3 text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--lot-text-muted)' }} />
             </tr>
           </thead>
           <tbody>
@@ -198,21 +192,21 @@ export default function CRMPage() {
                   key={c.id}
                   className="cursor-pointer hover:bg-slate-50 transition-colors"
                   style={{
-                    borderBottom: editingNote === c.id ? undefined : (i < filtered.length - 1 ? '1px solid #F5F5F4' : undefined),
+                    borderBottom: editingNote === c.id ? undefined : (i < filtered.length - 1 ? '1px solid var(--lot-border-faint)' : undefined),
                   }}
                   onClick={() => setPanelEntity({ type: 'customer', id: c.id })}
                 >
                   <td className="px-4 py-3">
-                    <p className="font-semibold" style={{ color: '#1C1917' }}>
+                    <p className="font-semibold" style={{ color: 'var(--lot-text)' }}>
                       {c.firstName} {c.lastName}
                     </p>
-                    <p className="text-xs" style={{ color: '#78716C' }}>
+                    <p className="text-xs" style={{ color: 'var(--lot-text-muted)' }}>
                       {c.id}
                     </p>
                   </td>
                   <td className="px-4 py-3">
-                    <p style={{ color: '#1C1917' }}>{c.phone}</p>
-                    <p className="text-xs" style={{ color: '#78716C' }}>
+                    <p style={{ color: 'var(--lot-text)' }}>{c.phone}</p>
+                    <p className="text-xs" style={{ color: 'var(--lot-text-muted)' }}>
                       {c.email}
                     </p>
                   </td>
@@ -225,14 +219,14 @@ export default function CRMPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span style={{ color: '#57534E' }}>{LEAD_SOURCE_LABELS[c.leadSource]}</span>
+                    <span style={{ color: 'var(--lot-text-secondary)' }}>{LEAD_SOURCE_LABELS[c.leadSource]}</span>
                   </td>
                   <td className="px-4 py-3">
-                    <span style={{ color: '#57534E' }}>{c.createdDate}</span>
+                    <span style={{ color: 'var(--lot-text-secondary)' }}>{c.createdDate}</span>
                   </td>
                   <td className="px-4 py-3 max-w-xs">
                     <span
-                      style={{ color: '#78716C' }}
+                      style={{ color: 'var(--lot-text-muted)' }}
                       className="block truncate text-sm"
                       title={customerNotes[c.id]}
                     >
@@ -250,13 +244,13 @@ export default function CRMPage() {
                   </td>
                 </tr>
                 {editingNote === c.id && (
-                  <tr key={`${c.id}-note`} style={{ borderBottom: i < filtered.length - 1 ? '1px solid #F5F5F4' : undefined }}>
-                    <td colSpan={7} className="px-4 py-3" style={{ backgroundColor: '#F8FAFC' }}>
+                  <tr key={`${c.id}-note`} style={{ borderBottom: i < filtered.length - 1 ? '1px solid var(--lot-border-faint)' : undefined }}>
+                    <td colSpan={7} className="px-4 py-3" style={{ backgroundColor: 'var(--lot-card-alt)' }}>
                       <textarea
                         value={editingNoteText}
                         onChange={(e) => setEditingNoteText(e.target.value)}
-                        className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                        style={{ borderColor: '#E7E5E4', color: '#1C1917', minHeight: '60px' }}
+                        className="lot-input w-full"
+                        style={{ minHeight: '60px' }}
                         onClick={(e) => e.stopPropagation()}
                       />
                       <div className="flex gap-2 mt-2">
@@ -270,7 +264,7 @@ export default function CRMPage() {
                         <button
                           onClick={(e) => { e.stopPropagation(); setEditingNote(null); }}
                           className="rounded-lg px-4 py-1.5 text-sm font-semibold border transition-colors"
-                          style={{ color: '#57534E', borderColor: '#E7E5E4' }}
+                          style={{ color: 'var(--lot-text-secondary)', borderColor: 'var(--lot-border)' }}
                         >
                           Cancel
                         </button>
@@ -283,7 +277,7 @@ export default function CRMPage() {
           </tbody>
         </table>
         {filtered.length === 0 && (
-          <div className="py-12 text-center" style={{ color: '#78716C' }}>
+          <div className="py-12 text-center" style={{ color: 'var(--lot-text-muted)' }}>
             No customers match your search.
           </div>
         )}

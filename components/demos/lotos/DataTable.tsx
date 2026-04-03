@@ -42,15 +42,15 @@ export function DataTable<T>({ columns, data, onRowClick, sortable = true, keyFn
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full">
+    <div className="overflow-x-auto lot-animate-in">
+      <table className="lot-table">
         <thead>
           <tr>
             {columns.map(col => (
               <th
                 key={col.key}
-                className={`text-xs uppercase tracking-wider font-semibold px-4 py-3${sortable && col.sortFn ? ' cursor-pointer hover:bg-gray-50 select-none' : ''}`}
-                style={{ color: '#78716C', borderBottom: '2px solid #E7E5E4', width: col.width, textAlign: col.align ?? 'left' }}
+                className={sortable && col.sortFn ? 'sortable' : ''}
+                style={{ width: col.width, textAlign: col.align ?? 'left' }}
                 onClick={() => handleHeaderClick(col)}
               >
                 {col.label}
@@ -65,15 +65,13 @@ export function DataTable<T>({ columns, data, onRowClick, sortable = true, keyFn
           {sortedData.map(row => (
             <tr
               key={keyFn(row)}
-              className={`border-b${onRowClick ? ' cursor-pointer hover:bg-slate-50 transition-colors' : ''}`}
-              style={{ borderColor: '#F5F5F4' }}
+              className={onRowClick ? 'cursor-pointer' : ''}
               onClick={() => onRowClick?.(row)}
             >
               {columns.map(col => (
                 <td
                   key={col.key}
-                  className="px-4 py-3 text-sm"
-                  style={{ color: '#57534E', fontSize: '14px', textAlign: col.align ?? 'left' }}
+                  style={{ textAlign: col.align ?? 'left' }}
                 >
                   {col.render ? col.render(row) : String((row as Record<string, unknown>)[col.key] ?? '')}
                 </td>
@@ -82,7 +80,7 @@ export function DataTable<T>({ columns, data, onRowClick, sortable = true, keyFn
           ))}
           {sortedData.length === 0 && (
             <tr>
-              <td colSpan={columns.length} className="px-4 py-8 text-center text-sm" style={{ color: '#A8A29E' }}>
+              <td colSpan={columns.length} className="px-4 py-8 text-center" style={{ color: 'var(--lot-text-faint)' }}>
                 No data to display
               </td>
             </tr>

@@ -85,13 +85,13 @@ export default function TestDrivesPage() {
       key: 'date',
       label: 'Date',
       width: '120px',
-      render: (row) => <span style={{ color: '#57534E' }}>{row.date}</span>,
+      render: (row) => <span style={{ color: 'var(--lot-text-secondary)' }}>{row.date}</span>,
       sortFn: (a, b) => a.date.localeCompare(b.date),
     },
     {
       key: 'customer',
       label: 'Customer',
-      render: (row) => <span className="font-semibold" style={{ color: '#1C1917' }}>{row.customer}</span>,
+      render: (row) => <span className="font-semibold" style={{ color: 'var(--lot-text)' }}>{row.customer}</span>,
       sortFn: (a, b) => a.customer.localeCompare(b.customer),
     },
     {
@@ -99,8 +99,8 @@ export default function TestDrivesPage() {
       label: 'Vehicle',
       render: (row) => (
         <div>
-          <p className="font-medium" style={{ color: '#1C1917' }}>{getVehicleLabel(row.vehicle)}</p>
-          <p className="text-xs" style={{ color: '#78716C' }}>{row.vehicle}</p>
+          <p className="font-medium" style={{ color: 'var(--lot-text)' }}>{getVehicleLabel(row.vehicle)}</p>
+          <p className="text-xs" style={{ color: 'var(--lot-text-muted)' }}>{row.vehicle}</p>
         </div>
       ),
       sortFn: (a, b) => a.vehicle.localeCompare(b.vehicle),
@@ -108,13 +108,13 @@ export default function TestDrivesPage() {
     {
       key: 'salesperson',
       label: 'Salesperson',
-      render: (row) => <span style={{ color: '#57534E' }}>{row.salesperson}</span>,
+      render: (row) => <span style={{ color: 'var(--lot-text-secondary)' }}>{row.salesperson}</span>,
       sortFn: (a, b) => a.salesperson.localeCompare(b.salesperson),
     },
     {
       key: 'duration',
       label: 'Duration',
-      render: (row) => <span style={{ color: '#57534E' }}>{row.duration}</span>,
+      render: (row) => <span style={{ color: 'var(--lot-text-secondary)' }}>{row.duration}</span>,
       sortFn: (a, b) => parseInt(a.duration) - parseInt(b.duration),
     },
     {
@@ -143,54 +143,54 @@ export default function TestDrivesPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Test Drive Log
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           {totalDrives} test drives recorded - March 2026
         </p>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Total Drives (March)
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             {totalDrives}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>this month</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>this month</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.06s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Conversion Rate
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#16A34A' }}>
             {conversionRate}%
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{purchased} purchased after drive</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>{purchased} purchased after drive</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card lot-animate-in" style={{ animationDelay: '0.12s' }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Avg Test Drive Time
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#2563EB' }}>
             {avgMinutes} min
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>per customer</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>per customer</p>
         </div>
       </div>
 
       <div className="grid grid-cols-4 gap-3">
-        {(Object.entries(OUTCOME_CONFIG) as [Outcome, typeof OUTCOME_CONFIG[Outcome]][]).map(([outcome, cfg]) => (
+        {(Object.entries(OUTCOME_CONFIG) as [Outcome, typeof OUTCOME_CONFIG[Outcome]][]).map(([outcome, cfg], index) => (
           <div
             key={outcome}
-            className="rounded-xl border p-4"
-            style={{ backgroundColor: cfg.bg, borderColor: '#E7E5E4' }}
+            className="lot-card lot-animate-in"
+            style={{ backgroundColor: cfg.bg, animationDelay: `${(index + 3) * 0.06}s` }}
           >
-            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
               {cfg.label}
             </p>
             <p className="text-2xl font-bold mt-1" style={{ color: cfg.color }}>
@@ -235,8 +235,7 @@ export default function TestDrivesPage() {
         <select
           value={salespersonFilter}
           onChange={(e) => setSalespersonFilter(e.target.value)}
-          className="rounded-lg border px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-          style={{ borderColor: '#E7E5E4', color: '#1C1917' }}
+          className="lot-input"
         >
           <option value="all">All Salespeople</option>
           {SALESPEOPLE.map(sp => (
@@ -245,7 +244,7 @@ export default function TestDrivesPage() {
         </select>
       </div>
 
-      <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
+      <div className="lot-card !p-0 overflow-hidden">
         <DataTable
           columns={columns}
           data={filteredDrives}

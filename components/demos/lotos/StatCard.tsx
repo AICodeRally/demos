@@ -1,5 +1,7 @@
 'use client';
 
+import { useCountUp } from './useCountUp';
+
 interface StatCardProps {
   label: string;
   value: string;
@@ -8,6 +10,7 @@ interface StatCardProps {
   color?: string;
   sparkline?: number[];
   onClick?: () => void;
+  animationDelay?: number;
 }
 
 function buildSparklinePath(values: number[], width: number, height: number): string {
@@ -21,17 +24,51 @@ function buildSparklinePath(values: number[], width: number, height: number): st
     .join(' ');
 }
 
-export function StatCard({ label, value, trend, trendValue, color = '#1E3A5F', sparkline, onClick }: StatCardProps) {
+function parseNumericValue(value: string): { num: number; prefix: string; suffix: string; decimals: number } | null {
+  const match = value.match(/^([^0-9-]*)(-?[\d,]+\.?\d*)(.*)$/);
+  if (!match) return null;
+  const num = parseFloat(match[2].replace(/,/g, ''));
+  if (isNaN(num)) return null;
+  const decimals = match[2].includes('.') ? match[2].split('.')[1].length : 0;
+  return { num, prefix: match[1], suffix: match[3], decimals };
+}
+
+function AnimatedValue({ value, color }: { value: string; color?: string }) {
+  const parsed = parseNumericValue(value);
+  if (!parsed) {
+    return <span className="lot-value" style={color ? { color } : undefined}>{value}</span>;
+  }
+
+  const display = useCountUp({
+    end: parsed.num,
+    duration: 800,
+    decimals: parsed.decimals,
+    prefix: parsed.prefix,
+    suffix: parsed.suffix,
+  });
+
+  // Format with commas
+  const formatted = display.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return <span className="lot-value" style={color ? { color } : undefined}>{formatted}</span>;
+}
+
+export function StatCard({ label, value, trend, trendValue, color = '#1E3A5F', sparkline, onClick, animationDelay = 0 }: StatCardProps) {
   return (
     <div
-      className={`rounded-xl bg-white border p-5 relative overflow-hidden${onClick ? ' cursor-pointer hover:shadow-md transition-shadow' : ''}`}
-      style={{ borderColor: '#E7E5E4', borderLeft: `4px solid ${color}` }}
+      className={`lot-card lot-animate-in relative overflow-hidden${onClick ? ' cursor-pointer' : ''}`}
+      style={{
+        borderLeft: `4px solid ${color}`,
+        animationDelay: `${animationDelay * 0.06}s`,
+      }}
       onClick={onClick}
     >
-      <p className="text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C' }}>{label}</p>
-      <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>{value}</p>
+      <p className="lot-label">{label}</p>
+      <div className="mt-1">
+        <AnimatedValue value={value} />
+      </div>
       {trend && trendValue && (
-        <p className="text-sm mt-1 font-medium" style={{ color: trend === 'up' ? '#16A34A' : '#DC2626' }}>
+        <p style={{ fontSize: 'var(--lot-font-caption)', marginTop: '4px', fontWeight: 600, color: trend === 'up' ? '#16A34A' : '#DC2626' }}>
           {trend === 'up' ? '↑' : '↓'} {trendValue}
         </p>
       )}

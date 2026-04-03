@@ -82,7 +82,7 @@ export default function LotosAgingPage() {
   }
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       {toastMsg && <Toast message={toastMsg} onDismiss={() => setToastMsg(null)} />}
 
       <DetailPanel
@@ -94,10 +94,10 @@ export default function LotosAgingPage() {
       </DetailPanel>
 
       <div style={{ marginBottom: '24px' }}>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Aging Report
         </h1>
-        <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+        <p className="lot-description">
           Inventory age analysis with recommended actions and unrealized loss tracking
         </p>
       </div>
@@ -117,7 +117,7 @@ export default function LotosAgingPage() {
           return (
             <div
               key={bucket}
-              className="rounded-xl border p-6"
+              className="rounded-xl border p-6 lot-animate-in"
               style={{
                 background: cfg.bg,
                 borderColor: isActive ? cfg.color : cfg.border,
@@ -130,10 +130,10 @@ export default function LotosAgingPage() {
               <div style={{ fontSize: '14px', fontWeight: 600, color: cfg.color, marginBottom: '6px' }}>
                 {cfg.label}
               </div>
-              <div className="text-3xl font-bold" style={{ color: '#1C1917', marginBottom: '4px' }}>
+              <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)', marginBottom: '4px' }}>
                 {data.count} units
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 600, color: '#57534E' }}>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text-secondary)' }}>
                 ${data.totalInvestment.toLocaleString()} invested
               </div>
               {isActive && (
@@ -176,20 +176,12 @@ export default function LotosAgingPage() {
 
       {activeBucket && (
         <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '14px', color: '#78716C' }}>
+          <span style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>
             Showing {filteredVehicles.length} vehicles in {BUCKET_CONFIG[activeBucket as AgeBucket]?.label ?? activeBucket} bucket
           </span>
           <button
             onClick={() => setActiveBucket(null)}
-            style={{
-              padding: '4px 12px',
-              borderRadius: '6px',
-              border: '1px solid #E7E5E4',
-              background: '#FFFFFF',
-              color: '#57534E',
-              fontSize: '14px',
-              cursor: 'pointer',
-            }}
+            className="lot-btn"
           >
             Clear Filter
           </button>
@@ -197,12 +189,12 @@ export default function LotosAgingPage() {
       )}
 
       <div
-        className="rounded-xl bg-white border"
-        style={{ borderColor: '#E7E5E4', overflowX: 'auto' }}
+        className="lot-card"
+        style={{ overflowX: 'auto', padding: 0 }}
       >
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+            <tr style={{ borderBottom: '2px solid var(--lot-border-faint)' }}>
               {[
                 'Stock #',
                 'Vehicle',
@@ -222,7 +214,7 @@ export default function LotosAgingPage() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     fontWeight: 600,
-                    color: '#78716C',
+                    color: 'var(--lot-text-muted)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -239,7 +231,7 @@ export default function LotosAgingPage() {
               return (
                 <tr
                   key={v.id}
-                  style={{ borderBottom: '1px solid #F1F5F9', cursor: 'pointer' }}
+                  style={{ borderBottom: '1px solid var(--lot-border-faint)', cursor: 'pointer' }}
                   onClick={() => setPanelEntity({ type: 'vehicle', id: v.id })}
                 >
                   <td
@@ -247,17 +239,17 @@ export default function LotosAgingPage() {
                       padding: '12px 14px',
                       fontSize: '14px',
                       fontWeight: 700,
-                      color: '#1C1917',
+                      color: 'var(--lot-text)',
                       whiteSpace: 'nowrap',
                     }}
                   >
                     {v.id}
                   </td>
-                  <td style={{ padding: '12px 14px', fontSize: '14px', color: '#1C1917' }}>
+                  <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text)' }}>
                     <div style={{ fontWeight: 600 }}>
                       {v.year} {v.make} {v.model}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#78716C' }}>{v.trim}</div>
+                    <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)' }}>{v.trim}</div>
                   </td>
                   <td style={{ padding: '12px 14px' }}>
                     <span
@@ -272,10 +264,10 @@ export default function LotosAgingPage() {
                       {v.daysOnLot}d
                     </span>
                   </td>
-                  <td style={{ padding: '12px 14px', fontSize: '14px', color: '#57534E', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px 14px', fontSize: '14px', color: 'var(--lot-text-secondary)', whiteSpace: 'nowrap' }}>
                     ${v.acquisitionCost.toLocaleString()}
                   </td>
-                  <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: '#1C1917', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px 14px', fontSize: '14px', fontWeight: 600, color: 'var(--lot-text)', whiteSpace: 'nowrap' }}>
                     ${v.askingPrice.toLocaleString()}
                   </td>
                   <td
@@ -283,7 +275,7 @@ export default function LotosAgingPage() {
                       padding: '12px 14px',
                       fontSize: '14px',
                       fontWeight: 600,
-                      color: v.marketValue < v.totalCost ? '#DC2626' : '#57534E',
+                      color: v.marketValue < v.totalCost ? '#DC2626' : 'var(--lot-text-secondary)',
                       whiteSpace: 'nowrap',
                     }}
                   >

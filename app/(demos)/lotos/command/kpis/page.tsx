@@ -106,29 +106,19 @@ export default function LotosKpiDashboardPage() {
   const last6 = MONTHLY_KPIS.slice(-6);
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '24px' }}>
+    <div className="lot-page">
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+          <h1 className="lot-heading">
             KPI Dashboard
           </h1>
-          <p style={{ color: '#57534E', fontSize: '16px', marginTop: '4px' }}>
+          <p className="lot-description">
             Dealership performance vs targets — current month and 12-month trend
           </p>
         </div>
         <button
           onClick={() => setShowBenchmark(!showBenchmark)}
-          style={{
-            padding: '10px 20px',
-            borderRadius: '8px',
-            border: showBenchmark ? '2px solid #2563EB' : '2px solid #E7E5E4',
-            background: showBenchmark ? '#EFF6FF' : '#FFFFFF',
-            color: showBenchmark ? '#2563EB' : '#57534E',
-            fontSize: '14px',
-            fontWeight: showBenchmark ? 700 : 500,
-            cursor: 'pointer',
-            whiteSpace: 'nowrap',
-          }}
+          className={showBenchmark ? 'lot-btn lot-btn-active' : 'lot-btn'}
         >
           {showBenchmark ? 'Industry Avg: ON' : 'Show Industry Avg'}
         </button>
@@ -167,12 +157,12 @@ export default function LotosKpiDashboardPage() {
             return (
               <div
                 key={key}
-                className="rounded-xl bg-white border p-6"
+                className="lot-card lot-animate-in"
                 style={{ borderColor: '#2563EB', cursor: 'pointer', gridColumn: 'span 2' }}
                 onClick={() => setExpandedKpi(null)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '16px', fontWeight: 700, color: '#1C1917' }}>{config.label}</span>
+                  <span style={{ fontSize: '16px', fontWeight: 700, color: 'var(--lot-text)' }}>{config.label}</span>
                   <span
                     style={{
                       display: 'inline-flex',
@@ -190,7 +180,7 @@ export default function LotosKpiDashboardPage() {
                     {traffic.label}
                   </span>
                 </div>
-                <div className="text-3xl font-bold" style={{ color: '#1C1917', marginBottom: '12px' }}>
+                <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)', marginBottom: '12px' }}>
                   {formatValue(current, config.unit)}
                 </div>
                 <svg
@@ -225,7 +215,7 @@ export default function LotosKpiDashboardPage() {
                         x={p.x}
                         y={p.y - 12}
                         textAnchor="middle"
-                        fill="#1C1917"
+                        fill="var(--lot-text)"
                         fontSize="12"
                         fontWeight="700"
                       >
@@ -235,7 +225,7 @@ export default function LotosKpiDashboardPage() {
                         x={p.x}
                         y={expandedHeight - 2}
                         textAnchor="middle"
-                        fill="#78716C"
+                        fill="var(--lot-text-muted)"
                         fontSize="11"
                       >
                         {SHORT_MONTH_LABELS[last6[i]?.month] ?? ''}
@@ -243,12 +233,12 @@ export default function LotosKpiDashboardPage() {
                     </g>
                   ))}
                   {showBenchmark && benchmarkY !== null && (
-                    <text x={expandedWidth - 4} y={benchmarkY - 6} textAnchor="end" fill="#78716C" fontSize="11" fontWeight="600">
+                    <text x={expandedWidth - 4} y={benchmarkY - 6} textAnchor="end" fill="var(--lot-text-muted)" fontSize="11" fontWeight="600">
                       Ind. Avg: {formatValue(benchmarkValue, config.unit)}
                     </text>
                   )}
                 </svg>
-                <div style={{ fontSize: '14px', color: '#78716C', marginTop: '6px' }}>
+                <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '6px' }}>
                   Click to collapse
                 </div>
               </div>
@@ -268,12 +258,12 @@ export default function LotosKpiDashboardPage() {
           return (
             <div
               key={key}
-              className="rounded-xl bg-white border p-6"
-              style={{ borderColor: '#E7E5E4', cursor: 'pointer' }}
+              className="lot-card lot-animate-in"
+              style={{ cursor: 'pointer' }}
               onClick={() => setExpandedKpi(key)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#78716C' }}>{config.label}</span>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--lot-text-muted)' }}>{config.label}</span>
                 <span
                   style={{
                     display: 'inline-flex',
@@ -291,10 +281,10 @@ export default function LotosKpiDashboardPage() {
                   {traffic.label}
                 </span>
               </div>
-              <div className="text-3xl font-bold" style={{ color: '#1C1917', marginBottom: '4px' }}>
+              <div className="text-3xl font-bold" style={{ color: 'var(--lot-text)', marginBottom: '4px' }}>
                 {formatValue(current, config.unit)}
               </div>
-              <div style={{ fontSize: '14px', color: '#78716C', marginBottom: '12px' }}>
+              <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginBottom: '12px' }}>
                 Target: {formatValue(config.target, config.unit)}
                 {'lowerIsBetter' in config && config.lowerIsBetter ? ' (lower is better)' : ''}
               </div>
@@ -319,7 +309,7 @@ export default function LotosKpiDashboardPage() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <div style={{ fontSize: '14px', color: '#A8A29E', marginTop: '2px' }}>
+              <div style={{ fontSize: '14px', color: 'var(--lot-text-muted)', marginTop: '2px' }}>
                 Last 6 months · click to expand
               </div>
             </div>
@@ -328,17 +318,17 @@ export default function LotosKpiDashboardPage() {
       </div>
 
       <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1C1917' }}>
+        <h2 className="lot-subheading">
           Monthly Trend — All Metrics
         </h2>
       </div>
       <div
-        className="rounded-xl bg-white border"
-        style={{ borderColor: '#E7E5E4', overflowX: 'auto' }}
+        className="lot-card"
+        style={{ overflowX: 'auto', padding: 0 }}
       >
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid #F1F5F9' }}>
+            <tr style={{ borderBottom: '2px solid var(--lot-border-faint)' }}>
               {[
                 'Month',
                 'Units Sold',
@@ -359,7 +349,7 @@ export default function LotosKpiDashboardPage() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     fontWeight: 600,
-                    color: '#78716C',
+                    color: 'var(--lot-text-muted)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -375,7 +365,7 @@ export default function LotosKpiDashboardPage() {
                 <tr
                   key={row.month}
                   style={{
-                    borderBottom: '1px solid #F1F5F9',
+                    borderBottom: '1px solid var(--lot-border-faint)',
                     background: isCurrent ? '#F0FDF4' : 'transparent',
                   }}
                 >
@@ -384,7 +374,7 @@ export default function LotosKpiDashboardPage() {
                       padding: '11px 14px',
                       fontSize: '14px',
                       fontWeight: isCurrent ? 700 : 500,
-                      color: '#1C1917',
+                      color: 'var(--lot-text)',
                       whiteSpace: 'nowrap',
                     }}
                   >
@@ -405,7 +395,7 @@ export default function LotosKpiDashboardPage() {
                       </span>
                     )}
                   </td>
-                  <td style={{ padding: '11px 14px', fontSize: '14px', color: '#1C1917', fontWeight: 600 }}>
+                  <td style={{ padding: '11px 14px', fontSize: '14px', color: 'var(--lot-text)', fontWeight: 600 }}>
                     {row.unitsSold}
                   </td>
                   <td
@@ -468,7 +458,7 @@ export default function LotosKpiDashboardPage() {
                   >
                     {row.fniPenetration}%
                   </td>
-                  <td style={{ padding: '11px 14px', fontSize: '14px', color: '#1C1917', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '11px 14px', fontSize: '14px', color: 'var(--lot-text)', fontWeight: 600, whiteSpace: 'nowrap' }}>
                     ${row.totalRevenue.toLocaleString()}
                   </td>
                 </tr>

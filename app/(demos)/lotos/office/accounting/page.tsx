@@ -35,17 +35,17 @@ export default function AccountingPage() {
   const plNetProfit = plGrossProfit - totalExpenses;
 
   const plRows = [
-    { label: 'Total Revenue', value: plRevenue, bold: false, color: '#1C1917' },
+    { label: 'Total Revenue', value: plRevenue, bold: false, color: 'var(--lot-text)' },
     { label: 'Cost of Goods Sold (COGS)', value: -plCogs, bold: false, color: '#DC2626' },
     { label: 'Gross Profit', value: plGrossProfit, bold: true, color: '#16A34A' },
-    { label: '', value: null as number | null, bold: false, color: '#1C1917', divider: true },
-    { label: 'Payroll', value: -payroll, bold: false, color: '#57534E' },
-    { label: 'Rent', value: -rent, bold: false, color: '#57534E' },
-    { label: 'Floor Plan Interest', value: -floorPlanInterest, bold: false, color: '#57534E' },
-    { label: 'Marketing', value: -marketing, bold: false, color: '#57534E' },
-    { label: 'Utilities', value: -utilities, bold: false, color: '#57534E' },
+    { label: '', value: null as number | null, bold: false, color: 'var(--lot-text)', divider: true },
+    { label: 'Payroll', value: -payroll, bold: false, color: 'var(--lot-text-secondary)' },
+    { label: 'Rent', value: -rent, bold: false, color: 'var(--lot-text-secondary)' },
+    { label: 'Floor Plan Interest', value: -floorPlanInterest, bold: false, color: 'var(--lot-text-secondary)' },
+    { label: 'Marketing', value: -marketing, bold: false, color: 'var(--lot-text-secondary)' },
+    { label: 'Utilities', value: -utilities, bold: false, color: 'var(--lot-text-secondary)' },
     { label: 'Total Expenses', value: -totalExpenses, bold: true, color: '#DC2626' },
-    { label: '', value: null as number | null, bold: false, color: '#1C1917', divider: true },
+    { label: '', value: null as number | null, bold: false, color: 'var(--lot-text)', divider: true },
     { label: 'Net Profit', value: plNetProfit, bold: true, color: plNetProfit >= 0 ? '#16A34A' : '#DC2626' },
   ];
 
@@ -54,7 +54,7 @@ export default function AccountingPage() {
       key: 'id',
       label: 'Deal #',
       sortFn: (a, b) => a.id.localeCompare(b.id),
-      render: (d) => <span style={{ fontWeight: 700, color: '#1C1917' }}>{d.id}</span>,
+      render: (d) => <span style={{ fontWeight: 700, color: 'var(--lot-text)' }}>{d.id}</span>,
     },
     {
       key: 'customer',
@@ -69,7 +69,7 @@ export default function AccountingPage() {
       label: 'Sale Price',
       align: 'right',
       sortFn: (a, b) => a.salePrice - b.salePrice,
-      render: (d) => <span style={{ fontWeight: 600, color: '#1C1917' }}>${d.salePrice.toLocaleString()}</span>,
+      render: (d) => <span style={{ fontWeight: 600, color: 'var(--lot-text)' }}>${d.salePrice.toLocaleString()}</span>,
     },
     {
       key: 'status',
@@ -102,79 +102,70 @@ export default function AccountingPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="lot-page">
       <div>
-        <h1 className="text-3xl font-bold" style={{ color: '#1C1917' }}>
+        <h1 className="lot-heading">
           Accounting
         </h1>
-        <p className="mt-1 text-base" style={{ color: '#57534E' }}>
+        <p className="lot-description">
           General ledger summary, deal posting, and monthly P&L
         </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+      <div className="grid grid-cols-4 gap-4 lot-animate-in">
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Total Revenue
           </p>
-          <p className="text-3xl font-bold mt-1" style={{ color: '#1C1917' }}>
+          <p className="text-3xl font-bold mt-1" style={{ color: 'var(--lot-text)' }}>
             ${totalRevenue.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{fundedDeals.length} funded deals</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>{fundedDeals.length} funded deals</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             COGS
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#DC2626' }}>
             ${cogs.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>acquisition + recon</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>acquisition + recon</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Gross Profit
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#16A34A' }}>
             ${grossProfit.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>{totalRevenue > 0 ? Math.round((grossProfit / totalRevenue) * 100) : 0}% margin</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>{totalRevenue > 0 ? Math.round((grossProfit / totalRevenue) * 100) : 0}% margin</p>
         </div>
-        <div className="rounded-xl bg-white border p-5" style={{ borderColor: '#E7E5E4' }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#78716C' }}>
+        <div className="lot-card">
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>
             Operating Expenses
           </p>
           <p className="text-3xl font-bold mt-1" style={{ color: '#D97706' }}>
             ${operatingExpenses.toLocaleString()}
           </p>
-          <p className="text-sm mt-1" style={{ color: '#57534E' }}>this month</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>this month</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-          <div className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #E7E5E4' }}>
+      <div className="grid grid-cols-2 gap-6 lot-animate-in">
+        <div className="lot-card overflow-hidden !p-0">
+          <div className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--lot-border)' }}>
             <div>
-              <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+              <h2 className="lot-subheading">
                 Monthly P&amp;L
               </h2>
-              <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+              <p className="text-sm mt-0.5" style={{ color: 'var(--lot-text-secondary)' }}>
                 {selectedKpi.month} — {selectedKpi.unitsSold} units sold
               </p>
             </div>
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              style={{
-                padding: '6px 12px',
-                borderRadius: '8px',
-                border: '1.5px solid #E7E5E4',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: '#1C1917',
-                background: '#FFFFFF',
-                cursor: 'pointer',
-              }}
+              className="lot-input"
             >
               {MONTHLY_KPIS.map((k) => (
                 <option key={k.month} value={k.month}>{k.month}</option>
@@ -185,16 +176,16 @@ export default function AccountingPage() {
             <tbody>
               {plRows.map((row, i) => {
                 if ('divider' in row && row.divider) {
-                  return <tr key={i}><td colSpan={2} style={{ borderTop: '2px solid #E7E5E4', padding: 0 }} /></tr>;
+                  return <tr key={i}><td colSpan={2} style={{ borderTop: '2px solid var(--lot-border)', padding: 0 }} /></tr>;
                 }
                 return (
                   <tr
                     key={i}
-                    style={{ borderBottom: i < plRows.length - 1 ? '1px solid #F5F5F4' : undefined, backgroundColor: row.bold ? '#F8FAFC' : undefined }}
+                    style={{ borderBottom: i < plRows.length - 1 ? '1px solid var(--lot-border-faint)' : undefined, backgroundColor: row.bold ? 'var(--lot-card-alt)' : undefined }}
                   >
                     <td
                       className="px-6 py-3"
-                      style={{ color: '#57534E', fontWeight: row.bold ? 700 : 400 }}
+                      style={{ color: 'var(--lot-text-secondary)', fontWeight: row.bold ? 700 : 400 }}
                     >
                       {row.label}
                     </td>
@@ -215,12 +206,12 @@ export default function AccountingPage() {
           </table>
         </div>
 
-        <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: '#E7E5E4' }}>
-          <div className="px-6 py-4" style={{ borderBottom: '1px solid #E7E5E4' }}>
-            <h2 className="text-lg font-bold" style={{ color: '#1C1917' }}>
+        <div className="lot-card overflow-hidden !p-0">
+          <div className="px-6 py-4" style={{ borderBottom: '1px solid var(--lot-border)' }}>
+            <h2 className="lot-subheading">
               Deal Posting Status
             </h2>
-            <p className="text-sm mt-0.5" style={{ color: '#57534E' }}>
+            <p className="text-sm mt-0.5" style={{ color: 'var(--lot-text-secondary)' }}>
               GL posting status for active deals — click row for details
             </p>
           </div>
