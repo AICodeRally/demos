@@ -6,7 +6,7 @@ function renderInline(text: string): (string | React.JSX.Element)[] {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} style={{ color: '#1C1917' }}>{part.slice(2, -2)}</strong>;
+      return <strong key={i} style={{ color: 'var(--lot-text)' }}>{part.slice(2, -2)}</strong>;
     }
     return part;
   });
@@ -22,7 +22,7 @@ export function MarkdownRenderer({ text }: MarkdownRendererProps) {
     if (!listBuffer) return;
     const Tag = listBuffer.type;
     elements.push(
-      <Tag key={elements.length} className={`${Tag === 'ol' ? 'list-decimal' : 'list-disc'} ml-5 mt-2 space-y-1`} style={{ color: '#57534E' }}>
+      <Tag key={elements.length} className={`${Tag === 'ol' ? 'list-decimal' : 'list-disc'} ml-5 mt-2 space-y-1`} style={{ color: 'var(--lot-text-secondary)' }}>
         {listBuffer.items.map((item, i) => (
           <li key={i} className="text-sm" style={{ fontSize: '14px' }}>{renderInline(item)}</li>
         ))}
@@ -37,11 +37,11 @@ export function MarkdownRenderer({ text }: MarkdownRendererProps) {
     const rows = tableLines.slice(2).map(r => r.split('|').filter(Boolean).map(c => c.trim()));
     elements.push(
       <div key={elements.length} className="overflow-x-auto mt-3">
-        <table className="w-full text-sm" style={{ fontSize: '14px' }}>
+        <table className="lot-table">
           <thead>
             <tr>
               {headers.map((h, i) => (
-                <th key={i} className="text-left px-3 py-2 text-xs uppercase tracking-wider font-semibold" style={{ color: '#78716C', borderBottom: '1px solid #E7E5E4' }}>{h}</th>
+                <th key={i} style={{ textAlign: 'left' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -49,7 +49,7 @@ export function MarkdownRenderer({ text }: MarkdownRendererProps) {
             {rows.map((row, ri) => (
               <tr key={ri}>
                 {row.map((cell, ci) => (
-                  <td key={ci} className="px-3 py-2" style={{ color: '#57534E', borderBottom: '1px solid #F5F5F4' }}>{renderInline(cell)}</td>
+                  <td key={ci}>{renderInline(cell)}</td>
                 ))}
               </tr>
             ))}
@@ -71,7 +71,7 @@ export function MarkdownRenderer({ text }: MarkdownRendererProps) {
     if (line.startsWith('## ')) {
       flushList();
       elements.push(
-        <h3 key={elements.length} className="text-lg font-bold mt-4 mb-2 pl-3" style={{ color: '#1C1917', borderLeft: '3px solid #DC2626' }}>
+        <h3 key={elements.length} className="text-lg font-bold mt-4 mb-2 pl-3" style={{ color: 'var(--lot-text)', borderLeft: '3px solid #DC2626' }}>
           {line.slice(3)}
         </h3>
       );
@@ -96,7 +96,7 @@ export function MarkdownRenderer({ text }: MarkdownRendererProps) {
     } else {
       flushList();
       elements.push(
-        <p key={elements.length} className="text-sm mt-2" style={{ color: '#57534E', fontSize: '14px' }}>{renderInline(line)}</p>
+        <p key={elements.length} className="text-sm mt-2" style={{ color: 'var(--lot-text-secondary)', fontSize: '14px' }}>{renderInline(line)}</p>
       );
     }
   }
