@@ -42,6 +42,7 @@ export function DetailPanel({ open, onClose, title, children }: DetailPanelProps
             style={{ color: 'var(--lot-text-muted)', background: 'transparent' }}
             onMouseEnter={(e) => e.currentTarget.style.background = 'var(--lot-hover)'}
             onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+            aria-label="Close panel"
           >
             ×
           </button>

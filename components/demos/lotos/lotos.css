@@ -22,8 +22,9 @@
   --lot-text-faint:     #64748b;
 
   /* Interactive */
-  --lot-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  --lot-hover:  rgba(0,0,0,0.04);
+  --lot-shadow:       0 1px 3px rgba(0,0,0,0.06);
+  --lot-shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  --lot-hover:        rgba(0,0,0,0.04);
 
   /* Input */
   --lot-input-bg:     #ffffff;
@@ -45,8 +46,9 @@
   --lot-text-muted:     #94a3b8;
   --lot-text-faint:     #64748b;
 
-  --lot-shadow: 0 1px 3px rgba(0,0,0,0.3);
-  --lot-hover:  rgba(255,255,255,0.04);
+  --lot-shadow:       0 1px 3px rgba(0,0,0,0.3);
+  --lot-shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+  --lot-hover:        rgba(255,255,255,0.04);
 
   --lot-input-bg:     #1e293b;
   --lot-input-border: #334155;
@@ -116,7 +118,7 @@
 }
 
 .lot-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  box-shadow: var(--lot-shadow-hover);
 }
 
 /* --- Button base --- */
@@ -356,4 +358,31 @@
 @keyframes lot-bounce {
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
   40% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+   Reduced Motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .lot-animate-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .lot-progress-fill {
+    transition: none;
+  }
+
+  .lot-chevron {
+    transition: none;
+  }
+
+  .lot-number-pop {
+    animation: none;
+  }
+
+  .lot-bounce {
+    animation: none;
+  }
 }

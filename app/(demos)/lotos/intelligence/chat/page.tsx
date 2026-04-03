@@ -108,7 +108,7 @@ export default function AskLotosChatPage() {
           ))}
         </div>
 
-        <div className="space-y-6" style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '8px', background: 'var(--lot-card-alt)', borderRadius: '12px', padding: '16px' }}>
+        <div className="space-y-6" style={{ maxHeight: '60vh', overflowY: 'auto', background: 'var(--lot-card-alt)', borderRadius: '12px', padding: '16px 8px 16px 16px' }}>
           {messages.map((msg, idx) => (
             <div key={idx} className="lot-animate-in">
               {msg.role === 'user' ? (
@@ -180,9 +180,8 @@ export default function AskLotosChatPage() {
         </div>
 
         <style>{`
-          @keyframes lotos-bounce {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1); opacity: 1; }
+          .lot-bounce {
+            animation: lot-bounce 1.4s infinite ease-in-out both;
           }
         `}</style>
 

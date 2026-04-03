@@ -18,10 +18,11 @@ export function CollapsibleSection({ title, defaultOpen = true, accentColor, chi
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between"
         style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        aria-expanded={open}
       >
         <h3 className="lot-subheading">{title}</h3>
         <span className={`lot-chevron ${open ? 'lot-chevron-open' : ''}`}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
             <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>

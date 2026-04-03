@@ -107,8 +107,9 @@ export default function AcquisitionScorerPage() {
               <h2 className="lot-subheading">Vehicle Information</h2>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Year</label>
+                  <label htmlFor="acq-year" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Year</label>
                   <input
+                    id="acq-year"
                     type="number"
                     value={editableFields.year}
                     onChange={(e) => setEditableFields((prev) => ({ ...prev, year: parseInt(e.target.value) || 0 }))}
@@ -116,8 +117,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Make</label>
+                  <label htmlFor="acq-make" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Make</label>
                   <input
+                    id="acq-make"
                     type="text"
                     value={editableFields.make}
                     onChange={(e) => setEditableFields((prev) => ({ ...prev, make: e.target.value }))}
@@ -125,8 +127,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Model</label>
+                  <label htmlFor="acq-model" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Model</label>
                   <input
+                    id="acq-model"
                     type="text"
                     value={editableFields.model}
                     onChange={(e) => setEditableFields((prev) => ({ ...prev, model: e.target.value }))}
@@ -134,8 +137,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Trim</label>
+                  <label htmlFor="acq-trim" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Trim</label>
                   <input
+                    id="acq-trim"
                     type="text"
                     readOnly
                     value="XLE"
@@ -143,8 +147,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Mileage</label>
+                  <label htmlFor="acq-mileage" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Mileage</label>
                   <input
+                    id="acq-mileage"
                     type="number"
                     value={editableFields.miles}
                     onChange={(e) => setEditableFields((prev) => ({ ...prev, miles: parseInt(e.target.value) || 0 }))}
@@ -152,8 +157,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Source</label>
+                  <label htmlFor="acq-source" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Source</label>
                   <input
+                    id="acq-source"
                     type="text"
                     readOnly
                     value="Manheim Phoenix"
@@ -161,8 +167,9 @@ export default function AcquisitionScorerPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Asking Price</label>
+                  <label htmlFor="acq-price" className="text-xs font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--lot-text-muted)' }}>Asking Price</label>
                   <input
+                    id="acq-price"
                     type="number"
                     value={editableFields.price}
                     onChange={(e) => setEditableFields((prev) => ({ ...prev, price: parseInt(e.target.value) || 0 }))}

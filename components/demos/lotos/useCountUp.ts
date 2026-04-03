@@ -15,7 +15,9 @@ function easeOutCubic(t: number): number {
 }
 
 export function useCountUp({ end, duration = 800, decimals = 0, prefix = '', suffix = '' }: UseCountUpOptions): string {
-  const [display, setDisplay] = useState(`${prefix}${(0).toFixed(decimals)}${suffix}`);
+  const safeDecimals = Math.max(0, Math.min(100, Math.floor(decimals)));
+  const safeDuration = Math.max(1, duration);
+  const [display, setDisplay] = useState(`${prefix}${(0).toFixed(safeDecimals)}${suffix}`);
   const frameRef = useRef<number>(0);
 
   useEffect(() => {
@@ -23,11 +25,11 @@ export function useCountUp({ end, duration = 800, decimals = 0, prefix = '', suf
 
     function tick(now: number) {
       const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(elapsed / safeDuration, 1);
       const eased = easeOutCubic(progress);
       const current = eased * end;
 
-      setDisplay(`${prefix}${current.toFixed(decimals)}${suffix}`);
+      setDisplay(`${prefix}${current.toFixed(safeDecimals)}${suffix}`);
 
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(tick);
@@ -36,7 +38,7 @@ export function useCountUp({ end, duration = 800, decimals = 0, prefix = '', suf
 
     frameRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameRef.current);
-  }, [end, duration, decimals, prefix, suffix]);
+  }, [end, safeDuration, safeDecimals, prefix, suffix]);
 
   return display;
 }

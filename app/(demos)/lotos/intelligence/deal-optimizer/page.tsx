@@ -204,7 +204,7 @@ export default function DealOptimizerPage() {
               <div className="rounded-xl border p-6" style={{ backgroundColor: '#FFF7ED', borderColor: '#FED7AA' }}>
                 <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>Current Total Gross</p>
                 <p className="text-4xl font-bold mt-2" style={{ color: '#C2410C' }}>
-                  ${(deal?.totalGross ?? 5195).toLocaleString()}
+                  ${(deal?.totalGross ?? 0).toLocaleString()}
                 </p>
                 <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>As submitted</p>
               </div>
@@ -222,7 +222,7 @@ export default function DealOptimizerPage() {
 
               <div className="rounded-xl border p-6" style={{ backgroundColor: '#F0FDF4', borderColor: '#86EFAC' }}>
                 <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--lot-text-muted)' }}>Optimized Total Gross</p>
-                <p className="text-4xl font-bold mt-2" style={{ color: '#15803D' }}>$7,755</p>
+                <p className="text-4xl font-bold mt-2" style={{ color: '#15803D' }}>${((deal?.totalGross ?? 0) + 2560).toLocaleString()}</p>
                 <p className="text-sm mt-1" style={{ color: 'var(--lot-text-secondary)' }}>With F&I bundle</p>
               </div>
             </div>
