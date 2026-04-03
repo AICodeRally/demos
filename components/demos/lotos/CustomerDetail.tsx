@@ -9,7 +9,7 @@ interface CustomerDetailProps {
 
 export function CustomerDetail({ customerId, onDealClick, onVehicleClick }: CustomerDetailProps) {
   const customer = CUSTOMERS.find(c => c.id === customerId);
-  if (!customer) return <p style={{ color: '#57534E' }}>Customer not found</p>;
+  if (!customer) return <p style={{ color: 'var(--lot-text-secondary)' }}>Customer not found</p>;
 
   const customerDeals = DEALS.filter(d => d.customerId === customerId);
 
@@ -17,10 +17,10 @@ export function CustomerDetail({ customerId, onDealClick, onVehicleClick }: Cust
     <div className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xl font-bold" style={{ color: '#1C1917' }}>{customer.firstName} {customer.lastName}</span>
+          <span className="lot-subheading">{customer.firstName} {customer.lastName}</span>
           <StatusBadge label={TIER_LABELS[customer.creditTier]} color={TIER_COLORS[customer.creditTier]} />
         </div>
-        <div className="space-y-2 text-sm" style={{ color: '#57534E' }}>
+        <div className="space-y-2 text-sm" style={{ color: 'var(--lot-text-secondary)' }}>
           <div><span className="font-semibold">Phone:</span> {customer.phone}</div>
           <div><span className="font-semibold">Email:</span> {customer.email}</div>
           <div><span className="font-semibold">Lead Source:</span> {customer.leadSource}</div>
@@ -28,25 +28,25 @@ export function CustomerDetail({ customerId, onDealClick, onVehicleClick }: Cust
         </div>
       </div>
 
-      <div className="rounded-lg p-4" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E7E5E4' }}>
-        <h3 className="text-sm font-bold mb-1" style={{ color: '#1C1917' }}>Notes</h3>
-        <p className="text-sm" style={{ color: '#57534E' }}>{customer.notes}</p>
+      <div className="rounded-lg p-4" style={{ backgroundColor: 'var(--lot-card-alt)', border: '1px solid var(--lot-border)' }}>
+        <h3 className="text-sm font-bold mb-1" style={{ color: 'var(--lot-text)' }}>Notes</h3>
+        <p className="text-sm" style={{ color: 'var(--lot-text-secondary)' }}>{customer.notes}</p>
       </div>
 
       {customerDeals.length > 0 && (
         <div>
-          <h3 className="text-sm font-bold mb-2" style={{ color: '#1C1917' }}>Deals</h3>
+          <h3 className="text-sm font-bold mb-2" style={{ color: 'var(--lot-text)' }}>Deals</h3>
           {customerDeals.map(d => {
             const vehicle = VEHICLES.find(v => v.id === d.vehicleId);
             return (
               <div
                 key={d.id}
                 className="rounded-lg p-3 mb-2 cursor-pointer hover:shadow-sm transition-shadow"
-                style={{ backgroundColor: '#F8FAFC', border: '1px solid #E7E5E4' }}
+                style={{ backgroundColor: 'var(--lot-card-alt)', border: '1px solid var(--lot-border)' }}
                 onClick={() => onDealClick?.(d.id)}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-sm" style={{ color: '#1C1917' }}>{d.id}</span>
+                  <span className="font-semibold text-sm" style={{ color: 'var(--lot-text)' }}>{d.id}</span>
                   <StatusBadge label={d.status} color={DEAL_STATUS_COLORS[d.status]} />
                 </div>
                 {vehicle && (
@@ -58,7 +58,7 @@ export function CustomerDetail({ customerId, onDealClick, onVehicleClick }: Cust
                     {vehicle.year} {vehicle.make} {vehicle.model} ({vehicle.id})
                   </p>
                 )}
-                <p className="text-xs mt-1" style={{ color: '#78716C' }}>${d.salePrice.toLocaleString()} · ${d.totalGross.toLocaleString()} gross</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--lot-text-muted)' }}>${d.salePrice.toLocaleString()} · ${d.totalGross.toLocaleString()} gross</p>
               </div>
             );
           })}
@@ -66,7 +66,7 @@ export function CustomerDetail({ customerId, onDealClick, onVehicleClick }: Cust
       )}
 
       {customerDeals.length === 0 && (
-        <p className="text-sm" style={{ color: '#A8A29E' }}>No deals yet</p>
+        <p className="text-sm" style={{ color: 'var(--lot-text-faint)' }}>No deals yet</p>
       )}
     </div>
   );
