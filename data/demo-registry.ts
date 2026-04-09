@@ -75,14 +75,13 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "badge": "Interactive Tool"
   },
   {
-    "name": "Prizym SGM — Sales Governance Manager",
+    "name": "PRIZYM GOVERNANCE",
     "slug": "prizym-governance",
     "industry": "Sales Performance Management",
     "tagline": "Enterprise governance platform for sales compensation programs — policies, plans, approvals, and audit trails",
     "color": "#06b6d4",
-    "layout": "focus",
-    "badge": "Live Demo",
-    "externalUrl": "https://governance.prizym.aicoderally.com"
+    "layout": "sidebar",
+    "badge": "Interactive Demo"
   },
   {
     "name": "ROUTEIQ",
