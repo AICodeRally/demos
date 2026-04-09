@@ -44,7 +44,8 @@ const LIGHT_TOKENS: Record<string, string> = {
   '--pg-hover': 'rgba(0,0,0,0.04)',
   '--pg-stripe': '#f1f5f9',
   '--pg-surface-alt': '#f1f5f9',
-  '--pg-cyan-bg': 'rgba(6,182,212,0.08)',
+  '--pg-cyan-bg': 'rgba(14,165,233,0.08)',
+  '--pg-accent-bg': 'rgba(139,92,246,0.08)',
   '--pg-gold-bg': 'rgba(201,148,43,0.08)',
   '--pl-sidebar-bg-start': '#ffffff',
   '--pl-sidebar-bg-end': '#f1f5f9',
@@ -67,26 +68,43 @@ const DARK_TOKENS: Record<string, string> = {
   '--pg-hover': 'rgba(255,255,255,0.04)',
   '--pg-stripe': 'rgba(255,255,255,0.03)',
   '--pg-surface-alt': '#1e293b',
-  '--pg-cyan-bg': 'rgba(6,182,212,0.12)',
+  '--pg-cyan-bg': 'rgba(14,165,233,0.12)',
+  '--pg-accent-bg': 'rgba(139,92,246,0.12)',
   '--pg-gold-bg': 'rgba(201,148,43,0.12)',
   '--pl-sidebar-bg-start': '#1e293b',
   '--pl-sidebar-bg-end': '#0f172a',
   '--pl-sidebar-text': '#ffffff',
   '--pl-sidebar-text-muted': 'rgba(255,255,255,0.65)',
-  '--pl-sidebar-border': 'rgba(6,182,212,0.12)',
+  '--pl-sidebar-border': 'rgba(139,92,246,0.18)',
 };
 
 const SHARED_TOKENS: Record<string, string> = {
-  '--pg-navy': '#0f172a',
-  '--pg-cyan': '#06b6d4',
-  '--pg-gold': '#c9942b',
-  '--pg-design': '#06b6d4',
-  '--pg-operate': '#3b82f6',
-  '--pg-oversee': '#8b5cf6',
+  // SPARCC SPM palette — Blue → Indigo → Violet gradient (from Summit SGM themes.ts)
+  '--pg-gradient-start': '#0ea5e9',  // sky
+  '--pg-gradient-mid1':  '#3b82f6',  // blue
+  '--pg-gradient-mid2':  '#6366f1',  // indigo
+  '--pg-gradient-end':   '#8b5cf6',  // violet
+
+  '--pg-primary':   '#0ea5e9',
+  '--pg-secondary': '#6366f1',
+  '--pg-accent':    '#8b5cf6',
+
+  // Quadrant colors — tuned to the SPARCC range for visual coherence
+  '--pg-design':  '#0ea5e9',  // sky (Design quadrant)
+  '--pg-operate': '#3b82f6',  // blue (Operate quadrant)
+  '--pg-dispute': '#6366f1',  // indigo (Dispute quadrant — new)
+  '--pg-oversee': '#8b5cf6',  // violet (Oversee quadrant)
+
+  // Status colors (unchanged — universal)
   '--pg-success': '#10b981',
   '--pg-warning': '#f59e0b',
-  '--pg-danger': '#ef4444',
-  '--pg-info': '#3b82f6',
+  '--pg-danger':  '#ef4444',
+  '--pg-info':    '#3b82f6',
+
+  // Back-compat aliases — legacy CSS still reads these
+  '--pg-navy': '#0f172a',
+  '--pg-cyan': '#0ea5e9', // legacy alias — now points at SPARCC primary
+  '--pg-gold': '#c9942b',
 };
 
 export function PrizymThemeProvider({ children }: { children: React.ReactNode }) {
