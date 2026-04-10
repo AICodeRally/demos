@@ -8,6 +8,7 @@ export { registerSlate } from './register-slate';
 export { charterStone } from './charter-stone';
 export { prizymNavy } from './prizym-navy';
 export { phoenixSapphire } from './phoenix-sapphire';
+export { sgmGlass } from './sgm-glass';
 
 import { barrelBrass } from './barrel-brass';
 import { midnight } from './midnight';
@@ -17,6 +18,7 @@ import { registerSlate } from './register-slate';
 import { charterStone } from './charter-stone';
 import { prizymNavy } from './prizym-navy';
 import { phoenixSapphire } from './phoenix-sapphire';
+import { sgmGlass } from './sgm-glass';
 
 export const PRESETS: Record<ThemePresetName, ThemePresetDef> = {
   'barrel-brass': barrelBrass,
@@ -27,4 +29,5 @@ export const PRESETS: Record<ThemePresetName, ThemePresetDef> = {
   'charter-stone': charterStone,
   'prizym-navy': prizymNavy,
   'phoenix-sapphire': phoenixSapphire,
+  'sgm-glass': sgmGlass,
 };
