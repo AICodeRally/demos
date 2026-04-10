@@ -11,7 +11,7 @@ export default defineDemo({
     badge: 'Interactive Demo',
   },
   darkMode: true,
-  theme: 'prizym-navy',
+  theme: 'sgm-glass',
   colors: {
     primary: '#06b6d4',
     accent: '#8b5cf6',

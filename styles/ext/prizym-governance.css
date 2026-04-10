@@ -222,64 +222,27 @@
   --pg-fs-overline: 0.875rem;    /* 14px — overlines (absolute floor) */
 }
 
-/* ── Light mode body gradient + transparent shell overrides ──────── */
-/* When the .dark class is NOT present on <html>, paint the full viewport
-   with the SPARCC gradient so glass cards float over it. The demo shell
-   uses --sem-bg-content / --comp-sidebar-bg / --comp-header-bg for its
-   chrome — we override all three to translucent glass so the body
-   gradient shines through. */
+/* ── Light mode body gradient ─────────────────────────────────────
+   The sgm-glass preset (components/shell/theme/presets/sgm-glass.ts)
+   already produces the correct glass CSS vars for both modes via the
+   shell's inline style injection — no !important overrides needed.
+   The one thing the preset CAN'T do is paint the body background with
+   a linear-gradient (CSS custom properties are single values), so we
+   do that here. .demo-shell gets the same gradient as a backup in
+   case the body is covered. */
 html:not(.dark),
-html:not(.dark) body {
-  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 28%, #6366f1 60%, #8b5cf6 100%) fixed !important;
+html:not(.dark) body,
+html:not(.dark) .demo-shell {
+  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 28%, #6366f1 60%, #8b5cf6 100%) fixed;
   min-height: 100vh;
 }
 
-/* Belt-and-braces — also paint the .demo-shell wrapper and its direct
-   children with the gradient, so the look survives even if a parent
-   layout sets its own bg. */
-html:not(.dark) .demo-shell {
-  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 28%, #6366f1 60%, #8b5cf6 100%) fixed !important;
-  min-height: 100vh;
-}
-
-html:not(.dark) .demo-shell > div,
-html:not(.dark) .demo-shell > div > div {
-  background: transparent !important;
-}
-
-/* The shell's DemoShell.tsx sets theme vars via inline style on .demo-shell,
-   which beats stylesheet rules on :root or html. We use !important on the
-   vars inside .demo-shell so light mode actually inherits our glass theme. */
-html:not(.dark) .demo-shell {
-  --sem-bg-primary: transparent !important;
-  --sem-bg-secondary: rgba(15,23,42,0.45) !important;
-  --sem-bg-content: transparent !important;
-  --sem-card-bg: rgba(255,255,255,0.12) !important;
-  --sem-text-primary: #ffffff !important;
-  --sem-text-secondary: #f1f5f9 !important;
-  --sem-text-muted: #e2e8f0 !important;
-  --sem-border-default: rgba(255,255,255,0.2) !important;
-  --sem-border-subtle: rgba(255,255,255,0.12) !important;
-  --comp-sidebar-bg: rgba(15,23,42,0.5) !important;
-  --comp-sidebar-border: rgba(255,255,255,0.14) !important;
-  --comp-sidebar-text: #ffffff !important;
-  --comp-sidebar-text-muted: rgba(255,255,255,0.78) !important;
-  --comp-sidebar-active-accent: #ffffff !important;
-  --comp-header-bg: rgba(15,23,42,0.5) !important;
-  --comp-header-border: rgba(255,255,255,0.14) !important;
-  --comp-footer-bg: rgba(15,23,42,0.45) !important;
-  --comp-nav-section-label: rgba(255,255,255,0.72) !important;
-}
-
-html:not(.dark) .demo-shell aside,
-html:not(.dark) .demo-shell header {
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-}
-
-/* Kill any stray white main background that bypasses the shell vars */
-html:not(.dark) .demo-shell main {
-  background: transparent !important;
+/* Sidebar + header get a subtle backdrop-filter blur so the gradient
+   they float over gets a frosted look. Works in both modes. */
+.demo-shell aside,
+.demo-shell header {
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 /* ── Page classes ────────────────────────────── */
