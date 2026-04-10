@@ -541,19 +541,6 @@ body,
   border-radius: 4px;
 }
 
-/* ── Mode indicator badge ────────────────────── */
-.pg-mode-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: var(--pg-fs-caption);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
 /* ── Highlight row ──────────────────────────── */
 .pg-highlight-row {
   display: flex;
