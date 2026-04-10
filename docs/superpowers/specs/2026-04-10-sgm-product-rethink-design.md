@@ -26,6 +26,8 @@ Real GRC policy-management products (v-comply, MetricStream, NAVEX, Workiva) all
 4. Preserve the Henry Schein hero surfaces (ASC 606 Calculator, ASC 606 policies, Compliance dashboard with gauge, Approvals queue with the $14.5M windfall).
 5. Keep the gradient-glass `sgm-glass` theme, AskSGM chat, and projector-grade readability.
 6. Collapse to a **single theme** (gradient glass) — drop dark/light toggle entirely.
+7. **Re-theme with a compliance-trust palette** — new blue → teal → emerald gradient replacing the current SPARCC cyan/blue/indigo/purple. Compliance buyers (CCOs, auditors) read navy-teal as "serious and professional" and the emerald hint as "healthy/compliant."
+8. **Show enforcement state** — every lifecycle item (policies, attestations, approvals, controls, reviews) gets visible SLA/overdue/exception state. Add a new `/workflows/exceptions` page for active exception requests.
 
 ## Non-goals
 
@@ -62,6 +64,7 @@ Workflows
   • Approvals                  /workflows/approvals
   • Attestations               /workflows/attestations
   • Reviews                    /workflows/reviews
+  • Exceptions                 /workflows/exceptions    ← NEW (enforcement)
   • Cases                      /workflows/cases
   • Committees                 /workflows/committees
   • Calendar                   /workflows/calendar
@@ -176,6 +179,79 @@ Also delete:
 - `/analytics` (absorbed into Compliance → Reports)
 - Current `/dashboard` page content (moved to home)
 
+## Theme — `sgm-compliance` gradient
+
+Replace the existing `sgm-glass` preset (and its SPARCC cyan/purple palette) with a new **compliance-trust** palette:
+
+```
+Gradient:    linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%)
+Primary:     #0891b2  (confident teal)
+Accent:      #10b981  (compliant emerald)
+Trust:       #1e40af  (deep trust blue — used in hero banners and section accents)
+Neutral:     #64748b  (slate)
+```
+
+**Rationale**: the current SPARCC purple-to-cyan was designed for a "Sales Performance Management" product identity. The new palette reframes as "compliance that works" — deep trust blue signals auditor/CCO reliability, teal signals modern tooling, emerald signals healthy/compliant status. This makes the first impression "professional GRC product" rather than "flashy sales demo."
+
+Surfaces:
+- **Body**: unconditional `linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%)` fixed attachment
+- **Cards**: `rgba(255,255,255,0.12)` glass with 20px backdrop-blur, 20px rounded corners
+- **Sidebar + header**: `rgba(15,23,42,0.55)` dark navy glass with blur
+- **Text**: white primary, `#e2e8f0` secondary, `#cbd5e1` muted (safe floor, never dimmer)
+- **Status colors** (independent of brand palette): green `#10b981`, amber `#f59e0b`, red `#ef4444`, purple `#8b5cf6` (for exceptions/escalations)
+
+A new preset file `components/shell/theme/presets/sgm-compliance.ts` replaces `sgm-glass.ts`. Single-mode (light only — no dark token set).
+
+## Enforcement state
+
+Enforcement is visible on every lifecycle page, and a new `/workflows/exceptions` page tracks active exception requests.
+
+### State signals (shown on existing pages)
+
+- **Attestations page**: items past SLA show red `OVERDUE` badge. Items approaching SLA show amber `DUE SOON`. SLA is 14 days from publish by default.
+- **Approvals page**: items in queue past committee cadence show amber `SLA BREACH`. CRB cadence = 10 business days, SGCC = 5.
+- **Documents → Policies**: policies where `nextReview < today` show red `REVIEW OVERDUE` badge.
+- **Compliance → Controls**: failed control tests show red `FAILED` + remediation owner + remediation due date.
+- **Documents → Comp Plans**: plans with unacknowledged participants after publish show a compliance % with amber/red thresholds.
+
+### New page: `/workflows/exceptions`
+
+Displays active exception requests. An exception is a formal "I need to deviate from a published policy for this specific situation" request.
+
+**Data shape** (`data/prizym-governance/workflows/exceptions.ts`):
+
+```ts
+export type ExceptionStatus = 'pending' | 'approved' | 'rejected' | 'expired';
+export type ExceptionType =
+  | 'territory_waiver'
+  | 'quota_appeal'
+  | 'clawback_waiver'
+  | 'asc606_treatment'
+  | 'windfall_deviation'
+  | 'plan_interpretation';
+
+export interface PolicyException {
+  id: string;
+  caseNumber: string;        // EXC-2026-001
+  type: ExceptionType;
+  title: string;
+  policyRef: string;         // SCP-007, SCP-001, etc.
+  requestedBy: string;
+  requestedAt: string;
+  status: ExceptionStatus;
+  approver: string;
+  approvedAt?: string;
+  expiresAt?: string;
+  amountImpact?: number;
+  justification: string;
+  dealContext?: string;
+}
+```
+
+Seed with 6 exceptions covering the types above. Mix of pending/approved/expired for visual variety.
+
+**Page layout**: filterable table with status tabs, clicking a row opens a drawer with the full justification + approval chain + expiry countdown.
+
 ## Data model
 
 ### New: Document type union
@@ -270,22 +346,35 @@ Seed with 8 obligations: SOX-302, SOX-404, ASC-606, IRS-409A, CA-AB-2288, NY-LL-
 18. `app/(demos)/prizym-governance/workflows/attestations/page.tsx` — new (aggregates attestation % from all documents)
 19. `app/(demos)/prizym-governance/workflows/reviews/page.tsx` — move decisions log + scheduled reviews
 20. `app/(demos)/prizym-governance/workflows/cases/page.tsx` — move dispute cases
-21. `app/(demos)/prizym-governance/workflows/committees/page.tsx` — move existing committees page (CRB, SGCC, standing committees with rosters and charters)
-22. `app/(demos)/prizym-governance/workflows/calendar/page.tsx` — move
-23. `app/(demos)/prizym-governance/workflows/audit-trail/page.tsx` — move audit log
+21. `app/(demos)/prizym-governance/workflows/exceptions/page.tsx` — NEW — exceptions register (6 synthetic exceptions, filterable table, drawer detail). Data file: `data/prizym-governance/workflows/exceptions.ts`.
+22. `app/(demos)/prizym-governance/workflows/committees/page.tsx` — move existing committees page (CRB, SGCC, standing committees with rosters and charters)
+23. `app/(demos)/prizym-governance/workflows/calendar/page.tsx` — move
+24. `app/(demos)/prizym-governance/workflows/audit-trail/page.tsx` — move audit log
+
+**Enforcement badges** — added inline during Wave C while moving the pages:
+- Attestations page: red `OVERDUE`, amber `DUE SOON` chips using status-color helpers
+- Approvals page: amber `SLA BREACH` badge on items past cadence
+- Documents → Policies: red `REVIEW OVERDUE` on rows where nextReview < today
+- Compliance → Controls: red `FAILED` + remediation owner inline
 
 ### Wave D — Single-theme collapse + polish
-23. **Remove dark/light toggle entirely**:
+25. **Replace `sgm-glass` preset with `sgm-compliance`**:
+    - Create `components/shell/theme/presets/sgm-compliance.ts` — single-mode (no dark set), blue→teal→emerald palette
+    - Register `'sgm-compliance'` in `ThemePresetName` type + `presets/index.ts`
+    - Switch `demo.config.ts` theme to `'sgm-compliance'`
+    - Update `demo.config.ts` colors to `{ primary: '#0891b2', accent: '#10b981' }`
+    - (Optional: delete `sgm-glass.ts` if no other demo references it)
+26. **Remove dark/light toggle entirely**:
     - Delete the ThemeToggle button from the shell header rendering
     - Rewrite `sgm-glass.ts` preset: keep only the light (gradient-glass) palette, delete the `dark` semantic/component token sets, export single-mode values
     - Update `theme/resolve.ts` to ignore the `darkMode` flag for sgm-glass (or delete the flag handling if no other preset needs it — check first)
     - Rewrite `styles/ext/prizym-governance.css`: delete the `.dark` ruleset, delete all `html:not(.dark)` selectors, inline the gradient-glass values into `:root`. Body gradient becomes unconditional.
     - Set `darkMode: false` in `demo.config.ts` (or remove the field)
     - Delete `PrizymThemeProvider`'s MutationObserver + toggleTheme — provider becomes a pure font-size controller
-24. Add universal search to the header bar (top of shell, not sidebar)
-25. Update `LandingHero.tsx` (home) to reflect new routes and messaging
-26. Update AskSGM canned responses to reference the new IA (still say "policies", "obligations", "compliance" — these are still correct)
-27. Regen registry + typecheck + verify:demo-standard + test + manual walkthrough
+27. Add universal search to the header bar (top of shell, not sidebar)
+28. Update `LandingHero.tsx` (home) to reflect new routes, messaging, and sgm-compliance gradient
+29. Update AskSGM canned responses to reference the new IA (still say "policies", "obligations", "compliance" — these are still correct)
+30. Regen registry + typecheck + verify:demo-standard + test + manual walkthrough
 
 ## Risks & mitigations
 
