@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { usePrizymTheme } from '../ThemeProvider';
+import { getCannedResponse } from './askSgmFallbacks';
 
 const FORGE_API = 'https://forge.aicoderally.com/api/widget'
+
+type ConnectionMode = 'connecting' | 'live' | 'fallback'
 
 interface Message {
   id: string
@@ -27,6 +30,7 @@ export function AskSGMChat({ fullHeight }: Props) {
   const { theme } = usePrizymTheme();
   const isDark = theme === 'dark';
   const [sessionId, setSessionId] = useState<string | null>(null)
+  const [mode, setMode] = useState<ConnectionMode>('connecting')
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
@@ -53,7 +57,7 @@ export function AskSGMChat({ fullHeight }: Props) {
     }
   }, [messages])
 
-  // Start Forge session on mount
+  // Start Forge session on mount; fall back to canned responses if unreachable
   useEffect(() => {
     let cancelled = false
     async function init() {
@@ -63,14 +67,14 @@ export function AskSGMChat({ fullHeight }: Props) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ packId: 'spm', mode: 'ask' }),
         })
-        if (!res.ok) {
-          if (!cancelled) setError('Failed to connect to AskSGM')
-          return
-        }
+        if (!res.ok) throw new Error('bad response')
         const data = await res.json() as { session: { id: string } }
-        if (!cancelled) setSessionId(data.session.id)
+        if (cancelled) return
+        setSessionId(data.session.id)
+        setMode('live')
       } catch {
-        if (!cancelled) setError('Failed to connect to AskSGM')
+        if (cancelled) return
+        setMode('fallback')
       }
     }
     init()
@@ -79,7 +83,8 @@ export function AskSGMChat({ fullHeight }: Props) {
 
   const sendMessage = useCallback(async () => {
     const content = input.trim()
-    if (!content || !sessionId || isStreaming) return
+    if (!content || isStreaming) return
+    if (mode === 'connecting') return
 
     const userMsg: Message = {
       id: `msg_${++msgCounter.current}`,
@@ -92,6 +97,25 @@ export function AskSGMChat({ fullHeight }: Props) {
     setInput('')
     setIsStreaming(true)
     setError(null)
+
+    // Fallback mode: simulate a typed response from canned knowledge base
+    if (mode === 'fallback' || !sessionId) {
+      const cannedContent = getCannedResponse(content)
+      const assistantId = `msg_${++msgCounter.current}`
+      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+      let streamed = ''
+      const words = cannedContent.split(' ')
+      for (let i = 0; i < words.length; i++) {
+        streamed += (i === 0 ? '' : ' ') + words[i]
+        setMessages(prev =>
+          prev.map(m => m.id === assistantId ? { ...m, content: streamed } : m)
+        )
+        await new Promise(r => setTimeout(r, 12))
+      }
+      setIsStreaming(false)
+      inputRef.current?.focus()
+      return
+    }
 
     try {
       const res = await fetch(`${FORGE_API}/session/message`, {
@@ -159,7 +183,7 @@ export function AskSGMChat({ fullHeight }: Props) {
       setIsStreaming(false)
       inputRef.current?.focus()
     }
-  }, [input, sessionId, isStreaming, messages])
+  }, [input, sessionId, isStreaming, messages, mode])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -170,17 +194,24 @@ export function AskSGMChat({ fullHeight }: Props) {
 
   const resetSession = () => {
     setMessages([])
-    setSessionId(null)
     setError(null)
-    // Re-init session
+    if (mode === 'fallback') return // nothing to reset in fallback
+    setSessionId(null)
+    setMode('connecting')
     fetch(`${FORGE_API}/session/start`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ packId: 'spm', mode: 'ask' }),
     })
-      .then(r => r.json())
-      .then((data: any) => setSessionId(data.session.id))
-      .catch(() => setError('Failed to reconnect'))
+      .then(r => {
+        if (!r.ok) throw new Error('bad response')
+        return r.json()
+      })
+      .then((data: { session: { id: string } }) => {
+        setSessionId(data.session.id)
+        setMode('live')
+      })
+      .catch(() => setMode('fallback'))
   }
 
   return (
@@ -204,10 +235,44 @@ export function AskSGMChat({ fullHeight }: Props) {
           width: 8,
           height: 8,
           borderRadius: '50%',
-          background: sessionId ? '#22c55e' : '#94a3b8',
+          background: mode === 'live' ? '#22c55e' : mode === 'fallback' ? '#f59e0b' : '#94a3b8',
         }} />
         <span style={{ fontSize: 16, fontWeight: 700, color: C.text }}>AskSGM</span>
-        <span style={{ fontSize: 14, color: C.muted }}>AI-powered SPM advisor</span>
+        <span
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            padding: '2px 10px',
+            borderRadius: 999,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            background:
+              mode === 'live'
+                ? 'rgba(34,197,94,0.18)'
+                : mode === 'fallback'
+                ? 'rgba(245,158,11,0.18)'
+                : 'rgba(148,163,184,0.18)',
+            color:
+              mode === 'live' ? '#6ee7b7' : mode === 'fallback' ? '#fcd34d' : '#cbd5e1',
+            border: `1px solid ${
+              mode === 'live'
+                ? 'rgba(34,197,94,0.5)'
+                : mode === 'fallback'
+                ? 'rgba(245,158,11,0.5)'
+                : 'rgba(148,163,184,0.3)'
+            }`,
+          }}
+          title={
+            mode === 'fallback'
+              ? 'Forge API unreachable — running on canned demo responses'
+              : mode === 'live'
+              ? 'Connected to Forge widget API'
+              : 'Connecting to Forge widget API'
+          }
+        >
+          {mode === 'live' ? 'Live' : mode === 'fallback' ? 'Demo Fallback' : 'Connecting'}
+        </span>
+        <span style={{ fontSize: 14, color: C.muted, marginLeft: 4 }}>SPM advisor</span>
         {messages.length > 0 && (
           <button
             onClick={resetSession}
@@ -346,8 +411,14 @@ export function AskSGMChat({ fullHeight }: Props) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={sessionId ? 'Ask about SPM...' : 'Connecting...'}
-            disabled={!sessionId || isStreaming}
+            placeholder={
+              mode === 'connecting'
+                ? 'Connecting...'
+                : mode === 'fallback'
+                ? 'Ask about SPM (demo fallback)...'
+                : 'Ask about SPM...'
+            }
+            disabled={mode === 'connecting' || isStreaming}
             rows={1}
             style={{
               flex: 1,
@@ -359,19 +430,19 @@ export function AskSGMChat({ fullHeight }: Props) {
               color: C.text,
               maxHeight: 120,
               fontFamily: 'inherit',
-              opacity: (!sessionId || isStreaming) ? 0.5 : 1,
+              opacity: (mode === 'connecting' || isStreaming) ? 0.5 : 1,
             }}
           />
           <button
             onClick={sendMessage}
-            disabled={!input.trim() || !sessionId || isStreaming}
+            disabled={!input.trim() || mode === 'connecting' || isStreaming}
             style={{
               padding: 8,
               borderRadius: 8,
               border: 'none',
               background: '#6366f1',
               cursor: 'pointer',
-              opacity: (!input.trim() || !sessionId || isStreaming) ? 0.3 : 1,
+              opacity: (!input.trim() || mode === 'connecting' || isStreaming) ? 0.3 : 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -383,7 +454,9 @@ export function AskSGMChat({ fullHeight }: Props) {
           </button>
         </div>
         <div style={{ fontSize: 14, color: C.muted, textAlign: 'center', marginTop: 8 }}>
-          Powered by Forge &middot; Responses are AI-generated
+          {mode === 'fallback'
+            ? 'Demo fallback mode · Canned responses from governance knowledge base'
+            : 'Powered by Forge · Responses are AI-generated'}
         </div>
       </div>
     </div>

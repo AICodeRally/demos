@@ -170,7 +170,7 @@ export default function LinksPage() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <span className="pg-overline" style={{ color: cfg.color, fontSize: 14 }}>{cfg.label}</span>
-                  <h3 className="pg-subheading" style={{ fontSize: 14, marginTop: 2, lineHeight: 1.3 }}>{l.title}</h3>
+                  <h3 className="pg-subheading" style={{ marginTop: 2, lineHeight: 1.3 }}>{l.title}</h3>
                 </div>
                 <ExternalLink size={14} style={{ color: 'var(--pg-text-muted)', flexShrink: 0 }} />
               </div>

@@ -21,7 +21,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; border: string }
   pending: AMBER, at_risk: AMBER,
   IN_PROGRESS: BLUE, in_progress: BLUE, open: BLUE,
   UNDER_REVIEW: PURPLE, under_review: PURPLE, escalated: PURPLE,
-  superseded: SLATE, INACTIVE: SLATE, todo: SLATE, not_tested: SLATE, low: SLATE, LOW: SLATE,
+  superseded: SLATE, INACTIVE: SLATE, queued: SLATE, not_tested: SLATE, low: SLATE, LOW: SLATE,
   rejected: RED, blocked: RED, non_compliant: RED, high: RED,
   CRITICAL: CRIMSON,
   HIGH: ORANGE,

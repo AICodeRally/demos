@@ -137,10 +137,10 @@ export default function DisputeCasesPage() {
               </div>
             </div>
 
-            <h3 className="pg-subheading" style={{ marginBottom: 12, fontSize: 15 }}>Summary</h3>
+            <h3 className="pg-subheading" style={{ marginBottom: 12 }}>Summary</h3>
             <p className="pg-caption" style={{ marginBottom: 24, lineHeight: 1.7 }}>{selected.summary}</p>
 
-            <h3 className="pg-subheading" style={{ marginBottom: 12, fontSize: 15 }}>Thread ({selected.thread.length})</h3>
+            <h3 className="pg-subheading" style={{ marginBottom: 12 }}>Thread ({selected.thread.length})</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {selected.thread.map((t, i) => (
                 <div key={i} className="pg-card" style={{ padding: 14, background: 'var(--pg-surface-alt)' }}>
