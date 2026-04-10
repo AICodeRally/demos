@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
-import { MetricCard } from '@/components/demos/prizym-governance/StatusBadge';
-import { APPROVALS, getApprovalStats, type ApprovalStatus, type ApprovalPriority } from '@/data/prizym-governance/operate';
+import { MetricCard, StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
+import { APPROVALS, getApprovalStats, type ApprovalStatus } from '@/data/prizym-governance/operate';
 import { CheckSquare, AlertTriangle, Clock, ShieldCheck, MessageSquare } from 'lucide-react';
 
 type FilterTab = 'all' | ApprovalStatus;
@@ -13,12 +13,6 @@ const STATUS_COLORS: Record<ApprovalStatus, string> = {
   approved: '#10b981',
   rejected: '#ef4444',
   escalated: '#8b5cf6',
-};
-
-const PRIORITY_COLORS: Record<ApprovalPriority, string> = {
-  high: '#ef4444',
-  medium: '#f59e0b',
-  low: '#64748b',
 };
 
 function formatMoney(n?: number) {
@@ -88,16 +82,8 @@ export default function ApprovalsPage() {
               <div style={{ flex: 1, minWidth: 260 }}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
                   <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>{a.policyRef}</span>
-                  <span style={{
-                    fontSize: 14, padding: '2px 8px', borderRadius: 10,
-                    background: `${STATUS_COLORS[a.status]}20`, color: STATUS_COLORS[a.status],
-                    textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
-                  }}>{a.status}</span>
-                  <span style={{
-                    fontSize: 14, padding: '2px 8px', borderRadius: 10,
-                    background: `${PRIORITY_COLORS[a.priority]}20`, color: PRIORITY_COLORS[a.priority],
-                    textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
-                  }}>{a.priority} priority</span>
+                  <StatusBadge status={a.status} />
+                  <StatusBadge status={a.priority} />
                 </div>
                 <h3 className="pg-subheading" style={{ marginBottom: 6 }}>{a.title}</h3>
                 <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.55 }}>{a.summary}</p>

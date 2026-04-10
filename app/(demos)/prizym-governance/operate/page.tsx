@@ -1,20 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { MetricCard } from '@/components/demos/prizym-governance/StatusBadge';
+import { QuadrantTile, type QuadrantTileProps } from '@/components/demos/prizym-governance/QuadrantTile';
 import { DECISIONS, CALENDAR_EVENTS, TASKS, NOTIFICATIONS, getApprovalStats } from '@/data/prizym-governance/operate';
-import { CheckSquare, Gavel, Calendar, ListTodo, Bell, Users, ArrowRight, AlertTriangle } from 'lucide-react';
-
-interface OperateTile {
-  href: string;
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ size?: number | string; style?: React.CSSProperties }>;
-  accent: string;
-  badge: string;
-}
+import { CheckSquare, Gavel, Calendar, ListTodo, Bell, Users, AlertTriangle } from 'lucide-react';
 
 export default function OperateQuadrantPage() {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +21,7 @@ export default function OperateQuadrantPage() {
     { label: 'Unread Alerts', value: String(unread), icon: Bell, color: '#8b5cf6' },
   ];
 
-  const tiles: OperateTile[] = [
+  const tiles: Array<Omit<QuadrantTileProps, 'mounted' | 'delay'>> = [
     {
       href: '/prizym-governance/operate/approvals',
       title: 'Approvals Queue',
@@ -89,39 +80,9 @@ export default function OperateQuadrantPage() {
 
       <h2 className="pg-subheading" style={{ marginBottom: 14 }}>Operational Surfaces</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tiles.map((tile, i) => {
-          const Icon = tile.icon;
-          return (
-            <Link
-              key={tile.href}
-              href={tile.href}
-              className="pg-card-elevated"
-              style={{
-                display: 'block',
-                textDecoration: 'none',
-                borderTop: `3px solid ${tile.accent}`,
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.2 + i * 0.08}s`,
-              }}
-            >
-              <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 10 }}>
-                <div style={{ width: 42, height: 42, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${tile.accent}18`, border: `1px solid ${tile.accent}50`, flexShrink: 0 }}>
-                  <Icon size={20} style={{ color: tile.accent }} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <h3 className="pg-subheading" style={{ marginBottom: 4 }}>{tile.title}</h3>
-                  <span className="pg-overline" style={{ color: tile.accent, fontSize: 14 }}>{tile.badge}</span>
-                </div>
-              </div>
-              <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.5 }}>{tile.description}</p>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: tile.accent, fontSize: 14, fontWeight: 600 }}>
-                Open <ArrowRight size={14} />
-              </div>
-            </Link>
-          );
-        })}
+        {tiles.map((tile, i) => (
+          <QuadrantTile key={tile.href} {...tile} mounted={mounted} delay={0.2 + i * 0.08} />
+        ))}
       </div>
     </PrizymPage>
   );

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { DECISIONS } from '@/data/prizym-governance/operate';
 import { Users, CheckCircle2, Edit3, XCircle } from 'lucide-react';
 
@@ -76,12 +77,7 @@ export default function DecisionsPage() {
                     </div>
                     <h3 className="pg-subheading" style={{ marginBottom: 6 }}>{d.title}</h3>
                   </div>
-                  <span style={{
-                    fontSize: 14, padding: '4px 12px', borderRadius: 20,
-                    background: config.bg, color: config.fg,
-                    textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
-                    height: 'fit-content',
-                  }}>{d.decision}</span>
+                  <span style={{ height: 'fit-content' }}><StatusBadge status={d.decision} /></span>
                 </div>
                 <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.6 }}>{d.rationale}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', gap: 12, paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>

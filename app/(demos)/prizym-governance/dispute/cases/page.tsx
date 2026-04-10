@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { DISPUTE_CASES, type DisputeCase, type DisputeStatus } from '@/data/prizym-governance/dispute';
 import { X, MessageSquare, User, Calendar, Clock } from 'lucide-react';
 
@@ -74,9 +75,7 @@ export default function DisputeCasesPage() {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
                     <span className="pg-overline" style={{ color: '#6366f1', fontSize: 14 }}>{c.caseNumber}</span>
-                    <span style={{ fontSize: 14, padding: '2px 8px', borderRadius: 10, background: `${STATUS_COLORS[c.status]}22`, color: STATUS_COLORS[c.status], fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      {STATUS_LABELS[c.status]}
-                    </span>
+                    <StatusBadge status={c.status} />
                     <span style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'capitalize' }}>· {c.category.replace('_', ' ')}</span>
                   </div>
                   <h3 className="pg-subheading" style={{ marginBottom: 6 }}>{c.title}</h3>

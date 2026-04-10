@@ -1,11 +1,18 @@
 'use client';
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { MetricCard } from '@/components/demos/prizym-governance/StatusBadge';
+import { QuadrantTile } from '@/components/demos/prizym-governance/QuadrantTile';
 import { DISPUTE_CASES, getDisputeStats } from '@/data/prizym-governance/dispute';
-import { Scale, Briefcase, AlertTriangle, CheckCircle2, DollarSign, ArrowRight } from 'lucide-react';
+import { Briefcase, AlertTriangle, CheckCircle2, DollarSign, Scale } from 'lucide-react';
+
+const ESCALATION_TIERS = [
+  'Tier 1 — Sales Ops review',
+  'Tier 2 — Sales Comp Lead',
+  'Tier 3 — VP Sales',
+  'Tier 4 — CRB (>$50K or precedent)',
+];
 
 export default function DisputeQuadrantPage() {
   const [mounted, setMounted] = useState(false);
@@ -28,43 +35,31 @@ export default function DisputeQuadrantPage() {
 
       <h2 className="pg-subheading" style={{ marginBottom: 14 }}>Dispute Workflow</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
-        <Link
+        <QuadrantTile
           href="/prizym-governance/dispute/cases"
-          className="pg-card-elevated"
-          style={{
-            display: 'block', textDecoration: 'none', borderTop: '3px solid #6366f1',
-            opacity: mounted ? 1 : 0, transform: mounted ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: '0.2s',
-          }}
-        >
-          <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 10 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(99,102,241,0.18)', border: '1px solid rgba(99,102,241,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Briefcase size={22} style={{ color: '#6366f1' }} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 className="pg-subheading" style={{ marginBottom: 4 }}>Dispute Cases</h3>
-              <span className="pg-overline" style={{ color: '#6366f1', fontSize: 14 }}>{DISPUTE_CASES.length} cases tracked</span>
-            </div>
-          </div>
-          <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.5 }}>
-            Full case management for commission disputes: crediting, quota appeals, clawback challenges, territory boundaries, and plan interpretation. Includes thread history and SLA tracking.
-          </p>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#6366f1', fontSize: 14, fontWeight: 600 }}>
-            Open case queue <ArrowRight size={14} />
-          </div>
-        </Link>
+          title="Dispute Cases"
+          description="Full case management for commission disputes: crediting, quota appeals, clawback challenges, territory boundaries, and plan interpretation. Includes thread history and SLA tracking."
+          icon={Briefcase}
+          accent="#6366f1"
+          badge={`${DISPUTE_CASES.length} cases tracked`}
+          mounted={mounted}
+          delay={0.2}
+        />
 
+        {/* Non-link info tile — kept inline since QuadrantTile is link-only */}
         <div
           className="pg-card-elevated"
           style={{
             borderTop: '3px solid #8b5cf6',
-            opacity: mounted ? 1 : 0, transform: mounted ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: '0.3s',
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDelay: '0.3s',
           }}
         >
           <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 10 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(139,92,246,0.18)', border: '1px solid rgba(139,92,246,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Scale size={22} style={{ color: '#8b5cf6' }} />
+            <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(139,92,246,0.18)', border: '1px solid rgba(139,92,246,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Scale size={20} style={{ color: '#8b5cf6' }} />
             </div>
             <div style={{ flex: 1 }}>
               <h3 className="pg-subheading" style={{ marginBottom: 4 }}>Escalation Paths</h3>
@@ -75,8 +70,8 @@ export default function DisputeQuadrantPage() {
             Standard escalation ladder for commission disputes: Sales Ops → Sales Comp Lead → VP Sales → CRB. High-dollar or precedent-setting cases route to the Compensation Review Board.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 10 }}>
-            {['Tier 1 — Sales Ops review', 'Tier 2 — Sales Comp Lead', 'Tier 3 — VP Sales', 'Tier 4 — CRB (>$50K or precedent)'].map((tier, i) => (
-              <div key={i} style={{ fontSize: 14, color: 'var(--pg-text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
+            {ESCALATION_TIERS.map((tier) => (
+              <div key={tier} style={{ fontSize: 14, color: 'var(--pg-text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b5cf6' }} />
                 {tier}
               </div>
