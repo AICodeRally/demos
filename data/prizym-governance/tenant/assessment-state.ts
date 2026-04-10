@@ -1,14 +1,13 @@
-// Synthetic ~60%-complete assessment state for the Gold Standard demo.
+// Synthetic ~60%-complete assessment state for the SGM Gold Standard demo.
 // Used as the first-visit seed by useAssessmentStore.hydrate() so the
 // dashboard and future wizard are populated on page load.
 //
 // Shape: Design strong · Oversee decent · Operate patchy · Dispute weak —
-// matches henryScheinOrgProfile.notes. Updating checkpoint counts below
-// REQUIRES re-checking that every id still exists in the ported framework.ts.
+// matches demoOrgProfile.notes. Updating checkpoint counts below REQUIRES
+// re-checking that every id still exists in the ported framework.ts.
 
 import type { AnswerMap, Rating } from '@/data/prizym-governance/engine/types';
 
-// Helper: assign a rating to a list of checkpoint ids
 const assign = (ids: string[], rating: Rating, into: AnswerMap) => {
   for (const id of ids) into[id] = rating;
 };
@@ -74,4 +73,4 @@ assign(
 );
 assign(['p11-07','p12-08'], 'not_started', seed);
 
-export const henryScheinSeedAnswers: AnswerMap = seed;
+export const demoSeedAnswers: AnswerMap = seed;

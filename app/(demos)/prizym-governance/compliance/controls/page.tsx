@@ -1,16 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
-import { GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import { COMPLIANCE_CONTROLS, getComplianceScore, type ComplianceControl } from '@/data/prizym-governance/oversee';
 import { ShieldCheck, AlertTriangle, XCircle, Clock, FileCheck } from 'lucide-react';
 
 const STATUS_CONFIG: Record<ComplianceControl['status'], { label: string; color: string; icon: typeof ShieldCheck }> = {
-  compliant: { label: 'Compliant', color: '#10b981', icon: ShieldCheck },
-  at_risk: { label: 'At Risk', color: '#f59e0b', icon: AlertTriangle },
-  non_compliant: { label: 'Non-Compliant', color: '#ef4444', icon: XCircle },
-  not_tested: { label: 'Not Tested', color: '#64748b', icon: Clock },
+  compliant: { label: 'Compliant', color: 'var(--pg-success-bright)', icon: ShieldCheck },
+  at_risk: { label: 'At Risk', color: 'var(--pg-warning-bright)', icon: AlertTriangle },
+  non_compliant: { label: 'Non-Compliant', color: 'var(--pg-danger-bright)', icon: XCircle },
+  not_tested: { label: 'Not Tested', color: 'var(--pg-neutral)', icon: Clock },
 };
 
 export default function CompliancePage() {
@@ -31,26 +29,78 @@ export default function CompliancePage() {
     not_tested: COMPLIANCE_CONTROLS.filter(c => c.status === 'not_tested').length,
   };
 
+  // Gauge geometry — same recipe as home page Program Pulse
+  const gaugeSize = 132;
+  const gaugeStroke = 13;
+  const gaugeR = (gaugeSize - gaugeStroke) / 2;
+  const gaugeC = 2 * Math.PI * gaugeR;
+  const gaugeOffset = gaugeC * (1 - score / 100);
+
   return (
-    <PrizymPage title="Compliance Dashboard" subtitle="SOX controls, wage law, tax, data security — unified compliance view">
-      {/* Score hero */}
-      <div className="pg-card-elevated" style={{ padding: 24, marginBottom: 24, background: 'linear-gradient(135deg, rgba(139,92,246,0.12), rgba(6,182,212,0.08))' }}>
+    <div className="pg-page" style={{ height: '100%' }}>
+      <div style={{ marginBottom: 16 }}>
+        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+          Compliance Dashboard
+        </h1>
+        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.5 }}>
+          SOX controls, wage law, tax, and data security — unified compliance view.
+        </p>
+      </div>
+
+      <div className="pg-card-elevated" style={{ padding: 20, marginBottom: 18 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-          <GaugeChart value={score} size={160} strokeWidth={14} color="#8b5cf6" label="Compliance" />
+          <div style={{ position: 'relative', width: gaugeSize, height: gaugeSize, flexShrink: 0 }}>
+            <svg width={gaugeSize} height={gaugeSize} style={{ transform: 'rotate(-90deg)' }}>
+              <circle cx={gaugeSize / 2} cy={gaugeSize / 2} r={gaugeR} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth={gaugeStroke} />
+              <circle
+                cx={gaugeSize / 2}
+                cy={gaugeSize / 2}
+                r={gaugeR}
+                fill="none"
+                stroke="var(--pg-oversee-bright)"
+                strokeWidth={gaugeStroke}
+                strokeDasharray={gaugeC}
+                strokeDashoffset={gaugeOffset}
+                strokeLinecap="round"
+                style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
+              />
+            </svg>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ fontSize: 30, fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>{score}%</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#e2e8f0', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: 4 }}>Compliance</div>
+            </div>
+          </div>
 
           <div style={{ flex: 1, minWidth: 280 }}>
-            <h2 className="pg-heading" style={{ marginBottom: 8 }}>Program Compliance Score</h2>
-            <p className="pg-caption" style={{ marginBottom: 16, lineHeight: 1.6 }}>
-              Weighted score across {COMPLIANCE_CONTROLS.length} controls in {categories.length} categories.
-              SOX / ICFR, wage and hour, tax, and data security.
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>Program Compliance Score</h2>
+            <p style={{ fontSize: 15, color: '#ffffff', lineHeight: 1.5, marginBottom: 14 }}>
+              Weighted score across {COMPLIANCE_CONTROLS.length} controls in {categories.length} categories — SOX / ICFR, wage and hour, tax, and data security.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
               {Object.entries(counts).map(([k, v]) => {
                 const cfg = STATUS_CONFIG[k as ComplianceControl['status']];
+                const Icon = cfg.icon;
                 return (
-                  <div key={k} style={{ padding: 10, borderRadius: 8, background: `${cfg.color}12`, border: `1px solid ${cfg.color}30`, textAlign: 'center' }}>
-                    <div style={{ fontSize: 20, fontWeight: 700, color: cfg.color }}>{v}</div>
-                    <div style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{cfg.label}</div>
+                  <div
+                    key={k}
+                    style={{
+                      padding: '10px 12px',
+                      borderRadius: 10,
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      border: `1px solid rgba(255, 255, 255, 0.22)`,
+                      borderLeft: `4px solid ${cfg.color}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                    }}
+                  >
+                    <div className="pg-icon-bubble pg-icon-bubble-sm" style={{ borderColor: cfg.color }}>
+                      <Icon size={16} color={cfg.color} strokeWidth={2.4} />
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: 22, fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>{v}</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: cfg.color, textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: 2 }}>{cfg.label}</div>
+                    </div>
                   </div>
                 );
               })}
@@ -60,48 +110,39 @@ export default function CompliancePage() {
       </div>
 
       {/* Category filter */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-        <button
-          onClick={() => setCategoryFilter('all')}
-          style={{
-            padding: '8px 16px', borderRadius: 20,
-            background: categoryFilter === 'all' ? 'rgba(139,92,246,0.2)' : 'var(--pg-stripe)',
-            border: categoryFilter === 'all' ? '1px solid rgba(139,92,246,0.6)' : '1px solid var(--pg-border)',
-            color: categoryFilter === 'all' ? 'var(--pg-oversee)' : 'var(--pg-text-muted)',
-            fontSize: 14, fontWeight: 600, cursor: 'pointer',
-          }}
-        >
-          All ({COMPLIANCE_CONTROLS.length})
-        </button>
-        {categories.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setCategoryFilter(cat)}
-            style={{
-              padding: '8px 16px', borderRadius: 20,
-              background: categoryFilter === cat ? 'rgba(139,92,246,0.2)' : 'var(--pg-stripe)',
-              border: categoryFilter === cat ? '1px solid rgba(139,92,246,0.6)' : '1px solid var(--pg-border)',
-              color: categoryFilter === cat ? 'var(--pg-oversee)' : 'var(--pg-text-muted)',
-              fontSize: 14, fontWeight: 600, cursor: 'pointer',
-            }}
-          >
-            {cat} ({COMPLIANCE_CONTROLS.filter(c => c.category === cat).length})
-          </button>
-        ))}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
+        {(['all', ...categories] as string[]).map((cat) => {
+          const active = categoryFilter === cat;
+          const count = cat === 'all' ? COMPLIANCE_CONTROLS.length : COMPLIANCE_CONTROLS.filter(c => c.category === cat).length;
+          return (
+            <button
+              key={cat}
+              onClick={() => setCategoryFilter(cat)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: 20,
+                background: active ? 'rgba(196, 181, 253, 0.22)' : 'rgba(255, 255, 255, 0.06)',
+                border: active ? '1.5px solid var(--pg-oversee-bright)' : '1px solid rgba(255, 255, 255, 0.2)',
+                color: active ? 'var(--pg-oversee-bright)' : '#ffffff',
+                fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                textTransform: 'capitalize',
+              }}
+            >
+              {cat === 'all' ? 'All' : cat} ({count})
+            </button>
+          );
+        })}
       </div>
 
-      {/* Controls table */}
-      <div className="pg-card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div style={{ overflowX: 'auto' }}>
+      {/* Controls table — scroll-isolated */}
+      <div className="pg-card" style={{ padding: 0, overflow: 'hidden', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <div className="pg-scroll" style={{ overflowY: 'auto', overflowX: 'auto', flex: 1, minHeight: 0 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: 'var(--pg-surface-alt)', borderBottom: '1px solid var(--pg-border)' }}>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Control</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Category</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Owner</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last Tested</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Evidence</th>
+            <thead style={{ position: 'sticky', top: 0, background: 'rgba(15, 23, 42, 0.72)', backdropFilter: 'blur(12px)', zIndex: 1 }}>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.24)' }}>
+                {['Control', 'Category', 'Status', 'Owner', 'Last Tested', 'Evidence'].map(h => (
+                  <th key={h} style={{ padding: '14px 16px', textAlign: 'left', fontSize: 14, fontWeight: 800, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -112,33 +153,35 @@ export default function CompliancePage() {
                   <tr
                     key={c.id}
                     style={{
-                      borderBottom: '1px solid var(--pg-border-faint)',
+                      borderBottom: '1px solid rgba(255,255,255,0.12)',
                       opacity: mounted ? 1 : 0,
                       transition: 'opacity 0.4s ease',
-                      transitionDelay: `${i * 0.03}s`,
+                      transitionDelay: `${i * 0.02}s`,
                     }}
                   >
                     <td style={{ padding: '14px 16px' }}>
-                      <div className="pg-overline" style={{ color: 'var(--pg-oversee)', fontSize: 14 }}>{c.code}</div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginTop: 2 }}>{c.name}</div>
-                      <div className="pg-caption" style={{ fontSize: 14, marginTop: 2 }}>{c.relatedPolicy}</div>
+                      <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--pg-oversee-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{c.code}</div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: '#ffffff', marginTop: 3 }}>{c.name}</div>
+                      <div style={{ fontSize: 14, color: '#f1f5f9', marginTop: 2 }}>{c.relatedPolicy}</div>
                     </td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-secondary)' }}>{c.category}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff' }}>{c.category}</td>
                     <td style={{ padding: '14px 16px' }}>
                       <span style={{
                         display: 'inline-flex', alignItems: 'center', gap: 6,
-                        padding: '4px 10px', borderRadius: 12,
-                        background: `${cfg.color}18`, color: cfg.color,
-                        fontSize: 14, fontWeight: 600,
+                        padding: '5px 12px', borderRadius: 12,
+                        background: 'rgba(0,0,0,0.28)',
+                        border: `1.5px solid ${cfg.color}`,
+                        color: cfg.color,
+                        fontSize: 14, fontWeight: 700,
                       }}>
-                        <Icon size={14} /> {cfg.label}
+                        <Icon size={14} strokeWidth={2.4} /> {cfg.label}
                       </span>
                     </td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-secondary)' }}>{c.owner}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-muted)' }}>{c.lastTested}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff' }}>{c.owner}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#f1f5f9' }}>{c.lastTested}</td>
                     <td style={{ padding: '14px 16px' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 14, color: 'var(--pg-text-secondary)' }}>
-                        <FileCheck size={14} /> {c.evidence}
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#ffffff' }}>
+                        <FileCheck size={14} color="var(--pg-success-bright)" strokeWidth={2.4} /> {c.evidence}
                       </span>
                     </td>
                   </tr>
@@ -148,6 +191,6 @@ export default function CompliancePage() {
           </table>
         </div>
       </div>
-    </PrizymPage>
+    </div>
   );
 }

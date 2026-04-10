@@ -9,16 +9,16 @@ interface PrizymPageProps {
 }
 
 export function PrizymPage({ children, title, subtitle, accentColor, hero }: PrizymPageProps) {
-  const borderColor = accentColor ?? '#10b981';
+  const borderColor = accentColor ?? 'var(--pg-success)';
 
   if (hero) {
     return (
       <div className="pg-page">
-        <div className="pg-hero-card mb-8" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="pg-hero-card mb-8" style={{ position: 'relative', zIndex: 1, padding: '20px 24px' }}>
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <h1 className="pg-heading-lg" style={{ color: '#ffffff', marginBottom: 10 }}>{title}</h1>
+            <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', marginBottom: 6, letterSpacing: '-0.01em', lineHeight: 1.15 }}>{title}</h1>
             {subtitle && (
-              <p style={{ fontSize: '1.25rem', color: '#e2e8f0', lineHeight: 1.5, maxWidth: '72ch' }}>
+              <p style={{ fontSize: '1.0625rem', color: '#ffffff', lineHeight: 1.45, maxWidth: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {subtitle}
               </p>
             )}

@@ -231,34 +231,34 @@ export function AskSGMChat({ fullHeight }: Props) {
         gap: 10,
       }}>
         <div style={{
-          width: 8,
-          height: 8,
+          width: 10,
+          height: 10,
           borderRadius: '50%',
-          background: mode === 'live' ? '#22c55e' : mode === 'fallback' ? '#f59e0b' : '#94a3b8',
+          background: mode === 'live' ? 'var(--pg-success)' : mode === 'fallback' ? 'var(--pg-warning)' : 'var(--pg-cyan)',
         }} />
-        <span style={{ fontSize: 16, fontWeight: 700, color: C.text }}>AskSGM</span>
+        <span style={{ fontSize: 18, fontWeight: 700, color: C.text }}>AskSGM</span>
         <span
           style={{
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: 700,
-            padding: '2px 10px',
+            padding: '3px 12px',
             borderRadius: 999,
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
             background:
               mode === 'live'
-                ? 'rgba(34,197,94,0.18)'
+                ? 'rgba(16,185,129,0.22)'
                 : mode === 'fallback'
-                ? 'rgba(245,158,11,0.18)'
-                : 'rgba(148,163,184,0.18)',
+                ? 'rgba(245,158,11,0.22)'
+                : 'rgba(14,165,233,0.22)',
             color:
-              mode === 'live' ? '#6ee7b7' : mode === 'fallback' ? '#fcd34d' : '#cbd5e1',
+              mode === 'live' ? '#6ee7b7' : mode === 'fallback' ? '#fcd34d' : '#7dd3fc',
             border: `1px solid ${
               mode === 'live'
-                ? 'rgba(34,197,94,0.5)'
+                ? 'rgba(16,185,129,0.55)'
                 : mode === 'fallback'
-                ? 'rgba(245,158,11,0.5)'
-                : 'rgba(148,163,184,0.3)'
+                ? 'rgba(245,158,11,0.55)'
+                : 'rgba(14,165,233,0.55)'
             }`,
           }}
           title={
@@ -389,7 +389,7 @@ export function AskSGMChat({ fullHeight }: Props) {
 
         {error && (
           <div style={{ textAlign: 'center' }}>
-            <span style={{ fontSize: 14, color: '#ef4444' }}>{error}</span>
+            <span style={{ fontSize: 14, color: 'var(--pg-danger)' }}>{error}</span>
           </div>
         )}
       </div>

@@ -1,7 +1,7 @@
 /**
  * Prizym Governance — Operate Quadrant Synthetic Data
  * Approvals queue, decisions log, calendar events, tasks, notifications.
- * Henry Schein-flavored dates aligned to 2026 fiscal year.
+ * Northwind Distribution synthetic dates aligned to 2026 fiscal year.
  */
 
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected' | 'escalated';

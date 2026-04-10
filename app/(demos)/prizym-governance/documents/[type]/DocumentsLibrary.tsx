@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { DOCUMENTS, getDocumentStats } from '@/data/prizym-governance/documents/catalog';
 import {
@@ -62,11 +61,17 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
   const tabs: DocumentType[] = ['comp_plan', 'policy', 'procedure', 'control', 'template'];
 
   return (
-    <PrizymPage
-      title={`${DOCUMENT_TYPE_LABELS[docType]}`}
-      subtitle={`${filtered.length} of ${docs.length} ${DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · ${overdueCount} review overdue`}
-    >
-      <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid var(--pg-border)', marginBottom: 20, flexWrap: 'wrap' }}>
+    <div className="pg-page" style={{ height: '100%' }}>
+      <div style={{ marginBottom: 14 }}>
+        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+          {DOCUMENT_TYPE_LABELS[docType]}
+        </h1>
+        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+          {filtered.length} of {docs.length} {DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · {overdueCount} review overdue.
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid rgba(255,255,255,0.22)', marginBottom: 14, flexWrap: 'wrap' }}>
         {tabs.map((t) => {
           const Icon = TYPE_ICONS[t];
           const active = t === docType;
@@ -77,14 +82,14 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
               style={{
                 display: 'flex', alignItems: 'center', gap: 8,
                 padding: '12px 18px',
-                borderBottom: active ? '2px solid var(--pg-cyan)' : '2px solid transparent',
-                color: active ? 'var(--pg-cyan)' : 'var(--pg-text-muted)',
-                fontSize: 14, fontWeight: 600, textDecoration: 'none',
+                borderBottom: active ? '2px solid var(--pg-cyan-bright)' : '2px solid transparent',
+                color: active ? 'var(--pg-cyan-bright)' : '#ffffff',
+                fontSize: 15, fontWeight: 700, textDecoration: 'none',
               }}
             >
-              <Icon size={16} />
+              <Icon size={16} strokeWidth={2.4} />
               {DOCUMENT_TYPE_LABELS[t]}
-              <span style={{ padding: '2px 8px', borderRadius: 10, background: active ? 'rgba(14,165,233,0.15)' : 'var(--pg-stripe)', fontSize: 12, fontWeight: 700 }}>
+              <span style={{ padding: '3px 10px', borderRadius: 10, background: active ? 'rgba(125,211,252,0.22)' : 'rgba(255,255,255,0.1)', fontSize: 14, fontWeight: 700 }}>
                 {stats.byType[t]}
               </span>
             </Link>
@@ -92,17 +97,17 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
         })}
       </div>
 
-      <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 16, marginBottom: 14, flexWrap: 'wrap', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {(['all', 'draft', 'in_review', 'approved', 'published', 'superseded'] as const).map((s) => {
             const active = statusFilter === s;
             return (
               <button key={s} onClick={() => setStatusFilter(s)} style={{
-                padding: '6px 12px', borderRadius: 16,
-                background: active ? 'rgba(16,185,129,0.2)' : 'var(--pg-stripe)',
-                border: active ? '1px solid rgba(16,185,129,0.5)' : '1px solid var(--pg-border)',
-                color: active ? '#10b981' : 'var(--pg-text-muted)',
-                fontSize: 13, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
+                padding: '8px 14px', borderRadius: 16,
+                background: active ? 'rgba(110,231,183,0.22)' : 'rgba(255,255,255,0.06)',
+                border: active ? '1.5px solid var(--pg-success-bright)' : '1px solid rgba(255,255,255,0.2)',
+                color: active ? 'var(--pg-success-bright)' : '#ffffff',
+                fontSize: 14, fontWeight: 700, cursor: 'pointer', textTransform: 'capitalize',
               }}>
                 {s === 'all' ? 'All Status' : LIFECYCLE_STATUS_LABELS[s as LifecycleStatus]}
               </button>
@@ -113,7 +118,15 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
           <select
             value={categoryFilter}
             onChange={e => setCategoryFilter(e.target.value)}
-            style={{ padding: '8px 12px', background: 'var(--pg-card)', border: '1px solid var(--pg-border)', borderRadius: 8, color: 'var(--pg-text)', fontSize: 14 }}
+            style={{
+              padding: '10px 14px',
+              background: 'rgba(15, 23, 42, 0.55)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              borderRadius: 10,
+              color: '#ffffff',
+              fontSize: 14,
+              fontWeight: 600,
+            }}
           >
             <option value="all">All Categories</option>
             {categories.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -121,13 +134,13 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
         )}
       </div>
 
-      <div className="pg-card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div style={{ overflowX: 'auto' }}>
+      <div className="pg-card" style={{ padding: 0, overflow: 'hidden', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <div className="pg-scroll" style={{ flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: 'var(--pg-surface-alt)', borderBottom: '1px solid var(--pg-border)' }}>
+            <thead style={{ position: 'sticky', top: 0, background: 'rgba(15, 23, 42, 0.72)', backdropFilter: 'blur(12px)', zIndex: 1 }}>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.24)' }}>
                 {['Code', 'Title', 'Category', 'Status', 'Version', 'Owner', 'Next Review', 'Attestation'].map(h => (
-                  <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                  <th key={h} style={{ padding: '14px 16px', textAlign: 'left', fontSize: 14, fontWeight: 800, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -139,25 +152,27 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
                     key={d.id}
                     onClick={() => setSelected(d)}
                     style={{
-                      borderBottom: '1px solid var(--pg-border-faint)', cursor: 'pointer',
-                      opacity: mounted ? 1 : 0, transition: 'opacity 0.3s ease', transitionDelay: `${i * 0.02}s`,
+                      borderBottom: '1px solid rgba(255,255,255,0.12)', cursor: 'pointer',
+                      opacity: mounted ? 1 : 0, transition: 'opacity 0.3s ease, background 0.15s ease', transitionDelay: `${i * 0.02}s`,
                     }}
+                    onMouseEnter={(ev) => { ev.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
+                    onMouseLeave={(ev) => { ev.currentTarget.style.background = 'transparent'; }}
                   >
-                    <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: 'var(--pg-cyan)' }}>{d.code}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>
+                    <td style={{ padding: '14px 16px', fontSize: 15, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{d.code}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 15, fontWeight: 700, color: '#ffffff' }}>
                       {d.title}
                       {overdue && (
-                        <span style={{ marginLeft: 10, display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 10, background: 'rgba(239,68,68,0.22)', color: '#fca5a5', fontSize: 11, fontWeight: 700 }}>
-                          <AlertTriangle size={11} /> REVIEW OVERDUE
+                        <span style={{ marginLeft: 10, display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 10, background: 'rgba(252,165,165,0.2)', color: 'var(--pg-danger-bright)', border: '1px solid var(--pg-danger-bright)', fontSize: 14, fontWeight: 800, letterSpacing: '0.04em' }}>
+                          <AlertTriangle size={14} strokeWidth={2.4} /> REVIEW OVERDUE
                         </span>
                       )}
                     </td>
-                    <td style={{ padding: '14px 16px', fontSize: 13, color: 'var(--pg-text-secondary)' }}>{d.category}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff' }}>{d.category}</td>
                     <td style={{ padding: '14px 16px' }}><StatusBadge status={d.status} /></td>
-                    <td style={{ padding: '14px 16px', fontSize: 13, color: 'var(--pg-text-muted)' }}>v{d.version}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 13, color: 'var(--pg-text-secondary)' }}>{d.owner}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 13, color: overdue ? '#fca5a5' : 'var(--pg-text-muted)' }}>{d.nextReview}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 13, color: 'var(--pg-text)', fontWeight: 600 }}>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#f1f5f9' }}>v{d.version}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff' }}>{d.owner}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: overdue ? 'var(--pg-danger-bright)' : '#f1f5f9', fontWeight: overdue ? 700 : 400 }}>{d.nextReview}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff', fontWeight: 700 }}>
                       {d.attestationPct !== undefined ? `${d.attestationPct}%` : '—'}
                     </td>
                   </tr>
@@ -169,50 +184,62 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
       </div>
 
       {selected && (
-        <div onClick={() => setSelected(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)', zIndex: 60, display: 'flex', justifyContent: 'flex-end' }}>
-          <aside onClick={e => e.stopPropagation()} className="pg-card" style={{ width: 'min(820px, 92vw)', height: '100%', overflowY: 'auto', borderRadius: 0, padding: '28px 36px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 18 }}>
+        <div onClick={() => setSelected(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)', zIndex: 60, display: 'flex', justifyContent: 'flex-end' }}>
+          <aside
+            onClick={e => e.stopPropagation()}
+            className="pg-scroll"
+            style={{
+              width: 'min(820px, 92vw)',
+              height: '100%',
+              overflowY: 'auto',
+              padding: '32px 36px',
+              background: 'rgba(15, 23, 42, 0.88)',
+              backdropFilter: 'blur(24px) saturate(150%)',
+              borderLeft: '1px solid rgba(255, 255, 255, 0.28)',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 22, gap: 16 }}>
               <div>
-                <span className="pg-overline" style={{ color: 'var(--pg-cyan)' }}>{selected.code} · {DOCUMENT_TYPE_LABELS[selected.type]}</span>
-                <h2 className="pg-heading" style={{ marginTop: 4 }}>{selected.title}</h2>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{selected.code} · {DOCUMENT_TYPE_LABELS[selected.type]}</div>
+                <h2 style={{ fontSize: '1.625rem', fontWeight: 800, color: '#ffffff', marginTop: 6, lineHeight: 1.2 }}>{selected.title}</h2>
               </div>
-              <button onClick={() => setSelected(null)} style={{ background: 'var(--pg-surface-alt)', border: '1px solid var(--pg-border)', borderRadius: 8, padding: 8, cursor: 'pointer', color: 'var(--pg-text-muted)' }}>
-                <X size={18} />
+              <button onClick={() => setSelected(null)} className="pg-icon-bubble" style={{ border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}>
+                <X size={20} color="#ffffff" strokeWidth={2.4} />
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 20 }}>
-              <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 11 }}>Status</div>
-                <div style={{ marginTop: 4 }}><StatusBadge status={selected.status} /></div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 22 }}>
+              <div style={{ padding: 14, borderRadius: 10, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</div>
+                <div style={{ marginTop: 5 }}><StatusBadge status={selected.status} /></div>
               </div>
-              <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 11 }}>Version</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>v{selected.version}</div>
+              <div style={{ padding: 14, borderRadius: 10, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Version</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginTop: 3 }}>v{selected.version}</div>
               </div>
-              <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 11 }}>Owner</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.owner}</div>
+              <div style={{ padding: 14, borderRadius: 10, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Owner</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginTop: 3 }}>{selected.owner}</div>
               </div>
-              <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 11 }}>Next Review</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.nextReview}</div>
+              <div style={{ padding: 14, borderRadius: 10, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Next Review</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginTop: 3 }}>{selected.nextReview}</div>
               </div>
               {selected.attestationPct !== undefined && (
-                <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                  <div className="pg-overline" style={{ fontSize: 11 }}>Attestation</div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.attestationPct}% of {selected.targetAudience}</div>
+                <div style={{ padding: 14, borderRadius: 10, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Attestation</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginTop: 3 }}>{selected.attestationPct}% of {selected.targetAudience}</div>
                 </div>
               )}
             </div>
 
-            <h3 className="pg-subheading" style={{ marginBottom: 10 }}>Description</h3>
-            <p className="pg-caption" style={{ lineHeight: 1.7, marginBottom: 20 }}>{selected.description}</p>
+            <h3 style={{ fontSize: 16, fontWeight: 800, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 10 }}>Description</h3>
+            <p style={{ fontSize: 15, color: '#ffffff', lineHeight: 1.7, marginBottom: 22 }}>{selected.description}</p>
 
             {selected.content && (
               <>
-                <h3 className="pg-subheading" style={{ marginBottom: 10 }}>Content</h3>
-                <div style={{ fontSize: 15, lineHeight: 1.7, whiteSpace: 'pre-wrap', color: 'var(--pg-text)', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>
+                <h3 style={{ fontSize: 16, fontWeight: 800, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 10 }}>Content</h3>
+                <div style={{ fontSize: 15, lineHeight: 1.7, whiteSpace: 'pre-wrap', color: '#ffffff', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>
                   {selected.content}
                 </div>
               </>
@@ -220,6 +247,6 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
           </aside>
         </div>
       )}
-    </PrizymPage>
+    </div>
   );
 }

@@ -8,9 +8,9 @@
    gradient backdrop. Mirrors the original Summit SGM demo look. */
 :root {
   --pg-text: #ffffff;
-  --pg-text-secondary: #f1f5f9;
-  --pg-text-muted: #e2e8f0;
-  --pg-text-faint: #cbd5e1;
+  --pg-text-secondary: #ffffff;
+  --pg-text-muted: #f1f5f9;
+  --pg-text-faint: #e2e8f0;
 
   --pg-bg: #1e3a8a; /* fallback if gradient doesn't render */
   --pg-card: rgba(255,255,255,0.12);
@@ -28,7 +28,7 @@
   --pg-sidebar-bg-start: rgba(15,23,42,0.55);
   --pg-sidebar-bg-end: rgba(15,23,42,0.45);
   --pg-sidebar-text: #ffffff;
-  --pg-sidebar-text-muted: #e2e8f0;
+  --pg-sidebar-text-muted: #f1f5f9;
   --pg-sidebar-active-bg: rgba(255,255,255,0.18);
   --pg-sidebar-border: rgba(255,255,255,0.14);
 
@@ -59,6 +59,22 @@
   --pg-warning: #f59e0b;
   --pg-danger: #ef4444;
   --pg-info: #3b82f6;
+  /* Neutral/inactive status — readable on dark bg. Never use the banned
+     slate-600 (#64748b) here; that fails the global readability floor. */
+  --pg-neutral: #cbd5e1;
+
+  /* Bright readable accent variants — use these for colored TEXT on the
+     gradient background, where the darker base tokens wash out. Keep the
+     base tokens for fills/borders where saturation matters. */
+  --pg-success-bright: #6ee7b7;
+  --pg-warning-bright: #fcd34d;
+  --pg-danger-bright: #fca5a5;
+  --pg-info-bright: #93c5fd;
+  --pg-cyan-bright: #7dd3fc;
+  --pg-design-bright: #67e8f9;
+  --pg-operate-bright: #93c5fd;
+  --pg-dispute-bright: #a5b4fc;
+  --pg-oversee-bright: #c4b5fd;
 
   /* Aliases for DemoShell */
   --pl-text: var(--pg-text);
@@ -164,7 +180,7 @@
    is covered. */
 body,
 .demo-shell {
-  background: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%) fixed;
+  background: linear-gradient(90deg, #1e40af 0%, #0891b2 50%, #10b981 100%) fixed;
   min-height: 100vh;
 }
 
@@ -179,6 +195,9 @@ body,
 /* ── Page classes ────────────────────────────── */
 .pg-page {
   color: var(--pg-text);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .pg-heading {
@@ -258,67 +277,67 @@ body,
 }
 
 .pg-section-title {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: var(--pg-text);
+  color: #ffffff;
   margin-bottom: 12px;
 }
 
-/* ── Card system (glass morphism) ─────────────── */
+/* ── Card system (dark glass) ────────────────────
+   Cards are translucent DARK glass so text stays readable over the
+   bright gradient. The gradient bleeds through via backdrop blur, but
+   the dark tint gives text the contrast it needs. */
 .pg-card {
-  background: var(--pg-card);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid var(--pg-border);
-  border-radius: 20px;
-  padding: 22px;
-  box-shadow: var(--pg-shadow);
+  background: rgba(15, 23, 42, 0.38);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.28);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card:hover {
-  background: var(--pg-card-alt);
-  box-shadow: var(--pg-shadow-lg);
-  border-color: rgba(255,255,255,0.32);
+  background: rgba(15, 23, 42, 0.48);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.38);
   transform: translateY(-2px);
 }
 
 .pg-card-elevated {
-  background: var(--pg-card);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid var(--pg-border);
-  border-radius: 22px;
-  padding: 26px;
-  box-shadow: var(--pg-shadow-lg);
+  background: rgba(15, 23, 42, 0.44);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.34);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card-elevated:hover {
-  box-shadow: var(--pg-shadow-xl);
-  border-color: rgba(255,255,255,0.4);
+  background: rgba(15, 23, 42, 0.54);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 56px rgba(15, 23, 42, 0.42);
   transform: translateY(-3px);
 }
 
-/* Hero banner card with gradient background */
 .pg-hero-card {
-  background: var(--pg-gradient-hero);
-  border: 1px solid rgba(99,102,241,0.2);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: var(--pg-shadow-lg);
+  background: rgba(15, 23, 42, 0.44);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 18px;
+  padding: 22px 26px;
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.38);
+  color: #ffffff;
   position: relative;
   overflow: hidden;
-  color: #f1f5f9;
 }
 
 .pg-hero-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top right, rgba(14,165,233,0.15) 0%, transparent 60%),
-              radial-gradient(ellipse at bottom left, rgba(139,92,246,0.1) 0%, transparent 60%);
-  pointer-events: none;
+  content: none;
 }
 
 /* Gradient accent border card */
@@ -429,17 +448,37 @@ body,
   overflow: hidden;
 }
 
-/* ── Icon bubble ────────────────────────────── */
+/* ── Icon bubble ──────────────────────────────
+   Standard site-wide icon treatment. Dark recess with a bright accent
+   border and the icon rendered in the accent color. Pass the accent
+   color via inline style on the icon AND border, or use the pg-icon-<hue>
+   utility classes below. */
 .pg-icon-bubble {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
-  padding: 8px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   flex-shrink: 0;
 }
 
 .pg-icon-bubble-sm {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.pg-icon-bubble-lg {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+/* legacy icon-bubble-sm fallback — retained for pages not yet migrated */
+.pg-icon-bubble-sm-legacy {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -589,4 +628,284 @@ body,
   background-size: 200% 100%;
   animation: pg-shimmer 1.5s infinite;
   border-radius: 6px;
+}
+
+/* ── PrizymShell (bottom-nav layout) ─────────────────────────────── */
+.pg-bshell {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(90deg, #1e40af 0%, #0891b2 50%, #10b981 100%) fixed;
+  color: var(--pg-text);
+}
+
+.pg-bshell-topbar {
+  flex: none;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 32px;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--pg-border-faint);
+}
+
+.pg-bshell-logo {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.15;
+  color: var(--pg-text);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.pg-bshell-logo:hover .pg-bshell-logo-title {
+  color: var(--pg-cyan);
+}
+
+.pg-bshell-logo-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--pg-text);
+}
+
+.pg-bshell-logo-sub {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pg-text-muted);
+  margin-top: 2px;
+}
+
+.pg-bshell-topbar-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  justify-self: end;
+}
+
+.pg-bshell-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: #a7f3d0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pg-bshell-sections-inner {
+  display: inline-flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-self: center;
+}
+
+.pg-bshell-section {
+  min-width: 130px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: 1.5px solid var(--pg-border-faint);
+  background: transparent;
+  color: var(--pg-text-secondary);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-bshell-section:hover {
+  background: var(--pg-hover);
+  color: var(--pg-text);
+  border-color: var(--pg-border);
+}
+
+.pg-bshell-section.is-active {
+  border-width: 2px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.35);
+}
+
+.pg-bshell-dropdown {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  right: 0;
+  z-index: 35;
+  display: flex;
+  justify-content: center;
+  padding: 14px 28px;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--pg-border-faint);
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.35);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  animation: pg-dropdown-in 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pg-bshell-dropdown-inner {
+  display: inline-flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@keyframes pg-dropdown-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pg-bshell-section.is-open {
+  background: var(--pg-hover);
+}
+
+.pg-bshell-module {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--pg-border-faint);
+  background: var(--pg-card-alt);
+  color: var(--pg-text-secondary);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.pg-bshell-module:hover {
+  background: var(--pg-hover);
+  color: var(--pg-text);
+  border-color: var(--pg-border);
+}
+
+.pg-bshell {
+  position: relative;
+}
+
+/* Scrollable card interior — custom slim scrollbar so the glass cards
+   retain their polish when overflowing. */
+.pg-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.pg-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pg-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pg-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 3px;
+}
+
+.pg-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.pg-bshell-content {
+  flex: 1;
+  min-height: 0;
+  padding: 24px 36px 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.pg-bshell-footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 32px;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-top: 1px solid var(--pg-border-faint);
+  color: var(--pg-text-muted);
+  font-size: 14px;
+}
+
+.pg-bshell-footer-copy {
+  color: var(--pg-text-secondary);
+  font-weight: 500;
+}
+
+.pg-bshell-footer-power {
+  color: var(--pg-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 1100px) {
+  .pg-bshell-topbar {
+    grid-template-columns: auto auto;
+    row-gap: 10px;
+  }
+  .pg-bshell-sections-inner {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 1100px) {
+  .pg-bshell-dropdown {
+    top: 128px;
+  }
+  .pg-home-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pg-mid-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pg-asc606-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pg-asksgm-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .pg-bshell-topbar {
+    padding: 12px 16px;
+  }
+  .pg-bshell-topbar-meta {
+    display: none;
+  }
+  .pg-bshell-dropdown {
+    top: 118px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .pg-bshell-section {
+    font-size: 14px;
+    padding: 9px 14px;
+    min-width: unset;
+  }
+  .pg-bshell-content {
+    padding: 20px 18px;
+  }
+  .pg-bshell-footer {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 18px;
+  }
 }

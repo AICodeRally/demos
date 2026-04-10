@@ -63,24 +63,27 @@ export function MetricCard({ label, value, icon: Icon, color = '#06b6d4', sub, m
         transform: mounted ? 'translateY(0)' : 'translateY(16px)',
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
         transitionDelay: `${delay}s`,
+        padding: '14px 16px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
         {Icon && (
           <div
             className="pg-icon-bubble"
-            style={{ background: `${color}18` }}
+            style={{ width: 34, height: 34, borderRadius: 9, borderColor: color }}
             aria-hidden="true"
           >
-            <Icon size={20} color={color} />
+            <Icon size={19} color={color} strokeWidth={2.4} />
           </div>
         )}
-        <span className="pg-label-muted">{label}</span>
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', letterSpacing: '0.01em' }}>{label}</span>
       </div>
-      <div className="pg-value" style={{ fontSize: '1.75rem' }}>{value}</div>
-      {sub && (
-        <div className="pg-caption" style={{ color, marginTop: 6, fontWeight: 600 }}>{sub}</div>
-      )}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ fontSize: '2.125rem', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>{value}</div>
+        {sub && (
+          <div style={{ color, fontWeight: 700, fontSize: 15, lineHeight: 1.2 }}>{sub}</div>
+        )}
+      </div>
     </div>
   );
 }

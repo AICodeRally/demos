@@ -23,7 +23,7 @@ export function AskSGMPanel() {
           onClick={() => setOpen(true)}
           style={{
             position: 'fixed',
-            bottom: 24,
+            bottom: 80,
             right: 24,
             zIndex: 60,
             display: 'flex',
@@ -51,13 +51,13 @@ export function AskSGMPanel() {
       {open && (
         <div style={{
           position: 'fixed',
-          bottom: 24,
+          bottom: 80,
           right: 24,
           zIndex: 60,
           width: 420,
           height: 600,
           maxWidth: 'calc(100vw - 48px)',
-          maxHeight: 'calc(100vh - 48px)',
+          maxHeight: 'calc(100vh - 104px)',
           borderRadius: 16,
           border: '1px solid var(--pg-border)',
           background: 'var(--pg-card)',
