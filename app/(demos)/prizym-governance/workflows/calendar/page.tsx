@@ -38,7 +38,7 @@ export default function CalendarPage() {
   const filters: Array<CalendarEvent['category'] | 'all'> = ['all', 'committee', 'approval', 'review', 'training', 'deadline'];
 
   return (
-    <PrizymPage title="Governance Calendar" subtitle="Committee meetings, approvals, reviews, training, and deadlines" mode="operate">
+    <PrizymPage title="Governance Calendar" subtitle="Committee meetings, approvals, reviews, training, and deadlines">
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
         {filters.map(f => {
           const active = filter === f;
