@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { usePrizymTheme } from '../ThemeProvider';
 import { getCannedResponse } from './askSgmFallbacks';
 
 const FORGE_API = 'https://forge.aicoderally.com/api/widget'
@@ -27,8 +26,6 @@ interface Props {
 }
 
 export function AskSGMChat({ fullHeight }: Props) {
-  const { theme } = usePrizymTheme();
-  const isDark = theme === 'dark';
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [mode, setMode] = useState<ConnectionMode>('connecting')
   const [messages, setMessages] = useState<Message[]>([])
@@ -39,15 +36,17 @@ export function AskSGMChat({ fullHeight }: Props) {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const msgCounter = useRef(0)
 
+  // Colors come from prizym-governance.css tokens so chat inherits the
+  // glass/dark theme in both modes instead of hardcoding hex values.
   const C = {
-    bg: isDark ? '#0f172a' : '#ffffff',
-    surface: isDark ? '#1e293b' : '#f8fafc',
-    text: isDark ? '#f1f5f9' : '#0f172a',
-    muted: isDark ? '#cbd5e1' : '#334155',
-    border: isDark ? '#334155' : '#e2e8f0',
+    bg: 'var(--pg-card)',
+    surface: 'var(--pg-surface-alt)',
+    text: 'var(--pg-text)',
+    muted: 'var(--pg-text-muted)',
+    border: 'var(--pg-border)',
     userBubble: '#6366f1',
-    assistantBubble: isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
-    inputBg: isDark ? 'rgba(255,255,255,0.04)' : '#ffffff',
+    assistantBubble: 'var(--pg-surface-alt)',
+    inputBg: 'var(--pg-surface-alt)',
   }
 
   // Auto-scroll on new messages
@@ -315,7 +314,7 @@ export function AskSGMChat({ fullHeight }: Props) {
               width: 56,
               height: 56,
               borderRadius: 16,
-              background: isDark ? 'rgba(79,70,229,0.15)' : '#eef2ff',
+              background: 'var(--pg-surface-alt)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

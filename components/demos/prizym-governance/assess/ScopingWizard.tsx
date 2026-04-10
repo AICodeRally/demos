@@ -1,12 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { usePrizymTheme } from '../ThemeProvider';
 import { SCOPING_CATEGORIES, calculateEstimate, type Estimate, type Category } from '@/data/prizym-governance/scoping';
 
 export function ScopingWizard() {
-  const { theme } = usePrizymTheme();
-  const isDark = theme === 'dark';
   const categories = SCOPING_CATEGORIES;
   const [currentCat, setCurrentCat] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
@@ -14,12 +11,12 @@ export function ScopingWizard() {
   const [showResults, setShowResults] = useState(false);
 
   const C = {
-    text: isDark ? '#f1f5f9' : '#0f172a',
-    muted: isDark ? '#cbd5e1' : '#334155',
-    border: isDark ? '#334155' : '#e2e8f0',
-    surface: isDark ? '#1e293b' : '#f8fafc',
-    card: isDark ? '#1e293b' : '#ffffff',
-    inputBg: isDark ? '#1e293b' : '#ffffff',
+    text: 'var(--pg-text)',
+    muted: 'var(--pg-text-muted)',
+    border: 'var(--pg-border)',
+    surface: 'var(--pg-surface-alt)',
+    card: 'var(--pg-card)',
+    inputBg: 'var(--pg-surface-alt)',
   };
 
   const setAnswer = (qId: string, value: string | string[]) => {
@@ -70,7 +67,7 @@ export function ScopingWizard() {
             {estimate.staffing.roles.map(role => (
               <span key={role} style={{
                 padding: '6px 14px',
-                background: isDark ? '#334155' : '#eef2ff',
+                background: 'var(--pg-surface-alt)',
                 borderRadius: 20,
                 fontSize: 14,
                 color: C.text,
@@ -95,7 +92,7 @@ export function ScopingWizard() {
           onClick={() => { setShowResults(false); setCurrentCat(0); }}
           style={{
             padding: '12px 24px',
-            background: isDark ? '#334155' : '#f1f5f9',
+            background: 'var(--pg-surface-alt)',
             border: `1px solid ${C.border}`,
             borderRadius: 8,
             fontSize: 16,
@@ -120,7 +117,7 @@ export function ScopingWizard() {
         <p style={{ fontSize: 16, color: C.muted }}>
           {cat.name} ({currentCat + 1} of {categories.length})
         </p>
-        <div style={{ height: 6, background: isDark ? '#334155' : '#e2e8f0', borderRadius: 3, marginTop: 12 }}>
+        <div style={{ height: 6, background: 'var(--pg-border)', borderRadius: 3, marginTop: 12 }}>
           <div style={{
             height: '100%',
             width: `${((currentCat + 1) / categories.length) * 100}%`,
@@ -215,7 +212,7 @@ export function ScopingWizard() {
             onClick={() => setCurrentCat(currentCat - 1)}
             style={{
               padding: '12px 24px',
-              background: isDark ? '#334155' : '#f1f5f9',
+              background: 'var(--pg-surface-alt)',
               border: `1px solid ${C.border}`,
               borderRadius: 8,
               fontSize: 16,

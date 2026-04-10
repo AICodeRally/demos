@@ -1,17 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePrizymTheme } from '../ThemeProvider';
 import { AskSGMChat } from './AskSGMChat';
 
 export function AskSGMPanel() {
-  const { theme } = usePrizymTheme();
-  const isDark = theme === 'dark';
   const [open, setOpen] = useState(false)
-
-  const C = {
-    border: isDark ? '#334155' : '#e2e8f0',
-  }
 
   // Close on Escape
   useEffect(() => {
@@ -66,8 +59,11 @@ export function AskSGMPanel() {
           maxWidth: 'calc(100vw - 48px)',
           maxHeight: 'calc(100vh - 48px)',
           borderRadius: 16,
-          border: `1px solid ${C.border}`,
-          boxShadow: '0 8px 40px rgba(0,0,0,0.15)',
+          border: '1px solid var(--pg-border)',
+          background: 'var(--pg-card)',
+          backdropFilter: 'blur(20px) saturate(150%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+          boxShadow: 'var(--pg-shadow-lg)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -84,7 +80,7 @@ export function AskSGMPanel() {
               border: 'none',
               cursor: 'pointer',
               fontSize: 20,
-              color: isDark ? '#cbd5e1' : '#64748b',
+              color: 'var(--pg-text-muted)',
               padding: 4,
               lineHeight: 1,
             }}
