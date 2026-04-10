@@ -6,12 +6,12 @@ import { MetricCard, GaugeChart } from '@/components/demos/prizym-governance/Sta
 import { GOVERNANCE_KPIS, RECENT_HIGHLIGHTS, POLICY_COVERAGE_HEALTH, CASE_VOLUME_BY_TYPE, APPROVAL_DECISIONS } from '@/data/prizym-governance/analytics';
 import { getPolicyStats } from '@/data/prizym-governance/policies';
 import { getPlanStats } from '@/data/prizym-governance/plans';
-import { DOCUMENT_COUNTS } from '@/data/prizym-governance/documents';
 import { getApprovalStats } from '@/data/prizym-governance/operate';
 import { getComplianceScore } from '@/data/prizym-governance/oversee';
+import { getDisputeStats } from '@/data/prizym-governance/dispute';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
 import {
-  Shield, FileText, ScrollText, AlertTriangle,
+  Shield, FileText, Briefcase, AlertTriangle,
   CheckCircle2, TrendingUp, TrendingDown, Minus, Activity, Target, ShieldCheck,
 } from 'lucide-react';
 
@@ -22,11 +22,12 @@ export default function DashboardPage() {
   const planStats = getPlanStats();
   const approvalStats = getApprovalStats();
   const complianceScore = getComplianceScore();
+  const disputeStats = getDisputeStats();
 
   const HERO_KPIS = [
     { label: 'Policies', value: String(policyStats.total), icon: Shield, color: '#3b82f6', sub: `${policyStats.approved} approved` },
     { label: 'Comp Plans', value: String(planStats.total), icon: FileText, color: '#06b6d4', sub: `${planStats.avgCompletion}% avg completion` },
-    { label: 'Documents', value: String(DOCUMENT_COUNTS.TOTAL), icon: ScrollText, color: '#8b5cf6', sub: '6 categories' },
+    { label: 'Open Disputes', value: String(disputeStats.open + disputeStats.underReview), icon: Briefcase, color: '#6366f1', sub: `${disputeStats.escalated} escalated` },
     { label: 'Pending Approvals', value: String(approvalStats.pending), icon: AlertTriangle, color: '#f59e0b', sub: `${approvalStats.highPriority} high priority` },
   ];
 
