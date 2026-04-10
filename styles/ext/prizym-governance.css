@@ -85,6 +85,25 @@
   --pl-sidebar-text: var(--pg-sidebar-text);
   --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
   --pl-sidebar-border: var(--pg-sidebar-border);
+
+  /* --color-* shim for ported Summit components (ASC 606 calculator, etc.) */
+  --color-background: var(--pg-bg);
+  --color-foreground: var(--pg-text);
+  --color-muted: var(--pg-text-muted);
+  --color-surface: var(--pg-card);
+  --color-surface-alt: var(--pg-surface-alt);
+  --color-border: var(--pg-border);
+  --color-primary: var(--pg-cyan);
+  --color-info: #0ea5e9;
+  --color-info-bg: rgba(14,165,233,0.10);
+  --color-info-border: rgba(14,165,233,0.35);
+  --color-success: #10b981;
+  --color-success-bg: rgba(16,185,129,0.10);
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245,158,11,0.10);
+  --color-warning-border: rgba(245,158,11,0.35);
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239,68,68,0.10);
 }
 
 /* ── Dark mode ────────────────────────────────── */
