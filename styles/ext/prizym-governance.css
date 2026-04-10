@@ -36,10 +36,10 @@
   --pg-footer-bg: rgba(15,23,42,0.45);
 
   /* Gradients */
-  --pg-gradient-hero: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 33%, #6366f1 66%, #8b5cf6 100%);
-  --pg-gradient-accent: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --pg-gradient-subtle: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.06) 100%);
-  --pg-gradient-card-hover: linear-gradient(135deg, rgba(14,165,233,0.03) 0%, rgba(139,92,246,0.03) 100%);
+  --pg-gradient-hero: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%);
+  --pg-gradient-accent: linear-gradient(135deg, #0891b2 0%, #10b981 100%);
+  --pg-gradient-subtle: linear-gradient(135deg, rgba(8,145,178,0.06) 0%, rgba(16,185,129,0.06) 100%);
+  --pg-gradient-card-hover: linear-gradient(135deg, rgba(8,145,178,0.03) 0%, rgba(16,185,129,0.03) 100%);
 
   /* Brand colors */
   --pg-navy: #0f172a;
@@ -109,74 +109,6 @@
   --color-error-bg: rgba(239,68,68,0.10);
 }
 
-/* ── Dark mode ────────────────────────────────── */
-.dark {
-  --pg-text: #ffffff;
-  --pg-text-secondary: #e2e8f0;
-  --pg-text-muted: #cbd5e1;
-  --pg-text-faint: #cbd5e1;
-
-  --pg-bg: #0a0f1e;
-  --pg-card: rgba(30,41,59,0.7);
-  --pg-card-alt: rgba(22,32,50,0.7);
-  --pg-border: rgba(100,116,139,0.25);
-  --pg-border-faint: rgba(100,116,139,0.12);
-  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
-  --pg-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  --pg-shadow-lg: 0 8px 24px rgba(99,102,241,0.12);
-  --pg-shadow-xl: 0 12px 36px rgba(139,92,246,0.18);
-  --pg-hover: rgba(255,255,255,0.04);
-  --pg-stripe: rgba(255,255,255,0.03);
-  --pg-surface-alt: rgba(255,255,255,0.04);
-
-  --pg-sidebar-bg-start: #1e293b;
-  --pg-sidebar-bg-end: #0f172a;
-  --pg-sidebar-text: #ffffff;
-  --pg-sidebar-text-muted: rgba(255,255,255,0.65);
-  --pg-sidebar-active-bg: rgba(14,165,233,0.12);
-  --pg-sidebar-border: rgba(14,165,233,0.12);
-
-  --pg-header-bg: rgba(10,15,30,0.95);
-  --pg-footer-bg: #0a0f1e;
-
-  --pg-gradient-hero: linear-gradient(135deg, #0a0f1e 0%, #0e2c4a 30%, #1b3570 60%, #2a2e6b 100%);
-  --pg-gradient-accent: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --pg-gradient-subtle: linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(139,92,246,0.08) 100%);
-  --pg-gradient-card-hover: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.06) 100%);
-
-  --pg-cyan-bg: rgba(14,165,233,0.12);
-  --pg-gold-bg: rgba(201,148,43,0.12);
-
-  /* DemoShell aliases */
-  --pl-text: var(--pg-text);
-  --pl-text-muted: var(--pg-text-muted);
-  --pl-text-secondary: var(--pg-text-secondary);
-  --pl-surface: rgba(255,255,255,0.06);
-  --pl-surface-border: rgba(255,255,255,0.1);
-  --pl-surface-hover: rgba(255,255,255,0.08);
-  --pl-card-bg: rgba(255,255,255,0.05);
-  --pl-card-border: rgba(255,255,255,0.12);
-  --pl-bar-bg: rgba(10,15,30,0.96);
-  --pl-bar-border: rgba(14,165,233,0.3);
-  --pl-content-bg: var(--pg-bg);
-  --pl-page-bg: var(--pg-bg);
-  --pl-gold: #d4af55;
-  --pl-gold-bg: rgba(201,148,43,0.12);
-  --pl-gold-border: rgba(201,148,43,0.35);
-  --pl-header-bg: var(--pg-header-bg);
-  --pl-zone-border: rgba(255,255,255,0.1);
-  --pl-bg: var(--pg-bg);
-  --pl-border: var(--pg-border);
-  --pl-text-faint: var(--pg-text-faint);
-  --pl-hover: var(--pg-hover);
-  --pl-footer-bg: var(--pg-footer-bg);
-  --pl-sidebar-bg-start: var(--pg-sidebar-bg-start);
-  --pl-sidebar-bg-end: var(--pg-sidebar-bg-end);
-  --pl-sidebar-text: var(--pg-sidebar-text);
-  --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
-  --pl-sidebar-border: var(--pg-sidebar-border);
-}
-
 /* ── Animations ──────────────────────────────── */
 @keyframes pg-fade-in {
   from { opacity: 0; transform: translateY(8px); }
@@ -222,23 +154,22 @@
   --pg-fs-overline: 0.875rem;    /* 14px — overlines (absolute floor) */
 }
 
-/* ── Light mode body gradient ─────────────────────────────────────
-   The sgm-glass preset (components/shell/theme/presets/sgm-glass.ts)
-   already produces the correct glass CSS vars for both modes via the
-   shell's inline style injection — no !important overrides needed.
-   The one thing the preset CAN'T do is paint the body background with
-   a linear-gradient (CSS custom properties are single values), so we
-   do that here. .demo-shell gets the same gradient as a backup in
-   case the body is covered. */
-html:not(.dark),
-html:not(.dark) body,
-html:not(.dark) .demo-shell {
-  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 28%, #6366f1 60%, #8b5cf6 100%) fixed;
+/* ── Body gradient (single-theme) ─────────────────────────────────
+   The sgm-compliance preset (components/shell/theme/presets/sgm-compliance.ts)
+   already produces the correct glass CSS vars via the shell's inline
+   style injection — no !important overrides needed. The one thing the
+   preset CAN'T do is paint the body background with a linear-gradient
+   (CSS custom properties are single values), so we do that here.
+   .demo-shell gets the same gradient as a backup in case the body
+   is covered. */
+body,
+.demo-shell {
+  background: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%) fixed;
   min-height: 100vh;
 }
 
 /* Sidebar + header get a subtle backdrop-filter blur so the gradient
-   they float over gets a frosted look. Works in both modes. */
+   they float over gets a frosted look. */
 .demo-shell aside,
 .demo-shell header {
   backdrop-filter: blur(18px) saturate(140%);
@@ -598,20 +529,6 @@ html:not(.dark) .demo-shell {
   .pg-stack-md {
     grid-template-columns: 1fr !important;
   }
-}
-
-/* ── Light-mode sidebar fix ──────────────────── */
-.h-screen:not(.dark) aside .font-extrabold {
-  background-image: linear-gradient(135deg, #0f172a 30%, #0ea5e9 100%) !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-.h-screen:not(.dark) aside nav button span {
-  filter: saturate(1.5) brightness(0.65) !important;
-}
-
-.h-screen:not(.dark) aside nav button svg {
-  filter: brightness(0.5) !important;
 }
 
 /* ── Focus & accessibility ───────────────────── */
