@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { GOVERNANCE_FRAMEWORK } from '@/data/prizym-governance/engine/framework';
-import { Grid3x3, ShieldCheck, Search, ChevronDown, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Search, ChevronDown, ChevronRight } from 'lucide-react';
 
 const QUADRANT_COLORS: Record<string, string> = {
   design: '#06b6d4',
@@ -68,7 +68,7 @@ export default function FrameworkBrowserPage() {
           onChange={e => setQuadrantFilter(e.target.value)}
           style={{
             padding: '10px 14px', background: 'var(--pg-card)', border: '1px solid var(--pg-border)',
-            borderRadius: 8, color: 'var(--pg-text)', fontSize: 13, cursor: 'pointer',
+            borderRadius: 8, color: 'var(--pg-text)', fontSize: 14, cursor: 'pointer',
           }}
         >
           <option value="all">All Quadrants</option>
@@ -78,7 +78,7 @@ export default function FrameworkBrowserPage() {
           <option value="oversee">Oversee</option>
         </select>
 
-        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--pg-text-muted)', cursor: 'pointer', padding: '10px 14px', background: soxOnly ? 'rgba(139,92,246,0.15)' : 'var(--pg-card)', border: soxOnly ? '1px solid rgba(139,92,246,0.5)' : '1px solid var(--pg-border)', borderRadius: 8 }}>
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--pg-text-muted)', cursor: 'pointer', padding: '10px 14px', background: soxOnly ? 'rgba(139,92,246,0.15)' : 'var(--pg-card)', border: soxOnly ? '1px solid rgba(139,92,246,0.5)' : '1px solid var(--pg-border)', borderRadius: 8 }}>
           <input type="checkbox" checked={soxOnly} onChange={e => setSoxOnly(e.target.checked)} />
           <ShieldCheck size={14} /> SOX Relevant ({soxCount})
         </label>
@@ -114,16 +114,16 @@ export default function FrameworkBrowserPage() {
                 }}
               >
                 {isOpen ? <ChevronDown size={16} style={{ color }} /> : <ChevronRight size={16} style={{ color }} />}
-                <span style={{ minWidth: 32, fontSize: 11, fontWeight: 700, color, background: `${color}18`, padding: '3px 8px', borderRadius: 6, textAlign: 'center' }}>
+                <span style={{ minWidth: 32, fontSize: 14, fontWeight: 700, color, background: `${color}18`, padding: '3px 8px', borderRadius: 6, textAlign: 'center' }}>
                   P{phase.number}
                 </span>
                 <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--pg-text)', flex: 1, textAlign: 'left' }}>
                   {phase.name}
                 </span>
-                <span style={{ fontSize: 10, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                <span style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
                   {phase.quadrant}
                 </span>
-                <span style={{ fontSize: 12, color: 'var(--pg-text-muted)' }}>{phase.checkpoints.length}</span>
+                <span style={{ fontSize: 14, color: 'var(--pg-text-muted)' }}>{phase.checkpoints.length}</span>
               </button>
 
               {isOpen && (
@@ -137,15 +137,15 @@ export default function FrameworkBrowserPage() {
                         display: 'flex', alignItems: 'flex-start', gap: 12,
                       }}
                     >
-                      <span style={{ fontSize: 10, fontWeight: 700, color, minWidth: 44, fontFamily: 'monospace' }}>{cp.id}</span>
+                      <span style={{ fontSize: 14, fontWeight: 700, color, minWidth: 44, fontFamily: 'monospace' }}>{cp.id}</span>
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--pg-text)' }}>{cp.label}</span>
+                          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{cp.label}</span>
                           {cp.soxRelevant && (
-                            <span style={{ fontSize: 9, padding: '1px 6px', borderRadius: 10, background: 'rgba(139,92,246,0.15)', color: '#8b5cf6', fontWeight: 700 }}>SOX</span>
+                            <span style={{ fontSize: 14, padding: '1px 6px', borderRadius: 10, background: 'rgba(139,92,246,0.15)', color: '#8b5cf6', fontWeight: 700 }}>SOX</span>
                           )}
                         </div>
-                        <p className="pg-caption" style={{ fontSize: 12, lineHeight: 1.5 }}>{cp.description}</p>
+                        <p className="pg-caption" style={{ fontSize: 14, lineHeight: 1.5 }}>{cp.description}</p>
                       </div>
                     </div>
                   ))}

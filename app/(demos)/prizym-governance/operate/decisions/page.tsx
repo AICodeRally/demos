@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { DECISIONS } from '@/data/prizym-governance/operate';
-import { Gavel, Users, CheckCircle2, Edit3, XCircle } from 'lucide-react';
+import { Users, CheckCircle2, Edit3, XCircle } from 'lucide-react';
 
 const DECISION_COLORS = {
   approved: { bg: 'rgba(16,185,129,0.15)', fg: '#10b981', icon: CheckCircle2 },
@@ -72,19 +72,19 @@ export default function DecisionsPage() {
                   <div style={{ flex: 1, minWidth: 260 }}>
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
                       <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>{d.policyRef}</span>
-                      <span style={{ fontSize: 11, color: 'var(--pg-text-muted)' }}>{d.date}</span>
+                      <span style={{ fontSize: 14, color: 'var(--pg-text-muted)' }}>{d.date}</span>
                     </div>
                     <h3 className="pg-subheading" style={{ marginBottom: 6 }}>{d.title}</h3>
                   </div>
                   <span style={{
-                    fontSize: 11, padding: '4px 12px', borderRadius: 20,
+                    fontSize: 14, padding: '4px 12px', borderRadius: 20,
                     background: config.bg, color: config.fg,
                     textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
                     height: 'fit-content',
                   }}>{d.decision}</span>
                 </div>
                 <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.6 }}>{d.rationale}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--pg-text-muted)', flexWrap: 'wrap', gap: 12, paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', gap: 12, paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                     <Users size={12} /> {d.voters.join(', ')}
                   </span>

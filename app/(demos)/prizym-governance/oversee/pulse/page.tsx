@@ -59,7 +59,7 @@ export default function PulsePage() {
                   <CatIcon size={18} style={{ color: cfg.color }} />
                 </div>
                 <h3 className="pg-subheading">{cfg.label}</h3>
-                <span className="pg-caption" style={{ marginLeft: 'auto', fontSize: 11 }}>{signals.length} signal{signals.length > 1 ? 's' : ''}</span>
+                <span className="pg-caption" style={{ marginLeft: 'auto', fontSize: 14 }}>{signals.length} signal{signals.length > 1 ? 's' : ''}</span>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
@@ -76,13 +76,13 @@ export default function PulsePage() {
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                      <p className="pg-caption" style={{ fontSize: 12, color: 'var(--pg-text-muted)', fontWeight: 600, letterSpacing: '0.02em' }}>{s.title}</p>
+                      <p className="pg-caption" style={{ fontSize: 14, color: 'var(--pg-text-muted)', fontWeight: 600, letterSpacing: '0.02em' }}>{s.title}</p>
                       {s.delta && (
                         <div style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
                           padding: '2px 8px', borderRadius: 10,
                           background: s.positive ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
-                          fontSize: 11, fontWeight: 700,
+                          fontSize: 14, fontWeight: 700,
                           color: s.positive ? '#10b981' : '#ef4444',
                         }}>
                           <DirectionIcon direction={s.direction} positive={s.positive} />
@@ -93,7 +93,7 @@ export default function PulsePage() {
                     <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--pg-text)', marginBottom: 8, lineHeight: 1 }}>
                       {s.value}
                     </div>
-                    <p className="pg-caption" style={{ fontSize: 12, lineHeight: 1.5 }}>{s.note}</p>
+                    <p className="pg-caption" style={{ fontSize: 14, lineHeight: 1.5 }}>{s.note}</p>
                   </div>
                 ))}
               </div>

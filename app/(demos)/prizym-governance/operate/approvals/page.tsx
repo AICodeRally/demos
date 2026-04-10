@@ -61,11 +61,11 @@ export default function ApprovalsPage() {
                 padding: '10px 18px', background: 'transparent', border: 'none',
                 borderBottom: active ? '2px solid var(--pg-operate)' : '2px solid transparent',
                 color: active ? 'var(--pg-operate)' : 'var(--pg-text-muted)',
-                fontSize: 13, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
                 display: 'flex', alignItems: 'center', gap: 8,
               }}
             >
-              {t} <span style={{ padding: '2px 8px', borderRadius: 10, background: active ? 'rgba(59,130,246,0.15)' : 'var(--pg-stripe)', fontSize: 11 }}>{count}</span>
+              {t} <span style={{ padding: '2px 8px', borderRadius: 10, background: active ? 'rgba(59,130,246,0.15)' : 'var(--pg-stripe)', fontSize: 14 }}>{count}</span>
             </button>
           );
         })}
@@ -89,12 +89,12 @@ export default function ApprovalsPage() {
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
                   <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>{a.policyRef}</span>
                   <span style={{
-                    fontSize: 10, padding: '2px 8px', borderRadius: 10,
+                    fontSize: 14, padding: '2px 8px', borderRadius: 10,
                     background: `${STATUS_COLORS[a.status]}20`, color: STATUS_COLORS[a.status],
                     textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
                   }}>{a.status}</span>
                   <span style={{
-                    fontSize: 10, padding: '2px 8px', borderRadius: 10,
+                    fontSize: 14, padding: '2px 8px', borderRadius: 10,
                     background: `${PRIORITY_COLORS[a.priority]}20`, color: PRIORITY_COLORS[a.priority],
                     textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700,
                   }}>{a.priority} priority</span>
@@ -109,7 +109,7 @@ export default function ApprovalsPage() {
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, fontSize: 12, color: 'var(--pg-text-muted)', flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
               <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Requestor:</strong> {a.requestor}</span>
               <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Reviewer:</strong> {a.reviewer}</span>
               <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Due:</strong> {a.decisionDueBy}</span>

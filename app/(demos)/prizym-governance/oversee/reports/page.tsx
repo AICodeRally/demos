@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { REPORTS, type GovernanceReport } from '@/data/prizym-governance/oversee';
-import { BarChart3, FileText, Download, Play, Calendar, Clock, User } from 'lucide-react';
+import { FileText, Download, Play, Calendar, Clock, User } from 'lucide-react';
 
 const CATEGORY_CONFIG: Record<GovernanceReport['category'], { color: string; label: string }> = {
   performance: { color: '#06b6d4', label: 'Performance' },
@@ -37,7 +37,7 @@ export default function ReportsPage() {
                 background: active ? `${color}20` : 'var(--pg-stripe)',
                 border: active ? `1px solid ${color}60` : '1px solid var(--pg-border)',
                 color: active ? color : 'var(--pg-text-muted)',
-                fontSize: 12, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
               }}
             >
               {c} ({count})
@@ -71,12 +71,12 @@ export default function ReportsPage() {
                   <FileText size={18} style={{ color: cfg.color }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <span className="pg-overline" style={{ color: cfg.color, fontSize: 10 }}>{cfg.label}</span>
+                  <span className="pg-overline" style={{ color: cfg.color, fontSize: 14 }}>{cfg.label}</span>
                   <h3 className="pg-subheading" style={{ fontSize: 15, marginTop: 4, lineHeight: 1.3 }}>{r.title}</h3>
                 </div>
               </div>
               <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.55, flex: 1 }}>{r.description}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 0', borderTop: '1px solid var(--pg-border-faint)', fontSize: 11, color: 'var(--pg-text-muted)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 0', borderTop: '1px solid var(--pg-border-faint)', fontSize: 14, color: 'var(--pg-text-muted)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={10} /> {r.schedule}</span>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={10} /> Last: {r.lastRun}</span>
@@ -92,7 +92,7 @@ export default function ReportsPage() {
                     flex: 1, padding: '8px 12px',
                     background: cfg.color, color: '#fff',
                     border: 'none', borderRadius: 6,
-                    fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                    fontSize: 14, fontWeight: 600, cursor: 'pointer',
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                   }}
                 >
@@ -103,7 +103,7 @@ export default function ReportsPage() {
                     flex: 1, padding: '8px 12px',
                     background: 'transparent', color: cfg.color,
                     border: `1px solid ${cfg.color}60`, borderRadius: 6,
-                    fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                    fontSize: 14, fontWeight: 600, cursor: 'pointer',
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                   }}
                 >

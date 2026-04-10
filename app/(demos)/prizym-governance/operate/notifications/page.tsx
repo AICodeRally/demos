@@ -28,18 +28,18 @@ export default function NotificationsPage() {
           <Bell size={18} style={{ color: 'var(--pg-operate)' }} />
           <div>
             <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--pg-text)' }}>{unreadCount}</div>
-            <div className="pg-caption" style={{ fontSize: 11 }}>Unread</div>
+            <div className="pg-caption" style={{ fontSize: 14 }}>Unread</div>
           </div>
         </div>
         <div className="pg-card" style={{ padding: '10px 18px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <CheckCircle2 size={18} style={{ color: '#10b981' }} />
           <div>
             <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--pg-text)' }}>{NOTIFICATIONS.length - unreadCount}</div>
-            <div className="pg-caption" style={{ fontSize: 11 }}>Read</div>
+            <div className="pg-caption" style={{ fontSize: 14 }}>Read</div>
           </div>
         </div>
         <div style={{ flex: 1 }} />
-        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--pg-text-muted)', cursor: 'pointer' }}>
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--pg-text-muted)', cursor: 'pointer' }}>
           <input type="checkbox" checked={showRead} onChange={e => setShowRead(e.target.checked)} />
           Show read
         </label>
@@ -57,7 +57,6 @@ export default function NotificationsPage() {
                 display: 'flex', gap: 14, alignItems: 'flex-start',
                 borderLeft: `3px solid ${config.color}`,
                 opacity: n.read ? 0.72 : 1,
-                background: n.read ? 'var(--pg-card)' : 'var(--pg-card)',
                 position: 'relative',
                 transform: mounted ? 'translateX(0)' : 'translateX(-6px)',
                 transition: 'all 0.4s ease',
@@ -80,9 +79,9 @@ export default function NotificationsPage() {
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: config.color, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{config.label}</span>
-                  {n.relatedPolicy && <span className="pg-overline" style={{ fontSize: 10, color: 'var(--pg-operate)' }}>{n.relatedPolicy}</span>}
-                  <span style={{ fontSize: 11, color: 'var(--pg-text-muted)', marginLeft: 'auto' }}>{n.at}</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: config.color, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{config.label}</span>
+                  {n.relatedPolicy && <span className="pg-overline" style={{ fontSize: 14, color: 'var(--pg-operate)' }}>{n.relatedPolicy}</span>}
+                  <span style={{ fontSize: 14, color: 'var(--pg-text-muted)', marginLeft: 'auto' }}>{n.at}</span>
                 </div>
                 <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 4 }}>{n.title}</p>
                 <p className="pg-caption" style={{ lineHeight: 1.5 }}>{n.body}</p>

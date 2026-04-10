@@ -105,7 +105,7 @@ export default function ASC606LibraryPage() {
                   padding: '2px 8px',
                   borderRadius: 10,
                   background: active ? 'var(--pg-cyan-bg)' : 'var(--pg-stripe)',
-                  fontSize: 11,
+                  fontSize: 14,
                   fontWeight: 700,
                 }}
               >
@@ -139,7 +139,7 @@ export default function ASC606LibraryPage() {
                 <span className="pg-overline" style={{ color: 'var(--pg-cyan)' }}>
                   {f.code}
                 </span>
-                <span className="pg-tag" style={{ fontSize: 10 }}>
+                <span className="pg-tag" style={{ fontSize: 14 }}>
                   {f.status}
                 </span>
               </div>
@@ -149,7 +149,7 @@ export default function ASC606LibraryPage() {
               <p className="pg-caption" style={{ marginBottom: 10 }}>
                 {f.category} · v{f.version} · {f.isMandatory ? 'Mandatory' : 'Optional'}
               </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--pg-cyan)', fontSize: 13, fontWeight: 600 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--pg-cyan)', fontSize: 14, fontWeight: 600 }}>
                 Read framework
                 <ChevronRight size={14} />
               </div>
@@ -180,7 +180,7 @@ export default function ASC606LibraryPage() {
                 <span className="pg-overline" style={{ color: 'var(--pg-oversee)' }}>
                   {p.id.replace('pol-asc606-', 'SCP-').toUpperCase()}
                 </span>
-                <span className="pg-tag" style={{ fontSize: 10 }}>
+                <span className="pg-tag" style={{ fontSize: 14 }}>
                   {p.status}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export default function ASC606LibraryPage() {
               <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.5 }}>
                 {p.description}
               </p>
-              <p className="pg-caption" style={{ fontSize: 11 }}>
+              <p className="pg-caption" style={{ fontSize: 14 }}>
                 {p.category} · v{p.version}
               </p>
             </button>
@@ -220,7 +220,7 @@ export default function ASC606LibraryPage() {
                 <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>
                   {t.code}
                 </span>
-                <span className="pg-tag" style={{ fontSize: 10 }}>
+                <span className="pg-tag" style={{ fontSize: 14 }}>
                   {t.status}
                 </span>
               </div>
@@ -233,7 +233,7 @@ export default function ASC606LibraryPage() {
               {t.tags && (
                 <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
                   {t.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="pg-tag" style={{ fontSize: 10 }}>
+                    <span key={tag} className="pg-tag" style={{ fontSize: 14 }}>
                       {tag}
                     </span>
                   ))}
@@ -322,7 +322,7 @@ export default function ASC606LibraryPage() {
                   </p>
                   <pre
                     style={{
-                      fontSize: 12,
+                      fontSize: 14,
                       color: 'var(--pg-text-secondary)',
                       overflowX: 'auto',
                       whiteSpace: 'pre-wrap',

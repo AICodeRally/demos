@@ -254,7 +254,7 @@ export default function ASC606CalculatorPage() {
             </div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="text-right">
-                <p className="text-xs text-[color:var(--color-muted)] uppercase tracking-wide">
+                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
                   Fixed Bundle
                 </p>
                 <p className="text-xl font-bold text-[color:var(--color-primary)]">
@@ -263,7 +263,7 @@ export default function ASC606CalculatorPage() {
               </div>
               <div className="w-px h-10 bg-[color:var(--color-border)]" />
               <div className="text-right">
-                <p className="text-xs text-[color:var(--color-muted)] uppercase tracking-wide">
+                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
                   Var. Est.
                 </p>
                 <p className="text-xl font-bold text-[color:var(--color-foreground)]">
@@ -272,7 +272,7 @@ export default function ASC606CalculatorPage() {
               </div>
               <div className="w-px h-10 bg-[color:var(--color-border)]" />
               <div className="text-right">
-                <p className="text-xs text-[color:var(--color-muted)] uppercase tracking-wide">
+                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
                   Total Contract
                 </p>
                 <p className="text-xl font-bold text-[color:var(--color-foreground)]">
@@ -329,7 +329,7 @@ export default function ASC606CalculatorPage() {
           <JournalEntries entries={journalEntries} />
         </div>
 
-        <p className="text-xs text-[color:var(--color-muted)] text-center pb-4">
+        <p className="text-sm text-[color:var(--color-muted)] text-center pb-4">
           This calculator is for illustrative and discussion purposes only. Consult your accounting
           team and auditors for final ASC 606 treatment.
         </p>
