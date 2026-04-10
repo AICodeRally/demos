@@ -28,6 +28,7 @@ interface DemoConfigBase {
   theme?: ThemePresetName;
   colors?: { primary?: string; accent?: string };
   darkMode?: boolean;
+  showThemeToggle?: boolean;
   nav?: NavSection[];
   footer?: {
     copyright?: string;

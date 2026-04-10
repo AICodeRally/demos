@@ -54,4 +54,5 @@ export interface ThemePresetDef {
 /** Preset names (matching old system + same names) */
 export type ThemePresetName =
   | 'barrel-brass' | 'midnight' | 'clean-light' | 'aegis-ivory'
-  | 'register-slate' | 'charter-stone' | 'prizym-navy' | 'phoenix-sapphire';
+  | 'register-slate' | 'charter-stone' | 'prizym-navy' | 'phoenix-sapphire'
+  | 'sgm-glass' | 'sgm-compliance';

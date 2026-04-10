@@ -9,3 +9,7 @@ data/demo-registry.ts
 # Claude Code local artifacts
 .claude/
 .superpowers/
+.codex/
+
+# Local scratch / unrelated projects
+LUMEN/
