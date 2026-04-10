@@ -11,6 +11,7 @@ export function applyDefaults(config: DemoConfig): ResolvedDemoConfig {
     product: config.product,
     colors: config.colors,
     darkMode: config.darkMode ?? true,
+    showThemeToggle: config.showThemeToggle ?? true,
     nav: config.nav ?? [],
     footer: {
       copyright: config.footer?.copyright ?? `\u00A9 ${year} ${config.client.name}`,

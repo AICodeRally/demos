@@ -63,7 +63,20 @@ function main() {
       continue;
     }
 
-    const missing = hrefs.filter((h) => !routes.includes(h));
+    // Convert dynamic-segment routes (e.g. /foo/[type]) into regex matchers
+    // so nav hrefs like /foo/comp-plans satisfy a [type] page.tsx.
+    const routePatterns = routes.map((r) => {
+      const hasDynamic = /\[[^\]]+\]/.test(r);
+      const re = hasDynamic
+        ? new RegExp('^' + r.replace(/\[[^\]]+\]/g, '[^/]+') + '$')
+        : null;
+      return { route: r, re, hasDynamic };
+    });
+
+    const routeMatches = (href: string) =>
+      routePatterns.some(({ route, re }) => (re ? re.test(href) : route === href));
+
+    const missing = hrefs.filter((h) => !routeMatches(h));
     if (missing.length > 0) {
       errors.push(`${demo}: missing routes for nav hrefs -> ${[...new Set(missing)].join(', ')}`);
     }
@@ -74,6 +87,12 @@ function main() {
       if (allowedDeep.has(r)) return false;
       // Allow parent container routes when child routes are in nav.
       if (hrefs.some((h) => h.startsWith(`${r}/`))) return false;
+      // Allow dynamic-segment routes if any nav href matches the pattern.
+      const hasDynamic = /\[[^\]]+\]/.test(r);
+      if (hasDynamic) {
+        const re = new RegExp('^' + r.replace(/\[[^\]]+\]/g, '[^/]+') + '$');
+        if (hrefs.some((h) => re.test(h))) return false;
+      }
       return true;
     });
     if (orphan.length > 0) {

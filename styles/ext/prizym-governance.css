@@ -1,60 +1,57 @@
-/* Prizym Governance — Production SGM Theme
-   Sky Blue → Indigo → Violet gradient, glass morphism, depth
-   Colors sourced from forge/prizym/governance/app/globals.css
+/* Prizym Governance — Premium Dark Theme
+   Summit Navy & Cyan with glass morphism, gradients, depth
 */
 
-/* ── Light mode (default) ─────────────────────── */
+/* ── Light mode (default) — gradient-glass aesthetic ─────────────── */
+/* Body gets the SPARCC gradient; all surfaces are translucent white
+   glass so the gradient shines through. All text is white on the
+   gradient backdrop. Mirrors the original Summit SGM demo look. */
 :root {
-  --pg-text: #0f172a;
-  --pg-text-secondary: #1e293b;
-  --pg-text-muted: #334155;
-  --pg-text-faint: #64748b;
+  --pg-text: #ffffff;
+  --pg-text-secondary: #f1f5f9;
+  --pg-text-muted: #e2e8f0;
+  --pg-text-faint: #cbd5e1;
 
-  --pg-bg: #f8fafc;
-  --pg-card: rgba(255,255,255,0.7);
-  --pg-card-alt: #f7fafc;
-  --pg-border: #e2e8f0;
-  --pg-border-faint: #edf2f7;
-  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --pg-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --pg-shadow-lg: 0 8px 24px rgba(14,165,233,0.1);
-  --pg-shadow-xl: 0 12px 36px rgba(14,165,233,0.14);
-  --pg-hover: rgba(0,0,0,0.04);
-  --pg-stripe: #f1f5f9;
-  --pg-surface-alt: #f1f5f9;
+  --pg-bg: #1e3a8a; /* fallback if gradient doesn't render */
+  --pg-card: rgba(255,255,255,0.12);
+  --pg-card-alt: rgba(255,255,255,0.06);
+  --pg-border: rgba(255,255,255,0.2);
+  --pg-border-faint: rgba(255,255,255,0.12);
+  --pg-shadow-sm: 0 2px 6px rgba(15,23,42,0.12);
+  --pg-shadow: 0 6px 18px rgba(15,23,42,0.18);
+  --pg-shadow-lg: 0 14px 40px rgba(15,23,42,0.28);
+  --pg-shadow-xl: 0 24px 64px rgba(15,23,42,0.35);
+  --pg-hover: rgba(255,255,255,0.08);
+  --pg-stripe: rgba(255,255,255,0.05);
+  --pg-surface-alt: rgba(255,255,255,0.08);
 
-  --pg-sidebar-bg-start: #ffffff;
-  --pg-sidebar-bg-end: #f1f5f9;
-  --pg-sidebar-text: #0f172a;
-  --pg-sidebar-text-muted: #475569;
-  --pg-sidebar-active-bg: rgba(14,165,233,0.08);
-  --pg-sidebar-border: #e2e8f0;
+  --pg-sidebar-bg-start: rgba(15,23,42,0.55);
+  --pg-sidebar-bg-end: rgba(15,23,42,0.45);
+  --pg-sidebar-text: #ffffff;
+  --pg-sidebar-text-muted: #e2e8f0;
+  --pg-sidebar-active-bg: rgba(255,255,255,0.18);
+  --pg-sidebar-border: rgba(255,255,255,0.14);
 
-  --pg-header-bg: rgba(255,255,255,0.95);
-  --pg-footer-bg: #ffffff;
+  --pg-header-bg: rgba(15,23,42,0.45);
+  --pg-footer-bg: rgba(15,23,42,0.45);
 
-  /* Gradients — production SGM */
-  --pg-gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e2040 100%);
-  --pg-gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 33%, #6366f1 66%, #8b5cf6 100%);
-  --pg-gradient-subtle: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, rgba(99,102,241,0.04) 50%, rgba(139,92,246,0.06) 100%);
-  --pg-gradient-card-hover: linear-gradient(135deg, rgba(14,165,233,0.03) 0%, rgba(139,92,246,0.03) 100%);
+  /* Gradients */
+  --pg-gradient-hero: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%);
+  --pg-gradient-accent: linear-gradient(135deg, #0891b2 0%, #10b981 100%);
+  --pg-gradient-subtle: linear-gradient(135deg, rgba(8,145,178,0.06) 0%, rgba(16,185,129,0.06) 100%);
+  --pg-gradient-card-hover: linear-gradient(135deg, rgba(8,145,178,0.03) 0%, rgba(16,185,129,0.03) 100%);
 
-  /* Brand colors — production SGM palette */
+  /* Brand colors */
   --pg-navy: #0f172a;
   --pg-cyan: #0ea5e9;
   --pg-cyan-bg: rgba(14,165,233,0.08);
   --pg-gold: #c9942b;
   --pg-gold-bg: rgba(201,148,43,0.08);
 
-  /* SPARCC gradient stops */
-  --pg-gradient-start: #0ea5e9;
-  --pg-gradient-mid1: #3b82f6;
-  --pg-gradient-mid2: #6366f1;
-  --pg-gradient-end: #8b5cf6;
-
   /* Mode indicators */
   --pg-design: #0ea5e9;
   --pg-operate: #3b82f6;
+  --pg-dispute: #6366f1;
   --pg-oversee: #8b5cf6;
 
   /* Status colors */
@@ -91,79 +88,25 @@
   --pl-sidebar-text: var(--pg-sidebar-text);
   --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
   --pl-sidebar-border: var(--pg-sidebar-border);
-}
 
-/* ── Dark mode ────────────────────────────────── */
-.dark {
-  --pg-text: #e2e8f0;
-  --pg-text-secondary: #cbd5e0;
-  --pg-text-muted: #94a3b8;
-  --pg-text-faint: #64748b;
-
-  --pg-bg: #0b1220;
-  --pg-card: rgba(15,23,42,0.65);
-  --pg-card-alt: rgba(17,24,39,0.7);
-  --pg-border: #1f2937;
-  --pg-border-faint: rgba(31,41,55,0.6);
-  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
-  --pg-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  --pg-shadow-lg: 0 10px 30px -18px rgba(14,165,233,0.55);
-  --pg-shadow-xl: 0 12px 32px -18px rgba(14,165,233,0.65);
-  --pg-hover: rgba(255,255,255,0.04);
-  --pg-stripe: rgba(255,255,255,0.03);
-  --pg-surface-alt: #111827;
-
-  --pg-sidebar-bg-start: #0f172a;
-  --pg-sidebar-bg-end: #0b1220;
-  --pg-sidebar-text: #e2e8f0;
-  --pg-sidebar-text-muted: rgba(255,255,255,0.65);
-  --pg-sidebar-active-bg: rgba(14,165,233,0.12);
-  --pg-sidebar-border: rgba(14,165,233,0.12);
-
-  --pg-header-bg: rgba(11,18,32,0.95);
-  --pg-footer-bg: #0b1220;
-
-  --pg-gradient-hero: linear-gradient(135deg, #0b1220 0%, rgba(14,165,233,0.14) 40%, rgba(139,92,246,0.12) 70%, #0b1220 100%);
-  --pg-gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 33%, #6366f1 66%, #8b5cf6 100%);
-  --pg-gradient-subtle: linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(99,102,241,0.06) 50%, rgba(139,92,246,0.08) 100%);
-  --pg-gradient-card-hover: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.06) 100%);
-
-  --pg-cyan-bg: rgba(14,165,233,0.16);
-  --pg-gold-bg: rgba(201,148,43,0.16);
-
-  /* Status — lighter for dark bg */
-  --pg-success: #6ee7b7;
-  --pg-warning: #fcd34d;
-  --pg-danger: #fca5a5;
-
-  /* DemoShell aliases */
-  --pl-text: var(--pg-text);
-  --pl-text-muted: var(--pg-text-muted);
-  --pl-text-secondary: var(--pg-text-secondary);
-  --pl-surface: rgba(15,23,42,0.65);
-  --pl-surface-border: rgba(148,163,184,0.25);
-  --pl-surface-hover: rgba(255,255,255,0.08);
-  --pl-card-bg: rgba(15,23,42,0.65);
-  --pl-card-border: rgba(148,163,184,0.25);
-  --pl-bar-bg: rgba(11,18,32,0.96);
-  --pl-bar-border: rgba(14,165,233,0.3);
-  --pl-content-bg: var(--pg-bg);
-  --pl-page-bg: var(--pg-bg);
-  --pl-gold: #d4af55;
-  --pl-gold-bg: rgba(201,148,43,0.16);
-  --pl-gold-border: rgba(201,148,43,0.35);
-  --pl-header-bg: var(--pg-header-bg);
-  --pl-zone-border: rgba(148,163,184,0.25);
-  --pl-bg: var(--pg-bg);
-  --pl-border: var(--pg-border);
-  --pl-text-faint: var(--pg-text-faint);
-  --pl-hover: var(--pg-hover);
-  --pl-footer-bg: var(--pg-footer-bg);
-  --pl-sidebar-bg-start: var(--pg-sidebar-bg-start);
-  --pl-sidebar-bg-end: var(--pg-sidebar-bg-end);
-  --pl-sidebar-text: var(--pg-sidebar-text);
-  --pl-sidebar-text-muted: var(--pg-sidebar-text-muted);
-  --pl-sidebar-border: var(--pg-sidebar-border);
+  /* --color-* shim for ported Summit components (ASC 606 calculator, etc.) */
+  --color-background: var(--pg-bg);
+  --color-foreground: var(--pg-text);
+  --color-muted: var(--pg-text-muted);
+  --color-surface: var(--pg-card);
+  --color-surface-alt: var(--pg-surface-alt);
+  --color-border: var(--pg-border);
+  --color-primary: var(--pg-cyan);
+  --color-info: #0ea5e9;
+  --color-info-bg: rgba(14,165,233,0.10);
+  --color-info-border: rgba(14,165,233,0.35);
+  --color-success: #10b981;
+  --color-success-bg: rgba(16,185,129,0.10);
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245,158,11,0.10);
+  --color-warning-border: rgba(245,158,11,0.35);
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239,68,68,0.10);
 }
 
 /* ── Animations ──────────────────────────────── */
@@ -184,8 +127,8 @@
 }
 
 @keyframes pg-pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(14,165,233,0); }
-  50% { box-shadow: 0 0 20px 4px rgba(14,165,233,0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+  50% { box-shadow: 0 0 20px 4px rgba(99,102,241,0.15); }
 }
 
 @keyframes pg-bar-grow {
@@ -201,12 +144,36 @@
 }
 
 /* ── Typography ──────────────────────────────── */
+/* Readability: Todd presents on projected screens — nothing below 14px. */
 :root {
-  --pg-fs-heading: 1.75rem;
-  --pg-fs-subheading: 1.1rem;
-  --pg-fs-body: 0.9rem;
-  --pg-fs-caption: 0.8rem;
-  --pg-fs-overline: 0.7rem;
+  --pg-fs-heading: 2.25rem;      /* 36px — section titles */
+  --pg-fs-heading-lg: 3rem;      /* 48px — hero titles */
+  --pg-fs-subheading: 1.25rem;   /* 20px — card titles */
+  --pg-fs-body: 1rem;            /* 16px — body floor */
+  --pg-fs-caption: 0.9375rem;    /* 15px — captions */
+  --pg-fs-overline: 0.875rem;    /* 14px — overlines (absolute floor) */
+}
+
+/* ── Body gradient (single-theme) ─────────────────────────────────
+   The sgm-compliance preset (components/shell/theme/presets/sgm-compliance.ts)
+   already produces the correct glass CSS vars via the shell's inline
+   style injection — no !important overrides needed. The one thing the
+   preset CAN'T do is paint the body background with a linear-gradient
+   (CSS custom properties are single values), so we do that here.
+   .demo-shell gets the same gradient as a backup in case the body
+   is covered. */
+body,
+.demo-shell {
+  background: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%) fixed;
+  min-height: 100vh;
+}
+
+/* Sidebar + header get a subtle backdrop-filter blur so the gradient
+   they float over gets a frosted look. */
+.demo-shell aside,
+.demo-shell header {
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 /* ── Page classes ────────────────────────────── */
@@ -219,6 +186,14 @@
   font-weight: 800;
   color: var(--pg-text);
   line-height: 1.2;
+}
+
+.pg-heading-lg {
+  font-size: var(--pg-fs-heading-lg);
+  font-weight: 800;
+  color: var(--pg-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .pg-subheading {
@@ -292,41 +267,44 @@
 /* ── Card system (glass morphism) ─────────────── */
 .pg-card {
   background: var(--pg-card);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--pg-border);
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 22px;
   box-shadow: var(--pg-shadow);
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card:hover {
-  border-color: var(--pg-cyan);
+  background: var(--pg-card-alt);
   box-shadow: var(--pg-shadow-lg);
+  border-color: rgba(255,255,255,0.32);
+  transform: translateY(-2px);
 }
 
 .pg-card-elevated {
   background: var(--pg-card);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
   border: 1px solid var(--pg-border);
-  border-radius: 8px;
-  padding: 24px;
+  border-radius: 22px;
+  padding: 26px;
   box-shadow: var(--pg-shadow-lg);
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card-elevated:hover {
-  border-color: var(--pg-cyan);
   box-shadow: var(--pg-shadow-xl);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-3px);
 }
 
-/* Hero banner card with production SGM gradient */
+/* Hero banner card with gradient background */
 .pg-hero-card {
   background: var(--pg-gradient-hero);
-  border: 1px solid rgba(14,165,233,0.2);
-  border-radius: 12px;
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 16px;
   padding: 28px;
   box-shadow: var(--pg-shadow-lg);
   position: relative;
@@ -343,26 +321,11 @@
   pointer-events: none;
 }
 
-/* Theme card — production SGM style */
-.pg-theme-card {
-  border: 1px solid rgba(139,92,246,0.25);
-  background: var(--pg-card);
-  box-shadow: 0 10px 30px -18px rgba(14,165,233,0.55);
-  border-radius: 8px;
-  padding: 20px;
-  transition: all 0.2s;
-}
-
-.pg-theme-card:hover {
-  border-color: var(--pg-cyan);
-  box-shadow: 0 10px 15px -3px rgba(14,165,233,0.2);
-}
-
 /* Gradient accent border card */
 .pg-card-gradient {
   position: relative;
   padding: 2px;
-  border-radius: 10px;
+  border-radius: 14px;
   background: var(--pg-gradient-accent);
   background-size: 200% 200%;
   animation: pg-gradient-shift 8s ease infinite;
@@ -370,18 +333,21 @@
 
 .pg-card-gradient > * {
   background: var(--pg-card);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 20px;
 }
 
 /* ── Badge ────────────────────────────────────── */
 .pg-badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: var(--pg-fs-caption);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: var(--pg-fs-overline);
   font-weight: 700;
   line-height: 1.4;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* ── Table ────────────────────────────────────── */
@@ -504,7 +470,7 @@
   border-color: var(--pg-cyan);
   background: var(--pg-cyan-bg);
   color: var(--pg-cyan);
-  box-shadow: 0 0 12px rgba(14,165,233,0.15);
+  box-shadow: 0 0 12px rgba(99,102,241,0.15);
 }
 
 /* ── Search input ───────────────────────────── */
@@ -521,7 +487,7 @@
 
 .pg-search:focus {
   border-color: var(--pg-cyan);
-  box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
   outline: none;
 }
 
@@ -565,32 +531,6 @@
   }
 }
 
-/* ── Rainbow gradient sidebar title ─────────── */
-@keyframes pg-rainbow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.pg-rainbow-word {
-  background: linear-gradient(
-    90deg,
-    #ef4444, #f97316, #eab308, #22c55e, #0ea5e9, #8b5cf6, #ec4899, #ef4444
-  );
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: pg-rainbow 6s linear infinite;
-  font-weight: 800;
-}
-
-.pg-suite-word {
-  color: #94a3b8;
-  -webkit-text-fill-color: #94a3b8;
-  font-weight: 600;
-}
-
 /* ── Focus & accessibility ───────────────────── */
 .pg-page a:focus-visible,
 .pg-page button:focus-visible,
@@ -599,19 +539,6 @@
   outline: 2px solid var(--pg-cyan);
   outline-offset: 2px;
   border-radius: 4px;
-}
-
-/* ── Mode indicator badge ────────────────────── */
-.pg-mode-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: var(--pg-fs-caption);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 /* ── Highlight row ──────────────────────────── */
