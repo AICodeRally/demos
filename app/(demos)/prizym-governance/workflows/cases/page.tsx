@@ -30,7 +30,7 @@ export default function DisputeCasesPage() {
   const tabs: Array<DisputeStatus | 'all'> = ['all', 'open', 'under_review', 'escalated', 'resolved'];
 
   return (
-    <PrizymPage title="Dispute Cases" subtitle="Commission dispute case queue with thread history and SLA tracking" mode="dispute">
+    <PrizymPage title="Dispute Cases" subtitle="Commission dispute case queue with thread history and SLA tracking">
       <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid var(--pg-border)', marginBottom: 20, flexWrap: 'wrap' }}>
         {tabs.map(t => {
           const active = tab === t;

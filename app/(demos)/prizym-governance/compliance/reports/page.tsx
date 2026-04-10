@@ -22,7 +22,7 @@ export default function ReportsPage() {
   const categories: Array<GovernanceReport['category'] | 'all'> = ['all', 'performance', 'compliance', 'audit', 'operational'];
 
   return (
-    <PrizymPage title="Reports Library" subtitle="Pre-built governance reports with run history and scheduled delivery" mode="oversee">
+    <PrizymPage title="Reports Library" subtitle="Pre-built governance reports with run history and scheduled delivery">
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
         {categories.map(c => {
           const active = categoryFilter === c;

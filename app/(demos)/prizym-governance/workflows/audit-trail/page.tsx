@@ -19,7 +19,7 @@ export default function AuditPage() {
   const categories = ['all', 'APPROVAL', 'CASE', 'POLICY', 'DOCUMENT'];
 
   return (
-    <PrizymPage title="Audit Trail" subtitle="Immutable event log — governance decisions, approvals, and case activity" mode="oversee">
+    <PrizymPage title="Audit Trail" subtitle="Immutable event log — governance decisions, approvals, and case activity">
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[

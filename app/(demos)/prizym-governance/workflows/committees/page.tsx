@@ -11,7 +11,7 @@ export default function CommitteesPage() {
   useEffect(() => { setMounted(true); }, []);
 
   return (
-    <PrizymPage title="Governance Committees" subtitle="SGCC and CRB — oversight bodies for compensation governance" mode="oversee">
+    <PrizymPage title="Governance Committees" subtitle="SGCC and CRB — oversight bodies for compensation governance">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
         {ALL_COMMITTEES.map((committee, ci) => {
           const votingMembers = committee.members.filter(m => m.isVoting);

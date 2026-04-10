@@ -17,7 +17,7 @@ export default function DecisionsPage() {
   useEffect(() => { setMounted(true); }, []);
 
   return (
-    <PrizymPage title="Decisions Log" subtitle="Audit-ready record of governance decisions with rationale and voters" mode="operate">
+    <PrizymPage title="Decisions Log" subtitle="Audit-ready record of governance decisions with rationale and voters">
       <div style={{ marginBottom: 24, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
         <div className="pg-card" style={{ padding: 14, flex: 1, minWidth: 180 }}>
           <div className="pg-overline">Total Decisions</div>

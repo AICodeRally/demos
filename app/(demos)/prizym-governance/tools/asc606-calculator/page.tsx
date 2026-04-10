@@ -229,7 +229,6 @@ export default function ASC606CalculatorPage() {
     <PrizymPage
       title="ASC 606 Revenue Allocation Calculator"
       subtitle="Allocate transaction price across performance obligations using standalone selling prices. Generates a monthly recognition schedule and sample journal entries."
-      mode="design"
     >
       <div className="space-y-8">
         {/* Money tiles */}

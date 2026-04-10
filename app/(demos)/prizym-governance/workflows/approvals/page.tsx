@@ -38,7 +38,7 @@ export default function ApprovalsPage() {
   const tabs: FilterTab[] = ['all', 'pending', 'approved', 'escalated', 'rejected'];
 
   return (
-    <PrizymPage title="Approvals Queue" subtitle="CRB, SGCC, and policy-gated approvals awaiting action" mode="operate">
+    <PrizymPage title="Approvals Queue" subtitle="CRB, SGCC, and policy-gated approvals awaiting action">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {metrics.map((m, i) => <MetricCard key={m.label} {...m} mounted={mounted} delay={i * 0.08} />)}
       </div>

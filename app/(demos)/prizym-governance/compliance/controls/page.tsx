@@ -32,7 +32,7 @@ export default function CompliancePage() {
   };
 
   return (
-    <PrizymPage title="Compliance Dashboard" subtitle="SOX controls, wage law, tax, data security — unified compliance view" mode="oversee">
+    <PrizymPage title="Compliance Dashboard" subtitle="SOX controls, wage law, tax, data security — unified compliance view">
       {/* Score hero */}
       <div className="pg-card-elevated" style={{ padding: 24, marginBottom: 24, background: 'linear-gradient(135deg, rgba(139,92,246,0.12), rgba(6,182,212,0.08))' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
