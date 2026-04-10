@@ -37,7 +37,7 @@ assign(['p6-07'], 'not_started', seed);
 
 // ── OPERATE QUADRANT (patchy: 35% done, 40% partial, 25% not started) ────
 assign(
-  ['p7-01','p7-02','p7-03','p7-07','p9-01','p9-06','p10-02','p10-05'],
+  ['p7-01','p7-02','p7-03','p9-01','p9-06','p10-02','p10-05'],
   'done',
   seed,
 );
