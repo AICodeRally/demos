@@ -45,7 +45,7 @@ export function NavSection({ section, collapsible = true, defaultExpanded, slug 
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex items-center gap-3 rounded-lg px-4 py-2 text-sm transition-colors ${
+                className={`relative flex min-h-[36px] items-center gap-3 rounded-lg pl-5 pr-3 py-2 text-sm leading-tight transition-colors ${
                   isActive
                     ? 'bg-white/10 font-medium text-[var(--comp-sidebar-text)]'
                     : 'text-[var(--comp-sidebar-text-muted)] hover:bg-white/5 hover:text-[var(--comp-sidebar-text)]'
@@ -53,12 +53,12 @@ export function NavSection({ section, collapsible = true, defaultExpanded, slug 
               >
                 {isActive && (
                   <div
-                    className="absolute left-0 h-6 w-1 rounded-r"
+                    className="absolute left-1 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r"
                     style={{ backgroundColor: section.color ?? 'var(--comp-sidebar-active-accent)' }}
                   />
                 )}
                 {item.icon && <Icon name={item.icon} className="h-4 w-4 shrink-0" />}
-                <span>{item.label}</span>
+                <span className="min-w-0 flex-1 truncate">{item.label}</span>
               </Link>
             );
           })}

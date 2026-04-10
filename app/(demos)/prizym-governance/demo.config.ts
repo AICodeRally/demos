@@ -1,16 +1,13 @@
 import { defineDemo } from '@/components/shell';
-import { Shield } from 'lucide-react';
 
 export default defineDemo({
   slug: 'prizym-governance',
   client: {
-    name: 'Prizym Suite',
-    tagline: 'Sales Compensation Governance Platform',
+    name: 'Prizym Sales Planning Suite',
     region: 'Enterprise SPM',
-    logo: Shield,
   },
   product: {
-    name: 'PRIZYM GOVERNANCE',
+    name: 'Sales Governance Manager (SGM)',
     badge: 'Interactive Demo',
   },
   darkMode: true,
@@ -103,12 +100,12 @@ export default defineDemo({
     },
   ],
   footer: {
-    copyright: '\u00A9 2026 Prizym Suite — Sales Compensation Governance',
+    copyright: '\u00A9 2026 Prizym Sales Planning Suite — Sales Governance Manager',
     poweredBy: 'AICR',
   },
   meta: {
     industry: 'Sales Performance Management',
-    tagline: 'Enterprise governance platform for sales compensation programs — policies, plans, approvals, and audit trails',
+    tagline: 'Sales Governance Manager (SGM) — part of the Prizym Sales Planning Suite',
     color: '#06b6d4',
   },
 });
