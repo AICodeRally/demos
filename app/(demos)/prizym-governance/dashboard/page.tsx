@@ -7,9 +7,13 @@ import { GOVERNANCE_KPIS, RECENT_HIGHLIGHTS, POLICY_COVERAGE_HEALTH, CASE_VOLUME
 import { ALL_POLICIES, getPolicyStats } from '@/data/prizym-governance/policies';
 import { PLANS, getPlanStats } from '@/data/prizym-governance/plans';
 import { DOCUMENT_COUNTS } from '@/data/prizym-governance/documents';
+import { useAssessmentStore } from '@/lib/prizym-governance/store';
+import { MaturityDial } from '@/components/demos/prizym-governance/assess/MaturityDial';
+import { QuadrantScoreCard } from '@/components/demos/prizym-governance/assess/QuadrantScoreCard';
+import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
 import {
   Shield, FileText, ScrollText, AlertTriangle,
-  CheckCircle2, TrendingUp, TrendingDown, Minus, Activity, Target,
+  CheckCircle2, TrendingUp, TrendingDown, Minus, Activity, Target, BarChart3,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -17,6 +21,14 @@ export default function DashboardPage() {
   useEffect(() => { setMounted(true); }, []);
   const policyStats = getPolicyStats();
   const planStats = getPlanStats();
+
+  const hydrate = useAssessmentStore(s => s.hydrate);
+  useEffect(() => { hydrate(); }, [hydrate]);
+
+  const score = useAssessmentStore(s => s.score());
+  const answers = useAssessmentStore(s => s.answers);
+  const answeredCount = Object.values(answers).filter(r => r !== 'not_started').length;
+  const maturityPct = Math.round(score.maturityScore * 100);
 
   const HERO_KPIS = [
     { label: 'Policies', value: String(policyStats.total), icon: Shield, color: '#3b82f6', sub: `${policyStats.approved} approved` },
@@ -26,12 +38,46 @@ export default function DashboardPage() {
   ];
 
   return (
-    <PrizymPage title="Governance Dashboard" subtitle="Prizym Suite — Sales Compensation Governance" hero>
+    <PrizymPage title="Governance Dashboard" subtitle={`${henryScheinOrgProfile.name} — Sales Compensation Governance`} hero>
       {/* Hero KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" role="region" aria-label="Key metrics">
         {HERO_KPIS.map((kpi, i) => (
           <MetricCard key={kpi.label} {...kpi} mounted={mounted} delay={i * 0.1} />
         ))}
+      </div>
+
+      {/* Assessment Maturity + Quadrant Scores */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6" role="region" aria-label="Assessment maturity">
+        {/* Maturity Dial */}
+        <div className="pg-card-elevated" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start' }}>
+            <Target size={16} color="var(--pg-cyan)" />
+            Governance Maturity
+          </h3>
+          <MaturityDial score={score.maturityScore} size={180} />
+          <div style={{ textAlign: 'center' }}>
+            <div className="pg-caption" style={{ marginBottom: 4 }}>
+              {answeredCount} of 88 checkpoints answered
+            </div>
+            <div className="pg-label" style={{ fontWeight: 700 }}>
+              Archetype: <span style={{ color: 'var(--pg-cyan)' }}>{score.archetype}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Quadrant Score Cards */}
+        <div className="lg:col-span-2" role="region" aria-label="Quadrant scores">
+          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <BarChart3 size={16} color="var(--pg-cyan)" />
+            Quadrant Scores
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <QuadrantScoreCard quadrant="design" score={score.quadrantScores.design} />
+            <QuadrantScoreCard quadrant="operate" score={score.quadrantScores.operate} />
+            <QuadrantScoreCard quadrant="dispute" score={score.quadrantScores.dispute} />
+            <QuadrantScoreCard quadrant="oversee" score={score.quadrantScores.oversee} />
+          </div>
+        </div>
       </div>
 
       {/* Governance Health + Coverage Gauge */}
