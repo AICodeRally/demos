@@ -41,7 +41,7 @@ export function AskSGMChat({ fullHeight }: Props) {
     text: isDark ? '#f1f5f9' : '#0f172a',
     muted: isDark ? '#cbd5e1' : '#334155',
     border: isDark ? '#334155' : '#e2e8f0',
-    userBubble: '#4f46e5',
+    userBubble: '#6366f1',
     assistantBubble: isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
     inputBg: isDark ? 'rgba(255,255,255,0.04)' : '#ffffff',
   }
@@ -369,7 +369,7 @@ export function AskSGMChat({ fullHeight }: Props) {
               padding: 8,
               borderRadius: 8,
               border: 'none',
-              background: '#4f46e5',
+              background: '#6366f1',
               cursor: 'pointer',
               opacity: (!input.trim() || !sessionId || isStreaming) ? 0.3 : 1,
               display: 'flex',
