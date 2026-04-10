@@ -24,8 +24,18 @@ export default defineDemo({
       section: 'Overview',
       color: '#06b6d4',
       items: [
+        { label: 'Home', href: '/prizym-governance', icon: 'Home' },
         { label: 'Dashboard', href: '/prizym-governance/dashboard', icon: 'LayoutDashboard' },
         { label: 'Analytics', href: '/prizym-governance/analytics', icon: 'BarChart3' },
+      ],
+    },
+    {
+      section: 'Assessment',
+      color: '#8b5cf6',
+      items: [
+        { label: 'Take Assessment', href: '/prizym-governance/assess/wizard', icon: 'ClipboardCheck' },
+        { label: 'Scoping', href: '/prizym-governance/assess/scoping', icon: 'SlidersHorizontal' },
+        { label: 'Results', href: '/prizym-governance/assess/results', icon: 'BarChart2' },
       ],
     },
     {
