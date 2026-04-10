@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useAssessmentStore } from '@/lib/prizym-governance/store';
+import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
 
 export function LandingHero() {
   const hydrate = useAssessmentStore(s => s.hydrate);
-  const score = useAssessmentStore(s => s.score());
+  const answers = useAssessmentStore(s => s.answers);
+  const score = useMemo(() => scoreAssessment(answers), [answers]);
 
   useEffect(() => { hydrate(); }, [hydrate]);
 

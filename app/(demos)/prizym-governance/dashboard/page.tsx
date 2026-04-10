@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { MetricCard, StatusBadge, GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import { GOVERNANCE_KPIS, RECENT_HIGHLIGHTS, POLICY_COVERAGE_HEALTH, CASE_VOLUME_BY_TYPE, APPROVAL_DECISIONS } from '@/data/prizym-governance/analytics';
@@ -8,6 +8,7 @@ import { ALL_POLICIES, getPolicyStats } from '@/data/prizym-governance/policies'
 import { PLANS, getPlanStats } from '@/data/prizym-governance/plans';
 import { DOCUMENT_COUNTS } from '@/data/prizym-governance/documents';
 import { useAssessmentStore } from '@/lib/prizym-governance/store';
+import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
 import { MaturityDial } from '@/components/demos/prizym-governance/assess/MaturityDial';
 import { QuadrantScoreCard } from '@/components/demos/prizym-governance/assess/QuadrantScoreCard';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
@@ -25,8 +26,8 @@ export default function DashboardPage() {
   const hydrate = useAssessmentStore(s => s.hydrate);
   useEffect(() => { hydrate(); }, [hydrate]);
 
-  const score = useAssessmentStore(s => s.score());
   const answers = useAssessmentStore(s => s.answers);
+  const score = useMemo(() => scoreAssessment(answers), [answers]);
   const answeredCount = Object.values(answers).filter(r => r !== 'not_started').length;
   const maturityPct = Math.round(score.maturityScore * 100);
 
