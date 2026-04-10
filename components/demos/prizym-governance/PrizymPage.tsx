@@ -5,13 +5,14 @@ interface PrizymPageProps {
   title: string;
   subtitle?: string;
   accentColor?: string;
-  mode?: 'design' | 'operate' | 'oversee';
+  mode?: 'design' | 'operate' | 'dispute' | 'oversee';
   hero?: boolean;
 }
 
 const MODE_CONFIG = {
   design: { label: 'Design', color: '#06b6d4', icon: '◇' },
   operate: { label: 'Operate', color: '#3b82f6', icon: '◈' },
+  dispute: { label: 'Dispute', color: '#6366f1', icon: '◆' },
   oversee: { label: 'Oversee', color: '#8b5cf6', icon: '◉' },
 };
 
@@ -24,7 +25,7 @@ export function PrizymPage({ children, title, subtitle, accentColor, mode, hero 
       <div className="pg-page">
         <div className="pg-hero-card mb-8" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
               {modeInfo && (
                 <span
                   className="pg-mode-badge"
@@ -38,8 +39,12 @@ export function PrizymPage({ children, title, subtitle, accentColor, mode, hero 
                 </span>
               )}
             </div>
-            <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#f1f5f9', lineHeight: 1.2, marginBottom: 6 }}>{title}</h1>
-            {subtitle && <p style={{ fontSize: '1.05rem', color: 'rgba(148,163,184,0.9)', lineHeight: 1.5 }}>{subtitle}</p>}
+            <h1 className="pg-heading-lg" style={{ color: '#ffffff', marginBottom: 10 }}>{title}</h1>
+            {subtitle && (
+              <p style={{ fontSize: '1.25rem', color: '#e2e8f0', lineHeight: 1.5, maxWidth: '72ch' }}>
+                {subtitle}
+              </p>
+            )}
           </div>
         </div>
         {children}
@@ -49,17 +54,17 @@ export function PrizymPage({ children, title, subtitle, accentColor, mode, hero 
 
   return (
     <div className="pg-page">
-      <div className="mb-6 md:mb-7">
-        <div style={{ borderLeft: `3px solid ${borderColor}`, paddingLeft: 14, marginBottom: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-            <h1 className="pg-heading" style={{ marginBottom: 4 }}>{title}</h1>
+      <div className="mb-6 md:mb-8">
+        <div style={{ borderLeft: `4px solid ${borderColor}`, paddingLeft: 18, marginBottom: 24 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 8 }}>
+            <h1 className="pg-heading">{title}</h1>
             {modeInfo && (
               <span
                 className="pg-mode-badge"
                 style={{
                   background: `${modeInfo.color}18`,
                   color: modeInfo.color,
-                  border: `1px solid ${modeInfo.color}40`,
+                  border: `1px solid ${modeInfo.color}50`,
                   boxShadow: `0 0 12px ${modeInfo.color}15`,
                 }}
               >
@@ -67,7 +72,11 @@ export function PrizymPage({ children, title, subtitle, accentColor, mode, hero 
               </span>
             )}
           </div>
-          {subtitle && <p style={{ fontSize: '1.05rem', color: 'var(--pg-text-muted)', marginTop: 4 }}>{subtitle}</p>}
+          {subtitle && (
+            <p style={{ fontSize: '1.125rem', color: 'var(--pg-text-secondary)', lineHeight: 1.55, maxWidth: '80ch' }}>
+              {subtitle}
+            </p>
+          )}
         </div>
       </div>
       {children}

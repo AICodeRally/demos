@@ -131,14 +131,14 @@ export default function CompliancePage() {
                         background: `${cfg.color}18`, color: cfg.color,
                         fontSize: 14, fontWeight: 600,
                       }}>
-                        <Icon size={11} /> {cfg.label}
+                        <Icon size={14} /> {cfg.label}
                       </span>
                     </td>
                     <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-secondary)' }}>{c.owner}</td>
                     <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-muted)' }}>{c.lastTested}</td>
                     <td style={{ padding: '14px 16px' }}>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 14, color: 'var(--pg-text-secondary)' }}>
-                        <FileCheck size={12} /> {c.evidence}
+                        <FileCheck size={14} /> {c.evidence}
                       </span>
                     </td>
                   </tr>

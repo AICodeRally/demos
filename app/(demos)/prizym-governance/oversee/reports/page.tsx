@@ -78,11 +78,11 @@ export default function ReportsPage() {
               <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.55, flex: 1 }}>{r.description}</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 0', borderTop: '1px solid var(--pg-border-faint)', fontSize: 14, color: 'var(--pg-text-muted)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={10} /> {r.schedule}</span>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={10} /> Last: {r.lastRun}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={14} /> {r.schedule}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={14} /> Last: {r.lastRun}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={10} /> {r.owner}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={14} /> {r.owner}</span>
                   <span>{r.pageCount} pages</span>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default function ReportsPage() {
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                   }}
                 >
-                  <Play size={12} /> Run
+                  <Play size={14} /> Run
                 </button>
                 <button
                   style={{
@@ -107,7 +107,7 @@ export default function ReportsPage() {
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                   }}
                 >
-                  <Download size={12} /> {r.format[0]}
+                  <Download size={14} /> {r.format[0]}
                 </button>
               </div>
             </div>

@@ -108,10 +108,10 @@
 
 /* ── Dark mode ────────────────────────────────── */
 .dark {
-  --pg-text: #f1f5f9;
-  --pg-text-secondary: #cbd5e0;
-  --pg-text-muted: #94a3b8;
-  --pg-text-faint: #64748b;
+  --pg-text: #ffffff;
+  --pg-text-secondary: #e2e8f0;
+  --pg-text-muted: #cbd5e1;
+  --pg-text-faint: #cbd5e1;
 
   --pg-bg: #0a0f1e;
   --pg-card: rgba(30,41,59,0.7);
@@ -209,12 +209,14 @@
 }
 
 /* ── Typography ──────────────────────────────── */
+/* Readability: Todd presents on projected screens — nothing below 14px. */
 :root {
-  --pg-fs-heading: 1.75rem;
-  --pg-fs-subheading: 1.1rem;
-  --pg-fs-body: 0.9rem;
-  --pg-fs-caption: 0.8rem;
-  --pg-fs-overline: 0.7rem;
+  --pg-fs-heading: 2.25rem;      /* 36px — section titles */
+  --pg-fs-heading-lg: 3rem;      /* 48px — hero titles */
+  --pg-fs-subheading: 1.25rem;   /* 20px — card titles */
+  --pg-fs-body: 1rem;            /* 16px — body floor */
+  --pg-fs-caption: 0.9375rem;    /* 15px — captions */
+  --pg-fs-overline: 0.875rem;    /* 14px — overlines (absolute floor) */
 }
 
 /* ── Page classes ────────────────────────────── */
@@ -227,6 +229,14 @@
   font-weight: 800;
   color: var(--pg-text);
   line-height: 1.2;
+}
+
+.pg-heading-lg {
+  font-size: var(--pg-fs-heading-lg);
+  font-weight: 800;
+  color: var(--pg-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .pg-subheading {
@@ -372,11 +382,14 @@
 /* ── Badge ────────────────────────────────────── */
 .pg-badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: var(--pg-fs-caption);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: var(--pg-fs-overline);
   font-weight: 700;
   line-height: 1.4;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* ── Table ────────────────────────────────────── */

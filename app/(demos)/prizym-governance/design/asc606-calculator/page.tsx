@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import Link from 'next/link';
-import { ChevronRight, BarChart2, Table as TableIcon, BookOpen } from 'lucide-react';
+import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { BarChart2, Table as TableIcon, BookOpen } from 'lucide-react';
 import {
   ContractInputForm,
   type ContractInputs,
@@ -226,59 +226,46 @@ export default function ASC606CalculatorPage() {
   const totalContractValue = totalFixed + marketplaceFee;
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm">
-          <Link
-            href="/prizym-governance/design"
-            className="font-medium text-[color:var(--color-muted)] hover:text-[color:var(--color-info)] transition-colors"
-          >
-            Design
-          </Link>
-          <ChevronRight className="w-4 h-4 text-[color:var(--color-muted)]" />
-          <span className="font-semibold text-[color:var(--color-info)]">ASC 606 Calculator</span>
-        </nav>
-
-        {/* Page header */}
+    <PrizymPage
+      title="ASC 606 Revenue Allocation Calculator"
+      subtitle="Allocate transaction price across performance obligations using standalone selling prices. Generates a monthly recognition schedule and sample journal entries."
+      mode="design"
+    >
+      <div className="space-y-8">
+        {/* Money tiles */}
         <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card-strong">
-          <div className="flex items-start justify-between gap-6 flex-wrap">
-            <div>
-              <h1 className="text-2xl font-bold bg-[linear-gradient(90deg,#0ea5e9,#6366f1,#8b5cf6)] bg-clip-text text-transparent">
-                ASC 606 Revenue Allocation Calculator
-              </h1>
-              <p className="text-sm text-[color:var(--color-muted)] mt-1 max-w-xl">
-                Allocate transaction price across performance obligations using standalone selling
-                prices. Generates a monthly revenue schedule and sample journal entries.
+          <div className="flex items-center justify-around gap-6 flex-wrap">
+            <div className="text-center">
+              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
+                Fixed Bundle
+              </p>
+              <p className="pg-heading" style={{ color: 'var(--pg-cyan)', fontSize: '2.5rem' }}>
+                {fmt(totalFixed)}
               </p>
             </div>
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="text-right">
-                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
-                  Fixed Bundle
-                </p>
-                <p className="text-xl font-bold text-[color:var(--color-primary)]">
-                  {fmt(totalFixed)}
-                </p>
-              </div>
-              <div className="w-px h-10 bg-[color:var(--color-border)]" />
-              <div className="text-right">
-                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
-                  Var. Est.
-                </p>
-                <p className="text-xl font-bold text-[color:var(--color-foreground)]">
-                  {fmt(marketplaceFee)}
-                </p>
-              </div>
-              <div className="w-px h-10 bg-[color:var(--color-border)]" />
-              <div className="text-right">
-                <p className="text-sm text-[color:var(--color-muted)] uppercase tracking-wide">
-                  Total Contract
-                </p>
-                <p className="text-xl font-bold text-[color:var(--color-foreground)]">
-                  {fmt(totalContractValue)}
-                </p>
-              </div>
+            <div style={{ width: 1, height: 56, background: 'var(--pg-border)' }} />
+            <div className="text-center">
+              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
+                Variable (Marketplace)
+              </p>
+              <p className="pg-heading" style={{ color: 'var(--pg-text)', fontSize: '2.5rem' }}>
+                {fmt(marketplaceFee)}
+              </p>
+            </div>
+            <div style={{ width: 1, height: 56, background: 'var(--pg-border)' }} />
+            <div className="text-center">
+              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
+                Total Contract Value
+              </p>
+              <p className="pg-heading" style={{
+                fontSize: '2.5rem',
+                background: 'linear-gradient(90deg, #0ea5e9, #6366f1, #8b5cf6)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
+                {fmt(totalContractValue)}
+              </p>
             </div>
           </div>
         </div>
@@ -329,11 +316,11 @@ export default function ASC606CalculatorPage() {
           <JournalEntries entries={journalEntries} />
         </div>
 
-        <p className="text-sm text-[color:var(--color-muted)] text-center pb-4">
+        <p className="pg-caption text-center" style={{ paddingBottom: 16 }}>
           This calculator is for illustrative and discussion purposes only. Consult your accounting
           team and auditors for final ASC 606 treatment.
         </p>
       </div>
-    </div>
+    </PrizymPage>
   );
 }
