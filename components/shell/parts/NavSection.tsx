@@ -14,71 +14,183 @@ interface Props {
   slug: string;
 }
 
-export function NavSection({ section, collapsible = true, defaultExpanded, slug }: Props) {
+/**
+ * NavSection renders a collapsible group of nav links.
+ *
+ * Layout strategy: every row (section header + items) is a CSS grid with
+ * three columns — [icon:18px] [label:1fr] [trailing:auto]. That shared
+ * grid guarantees icons, labels, and trailing content line up across the
+ * section header and every item below it regardless of label length.
+ */
+export function NavSection({ section, collapsible = true, defaultExpanded, slug: _slug }: Props) {
   const pathname = usePathname();
-  const hasActiveItem = section.items.some(item => pathname === item.href || pathname.startsWith(item.href + '/'));
+  const hasActiveItem = section.items.some(
+    item => pathname === item.href || pathname.startsWith(item.href + '/')
+  );
   const [userToggled, setUserToggled] = useState<boolean | null>(null);
   const expanded = userToggled ?? (defaultExpanded !== undefined ? defaultExpanded : hasActiveItem);
+  const accent = section.color ?? 'var(--comp-sidebar-active-accent, #6366f1)';
 
-  const accent = section.color ?? 'var(--comp-sidebar-active-accent)';
+  const rowStyle: React.CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: '18px 1fr auto',
+    alignItems: 'center',
+    columnGap: 12,
+    width: '100%',
+    paddingLeft: 16,
+    paddingRight: 12,
+    boxSizing: 'border-box',
+  };
 
   return (
-    <div className="mb-3">
+    <div style={{ marginBottom: 14 }}>
       <button
+        type="button"
         onClick={() => collapsible && setUserToggled(expanded ? false : true)}
-        className="flex w-full items-center gap-3 rounded pl-5 pr-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em]"
-        style={{ cursor: collapsible ? 'pointer' : 'default' }}
+        aria-expanded={expanded}
+        style={{
+          ...rowStyle,
+          height: 28,
+          background: 'transparent',
+          border: 'none',
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.78))',
+          cursor: collapsible ? 'pointer' : 'default',
+        }}
       >
-        {/* 16px icon-column dot — lines up with item icons below */}
         <span
           aria-hidden
-          className="flex h-4 w-4 shrink-0 items-center justify-center"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 18,
+            height: 18,
+          }}
         >
           <span
-            className="block h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: accent, boxShadow: `0 0 8px ${accent}` }}
+            style={{
+              display: 'block',
+              width: 7,
+              height: 7,
+              borderRadius: '50%',
+              background: accent,
+              boxShadow: `0 0 10px ${accent}, 0 0 2px rgba(255,255,255,0.4)`,
+            }}
           />
         </span>
         <span
-          className="min-w-0 flex-1 truncate text-left"
-          style={{ color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.78))' }}
+          style={{
+            minWidth: 0,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            textAlign: 'left',
+          }}
         >
           {section.section}
         </span>
-        {collapsible && (
+        {collapsible ? (
           <ChevronDown
-            className={`h-3 w-3 shrink-0 transition-transform ${expanded ? '' : '-rotate-90'}`}
-            style={{ color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.6))' }}
+            aria-hidden
+            style={{
+              width: 14,
+              height: 14,
+              transform: expanded ? 'none' : 'rotate(-90deg)',
+              transition: 'transform 0.2s ease',
+              color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.6))',
+            }}
           />
+        ) : (
+          <span />
         )}
       </button>
 
-      {(expanded || !collapsible) && (
-        <div className="mt-1 space-y-0.5">
+      {expanded && (
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0, marginTop: 4 }}>
           {section.items.map(item => {
             const isActive = pathname === item.href;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative flex min-h-[36px] items-center gap-3 rounded-lg pl-5 pr-3 py-2 text-sm leading-tight transition-colors ${
-                  isActive
-                    ? 'bg-white/15 font-semibold text-[var(--comp-sidebar-text)]'
-                    : 'text-[var(--comp-sidebar-text-muted)] hover:bg-white/10 hover:text-[var(--comp-sidebar-text)]'
-                }`}
-              >
-                {isActive && (
-                  <div
-                    className="absolute left-1 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r"
-                    style={{ backgroundColor: accent }}
-                  />
-                )}
-                {item.icon && <Icon name={item.icon} className="h-4 w-4 shrink-0" />}
-                <span className="min-w-0 flex-1 truncate">{item.label}</span>
-              </Link>
+              <li key={item.href} style={{ position: 'relative' }}>
+                <Link
+                  href={item.href}
+                  style={{
+                    ...rowStyle,
+                    minHeight: 38,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                    marginBottom: 2,
+                    borderRadius: 10,
+                    textDecoration: 'none',
+                    fontSize: 14,
+                    lineHeight: 1.3,
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive
+                      ? 'var(--comp-sidebar-text, #ffffff)'
+                      : 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.82))',
+                    background: isActive ? 'rgba(255,255,255,0.16)' : 'transparent',
+                    transition: 'background 0.15s ease, color 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                      e.currentTarget.style.color = 'var(--comp-sidebar-text, #ffffff)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.color = 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.82))';
+                    }
+                  }}
+                >
+                  {isActive && (
+                    <span
+                      aria-hidden
+                      style={{
+                        position: 'absolute',
+                        left: 4,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: 3,
+                        height: 22,
+                        borderRadius: 2,
+                        background: accent,
+                        boxShadow: `0 0 10px ${accent}`,
+                      }}
+                    />
+                  )}
+                  <span
+                    aria-hidden
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 18,
+                      height: 18,
+                    }}
+                  >
+                    {item.icon && <Icon name={item.icon} style={{ width: 16, height: 16 }} />}
+                  </span>
+                  <span
+                    style={{
+                      minWidth: 0,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                  <span />
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
     </div>
   );
