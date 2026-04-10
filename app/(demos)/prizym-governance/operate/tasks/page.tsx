@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { TASKS, type TaskStatus } from '@/data/prizym-governance/operate';
 import { CheckCircle2, Clock, Pause, ListTodo, User, Calendar } from 'lucide-react';
 
@@ -62,13 +63,9 @@ export default function TasksPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {tasks.map(t => (
                   <div key={t.id} className="pg-card" style={{ borderTop: `3px solid ${PRIORITY_COLORS[t.priority]}` }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 6, alignItems: 'center' }}>
                       {t.relatedPolicy && <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>{t.relatedPolicy}</span>}
-                      <span style={{
-                        fontSize: 14, padding: '2px 6px', borderRadius: 8,
-                        background: `${PRIORITY_COLORS[t.priority]}20`, color: PRIORITY_COLORS[t.priority],
-                        textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', marginLeft: 'auto',
-                      }}>{t.priority}</span>
+                      <span style={{ marginLeft: 'auto' }}><StatusBadge status={t.priority} /></span>
                     </div>
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 8, lineHeight: 1.35 }}>{t.title}</p>
                     <p className="pg-caption" style={{ marginBottom: 10, fontSize: 14, lineHeight: 1.5 }}>{t.description}</p>

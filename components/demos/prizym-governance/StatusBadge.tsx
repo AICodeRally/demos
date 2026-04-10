@@ -2,20 +2,28 @@
 
 import type { LucideIcon } from 'lucide-react';
 
+const GREEN = { bg: 'rgba(16,185,129,0.12)', text: '#10b981', border: 'rgba(16,185,129,0.3)' };
+const AMBER = { bg: 'rgba(245,158,11,0.12)', text: '#f59e0b', border: 'rgba(245,158,11,0.3)' };
+const BLUE = { bg: 'rgba(59,130,246,0.12)', text: '#3b82f6', border: 'rgba(59,130,246,0.3)' };
+const PURPLE = { bg: 'rgba(139,92,246,0.12)', text: '#8b5cf6', border: 'rgba(139,92,246,0.3)' };
+const SLATE = { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.3)' };
+const RED = { bg: 'rgba(239,68,68,0.12)', text: '#ef4444', border: 'rgba(239,68,68,0.3)' };
+const CRIMSON = { bg: 'rgba(220,38,38,0.12)', text: '#dc2626', border: 'rgba(220,38,38,0.3)' };
+const ORANGE = { bg: 'rgba(249,115,22,0.12)', text: '#f97316', border: 'rgba(249,115,22,0.3)' };
+const YELLOW = { bg: 'rgba(234,179,8,0.12)', text: '#eab308', border: 'rgba(234,179,8,0.3)' };
+
 const STATUS_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  APPROVED: { bg: 'rgba(16,185,129,0.12)', text: '#10b981', border: 'rgba(16,185,129,0.3)' },
-  ACTIVE: { bg: 'rgba(16,185,129,0.12)', text: '#10b981', border: 'rgba(16,185,129,0.3)' },
-  PUBLISHED: { bg: 'rgba(16,185,129,0.12)', text: '#10b981', border: 'rgba(16,185,129,0.3)' },
-  DRAFT: { bg: 'rgba(245,158,11,0.12)', text: '#f59e0b', border: 'rgba(245,158,11,0.3)' },
-  draft: { bg: 'rgba(245,158,11,0.12)', text: '#f59e0b', border: 'rgba(245,158,11,0.3)' },
-  IN_PROGRESS: { bg: 'rgba(59,130,246,0.12)', text: '#3b82f6', border: 'rgba(59,130,246,0.3)' },
-  UNDER_REVIEW: { bg: 'rgba(139,92,246,0.12)', text: '#8b5cf6', border: 'rgba(139,92,246,0.3)' },
-  superseded: { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.3)' },
-  INACTIVE: { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.3)' },
-  CRITICAL: { bg: 'rgba(220,38,38,0.12)', text: '#dc2626', border: 'rgba(220,38,38,0.3)' },
-  HIGH: { bg: 'rgba(249,115,22,0.12)', text: '#f97316', border: 'rgba(249,115,22,0.3)' },
-  MEDIUM: { bg: 'rgba(234,179,8,0.12)', text: '#eab308', border: 'rgba(234,179,8,0.3)' },
-  LOW: { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.3)' },
+  APPROVED: GREEN, ACTIVE: GREEN, PUBLISHED: GREEN,
+  approved: GREEN, done: GREEN, resolved: GREEN, compliant: GREEN,
+  DRAFT: AMBER, draft: AMBER, modified: AMBER,
+  pending: AMBER, at_risk: AMBER,
+  IN_PROGRESS: BLUE, in_progress: BLUE, open: BLUE,
+  UNDER_REVIEW: PURPLE, under_review: PURPLE, escalated: PURPLE,
+  superseded: SLATE, INACTIVE: SLATE, todo: SLATE, not_tested: SLATE, low: SLATE, LOW: SLATE,
+  rejected: RED, blocked: RED, non_compliant: RED, high: RED,
+  CRITICAL: CRIMSON,
+  HIGH: ORANGE,
+  MEDIUM: YELLOW, medium: YELLOW,
 };
 
 export function StatusBadge({ status }: { status: string }) {

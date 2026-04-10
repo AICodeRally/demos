@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import {
   asc606Frameworks,
   asc606Policies,
@@ -13,13 +14,119 @@ import type {
   Policy,
   PlanTemplate,
 } from '@/data/prizym-governance/asc606';
-import { ChevronRight, BookOpen, FileText, LayoutTemplate, Landmark, X } from 'lucide-react';
+import { ChevronRight, BookOpen, LayoutTemplate, Landmark, X } from 'lucide-react';
 
 type Tab = 'frameworks' | 'policies' | 'templates';
 
 interface OpenItem {
   kind: Tab;
   id: string;
+}
+
+interface CardRenderArgs {
+  id: string;
+  overlineText: string;
+  overlineColor: string;
+  status: string;
+  title: string;
+  description: string;
+  footer?: React.ReactNode;
+}
+
+function LibraryCard({
+  item,
+  index,
+  mounted,
+  onOpen,
+}: {
+  item: CardRenderArgs;
+  index: number;
+  mounted: boolean;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      onClick={onOpen}
+      className="pg-card-elevated"
+      style={{
+        textAlign: 'left',
+        cursor: 'pointer',
+        border: 'none',
+        width: '100%',
+        opacity: mounted ? 1 : 0,
+        transform: mounted ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transitionDelay: `${0.1 + index * 0.08}s`,
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, alignItems: 'center' }}>
+        <span className="pg-overline" style={{ color: item.overlineColor }}>
+          {item.overlineText}
+        </span>
+        <StatusBadge status={item.status} />
+      </div>
+      <h3 className="pg-subheading" style={{ marginBottom: 6 }}>
+        {item.title}
+      </h3>
+      <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.5 }}>
+        {item.description}
+      </p>
+      {item.footer}
+    </button>
+  );
+}
+
+function frameworkToCard(f: GovernanceFramework): CardRenderArgs {
+  return {
+    id: f.id,
+    overlineText: f.code,
+    overlineColor: 'var(--pg-cyan)',
+    status: f.status,
+    title: f.title,
+    description: `${f.category} · v${f.version} · ${f.isMandatory ? 'Mandatory' : 'Optional'}`,
+    footer: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--pg-cyan)', fontSize: 14, fontWeight: 600 }}>
+        Read framework
+        <ChevronRight size={14} />
+      </div>
+    ),
+  };
+}
+
+function policyToCard(p: Policy): CardRenderArgs {
+  return {
+    id: p.id,
+    overlineText: p.id.replace('pol-asc606-', 'SCP-').toUpperCase(),
+    overlineColor: 'var(--pg-oversee)',
+    status: p.status,
+    title: p.name,
+    description: p.description ?? '',
+    footer: (
+      <p className="pg-caption" style={{ fontSize: 14 }}>
+        {p.category} · v{p.version}
+      </p>
+    ),
+  };
+}
+
+function templateToCard(t: PlanTemplate): CardRenderArgs {
+  return {
+    id: t.id,
+    overlineText: t.code,
+    overlineColor: 'var(--pg-operate)',
+    status: t.status,
+    title: t.name,
+    description: t.description ?? '',
+    footer: t.tags && t.tags.length > 0 ? (
+      <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+        {t.tags.slice(0, 3).map((tag) => (
+          <span key={tag} className="pg-tag" style={{ fontSize: 14 }}>
+            {tag}
+          </span>
+        ))}
+      </div>
+    ) : undefined,
+  };
 }
 
 export default function ASC606LibraryPage() {
@@ -42,6 +149,18 @@ export default function ASC606LibraryPage() {
     { id: 'policies', label: 'Policies', count: asc606Policies.length, icon: BookOpen },
     { id: 'templates', label: 'Templates', count: asc606Templates.length, icon: LayoutTemplate },
   ];
+
+  const activeCards: CardRenderArgs[] =
+    tab === 'frameworks'
+      ? asc606Frameworks.map(frameworkToCard)
+      : tab === 'policies'
+      ? asc606Policies.map(policyToCard)
+      : asc606Templates.map(templateToCard);
+
+  const gridCols =
+    tab === 'templates'
+      ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'
+      : 'grid grid-cols-1 md:grid-cols-2 gap-5';
 
   return (
     <PrizymPage
@@ -117,132 +236,17 @@ export default function ASC606LibraryPage() {
       </div>
 
       {/* Card grid */}
-      {tab === 'frameworks' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {asc606Frameworks.map((f, i) => (
-            <button
-              key={f.id}
-              onClick={() => setOpen({ kind: 'frameworks', id: f.id })}
-              className="pg-card-elevated"
-              style={{
-                textAlign: 'left',
-                cursor: 'pointer',
-                border: 'none',
-                width: '100%',
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.1 + i * 0.08}s`,
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span className="pg-overline" style={{ color: 'var(--pg-cyan)' }}>
-                  {f.code}
-                </span>
-                <span className="pg-tag" style={{ fontSize: 14 }}>
-                  {f.status}
-                </span>
-              </div>
-              <h3 className="pg-subheading" style={{ marginBottom: 6 }}>
-                {f.title}
-              </h3>
-              <p className="pg-caption" style={{ marginBottom: 10 }}>
-                {f.category} · v{f.version} · {f.isMandatory ? 'Mandatory' : 'Optional'}
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--pg-cyan)', fontSize: 14, fontWeight: 600 }}>
-                Read framework
-                <ChevronRight size={14} />
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {tab === 'policies' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {asc606Policies.map((p, i) => (
-            <button
-              key={p.id}
-              onClick={() => setOpen({ kind: 'policies', id: p.id })}
-              className="pg-card-elevated"
-              style={{
-                textAlign: 'left',
-                cursor: 'pointer',
-                border: 'none',
-                width: '100%',
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.1 + i * 0.08}s`,
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span className="pg-overline" style={{ color: 'var(--pg-oversee)' }}>
-                  {p.id.replace('pol-asc606-', 'SCP-').toUpperCase()}
-                </span>
-                <span className="pg-tag" style={{ fontSize: 14 }}>
-                  {p.status}
-                </span>
-              </div>
-              <h3 className="pg-subheading" style={{ marginBottom: 6 }}>
-                {p.name}
-              </h3>
-              <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.5 }}>
-                {p.description}
-              </p>
-              <p className="pg-caption" style={{ fontSize: 14 }}>
-                {p.category} · v{p.version}
-              </p>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {tab === 'templates' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {asc606Templates.map((t, i) => (
-            <button
-              key={t.id}
-              onClick={() => setOpen({ kind: 'templates', id: t.id })}
-              className="pg-card-elevated"
-              style={{
-                textAlign: 'left',
-                cursor: 'pointer',
-                border: 'none',
-                width: '100%',
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(12px)',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.1 + i * 0.08}s`,
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span className="pg-overline" style={{ color: 'var(--pg-operate)' }}>
-                  {t.code}
-                </span>
-                <span className="pg-tag" style={{ fontSize: 14 }}>
-                  {t.status}
-                </span>
-              </div>
-              <h3 className="pg-subheading" style={{ marginBottom: 6 }}>
-                {t.name}
-              </h3>
-              <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.5 }}>
-                {t.description}
-              </p>
-              {t.tags && (
-                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {t.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="pg-tag" style={{ fontSize: 14 }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className={gridCols}>
+        {activeCards.map((card, i) => (
+          <LibraryCard
+            key={card.id}
+            item={card}
+            index={i}
+            mounted={mounted}
+            onOpen={() => setOpen({ kind: tab, id: card.id })}
+          />
+        ))}
+      </div>
 
       {/* Drawer for selected item */}
       {open && (
@@ -304,9 +308,7 @@ export default function ASC606LibraryPage() {
               </button>
             </div>
 
-            {selectedFramework && (
-              <MarkdownBlock content={selectedFramework.content} />
-            )}
+            {selectedFramework && <MarkdownBlock content={selectedFramework.content} />}
             {selectedPolicy && <MarkdownBlock content={selectedPolicy.content} />}
             {selectedTemplate && (
               <div>
