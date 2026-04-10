@@ -2,7 +2,6 @@
 
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { usePrizymTheme } from '../ThemeProvider';
 import { useAssessmentStore } from '@/lib/prizym-governance/store';
 import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
@@ -11,8 +10,6 @@ import { QuadrantScoreCard } from './QuadrantScoreCard';
 
 export function Results() {
   const router = useRouter();
-  const { theme } = usePrizymTheme();
-  const isDark = theme === 'dark';
   const answers = useAssessmentStore(s => s.answers);
   const score = useMemo(() => scoreAssessment(answers), [answers]);
   const resetToSeed = useAssessmentStore(s => s.resetToSeed);
