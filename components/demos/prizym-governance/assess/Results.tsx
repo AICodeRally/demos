@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePrizymTheme } from '../ThemeProvider';
 import { useAssessmentStore } from '@/lib/prizym-governance/store';
+import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
 import { MaturityDial } from './MaturityDial';
 import { QuadrantScoreCard } from './QuadrantScoreCard';
@@ -12,10 +13,11 @@ export function Results() {
   const router = useRouter();
   const { theme } = usePrizymTheme();
   const isDark = theme === 'dark';
-  const score = useAssessmentStore(s => s.score());
+  const answers = useAssessmentStore(s => s.answers);
+  const score = useMemo(() => scoreAssessment(answers), [answers]);
   const resetToSeed = useAssessmentStore(s => s.resetToSeed);
 
-  const totalAnswered = Object.keys(useAssessmentStore(s => s.answers)).length;
+  const totalAnswered = Object.keys(answers).length;
 
   return (
     <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 0' }}>
