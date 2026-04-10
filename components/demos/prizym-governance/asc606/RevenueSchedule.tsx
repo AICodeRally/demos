@@ -50,25 +50,25 @@ export function RevenueSchedule({ schedule, termMonths }: RevenueScheduleProps) 
         <table className="min-w-full">
           <thead>
             <tr className="bg-[color:var(--color-surface-alt)]">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider sticky left-0 bg-[color:var(--color-surface-alt)]">
+              <th className="px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider sticky left-0 bg-[color:var(--color-surface-alt)]">
                 Month
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Subscription
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 AI Credits
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Onboarding
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Hardware
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Marketplace
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-foreground)] uppercase tracking-wider bg-[color:var(--color-info-bg)]">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-foreground)] uppercase tracking-wider bg-[color:var(--color-info-bg)]">
                 Monthly Total
               </th>
             </tr>
@@ -110,7 +110,7 @@ export function RevenueSchedule({ schedule, termMonths }: RevenueScheduleProps) 
             {/* Collapsed indicator rows */}
             {collapsed && schedule.length > 3 && (
               <tr className="bg-[color:var(--color-surface)]">
-                <td colSpan={7} className="px-4 py-2 text-center text-xs text-[color:var(--color-muted)]">
+                <td colSpan={7} className="px-4 py-2 text-center text-sm text-[color:var(--color-muted)]">
                   ... {schedule.length - 3} more months (months 4–{schedule.length}) follow same pattern ...
                 </td>
               </tr>
@@ -149,7 +149,7 @@ export function RevenueSchedule({ schedule, termMonths }: RevenueScheduleProps) 
         <div className="border-t border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)]">
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="w-full flex items-center justify-center gap-2 py-2 text-xs font-medium text-[color:var(--color-muted)] hover:text-[color:var(--color-foreground)] transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-[color:var(--color-muted)] hover:text-[color:var(--color-foreground)] transition-colors"
           >
             {collapsed ? (
               <>

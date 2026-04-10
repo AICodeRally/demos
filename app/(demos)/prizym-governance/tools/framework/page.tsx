@@ -1,15 +1,14 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { GOVERNANCE_FRAMEWORK } from '@/data/prizym-governance/engine/framework';
 import { ShieldCheck, Search, ChevronDown, ChevronRight } from 'lucide-react';
 
 const QUADRANT_COLORS: Record<string, string> = {
-  design: '#06b6d4',
-  operate: '#3b82f6',
-  dispute: '#6366f1',
-  oversee: '#8b5cf6',
+  design: 'var(--pg-design-bright)',
+  operate: 'var(--pg-operate-bright)',
+  dispute: 'var(--pg-dispute-bright)',
+  oversee: 'var(--pg-oversee-bright)',
 };
 
 export default function FrameworkBrowserPage() {
@@ -45,20 +44,31 @@ export default function FrameworkBrowserPage() {
   };
 
   return (
-    <PrizymPage title="88-Checkpoint Framework" subtitle="Browse the complete SGM governance framework across 12 phases and 4 quadrants">
-      {/* Controls */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+    <div className="pg-page" style={{ height: '100%' }}>
+      <div style={{ marginBottom: 14 }}>
+        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+          88-Checkpoint Framework
+        </h1>
+        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+          Browse the complete SGM governance framework across 12 phases and 4 quadrants.
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', gap: 12, marginBottom: 14, flexWrap: 'wrap', alignItems: 'center' }}>
         <div style={{ position: 'relative', flex: 1, minWidth: 260 }}>
-          <Search size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--pg-text-muted)' }} />
+          <Search size={16} color="#f1f5f9" strokeWidth={2.4} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
             placeholder="Search checkpoints..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             style={{
-              width: '100%', padding: '10px 12px 10px 36px',
-              background: 'var(--pg-card)', border: '1px solid var(--pg-border)', borderRadius: 8,
-              color: 'var(--pg-text)', fontSize: 14,
+              width: '100%', padding: '11px 14px 11px 38px',
+              background: 'rgba(15, 23, 42, 0.55)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              borderRadius: 10,
+              color: '#ffffff',
+              fontSize: 15,
             }}
           />
         </div>
@@ -67,8 +77,14 @@ export default function FrameworkBrowserPage() {
           value={quadrantFilter}
           onChange={e => setQuadrantFilter(e.target.value)}
           style={{
-            padding: '10px 14px', background: 'var(--pg-card)', border: '1px solid var(--pg-border)',
-            borderRadius: 8, color: 'var(--pg-text)', fontSize: 14, cursor: 'pointer',
+            padding: '11px 16px',
+            background: 'rgba(15, 23, 42, 0.55)',
+            border: '1px solid rgba(255,255,255,0.25)',
+            borderRadius: 10,
+            color: '#ffffff',
+            fontSize: 15,
+            fontWeight: 700,
+            cursor: 'pointer',
           }}
         >
           <option value="all">All Quadrants</option>
@@ -78,32 +94,45 @@ export default function FrameworkBrowserPage() {
           <option value="oversee">Oversee</option>
         </select>
 
-        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--pg-text-muted)', cursor: 'pointer', padding: '10px 14px', background: soxOnly ? 'rgba(139,92,246,0.15)' : 'var(--pg-card)', border: soxOnly ? '1px solid rgba(139,92,246,0.5)' : '1px solid var(--pg-border)', borderRadius: 8 }}>
+        <label style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          fontSize: 15, fontWeight: 700,
+          color: soxOnly ? 'var(--pg-oversee-bright)' : '#ffffff',
+          cursor: 'pointer',
+          padding: '11px 16px',
+          background: soxOnly ? 'rgba(196,181,253,0.18)' : 'rgba(15, 23, 42, 0.55)',
+          border: soxOnly ? '1.5px solid var(--pg-oversee-bright)' : '1px solid rgba(255,255,255,0.25)',
+          borderRadius: 10,
+        }}>
           <input type="checkbox" checked={soxOnly} onChange={e => setSoxOnly(e.target.checked)} />
-          <ShieldCheck size={14} /> SOX Relevant ({soxCount})
+          <ShieldCheck size={15} strokeWidth={2.4} /> SOX Relevant ({soxCount})
         </label>
       </div>
 
-      <div className="pg-caption" style={{ marginBottom: 16 }}>
-        Showing <strong style={{ color: 'var(--pg-text)' }}>{totalVisible}</strong> of <strong style={{ color: 'var(--pg-text)' }}>{GOVERNANCE_FRAMEWORK.totalCheckpoints}</strong> checkpoints across <strong style={{ color: 'var(--pg-text)' }}>{filtered.length}</strong> phases
+      <div style={{ fontSize: 14, color: '#ffffff', marginBottom: 12 }}>
+        Showing <strong style={{ color: 'var(--pg-cyan-bright)', fontWeight: 800 }}>{totalVisible}</strong> of <strong style={{ color: 'var(--pg-cyan-bright)', fontWeight: 800 }}>{GOVERNANCE_FRAMEWORK.totalCheckpoints}</strong> checkpoints across <strong style={{ color: 'var(--pg-cyan-bright)', fontWeight: 800 }}>{filtered.length}</strong> phases.
       </div>
 
-      {/* Phases */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div className="pg-scroll" style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 6 }}>
         {filtered.map((phase, pi) => {
           const color = QUADRANT_COLORS[phase.quadrant];
           const isOpen = expanded.has(phase.number);
           return (
             <div
               key={phase.number}
-              className="pg-card"
               style={{
                 padding: 0, overflow: 'hidden',
-                borderLeft: `3px solid ${color}`,
+                borderRadius: 12,
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+                borderRight: '1px solid rgba(255, 255, 255, 0.2)',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                borderLeft: `5px solid ${color}`,
                 opacity: mounted ? 1 : 0,
                 transform: mounted ? 'translateY(0)' : 'translateY(6px)',
                 transition: 'all 0.3s ease',
                 transitionDelay: `${pi * 0.03}s`,
+                flexShrink: 0,
               }}
             >
               <button
@@ -111,41 +140,49 @@ export default function FrameworkBrowserPage() {
                 style={{
                   display: 'flex', alignItems: 'center', gap: 12, width: '100%',
                   padding: '14px 18px', background: 'transparent', border: 'none', cursor: 'pointer',
+                  color: 'inherit',
                 }}
               >
-                {isOpen ? <ChevronDown size={16} style={{ color }} /> : <ChevronRight size={16} style={{ color }} />}
-                <span style={{ minWidth: 32, fontSize: 14, fontWeight: 700, color, background: `${color}18`, padding: '3px 8px', borderRadius: 6, textAlign: 'center' }}>
+                {isOpen ? <ChevronDown size={18} color={color} strokeWidth={2.6} /> : <ChevronRight size={18} color={color} strokeWidth={2.6} />}
+                <span style={{
+                  minWidth: 40, padding: '4px 10px', borderRadius: 8,
+                  background: 'rgba(0, 0, 0, 0.32)',
+                  border: `1.5px solid ${color}`,
+                  fontSize: 14, fontWeight: 800, color, textAlign: 'center',
+                }}>
                   P{phase.number}
                 </span>
-                <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--pg-text)', flex: 1, textAlign: 'left' }}>
+                <span style={{ fontSize: 17, fontWeight: 800, color: '#ffffff', flex: 1, textAlign: 'left' }}>
                   {phase.name}
                 </span>
-                <span style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                <span style={{ fontSize: 14, fontWeight: 800, color, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   {phase.quadrant}
                 </span>
-                <span style={{ fontSize: 14, color: 'var(--pg-text-muted)' }}>{phase.checkpoints.length}</span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: '#f1f5f9' }}>{phase.checkpoints.length}</span>
               </button>
 
               {isOpen && (
-                <div style={{ padding: '0 18px 16px 50px' }}>
+                <div style={{ padding: '0 18px 16px 56px' }}>
                   {phase.checkpoints.map(cp => (
                     <div
                       key={cp.id}
                       style={{
-                        padding: '10px 14px', borderRadius: 6,
-                        background: 'var(--pg-surface-alt)', marginBottom: 6,
+                        padding: '11px 14px', borderRadius: 8,
+                        background: 'rgba(255, 255, 255, 0.08)',
+                        border: '1px solid rgba(255, 255, 255, 0.18)',
+                        marginBottom: 6,
                         display: 'flex', alignItems: 'flex-start', gap: 12,
                       }}
                     >
-                      <span style={{ fontSize: 14, fontWeight: 700, color, minWidth: 44, fontFamily: 'monospace' }}>{cp.id}</span>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{cp.label}</span>
+                      <span style={{ fontSize: 14, fontWeight: 800, color, minWidth: 48, fontFamily: 'ui-monospace, SFMono-Regular, monospace', textTransform: 'uppercase' }}>{cp.id}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
+                          <span style={{ fontSize: 15, fontWeight: 700, color: '#ffffff' }}>{cp.label}</span>
                           {cp.soxRelevant && (
-                            <span style={{ fontSize: 14, padding: '1px 6px', borderRadius: 10, background: 'rgba(139,92,246,0.15)', color: '#8b5cf6', fontWeight: 700 }}>SOX</span>
+                            <span style={{ fontSize: 13, padding: '2px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.32)', border: '1.5px solid var(--pg-oversee-bright)', color: 'var(--pg-oversee-bright)', fontWeight: 800, letterSpacing: '0.05em' }}>SOX</span>
                           )}
                         </div>
-                        <p className="pg-caption" style={{ fontSize: 14, lineHeight: 1.5 }}>{cp.description}</p>
+                        <p style={{ fontSize: 14, color: '#f1f5f9', lineHeight: 1.5 }}>{cp.description}</p>
                       </div>
                     </div>
                   ))}
@@ -155,6 +192,6 @@ export default function FrameworkBrowserPage() {
           );
         })}
       </div>
-    </PrizymPage>
+    </div>
   );
 }

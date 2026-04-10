@@ -51,13 +51,13 @@ function JournalEntryCard({ entry, index }: { entry: JournalEntry; index: number
               JE-{String(index + 1).padStart(2, '0')}: {entry.title}
             </p>
             {entry.description && (
-              <p className="text-xs text-[color:var(--color-muted)] mt-0.5">{entry.description}</p>
+              <p className="text-sm text-[color:var(--color-muted)] mt-0.5">{entry.description}</p>
             )}
           </div>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           <span
-            className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+            className={`text-sm px-2 py-0.5 rounded-full font-medium ${
               balanced
                 ? 'bg-[color:var(--color-success-bg)] text-[color:var(--color-success)]'
                 : 'bg-[color:var(--color-error-bg)] text-[color:var(--color-error)]'
@@ -79,13 +79,13 @@ function JournalEntryCard({ entry, index }: { entry: JournalEntry; index: number
           <table className="min-w-full">
             <thead>
               <tr className="border-b border-[color:var(--color-border)]">
-                <th className="px-4 py-2 text-left text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+                <th className="px-4 py-2 text-left text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                   Account
                 </th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider w-32">
+                <th className="px-4 py-2 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider w-32">
                   Debit
                 </th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider w-32">
+                <th className="px-4 py-2 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider w-32">
                   Credit
                 </th>
               </tr>
@@ -100,7 +100,7 @@ function JournalEntryCard({ entry, index }: { entry: JournalEntry; index: number
                     <div className={`flex items-start gap-2 ${line.credit !== undefined && line.debit === undefined ? 'pl-4' : ''}`}>
                       <span className="text-sm text-[color:var(--color-foreground)]">{line.account}</span>
                       {line.note && (
-                        <span className="text-xs text-[color:var(--color-muted)] italic mt-0.5">
+                        <span className="text-sm text-[color:var(--color-muted)] italic mt-0.5">
                           ({line.note})
                         </span>
                       )}
@@ -129,7 +129,7 @@ function JournalEntryCard({ entry, index }: { entry: JournalEntry; index: number
             </tbody>
             <tfoot>
               <tr className="border-t-2 border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)]">
-                <td className="px-4 py-2.5 text-xs font-bold text-[color:var(--color-muted)] uppercase">
+                <td className="px-4 py-2.5 text-sm font-bold text-[color:var(--color-muted)] uppercase">
                   Totals
                 </td>
                 <td className="px-4 py-2.5 text-right text-sm font-bold text-[color:var(--color-foreground)]">

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { BarChart2, Table as TableIcon, BookOpen } from 'lucide-react';
 import {
   ContractInputForm,
@@ -47,19 +46,21 @@ function SectionHeader({
   icon,
   title,
   subtitle,
+  accent,
 }: {
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
+  accent: string;
 }) {
   return (
-    <div className="flex items-center gap-3 mb-4">
-      <div className="p-2 rounded-lg bg-[color:var(--color-info-bg)] border border-[color:var(--color-info-border)]">
-        <span className="text-[color:var(--color-primary)]">{icon}</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+      <div className="pg-icon-bubble" style={{ borderColor: accent }}>
+        {icon}
       </div>
-      <div>
-        <h2 className="text-lg font-bold text-[color:var(--color-foreground)]">{title}</h2>
-        {subtitle && <p className="text-sm text-[color:var(--color-muted)]">{subtitle}</p>}
+      <div style={{ minWidth: 0 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 800, color: '#ffffff', lineHeight: 1.2 }}>{title}</h2>
+        {subtitle && <p style={{ fontSize: 14, color: '#f1f5f9', marginTop: 2 }}>{subtitle}</p>}
       </div>
     </div>
   );
@@ -226,65 +227,75 @@ export default function ASC606CalculatorPage() {
   const totalContractValue = totalFixed + marketplaceFee;
 
   return (
-    <PrizymPage
-      title="ASC 606 Revenue Allocation Calculator"
-      subtitle="Allocate transaction price across performance obligations using standalone selling prices. Generates a monthly recognition schedule and sample journal entries."
-    >
-      <div className="space-y-8">
-        {/* Money tiles */}
-        <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card-strong">
-          <div className="flex items-center justify-around gap-6 flex-wrap">
-            <div className="text-center">
-              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
-                Fixed Bundle
-              </p>
-              <p className="pg-heading" style={{ color: 'var(--pg-cyan)', fontSize: '2.5rem' }}>
-                {fmt(totalFixed)}
-              </p>
+    <div className="pg-page" style={{ height: '100%' }}>
+      <div style={{ marginBottom: 14 }}>
+        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+          ASC 606 Revenue Allocation Calculator
+        </h1>
+        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+          Allocate transaction price across performance obligations using standalone selling prices. Monthly recognition schedule and sample journal entries generated below.
+        </p>
+      </div>
+
+      {/* Money tiles */}
+      <div className="pg-card-elevated" style={{ padding: 18, marginBottom: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', gap: 24, flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
+              Fixed Bundle
             </div>
-            <div style={{ width: 1, height: 56, background: 'var(--pg-border)' }} />
-            <div className="text-center">
-              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
-                Variable (Marketplace)
-              </p>
-              <p className="pg-heading" style={{ color: 'var(--pg-text)', fontSize: '2.5rem' }}>
-                {fmt(marketplaceFee)}
-              </p>
+            <div style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--pg-cyan-bright)', lineHeight: 1 }}>
+              {fmt(totalFixed)}
             </div>
-            <div style={{ width: 1, height: 56, background: 'var(--pg-border)' }} />
-            <div className="text-center">
-              <p className="pg-overline" style={{ color: 'var(--pg-text-muted)', marginBottom: 6 }}>
-                Total Contract Value
-              </p>
-              <p className="pg-heading" style={{
-                fontSize: '2.5rem',
-                background: 'linear-gradient(90deg, #0ea5e9, #6366f1, #8b5cf6)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>
-                {fmt(totalContractValue)}
-              </p>
+          </div>
+          <div style={{ width: 1, height: 56, background: 'rgba(255,255,255,0.22)' }} />
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
+              Variable (Marketplace)
+            </div>
+            <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
+              {fmt(marketplaceFee)}
+            </div>
+          </div>
+          <div style={{ width: 1, height: 56, background: 'rgba(255,255,255,0.22)' }} />
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
+              Total Contract Value
+            </div>
+            <div style={{
+              fontSize: '2.25rem',
+              fontWeight: 800,
+              lineHeight: 1,
+              background: 'linear-gradient(90deg, #7dd3fc, #a5b4fc, #c4b5fd)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              {fmt(totalContractValue)}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Two-column: inputs + allocation */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card">
+      {/* Scrollable content — inputs+allocation, schedule, journal entries live inside one scroll region */}
+      <div className="pg-scroll" style={{ flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 6 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }} className="pg-asc606-grid">
+          <div className="pg-card-elevated" style={{ padding: 18 }}>
             <SectionHeader
-              icon={<BookOpen className="w-5 h-5" />}
+              icon={<BookOpen size={20} color="var(--pg-cyan-bright)" strokeWidth={2.4} />}
               title="Contract Inputs"
               subtitle="Enter contract amounts and standalone selling prices"
+              accent="var(--pg-cyan-bright)"
             />
             <ContractInputForm inputs={inputs} onChange={setInputs} />
           </div>
 
-          <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card">
+          <div className="pg-card-elevated" style={{ padding: 18 }}>
             <SectionHeader
-              icon={<BarChart2 className="w-5 h-5" />}
+              icon={<BarChart2 size={20} color="var(--pg-success-bright)" strokeWidth={2.4} />}
               title="SSP Allocation"
               subtitle="Relative standalone selling price method (ASC 606-10-32-31)"
+              accent="var(--pg-success-bright)"
             />
             <AllocationTable
               rows={rows}
@@ -295,31 +306,30 @@ export default function ASC606CalculatorPage() {
           </div>
         </div>
 
-        {/* Revenue Schedule */}
-        <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card">
+        <div className="pg-card-elevated" style={{ padding: 18, marginBottom: 16 }}>
           <SectionHeader
-            icon={<TableIcon className="w-5 h-5" />}
+            icon={<TableIcon size={20} color="var(--pg-info-bright)" strokeWidth={2.4} />}
             title="Monthly Revenue Schedule"
             subtitle={`${inputs.termMonths}-month recognition schedule by performance obligation`}
+            accent="var(--pg-info-bright)"
           />
           <RevenueSchedule schedule={schedule} termMonths={inputs.termMonths} />
         </div>
 
-        {/* Journal Entries */}
-        <div className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 theme-card">
+        <div className="pg-card-elevated" style={{ padding: 18, marginBottom: 16 }}>
           <SectionHeader
-            icon={<BookOpen className="w-5 h-5" />}
+            icon={<BookOpen size={20} color="var(--pg-oversee-bright)" strokeWidth={2.4} />}
             title="Sample Journal Entries"
             subtitle="Auto-generated based on contract structure — for illustrative purposes"
+            accent="var(--pg-oversee-bright)"
           />
           <JournalEntries entries={journalEntries} />
         </div>
 
-        <p className="pg-caption text-center" style={{ paddingBottom: 16 }}>
-          This calculator is for illustrative and discussion purposes only. Consult your accounting
-          team and auditors for final ASC 606 treatment.
+        <p style={{ fontSize: 14, color: '#f1f5f9', textAlign: 'center', paddingBottom: 8 }}>
+          This calculator is for illustrative and discussion purposes only. Consult your accounting team and auditors for final ASC 606 treatment.
         </p>
       </div>
-    </PrizymPage>
+    </div>
   );
 }

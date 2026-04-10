@@ -36,7 +36,7 @@ function CurrencyInput({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-xs font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
+      <label className="text-sm font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
         {label}
       </label>
       <div className="relative">
@@ -72,7 +72,7 @@ function NumberInput({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-xs font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
+      <label className="text-sm font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
         {label}
       </label>
       <div className="relative">
@@ -84,7 +84,7 @@ function NumberInput({
           className="w-full pl-3 pr-8 py-2 text-sm bg-[color:var(--color-surface)] border border-[color:var(--color-border)] rounded-md text-[color:var(--color-foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--color-info-border)] focus:border-transparent transition-colors"
         />
         {suffix && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[color:var(--color-muted)] select-none">
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-[color:var(--color-muted)] select-none">
             {suffix}
           </span>
         )}
@@ -96,7 +96,7 @@ function NumberInput({
 function SectionDivider({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-3 py-1">
-      <span className="text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider whitespace-nowrap">
+      <span className="text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider whitespace-nowrap">
         {title}
       </span>
       <div className="flex-1 h-px bg-[color:var(--color-border)]" />
@@ -124,7 +124,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
 
       {/* Subscription */}
       <div>
-        <p className="text-xs font-semibold text-[color:var(--color-foreground)] mb-2">Subscription</p>
+        <p className="text-sm font-semibold text-[color:var(--color-foreground)] mb-2">Subscription</p>
         <div className="grid grid-cols-2 gap-3">
           <CurrencyInput
             label="Contract Amount"
@@ -143,7 +143,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
 
       {/* AI Credits */}
       <div>
-        <p className="text-xs font-semibold text-[color:var(--color-foreground)] mb-2">AI Credits</p>
+        <p className="text-sm font-semibold text-[color:var(--color-foreground)] mb-2">AI Credits</p>
         <div className="grid grid-cols-2 gap-3">
           <CurrencyInput
             label="Contract Amount"
@@ -162,7 +162,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
 
       {/* Onboarding */}
       <div>
-        <p className="text-xs font-semibold text-[color:var(--color-foreground)] mb-2">Onboarding Services</p>
+        <p className="text-sm font-semibold text-[color:var(--color-foreground)] mb-2">Onboarding Services</p>
         <div className="grid grid-cols-2 gap-3">
           <CurrencyInput
             label="Contract Amount"
@@ -181,7 +181,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
 
       {/* Hardware */}
       <div>
-        <p className="text-xs font-semibold text-[color:var(--color-foreground)] mb-2">Hardware</p>
+        <p className="text-sm font-semibold text-[color:var(--color-foreground)] mb-2">Hardware</p>
         <div className="grid grid-cols-2 gap-3">
           <CurrencyInput
             label="Contract Amount"
@@ -202,7 +202,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
 
       {/* Marketplace */}
       <div>
-        <p className="text-xs font-semibold text-[color:var(--color-foreground)] mb-2">Marketplace Commission</p>
+        <p className="text-sm font-semibold text-[color:var(--color-foreground)] mb-2">Marketplace Commission</p>
         <div className="grid grid-cols-2 gap-3">
           <NumberInput
             label="Fee Rate"
@@ -218,7 +218,7 @@ export function ContractInputForm({ inputs, onChange }: ContractInputFormProps) 
             onChange={handleChange}
           />
         </div>
-        <p className="text-xs text-[color:var(--color-muted)] mt-2">
+        <p className="text-sm text-[color:var(--color-muted)] mt-2">
           Estimated annual fee: ${((inputs.marketplaceFeePercent / 100) * inputs.marketplaceVolume).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
         </p>
       </div>

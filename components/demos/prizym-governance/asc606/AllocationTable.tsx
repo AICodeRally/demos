@@ -40,16 +40,16 @@ export function AllocationTable({ rows, totalFixed, totalSSP, marketplaceFee }: 
         <table className="min-w-full">
           <thead>
             <tr className="bg-[color:var(--color-surface-alt)]">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Performance Obligation
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 SSP
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 % of Total
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-sm font-semibold text-[color:var(--color-muted)] uppercase tracking-wider">
                 Allocated Amount
               </th>
             </tr>
@@ -117,7 +117,7 @@ export function AllocationTable({ rows, totalFixed, totalSSP, marketplaceFee }: 
           : 'bg-[color:var(--color-info-bg)] border-[color:var(--color-info-border)] text-[color:var(--color-info)]';
 
         return (
-          <div className={`flex items-start gap-2 px-3 py-2 rounded-md border text-xs ${colorClass}`}>
+          <div className={`flex items-start gap-2 px-3 py-2 rounded-md border text-sm ${colorClass}`}>
             <InfoCircledIcon className="w-4 h-4 mt-0.5 flex-shrink-0" />
             <span>
               <span className="font-semibold">{label}: </span>
@@ -132,7 +132,7 @@ export function AllocationTable({ rows, totalFixed, totalSSP, marketplaceFee }: 
 
       {/* Marketplace note */}
       {marketplaceFee > 0 && (
-        <div className="flex items-start gap-2 px-3 py-2 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)] text-xs text-[color:var(--color-muted)]">
+        <div className="flex items-start gap-2 px-3 py-2 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)] text-sm text-[color:var(--color-muted)]">
           <InfoCircledIcon className="w-4 h-4 mt-0.5 flex-shrink-0 text-[color:var(--color-muted)]" />
           <span>
             <span className="font-semibold text-[color:var(--color-foreground)]">Variable Consideration — Marketplace Fee: </span>

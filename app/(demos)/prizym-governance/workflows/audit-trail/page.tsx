@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { AUDIT_EVENTS, IMPACT_COLORS, CATEGORY_COLORS } from '@/data/prizym-governance/audit';
 import { History, Shield, AlertTriangle, Activity } from 'lucide-react';
@@ -18,20 +17,31 @@ export default function AuditPage() {
 
   const categories = ['all', 'APPROVAL', 'CASE', 'POLICY', 'DOCUMENT'];
 
+  const stats = [
+    { label: 'Total Events', value: AUDIT_EVENTS.length, color: 'var(--pg-oversee-bright)', icon: Activity },
+    { label: 'Critical', value: AUDIT_EVENTS.filter(e => e.impactLevel === 'CRITICAL').length, color: 'var(--pg-danger-bright)', icon: AlertTriangle },
+    { label: 'High', value: AUDIT_EVENTS.filter(e => e.impactLevel === 'HIGH').length, color: 'var(--pg-warning-bright)', icon: Shield },
+    { label: 'Committees', value: AUDIT_EVENTS.filter(e => e.committee).length, color: 'var(--pg-success-bright)', icon: History },
+  ];
+
   return (
-    <PrizymPage title="Audit Trail" subtitle="Immutable event log — governance decisions, approvals, and case activity">
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {[
-          { label: 'Total Events', value: AUDIT_EVENTS.length, color: '#8b5cf6', icon: Activity },
-          { label: 'Critical', value: AUDIT_EVENTS.filter(e => e.impactLevel === 'CRITICAL').length, color: '#dc2626', icon: AlertTriangle },
-          { label: 'High', value: AUDIT_EVENTS.filter(e => e.impactLevel === 'HIGH').length, color: '#f97316', icon: Shield },
-          { label: 'Committees', value: AUDIT_EVENTS.filter(e => e.committee).length, color: '#10b981', icon: History },
-        ].map((s, i) => (
+    <div className="pg-page" style={{ height: '100%' }}>
+      <div style={{ marginBottom: 14 }}>
+        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+          Audit Trail
+        </h1>
+        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+          Immutable event log — governance decisions, approvals, and case activity.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+        {stats.map((s, i) => (
           <div
             key={s.label}
-            className="pg-card"
+            className="pg-card-elevated"
             style={{
+              padding: '14px 16px',
               display: 'flex', alignItems: 'center', gap: 12,
               opacity: mounted ? 1 : 0,
               transform: mounted ? 'translateY(0)' : 'translateY(12px)',
@@ -39,39 +49,43 @@ export default function AuditPage() {
               transitionDelay: `${i * 0.08}s`,
             }}
           >
-            <div className="pg-icon-bubble" style={{ background: `${s.color}18` }}>
-              <s.icon size={18} color={s.color} />
+            <div className="pg-icon-bubble" style={{ borderColor: s.color }}>
+              <s.icon size={19} color={s.color} strokeWidth={2.4} />
             </div>
-            <div>
-              <div className="pg-value-sm" style={{ color: s.color }}>{s.value}</div>
-              <div className="pg-caption">{s.label}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 28, fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>{s.value}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: s.color, textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: 4 }}>{s.label}</div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Category filter */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-        {categories.map(c => (
-          <button
-            key={c}
-            className="pg-filter-btn"
-            data-active={categoryFilter === c ? 'true' : undefined}
-            onClick={() => setCategoryFilter(c)}
-            style={categoryFilter === c ? {
-              borderColor: CATEGORY_COLORS[c] ?? 'var(--pg-cyan)',
-              background: `${CATEGORY_COLORS[c] ?? 'var(--pg-cyan)'}12`,
-              color: CATEGORY_COLORS[c] ?? 'var(--pg-cyan)',
-            } : undefined}
-          >
-            {c === 'all' ? `All (${AUDIT_EVENTS.length})` : c.toLowerCase()}
-          </button>
-        ))}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
+        {categories.map(c => {
+          const active = categoryFilter === c;
+          const color = c === 'all' ? 'var(--pg-cyan-bright)' : (CATEGORY_COLORS[c] ?? 'var(--pg-cyan-bright)');
+          return (
+            <button
+              key={c}
+              onClick={() => setCategoryFilter(c)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: 20,
+                background: active ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.06)',
+                border: active ? `1.5px solid ${color}` : '1px solid rgba(255,255,255,0.2)',
+                color: active ? color : '#ffffff',
+                fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                textTransform: 'capitalize',
+              }}
+            >
+              {c === 'all' ? `All (${AUDIT_EVENTS.length})` : c.toLowerCase()}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Timeline */}
-      <div className="pg-card">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      <div className="pg-card-elevated" style={{ padding: 18, flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <div className="pg-scroll" style={{ display: 'flex', flexDirection: 'column', gap: 0, flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 6 }}>
           {filtered.map((event, i) => (
             <div
               key={event.id}
@@ -79,50 +93,49 @@ export default function AuditPage() {
                 display: 'flex',
                 gap: 14,
                 padding: '14px 0',
-                borderBottom: i < filtered.length - 1 ? '1px solid var(--pg-border-faint)' : 'none',
+                borderBottom: i < filtered.length - 1 ? '1px solid rgba(255,255,255,0.16)' : 'none',
                 opacity: mounted ? 1 : 0,
                 transform: mounted ? 'translateX(0)' : 'translateX(-8px)',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.2 + i * 0.04}s`,
+                transitionDelay: `${0.15 + i * 0.03}s`,
               }}
             >
-              {/* Impact dot + timeline */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 24 }}>
                 <div style={{
-                  width: 12, height: 12, borderRadius: '50%',
+                  width: 14, height: 14, borderRadius: '50%',
                   background: IMPACT_COLORS[event.impactLevel],
-                  boxShadow: `0 0 8px ${IMPACT_COLORS[event.impactLevel]}40`,
+                  boxShadow: `0 0 10px ${IMPACT_COLORS[event.impactLevel]}88`,
+                  border: '2px solid rgba(255,255,255,0.28)',
                   marginTop: 4,
                 }} />
                 {i < filtered.length - 1 && (
-                  <div style={{ width: 1, flex: 1, background: 'var(--pg-border-faint)', marginTop: 4 }} />
+                  <div style={{ width: 2, flex: 1, background: 'rgba(255,255,255,0.18)', marginTop: 4 }} />
                 )}
               </div>
 
-              {/* Content */}
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 6 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span className="pg-label">{event.action}</span>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: '#ffffff' }}>{event.action}</span>
                     {event.committee && (
-                      <span className="pg-badge" style={{ background: 'rgba(139,92,246,0.12)', color: '#8b5cf6', border: '1px solid rgba(139,92,246,0.3)' }}>
+                      <span style={{ padding: '3px 10px', borderRadius: 999, background: 'rgba(196,181,253,0.18)', color: 'var(--pg-oversee-bright)', border: '1px solid var(--pg-oversee-bright)', fontSize: 13, fontWeight: 800, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                         {event.committee}
                       </span>
                     )}
                   </div>
                   <StatusBadge status={event.impactLevel} />
                 </div>
-                <div className="pg-caption" style={{ marginTop: 4, lineHeight: 1.5 }}>{event.description}</div>
-                <div style={{ display: 'flex', gap: 12, marginTop: 6, flexWrap: 'wrap' }}>
-                  <span className="pg-overline" style={{ color: 'var(--pg-cyan)' }}>{event.actor}</span>
-                  <span className="pg-caption">{event.actorRole}</span>
-                  <span className="pg-caption" style={{ fontWeight: 600 }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                <div style={{ fontSize: 15, color: '#ffffff', marginTop: 4, lineHeight: 1.5 }}>{event.description}</div>
+                <div style={{ display: 'flex', gap: 14, marginTop: 6, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{event.actor}</span>
+                  <span style={{ fontSize: 14, color: '#f1f5f9' }}>{event.actorRole}</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: '#ffffff' }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </PrizymPage>
+    </div>
   );
 }

@@ -1,6 +1,5 @@
-// Synthetic tenant profile for the Gold Standard demo. Henry Schein is
-// used as the plausible prospect persona — this data is invented for
-// the showcase, not sourced from any real HS engagement.
+// Synthetic tenant profile for the SGM Gold Standard demo. Northwind
+// Distribution is an invented demo company — not a real engagement.
 
 export interface OrgProfile {
   name: string;
@@ -28,17 +27,17 @@ export interface OrgProfile {
   notes: string;
 }
 
-export const henryScheinOrgProfile: OrgProfile = {
-  name: 'Henry Schein Industries',
-  shortName: 'Henry Schein',
+export const demoOrgProfile: OrgProfile = {
+  name: 'Northwind Distribution',
+  shortName: 'Northwind',
   industry: 'Healthcare Distribution',
-  subIndustry: 'Medical & Dental Practice Solutions',
+  subIndustry: 'Medical, Dental & Animal Health Supply',
   entityType: 'Public (SOX)',
-  headquarters: 'Melville, NY',
+  headquarters: 'Seattle, WA',
   region: 'Global',
-  employees: 23500,
-  salesHeadcount: 4200,
-  revenueUsd: 12_600_000_000,
+  employees: 22400,
+  salesHeadcount: 3800,
+  revenueUsd: 11_200_000_000,
   fiscalYearEnd: '12-31',
   sponsor: {
     name: 'Avery Caldwell',
