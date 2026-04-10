@@ -1,20 +1,18 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
-import { MetricCard, StatusBadge, GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
+import { MetricCard, GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import { GOVERNANCE_KPIS, RECENT_HIGHLIGHTS, POLICY_COVERAGE_HEALTH, CASE_VOLUME_BY_TYPE, APPROVAL_DECISIONS } from '@/data/prizym-governance/analytics';
-import { ALL_POLICIES, getPolicyStats } from '@/data/prizym-governance/policies';
-import { PLANS, getPlanStats } from '@/data/prizym-governance/plans';
+import { getPolicyStats } from '@/data/prizym-governance/policies';
+import { getPlanStats } from '@/data/prizym-governance/plans';
 import { DOCUMENT_COUNTS } from '@/data/prizym-governance/documents';
-import { useAssessmentStore } from '@/lib/prizym-governance/store';
-import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
-import { MaturityDial } from '@/components/demos/prizym-governance/assess/MaturityDial';
-import { QuadrantScoreCard } from '@/components/demos/prizym-governance/assess/QuadrantScoreCard';
+import { getApprovalStats } from '@/data/prizym-governance/operate';
+import { getComplianceScore } from '@/data/prizym-governance/oversee';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
 import {
   Shield, FileText, ScrollText, AlertTriangle,
-  CheckCircle2, TrendingUp, TrendingDown, Minus, Activity, Target, BarChart3,
+  CheckCircle2, TrendingUp, TrendingDown, Minus, Activity, Target, ShieldCheck,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -22,20 +20,14 @@ export default function DashboardPage() {
   useEffect(() => { setMounted(true); }, []);
   const policyStats = getPolicyStats();
   const planStats = getPlanStats();
-
-  const hydrate = useAssessmentStore(s => s.hydrate);
-  useEffect(() => { hydrate(); }, [hydrate]);
-
-  const answers = useAssessmentStore(s => s.answers);
-  const score = useMemo(() => scoreAssessment(answers), [answers]);
-  const answeredCount = Object.values(answers).filter(r => r !== 'not_started').length;
-  const maturityPct = Math.round(score.maturityScore * 100);
+  const approvalStats = getApprovalStats();
+  const complianceScore = getComplianceScore();
 
   const HERO_KPIS = [
     { label: 'Policies', value: String(policyStats.total), icon: Shield, color: '#3b82f6', sub: `${policyStats.approved} approved` },
     { label: 'Comp Plans', value: String(planStats.total), icon: FileText, color: '#06b6d4', sub: `${planStats.avgCompletion}% avg completion` },
     { label: 'Documents', value: String(DOCUMENT_COUNTS.TOTAL), icon: ScrollText, color: '#8b5cf6', sub: '6 categories' },
-    { label: 'Active Cases', value: '4', icon: AlertTriangle, color: '#f59e0b', sub: '2 high priority' },
+    { label: 'Pending Approvals', value: String(approvalStats.pending), icon: AlertTriangle, color: '#f59e0b', sub: `${approvalStats.highPriority} high priority` },
   ];
 
   return (
@@ -47,42 +39,21 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* Assessment Maturity + Quadrant Scores */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6" role="region" aria-label="Assessment maturity">
-        {/* Maturity Dial */}
-        <div className="pg-card-elevated" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start' }}>
-            <Target size={16} color="var(--pg-cyan)" />
-            Governance Maturity
-          </h3>
-          <MaturityDial score={score.maturityScore} size={180} />
-          <div style={{ textAlign: 'center' }}>
-            <div className="pg-caption" style={{ marginBottom: 4 }}>
-              {answeredCount} of 88 checkpoints answered
-            </div>
-            <div className="pg-label" style={{ fontWeight: 700 }}>
-              Archetype: <span style={{ color: 'var(--pg-cyan)' }}>{score.archetype}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Quadrant Score Cards */}
-        <div className="lg:col-span-2" role="region" aria-label="Quadrant scores">
-          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <BarChart3 size={16} color="var(--pg-cyan)" />
-            Quadrant Scores
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <QuadrantScoreCard quadrant="design" score={score.quadrantScores.design} />
-            <QuadrantScoreCard quadrant="operate" score={score.quadrantScores.operate} />
-            <QuadrantScoreCard quadrant="dispute" score={score.quadrantScores.dispute} />
-            <QuadrantScoreCard quadrant="oversee" score={score.quadrantScores.oversee} />
-          </div>
-        </div>
-      </div>
-
-      {/* Governance Health + Coverage Gauge */}
+      {/* Compliance + Policy Coverage + Governance Health */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Compliance Score Gauge */}
+        <div className="pg-card-elevated" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+          <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start' }}>
+            <ShieldCheck size={16} color="var(--pg-cyan)" />
+            Compliance Score
+          </h3>
+          <GaugeChart value={complianceScore} size={180} strokeWidth={14} color="#8b5cf6" label="Compliant" />
+          <div className="pg-caption" style={{ textAlign: 'center' }}>
+            Weighted across SOX, wage law, tax, and data-security controls
+          </div>
+        </div>
+
+        {/* Governance Health KPIs */}
         <div className="lg:col-span-2 pg-card" role="region" aria-label="Governance KPIs">
           <h2 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Activity size={16} color="var(--pg-cyan)" />
@@ -109,7 +80,7 @@ export default function DashboardPage() {
                   <div className="pg-value-sm" style={{ color: trendColor }}>{kpi.value}{kpi.unit === '%' || kpi.unit === 'days' ? kpi.unit : ''}</div>
                   <div className="pg-overline" style={{ marginTop: 4 }}>{kpi.label}</div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 4 }}>
-                    <TrendIcon size={12} color={trendColor} />
+                    <TrendIcon size={14} color={trendColor} />
                     <span className="pg-caption" style={{ color: trendColor }}>{kpi.trendValue}%</span>
                   </div>
                 </div>
@@ -117,9 +88,12 @@ export default function DashboardPage() {
             })}
           </div>
         </div>
+      </div>
 
+      {/* Policy Coverage + Case Volume */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Policy Coverage Gauge */}
-        <div className="pg-card-elevated" role="region" aria-label="Policy coverage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="pg-card-elevated" role="region" aria-label="Policy coverage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h3 className="pg-section-title" style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start' }}>
             <Target size={16} color="var(--pg-cyan)" />
             Policy Coverage
@@ -141,11 +115,9 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Case Volume */}
-        <div className="pg-card" role="region" aria-label="Case volume by type">
+        <div className="pg-card lg:col-span-2" role="region" aria-label="Case volume by type">
           <h3 className="pg-section-title">Case Volume by Type</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {CASE_VOLUME_BY_TYPE.map(c => (
@@ -159,8 +131,10 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Approval Decisions */}
+      {/* Approval Decisions + Recent Highlights */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="pg-card" role="region" aria-label="Approval decisions">
           <h3 className="pg-section-title">Approval Decisions (YTD)</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -175,38 +149,37 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Recent Highlights */}
-      <div className="pg-card" role="region" aria-label="Recent highlights">
-        <h3 className="pg-section-title">Recent Highlights</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {RECENT_HIGHLIGHTS.map((h, i) => {
-            const color = h.type === 'success' ? '#10b981' : h.type === 'warning' ? '#f59e0b' : '#3b82f6';
-            return (
-              <div
-                key={h.id}
-                className="pg-highlight-row"
-                style={{
-                  background: `${color}08`,
-                  border: `1px solid ${color}20`,
-                  opacity: mounted ? 1 : 0,
-                  transform: mounted ? 'translateX(0)' : 'translateX(-12px)',
-                  transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                  transitionDelay: `${0.6 + i * 0.1}s`,
-                }}
-              >
-                <div className="pg-icon-bubble-sm" style={{ background: `${color}18` }}>
-                  <CheckCircle2 size={14} color={color} />
+        <div className="pg-card" role="region" aria-label="Recent highlights">
+          <h3 className="pg-section-title">Recent Highlights</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {RECENT_HIGHLIGHTS.map((h, i) => {
+              const color = h.type === 'success' ? '#10b981' : h.type === 'warning' ? '#f59e0b' : '#3b82f6';
+              return (
+                <div
+                  key={h.id}
+                  className="pg-highlight-row"
+                  style={{
+                    background: `${color}08`,
+                    border: `1px solid ${color}20`,
+                    opacity: mounted ? 1 : 0,
+                    transform: mounted ? 'translateX(0)' : 'translateX(-12px)',
+                    transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transitionDelay: `${0.6 + i * 0.1}s`,
+                  }}
+                >
+                  <div className="pg-icon-bubble-sm" style={{ background: `${color}18` }}>
+                    <CheckCircle2 size={14} color={color} />
+                  </div>
+                  <div>
+                    <div className="pg-label" style={{ color }}>{h.title}</div>
+                    <div className="pg-caption">{h.description}</div>
+                    <div className="pg-caption" style={{ marginTop: 2, fontWeight: 600 }}>{h.date}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="pg-label" style={{ color }}>{h.title}</div>
-                  <div className="pg-caption">{h.description}</div>
-                  <div className="pg-caption" style={{ marginTop: 2, fontWeight: 600 }}>{h.date}</div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </PrizymPage>
