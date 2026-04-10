@@ -26,18 +26,23 @@ export function NavSection({ section, collapsible = true, defaultExpanded, slug 
     <div className="mb-3">
       <button
         onClick={() => collapsible && setUserToggled(expanded ? false : true)}
-        className="flex w-full items-center justify-between rounded pl-5 pr-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em]"
+        className="flex w-full items-center gap-3 rounded pl-5 pr-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em]"
         style={{ cursor: collapsible ? 'pointer' : 'default' }}
       >
+        {/* 16px icon-column dot — lines up with item icons below */}
         <span
-          className="flex items-center gap-2 truncate"
-          style={{ color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.72))' }}
+          aria-hidden
+          className="flex h-4 w-4 shrink-0 items-center justify-center"
         >
           <span
-            aria-hidden
-            className="inline-block h-1 w-1 shrink-0 rounded-full"
-            style={{ backgroundColor: accent }}
+            className="block h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: accent, boxShadow: `0 0 8px ${accent}` }}
           />
+        </span>
+        <span
+          className="min-w-0 flex-1 truncate text-left"
+          style={{ color: 'var(--comp-sidebar-text-muted, rgba(255,255,255,0.78))' }}
+        >
           {section.section}
         </span>
         {collapsible && (
