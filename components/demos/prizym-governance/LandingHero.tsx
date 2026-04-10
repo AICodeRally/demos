@@ -84,7 +84,7 @@ export function LandingHero() {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
           <div style={{ flex: 1, minWidth: 280 }}>
             <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: 0.8 }}>
-              Live Demo Client
+              Synthetic Demo Tenant
             </div>
             <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--pg-text)', marginTop: 4 }}>
               {henryScheinOrgProfile.name}

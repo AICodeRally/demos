@@ -72,7 +72,7 @@ export default function ReportsPage() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <span className="pg-overline" style={{ color: cfg.color, fontSize: 14 }}>{cfg.label}</span>
-                  <h3 className="pg-subheading" style={{ fontSize: 15, marginTop: 4, lineHeight: 1.3 }}>{r.title}</h3>
+                  <h3 className="pg-subheading" style={{ marginTop: 4, lineHeight: 1.3 }}>{r.title}</h3>
                 </div>
               </div>
               <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.55, flex: 1 }}>{r.description}</p>

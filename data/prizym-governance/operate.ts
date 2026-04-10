@@ -328,7 +328,7 @@ export const CALENDAR_EVENTS: CalendarEvent[] = [
   },
 ];
 
-export type TaskStatus = 'todo' | 'in_progress' | 'blocked' | 'done';
+export type TaskStatus = 'queued' | 'in_progress' | 'blocked' | 'done';
 
 export interface OperateTask {
   id: string;
@@ -358,7 +358,7 @@ export const TASKS: OperateTask[] = [
     title: 'Update ASC 606 SOX walkthrough narrative',
     owner: 'Revenue Accounting',
     due: '2026-04-18',
-    status: 'todo',
+    status: 'queued',
     priority: 'high',
     relatedPolicy: 'SCP-018',
     description:
@@ -402,7 +402,7 @@ export const TASKS: OperateTask[] = [
     title: 'Review draw recoverability for 3 new enterprise AE hires',
     owner: 'Sales Comp',
     due: '2026-04-20',
-    status: 'todo',
+    status: 'queued',
     priority: 'low',
     relatedPolicy: 'SCP-003',
     description:

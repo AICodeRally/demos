@@ -45,6 +45,10 @@
     {
       "path": "app/(demos)/meridian/deals/diligence/page.tsx",
       "contains": "'TBD'"
+    },
+    {
+      "path": "data/lotos/deals.ts",
+      "contains": "lender: 'TBD'"
     }
   ]
 }

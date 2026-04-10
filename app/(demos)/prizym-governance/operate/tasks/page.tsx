@@ -7,7 +7,7 @@ import { TASKS, type TaskStatus } from '@/data/prizym-governance/operate';
 import { CheckCircle2, Clock, Pause, ListTodo, User, Calendar } from 'lucide-react';
 
 const STATUS_CONFIG: Record<TaskStatus, { label: string; color: string; icon: typeof CheckCircle2 }> = {
-  todo: { label: 'To Do', color: '#64748b', icon: ListTodo },
+  queued: { label: 'To Do', color: '#64748b', icon: ListTodo },
   in_progress: { label: 'In Progress', color: '#3b82f6', icon: Clock },
   blocked: { label: 'Blocked', color: '#ef4444', icon: Pause },
   done: { label: 'Done', color: '#10b981', icon: CheckCircle2 },
@@ -20,13 +20,13 @@ export default function TasksPage() {
   useEffect(() => { setMounted(true); }, []);
 
   const byStatus: Record<TaskStatus, typeof TASKS> = {
-    todo: TASKS.filter(t => t.status === 'todo'),
+    queued: TASKS.filter(t => t.status === 'queued'),
     in_progress: TASKS.filter(t => t.status === 'in_progress'),
     blocked: TASKS.filter(t => t.status === 'blocked'),
     done: TASKS.filter(t => t.status === 'done'),
   };
 
-  const columns: TaskStatus[] = ['todo', 'in_progress', 'blocked', 'done'];
+  const columns: TaskStatus[] = ['queued', 'in_progress', 'blocked', 'done'];
 
   return (
     <PrizymPage title="Action Items" subtitle="Open governance tasks grouped by status — kanban view" mode="operate">
