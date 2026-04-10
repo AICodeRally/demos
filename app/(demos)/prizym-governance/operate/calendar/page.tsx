@@ -53,7 +53,7 @@ export default function CalendarPage() {
                 background: active ? `${color}20` : 'var(--pg-stripe)',
                 border: active ? `1px solid ${color}60` : '1px solid var(--pg-border)',
                 color: active ? color : 'var(--pg-text-muted)',
-                fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer',
                 textTransform: 'capitalize',
               }}
             >
@@ -72,7 +72,7 @@ export default function CalendarPage() {
                 background: 'linear-gradient(135deg, var(--pg-operate), var(--pg-cyan))',
                 color: '#fff', textAlign: 'center',
               }}>
-                <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 14, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                   {new Date(date + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short' })}
                 </div>
                 <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>
@@ -101,11 +101,11 @@ export default function CalendarPage() {
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                          <span style={{ fontSize: 10, fontWeight: 700, color: config.color, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{config.label}</span>
-                          {e.committee && <span style={{ fontSize: 10, color: 'var(--pg-text-muted)' }}>· {e.committee}</span>}
+                          <span style={{ fontSize: 14, fontWeight: 700, color: config.color, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{config.label}</span>
+                          {e.committee && <span style={{ fontSize: 14, color: 'var(--pg-text-muted)' }}>· {e.committee}</span>}
                         </div>
                         <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 6, lineHeight: 1.3 }}>{e.title}</p>
-                        <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--pg-text-muted)', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', gap: 12, fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap' }}>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={10} /> {e.time}</span>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><MapPin size={10} /> {e.location}</span>
                           {e.attendees > 0 && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Users size={10} /> {e.attendees}</span>}

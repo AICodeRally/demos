@@ -43,13 +43,13 @@ export default function DisputeQuadrantPage() {
             </div>
             <div style={{ flex: 1 }}>
               <h3 className="pg-subheading" style={{ marginBottom: 4 }}>Dispute Cases</h3>
-              <span className="pg-overline" style={{ color: '#6366f1', fontSize: 11 }}>{DISPUTE_CASES.length} cases tracked</span>
+              <span className="pg-overline" style={{ color: '#6366f1', fontSize: 14 }}>{DISPUTE_CASES.length} cases tracked</span>
             </div>
           </div>
           <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.5 }}>
             Full case management for commission disputes: crediting, quota appeals, clawback challenges, territory boundaries, and plan interpretation. Includes thread history and SLA tracking.
           </p>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#6366f1', fontSize: 13, fontWeight: 600 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#6366f1', fontSize: 14, fontWeight: 600 }}>
             Open case queue <ArrowRight size={14} />
           </div>
         </Link>
@@ -68,7 +68,7 @@ export default function DisputeQuadrantPage() {
             </div>
             <div style={{ flex: 1 }}>
               <h3 className="pg-subheading" style={{ marginBottom: 4 }}>Escalation Paths</h3>
-              <span className="pg-overline" style={{ color: '#8b5cf6', fontSize: 11 }}>CRB · SGCC · Legal</span>
+              <span className="pg-overline" style={{ color: '#8b5cf6', fontSize: 14 }}>CRB · SGCC · Legal</span>
             </div>
           </div>
           <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.5 }}>
@@ -76,7 +76,7 @@ export default function DisputeQuadrantPage() {
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 10 }}>
             {['Tier 1 — Sales Ops review', 'Tier 2 — Sales Comp Lead', 'Tier 3 — VP Sales', 'Tier 4 — CRB (>$50K or precedent)'].map((tier, i) => (
-              <div key={i} style={{ fontSize: 12, color: 'var(--pg-text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div key={i} style={{ fontSize: 14, color: 'var(--pg-text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b5cf6' }} />
                 {tier}
               </div>

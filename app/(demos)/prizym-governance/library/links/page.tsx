@@ -131,7 +131,7 @@ export default function LinksPage() {
                 background: active ? `${color}20` : 'var(--pg-stripe)',
                 border: active ? `1px solid ${color}60` : '1px solid var(--pg-border)',
                 color: active ? color : 'var(--pg-text-muted)',
-                fontSize: 12, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize',
               }}
             >
               {c} ({count})
@@ -169,12 +169,12 @@ export default function LinksPage() {
                   <Icon size={16} style={{ color: cfg.color }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <span className="pg-overline" style={{ color: cfg.color, fontSize: 10 }}>{cfg.label}</span>
+                  <span className="pg-overline" style={{ color: cfg.color, fontSize: 14 }}>{cfg.label}</span>
                   <h3 className="pg-subheading" style={{ fontSize: 14, marginTop: 2, lineHeight: 1.3 }}>{l.title}</h3>
                 </div>
                 <ExternalLink size={14} style={{ color: 'var(--pg-text-muted)', flexShrink: 0 }} />
               </div>
-              <p className="pg-caption" style={{ fontSize: 12, lineHeight: 1.55 }}>{l.description}</p>
+              <p className="pg-caption" style={{ fontSize: 14, lineHeight: 1.55 }}>{l.description}</p>
             </a>
           );
         })}

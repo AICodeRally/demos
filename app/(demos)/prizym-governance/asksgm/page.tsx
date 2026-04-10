@@ -63,14 +63,15 @@ const PROMPT_GROUPS: PromptGroup[] = [
   },
 ];
 
+const RECENT_QUERIES = [
+  'Explain ASC 606 five-step model',
+  'Q1 windfall approvals pending review',
+  'SOX-003 month-end cut-off evidence',
+];
+
 export default function AskSGMWorkspacePage() {
   const [query, setQuery] = useState('');
   const [mounted, setMounted] = useState(false);
-  const [recentQueries] = useState<string[]>([
-    'Explain ASC 606 five-step model',
-    'Q1 windfall approvals pending review',
-    'SOX-003 month-end cut-off evidence',
-  ]);
   useEffect(() => { setMounted(true); }, []);
 
   return (
@@ -166,7 +167,7 @@ export default function AskSGMWorkspacePage() {
                         style={{
                           textAlign: 'left', padding: '8px 10px', borderRadius: 6,
                           background: 'var(--pg-surface-alt)', border: '1px solid var(--pg-border-faint)',
-                          color: 'var(--pg-text-secondary)', fontSize: 12, lineHeight: 1.45,
+                          color: 'var(--pg-text-secondary)', fontSize: 14, lineHeight: 1.45,
                           cursor: 'pointer', transition: 'all 0.15s ease',
                           display: 'flex', alignItems: 'flex-start', gap: 6,
                         }}
@@ -185,10 +186,10 @@ export default function AskSGMWorkspacePage() {
         {/* Sidebar */}
         <aside style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="pg-card" style={{ opacity: mounted ? 1 : 0, transition: 'opacity 0.5s ease', transitionDelay: '0.3s' }}>
-            <h4 style={{ fontSize: 12, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+            <h4 style={{ fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
               Recent Queries
             </h4>
-            {recentQueries.map((q, i) => (
+            {RECENT_QUERIES.map((q, i) => (
               <button
                 key={i}
                 onClick={() => setQuery(q)}
@@ -196,7 +197,7 @@ export default function AskSGMWorkspacePage() {
                   display: 'block', textAlign: 'left', width: '100%',
                   padding: '8px 10px', borderRadius: 6, marginBottom: 6,
                   background: 'transparent', border: 'none',
-                  color: 'var(--pg-text-secondary)', fontSize: 12, cursor: 'pointer',
+                  color: 'var(--pg-text-secondary)', fontSize: 14, cursor: 'pointer',
                 }}
               >
                 <MessageSquare size={11} style={{ display: 'inline', marginRight: 6 }} /> {q}
@@ -205,10 +206,10 @@ export default function AskSGMWorkspacePage() {
           </div>
 
           <div className="pg-card" style={{ opacity: mounted ? 1 : 0, transition: 'opacity 0.5s ease', transitionDelay: '0.4s' }}>
-            <h4 style={{ fontSize: 12, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+            <h4 style={{ fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
               Knowledge Context
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 11, color: 'var(--pg-text-muted)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 14, color: 'var(--pg-text-muted)' }}>
               <div>• 88 SGM checkpoints indexed</div>
               <div>• 21 SCPs + 4 ASC 606 policies</div>
               <div>• 8 pending approvals in queue</div>

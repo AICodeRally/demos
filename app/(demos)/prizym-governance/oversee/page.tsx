@@ -107,11 +107,11 @@ export default function OverseeQuadrantPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 className="pg-subheading" style={{ marginBottom: 4 }}>{tile.title}</h3>
-                  <span className="pg-overline" style={{ color: tile.accent, fontSize: 11 }}>{tile.badge}</span>
+                  <span className="pg-overline" style={{ color: tile.accent, fontSize: 14 }}>{tile.badge}</span>
                 </div>
               </div>
               <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.5 }}>{tile.description}</p>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: tile.accent, fontSize: 13, fontWeight: 600 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: tile.accent, fontSize: 14, fontWeight: 600 }}>
                 Open <ArrowRight size={14} />
               </div>
             </Link>

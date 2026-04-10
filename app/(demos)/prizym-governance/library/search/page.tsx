@@ -195,7 +195,7 @@ export default function SearchPage() {
                 background: active ? 'rgba(14,165,233,0.15)' : 'var(--pg-stripe)',
                 border: active ? '1px solid rgba(14,165,233,0.5)' : '1px solid var(--pg-border)',
                 color: active ? 'var(--pg-cyan)' : 'var(--pg-text-muted)',
-                fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer',
               }}
             >
               {kindLabel[k]} ({count})
@@ -238,10 +238,10 @@ export default function SearchPage() {
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
-                  <span className="pg-overline" style={{ color: r.color, fontSize: 10 }}>{r.badge}</span>
+                  <span className="pg-overline" style={{ color: r.color, fontSize: 14 }}>{r.badge}</span>
                 </div>
                 <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 4, lineHeight: 1.3 }}>{r.title}</h3>
-                <p className="pg-caption" style={{ fontSize: 12, lineHeight: 1.5, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                <p className="pg-caption" style={{ fontSize: 14, lineHeight: 1.5, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {r.snippet}
                 </p>
               </div>

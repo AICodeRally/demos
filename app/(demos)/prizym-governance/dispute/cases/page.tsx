@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
 import { DISPUTE_CASES, type DisputeCase, type DisputeStatus } from '@/data/prizym-governance/dispute';
-import { Briefcase, X, MessageSquare, User, Calendar, DollarSign, Clock } from 'lucide-react';
+import { X, MessageSquare, User, Calendar, Clock } from 'lucide-react';
 
 const STATUS_COLORS: Record<DisputeStatus, string> = {
   open: '#3b82f6',
@@ -42,12 +42,12 @@ export default function DisputeCasesPage() {
                 padding: '10px 18px', background: 'transparent', border: 'none',
                 borderBottom: active ? '2px solid #6366f1' : '2px solid transparent',
                 color: active ? '#6366f1' : 'var(--pg-text-muted)',
-                fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                fontSize: 14, fontWeight: 600, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 8, textTransform: 'capitalize',
               }}
             >
               {t === 'all' ? 'All' : STATUS_LABELS[t]}
-              <span style={{ padding: '2px 8px', borderRadius: 10, background: active ? 'rgba(99,102,241,0.15)' : 'var(--pg-stripe)', fontSize: 11 }}>{count}</span>
+              <span style={{ padding: '2px 8px', borderRadius: 10, background: active ? 'rgba(99,102,241,0.15)' : 'var(--pg-stripe)', fontSize: 14 }}>{count}</span>
             </button>
           );
         })}
@@ -73,25 +73,25 @@ export default function DisputeCasesPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
-                    <span className="pg-overline" style={{ color: '#6366f1', fontSize: 10 }}>{c.caseNumber}</span>
-                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: `${STATUS_COLORS[c.status]}22`, color: STATUS_COLORS[c.status], fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span className="pg-overline" style={{ color: '#6366f1', fontSize: 14 }}>{c.caseNumber}</span>
+                    <span style={{ fontSize: 14, padding: '2px 8px', borderRadius: 10, background: `${STATUS_COLORS[c.status]}22`, color: STATUS_COLORS[c.status], fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {STATUS_LABELS[c.status]}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--pg-text-muted)', textTransform: 'capitalize' }}>· {c.category.replace('_', ' ')}</span>
+                    <span style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'capitalize' }}>· {c.category.replace('_', ' ')}</span>
                   </div>
                   <h3 className="pg-subheading" style={{ marginBottom: 6 }}>{c.title}</h3>
                   <p className="pg-caption" style={{ marginBottom: 10, lineHeight: 1.55 }}>{c.summary}</p>
                 </div>
                 {c.amountDisputed > 0 && (
                   <div style={{ textAlign: 'right' }}>
-                    <div className="pg-overline" style={{ fontSize: 10 }}>Disputed</div>
+                    <div className="pg-overline" style={{ fontSize: 14 }}>Disputed</div>
                     <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--pg-text)' }}>
                       ${(c.amountDisputed / 1000).toFixed(0)}K
                     </div>
                   </div>
                 )}
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 11, color: 'var(--pg-text-muted)', flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={11} /> {c.filedBy}</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={11} /> Filed {c.filedAt}</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: slaColor, fontWeight: 600 }}>
@@ -119,22 +119,22 @@ export default function DisputeCasesPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 20 }}>
               <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 10 }}>Status</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: STATUS_COLORS[selected.status], textTransform: 'capitalize' }}>{STATUS_LABELS[selected.status]}</div>
+                <div className="pg-overline" style={{ fontSize: 14 }}>Status</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: STATUS_COLORS[selected.status], textTransform: 'capitalize' }}>{STATUS_LABELS[selected.status]}</div>
               </div>
               <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 10 }}>Amount</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--pg-text)' }}>
+                <div className="pg-overline" style={{ fontSize: 14 }}>Amount</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>
                   {selected.amountDisputed > 0 ? `$${(selected.amountDisputed / 1000).toFixed(0)}K` : '—'}
                 </div>
               </div>
               <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 10 }}>Assigned</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.assignedTo}</div>
+                <div className="pg-overline" style={{ fontSize: 14 }}>Assigned</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.assignedTo}</div>
               </div>
               <div className="pg-card" style={{ padding: 12, background: 'var(--pg-surface-alt)' }}>
-                <div className="pg-overline" style={{ fontSize: 10 }}>SLA</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.daysOpen} / {selected.slaDays} days</div>
+                <div className="pg-overline" style={{ fontSize: 14 }}>SLA</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)' }}>{selected.daysOpen} / {selected.slaDays} days</div>
               </div>
             </div>
 
@@ -146,10 +146,10 @@ export default function DisputeCasesPage() {
               {selected.thread.map((t, i) => (
                 <div key={i} className="pg-card" style={{ padding: 14, background: 'var(--pg-surface-alt)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--pg-text)' }}>{t.author}</span>
-                    <span style={{ fontSize: 11, color: 'var(--pg-text-muted)' }}>{t.at}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--pg-text)' }}>{t.author}</span>
+                    <span style={{ fontSize: 14, color: 'var(--pg-text-muted)' }}>{t.at}</span>
                   </div>
-                  <p style={{ fontSize: 13, color: 'var(--pg-text-secondary)', lineHeight: 1.6 }}>{t.note}</p>
+                  <p style={{ fontSize: 14, color: 'var(--pg-text-secondary)', lineHeight: 1.6 }}>{t.note}</p>
                 </div>
               ))}
             </div>

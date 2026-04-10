@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PrizymPage } from '@/components/demos/prizym-governance/PrizymPage';
+import { GaugeChart } from '@/components/demos/prizym-governance/StatusBadge';
 import { COMPLIANCE_CONTROLS, getComplianceScore, type ComplianceControl } from '@/data/prizym-governance/oversee';
 import { ShieldCheck, AlertTriangle, XCircle, Clock, FileCheck } from 'lucide-react';
 
@@ -35,21 +36,7 @@ export default function CompliancePage() {
       {/* Score hero */}
       <div className="pg-card-elevated" style={{ padding: 24, marginBottom: 24, background: 'linear-gradient(135deg, rgba(139,92,246,0.12), rgba(6,182,212,0.08))' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-          <div style={{
-            width: 140, height: 140, borderRadius: '50%',
-            background: `conic-gradient(#8b5cf6 ${score * 3.6}deg, rgba(100,116,139,0.15) ${score * 3.6}deg)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            position: 'relative',
-          }}>
-            <div style={{
-              width: 110, height: 110, borderRadius: '50%',
-              background: 'var(--pg-card)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--pg-oversee)' }}>{score}%</div>
-              <div className="pg-overline" style={{ fontSize: 10 }}>Compliance</div>
-            </div>
-          </div>
+          <GaugeChart value={score} size={160} strokeWidth={14} color="#8b5cf6" label="Compliance" />
 
           <div style={{ flex: 1, minWidth: 280 }}>
             <h2 className="pg-heading" style={{ marginBottom: 8 }}>Program Compliance Score</h2>
@@ -63,7 +50,7 @@ export default function CompliancePage() {
                 return (
                   <div key={k} style={{ padding: 10, borderRadius: 8, background: `${cfg.color}12`, border: `1px solid ${cfg.color}30`, textAlign: 'center' }}>
                     <div style={{ fontSize: 20, fontWeight: 700, color: cfg.color }}>{v}</div>
-                    <div style={{ fontSize: 10, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{cfg.label}</div>
+                    <div style={{ fontSize: 14, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{cfg.label}</div>
                   </div>
                 );
               })}
@@ -81,7 +68,7 @@ export default function CompliancePage() {
             background: categoryFilter === 'all' ? 'rgba(139,92,246,0.2)' : 'var(--pg-stripe)',
             border: categoryFilter === 'all' ? '1px solid rgba(139,92,246,0.6)' : '1px solid var(--pg-border)',
             color: categoryFilter === 'all' ? 'var(--pg-oversee)' : 'var(--pg-text-muted)',
-            fontSize: 12, fontWeight: 600, cursor: 'pointer',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer',
           }}
         >
           All ({COMPLIANCE_CONTROLS.length})
@@ -95,7 +82,7 @@ export default function CompliancePage() {
               background: categoryFilter === cat ? 'rgba(139,92,246,0.2)' : 'var(--pg-stripe)',
               border: categoryFilter === cat ? '1px solid rgba(139,92,246,0.6)' : '1px solid var(--pg-border)',
               color: categoryFilter === cat ? 'var(--pg-oversee)' : 'var(--pg-text-muted)',
-              fontSize: 12, fontWeight: 600, cursor: 'pointer',
+              fontSize: 14, fontWeight: 600, cursor: 'pointer',
             }}
           >
             {cat} ({COMPLIANCE_CONTROLS.filter(c => c.category === cat).length})
@@ -109,12 +96,12 @@ export default function CompliancePage() {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'var(--pg-surface-alt)', borderBottom: '1px solid var(--pg-border)' }}>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Control</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Category</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Owner</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last Tested</th>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Evidence</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Control</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Category</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Owner</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last Tested</th>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: 14, fontWeight: 700, color: 'var(--pg-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Evidence</th>
               </tr>
             </thead>
             <tbody>
@@ -132,25 +119,25 @@ export default function CompliancePage() {
                     }}
                   >
                     <td style={{ padding: '14px 16px' }}>
-                      <div className="pg-overline" style={{ color: 'var(--pg-oversee)', fontSize: 10 }}>{c.code}</div>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--pg-text)', marginTop: 2 }}>{c.name}</div>
-                      <div className="pg-caption" style={{ fontSize: 11, marginTop: 2 }}>{c.relatedPolicy}</div>
+                      <div className="pg-overline" style={{ color: 'var(--pg-oversee)', fontSize: 14 }}>{c.code}</div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginTop: 2 }}>{c.name}</div>
+                      <div className="pg-caption" style={{ fontSize: 14, marginTop: 2 }}>{c.relatedPolicy}</div>
                     </td>
-                    <td style={{ padding: '14px 16px', fontSize: 12, color: 'var(--pg-text-secondary)' }}>{c.category}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-secondary)' }}>{c.category}</td>
                     <td style={{ padding: '14px 16px' }}>
                       <span style={{
                         display: 'inline-flex', alignItems: 'center', gap: 6,
                         padding: '4px 10px', borderRadius: 12,
                         background: `${cfg.color}18`, color: cfg.color,
-                        fontSize: 11, fontWeight: 600,
+                        fontSize: 14, fontWeight: 600,
                       }}>
                         <Icon size={11} /> {cfg.label}
                       </span>
                     </td>
-                    <td style={{ padding: '14px 16px', fontSize: 12, color: 'var(--pg-text-secondary)' }}>{c.owner}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 12, color: 'var(--pg-text-muted)' }}>{c.lastTested}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-secondary)' }}>{c.owner}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, color: 'var(--pg-text-muted)' }}>{c.lastTested}</td>
                     <td style={{ padding: '14px 16px' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--pg-text-secondary)' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 14, color: 'var(--pg-text-secondary)' }}>
                         <FileCheck size={12} /> {c.evidence}
                       </span>
                     </td>

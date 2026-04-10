@@ -137,7 +137,7 @@ export default function DesignQuadrantPage() {
                       className="pg-overline"
                       style={{
                         color: tile.accent,
-                        fontSize: 11,
+                        fontSize: 14,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
                       }}
