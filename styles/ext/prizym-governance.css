@@ -2,35 +2,38 @@
    Summit Navy & Cyan with glass morphism, gradients, depth
 */
 
-/* ── Light mode (default) ─────────────────────── */
+/* ── Light mode (default) — gradient-glass aesthetic ─────────────── */
+/* Body gets the SPARCC gradient; all surfaces are translucent white
+   glass so the gradient shines through. All text is white on the
+   gradient backdrop. Mirrors the original Summit SGM demo look. */
 :root {
-  --pg-text: #0f172a;
-  --pg-text-secondary: #1e293b;
-  --pg-text-muted: #334155;
-  --pg-text-faint: #64748b;
+  --pg-text: #ffffff;
+  --pg-text-secondary: #f1f5f9;
+  --pg-text-muted: #e2e8f0;
+  --pg-text-faint: #cbd5e1;
 
-  --pg-bg: #f8fafc;
-  --pg-card: #ffffff;
-  --pg-card-alt: #f7fafc;
-  --pg-border: #e2e8f0;
-  --pg-border-faint: #edf2f7;
-  --pg-shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --pg-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --pg-shadow-lg: 0 8px 24px rgba(99,102,241,0.10);
-  --pg-shadow-xl: 0 12px 36px rgba(139,92,246,0.14);
-  --pg-hover: rgba(0,0,0,0.04);
-  --pg-stripe: #f1f5f9;
-  --pg-surface-alt: #f1f5f9;
+  --pg-bg: #1e3a8a; /* fallback if gradient doesn't render */
+  --pg-card: rgba(255,255,255,0.12);
+  --pg-card-alt: rgba(255,255,255,0.06);
+  --pg-border: rgba(255,255,255,0.2);
+  --pg-border-faint: rgba(255,255,255,0.12);
+  --pg-shadow-sm: 0 2px 6px rgba(15,23,42,0.12);
+  --pg-shadow: 0 6px 18px rgba(15,23,42,0.18);
+  --pg-shadow-lg: 0 14px 40px rgba(15,23,42,0.28);
+  --pg-shadow-xl: 0 24px 64px rgba(15,23,42,0.35);
+  --pg-hover: rgba(255,255,255,0.08);
+  --pg-stripe: rgba(255,255,255,0.05);
+  --pg-surface-alt: rgba(255,255,255,0.08);
 
-  --pg-sidebar-bg-start: #ffffff;
-  --pg-sidebar-bg-end: #f1f5f9;
-  --pg-sidebar-text: #0f172a;
-  --pg-sidebar-text-muted: #475569;
-  --pg-sidebar-active-bg: rgba(14,165,233,0.08);
-  --pg-sidebar-border: #e2e8f0;
+  --pg-sidebar-bg-start: rgba(15,23,42,0.55);
+  --pg-sidebar-bg-end: rgba(15,23,42,0.45);
+  --pg-sidebar-text: #ffffff;
+  --pg-sidebar-text-muted: #e2e8f0;
+  --pg-sidebar-active-bg: rgba(255,255,255,0.18);
+  --pg-sidebar-border: rgba(255,255,255,0.14);
 
-  --pg-header-bg: rgba(255,255,255,0.95);
-  --pg-footer-bg: #ffffff;
+  --pg-header-bg: rgba(15,23,42,0.45);
+  --pg-footer-bg: rgba(15,23,42,0.45);
 
   /* Gradients */
   --pg-gradient-hero: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 33%, #6366f1 66%, #8b5cf6 100%);
@@ -219,6 +222,38 @@
   --pg-fs-overline: 0.875rem;    /* 14px — overlines (absolute floor) */
 }
 
+/* ── Light mode body gradient + transparent shell overrides ──────── */
+/* When the .dark class is NOT present on <html>, paint the full viewport
+   with the SPARCC gradient so glass cards float over it. The demo shell
+   uses --sem-bg-content / --comp-sidebar-bg / --comp-header-bg for its
+   chrome — we override all three to translucent glass so the body
+   gradient shines through. */
+html:not(.dark) body,
+html:not(.dark) {
+  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 28%, #6366f1 60%, #8b5cf6 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+html:not(.dark) {
+  --sem-bg-content: transparent;
+  --comp-sidebar-bg: rgba(15,23,42,0.5);
+  --comp-sidebar-border: rgba(255,255,255,0.14);
+  --comp-sidebar-text: #ffffff;
+  --comp-sidebar-text-muted: rgba(255,255,255,0.78);
+  --comp-sidebar-active-accent: #f1f5f9;
+  --comp-header-bg: rgba(15,23,42,0.5);
+  --comp-header-border: rgba(255,255,255,0.14);
+  --sem-text-primary: #ffffff;
+  --comp-nav-section-label: rgba(255,255,255,0.65);
+}
+
+html:not(.dark) aside,
+html:not(.dark) header {
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
 /* ── Page classes ────────────────────────────── */
 .pg-page {
   color: var(--pg-text);
@@ -310,36 +345,37 @@
 /* ── Card system (glass morphism) ─────────────── */
 .pg-card {
   background: var(--pg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--pg-border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 22px;
   box-shadow: var(--pg-shadow);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card:hover {
+  background: var(--pg-card-alt);
   box-shadow: var(--pg-shadow-lg);
-  border-color: rgba(99,102,241,0.3);
-  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.32);
+  transform: translateY(-2px);
 }
 
 .pg-card-elevated {
   background: var(--pg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
   border: 1px solid var(--pg-border);
-  border-radius: 14px;
-  padding: 24px;
+  border-radius: 22px;
+  padding: 26px;
   box-shadow: var(--pg-shadow-lg);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pg-card-elevated:hover {
   box-shadow: var(--pg-shadow-xl);
-  border-color: rgba(99,102,241,0.4);
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-3px);
 }
 
 /* Hero banner card with gradient background */
