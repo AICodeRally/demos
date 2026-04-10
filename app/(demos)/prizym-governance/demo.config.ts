@@ -27,15 +27,6 @@ export default defineDemo({
       ],
     },
     {
-      section: 'Assessment',
-      color: '#8b5cf6',
-      items: [
-        { label: 'Take Assessment', href: '/prizym-governance/assess/wizard', icon: 'ClipboardCheck' },
-        { label: 'Scoping', href: '/prizym-governance/assess/scoping', icon: 'SlidersHorizontal' },
-        { label: 'Results', href: '/prizym-governance/assess/results', icon: 'BarChart2' },
-      ],
-    },
-    {
       section: 'Design',
       color: '#06b6d4',
       items: [

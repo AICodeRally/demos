@@ -1,19 +1,14 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useAssessmentStore } from '@/lib/prizym-governance/store';
-import { scoreAssessment } from '@/data/prizym-governance/engine/scoring';
 import { henryScheinOrgProfile } from '@/data/prizym-governance/henry-schein/org-profile';
+import { getComplianceScore } from '@/data/prizym-governance/oversee';
+import { getApprovalStats } from '@/data/prizym-governance/operate';
 
 export function LandingHero() {
-  const hydrate = useAssessmentStore(s => s.hydrate);
-  const answers = useAssessmentStore(s => s.answers);
-  const score = useMemo(() => scoreAssessment(answers), [answers]);
-
-  useEffect(() => { hydrate(); }, [hydrate]);
-
-  const maturityPct = Math.round(score.maturityScore * 100);
+  const complianceScore = getComplianceScore();
+  const approvalStats = getApprovalStats();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32, padding: '48px 32px', maxWidth: 1200, margin: '0 auto' }}>
@@ -27,19 +22,19 @@ export function LandingHero() {
           boxShadow: '0 12px 48px rgba(99,102,241,0.25)',
         }}
       >
-        <div style={{ fontSize: 14, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 12, opacity: 0.9 }}>
-          Prizym SGM — Sales Governance Manager
+        <div style={{ fontSize: 14, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 12, opacity: 0.95 }}>
+          Prizym Sales Planning Suite · Sales Governance Manager
         </div>
         <h1 style={{ fontSize: 56, fontWeight: 800, margin: 0, lineHeight: 1.1, color: '#ffffff' }}>
           Governance that<br />scales with your<br />compensation program.
         </h1>
-        <p style={{ fontSize: 20, marginTop: 24, maxWidth: 700, opacity: 0.95, lineHeight: 1.5, color: '#ffffff' }}>
-          Assess 88 controls across 12 phases. Design policies that stand up to audit.
-          Operate plans with confidence. Oversee the full lifecycle from one view.
+        <p style={{ fontSize: 20, marginTop: 24, maxWidth: 720, opacity: 0.95, lineHeight: 1.5, color: '#ffffff' }}>
+          Design policies that stand up to audit. Operate approvals, decisions, committees,
+          and calendars with confidence. Oversee compliance, reports, and pulse — all from one view.
         </p>
         <div style={{ display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' }}>
           <Link
-            href="/prizym-governance/assess/wizard"
+            href="/prizym-governance/dashboard"
             style={{
               padding: '16px 32px',
               background: '#ffffff',
@@ -51,10 +46,10 @@ export function LandingHero() {
               boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
             }}
           >
-            Take the Assessment →
+            Open Dashboard →
           </Link>
           <Link
-            href="/prizym-governance/assess/scoping"
+            href="/prizym-governance/design/asc606-calculator"
             style={{
               padding: '16px 32px',
               background: 'rgba(255,255,255,0.12)',
@@ -66,19 +61,21 @@ export function LandingHero() {
               textDecoration: 'none',
             }}
           >
-            Size an Engagement
+            ASC 606 Calculator
           </Link>
         </div>
       </div>
 
-      {/* Henry Schein synthetic preview card */}
+      {/* Synthetic demo tenant preview card */}
       <div
         style={{
           background: 'var(--pg-card)',
           border: '1px solid var(--pg-border)',
-          borderRadius: 16,
+          borderRadius: 20,
           padding: 32,
           boxShadow: 'var(--pg-shadow)',
+          backdropFilter: 'blur(16px) saturate(140%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(140%)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
@@ -94,45 +91,47 @@ export function LandingHero() {
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 52, fontWeight: 800, color: '#6366f1', lineHeight: 1 }}>{maturityPct}%</div>
-            <div style={{ fontSize: 14, color: 'var(--pg-text-muted)', marginTop: 4 }}>Governance Maturity</div>
+            <div style={{ fontSize: 52, fontWeight: 800, color: '#8b5cf6', lineHeight: 1 }}>{complianceScore}%</div>
+            <div style={{ fontSize: 14, color: 'var(--pg-text-muted)', marginTop: 4 }}>Compliance Score</div>
           </div>
         </div>
-        <div style={{ marginTop: 20, padding: 16, background: 'var(--pg-surface-alt)', borderRadius: 8 }}>
-          <div style={{ fontSize: 14, color: 'var(--pg-text-secondary)', lineHeight: 1.6 }}>
-            <strong style={{ color: 'var(--pg-text)' }}>Current Archetype: {score.archetype}.</strong>{' '}
+        <div style={{ marginTop: 20, padding: 18, background: 'var(--pg-surface-alt)', borderRadius: 12 }}>
+          <div style={{ fontSize: 16, color: 'var(--pg-text-secondary)', lineHeight: 1.6 }}>
+            <strong style={{ color: 'var(--pg-text)' }}>
+              {approvalStats.pending} pending approvals · {approvalStats.highPriority} high priority.
+            </strong>{' '}
             {henryScheinOrgProfile.notes}
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
           <Link
-            href="/prizym-governance/dashboard"
+            href="/prizym-governance/oversee/compliance"
             style={{
-              padding: '10px 20px',
-              background: '#6366f1',
+              padding: '12px 22px',
+              background: '#8b5cf6',
               color: '#ffffff',
-              borderRadius: 8,
+              borderRadius: 10,
               fontSize: 15,
               fontWeight: 600,
               textDecoration: 'none',
             }}
           >
-            View Live Dashboard →
+            Compliance Dashboard →
           </Link>
           <Link
-            href="/prizym-governance/assess/results"
+            href="/prizym-governance/operate/approvals"
             style={{
-              padding: '10px 20px',
+              padding: '12px 22px',
               background: 'transparent',
               color: 'var(--pg-text)',
               border: '1px solid var(--pg-border)',
-              borderRadius: 8,
+              borderRadius: 10,
               fontSize: 15,
               fontWeight: 600,
               textDecoration: 'none',
             }}
           >
-            See Assessment Results
+            Approvals Queue
           </Link>
         </div>
       </div>
