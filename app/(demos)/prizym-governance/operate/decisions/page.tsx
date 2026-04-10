@@ -65,7 +65,7 @@ export default function DecisionsPage() {
                 background: config.bg, border: `2px solid ${config.fg}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <Icon size={10} style={{ color: config.fg }} />
+                <Icon size={14} style={{ color: config.fg }} />
               </div>
 
               <div className="pg-card-elevated">
@@ -82,7 +82,7 @@ export default function DecisionsPage() {
                 <p className="pg-caption" style={{ marginBottom: 12, lineHeight: 1.6 }}>{d.rationale}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', gap: 12, paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                    <Users size={12} /> {d.voters.join(', ')}
+                    <Users size={14} /> {d.voters.join(', ')}
                   </span>
                   {d.impactDollars && (
                     <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Impact:</strong> ${(d.impactDollars / 1000).toFixed(0)}K</span>

@@ -106,9 +106,9 @@ export default function CalendarPage() {
                         </div>
                         <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 6, lineHeight: 1.3 }}>{e.title}</p>
                         <div style={{ display: 'flex', gap: 12, fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap' }}>
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={10} /> {e.time}</span>
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><MapPin size={10} /> {e.location}</span>
-                          {e.attendees > 0 && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Users size={10} /> {e.attendees}</span>}
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={14} /> {e.time}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><MapPin size={14} /> {e.location}</span>
+                          {e.attendees > 0 && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Users size={14} /> {e.attendees}</span>}
                         </div>
                       </div>
                     </div>

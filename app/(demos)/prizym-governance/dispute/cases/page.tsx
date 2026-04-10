@@ -30,7 +30,7 @@ export default function DisputeCasesPage() {
   const tabs: Array<DisputeStatus | 'all'> = ['all', 'open', 'under_review', 'escalated', 'resolved'];
 
   return (
-    <PrizymPage title="Dispute Cases" subtitle="Commission dispute case queue with thread history and SLA tracking" mode="oversee">
+    <PrizymPage title="Dispute Cases" subtitle="Commission dispute case queue with thread history and SLA tracking" mode="dispute">
       <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid var(--pg-border)', marginBottom: 20, flexWrap: 'wrap' }}>
         {tabs.map(t => {
           const active = tab === t;
@@ -91,12 +91,12 @@ export default function DisputeCasesPage() {
                 )}
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 14, color: 'var(--pg-text-muted)', flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid var(--pg-border-faint)' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={11} /> {c.filedBy}</span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={11} /> Filed {c.filedAt}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={14} /> {c.filedBy}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={14} /> Filed {c.filedAt}</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: slaColor, fontWeight: 600 }}>
-                  <Clock size={11} /> {c.daysOpen}/{c.slaDays} days
+                  <Clock size={14} /> {c.daysOpen}/{c.slaDays} days
                 </span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><MessageSquare size={11} /> {c.thread.length}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><MessageSquare size={14} /> {c.thread.length}</span>
               </div>
             </button>
           );

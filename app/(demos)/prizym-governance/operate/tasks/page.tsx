@@ -70,8 +70,8 @@ export default function TasksPage() {
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--pg-text)', marginBottom: 8, lineHeight: 1.35 }}>{t.title}</p>
                     <p className="pg-caption" style={{ marginBottom: 10, fontSize: 14, lineHeight: 1.5 }}>{t.description}</p>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--pg-text-muted)', paddingTop: 8, borderTop: '1px solid var(--pg-border-faint)' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={11} /> {t.owner}</span>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={11} /> {t.due}</span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><User size={14} /> {t.owner}</span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Calendar size={14} /> {t.due}</span>
                     </div>
                   </div>
                 ))}

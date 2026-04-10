@@ -28,7 +28,7 @@ export default function DisputeQuadrantPage() {
   ];
 
   return (
-    <PrizymPage title="Dispute" subtitle="Commission dispute case management with CRB escalation paths" mode="oversee">
+    <PrizymPage title="Dispute" subtitle="Commission dispute case management with CRB escalation paths" mode="dispute">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {metrics.map((m, i) => <MetricCard key={m.label} {...m} mounted={mounted} delay={i * 0.08} />)}
       </div>

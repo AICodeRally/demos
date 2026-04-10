@@ -56,7 +56,7 @@ export default function NotificationsPage() {
               style={{
                 display: 'flex', gap: 14, alignItems: 'flex-start',
                 borderLeft: `3px solid ${config.color}`,
-                opacity: n.read ? 0.72 : 1,
+                opacity: n.read ? 0.88 : 1,
                 position: 'relative',
                 transform: mounted ? 'translateX(0)' : 'translateX(-6px)',
                 transition: 'all 0.4s ease',

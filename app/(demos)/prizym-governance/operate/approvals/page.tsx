@@ -100,7 +100,7 @@ export default function ApprovalsPage() {
               <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Reviewer:</strong> {a.reviewer}</span>
               <span><strong style={{ color: 'var(--pg-text-secondary)' }}>Due:</strong> {a.decisionDueBy}</span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                <MessageSquare size={12} /> {a.threadCount} comments
+                <MessageSquare size={14} /> {a.threadCount} comments
               </span>
             </div>
           </div>

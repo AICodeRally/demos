@@ -172,7 +172,7 @@ export default function AskSGMWorkspacePage() {
                           display: 'flex', alignItems: 'flex-start', gap: 6,
                         }}
                       >
-                        <ArrowRight size={12} style={{ color: group.color, flexShrink: 0, marginTop: 2 }} />
+                        <ArrowRight size={14} style={{ color: group.color, flexShrink: 0, marginTop: 2 }} />
                         {p}
                       </button>
                     ))}
@@ -200,7 +200,7 @@ export default function AskSGMWorkspacePage() {
                   color: 'var(--pg-text-secondary)', fontSize: 14, cursor: 'pointer',
                 }}
               >
-                <MessageSquare size={11} style={{ display: 'inline', marginRight: 6 }} /> {q}
+                <MessageSquare size={14} style={{ display: 'inline', marginRight: 6 }} /> {q}
               </button>
             ))}
           </div>

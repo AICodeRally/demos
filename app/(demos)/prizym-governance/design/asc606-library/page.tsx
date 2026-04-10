@@ -348,8 +348,8 @@ function MarkdownBlock({ content }: { content: string }) {
       className="pg-prose"
       style={{
         color: 'var(--pg-text)',
-        fontSize: 14,
-        lineHeight: 1.7,
+        fontSize: 16,
+        lineHeight: 1.75,
         whiteSpace: 'pre-wrap',
         fontFamily: 'ui-sans-serif, system-ui, sans-serif',
       }}

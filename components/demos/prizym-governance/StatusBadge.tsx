@@ -2,15 +2,17 @@
 
 import type { LucideIcon } from 'lucide-react';
 
-const GREEN = { bg: 'rgba(16,185,129,0.12)', text: '#10b981', border: 'rgba(16,185,129,0.3)' };
-const AMBER = { bg: 'rgba(245,158,11,0.12)', text: '#f59e0b', border: 'rgba(245,158,11,0.3)' };
-const BLUE = { bg: 'rgba(59,130,246,0.12)', text: '#3b82f6', border: 'rgba(59,130,246,0.3)' };
-const PURPLE = { bg: 'rgba(139,92,246,0.12)', text: '#8b5cf6', border: 'rgba(139,92,246,0.3)' };
-const SLATE = { bg: 'rgba(100,116,139,0.12)', text: '#64748b', border: 'rgba(100,116,139,0.3)' };
-const RED = { bg: 'rgba(239,68,68,0.12)', text: '#ef4444', border: 'rgba(239,68,68,0.3)' };
-const CRIMSON = { bg: 'rgba(220,38,38,0.12)', text: '#dc2626', border: 'rgba(220,38,38,0.3)' };
-const ORANGE = { bg: 'rgba(249,115,22,0.12)', text: '#f97316', border: 'rgba(249,115,22,0.3)' };
-const YELLOW = { bg: 'rgba(234,179,8,0.12)', text: '#eab308', border: 'rgba(234,179,8,0.3)' };
+/* Text colors are lightened variants of the base hue so chips stay readable
+   on both light cards and the rgba dark-mode surfaces. */
+const GREEN = { bg: 'rgba(16,185,129,0.22)', text: '#6ee7b7', border: 'rgba(16,185,129,0.5)' };
+const AMBER = { bg: 'rgba(245,158,11,0.22)', text: '#fcd34d', border: 'rgba(245,158,11,0.5)' };
+const BLUE = { bg: 'rgba(59,130,246,0.22)', text: '#93c5fd', border: 'rgba(59,130,246,0.5)' };
+const PURPLE = { bg: 'rgba(139,92,246,0.22)', text: '#c4b5fd', border: 'rgba(139,92,246,0.5)' };
+const SLATE = { bg: 'rgba(148,163,184,0.22)', text: '#e2e8f0', border: 'rgba(148,163,184,0.5)' };
+const RED = { bg: 'rgba(239,68,68,0.22)', text: '#fca5a5', border: 'rgba(239,68,68,0.5)' };
+const CRIMSON = { bg: 'rgba(220,38,38,0.22)', text: '#fca5a5', border: 'rgba(220,38,38,0.5)' };
+const ORANGE = { bg: 'rgba(249,115,22,0.22)', text: '#fdba74', border: 'rgba(249,115,22,0.5)' };
+const YELLOW = { bg: 'rgba(234,179,8,0.22)', text: '#fde047', border: 'rgba(234,179,8,0.5)' };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   APPROVED: GREEN, ACTIVE: GREEN, PUBLISHED: GREEN,
