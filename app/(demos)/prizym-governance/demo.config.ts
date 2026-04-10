@@ -63,7 +63,6 @@ export default defineDemo({
       color: '#8b5cf6',
       items: [
         { label: 'Oversee Overview', href: '/prizym-governance/oversee', icon: 'Eye' },
-        { label: 'Policy Library', href: '/prizym-governance/policies', icon: 'BookOpen' },
         { label: 'Compliance', href: '/prizym-governance/oversee/compliance', icon: 'ShieldCheck' },
         { label: 'Reports', href: '/prizym-governance/oversee/reports', icon: 'BarChart3' },
         { label: 'Pulse', href: '/prizym-governance/oversee/pulse', icon: 'Activity' },
@@ -74,9 +73,8 @@ export default defineDemo({
       section: 'Library',
       color: '#0ea5e9',
       items: [
+        { label: 'Policy Library', href: '/prizym-governance/policies', icon: 'BookOpen' },
         { label: '88-Checkpoint Framework', href: '/prizym-governance/library/framework', icon: 'Grid3x3' },
-        { label: 'Governance Frameworks', href: '/prizym-governance/frameworks', icon: 'Network' },
-        { label: 'Documents', href: '/prizym-governance/documents', icon: 'FolderOpen' },
         { label: 'Links', href: '/prizym-governance/library/links', icon: 'Link2' },
         { label: 'Search', href: '/prizym-governance/library/search', icon: 'Search' },
       ],

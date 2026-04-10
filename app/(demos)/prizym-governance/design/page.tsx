@@ -52,9 +52,9 @@ const SECONDARY_TILES: TileSpec[] = [
     variant: 'secondary',
   },
   {
-    href: '/prizym-governance/frameworks',
-    title: 'Governance Frameworks',
-    description: '88-checkpoint SGM framework + supporting pillars.',
+    href: '/prizym-governance/library/framework',
+    title: '88-Checkpoint Framework',
+    description: 'Full SGM governance framework — browse all 88 checkpoints across 12 phases.',
     icon: Network,
     accent: '#8b5cf6',
     variant: 'secondary',
