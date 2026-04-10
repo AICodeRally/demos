@@ -1,4 +1,7 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { LandingHero } from '@/components/demos/prizym-governance/LandingHero';
+
 export default function PrizymGovernanceHome() {
-  redirect('/prizym-governance/dashboard');
+  return <LandingHero />;
 }
