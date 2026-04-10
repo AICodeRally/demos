@@ -104,7 +104,7 @@ function SidebarLayout({ config, children, parts }: {
               </span>
             )}
           </div>
-          <parts.ThemeToggle />
+          {config.showThemeToggle !== false && <parts.ThemeToggle />}
         </header>
 
         <div className="flex flex-1 overflow-hidden">

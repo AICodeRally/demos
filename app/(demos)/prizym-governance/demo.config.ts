@@ -11,7 +11,8 @@ export default defineDemo({
     badge: 'Interactive Demo',
   },
   darkMode: true,
-  theme: 'sgm-glass',
+  theme: 'sgm-compliance',
+  showThemeToggle: false,
   colors: {
     primary: '#0891b2',
     accent: '#10b981',
