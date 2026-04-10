@@ -42,7 +42,6 @@ export default defineDemo({
         { label: 'Design Overview', href: '/prizym-governance/design', icon: 'Compass' },
         { label: 'Comp Plans', href: '/prizym-governance/plans', icon: 'FileText' },
         { label: 'Plan Templates', href: '/prizym-governance/templates', icon: 'LayoutTemplate' },
-        { label: 'Frameworks', href: '/prizym-governance/frameworks', icon: 'Network' },
         { label: 'ASC 606 Calculator', href: '/prizym-governance/design/asc606-calculator', icon: 'Calculator' },
         { label: 'ASC 606 Library', href: '/prizym-governance/design/asc606-library', icon: 'Landmark' },
       ],
