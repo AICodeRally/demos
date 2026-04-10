@@ -49,6 +49,14 @@
     {
       "path": "data/lotos/deals.ts",
       "contains": "lender: 'TBD'"
+    },
+    {
+      "path": "data/prizym-governance/documents/catalog.ts",
+      "contains": "SPIF placeholders, clawback clauses"
+    },
+    {
+      "path": "data/prizym-governance/documents/catalog.ts",
+      "contains": "SPIF placeholders, quarterly quotas"
     }
   ]
 }
