@@ -55,4 +55,4 @@ export interface ThemePresetDef {
 export type ThemePresetName =
   | 'barrel-brass' | 'midnight' | 'clean-light' | 'aegis-ivory'
   | 'register-slate' | 'charter-stone' | 'prizym-navy' | 'phoenix-sapphire'
-  | 'sgm-glass';
+  | 'sgm-glass' | 'sgm-compliance';
