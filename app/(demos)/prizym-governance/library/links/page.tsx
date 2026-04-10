@@ -91,9 +91,9 @@ const LINKS: LinkItem[] = [
     icon: Link2,
   },
   {
-    title: 'Prizym Suite Platform Docs',
+    title: 'Prizym Sales Planning Suite Docs',
     url: 'https://docs.prizym.example',
-    description: 'Product documentation for Prizym Governance and SPM platform.',
+    description: 'Product documentation for the Sales Governance Manager (SGM) and the broader Prizym Sales Planning Suite.',
     category: 'vendors',
     icon: Link2,
   },

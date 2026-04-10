@@ -62,12 +62,12 @@ function SidebarLayout({ config, children, parts }: {
         className="hidden lg:flex shrink-0 flex-col border-r border-[var(--comp-sidebar-border)] bg-[var(--comp-sidebar-bg)] overflow-y-auto relative"
         style={{ width: sidebarWidth }}
       >
-        <div className="flex items-center gap-3 border-b border-[var(--comp-sidebar-border)] px-4 py-3">
+        <div className="flex h-14 shrink-0 items-center gap-3 border-b border-[var(--comp-sidebar-border)] px-4">
           {Logo && <Logo className="h-6 w-6 text-[var(--comp-sidebar-active-accent)]" />}
-          <div>
-            <div className="text-sm font-bold text-[var(--comp-sidebar-text)]">{config.client.name}</div>
+          <div className="min-w-0">
+            <div className="truncate text-sm font-bold text-[var(--comp-sidebar-text)]">{config.client.name}</div>
             {config.client.tagline && (
-              <div className="text-xs text-[var(--comp-sidebar-text-muted)]">{config.client.tagline}</div>
+              <div className="truncate text-xs text-[var(--comp-sidebar-text-muted)]">{config.client.tagline}</div>
             )}
           </div>
         </div>

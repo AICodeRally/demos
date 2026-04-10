@@ -75,10 +75,10 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "badge": "Interactive Tool"
   },
   {
-    "name": "PRIZYM GOVERNANCE",
+    "name": "Sales Governance Manager (SGM)",
     "slug": "prizym-governance",
     "industry": "Sales Performance Management",
-    "tagline": "Enterprise governance platform for sales compensation programs — policies, plans, approvals, and audit trails",
+    "tagline": "Sales Governance Manager (SGM) — part of the Prizym Sales Planning Suite",
     "color": "#06b6d4",
     "layout": "sidebar",
     "badge": "Interactive Demo"
