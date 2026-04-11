@@ -259,7 +259,7 @@ export default function MyWorkspacePage() {
                       cy={size / 2}
                       r={r}
                       fill="none"
-                      stroke="#10b981"
+                      stroke="var(--pg-success)"
                       strokeWidth={stroke}
                       strokeDasharray={c}
                       strokeDashoffset={offset}

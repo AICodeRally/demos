@@ -54,8 +54,10 @@
   --pg-dispute: #6366f1;
   --pg-oversee: #8b5cf6;
 
-  /* Status colors */
-  --pg-success: #10b981;
+  /* Status colors — success uses fuchsia not green so it stands apart from
+     the purple→cyan body gradient and gives "good/complete" states a
+     distinctive signature color across the site. */
+  --pg-success: #d946ef;
   --pg-warning: #f59e0b;
   --pg-danger: #ef4444;
   --pg-info: #3b82f6;
@@ -66,7 +68,7 @@
   /* Bright readable accent variants — use these for colored TEXT on the
      gradient background, where the darker base tokens wash out. Keep the
      base tokens for fills/borders where saturation matters. */
-  --pg-success-bright: #6ee7b7;
+  --pg-success-bright: #f0abfc; /* fuchsia-300 (was emerald-300) */
   --pg-warning-bright: #fcd34d;
   --pg-danger-bright: #fca5a5;
   --pg-info-bright: #93c5fd;
@@ -116,8 +118,8 @@
   --color-info: #0ea5e9;
   --color-info-bg: rgba(14,165,233,0.10);
   --color-info-border: rgba(14,165,233,0.35);
-  --color-success: #10b981;
-  --color-success-bg: rgba(16,185,129,0.10);
+  --color-success: #d946ef;
+  --color-success-bg: rgba(217, 70, 239, 0.10);
   --color-warning: #f59e0b;
   --color-warning-bg: rgba(245,158,11,0.10);
   --color-warning-border: rgba(245,158,11,0.35);
@@ -693,8 +695,8 @@ body,
   align-items: center;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(16, 185, 129, 0.18);
-  border: 1px solid rgba(16, 185, 129, 0.45);
+  background: rgba(217, 70, 239, 0.18);
+  border: 1px solid rgba(217, 70, 239, 0.5);
   color: #a7f3d0;
   font-size: 14px;
   font-weight: 700;
