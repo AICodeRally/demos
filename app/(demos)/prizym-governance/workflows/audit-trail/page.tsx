@@ -84,57 +84,71 @@ export default function AuditPage() {
         })}
       </div>
 
-      <div className="pg-card-elevated" style={{ padding: 18, flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-        <div className="pg-scroll" style={{ display: 'flex', flexDirection: 'column', gap: 0, flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 6 }}>
-          {filtered.map((event, i) => (
+      <div className="pg-scroll" style={{ display: 'flex', flexDirection: 'column', gap: 12, flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 6, position: 'relative' }}>
+        {filtered.map((event, i) => (
+          <div
+            key={event.id}
+            style={{
+              display: 'flex',
+              gap: 16,
+              alignItems: 'stretch',
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'translateX(0)' : 'translateX(-8px)',
+              transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: `${0.12 + i * 0.03}s`,
+              flexShrink: 0,
+            }}
+          >
+            {/* Timeline rail + dot */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 28, flexShrink: 0 }}>
+              <div style={{
+                width: 18,
+                height: 18,
+                borderRadius: '50%',
+                background: IMPACT_COLORS[event.impactLevel],
+                boxShadow: `0 0 14px ${IMPACT_COLORS[event.impactLevel]}88`,
+                border: '2px solid rgba(255,255,255,0.32)',
+                marginTop: 16,
+                flexShrink: 0,
+              }} />
+              {i < filtered.length - 1 && (
+                <div style={{ width: 2, flex: 1, background: 'rgba(255,255,255,0.18)', marginTop: 6, marginBottom: -12 }} />
+              )}
+            </div>
+
+            {/* Event panel */}
             <div
-              key={event.id}
               style={{
-                display: 'flex',
-                gap: 14,
-                padding: '14px 0',
-                borderBottom: i < filtered.length - 1 ? '1px solid rgba(255,255,255,0.16)' : 'none',
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateX(0)' : 'translateX(-8px)',
-                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                transitionDelay: `${0.15 + i * 0.03}s`,
+                flex: 1,
+                padding: '16px 20px',
+                borderRadius: 12,
+                background: 'rgba(255, 255, 255, 0.12)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.22)',
+                borderRight: '1px solid rgba(255, 255, 255, 0.22)',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.22)',
+                borderLeft: `5px solid ${IMPACT_COLORS[event.impactLevel]}`,
               }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 24 }}>
-                <div style={{
-                  width: 14, height: 14, borderRadius: '50%',
-                  background: IMPACT_COLORS[event.impactLevel],
-                  boxShadow: `0 0 10px ${IMPACT_COLORS[event.impactLevel]}88`,
-                  border: '2px solid rgba(255,255,255,0.28)',
-                  marginTop: 4,
-                }} />
-                {i < filtered.length - 1 && (
-                  <div style={{ width: 2, flex: 1, background: 'rgba(255,255,255,0.18)', marginTop: 4 }} />
-                )}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10, marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 17, fontWeight: 800, color: '#ffffff' }}>{event.action}</span>
+                  {event.committee && (
+                    <span style={{ padding: '3px 10px', borderRadius: 999, background: 'rgba(0,0,0,0.28)', color: 'var(--pg-oversee-bright)', border: '1.5px solid var(--pg-oversee-bright)', fontSize: 13, fontWeight: 800, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                      {event.committee}
+                    </span>
+                  )}
+                </div>
+                <StatusBadge status={event.impactLevel} />
               </div>
-
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 6 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontSize: 16, fontWeight: 800, color: '#ffffff' }}>{event.action}</span>
-                    {event.committee && (
-                      <span style={{ padding: '3px 10px', borderRadius: 999, background: 'rgba(196,181,253,0.18)', color: 'var(--pg-oversee-bright)', border: '1px solid var(--pg-oversee-bright)', fontSize: 13, fontWeight: 800, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                        {event.committee}
-                      </span>
-                    )}
-                  </div>
-                  <StatusBadge status={event.impactLevel} />
-                </div>
-                <div style={{ fontSize: 15, color: '#ffffff', marginTop: 4, lineHeight: 1.5 }}>{event.description}</div>
-                <div style={{ display: 'flex', gap: 14, marginTop: 6, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{event.actor}</span>
-                  <span style={{ fontSize: 14, color: '#f1f5f9' }}>{event.actorRole}</span>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: '#ffffff' }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                </div>
+              <div style={{ fontSize: 15, color: '#ffffff', lineHeight: 1.55, marginBottom: 10 }}>{event.description}</div>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.16)', fontSize: 14 }}>
+                <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{event.actor}</span>
+                <span style={{ color: '#f1f5f9' }}>{event.actorRole}</span>
+                <span style={{ fontWeight: 700, color: '#ffffff' }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

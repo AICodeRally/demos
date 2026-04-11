@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Home, FileText, BookOpen, ListChecks, ShieldCheck, LayoutTemplate,
@@ -32,6 +32,7 @@ function findSectionForPath(pathname: string): string | null {
 
 export function PrizymShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const urlSection = useMemo(() => findSectionForPath(pathname), [pathname]);
   const [openSection, setOpenSection] = useState<string | null>(null);
   const topbarRef = useRef<HTMLElement | null>(null);
@@ -82,13 +83,22 @@ export function PrizymShell({ children }: { children: React.ReactNode }) {
             const highlighted = urlSection === sec.section;
             const isOpen = openSection === sec.section;
             const showActive = highlighted || isOpen;
+            // Sections with exactly one module navigate directly — no dropdown.
+            const isDirectNav = sec.items.length === 1;
             return (
               <button
                 key={sec.section}
                 type="button"
-                aria-expanded={isOpen}
-                aria-haspopup="menu"
-                onClick={() => setOpenSection((prev) => (prev === sec.section ? null : sec.section))}
+                aria-expanded={isDirectNav ? undefined : isOpen}
+                aria-haspopup={isDirectNav ? undefined : 'menu'}
+                onClick={() => {
+                  if (isDirectNav) {
+                    setOpenSection(null);
+                    router.push(sec.items[0].href);
+                  } else {
+                    setOpenSection((prev) => (prev === sec.section ? null : sec.section));
+                  }
+                }}
                 className={`pg-bshell-section${showActive ? ' is-active' : ''}${isOpen ? ' is-open' : ''}`}
                 style={showActive ? { borderColor: sec.color, color: sec.color, background: `${sec.color}1a` } : undefined}
               >
