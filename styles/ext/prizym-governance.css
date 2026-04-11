@@ -180,7 +180,7 @@
    is covered. */
 body,
 .demo-shell {
-  background: linear-gradient(90deg, #1e40af 0%, #0891b2 50%, #10b981 100%) fixed;
+  background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%) fixed;
   min-height: 100vh;
 }
 
@@ -636,7 +636,7 @@ body,
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: linear-gradient(90deg, #1e40af 0%, #0891b2 50%, #10b981 100%) fixed;
+  background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%) fixed;
   color: var(--pg-text);
 }
 
