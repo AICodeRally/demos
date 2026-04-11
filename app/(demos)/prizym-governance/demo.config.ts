@@ -17,24 +17,28 @@ export default defineDemo({
     primary: '#0891b2',
     accent: '#10b981',
   },
+  // Section colors MUST be Tailwind-300-level brights. The BG gradient runs
+  // #1e40af → #0891b2 → #10b981 horizontally, so darker base tokens would
+  // match the gradient and vanish on hover/active. Every color here was
+  // picked to stay readable across the whole gradient.
   nav: [
     {
       section: 'Home',
-      color: '#0891b2',
+      color: '#7dd3fc', // cyan-bright
       items: [
         { label: 'My Workspace', href: '/prizym-governance', icon: 'Home' },
       ],
     },
     {
       section: 'Documents',
-      color: '#1e40af',
+      color: '#67e8f9', // design-bright (distinct pale cyan)
       items: [
         { label: 'Documents Library', href: '/prizym-governance/documents', icon: 'FileText' },
       ],
     },
     {
       section: 'Tools',
-      color: '#0891b2',
+      color: '#fcd34d', // warning-bright (gold — pops on all 3 gradient stops)
       items: [
         { label: 'ASC 606 Calculator', href: '/prizym-governance/tools/asc606-calculator', icon: 'Calculator' },
         { label: '88-Checkpoint Framework', href: '/prizym-governance/tools/framework', icon: 'Grid3x3' },
@@ -44,7 +48,7 @@ export default defineDemo({
     },
     {
       section: 'Compliance',
-      color: '#10b981',
+      color: '#c4b5fd', // oversee-bright (lavender — distinct from the gradient's green end)
       items: [
         { label: 'Obligations', href: '/prizym-governance/compliance/obligations', icon: 'Scale' },
         { label: 'Control Status', href: '/prizym-governance/compliance/controls', icon: 'ShieldCheck' },
@@ -54,7 +58,7 @@ export default defineDemo({
     },
     {
       section: 'Workflows',
-      color: '#0ea5e9',
+      color: '#fca5a5', // danger-bright (coral — warm contrast vs the cool gradient)
       items: [
         { label: 'Actions Queue', href: '/prizym-governance/workflows/actions', icon: 'CheckSquare' },
         { label: 'Cases', href: '/prizym-governance/workflows/cases', icon: 'Briefcase' },
@@ -64,7 +68,7 @@ export default defineDemo({
     },
     {
       section: 'AI',
-      color: '#8b5cf6',
+      color: '#a5b4fc', // dispute-bright (pale indigo)
       items: [
         { label: 'AskSGM Workspace', href: '/prizym-governance/asksgm', icon: 'Sparkles' },
       ],

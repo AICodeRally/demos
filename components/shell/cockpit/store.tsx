@@ -76,7 +76,7 @@ const BHG_STARTER_SCOPE: ModuleScope[] = [
   { id: 'bs-reporting', department: 'Operations', moduleName: 'Reporting & Analytics', description: 'Unified reporting across sales, services, and operations. Dashboard widgets, scheduled reports, export capabilities', priority: 7 },
   { id: 'bs-documents', department: 'Operations', moduleName: 'Document Management', description: 'Centralized document storage for proposals, SOWs, contracts, and deliverables. Version control and access management', priority: 8 },
   { id: 'bs-marketing', department: 'Marketing', moduleName: 'Marketing & Lead Gen', description: 'Campaign management, lead generation tracking, marketing analytics. Lead→Pipeline handoff workflow', priority: 9 },
-  { id: 'bs-partners', department: 'Sales', moduleName: 'Channel Partner Portal', description: 'Sub-client management for channel partners (Royal, Henry Schein, Jamf, KPMG, Verizon). Branded dashboards per partner', priority: 10 },
+  { id: 'bs-partners', department: 'Sales', moduleName: 'Channel Partner Portal', description: 'Sub-client management for channel partners. Branded dashboards per partner', priority: 10 },
   { id: 'bs-training', department: 'Services', moduleName: 'Training & Enablement', description: 'SPM methodology training, ICM platform certification tracks, onboarding materials for new consultants', priority: 11 },
   { id: 'bs-admin', department: 'IT', moduleName: 'Platform Admin & Security', description: 'User management, role-based access, Azure AD SSO, audit logging, security policies. Department-scoped permissions', priority: 12 },
 ];
