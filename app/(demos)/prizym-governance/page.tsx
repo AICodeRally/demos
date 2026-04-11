@@ -40,13 +40,12 @@ export default function MyWorkspacePage() {
     { label: 'Obligations', value: `${oblStats.compliant}/${oblStats.total}`, icon: Scale, color: 'var(--pg-info-bright)', sub: 'compliant' },
   ];
 
-  const urlForType = (type: string) => (type === 'comp_plan' ? 'comp-plans' : `${type}s`);
 
   const quickLinks = [
-    { href: '/prizym-governance/documents/policies', label: 'Policy Library', icon: FileText, count: `${docStats.byType.policy} policies`, color: 'var(--pg-cyan-bright)' },
+    { href: '/prizym-governance/documents', label: 'Documents Library', icon: FileText, count: `${docStats.total} documents`, color: 'var(--pg-cyan-bright)' },
     { href: '/prizym-governance/tools/asc606-calculator', label: 'ASC 606 Calculator', icon: Calculator, count: 'Interactive tool', color: 'var(--pg-success-bright)' },
     { href: '/prizym-governance/compliance/obligations', label: 'Obligations', icon: Scale, count: `${oblStats.total} tracked`, color: 'var(--pg-info-bright)' },
-    { href: '/prizym-governance/workflows/exceptions', label: 'Exceptions', icon: AlertOctagon, count: `${exceptionStats.pending} pending`, color: 'var(--pg-warning-bright)' },
+    { href: '/prizym-governance/workflows/actions', label: 'Actions Queue', icon: AlertOctagon, count: `${exceptionStats.pending} exceptions pending`, color: 'var(--pg-warning-bright)' },
   ];
 
   return (
@@ -116,7 +115,7 @@ export default function MyWorkspacePage() {
             {EXCEPTIONS.filter(e => e.status === 'pending').map((e) => (
               <Link
                 key={e.id}
-                href="/prizym-governance/workflows/exceptions"
+                href="/prizym-governance/workflows/actions"
                 style={{
                   textDecoration: 'none',
                   display: 'block',
@@ -146,7 +145,7 @@ export default function MyWorkspacePage() {
             {DOCUMENTS.filter(d => isReviewOverdue(d, TODAY)).map((d) => (
               <Link
                 key={d.id}
-                href={`/prizym-governance/documents/${urlForType(d.type)}`}
+                href="/prizym-governance/documents"
                 style={{
                   textDecoration: 'none',
                   display: 'block',
@@ -181,7 +180,7 @@ export default function MyWorkspacePage() {
               <Gavel size={20} color="var(--pg-operate-bright)" strokeWidth={2.4} />
             </div>
             Recent Decisions
-            <Link href="/prizym-governance/workflows/reviews" style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 800, color: 'var(--pg-operate-bright)', textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+            <Link href="/prizym-governance/workflows/actions" style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 800, color: 'var(--pg-operate-bright)', textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               View all
             </Link>
           </h3>
@@ -199,7 +198,7 @@ export default function MyWorkspacePage() {
               return (
                 <Link
                   key={d.id}
-                  href="/prizym-governance/workflows/reviews"
+                  href="/prizym-governance/workflows/actions"
                   style={{
                     textDecoration: 'none',
                     display: 'flex',
