@@ -92,7 +92,7 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
             return (
               <button key={s} onClick={() => setStatusFilter(s)} style={{
                 padding: '8px 14px', borderRadius: 16,
-                background: active ? 'rgba(110,231,183,0.22)' : 'rgba(255,255,255,0.06)',
+                background: active ? 'rgba(240, 171, 252, 0.22)' : 'rgba(255,255,255,0.06)',
                 border: active ? '1.5px solid var(--pg-success-bright)' : '1px solid rgba(255,255,255,0.2)',
                 color: active ? 'var(--pg-success-bright)' : '#ffffff',
                 fontSize: 14, fontWeight: 700, cursor: 'pointer', textTransform: 'capitalize',

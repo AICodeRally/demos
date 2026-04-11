@@ -247,15 +247,15 @@ export function AskSGMChat({ fullHeight }: Props) {
             letterSpacing: '0.05em',
             background:
               mode === 'live'
-                ? 'rgba(16,185,129,0.22)'
+                ? 'rgba(217, 70, 239, 0.22)'
                 : mode === 'fallback'
                 ? 'rgba(245,158,11,0.22)'
                 : 'rgba(14,165,233,0.22)',
             color:
-              mode === 'live' ? '#6ee7b7' : mode === 'fallback' ? '#fcd34d' : '#7dd3fc',
+              mode === 'live' ? '#f0abfc' : mode === 'fallback' ? '#fcd34d' : '#7dd3fc',
             border: `1px solid ${
               mode === 'live'
-                ? 'rgba(16,185,129,0.55)'
+                ? 'rgba(217, 70, 239, 0.55)'
                 : mode === 'fallback'
                 ? 'rgba(245,158,11,0.55)'
                 : 'rgba(14,165,233,0.55)'

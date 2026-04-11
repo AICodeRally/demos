@@ -31,7 +31,7 @@ export default defineDemo({
     },
     {
       section: 'Documents',
-      color: '#6ee7b7', // emerald-300 mint
+      color: '#f0abfc', // fuchsia-300 (matches new success accent)
       items: [
         { label: 'Documents Library', href: '/prizym-governance/documents', icon: 'FileText' },
       ],

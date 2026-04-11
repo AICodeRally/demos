@@ -4,7 +4,7 @@ import type { LucideIcon } from 'lucide-react';
 
 /* Text colors are lightened variants of the base hue so chips stay readable
    on both light cards and the rgba dark-mode surfaces. */
-const GREEN = { bg: 'rgba(16,185,129,0.22)', text: '#6ee7b7', border: 'rgba(16,185,129,0.5)' };
+const GREEN = { bg: 'rgba(217,70,239,0.22)', text: '#f0abfc', border: 'rgba(217,70,239,0.55)' };
 const AMBER = { bg: 'rgba(245,158,11,0.22)', text: '#fcd34d', border: 'rgba(245,158,11,0.5)' };
 const BLUE = { bg: 'rgba(59,130,246,0.22)', text: '#93c5fd', border: 'rgba(59,130,246,0.5)' };
 const PURPLE = { bg: 'rgba(139,92,246,0.22)', text: '#c4b5fd', border: 'rgba(139,92,246,0.5)' };
