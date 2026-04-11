@@ -35,24 +35,26 @@
   --pg-header-bg: rgba(15,23,42,0.45);
   --pg-footer-bg: rgba(15,23,42,0.45);
 
-  /* Gradients */
-  --pg-gradient-hero: linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #10b981 100%);
-  --pg-gradient-accent: linear-gradient(135deg, #0891b2 0%, #10b981 100%);
-  --pg-gradient-subtle: linear-gradient(135deg, rgba(8,145,178,0.06) 0%, rgba(16,185,129,0.06) 100%);
-  --pg-gradient-card-hover: linear-gradient(135deg, rgba(8,145,178,0.03) 0%, rgba(16,185,129,0.03) 100%);
+  /* Gradients — match the purple→cyan body gradient. */
+  --pg-gradient-hero: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%);
+  --pg-gradient-accent: linear-gradient(90deg, #a5b4fc 0%, #7dd3fc 100%);
+  --pg-gradient-subtle: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(6,182,212,0.08) 100%);
+  --pg-gradient-card-hover: linear-gradient(135deg, rgba(139,92,246,0.04) 0%, rgba(6,182,212,0.04) 100%);
 
   /* Brand colors */
   --pg-navy: #0f172a;
   --pg-cyan: #0ea5e9;
   --pg-cyan-bg: rgba(14,165,233,0.08);
-  --pg-gold: #c9942b;
-  --pg-gold-bg: rgba(201,148,43,0.08);
+  --pg-gold: #fcd34d;
+  --pg-gold-bg: rgba(252,211,77,0.12);
 
-  /* Mode indicators */
-  --pg-design: #0ea5e9;
-  --pg-operate: #3b82f6;
-  --pg-dispute: #6366f1;
-  --pg-oversee: #8b5cf6;
+  /* Quadrant indicators — use the bright variants so they read on the
+     gradient. The base tokens used to be 5-400-level blues/purples that
+     matched the old gradient; those are gone. */
+  --pg-design: #67e8f9;
+  --pg-operate: #93c5fd;
+  --pg-dispute: #a5b4fc;
+  --pg-oversee: #c4b5fd;
 
   /* Status colors — success uses fuchsia not green so it stands apart from
      the purple→cyan body gradient and gives "good/complete" states a
@@ -109,22 +111,22 @@
 
   /* --color-* shim for ported Summit components (ASC 606 calculator, etc.) */
   --color-background: var(--pg-bg);
-  --color-foreground: var(--pg-text);
-  --color-muted: var(--pg-text-muted);
-  --color-surface: var(--pg-card);
-  --color-surface-alt: var(--pg-surface-alt);
-  --color-border: var(--pg-border);
-  --color-primary: var(--pg-cyan);
-  --color-info: #0ea5e9;
-  --color-info-bg: rgba(14,165,233,0.10);
-  --color-info-border: rgba(14,165,233,0.35);
-  --color-success: #d946ef;
-  --color-success-bg: rgba(217, 70, 239, 0.10);
-  --color-warning: #f59e0b;
-  --color-warning-bg: rgba(245,158,11,0.10);
-  --color-warning-border: rgba(245,158,11,0.35);
-  --color-error: #ef4444;
-  --color-error-bg: rgba(239,68,68,0.10);
+  --color-foreground: #ffffff;
+  --color-muted: #f1f5f9;
+  --color-surface: rgba(15, 23, 42, 0.44);
+  --color-surface-alt: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.22);
+  --color-primary: var(--pg-cyan-bright);
+  --color-info: var(--pg-info-bright);
+  --color-info-bg: rgba(147, 197, 253, 0.14);
+  --color-info-border: rgba(147, 197, 253, 0.45);
+  --color-success: var(--pg-success-bright);
+  --color-success-bg: rgba(240, 171, 252, 0.14);
+  --color-warning: var(--pg-warning-bright);
+  --color-warning-bg: rgba(252, 211, 77, 0.14);
+  --color-warning-border: rgba(252, 211, 77, 0.45);
+  --color-error: var(--pg-danger-bright);
+  --color-error-bg: rgba(252, 165, 165, 0.14);
 }
 
 /* ── Animations ──────────────────────────────── */
@@ -695,13 +697,193 @@ body,
   align-items: center;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(217, 70, 239, 0.18);
-  border: 1px solid rgba(217, 70, 239, 0.5);
-  color: #a7f3d0;
+  background: rgba(217, 70, 239, 0.2);
+  border: 1.5px solid var(--pg-success-bright);
+  color: var(--pg-success-bright);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* ── Topbar: search trigger, notifications, avatar, popovers ────── */
+.pg-bshell-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 220px;
+}
+
+.pg-bshell-search-trigger:hover {
+  background: rgba(0, 0, 0, 0.44);
+  border-color: var(--pg-cyan-bright);
+  color: var(--pg-cyan-bright);
+}
+
+.pg-bshell-search-trigger > span:first-of-type {
+  flex: 1;
+  text-align: left;
+  color: #f1f5f9;
+}
+
+.pg-bshell-kbd {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.pg-bshell-notif-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pg-danger-bright);
+  border: 2px solid rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 10px rgba(252, 165, 165, 0.6);
+}
+
+.pg-bshell-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--pg-cyan-bright), var(--pg-oversee-bright));
+  color: #0f172a;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-bshell-avatar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.4);
+}
+
+.pg-bshell-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 320px;
+  max-width: 380px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.5);
+  overflow: hidden;
+  z-index: 55;
+  animation: pg-dropdown-in 140ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pg-bshell-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pg-bshell-popover-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pg-danger-bright);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pg-bshell-popover-sub {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f5f9;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+
+.pg-bshell-notif-item {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 4px solid transparent;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.pg-bshell-notif-item:last-child {
+  border-bottom: none;
+}
+
+.pg-bshell-notif-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pg-bshell-notif-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.pg-bshell-notif-time {
+  font-size: 13px;
+  color: #f1f5f9;
+  margin-top: 3px;
+}
+
+.pg-bshell-menu-item {
+  display: block;
+  width: 100%;
+  padding: 11px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pg-bshell-menu-item:last-child {
+  border-bottom: none;
+}
+
+.pg-bshell-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--pg-cyan-bright);
+}
+
+@media (max-width: 900px) {
+  .pg-bshell-search-trigger {
+    display: none;
+  }
 }
 
 .pg-bshell-sections-inner {

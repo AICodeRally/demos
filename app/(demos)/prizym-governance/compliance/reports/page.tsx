@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { REPORTS, type GovernanceReport } from '@/data/prizym-governance/oversee';
 import { FileText, Download, Play, Calendar, Clock, User } from 'lucide-react';
+import { showDemoToast } from '@/components/demos/prizym-governance/Toast';
+import { EmptyState } from '@/components/demos/prizym-governance/EmptyState';
 
 const CATEGORY_CONFIG: Record<GovernanceReport['category'], { color: string; label: string }> = {
   performance: { color: 'var(--pg-cyan-bright)', label: 'Performance' },
@@ -62,8 +64,17 @@ export default function ReportsPage() {
           minHeight: 0,
           overflowY: 'auto',
           paddingRight: 6,
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
+        {filtered.length === 0 ? (
+          <EmptyState
+            icon={FileText}
+            title="No reports match this filter"
+            description={`Switch to a different category or clear the "${categoryFilter}" filter to see more.`}
+          />
+        ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 14 }}>
           {filtered.map((r, i) => {
             const cfg = CATEGORY_CONFIG[r.category];
@@ -103,6 +114,8 @@ export default function ReportsPage() {
                 </div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                   <button
+                    type="button"
+                    onClick={() => showDemoToast(`Running "${r.title}"…`, 'success')}
                     style={{
                       flex: 1, padding: '10px 14px',
                       background: cfg.color, color: '#0f172a',
@@ -114,6 +127,8 @@ export default function ReportsPage() {
                     <Play size={14} strokeWidth={2.6} /> Run
                   </button>
                   <button
+                    type="button"
+                    onClick={() => showDemoToast(`Exporting "${r.title}" as ${r.format[0]}…`, 'info')}
                     style={{
                       flex: 1, padding: '10px 14px',
                       background: 'rgba(0,0,0,0.3)', color: cfg.color,
@@ -129,6 +144,7 @@ export default function ReportsPage() {
             );
           })}
         </div>
+        )}
       </div>
     </div>
   );

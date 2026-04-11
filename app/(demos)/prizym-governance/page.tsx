@@ -61,11 +61,14 @@ export default function MyWorkspacePage() {
         className="pg-home-hero-grid"
       >
         <section className="pg-hero-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--pg-success-bright)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+            Sales Governance Manager
+          </div>
           <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 10 }}>
             Welcome back — {demoOrgProfile.name}
           </h1>
-          <p style={{ fontSize: '1.0625rem', color: '#ffffff', lineHeight: 1.5 }}>
-            Your compliance workspace — pending attestations, approvals, reviews, and program pulse in one view.
+          <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.5 }}>
+            Unified workspace for compensation program oversight across the four SGM quadrants — <strong style={{ color: 'var(--pg-design-bright)' }}>Design</strong>, <strong style={{ color: 'var(--pg-operate-bright)' }}>Operate</strong>, <strong style={{ color: 'var(--pg-dispute-bright)' }}>Dispute</strong>, and <strong style={{ color: 'var(--pg-oversee-bright)' }}>Oversee</strong>.
           </p>
         </section>
 
