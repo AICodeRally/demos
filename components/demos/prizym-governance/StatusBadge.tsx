@@ -2,17 +2,18 @@
 
 import type { LucideIcon } from 'lucide-react';
 
-/* Text colors are lightened variants of the base hue so chips stay readable
-   on both light cards and the rgba dark-mode surfaces. */
-const GREEN = { bg: 'rgba(217,70,239,0.22)', text: '#f0abfc', border: 'rgba(217,70,239,0.55)' };
-const AMBER = { bg: 'rgba(245,158,11,0.22)', text: '#fcd34d', border: 'rgba(245,158,11,0.5)' };
-const BLUE = { bg: 'rgba(59,130,246,0.22)', text: '#93c5fd', border: 'rgba(59,130,246,0.5)' };
-const PURPLE = { bg: 'rgba(139,92,246,0.22)', text: '#c4b5fd', border: 'rgba(139,92,246,0.5)' };
-const SLATE = { bg: 'rgba(148,163,184,0.22)', text: '#e2e8f0', border: 'rgba(148,163,184,0.5)' };
-const RED = { bg: 'rgba(239,68,68,0.22)', text: '#fca5a5', border: 'rgba(239,68,68,0.5)' };
-const CRIMSON = { bg: 'rgba(220,38,38,0.22)', text: '#fca5a5', border: 'rgba(220,38,38,0.5)' };
-const ORANGE = { bg: 'rgba(249,115,22,0.22)', text: '#fdba74', border: 'rgba(249,115,22,0.5)' };
-const YELLOW = { bg: 'rgba(234,179,8,0.22)', text: '#fde047', border: 'rgba(234,179,8,0.5)' };
+/* Badge palettes: each uses dark recess + bright border + bright text so
+   chips pop against the purple→cyan gradient. "GREEN" is historical — the
+   success accent is now fuchsia. */
+const GREEN = { bg: 'rgba(0,0,0,0.32)', text: '#f0abfc', border: 'rgba(240,171,252,0.7)' };
+const AMBER = { bg: 'rgba(0,0,0,0.32)', text: '#fcd34d', border: 'rgba(252,211,77,0.7)' };
+const BLUE = { bg: 'rgba(0,0,0,0.32)', text: '#93c5fd', border: 'rgba(147,197,253,0.7)' };
+const PURPLE = { bg: 'rgba(0,0,0,0.32)', text: '#c4b5fd', border: 'rgba(196,181,253,0.7)' };
+const SLATE = { bg: 'rgba(0,0,0,0.32)', text: '#e2e8f0', border: 'rgba(226,232,240,0.6)' };
+const RED = { bg: 'rgba(0,0,0,0.32)', text: '#fca5a5', border: 'rgba(252,165,165,0.7)' };
+const CRIMSON = { bg: 'rgba(0,0,0,0.4)', text: '#fecaca', border: 'rgba(254,202,202,0.85)' };
+const ORANGE = { bg: 'rgba(0,0,0,0.32)', text: '#fdba74', border: 'rgba(253,186,116,0.7)' };
+const YELLOW = { bg: 'rgba(0,0,0,0.32)', text: '#fde047', border: 'rgba(253,224,71,0.7)' };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   APPROVED: GREEN, ACTIVE: GREEN, PUBLISHED: GREEN,
@@ -36,7 +37,8 @@ export function StatusBadge({ status }: { status: string }) {
       style={{
         background: style.bg,
         color: style.text,
-        border: `1px solid ${style.border}`,
+        border: `1.5px solid ${style.border}`,
+        fontWeight: 800,
       }}
     >
       {status.replace(/_/g, ' ')}
