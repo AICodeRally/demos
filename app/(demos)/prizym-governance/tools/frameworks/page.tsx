@@ -27,7 +27,7 @@ const FRAMEWORKS: FrameworkEntry[] = [
     code: f.code,
     title: f.title,
     description: f.content.slice(0, 240) + '...',
-    href: '/prizym-governance/documents/policies',
+    href: '/prizym-governance/documents',
     icon: BookOpen,
     accent: 'var(--pg-success-bright)',
   })),

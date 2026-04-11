@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
 import { DOCUMENTS, getDocumentStats } from '@/data/prizym-governance/documents/catalog';
 import {
@@ -9,22 +8,6 @@ import {
   type DocumentType, type LifecycleStatus, type DocumentRecord,
 } from '@/data/prizym-governance/documents/types';
 import { FileText, BookOpen, ListChecks, ShieldCheck, LayoutTemplate, X, AlertTriangle } from 'lucide-react';
-
-export const URL_TO_TYPE: Record<string, DocumentType> = {
-  'comp-plans': 'comp_plan',
-  'policies': 'policy',
-  'procedures': 'procedure',
-  'controls': 'control',
-  'templates': 'template',
-};
-
-const TYPE_TO_URL: Record<DocumentType, string> = {
-  comp_plan: 'comp-plans',
-  policy: 'policies',
-  procedure: 'procedures',
-  control: 'controls',
-  template: 'templates',
-};
 
 const TYPE_ICONS: Record<DocumentType, typeof FileText> = {
   comp_plan: FileText,
@@ -34,11 +17,12 @@ const TYPE_ICONS: Record<DocumentType, typeof FileText> = {
   template: LayoutTemplate,
 };
 
+const ALL_TYPES: DocumentType[] = ['comp_plan', 'policy', 'procedure', 'control', 'template'];
+
 const TODAY = new Date('2026-04-10');
 
-export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
-  const docType = URL_TO_TYPE[typeSlug];
-
+export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: DocumentType } = {}) {
+  const [docType, setDocType] = useState<DocumentType>(initialType);
   const [statusFilter, setStatusFilter] = useState<LifecycleStatus | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [selected, setSelected] = useState<DocumentRecord | null>(null);
@@ -55,36 +39,40 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
     [docs, statusFilter, categoryFilter]
   );
 
+  // Reset category filter when type changes (categories vary per type)
+  useEffect(() => { setCategoryFilter('all'); }, [docType]);
+
   const stats = getDocumentStats();
   const overdueCount = docs.filter(d => isReviewOverdue(d, TODAY)).length;
-
-  const tabs: DocumentType[] = ['comp_plan', 'policy', 'procedure', 'control', 'template'];
 
   return (
     <div className="pg-page" style={{ height: '100%' }}>
       <div style={{ marginBottom: 14 }}>
         <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
-          {DOCUMENT_TYPE_LABELS[docType]}
+          Documents Library
         </h1>
         <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
-          {filtered.length} of {docs.length} {DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · {overdueCount} review overdue.
+          {filtered.length} of {docs.length} {DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · {overdueCount} review overdue · filter by type below.
         </p>
       </div>
 
       <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid rgba(255,255,255,0.22)', marginBottom: 14, flexWrap: 'wrap' }}>
-        {tabs.map((t) => {
+        {ALL_TYPES.map((t) => {
           const Icon = TYPE_ICONS[t];
           const active = t === docType;
           return (
-            <Link
+            <button
               key={t}
-              href={`/prizym-governance/documents/${TYPE_TO_URL[t]}`}
+              type="button"
+              onClick={() => setDocType(t)}
               style={{
                 display: 'flex', alignItems: 'center', gap: 8,
                 padding: '12px 18px',
+                background: 'transparent',
+                border: 'none',
                 borderBottom: active ? '2px solid var(--pg-cyan-bright)' : '2px solid transparent',
                 color: active ? 'var(--pg-cyan-bright)' : '#ffffff',
-                fontSize: 15, fontWeight: 700, textDecoration: 'none',
+                fontSize: 15, fontWeight: 700, cursor: 'pointer',
               }}
             >
               <Icon size={16} strokeWidth={2.4} />
@@ -92,7 +80,7 @@ export function DocumentsLibrary({ typeSlug }: { typeSlug: string }) {
               <span style={{ padding: '3px 10px', borderRadius: 10, background: active ? 'rgba(125,211,252,0.22)' : 'rgba(255,255,255,0.1)', fontSize: 14, fontWeight: 700 }}>
                 {stats.byType[t]}
               </span>
-            </Link>
+            </button>
           );
         })}
       </div>

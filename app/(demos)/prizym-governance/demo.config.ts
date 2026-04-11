@@ -29,11 +29,7 @@ export default defineDemo({
       section: 'Documents',
       color: '#1e40af',
       items: [
-        { label: 'Comp Plans', href: '/prizym-governance/documents/comp-plans', icon: 'FileText' },
-        { label: 'Policies', href: '/prizym-governance/documents/policies', icon: 'BookOpen' },
-        { label: 'Procedures', href: '/prizym-governance/documents/procedures', icon: 'ListChecks' },
-        { label: 'Controls', href: '/prizym-governance/documents/controls', icon: 'ShieldCheck' },
-        { label: 'Templates', href: '/prizym-governance/documents/templates', icon: 'LayoutTemplate' },
+        { label: 'Documents Library', href: '/prizym-governance/documents', icon: 'FileText' },
       ],
     },
     {
@@ -43,6 +39,7 @@ export default defineDemo({
         { label: 'ASC 606 Calculator', href: '/prizym-governance/tools/asc606-calculator', icon: 'Calculator' },
         { label: '88-Checkpoint Framework', href: '/prizym-governance/tools/framework', icon: 'Grid3x3' },
         { label: 'Governance Frameworks', href: '/prizym-governance/tools/frameworks', icon: 'Network' },
+        { label: 'Committees', href: '/prizym-governance/tools/committees', icon: 'Users' },
       ],
     },
     {
@@ -59,12 +56,8 @@ export default defineDemo({
       section: 'Workflows',
       color: '#0ea5e9',
       items: [
-        { label: 'Approvals', href: '/prizym-governance/workflows/approvals', icon: 'CheckSquare' },
-        { label: 'Attestations', href: '/prizym-governance/workflows/attestations', icon: 'PenLine' },
-        { label: 'Reviews', href: '/prizym-governance/workflows/reviews', icon: 'Gavel' },
-        { label: 'Exceptions', href: '/prizym-governance/workflows/exceptions', icon: 'AlertOctagon' },
+        { label: 'Actions Queue', href: '/prizym-governance/workflows/actions', icon: 'CheckSquare' },
         { label: 'Cases', href: '/prizym-governance/workflows/cases', icon: 'Briefcase' },
-        { label: 'Committees', href: '/prizym-governance/workflows/committees', icon: 'Users' },
         { label: 'Calendar', href: '/prizym-governance/workflows/calendar', icon: 'Calendar' },
         { label: 'Audit Trail', href: '/prizym-governance/workflows/audit-trail', icon: 'History' },
       ],
