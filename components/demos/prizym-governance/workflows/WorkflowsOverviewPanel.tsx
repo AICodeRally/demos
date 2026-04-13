@@ -129,7 +129,7 @@ export function WorkflowsOverviewPanel({ onJumpToTab }: WorkflowsOverviewPanelPr
               <div key={e.id} style={{ ...rowStyle, borderLeft: `4px solid ${IMPACT_COLORS[e.impactLevel]}` }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: IMPACT_COLORS[e.impactLevel], textTransform: 'uppercase', letterSpacing: '0.04em' }}>{e.action}</div>
                 <div style={{ fontSize: 14, color: '#ffffff', marginTop: 3, lineHeight: 1.4 }}>{e.description}</div>
-                <div style={{ fontSize: 13, color: '#f1f5f9', marginTop: 3 }}>{e.actor} · {new Date(e.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                <div style={{ fontSize: 13, color: '#f1f5f9', marginTop: 3 }}>{e.actor} · {new Date(e.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })}</div>
               </div>
             ))}
           </div>
