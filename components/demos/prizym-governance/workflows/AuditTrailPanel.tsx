@@ -135,7 +135,7 @@ export function AuditTrailPanel({ showStats = true }: { showStats?: boolean } = 
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.16)', fontSize: 14 }}>
                 <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{event.actor}</span>
                 <span style={{ color: '#f1f5f9' }}>{event.actorRole}</span>
-                <span style={{ fontWeight: 700, color: '#ffffff' }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                <span style={{ fontWeight: 700, color: '#ffffff' }}>{new Date(event.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
               </div>
             </div>
           </div>
