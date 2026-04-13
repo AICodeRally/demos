@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
-import { DOCUMENTS, getDocumentStats } from '@/data/prizym-governance/documents/catalog';
+import { DocumentFormModal } from '@/components/demos/prizym-governance/DocumentFormModal';
+import { DOCUMENTS } from '@/data/prizym-governance/documents/catalog';
 import {
   DOCUMENT_TYPE_LABELS, LIFECYCLE_STATUS_LABELS, isReviewOverdue,
   type DocumentType, type LifecycleStatus, type DocumentRecord,
 } from '@/data/prizym-governance/documents/types';
-import { FileText, BookOpen, ListChecks, ShieldCheck, LayoutTemplate, X, AlertTriangle } from 'lucide-react';
+import { FileText, BookOpen, ListChecks, ShieldCheck, LayoutTemplate, X, AlertTriangle, Plus, Pencil } from 'lucide-react';
 
 const TYPE_ICONS: Record<DocumentType, typeof FileText> = {
   comp_plan: FileText,
@@ -17,20 +18,37 @@ const TYPE_ICONS: Record<DocumentType, typeof FileText> = {
   template: LayoutTemplate,
 };
 
+type TypeFilter = DocumentType | 'all';
 const ALL_TYPES: DocumentType[] = ['comp_plan', 'policy', 'procedure', 'control', 'template'];
+const TYPE_TABS: TypeFilter[] = ['all', 'comp_plan', 'policy', 'procedure', 'control', 'template'];
+
+const TYPE_SHORT_LABELS: Record<DocumentType, string> = {
+  comp_plan: 'Comp Plan',
+  policy: 'Policy',
+  procedure: 'Procedure',
+  control: 'Control',
+  template: 'Template',
+};
 
 const TODAY = new Date('2026-04-10');
 
-export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: DocumentType } = {}) {
-  const [docType, setDocType] = useState<DocumentType>(initialType);
+export function DocumentsLibrary({ initialType = 'all' as TypeFilter }: { initialType?: TypeFilter } = {}) {
+  const [docType, setDocType] = useState<TypeFilter>(initialType);
   const [statusFilter, setStatusFilter] = useState<LifecycleStatus | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [selected, setSelected] = useState<DocumentRecord | null>(null);
+  const [documents, setDocuments] = useState<DocumentRecord[]>(() => [...DOCUMENTS]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingDoc, setEditingDoc] = useState<DocumentRecord | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  const docs = useMemo(() => DOCUMENTS.filter((d) => d.type === docType), [docType]);
+  const docs = useMemo(
+    () => docType === 'all' ? documents : documents.filter((d) => d.type === docType),
+    [documents, docType]
+  );
   const categories = useMemo(() => Array.from(new Set(docs.map(d => d.category))), [docs]);
+  const allCategories = useMemo(() => Array.from(new Set(documents.map(d => d.category))).filter(Boolean).sort(), [documents]);
   const filtered = useMemo(
     () => docs.filter(d =>
       (statusFilter === 'all' || d.status === statusFilter) &&
@@ -42,24 +60,87 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
   // Reset category filter when type changes (categories vary per type)
   useEffect(() => { setCategoryFilter('all'); }, [docType]);
 
-  const stats = getDocumentStats();
+  const byType = useMemo(() => {
+    const counts: Record<DocumentType, number> = { comp_plan: 0, policy: 0, procedure: 0, control: 0, template: 0 };
+    for (const d of documents) counts[d.type]++;
+    return counts;
+  }, [documents]);
   const overdueCount = docs.filter(d => isReviewOverdue(d, TODAY)).length;
+
+  function openCreate() {
+    setEditingDoc(null);
+    setModalOpen(true);
+  }
+
+  function openEdit(doc: DocumentRecord, ev?: React.MouseEvent) {
+    ev?.stopPropagation();
+    setEditingDoc(doc);
+    setModalOpen(true);
+  }
+
+  function handleSave(doc: DocumentRecord) {
+    setDocuments((prev) => {
+      const idx = prev.findIndex((d) => d.id === doc.id);
+      if (idx >= 0) {
+        const next = [...prev];
+        next[idx] = doc;
+        return next;
+      }
+      return [doc, ...prev];
+    });
+    setModalOpen(false);
+    setEditingDoc(null);
+    // After saving, ensure the saved doc is visible — if the current
+    // type filter excludes it, widen to 'all'.
+    if (docType !== 'all' && docType !== doc.type) {
+      setDocType('all');
+    }
+    setStatusFilter('all');
+    setCategoryFilter('all');
+  }
 
   return (
     <div className="pg-page" style={{ height: '100%' }}>
-      <div style={{ marginBottom: 14 }}>
-        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
-          Documents Library
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
-          {filtered.length} of {docs.length} {DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · {overdueCount} review overdue · filter by type below.
-        </p>
+      <div style={{ marginBottom: 14, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 280 }}>
+          <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+            Documents Library
+          </h1>
+          <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+            {filtered.length} of {docs.length} {docType === 'all' ? 'documents' : DOCUMENT_TYPE_LABELS[docType].toLowerCase()} shown · {overdueCount} review overdue · filter by type below.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={openCreate}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '12px 22px',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)',
+            border: '1px solid rgba(255,255,255,0.35)',
+            borderRadius: 12,
+            color: '#ffffff',
+            fontSize: 15,
+            fontWeight: 800,
+            cursor: 'pointer',
+            boxShadow: '0 8px 24px rgba(14,165,233,0.3)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <Plus size={18} strokeWidth={2.6} />
+          New {docType === 'all' ? 'Document' : DOCUMENT_TYPE_LABELS[docType].slice(0, -1)}
+        </button>
       </div>
 
       <div style={{ display: 'flex', gap: 8, borderBottom: '1px solid rgba(255,255,255,0.22)', marginBottom: 14, flexWrap: 'wrap' }}>
-        {ALL_TYPES.map((t) => {
-          const Icon = TYPE_ICONS[t];
+        {TYPE_TABS.map((t) => {
+          const isAll = t === 'all';
+          const Icon = isAll ? FileText : TYPE_ICONS[t];
           const active = t === docType;
+          const count = isAll ? documents.length : byType[t];
+          const label = isAll ? 'All Documents' : DOCUMENT_TYPE_LABELS[t];
           return (
             <button
               key={t}
@@ -76,9 +157,9 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
               }}
             >
               <Icon size={16} strokeWidth={2.4} />
-              {DOCUMENT_TYPE_LABELS[t]}
+              {label}
               <span style={{ padding: '3px 10px', borderRadius: 10, background: active ? 'rgba(125,211,252,0.22)' : 'rgba(255,255,255,0.1)', fontSize: 14, fontWeight: 700 }}>
-                {stats.byType[t]}
+                {count}
               </span>
             </button>
           );
@@ -127,9 +208,10 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead style={{ position: 'sticky', top: 0, background: 'rgba(15, 23, 42, 0.72)', backdropFilter: 'blur(12px)', zIndex: 1 }}>
               <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.24)' }}>
-                {['Code', 'Title', 'Category', 'Status', 'Version', 'Owner', 'Next Review', 'Attestation'].map(h => (
+                {['Code', 'Type', 'Title', 'Category', 'Status', 'Version', 'Owner', 'Next Review', 'Attestation'].map(h => (
                   <th key={h} style={{ padding: '14px 16px', textAlign: 'left', fontSize: 14, fontWeight: 800, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
                 ))}
+                <th style={{ padding: '14px 16px', textAlign: 'right', fontSize: 14, fontWeight: 800, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.05em', width: 60 }}></th>
               </tr>
             </thead>
             <tbody>
@@ -147,6 +229,25 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
                     onMouseLeave={(ev) => { ev.currentTarget.style.background = 'transparent'; }}
                   >
                     <td style={{ padding: '14px 16px', fontSize: 15, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{d.code}</td>
+                    <td style={{ padding: '14px 16px' }}>
+                      {(() => {
+                        const TypeIcon = TYPE_ICONS[d.type];
+                        return (
+                          <span style={{
+                            display: 'inline-flex', alignItems: 'center', gap: 6,
+                            padding: '4px 10px', borderRadius: 10,
+                            background: 'rgba(125,211,252,0.12)',
+                            border: '1px solid rgba(125,211,252,0.4)',
+                            color: 'var(--pg-cyan-bright)',
+                            fontSize: 13, fontWeight: 800, letterSpacing: '0.03em',
+                            whiteSpace: 'nowrap',
+                          }}>
+                            <TypeIcon size={13} strokeWidth={2.6} />
+                            {TYPE_SHORT_LABELS[d.type]}
+                          </span>
+                        );
+                      })()}
+                    </td>
                     <td style={{ padding: '14px 16px', fontSize: 15, fontWeight: 700, color: '#ffffff' }}>
                       {d.title}
                       {overdue && (
@@ -162,6 +263,27 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
                     <td style={{ padding: '14px 16px', fontSize: 14, color: overdue ? 'var(--pg-danger-bright)' : '#f1f5f9', fontWeight: overdue ? 700 : 400 }}>{d.nextReview}</td>
                     <td style={{ padding: '14px 16px', fontSize: 14, color: '#ffffff', fontWeight: 700 }}>
                       {d.attestationPct !== undefined ? `${d.attestationPct}%` : '—'}
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'right' }}>
+                      <button
+                        type="button"
+                        onClick={(ev) => openEdit(d, ev)}
+                        aria-label={`Edit ${d.code}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 34,
+                          height: 34,
+                          borderRadius: 8,
+                          background: 'rgba(255,255,255,0.08)',
+                          border: '1px solid rgba(255,255,255,0.24)',
+                          color: 'var(--pg-cyan-bright)',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <Pencil size={15} strokeWidth={2.4} />
+                      </button>
                     </td>
                   </tr>
                 );
@@ -191,9 +313,32 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
                 <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{selected.code} · {DOCUMENT_TYPE_LABELS[selected.type]}</div>
                 <h2 style={{ fontSize: '1.625rem', fontWeight: 800, color: '#ffffff', marginTop: 6, lineHeight: 1.2 }}>{selected.title}</h2>
               </div>
-              <button onClick={() => setSelected(null)} className="pg-icon-bubble" style={{ border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}>
-                <X size={20} color="#ffffff" strokeWidth={2.4} />
-              </button>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => { const d = selected; setSelected(null); if (d) openEdit(d); }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '9px 16px',
+                    background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)',
+                    border: '1px solid rgba(255,255,255,0.35)',
+                    borderRadius: 10,
+                    color: '#ffffff',
+                    fontSize: 14,
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    boxShadow: '0 6px 18px rgba(14,165,233,0.3)',
+                  }}
+                >
+                  <Pencil size={14} strokeWidth={2.6} />
+                  Edit
+                </button>
+                <button onClick={() => setSelected(null)} className="pg-icon-bubble" style={{ border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}>
+                  <X size={20} color="#ffffff" strokeWidth={2.4} />
+                </button>
+              </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 22 }}>
@@ -234,6 +379,16 @@ export function DocumentsLibrary({ initialType = 'policy' }: { initialType?: Doc
             )}
           </aside>
         </div>
+      )}
+
+      {modalOpen && (
+        <DocumentFormModal
+          doc={editingDoc}
+          defaultType={docType === 'all' ? 'policy' : docType}
+          existingCategories={allCategories}
+          onSave={handleSave}
+          onClose={() => { setModalOpen(false); setEditingDoc(null); }}
+        />
       )}
     </div>
   );

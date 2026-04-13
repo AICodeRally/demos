@@ -33,18 +33,18 @@ const sharedComponent = {
   sidebarText: '#ffffff',
   sidebarTextMuted: 'rgba(255,255,255,0.82)',
   sidebarBorder: 'rgba(255,255,255,0.16)',
-  sidebarActiveAccent: '#10b981',
+  sidebarActiveAccent: '#8b5cf6',
   headerBg: 'rgba(15,23,42,0.5)',
   headerBorder: 'rgba(255,255,255,0.16)',
   footerBg: 'rgba(15,23,42,0.45)',
   navSectionLabel: 'rgba(255,255,255,0.82)',
-  progressBarFill: '#10b981',
+  progressBarFill: '#8b5cf6',
 };
 
 export const sgmCompliance: ThemePresetDef = {
   palette: {
-    primary: generateShades('#0891b2'),
-    accent: generateShades('#10b981'),
+    primary: generateShades('#0ea5e9'),
+    accent: generateShades('#8b5cf6'),
     neutral: generateShades('#64748b'),
     success: '#10b981',
     danger: '#ef4444',

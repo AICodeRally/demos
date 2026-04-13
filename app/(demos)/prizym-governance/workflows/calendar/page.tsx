@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { showDemoToast } from '@/components/demos/prizym-governance/Toast';
 import { CALENDAR_EVENTS, type CalendarEvent } from '@/data/prizym-governance/operate';
-import { Calendar as CalIcon, Users, Clock, MapPin, Gavel, GraduationCap, AlertCircle, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Calendar as CalIcon, Users, Clock, MapPin, Gavel, GraduationCap, AlertCircle, ChevronLeft, ChevronRight, X, Plus } from 'lucide-react';
 
 const CATEGORY_CONFIG: Record<CalendarEvent['category'], { color: string; icon: typeof CalIcon; label: string }> = {
   committee: { color: 'var(--pg-info-bright)', icon: Users, label: 'Committee' },
@@ -25,17 +26,62 @@ function parseEventDate(dateStr: string): Date {
   return new Date(dateStr + 'T12:00:00Z');
 }
 
+type NewEventDraft = {
+  title: string;
+  date: string;
+  time: string;
+  category: CalendarEvent['category'];
+  attendees: string;
+  location: string;
+  committee: string;
+};
+
+function emptyDraft(date: string): NewEventDraft {
+  return { title: '', date, time: '10:00 AM', category: 'committee', attendees: '5', location: 'Conference Room A', committee: '' };
+}
+
 export default function CalendarPage() {
   // Default view: April 2026 (where seed events live)
   const [viewYear, setViewYear] = useState(2026);
   const [viewMonth, setViewMonth] = useState(3); // April (0-indexed)
   const [filter, setFilter] = useState<CalendarEvent['category'] | 'all'>('all');
+  const [events, setEvents] = useState<CalendarEvent[]>(() => [...CALENDAR_EVENTS]);
   const [selected, setSelected] = useState<CalendarEvent | null>(null);
+  const [draft, setDraft] = useState<NewEventDraft | null>(null);
 
   const filtered = useMemo(
-    () => (filter === 'all' ? CALENDAR_EVENTS : CALENDAR_EVENTS.filter(e => e.category === filter)),
-    [filter]
+    () => (filter === 'all' ? events : events.filter(e => e.category === filter)),
+    [events, filter]
   );
+
+  function openCreate(dateStr?: string) {
+    const defaultDate = dateStr ?? new Date(Date.UTC(viewYear, viewMonth, 15)).toISOString().slice(0, 10);
+    setDraft(emptyDraft(defaultDate));
+  }
+
+  function saveDraft() {
+    if (!draft) return;
+    if (!draft.title.trim() || !draft.date || !draft.time.trim() || !draft.location.trim()) {
+      showDemoToast('Title, date, time, and location are required', 'warning');
+      return;
+    }
+    const newEvent: CalendarEvent = {
+      id: `evt-${Date.now().toString(36)}`,
+      title: draft.title.trim(),
+      date: draft.date,
+      time: draft.time.trim(),
+      category: draft.category,
+      attendees: Number(draft.attendees) || 0,
+      location: draft.location.trim(),
+      ...(draft.committee.trim() ? { committee: draft.committee.trim() } : {}),
+    };
+    setEvents(prev => [...prev, newEvent]);
+    const d = parseEventDate(newEvent.date);
+    setViewYear(d.getUTCFullYear());
+    setViewMonth(d.getUTCMonth());
+    setDraft(null);
+    showDemoToast(`"${newEvent.title}" added to calendar`, 'success');
+  }
 
   // Grid math — first visible day = Sunday of the week containing day 1
   const firstOfMonth = new Date(Date.UTC(viewYear, viewMonth, 1));
@@ -81,15 +127,35 @@ export default function CalendarPage() {
     return d.getUTCFullYear() === viewYear && d.getUTCMonth() === viewMonth;
   }).length;
 
+  const allEventCount = events.length;
+
   return (
     <div className="pg-page" style={{ height: '100%' }}>
-      <div style={{ marginBottom: 14 }}>
-        <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
-          Governance Calendar
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
-          Committee meetings, approvals, reviews, training, and deadlines.
-        </p>
+      <div style={{ marginBottom: 14, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 280 }}>
+          <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 4 }}>
+            Governance Calendar
+          </h1>
+          <p style={{ fontSize: '1rem', color: '#ffffff', lineHeight: 1.45 }}>
+            Committee meetings, approvals, reviews, training, and deadlines.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => openCreate()}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '12px 22px',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)',
+            border: '1px solid rgba(255,255,255,0.35)',
+            borderRadius: 12, color: '#ffffff',
+            fontSize: 15, fontWeight: 800, cursor: 'pointer',
+            boxShadow: '0 8px 24px rgba(14,165,233,0.3)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <Plus size={18} strokeWidth={2.6} /> New Event
+        </button>
       </div>
 
       {/* Month header + filter chips */}
@@ -142,7 +208,7 @@ export default function CalendarPage() {
       <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
         {filters.map(f => {
           const active = filter === f;
-          const count = f === 'all' ? CALENDAR_EVENTS.length : CALENDAR_EVENTS.filter(e => e.category === f).length;
+          const count = f === 'all' ? allEventCount : events.filter(e => e.category === f).length;
           const color = f === 'all' ? 'var(--pg-cyan-bright)' : CATEGORY_CONFIG[f].color;
           return (
             <button
@@ -303,6 +369,112 @@ export default function CalendarPage() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {draft && (
+        <div
+          onClick={() => setDraft(null)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)', zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
+        >
+          <div
+            onClick={(ev) => ev.stopPropagation()}
+            className="pg-scroll"
+            style={{
+              width: 'min(640px, 96vw)',
+              maxHeight: '92vh',
+              overflowY: 'auto',
+              background: 'rgba(15, 23, 42, 0.92)',
+              backdropFilter: 'blur(24px) saturate(150%)',
+              border: '1px solid rgba(255, 255, 255, 0.28)',
+              borderRadius: 16,
+              boxShadow: '0 24px 64px rgba(15,23,42,0.5)',
+              padding: '30px 36px 32px',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 22 }}>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--pg-cyan-bright)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>New Event</div>
+                <h2 style={{ fontSize: '1.625rem', fontWeight: 800, color: '#ffffff', marginTop: 6, lineHeight: 1.2 }}>{draft.title || 'Untitled Event'}</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setDraft(null)}
+                className="pg-icon-bubble"
+                style={{ border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                aria-label="Close"
+              >
+                <X size={20} color="#ffffff" strokeWidth={2.4} />
+              </button>
+            </div>
+
+            {(() => {
+              const labelStyle: React.CSSProperties = {
+                display: 'block', fontSize: 13, fontWeight: 800, color: '#f1f5f9',
+                textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6,
+              };
+              const inputStyle: React.CSSProperties = {
+                width: '100%', padding: '11px 14px',
+                background: 'rgba(15, 23, 42, 0.55)',
+                border: '1px solid rgba(255, 255, 255, 0.28)',
+                borderRadius: 10, color: '#ffffff',
+                fontSize: 15, fontWeight: 600, outline: 'none', fontFamily: 'inherit',
+              };
+              return (
+                <>
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={labelStyle}>Title *</label>
+                    <input type="text" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} placeholder="e.g. Q2 SGCC Meeting" style={inputStyle} />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+                    <div>
+                      <label style={labelStyle}>Date *</label>
+                      <input type="date" value={draft.date} onChange={(e) => setDraft({ ...draft, date: e.target.value })} style={{ ...inputStyle, colorScheme: 'dark' }} />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Time *</label>
+                      <input type="text" value={draft.time} onChange={(e) => setDraft({ ...draft, time: e.target.value })} placeholder="10:00 AM" style={inputStyle} />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+                    <div>
+                      <label style={labelStyle}>Category</label>
+                      <select value={draft.category} onChange={(e) => setDraft({ ...draft, category: e.target.value as CalendarEvent['category'] })} style={inputStyle}>
+                        <option value="committee" style={{ background: '#0f172a' }}>Committee</option>
+                        <option value="approval" style={{ background: '#0f172a' }}>Approval</option>
+                        <option value="review" style={{ background: '#0f172a' }}>Review</option>
+                        <option value="training" style={{ background: '#0f172a' }}>Training</option>
+                        <option value="deadline" style={{ background: '#0f172a' }}>Deadline</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Attendees</label>
+                      <input type="number" min="0" value={draft.attendees} onChange={(e) => setDraft({ ...draft, attendees: e.target.value })} style={inputStyle} />
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={labelStyle}>Location *</label>
+                    <input type="text" value={draft.location} onChange={(e) => setDraft({ ...draft, location: e.target.value })} placeholder="e.g. Conference Room A, Zoom, Chicago HQ" style={inputStyle} />
+                  </div>
+
+                  <div style={{ marginBottom: 22 }}>
+                    <label style={labelStyle}>Committee (optional)</label>
+                    <input type="text" value={draft.committee} onChange={(e) => setDraft({ ...draft, committee: e.target.value })} placeholder="e.g. SGCC, CRB" style={inputStyle} />
+                  </div>
+
+                  <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+                    <button type="button" onClick={() => setDraft(null)} style={{ padding: '11px 22px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: 10, color: '#ffffff', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>Cancel</button>
+                    <button type="button" onClick={saveDraft} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 22px', background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)', border: '1px solid rgba(255,255,255,0.35)', borderRadius: 10, color: '#ffffff', fontSize: 15, fontWeight: 800, cursor: 'pointer', boxShadow: '0 8px 24px rgba(14,165,233,0.3)' }}>
+                      <Plus size={16} strokeWidth={2.8} /> Create Event
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
       )}

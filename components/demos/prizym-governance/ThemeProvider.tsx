@@ -1,11 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Space_Grotesk } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-const spaceGrotesk = Space_Grotesk({
+const sgmSans = Inter({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-sgm-sans',
 });
 
 interface ThemeContextValue {
@@ -45,7 +45,7 @@ export function PrizymThemeProvider({ children }: { children: React.ReactNode })
 
   return (
     <ThemeContext.Provider value={{ fontSize, increaseFontSize, decreaseFontSize }}>
-      <div className={spaceGrotesk.variable} style={{ fontFamily: 'var(--font-space-grotesk), system-ui, sans-serif' }}>
+      <div className={sgmSans.variable} style={{ fontFamily: 'var(--font-sgm-sans), Inter, system-ui, sans-serif' }}>
         {children}
       </div>
     </ThemeContext.Provider>
