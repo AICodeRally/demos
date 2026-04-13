@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CheckCircle2, Info } from 'lucide-react';
+import { CheckCircle2, Info, AlertTriangle, XCircle } from 'lucide-react';
 
 // Simple toast system: dispatches a custom event on window that the
 // <ToastHost/> listens for. Any component can call showDemoToast()
 // without importing a context.
 
+type ToastTone = 'success' | 'info' | 'warning' | 'danger';
+
 type ToastPayload = {
   message: string;
-  tone?: 'success' | 'info';
+  tone?: ToastTone;
 };
 
 type ToastItem = ToastPayload & { id: number };
@@ -56,8 +58,16 @@ export function ToastHost() {
       }}
     >
       {toasts.map((t) => {
-        const color = t.tone === 'success' ? 'var(--pg-success-bright)' : 'var(--pg-cyan-bright)';
-        const Icon = t.tone === 'success' ? CheckCircle2 : Info;
+        const color =
+          t.tone === 'success' ? 'var(--pg-success-bright)' :
+          t.tone === 'warning' ? 'var(--pg-warning-bright)' :
+          t.tone === 'danger' ? 'var(--pg-danger-bright)' :
+          'var(--pg-cyan-bright)';
+        const Icon =
+          t.tone === 'success' ? CheckCircle2 :
+          t.tone === 'warning' ? AlertTriangle :
+          t.tone === 'danger' ? XCircle :
+          Info;
         return (
           <div
             key={t.id}

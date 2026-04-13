@@ -14,8 +14,8 @@ export default defineDemo({
   theme: 'sgm-compliance',
   showThemeToggle: false,
   colors: {
-    primary: '#0891b2',
-    accent: '#10b981',
+    primary: '#0ea5e9', // forge SGM gradient start (cyan-500)
+    accent: '#8b5cf6',  // forge SGM gradient end (violet-500)
   },
   // Section colors MUST be Tailwind-300-level brights that DON'T match the
   // BG gradient (purple #8b5cf6 → cyan #06b6d4). We stick to warm tones
@@ -49,20 +49,16 @@ export default defineDemo({
       section: 'Compliance',
       color: '#fda4af', // rose-300
       items: [
-        { label: 'Obligations', href: '/prizym-governance/compliance/obligations', icon: 'Scale' },
-        { label: 'Control Status', href: '/prizym-governance/compliance/controls', icon: 'ShieldCheck' },
+        { label: 'Compliance Center', href: '/prizym-governance/compliance', icon: 'Scale' },
         { label: 'Reports', href: '/prizym-governance/compliance/reports', icon: 'BarChart3' },
-        { label: 'Audit Readiness', href: '/prizym-governance/compliance/audit', icon: 'ClipboardCheck' },
       ],
     },
     {
       section: 'Workflows',
       color: '#fca5a5', // red-300 coral
       items: [
-        { label: 'Actions Queue', href: '/prizym-governance/workflows/actions', icon: 'CheckSquare' },
-        { label: 'Cases', href: '/prizym-governance/workflows/cases', icon: 'Briefcase' },
+        { label: 'Workflows Center', href: '/prizym-governance/workflows', icon: 'CheckSquare' },
         { label: 'Calendar', href: '/prizym-governance/workflows/calendar', icon: 'Calendar' },
-        { label: 'Audit Trail', href: '/prizym-governance/workflows/audit-trail', icon: 'History' },
       ],
     },
     {
@@ -80,6 +76,6 @@ export default defineDemo({
   meta: {
     industry: 'Sales Performance Management',
     tagline: 'Sales Governance Manager (SGM) — part of the Prizym Sales Planning Suite',
-    color: '#06b6d4',
+    color: '#0ea5e9',
   },
 });

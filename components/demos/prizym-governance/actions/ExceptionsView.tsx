@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MetricCard, StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
-import { EXCEPTIONS, getExceptionStats, type PolicyException, type ExceptionStatus } from '@/data/prizym-governance/workflows/exceptions';
-import { AlertOctagon, Clock, CheckCircle2, XCircle, X, Calendar, User } from 'lucide-react';
+import { showDemoToast } from '@/components/demos/prizym-governance/Toast';
+import { EXCEPTIONS, type PolicyException, type ExceptionStatus } from '@/data/prizym-governance/workflows/exceptions';
+import { AlertOctagon, Clock, CheckCircle2, XCircle, X, Calendar, User, Check } from 'lucide-react';
 
 const STATUS_COLOR: Record<ExceptionStatus, string> = {
   pending: 'var(--pg-warning-bright)',
@@ -14,12 +15,26 @@ const STATUS_COLOR: Record<ExceptionStatus, string> = {
 
 export function ExceptionsView() {
   const [tab, setTab] = useState<ExceptionStatus | 'all'>('all');
+  const [exceptions, setExceptions] = useState<PolicyException[]>(() => [...EXCEPTIONS]);
   const [selected, setSelected] = useState<PolicyException | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  const stats = getExceptionStats();
-  const filtered = tab === 'all' ? EXCEPTIONS : EXCEPTIONS.filter(e => e.status === tab);
+  const stats = useMemo(() => ({
+    pending: exceptions.filter(e => e.status === 'pending').length,
+    approved: exceptions.filter(e => e.status === 'approved').length,
+    expired: exceptions.filter(e => e.status === 'expired').length,
+    totalImpact: exceptions.reduce((sum, e) => sum + (e.amountImpact ?? 0), 0),
+  }), [exceptions]);
+
+  const filtered = tab === 'all' ? exceptions : exceptions.filter(e => e.status === tab);
+
+  function updateStatus(id: string, next: ExceptionStatus, verb: string) {
+    setExceptions(prev => prev.map(e => e.id === id ? { ...e, status: next } : e));
+    setSelected(prev => prev && prev.id === id ? { ...prev, status: next } : prev);
+    const item = exceptions.find(e => e.id === id);
+    showDemoToast(`${verb} · ${item?.caseNumber ?? ''} ${item?.title ?? ''}`.trim(), next === 'rejected' ? 'warning' : 'success');
+  }
 
   const metrics = [
     { label: 'Pending', value: String(stats.pending), icon: Clock, color: 'var(--pg-warning-bright)' },
@@ -39,7 +54,7 @@ export function ExceptionsView() {
       <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
         {tabs.map(t => {
           const active = tab === t;
-          const count = t === 'all' ? EXCEPTIONS.length : EXCEPTIONS.filter(e => e.status === t).length;
+          const count = t === 'all' ? exceptions.length : exceptions.filter(e => e.status === t).length;
           return (
             <button
               key={t}
@@ -158,6 +173,45 @@ export function ExceptionsView() {
                 </div>
               )}
             </div>
+
+            {selected.status === 'pending' && (
+              <div style={{ display: 'flex', gap: 12, marginTop: 28, paddingTop: 22, borderTop: '1px solid rgba(255,255,255,0.22)', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(selected.id, 'approved', 'Approved')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    padding: '11px 22px',
+                    background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)',
+                    border: '1px solid rgba(255,255,255,0.35)',
+                    borderRadius: 10, color: '#ffffff',
+                    fontSize: 15, fontWeight: 800, cursor: 'pointer',
+                    boxShadow: '0 8px 24px rgba(14,165,233,0.3)',
+                  }}
+                >
+                  <Check size={16} strokeWidth={2.8} /> Approve Exception
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(selected.id, 'rejected', 'Rejected')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    padding: '11px 22px',
+                    background: 'rgba(252,165,165,0.14)',
+                    border: '1.5px solid var(--pg-danger-bright)',
+                    borderRadius: 10, color: 'var(--pg-danger-bright)',
+                    fontSize: 15, fontWeight: 800, cursor: 'pointer',
+                  }}
+                >
+                  <X size={16} strokeWidth={2.8} /> Reject
+                </button>
+              </div>
+            )}
+            {selected.status !== 'pending' && (
+              <div style={{ marginTop: 24, padding: '14px 18px', borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)', color: '#f1f5f9', fontSize: 14, fontWeight: 600 }}>
+                This exception has been <strong style={{ color: '#ffffff' }}>{selected.status}</strong> — no further action available.
+              </div>
+            )}
           </aside>
         </div>
       )}

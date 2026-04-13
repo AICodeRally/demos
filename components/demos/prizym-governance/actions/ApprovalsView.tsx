@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MetricCard, StatusBadge } from '@/components/demos/prizym-governance/StatusBadge';
-import { APPROVALS, getApprovalStats, type ApprovalStatus } from '@/data/prizym-governance/operate';
-import { CheckSquare, AlertTriangle, Clock, ShieldCheck, MessageSquare } from 'lucide-react';
+import { showDemoToast } from '@/components/demos/prizym-governance/Toast';
+import { APPROVALS, type ApprovalItem, type ApprovalStatus } from '@/data/prizym-governance/operate';
+import { CheckSquare, AlertTriangle, Clock, ShieldCheck, MessageSquare, Check, X, ArrowUpRight } from 'lucide-react';
 
 type FilterTab = 'all' | ApprovalStatus;
 
@@ -21,11 +22,18 @@ function formatMoney(n?: number) {
 
 export function ApprovalsView() {
   const [tab, setTab] = useState<FilterTab>('all');
+  const [approvals, setApprovals] = useState<ApprovalItem[]>(() => [...APPROVALS]);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  const stats = getApprovalStats();
-  const filtered = tab === 'all' ? APPROVALS : APPROVALS.filter(a => a.status === tab);
+  const stats = useMemo(() => ({
+    pending: approvals.filter(a => a.status === 'pending').length,
+    approved: approvals.filter(a => a.status === 'approved').length,
+    escalated: approvals.filter(a => a.status === 'escalated').length,
+    highPriority: approvals.filter(a => a.priority === 'high').length,
+  }), [approvals]);
+
+  const filtered = tab === 'all' ? approvals : approvals.filter(a => a.status === tab);
 
   const metrics = [
     { label: 'Pending', value: String(stats.pending), icon: Clock, color: 'var(--pg-warning-bright)' },
@@ -36,6 +44,12 @@ export function ApprovalsView() {
 
   const tabs: FilterTab[] = ['all', 'pending', 'approved', 'escalated', 'rejected'];
 
+  function updateStatus(id: string, next: ApprovalStatus, verb: string) {
+    setApprovals(prev => prev.map(a => a.id === id ? { ...a, status: next } : a));
+    const item = approvals.find(a => a.id === id);
+    showDemoToast(`${verb} · ${item?.policyRef ?? ''} ${item?.title ?? ''}`.trim(), next === 'rejected' ? 'warning' : 'success');
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
@@ -45,7 +59,7 @@ export function ApprovalsView() {
       <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
         {tabs.map(t => {
           const active = tab === t;
-          const count = t === 'all' ? APPROVALS.length : APPROVALS.filter(a => a.status === t).length;
+          const count = t === 'all' ? approvals.length : approvals.filter(a => a.status === t).length;
           return (
             <button
               key={t}
@@ -108,6 +122,53 @@ export function ApprovalsView() {
                 <MessageSquare size={14} strokeWidth={2.4} /> {a.threadCount} comments
               </span>
             </div>
+            {a.status === 'pending' && (
+              <div style={{ display: 'flex', gap: 10, marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.16)', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(a.id, 'approved', 'Approved')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 7,
+                    padding: '9px 18px',
+                    background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #8b5cf6 100%)',
+                    border: '1px solid rgba(255,255,255,0.35)',
+                    borderRadius: 10, color: '#ffffff',
+                    fontSize: 14, fontWeight: 800, cursor: 'pointer',
+                    boxShadow: '0 6px 18px rgba(14,165,233,0.28)',
+                  }}
+                >
+                  <Check size={15} strokeWidth={2.8} /> Approve
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(a.id, 'rejected', 'Rejected')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 7,
+                    padding: '9px 18px',
+                    background: 'rgba(252,165,165,0.14)',
+                    border: '1.5px solid var(--pg-danger-bright)',
+                    borderRadius: 10, color: 'var(--pg-danger-bright)',
+                    fontSize: 14, fontWeight: 800, cursor: 'pointer',
+                  }}
+                >
+                  <X size={15} strokeWidth={2.8} /> Reject
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(a.id, 'escalated', 'Escalated')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 7,
+                    padding: '9px 18px',
+                    background: 'rgba(196,181,252,0.14)',
+                    border: '1.5px solid var(--pg-oversee-bright)',
+                    borderRadius: 10, color: 'var(--pg-oversee-bright)',
+                    fontSize: 14, fontWeight: 800, cursor: 'pointer',
+                  }}
+                >
+                  <ArrowUpRight size={15} strokeWidth={2.8} /> Escalate
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

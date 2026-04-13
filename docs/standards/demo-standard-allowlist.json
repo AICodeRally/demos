@@ -2,6 +2,12 @@
   "deepLinkRoutes": [
     "/equipr/ara",
     "/meridian/cockpit",
+    "/prizym-governance/compliance/audit",
+    "/prizym-governance/compliance/controls",
+    "/prizym-governance/compliance/obligations",
+    "/prizym-governance/workflows/actions",
+    "/prizym-governance/workflows/audit-trail",
+    "/prizym-governance/workflows/cases",
     "/proofline/ops/ai/forecasting",
     "/proofline/ops/ai/pricing",
     "/proofline/ops/day-planner/stop/[id]",
