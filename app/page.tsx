@@ -9,7 +9,7 @@ const SPM_DEMO_SLUGS = new Set([
   'swic',
 ]);
 
-const TOOL_DEMO_SLUGS = new Set(['on-the-clock', 'knil']);
+const TOOL_DEMO_SLUGS = new Set(['knil']);
 
 function groupDemos() {
   const visibleDemos = demoRegistry.filter((demo) => !PRIVATE_RALLY_DEMO_SLUGS.has(demo.slug));
