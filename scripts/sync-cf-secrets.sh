@@ -30,7 +30,7 @@ readonly KEYCHAIN_TOKEN_NAME="cf_secrets_token"
 # Mapping from CF Secrets Store name → expected macOS Keychain service name.
 # Keep these in sync when you add or rotate secrets on either side.
 declare -a CF_TO_KEYCHAIN=(
-  "aicr_anthropic_anthro-01:aicr-tools-ANTHROPIC_API_KEY_1"
+  # anthro-01 deprecated 2026-04-13 — no longer exists in CF Secrets Store
   "aicr_anthropic_anthro-02:aicr-tools-ANTHROPIC_API_KEY_2"
   "aicr_anthropic_anthro-03:aicr-tools-ANTHROPIC_API_KEY_3"
   "aicr_openai_openai-01:aicr-tools-OPENAI_API_KEY"
