@@ -49,7 +49,7 @@ export function RouteIQHeader({
           style={{
             width: 24,
             height: 24,
-            background: 'linear-gradient(135deg, #C6A052, #a8842e)',
+            background: 'linear-gradient(135deg, #F59E0B, #D97706)',
           }}
         >
           <Truck className="w-3 h-3 text-white" />

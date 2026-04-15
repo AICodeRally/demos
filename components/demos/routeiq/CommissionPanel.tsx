@@ -157,7 +157,7 @@ export function CommissionPanel({
           2026 Strategy Impact
         </p>
         <div className="grid grid-cols-2 gap-1.5">
-          <StrategyMiniCard label="Margin Priority" value="6% target" color="#C6A052" active={allAcceptedStrategies.length > 0} />
+          <StrategyMiniCard label="Margin Priority" value="6% target" color="#F59E0B" active={allAcceptedStrategies.length > 0} />
           <StrategyMiniCard label="Mix Shift" value="Craft +15%" color="#a855f7" active={allAcceptedStrategies.length > 0} />
           <StrategyMiniCard label="New Pipeline" value="1 new acct" color="#22c55e" active={true} />
           <StrategyMiniCard label="Placements" value="3 displays" color="#3b82f6" active={allAcceptedStrategies.length > 0} />
@@ -199,7 +199,7 @@ export function CommissionPanel({
             className="tap-active w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg font-bold transition-all"
             style={{
               fontSize: '0.85em',
-              background: 'linear-gradient(135deg, #C6A052, #a8842e)',
+              background: 'linear-gradient(135deg, #F59E0B, #D97706)',
               color: '#0a0f1e',
               boxShadow: '0 2px 12px rgba(198, 160, 82, 0.3)',
               minHeight: 36,

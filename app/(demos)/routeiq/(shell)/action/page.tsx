@@ -8,7 +8,7 @@ const ACTIONS = [
   { time: '08:58', type: 'coaching', target: 'Amara Okoye · LR-01', message: 'Stop 3 tomorrow: new-account talking points + 2 AI upsell suggestions', status: 'ack', icon: CheckCircle2 },
   { time: '08:42', type: 'priority', target: 'Marcus Reyes · KC-01', message: 'Stop 5 upgraded to priority: inventory shortage upstream', status: 'ack', icon: CheckCircle2 },
   { time: '08:30', type: 'guardrail', target: 'Priya Chen · OMA-01', message: '21% discount request — exceeds ceiling', status: 'pending', icon: AlertTriangle },
-  { time: '08:15', type: 'alert', target: 'All KS reps', message: 'TABC spirits license expiring in 14 days for 2 accounts', status: 'delivered', icon: CheckCircle2 },
+  { time: '08:15', type: 'alert', target: 'All KS reps', message: 'Liquor license expiring in 14 days for 2 accounts', status: 'delivered', icon: CheckCircle2 },
   { time: '07:58', type: 'coaching', target: 'Jenna Walsh · KC-02', message: 'Spirits kicker activated — quarter pacing on track', status: 'ack', icon: CheckCircle2 },
 ];
 

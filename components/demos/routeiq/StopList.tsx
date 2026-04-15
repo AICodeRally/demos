@@ -42,7 +42,7 @@ export function StopList({ activeStopIndex, onStopClick, completedSuggestions }:
                   className="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center font-black"
                   style={{
                     fontSize: '0.8em',
-                    background: isActive ? '#C6A052' : `${color}20`,
+                    background: isActive ? '#F59E0B' : `${color}20`,
                     color: isActive ? '#0a0f1e' : color,
                   }}
                 >
