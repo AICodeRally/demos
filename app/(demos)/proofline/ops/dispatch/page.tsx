@@ -190,7 +190,7 @@ export default function DeliveryDispatchPage() {
           {[
             { id: 'EXC-001', type: 'Late Departure', route: 'DAL-03', rep: 'Marcus Reyes', detail: '42 min behind schedule — traffic on I-35E', color: '#F87171' },
             { id: 'EXC-002', type: 'Low Inventory', route: 'FTW-02', rep: 'Tyler Brooks', detail: 'Corona Extra 12pk — 8 cases short of order', color: '#F59E0B' },
-            { id: 'EXC-003', type: 'Route Deviation', route: 'ALN-01', rep: 'Sarah Kim', detail: 'Skipped stop #4 (Total Wine) — customer closed early', color: '#A855F7' },
+            { id: 'EXC-003', type: 'Route Deviation', route: 'ALN-01', rep: 'Sarah Kim', detail: 'Skipped stop #4 (Brazos Wine) — customer closed early', color: '#A855F7' },
             { id: 'EXC-004', type: 'Compliance Flag', route: 'DAL-07', rep: 'Marcus Johnson', detail: 'Display photo missing at Spec\'s #12 — required by promo', color: '#2563EB' },
             { id: 'EXC-005', type: 'Delivery Delay', route: 'LAR-01', rep: 'Diego Ramirez', detail: 'Warehouse loading backup — ETA pushed 25 min', color: '#F97316' },
           ].map(alert => (

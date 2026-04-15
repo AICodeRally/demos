@@ -18,7 +18,7 @@ const SCAN_DATA_VELOCITY = [
   { sku: 'Miller Lite 24pk', store: 'Kroger IH-35', unitsWeek: 84, velocityRank: 1, categoryShare: 18.2, trend: 'up' as const },
   { sku: 'Corona Extra 12pk', store: 'H-E-B Plus Allen', unitsWeek: 72, velocityRank: 2, categoryShare: 15.4, trend: 'up' as const },
   { sku: 'Modelo Especial 24pk', store: 'Walmart Supercenter 78', unitsWeek: 68, velocityRank: 3, categoryShare: 14.8, trend: 'flat' as const },
-  { sku: 'Coors Light 30pk', store: 'Total Wine Richardson', unitsWeek: 56, velocityRank: 4, categoryShare: 12.1, trend: 'down' as const },
+  { sku: 'Coors Light 30pk', store: 'Brazos Wine Richardson', unitsWeek: 56, velocityRank: 4, categoryShare: 12.1, trend: 'down' as const },
   { sku: 'Blue Moon 6pk', store: 'Central Market Bev', unitsWeek: 42, velocityRank: 5, categoryShare: 9.1, trend: 'up' as const },
 ];
 

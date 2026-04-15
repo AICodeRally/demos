@@ -150,7 +150,7 @@ export default function MarketPositionPage() {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <linearGradient id="andrewsGlow" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="lonestarGlow" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#C6A052" stopOpacity="0.3" />
               <stop offset="100%" stopColor="#C6A052" stopOpacity="0.05" />
             </linearGradient>
@@ -212,11 +212,11 @@ export default function MarketPositionPage() {
 
           {/* Lone Star highlight zone */}
           {(() => {
-            const andrews = MARKET_PLAYERS[0];
-            const ax = toPlotX(andrews.marketShare);
-            const ay = toPlotY(andrews.growthRate);
+            const lonestar = MARKET_PLAYERS[0];
+            const lx = toPlotX(lonestar.marketShare);
+            const ly = toPlotY(lonestar.growthRate);
             return (
-              <circle cx={ax} cy={ay} r={60} fill="url(#andrewsGlow)" />
+              <circle cx={lx} cy={ly} r={60} fill="url(#lonestarGlow)" />
             );
           })()}
 

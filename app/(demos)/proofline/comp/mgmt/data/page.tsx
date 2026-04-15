@@ -44,7 +44,7 @@ const CREDIT_RULES = [
 
 const TRANSACTIONS = [
   { date: 'Mar 8', account: 'HEB Kirby', product: 'Coors Light 24pk', cases: 48, revenue: 1296, rep: 'Marcus Reyes', rule: 'Primary', confidence: 99 },
-  { date: 'Mar 8', account: 'Total Wine 183', product: 'Corona Extra 12pk', cases: 72, revenue: 2160, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
+  { date: 'Mar 8', account: 'Brazos Wine 183', product: 'Corona Extra 12pk', cases: 72, revenue: 2160, rep: 'Sofia Reyes', rule: 'Primary', confidence: 99 },
   { date: 'Mar 7', account: 'Whataburger Loop 410', product: 'Coors Banquet 6pk', cases: 24, revenue: 576, rep: 'James Park / Kenji Morales', rule: 'Split', confidence: 94 },
   { date: 'Mar 7', account: 'Central Market Bev', product: 'High Noon Variety', cases: 36, revenue: 1188, rep: 'Elena Vargas', rule: 'Primary', confidence: 99 },
   { date: 'Mar 7', account: 'Q Sports Bar Downtown', product: 'Modelo Especial Draft', cases: 18, revenue: 594, rep: 'Diego Santos', rule: 'Primary', confidence: 98 },
