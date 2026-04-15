@@ -12,7 +12,7 @@ export type StopType = 'warehouse' | 'key-account' | 'chain-drop' | 'presell' | 
 
 export const STOP_TYPE_COLORS: Record<StopType, string> = {
   'warehouse': '#94a3b8',
-  'key-account': '#C6A052',
+  'key-account': '#F59E0B',
   'chain-drop': '#3b82f6',
   'presell': '#22c55e',
   'new-account': '#a855f7',
@@ -45,7 +45,7 @@ export interface VisitRecord {
 export type StrategyTag = 'margin-priority' | 'mix-shift' | 'new-pipeline' | 'placement' | 'volume-tier';
 
 export const STRATEGY_TAG_CONFIG: Record<StrategyTag, { label: string; color: string; icon: string }> = {
-  'margin-priority': { label: 'MARGIN PRIORITY', color: '#C6A052', icon: '\u{1F48E}' },
+  'margin-priority': { label: 'MARGIN PRIORITY', color: '#F59E0B', icon: '\u{1F48E}' },
   'mix-shift':       { label: 'MIX SHIFT',       color: '#a855f7', icon: '\u{1F504}' },
   'new-pipeline':    { label: 'NEW ACCOUNT',      color: '#22c55e', icon: '\u{1F680}' },
   'placement':       { label: 'PLACEMENT',        color: '#3b82f6', icon: '\u{1F4CD}' },
@@ -114,7 +114,7 @@ export const ROUTE_META = {
   repName: 'Marcus Reyes',
   repId: 'kc-rep-001',
   territory: 'Kansas City',
-  date: '2026-03-09',
+  date: '2026-04-15',
   vehicleId: 'MO-4827',
   loadedCases: 187,
 };
@@ -128,7 +128,7 @@ export const ROUTE_STOPS: RouteStop[] = [
     accountName: 'Royal Distributing Center',
     type: 'warehouse',
     arrivalTime: '7:00 AM',
-    address: '4200 Singleton Blvd, Kansas City, MO 75212',
+    address: '4200 Kansas Ave, Kansas City, MO 64130',
     lat: 39.094, lng: -94.578,
     manifest: [],
     talkingPoints: [
@@ -142,31 +142,31 @@ export const ROUTE_STOPS: RouteStop[] = [
       insights: [
         'Today\'s load: 187 cases across 7 accounts',
         'Spring allocation: 24 cases Patron Silver (priority for key accounts)',
-        'New product sample: Revolver Blood & Honey seasonal',
+        'New product sample: Boulevard Tank 7 seasonal',
       ],
       competitiveIntel: 'Heartland Beverage Co ran a promo blitz in 64105 zip last week — expect requests for price matching.',
       contactName: 'Warehouse Manager',
       contactPhone: '(816) 555-0100',
       tabcStatus: 'verified',
       tabcExpiry: '2027-12-31',
-      tabcLicenseNo: 'WH-001-DFW',
+      tabcLicenseNo: 'WH-001-KC metro',
     },
     aiSuggestions: [],
   },
   {
     id: 'stop-2',
     sequence: 2,
-    accountName: 'Beverage Barn',
+    accountName: 'Midwest Tap House',
     type: 'key-account',
     arrivalTime: '8:00 AM',
-    address: '8531 Greenville Ave, Kansas City, MO 75231',
+    address: '1420 Westport Rd, Kansas City, MO 64110',
     lat: 39.125, lng: -94.560,
     manifest: [
       { productId: 'ls-005', name: 'Patron Silver Tequila 750ml', cases: 6, sku: 'PAT-SLV-750', promo: 'Cinco de Mayo Special' },
       { productId: 'ls-001', name: 'Buffalo Trace Bourbon 750ml', cases: 4, sku: 'BUF-TRC-750' },
       { productId: 'ls-007', name: 'Corona Extra 24pk', cases: 12, sku: 'COR-EXT-24' },
       { productId: 'ls-008', name: 'Modelo Especial 24pk', cases: 8, sku: 'MOD-ESP-24' },
-      { productId: 'ls-012', name: 'Shiner Bock 12pk', cases: 6, sku: 'SHN-BOC-12' },
+      { productId: 'ls-012', name: 'Boulevard Wheat 12pk', cases: 6, sku: 'BLV-WHE-12' },
     ],
     talkingPoints: [
       'Patron tasting event this Saturday — need end-cap display',
@@ -191,12 +191,12 @@ export const ROUTE_STOPS: RouteStop[] = [
       contactPhone: '(816) 555-0201',
       tabcStatus: 'verified',
       tabcExpiry: '2027-06-15',
-      tabcLicenseNo: 'BV-2847-DAL',
+      tabcLicenseNo: 'BV-2847-KCMO',
     },
     aiSuggestions: [
       {
         id: 'sug-2a', product: 'Patron Silver Tequila 750ml', productId: 'ls-005', cases: 4, commissionDelta: 47,
-        reasoning: 'Nielsen: +40% Patron sales in 75231. Cinco promo active. High margin ($18/cs).',
+        reasoning: 'Nielsen: +40% Patron sales in 64110. Cinco promo active. High margin ($18/cs).',
         source: 'Nielsen Scan Data + CRM', tags: ['spirits', 'premium'], strategy: 'margin-priority',
         coachingPlay: 'Lead with Cinco tasting event. Dave expanded spirits section — Patron fills the gap. Mention 3cs last year, push to 6.',
         marginDelta: 2.1,
@@ -213,10 +213,10 @@ export const ROUTE_STOPS: RouteStop[] = [
   {
     id: 'stop-3',
     sequence: 3,
-    accountName: 'Brazos Wine & Spirits',
+    accountName: 'Prairie Wine & Spirits',
     type: 'chain-drop',
     arrivalTime: '9:00 AM',
-    address: '10740 Preston Rd, Kansas City, MO 75230',
+    address: '8815 Metcalf Ave, Kansas City, MO 75230',
     lat: 39.145, lng: -94.595,
     manifest: [
       { productId: 'ls-003', name: "Tito's Handmade Vodka 1.75L", cases: 24, sku: 'TIT-HMV-175' },
@@ -227,7 +227,7 @@ export const ROUTE_STOPS: RouteStop[] = [
     talkingPoints: [
       'Volume play: chain minimum is 108 cases for tier pricing',
       'Tito\'s reset happening next week — confirm shelf space',
-      'New craft section needs Shiner and Deep Ellum representation',
+      'New craft section needs Boulevard and Martin City representation',
     ],
     displayInstructions: 'Stock to planogram. No custom displays for chain drops.',
     history: [
@@ -242,7 +242,7 @@ export const ROUTE_STOPS: RouteStop[] = [
         'Tito\'s is #1 vodka in KC market — protect shelf space',
         'Store manager open to end-cap promo for Cinco de Mayo',
       ],
-      competitiveIntel: 'Magnolia Spirits just won exclusive on Clase Azul at this location. Focus on Patron as premium tequila.',
+      competitiveIntel: 'Heartland Beverage just won exclusive on Clase Azul at this location. Focus on Patron as premium tequila.',
       contactName: 'Store Manager (Corp HQ)',
       contactPhone: '(816) 555-0302',
       tabcStatus: 'verified',
@@ -251,17 +251,17 @@ export const ROUTE_STOPS: RouteStop[] = [
     },
     aiSuggestions: [
       {
-        id: 'sug-3a', product: 'Deep Ellum IPA 6pk', productId: 'ls-013', cases: 12, commissionDelta: 18,
-        reasoning: 'Chain mandate: +15% Missouri craft. Deep Ellum trending in DFW. First-mover advantage.',
+        id: 'sug-3a', product: 'Martin City IPA 6pk', productId: 'ls-013', cases: 12, commissionDelta: 18,
+        reasoning: 'Chain mandate: +15% Missouri craft. Martin City trending in KC metro. First-mover advantage.',
         source: 'Chain HQ Directive + Market Data', tags: ['regional', 'premium'], strategy: 'mix-shift',
-        coachingPlay: 'Use chain HQ mandate as leverage — "your corporate wants 15% craft." Position Deep Ellum as the local hero brand.',
+        coachingPlay: 'Use chain HQ mandate as leverage — "your corporate wants 15% craft." Position Martin City as the local hero brand.',
         marginDelta: 3.4,
       },
       {
-        id: 'sug-3b', product: 'Karbach Love Street 12pk', productId: 'ls-014', cases: 12, commissionDelta: 16,
-        reasoning: 'Pairs with Deep Ellum for Missouri craft set. Karbach has strong brand recognition.',
+        id: 'sug-3b', product: 'KC Bier Dunkel 12pk', productId: 'ls-014', cases: 12, commissionDelta: 16,
+        reasoning: 'Pairs with Martin City for Missouri craft set. KC Bier has strong local brand recognition.',
         source: 'Category Analysis', tags: ['regional'], strategy: 'mix-shift',
-        coachingPlay: 'Bundle with Deep Ellum — "Missouri craft set." Love Street is approachable for craft newbies. Shelf-talker included.',
+        coachingPlay: 'Bundle with Martin City — "Missouri craft set." KC Bier is approachable for craft newbies. Shelf-talker included.',
         marginDelta: 2.8,
       },
     ],
@@ -294,7 +294,7 @@ export const ROUTE_STOPS: RouteStop[] = [
     intelligence: {
       insights: [
         'Owner expanding bourbon section — opportunity for Buffalo Trace',
-        'Deep Ellum neighborhood foot traffic up 25% since new restaurants opened',
+        'Martin City neighborhood foot traffic up 25% since new restaurants opened',
         'Fireball outsells by 3x vs. category average at this location',
       ],
       competitiveIntel: 'Pecan Valley placed a Jack Daniel\'s floor display. Counter with Crown Royal premium positioning.',
@@ -317,7 +317,7 @@ export const ROUTE_STOPS: RouteStop[] = [
   {
     id: 'stop-5',
     sequence: 5,
-    accountName: "Joe's Icehouse",
+    accountName: "Crown Town Cantina",
     type: 'key-account',
     arrivalTime: '11:00 AM',
     address: '4100 Maple Ave, Kansas City, MO 75219',
@@ -374,7 +374,7 @@ export const ROUTE_STOPS: RouteStop[] = [
   {
     id: 'stop-6',
     sequence: 6,
-    accountName: 'The Depot',
+    accountName: 'Union Station Spirits',
     type: 'new-account',
     arrivalTime: '12:30 PM',
     address: '2614 Commerce St, Kansas City, MO 75226',
@@ -388,18 +388,18 @@ export const ROUTE_STOPS: RouteStop[] = [
     talkingPoints: [
       'NEW ACCOUNT — First delivery! Build relationship.',
       'Opening night is March 15 — ensure full stock',
-      'Discuss exclusive Royal draft program',
+      'Discuss exclusive Boulevard draft program',
       'Introduce Cinco de Mayo promo opportunity early',
     ],
     displayInstructions: 'Full bar setup. Place spirits on top shelf. Beer in walk-in cooler. Get photo for CRM.',
     history: [],
     intelligence: {
       insights: [
-        'New bar opening in Deep Ellum — high foot traffic area',
+        'New bar opening in Martin City — high foot traffic area',
         'Owner previously ran successful bar in Austin (10 years)',
         'Target demographic: 25-40 professionals, craft cocktail focused',
       ],
-      competitiveIntel: 'No existing distributor relationship — first-mover advantage. Magnolia Spirits is also pitching.',
+      competitiveIntel: 'No existing distributor relationship — first-mover advantage. Heartland Beverage is also pitching.',
       contactName: 'Alex Kim (Owner)',
       contactPhone: '(816) 555-0606',
       tabcStatus: 'verified',
@@ -415,10 +415,10 @@ export const ROUTE_STOPS: RouteStop[] = [
         marginDelta: 3.8,
       },
       {
-        id: 'sug-6b', product: 'Deep Ellum IPA 6pk', productId: 'ls-013', cases: 4, commissionDelta: 8,
-        reasoning: 'Located IN Deep Ellum — local craft is table stakes. Builds community connection.',
+        id: 'sug-6b', product: 'Martin City IPA 6pk', productId: 'ls-013', cases: 4, commissionDelta: 8,
+        reasoning: 'Located IN Martin City — local craft is table stakes. Builds community connection.',
         source: 'Geo-Intelligence', tags: ['regional', 'premium'], strategy: 'mix-shift',
-        coachingPlay: 'They\'re literally IN Deep Ellum. "Your customers will ask for it by name. It\'s a local identity play."',
+        coachingPlay: 'They\'re literally IN Martin City. "Your customers will ask for it by name. It\'s a local identity play."',
         marginDelta: 3.4,
       },
       {
@@ -433,7 +433,7 @@ export const ROUTE_STOPS: RouteStop[] = [
   {
     id: 'stop-7',
     sequence: 7,
-    accountName: 'Fiesta Mart',
+    accountName: 'Heartland Grocery',
     type: 'chain-drop',
     arrivalTime: '1:30 PM',
     address: '3535 W Oak Cliff Blvd, Kansas City, MO 75211',
@@ -482,7 +482,7 @@ export const ROUTE_STOPS: RouteStop[] = [
   {
     id: 'stop-8',
     sequence: 8,
-    accountName: "Sam's Discount Liquor",
+    accountName: "Jake's Discount Liquor",
     type: 'presell',
     arrivalTime: '2:30 PM',
     address: '6162 Lemmon Ave, Kansas City, MO 75209',
@@ -491,18 +491,18 @@ export const ROUTE_STOPS: RouteStop[] = [
       { productId: 'ls-002', name: 'Fireball Cinnamon Whisky 750ml', cases: 12, sku: 'FRB-CIN-750' },
       { productId: 'ls-009', name: 'Miller Lite 24pk', cases: 12, sku: 'MIL-LTE-24' },
       { productId: 'ls-010', name: 'Coors Light 24pk', cases: 12, sku: 'CRS-LGT-24' },
-      { productId: 'ls-012', name: 'Shiner Bock 12pk', cases: 8, sku: 'SHN-BOC-12' },
+      { productId: 'ls-012', name: 'Boulevard Wheat 12pk', cases: 8, sku: 'BLV-WHE-12' },
     ],
     talkingPoints: [
       'Volume play: hit 44+ cases for tier bump',
       'Fireball is #1 seller — ensure prominent placement',
-      'Discuss summer seasonal: Shiner Ruby Redbird pre-order',
+      'Discuss summer seasonal: Boulevard Tank 7 pre-order',
     ],
     displayInstructions: 'Stack Fireball floor display near register. Domestic beer in cooler facing.',
     history: [
       { date: '2026-03-02', cases: 40, revenue: 980, notes: 'Close to volume tier — push next visit', trend: 'up' },
       { date: '2026-02-23', cases: 36, revenue: 880, notes: 'Regular order', trend: 'flat' },
-      { date: '2026-02-16', cases: 38, revenue: 930, notes: 'Added Shiner to regular', trend: 'up' },
+      { date: '2026-02-16', cases: 38, revenue: 930, notes: 'Added Boulevard to regular', trend: 'up' },
       { date: '2026-02-09', cases: 42, revenue: 1030, notes: 'Fireball promo did well', trend: 'up' },
     ],
     intelligence: {
@@ -527,7 +527,7 @@ export const ROUTE_STOPS: RouteStop[] = [
         marginDelta: 1.2,
       },
       {
-        id: 'sug-8b', product: 'Revolver Blood & Honey 6pk', productId: 'ls-015', cases: 4, commissionDelta: 10,
+        id: 'sug-8b', product: 'Boulevard Tank 7 6pk', productId: 'ls-015', cases: 4, commissionDelta: 10,
         reasoning: 'New product — sampling opportunity. Missouri craft is growing 22% YoY in discount segment.',
         source: 'Market Research + New Product Launch', tags: ['regional', 'premium'], strategy: 'mix-shift',
         coachingPlay: 'Sampling opportunity — "let me leave 4 cases, I\'ll set up a tasting next Saturday." Craft is growing 22% even in discount stores.',

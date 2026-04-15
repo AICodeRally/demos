@@ -1,10 +1,10 @@
 import type { ClientConfig, SaleItem, PeriodContext } from '@/lib/swic-engine/types';
 
 /* ══════════════════════════════════════════════════════════
-   Royal Spirits — Client Configuration
+   Royal Distributing — Client Configuration
 
    Beverage distribution (liquor/beer/mixers) for ROUTEIQ
-   Route Commission demo. Dallas / Fort Worth territory.
+   Route Commission demo. Kansas City Metro territory.
 
    Commission structure:
    - Base Volume Commission (tiered by cases/mo)
@@ -16,15 +16,15 @@ import type { ClientConfig, SaleItem, PeriodContext } from '@/lib/swic-engine/ty
 
 export const ROYAL_CONFIG: ClientConfig = {
   id: 'royal-config',
-  name: 'Royal Spirits',
+  name: 'Royal Distributing',
   logo: 'royal-config',
 
   theme: {
-    primary: '#0f1729',
-    secondary: '#1e293b',
-    background: '#0a0f1e',
+    primary: '#0A0A15',
+    secondary: '#141428',
+    background: '#0A0A15',
     text: '#f1f5f9',
-    accent: '#C6A052',
+    accent: '#F59E0B',
   },
 
   components: [
@@ -131,10 +131,10 @@ export const ROYAL_CATALOG: SaleItem[] = [
   { id: 'ls-011', name: 'Blue Moon Belgian White 12pk', category: 'Beer', tags: ['premium'], price: 18, cost: 12, quantity: 1 },
 
   // ── Craft / Regional (4)
-  { id: 'ls-012', name: 'Shiner Bock 12pk', category: 'Craft', tags: ['regional'], price: 16, cost: 10, quantity: 1 },
-  { id: 'ls-013', name: 'Deep Ellum IPA 6pk', category: 'Craft', tags: ['regional', 'premium'], price: 12, cost: 8, quantity: 1 },
-  { id: 'ls-014', name: 'Karbach Love Street 12pk', category: 'Craft', tags: ['regional'], price: 17, cost: 11, quantity: 1 },
-  { id: 'ls-015', name: 'Revolver Blood & Honey 6pk', category: 'Craft', tags: ['regional', 'premium'], price: 13, cost: 9, quantity: 1 },
+  { id: 'bv-012', name: 'Boulevard Wheat 12pk', category: 'Craft', tags: ['regional'], price: 16, cost: 10, quantity: 1 },
+  { id: 'ls-013', name: 'Martin City IPA 6pk', category: 'Craft', tags: ['regional', 'premium'], price: 12, cost: 8, quantity: 1 },
+  { id: 'ls-014', name: 'KC Bier Dunkel 12pk', category: 'Craft', tags: ['regional'], price: 17, cost: 11, quantity: 1 },
+  { id: 'ls-015', name: 'Boulevard Tank 7 6pk', category: 'Craft', tags: ['regional', 'premium'], price: 13, cost: 9, quantity: 1 },
 
   // ── Mixers (4)
   { id: 'ls-016', name: 'Topo Chico Mineral Water 12pk', category: 'Mixer', tags: [], price: 8, cost: 5, quantity: 1 },
@@ -148,7 +148,7 @@ export const ROYAL_CATALOG: SaleItem[] = [
 export const ROYAL_REPS = [
   { id: 'kc-rep-001', name: 'Marcus Reyes', storeId: 'KC-01' },
   { id: 'kc-rep-002', name: 'Jake Thompson', storeId: 'KC-02' },
-  { id: 'kc-rep-003', name: 'Christina Morales', storeId: 'IND-01' },
+  { id: 'kc-rep-003', name: 'Christina Morales', storeId: 'OMA-01' },
 ];
 
 /* ── Sample Periods ──────────────────────────────────────── */

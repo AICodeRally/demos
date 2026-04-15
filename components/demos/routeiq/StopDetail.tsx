@@ -54,7 +54,7 @@ export function StopDetail({ stop, slideDirection, onSwipeLeft, onSwipeRight }: 
           <div className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-md flex items-center justify-center font-black"
-              style={{ fontSize: '0.85em', background: '#C6A052', color: '#0a0f1e' }}
+              style={{ fontSize: '0.85em', background: '#F59E0B', color: '#0a0f1e' }}
             >
               {stop.sequence}
             </div>
@@ -281,7 +281,7 @@ function IntelTab({ stop }: { stop: RouteStop }) {
 
       <div>
         <h4 className="font-bold uppercase tracking-wider mb-2" style={{ color: 'var(--pl-text-muted)', fontSize: '0.75em' }}>
-          TABC License
+          Liquor License
         </h4>
         <div
           className="flex items-center justify-between rounded-lg px-3 py-2.5"

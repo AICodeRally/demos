@@ -53,7 +53,7 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
 
       const routeCoords = ROUTE_STOPS.map((s) => [s.lat, s.lng] as [number, number]);
       L.polyline(routeCoords, {
-        color: '#C6A052',
+        color: '#F59E0B',
         weight: 3,
         opacity: 0.6,
         dashArray: '8 6',
@@ -65,9 +65,9 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
 
         const marker = L.circleMarker([stop.lat, stop.lng], {
           radius: isActive ? 14 : 10,
-          fillColor: isActive ? '#C6A052' : color,
+          fillColor: isActive ? '#F59E0B' : color,
           fillOpacity: 1,
-          color: isActive ? '#C6A052' : '#fff',
+          color: isActive ? '#F59E0B' : '#fff',
           weight: isActive ? 3 : 2,
         }).addTo(map);
 
@@ -77,7 +77,7 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
             display:flex;align-items:center;justify-content:center;
             width:${isActive ? 28 : 20}px;height:${isActive ? 28 : 20}px;
             border-radius:50%;
-            background:${isActive ? '#C6A052' : color};
+            background:${isActive ? '#F59E0B' : color};
             color:${isActive ? '#0a0f1e' : '#fff'};
             font-size:${isActive ? 13 : 11}px;font-weight:900;
             border:${isActive ? '3px solid rgba(198,160,82,0.4)' : '2px solid rgba(255,255,255,0.8)'};
@@ -132,7 +132,7 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
 
     const routeCoords = ROUTE_STOPS.map((s) => [s.lat, s.lng] as [number, number]);
     L.polyline(routeCoords, {
-      color: '#C6A052',
+      color: '#F59E0B',
       weight: 3,
       opacity: 0.6,
       dashArray: '8 6',
@@ -144,9 +144,9 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
 
       L.circleMarker([stop.lat, stop.lng], {
         radius: isActive ? 14 : 10,
-        fillColor: isActive ? '#C6A052' : color,
+        fillColor: isActive ? '#F59E0B' : color,
         fillOpacity: 1,
-        color: isActive ? '#C6A052' : '#fff',
+        color: isActive ? '#F59E0B' : '#fff',
         weight: isActive ? 3 : 2,
       }).addTo(map).on('click', () => onStopClick(i));
 
@@ -156,7 +156,7 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
           display:flex;align-items:center;justify-content:center;
           width:${isActive ? 28 : 20}px;height:${isActive ? 28 : 20}px;
           border-radius:50%;
-          background:${isActive ? '#C6A052' : color};
+          background:${isActive ? '#F59E0B' : color};
           color:${isActive ? '#0a0f1e' : '#fff'};
           font-size:${isActive ? 13 : 11}px;font-weight:900;
           border:${isActive ? '3px solid rgba(198,160,82,0.4)' : '2px solid rgba(255,255,255,0.8)'};
@@ -186,7 +186,7 @@ export function RouteMap({ activeStopIndex, onStopClick }: RouteMapProps) {
     <div className="h-full flex flex-col">
       <div className="px-2 pt-1.5 pb-0.5 flex-shrink-0">
         <h3 className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--pl-text-muted)' }}>
-          Route Map — Dallas
+          Route Map — Kansas City
         </h3>
       </div>
       <div ref={mapRef} className="flex-1 min-h-0" />
