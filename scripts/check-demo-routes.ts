@@ -55,7 +55,8 @@ function main() {
 
     const routes = walkPages(demoRoot).map((fp) => {
       const rel = path.relative(DEMOS_DIR, fp).replace(/\\/g, '/');
-      return `/${rel.replace(/\/page\.tsx$/, '')}`;
+      // Strip Next.js route groups like (shell) / (tablet) — they don't appear in URLs.
+      return `/${rel.replace(/\/page\.tsx$/, '').replace(/\/\([^)]+\)/g, '')}`;
     });
 
     if (isNavlessDemo) {
