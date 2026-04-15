@@ -1,0 +1,114 @@
+/* ROUTEIQ — Light/Dark CSS Custom Properties
+   Light values are defaults. Dark values activate under .dark class.
+   Spec: docs/superpowers/specs/2026-03-10-routeiq-dark-light-toggle-design.md
+*/
+
+/* ── Light mode (default) ─────────────────────── */
+:root {
+  /* Font — stronger system stack */
+  --pl-font: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Text — darker for readability */
+  --pl-text: #0F172A;
+  --pl-text-secondary: #1E293B;
+  --pl-text-muted: #334155;
+  --pl-text-faint: #64748B;
+
+  /* Surfaces */
+  --pl-bg: #F8FAFC;
+  --pl-card: #FFFFFF;
+  --pl-card-alt: #F7FAFC;
+  --pl-border: #E2E8F0;
+  --pl-border-faint: #EDF2F7;
+  --pl-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --pl-hover: rgba(0,0,0,0.04);
+  --pl-stripe: #F1F5F9;
+  --pl-gold-text: #9A7B2E;
+
+  /* Sidebar */
+  --pl-sidebar-bg-start: #F1F5F9;
+  --pl-sidebar-bg-end: #FFFFFF;
+  --pl-sidebar-text: #1A1A2E;
+  --pl-sidebar-text-muted: #64748B;
+  --pl-sidebar-active-bg: rgba(0,0,0,0.06);
+  --pl-sidebar-border: #E2E8F0;
+
+  /* Header / Footer */
+  --pl-header-bg: rgba(255,255,255,0.95);
+  --pl-footer-bg: #FFFFFF;
+
+  /* Chart-specific */
+  --pl-chart-grid: #E2E8F0;
+  --pl-chart-tooltip-bg: #FFFFFF;
+  --pl-chart-tooltip-border: #E2E8F0;
+  --pl-chart-bar-track: #F1F5F9;
+
+  /* Map-specific */
+  --pl-map-bg: #EDF2F7;
+  --pl-map-road: #94A3B8;
+  --pl-map-road-minor: #CBD5E1;
+  --pl-map-label: #CBD5E1;
+  --pl-map-stop-label: #475569;
+}
+
+/* ── Dark mode ────────────────────────────────── */
+.dark {
+  --pl-text: #F1F5F9;
+  --pl-text-secondary: #CBD5E0;
+  --pl-text-muted: #94A3B8;
+  --pl-text-faint: #64748B;
+
+  --pl-bg: #111827;
+  --pl-card: #1E293B;
+  --pl-card-alt: #162032;
+  --pl-border: #334155;
+  --pl-border-faint: #1E293B;
+  --pl-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --pl-hover: rgba(255,255,255,0.04);
+  --pl-stripe: rgba(255,255,255,0.03);
+
+  --pl-sidebar-bg-start: #1E293B;
+  --pl-sidebar-bg-end: #0F172A;
+  --pl-sidebar-text: #FFFFFF;
+  --pl-sidebar-text-muted: rgba(255,255,255,0.65);
+  --pl-sidebar-active-bg: rgba(255,255,255,0.10);
+  --pl-sidebar-border: rgba(232,121,249,0.12);
+
+  --pl-header-bg: rgba(15,23,42,0.95);
+  --pl-footer-bg: #0F172A;
+
+  --pl-chart-grid: #334155;
+  --pl-chart-tooltip-bg: #1E293B;
+  --pl-chart-tooltip-border: #334155;
+  --pl-chart-bar-track: rgba(255,255,255,0.06);
+
+  --pl-map-bg: #1E293B;
+  --pl-map-road: #475569;
+  --pl-map-road-minor: #334155;
+  --pl-map-label: #475569;
+  --pl-map-stop-label: #CBD5E0;
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-slide-in 0.3s ease-out both;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.routeiq-map-tooltip {
+  background: var(--pl-card) !important;
+  border: 1px solid var(--pl-border) !important;
+  color: var(--pl-text) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+}
+.routeiq-map-tooltip::before { border-top-color: var(--pl-border) !important; }

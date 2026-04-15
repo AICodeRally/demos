@@ -1,0 +1,300 @@
+/* ROUTEIQ — Royal Distributing Light/Dark Tokens
+   Derived from routeiq.css token structure, rebranded to indigo + amber.
+   Includes tablet-specific animations ported from routeiq-tablet-rally.css.
+   Also exposes --pl-* aliases so the ported tablet components render in
+   RouteIQ colors without per-component edits.
+*/
+
+/* ── --pl-* aliases for ported tablet components (light mode) ── */
+:root {
+  --pl-text: #0F172A;
+  --pl-text-muted: #475569;
+  --pl-text-secondary: #1E293B;
+  --pl-surface: rgba(255, 255, 255, 0.7);
+  --pl-surface-border: rgba(67, 56, 202, 0.14);
+  --pl-surface-hover: rgba(255, 255, 255, 0.9);
+  --pl-bar-bg: rgba(248, 250, 252, 0.96);
+  --pl-bar-border: rgba(245, 158, 11, 0.4);
+  --pl-header-bg: rgba(255, 255, 255, 0.95);
+  --pl-content-bg: #FFFFFF;
+  --pl-page-bg: #F8FAFC;
+  --pl-gold: #F59E0B;
+  --pl-gold-bg: rgba(245, 158, 11, 0.12);
+  --pl-gold-border: rgba(245, 158, 11, 0.35);
+  --pl-card-bg: rgba(255, 255, 255, 0.9);
+  --pl-card-border: rgba(67, 56, 202, 0.12);
+  --pl-accepted-bg: rgba(5, 150, 105, 0.1);
+  --pl-accepted-border: rgba(5, 150, 105, 0.3);
+  --pl-competitive-bg: rgba(220, 38, 38, 0.08);
+  --pl-competitive-border: rgba(220, 38, 38, 0.2);
+  --pl-competitive-text: #B91C1C;
+  --pl-zone-border: rgba(67, 56, 202, 0.14);
+}
+
+/* ── --pl-* aliases (dark mode) ── */
+.dark {
+  --pl-text: #F1F5F9;
+  --pl-text-muted: #CBD5E1;
+  --pl-text-secondary: #E2E8F0;
+  --pl-surface: rgba(255, 255, 255, 0.06);
+  --pl-surface-border: rgba(99, 102, 241, 0.18);
+  --pl-surface-hover: rgba(255, 255, 255, 0.08);
+  --pl-bar-bg: rgba(10, 10, 21, 0.96);
+  --pl-bar-border: rgba(251, 191, 36, 0.35);
+  --pl-header-bg: rgba(10, 10, 21, 0.92);
+  --pl-content-bg: #141428;
+  --pl-page-bg: #0A0A15;
+  --pl-gold: #FBBF24;
+  --pl-gold-bg: rgba(251, 191, 36, 0.14);
+  --pl-gold-border: rgba(251, 191, 36, 0.4);
+  --pl-card-bg: rgba(255, 255, 255, 0.05);
+  --pl-card-border: rgba(99, 102, 241, 0.2);
+  --pl-accepted-bg: rgba(34, 197, 94, 0.12);
+  --pl-accepted-border: rgba(34, 197, 94, 0.4);
+  --pl-competitive-bg: rgba(248, 113, 113, 0.08);
+  --pl-competitive-border: rgba(248, 113, 113, 0.24);
+  --pl-competitive-text: #FCA5A5;
+  --pl-zone-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Tablet-specific animation class aliases the ported components reference */
+.animate-dash-trace { stroke-dasharray: 8 6; animation: dash-trace 2s ease-in-out forwards; }
+.animate-stop-pulse { animation: stop-pulse 2s ease-in-out infinite; }
+.animate-commission-flash { animation: commission-flash 0.6s ease-out; }
+.animate-tier-shimmer {
+  background: linear-gradient(90deg, #F59E0B 33%, #FCD34D 50%, #F59E0B 66%);
+  background-size: 200% 100%;
+  animation: tier-shimmer 2s infinite;
+}
+.animate-sparkle { animation: sparkle 0.4s ease-out forwards; }
+.slide-enter { animation: slide-in-right 0.3s ease-out; }
+.glass-hover:hover { transform: none; }
+
+/* ── Original ROUTEIQ token block ─────────────── */
+
+
+/* ── Light mode (default) ─────────────────────── */
+:root {
+  --rq-font: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --rq-text: #0F172A;
+  --rq-text-secondary: #1E293B;
+  --rq-text-muted: #334155;
+  --rq-text-faint: #64748B;
+
+  --rq-bg: #F8FAFC;
+  --rq-card: #FFFFFF;
+  --rq-card-alt: #F7FAFC;
+  --rq-border: #E2E8F0;
+  --rq-border-faint: #EDF2F7;
+  --rq-shadow: 0 1px 3px rgba(15,23,42,0.06);
+  --rq-hover: rgba(67,56,202,0.04);
+  --rq-stripe: #F1F5F9;
+
+  --rq-indigo: #4338CA;
+  --rq-indigo-soft: #E0E7FF;
+  --rq-amber: #F59E0B;
+  --rq-amber-soft: #FEF3C7;
+
+  --rq-sidebar-bg-start: #F1F5F9;
+  --rq-sidebar-bg-end: #FFFFFF;
+  --rq-sidebar-text: #0F172A;
+  --rq-sidebar-text-muted: #64748B;
+  --rq-sidebar-active-bg: rgba(67,56,202,0.08);
+  --rq-sidebar-border: #E2E8F0;
+
+  --rq-header-bg: rgba(255,255,255,0.95);
+  --rq-footer-bg: #FFFFFF;
+
+  --rq-chart-grid: #E2E8F0;
+  --rq-chart-tooltip-bg: #FFFFFF;
+  --rq-chart-tooltip-border: #E2E8F0;
+  --rq-chart-bar-track: #F1F5F9;
+
+  --rq-map-bg: #EDF2F7;
+  --rq-map-road: #94A3B8;
+  --rq-map-road-minor: #CBD5E1;
+  --rq-map-label: #CBD5E1;
+  --rq-map-stop-label: #475569;
+
+  --rq-pulse: #0EA5E9;
+  --rq-opschief: #8B5CF6;
+  --rq-askforge: #F59E0B;
+}
+
+/* ── Dark mode ────────────────────────────────── */
+.dark {
+  --rq-text: #F1F5F9;
+  --rq-text-secondary: #E2E8F0;
+  --rq-text-muted: #CBD5E1;
+  --rq-text-faint: #94A3B8;
+
+  --rq-bg: #0A0A15;
+  --rq-card: #141428;
+  --rq-card-alt: #1A1A33;
+  --rq-border: #2D2D52;
+  --rq-border-faint: #222240;
+  --rq-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --rq-hover: rgba(245,158,11,0.06);
+  --rq-stripe: rgba(255,255,255,0.03);
+
+  --rq-indigo: #6366F1;
+  --rq-indigo-soft: rgba(99,102,241,0.16);
+  --rq-amber: #FBBF24;
+  --rq-amber-soft: rgba(251,191,36,0.12);
+
+  --rq-sidebar-bg-start: #141428;
+  --rq-sidebar-bg-end: #0A0A15;
+  --rq-sidebar-text: #FFFFFF;
+  --rq-sidebar-text-muted: rgba(255,255,255,0.65);
+  --rq-sidebar-active-bg: rgba(245,158,11,0.12);
+  --rq-sidebar-border: rgba(99,102,241,0.15);
+
+  --rq-header-bg: rgba(10,10,21,0.95);
+  --rq-footer-bg: #0A0A15;
+
+  --rq-chart-grid: #2D2D52;
+  --rq-chart-tooltip-bg: #141428;
+  --rq-chart-tooltip-border: #2D2D52;
+  --rq-chart-bar-track: rgba(255,255,255,0.06);
+
+  --rq-map-bg: #141428;
+  --rq-map-road: #475569;
+  --rq-map-road-minor: #334155;
+  --rq-map-label: #475569;
+  --rq-map-stop-label: #CBD5E1;
+}
+
+/* ── Narrative animations ─────────────────────── */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rq-animate-fade-in {
+  animation: fade-slide-in 0.3s ease-out both;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.rq-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--rq-pulse);
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+/* ── Tablet-specific animations (ported from routeiq-tablet-rally.css) ─────────── */
+@keyframes dash-trace {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes stop-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+}
+
+@keyframes commission-flash {
+  0% { background: transparent; }
+  40% { background: rgba(245,158,11,0.35); }
+  100% { background: transparent; }
+}
+
+@keyframes tier-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0.8) rotate(360deg); opacity: 0; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.rq-slide-enter { animation: slide-in-right 0.3s ease-out both; }
+.rq-commission-flash { animation: commission-flash 0.6s ease-out; }
+.rq-stop-pulse { animation: stop-pulse 2s infinite; }
+
+.rq-tier-track {
+  background: linear-gradient(90deg,
+    var(--rq-chart-bar-track) 0%,
+    rgba(245,158,11,0.4) 50%,
+    var(--rq-chart-bar-track) 100%);
+  background-size: 200% 100%;
+  animation: tier-shimmer 2s infinite linear;
+}
+
+/* ── Touch & tablet utilities ─────────────────── */
+.tap-active:active {
+  transform: scale(0.97);
+  transition: transform 0.08s ease-out;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.overscroll-contain { overscroll-behavior: contain; }
+
+.snap-y-mandatory { scroll-snap-type: y mandatory; }
+.snap-start { scroll-snap-align: start; }
+
+@media (hover: none) {
+  .rq-hover-only:hover { background: transparent !important; }
+}
+
+.pane-transition {
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.tablet-bezel-shadow {
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 2px 8px rgba(0,0,0,0.4),
+    0 30px 60px rgba(0,0,0,0.5),
+    0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* ── Leaflet customizations for the tablet map ── */
+.route-stop-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.route-stop-tooltip {
+  background: var(--rq-card) !important;
+  color: var(--rq-amber) !important;
+  border: 1px solid var(--rq-amber) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;
+  font-weight: 600 !important;
+}
+.route-stop-tooltip::before { border-top-color: var(--rq-amber) !important; }
+
+/* ── Narrative trio styling ───────────────────── */
+.rq-pulse-card {
+  border-left: 3px solid var(--rq-pulse);
+  background: var(--rq-card);
+}
+
+.rq-opschief-card {
+  border-left: 3px solid var(--rq-opschief);
+  background: var(--rq-card);
+}
+
+.rq-askforge-card {
+  border-left: 3px solid var(--rq-askforge);
+  background: var(--rq-card);
+}

@@ -48,15 +48,6 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "badge": "ARA Show 2026"
   },
   {
-    "name": "LotOS",
-    "slug": "lotos",
-    "industry": "Automotive — Independent Dealer",
-    "tagline": "Dealer Operating System for velocity, cashflow, and compliance",
-    "color": "#E85D2C",
-    "layout": "sidebar",
-    "badge": "Interactive Demo"
-  },
-  {
     "name": "MERIDIAN",
     "slug": "meridian",
     "industry": "Private Equity",
@@ -66,29 +57,11 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "badge": "Interactive Demo"
   },
   {
-    "name": "On The Clock — 2026 NFL Draft Simulator",
-    "slug": "on-the-clock",
-    "industry": "Sports & Entertainment",
-    "tagline": "Simulate the 2026 NFL Draft — spin the wheel, pick your players, build every team's roster",
-    "color": "#22C55E",
-    "layout": "focus",
-    "badge": "Interactive Tool"
-  },
-  {
     "name": "Sales Governance Manager (SGM)",
     "slug": "prizym-governance",
     "industry": "Sales Performance Management",
     "tagline": "Sales Governance Manager (SGM) — part of the Prizym Sales Planning Suite",
     "color": "#0ea5e9",
-    "layout": "sidebar",
-    "badge": "Interactive Demo"
-  },
-  {
-    "name": "ROUTEIQ",
-    "slug": "routeiq",
-    "industry": "Beverage Distribution",
-    "tagline": "Revenue operating system for beverage distributors — territory, comp, route ops",
-    "color": "#C6A052",
     "layout": "sidebar",
     "badge": "Interactive Demo"
   },
@@ -116,6 +89,15 @@ export const demoRegistry: DemoRegistryEntry[] = [
     "industry": "Specialty Trade Distribution",
     "tagline": "RevOps & SPM for specialty trade distribution — territory, comp, branch operations",
     "color": "#5B8CB8",
+    "layout": "sidebar",
+    "badge": "Interactive Demo"
+  },
+  {
+    "name": "ROUTEIQ",
+    "slug": "routeiq",
+    "industry": "Beverage Distribution",
+    "tagline": "Revenue operating system for multi-state F&B distribution — organized by failure points, not tools",
+    "color": "#4338CA",
     "layout": "sidebar",
     "badge": "Interactive Demo"
   },

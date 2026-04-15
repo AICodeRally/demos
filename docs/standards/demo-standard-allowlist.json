@@ -8,12 +8,8 @@
     "/prizym-governance/workflows/actions",
     "/prizym-governance/workflows/audit-trail",
     "/prizym-governance/workflows/cases",
-    "/routeiq/ops/ai/forecasting",
-    "/routeiq/ops/ai/pricing",
-    "/routeiq/ops/day-planner/stop/[id]",
-    "/routeiq/ops/manager/rep/[id]",
-    "/routeiq/strategy/territories/[hometown]",
-    "/register/ops/manager/coaching/[id]"
+    "/register/ops/manager/coaching/[id]",
+    "/routeiq/tablet"
   ],
   "markerAllowlist": [
     {
@@ -27,10 +23,6 @@
     {
       "path": "app/(demos)/register/comp/admin/page.tsx",
       "contains": "=== 'placeholder'"
-    },
-    {
-      "path": "data/routeiq/day-plans.ts",
-      "contains": "TBD — not yet contacted"
     },
     {
       "path": "app/(demos)/wellspring/ops/pads/page.tsx",

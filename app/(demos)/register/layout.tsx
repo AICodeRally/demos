@@ -2,7 +2,7 @@
 
 import { DemoShell } from '@/components/shell';
 import { RegisterThemeProvider } from '@/components/demos/register/ThemeProvider';
-import '@/styles/ext/routeiq.css';
+import '@/styles/ext/register.css';
 import demoConfig from './demo.config';
 
 export default function RegisterLayout({ children }: { children: React.ReactNode }) {

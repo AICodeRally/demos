@@ -113,15 +113,11 @@ A demo change is done only when:
 5. Verification commands pass.
 6. Any standard exceptions are documented in the latest audit note.
 
-## 10) Current Known Deep-Link Exceptions (as of 2026-03-28)
+## 10) Current Known Deep-Link Exceptions (as of 2026-04-15)
 
 - `equipr/ara`
 - `meridian/cockpit`
-- `routeiq/ops/ai/forecasting`
-- `routeiq/ops/ai/pricing`
-- `routeiq/ops/day-planner/stop/[id]`
-- `routeiq/ops/manager/rep/[id]`
-- `routeiq/strategy/territories/[hometown]`
 - `register/ops/manager/coaching/[id]`
+- `routeiq/tablet` (lives under parallel route group for chromeless full-viewport rendering)
 
 Review this list every sprint and shrink it where possible.
