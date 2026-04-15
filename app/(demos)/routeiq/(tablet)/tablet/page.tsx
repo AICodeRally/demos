@@ -5,12 +5,15 @@ import { calculate } from '@/lib/swic-engine/calculator';
 import type { SaleItem } from '@/lib/swic-engine/types';
 import { LONE_STAR_CONFIG, LONE_STAR_CATALOG, LONE_STAR_PERIODS } from '@/data/routeiq/royal-config';
 import { ROUTE_STOPS, ROUTE_META } from '@/data/routeiq/route-data';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { TabletFrame } from '@/components/demos/routeiq/TabletFrame';
 import { RouteIQHeader } from '@/components/demos/routeiq/RouteIQHeader';
 import { RouteMap } from '@/components/demos/routeiq/RouteMap';
 import { StopList } from '@/components/demos/routeiq/StopList';
 import { StopDetail } from '@/components/demos/routeiq/StopDetail';
 import { CommissionPanel } from '@/components/demos/routeiq/CommissionPanel';
+import { ManagerToast } from '@/components/demos/routeiq/ManagerToast';
 
 /* ══════════════════════════════════════════════════════════
    ROUTEIQ Field Tablet — Royal Distributing
@@ -184,6 +187,7 @@ export default function RouteiqTabletPage() {
 
   const content = (
     <div className="flex flex-col h-full overflow-hidden">
+      <ManagerToast />
       <RouteIQHeader
         isDark={isDark}
         onToggleTheme={() => setIsDark((d) => !d)}
@@ -259,13 +263,26 @@ export default function RouteiqTabletPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center relative"
       style={{
         background: isDark
           ? 'radial-gradient(ellipse at 30% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(15, 23, 42, 0.9) 0%, transparent 50%), #0A0A15'
           : 'radial-gradient(ellipse at 30% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(232, 237, 248, 0.85) 0%, transparent 50%), #EEF2FF',
       }}
     >
+      <Link
+        href="/routeiq/cockpit"
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold backdrop-blur-md transition-colors"
+        style={{
+          background: isDark ? 'rgba(20, 20, 40, 0.85)' : 'rgba(255, 255, 255, 0.9)',
+          color: isDark ? '#F59E0B' : '#4338CA',
+          border: `1px solid ${isDark ? 'rgba(245, 158, 11, 0.4)' : 'rgba(67, 56, 202, 0.3)'}`,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+        }}
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to RouteIQ Cockpit
+      </Link>
       <TabletFrame isDark={isDark}>
         {content}
       </TabletFrame>
