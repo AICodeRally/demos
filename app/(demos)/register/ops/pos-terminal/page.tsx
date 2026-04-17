@@ -13,6 +13,8 @@ import { CloseSaleFlow } from '@/components/demos/register/pos/CloseSaleFlow';
 import { D365EventLog } from '@/components/demos/register/pos/D365EventLog';
 import { BundleBuilder } from '@/components/demos/register/pos/BundleBuilder';
 import { SellingMotion } from '@/components/demos/register/pos/SellingMotion';
+import { useIcm } from '@/components/demos/register/IcmContext';
+import { Activity, Database, Zap as ZapIcon, CloudLightning, AlertTriangle as AlertIcon, ArrowRightLeft, Tablet as TabletIcon, Monitor as MonitorIcon, FileJson } from 'lucide-react';
 import { calculate } from '@/lib/swic-engine/calculator';
 import { onRegisterBroadcast, type BroadcastMessage } from '@/lib/register-broadcast';
 import { SUMMIT_SLEEP_CONFIG, CATALOG_ITEMS, STORE_CONTEXT, POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
@@ -143,6 +145,254 @@ function FloorPulseStrip() {
 }
 
 /* ── Toast ───────────────────────────────────────────────── */
+
+/* ── Data / Integration Panel (full-width Data tab content) ───────── */
+
+const THROUGHPUT_SERIES = [84, 102, 119, 98, 144, 172, 188, 201, 176, 168, 192, 211, 224, 208, 195];
+const FAILED_EVENTS = [
+  { ts: '2:47 PM', code: 'E_SCHEMA', event: 'RetailTransactionPosted', reason: 'Missing custAccount on non-loyalty sale', retries: 2 },
+  { ts: '1:08 PM', code: 'E_TIMEOUT', event: 'LoyaltyPointsAccrued', reason: 'ICM ack > 5s — auto-retried', retries: 1 },
+  { ts: '11:54 AM', code: 'E_MAP', event: 'BundleBonusTriggered', reason: 'Product group unmapped in plan v3.2', retries: 3 },
+  { ts: '10:22 AM', code: 'E_DUP', event: 'RetailTransactionPosted', reason: 'Duplicate control # — deduped', retries: 0 },
+];
+const D365_ENTITIES = [
+  { name: 'RetailTransactionTable',       version: 'v7', fields: 42, todayCount: 2847 },
+  { name: 'RetailTransactionSalesTrans',  version: 'v7', fields: 58, todayCount: 9160 },
+  { name: 'RetailTransactionPaymentTrans',version: 'v7', fields: 21, todayCount: 3012 },
+  { name: 'InventJournalTrans',           version: 'v6', fields: 34, todayCount: 418 },
+  { name: 'EmplTable',                    version: 'v5', fields: 18, todayCount: 6 },
+  { name: 'RetailStoreTable',             version: 'v5', fields: 24, todayCount: 1 },
+];
+
+function DataIntegrationPanel({ events }: { events: D365TransactionEvent[] }) {
+  const { provider: icm } = useIcm();
+  const peakThroughput = Math.max(...THROUGHPUT_SERIES);
+
+  const systems = [
+    { id: 'd365',      label: 'D365 Commerce',       role: 'Transactions · source',    status: 'healthy', metric: '2,847 today', latency: '23 ms', icon: Database },
+    { id: 'icm',       label: icm.name,              role: 'ICM · payroll',            status: 'healthy', metric: `${icm.protocol.split(' ')[0]} · ${icm.avgLatencyMs}ms avg`, latency: `${icm.avgLatencyMs} ms`, icon: ArrowRightLeft },
+    { id: 'tablets',   label: 'Floor Tablets',       role: 'Live what-if',             status: 'healthy', metric: '214 / 214 connected', latency: '340 ms', icon: TabletIcon },
+    { id: 'consoles',  label: 'REGISTER Consoles',   role: 'Manager/exec views',       status: 'healthy', metric: '38 / 38 live',         latency: '<100 ms', icon: MonitorIcon },
+    { id: 'bus',       label: 'Broadcast Bus',       role: 'Cross-device sync',        status: 'healthy', metric: '12 channels active',   latency: '45 ms',  icon: CloudLightning },
+  ];
+
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--register-bg)' }}>
+      {/* Integration health strip */}
+      <div style={{
+        display: 'grid', gap: 8,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+        padding: 12, borderBottom: '1px solid var(--register-border)',
+        background: 'var(--register-bg-elevated)',
+      }}>
+        {systems.map((s) => {
+          const Icon = s.icon;
+          return (
+            <div key={s.id} style={{
+              display: 'flex', alignItems: 'center', gap: 10,
+              padding: '8px 10px', borderRadius: 10,
+              background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)',
+            }}>
+              <div style={{
+                width: 32, height: 32, borderRadius: 8,
+                background: 'color-mix(in srgb, var(--register-success) 14%, transparent)',
+                color: 'var(--register-success)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              }}>
+                <Icon size={14} />
+              </div>
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <span style={{
+                    width: 6, height: 6, borderRadius: 999,
+                    background: 'var(--register-success)',
+                    boxShadow: '0 0 6px var(--register-success)',
+                  }} />
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)' }}>{s.label}</span>
+                </div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--register-text-muted)', marginTop: 2 }}>
+                  {s.metric}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Main 2-column: event log + side panels */}
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'row', gap: 12,
+        padding: 12, overflow: 'hidden', minHeight: 0,
+      }}>
+        {/* LEFT: live event log (bigger) */}
+        <div style={{
+          flex: '1 1 55%', minWidth: 0,
+          display: 'flex', flexDirection: 'column',
+          background: 'var(--register-bg-elevated)',
+          border: '1px solid var(--register-border)',
+          borderRadius: 12, overflow: 'hidden',
+        }}>
+          <div style={{
+            padding: '10px 14px',
+            borderBottom: '1px solid var(--register-border)',
+            display: 'flex', alignItems: 'center', gap: 8,
+          }}>
+            <Activity size={14} style={{ color: 'var(--register-primary)' }} />
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--register-text)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+              Live D365 event stream
+            </span>
+            <span style={{ marginLeft: 'auto', fontSize: '0.72rem', color: 'var(--register-text-dim)', fontFamily: 'ui-monospace, Menlo, monospace' }}>
+              {events.length} events
+            </span>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto', padding: 10 }}>
+            <D365EventLog events={events} />
+          </div>
+        </div>
+
+        {/* RIGHT: stacked panels */}
+        <div style={{
+          flex: '1 1 45%', minWidth: 280,
+          display: 'flex', flexDirection: 'column', gap: 12, overflowY: 'auto',
+        }}>
+          {/* Throughput chart */}
+          <div style={{
+            background: 'var(--register-bg-elevated)',
+            border: '1px solid var(--register-border)',
+            borderRadius: 12, padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <ZapIcon size={14} style={{ color: 'var(--register-accent)' }} />
+              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--register-text)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                Throughput · last 15 min
+              </span>
+              <span style={{ marginLeft: 'auto', fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-accent)', fontVariantNumeric: 'tabular-nums' }}>
+                {THROUGHPUT_SERIES[THROUGHPUT_SERIES.length - 1]} evt/min
+              </span>
+            </div>
+            {/* Inline SVG bars */}
+            <svg viewBox="0 0 300 60" preserveAspectRatio="none" style={{ width: '100%', height: 60 }}>
+              {THROUGHPUT_SERIES.map((v, i) => {
+                const x = i * (300 / THROUGHPUT_SERIES.length);
+                const w = (300 / THROUGHPUT_SERIES.length) - 2;
+                const h = (v / peakThroughput) * 56;
+                return (
+                  <rect key={i} x={x} y={60 - h} width={w} height={h} rx="1.5"
+                    fill="var(--register-accent)" opacity={0.35 + (i / THROUGHPUT_SERIES.length) * 0.65} />
+                );
+              })}
+            </svg>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--register-text-dim)', marginTop: 4 }}>
+              <span>15 min ago</span>
+              <span>Peak {peakThroughput}</span>
+              <span>now</span>
+            </div>
+          </div>
+
+          {/* Failed events */}
+          <div style={{
+            background: 'var(--register-bg-elevated)',
+            border: '1px solid var(--register-border)',
+            borderRadius: 12, padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <AlertIcon size={14} style={{ color: 'var(--register-warning)' }} />
+              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--register-text)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                Events with retries · last 24h
+              </span>
+              <span style={{ marginLeft: 'auto', fontSize: '0.72rem', color: 'var(--register-text-dim)' }}>
+                {FAILED_EVENTS.length} events · all resolved
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {FAILED_EVENTS.map((e) => (
+                <div key={e.ts} style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  padding: '7px 10px', borderRadius: 8,
+                  background: 'var(--register-bg-surface)',
+                  border: '1px solid var(--register-border)',
+                }}>
+                  <span style={{
+                    fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.06em',
+                    padding: '2px 6px', borderRadius: 4,
+                    background: 'color-mix(in srgb, var(--register-warning) 14%, transparent)',
+                    color: 'var(--register-warning)',
+                    fontFamily: 'ui-monospace, Menlo, monospace',
+                  }}>
+                    {e.code}
+                  </span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)', lineHeight: 1.2 }}>
+                      {e.event}
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--register-text-muted)', lineHeight: 1.3 }}>
+                      {e.reason}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                    <div style={{ fontSize: '0.72rem', fontFamily: 'ui-monospace, Menlo, monospace', color: 'var(--register-text-dim)' }}>
+                      {e.ts}
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
+                      {e.retries} retry{e.retries === 1 ? '' : 'ies'}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* D365 schema browser */}
+          <div style={{
+            background: 'var(--register-bg-elevated)',
+            border: '1px solid var(--register-border)',
+            borderRadius: 12, padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <FileJson size={14} style={{ color: 'var(--register-ai)' }} />
+              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--register-text)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                D365 Entity Map
+              </span>
+              <span style={{ marginLeft: 'auto', fontSize: '0.72rem', color: 'var(--register-text-dim)' }}>
+                CDM v7 mirrored
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              {D365_ENTITIES.map((e) => (
+                <div key={e.name} style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '6px 10px', borderRadius: 6,
+                  background: 'var(--register-bg-surface)',
+                }}>
+                  <span style={{
+                    fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)',
+                    fontFamily: 'ui-monospace, Menlo, monospace',
+                    flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                  }}>
+                    {e.name}
+                  </span>
+                  <span style={{
+                    fontSize: '0.68rem', padding: '1px 6px', borderRadius: 4,
+                    background: 'var(--register-border)',
+                    color: 'var(--register-text-dim)', fontWeight: 700,
+                  }}>
+                    {e.version}
+                  </span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--register-text-dim)', fontVariantNumeric: 'tabular-nums', width: 44, textAlign: 'right' }}>
+                    {e.fields} fld
+                  </span>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--register-text)', fontVariantNumeric: 'tabular-nums', width: 60, textAlign: 'right' }}>
+                    {e.todayCount.toLocaleString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Toast({ message, onClose }: { message: string; onClose: () => void }) {
   useEffect(() => {
@@ -333,7 +583,7 @@ export default function POSTerminal() {
           {/* ── Main Split ──────────────────────────── */}
           {/* Motion + Coaching tabs go full-width — showroom is useless there */}
           {(() => {
-            const fullWidthTab = activeTab === 'motion' || activeTab === 'coaching';
+            const fullWidthTab = activeTab === 'motion' || activeTab === 'coaching' || activeTab === 'data';
             return (
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
             {/* Left: Showroom Catalog (40%) — hidden on full-width tabs */}
@@ -466,9 +716,7 @@ export default function POSTerminal() {
                 )}
 
                 {activeTab === 'data' && (
-                  <div style={{ padding: 10, flex: 1, overflow: 'auto' }}>
-                    <D365EventLog events={d365Events} />
-                  </div>
+                  <DataIntegrationPanel events={d365Events} />
                 )}
               </div>
 
