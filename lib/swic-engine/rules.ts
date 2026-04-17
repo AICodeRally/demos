@@ -59,7 +59,7 @@ export function evaluateRule(
       return { amount: 0, detail: `${(rule.factor * 100).toFixed(0)}% credit multiplier` };
 
     case 'placeholder':
-      return { amount: 0, detail: rule.description ?? 'Formula TBD — awaiting client configuration' };
+      return { amount: 0, detail: rule.description ?? 'Formula pending — awaiting client configuration' };
 
     case 'bundle_bonus':
       return evalBundleBonus(rule, sale, splitFactor);
@@ -106,7 +106,7 @@ function evalFixedPerMatch(
     amount,
     detail:
       matchingUnits > 0
-        ? `${matchingUnits} qualifying \u00d7 ${formatCurrency(rule.amount)}`
+        ? `${matchingUnits} qualifying × ${formatCurrency(rule.amount)}`
         : 'No qualifying items',
   };
 }
@@ -129,6 +129,7 @@ function evalTiered(
   let appliedRate: number;
 
   if (rule.marginal) {
+    // Marginal: each bracket of revenue gets its own rate
     amount = 0;
     let remaining = saleBasis;
     let cursor = ytdBasis;
@@ -145,6 +146,7 @@ function evalTiered(
       appliedRate = tierRate;
     }
   } else {
+    // Flat: entire sale uses the tier rate based on YTD + sale total
     const totalAfterSale = ytdBasis + saleBasis;
     const tierIndex = findTierIndex(tiers, totalAfterSale);
     appliedRate = tiers[tierIndex]?.rate ?? 0;
@@ -178,6 +180,7 @@ function evalLookup(
   };
   const input = basisMap[rule.inputBasis] ?? 0;
 
+  // Find matching row
   const row = table.rows.find((r) => input >= r.min && input < r.max);
   if (!row) {
     return { amount: 0, detail: `No matching rate for ${formatCurrency(input)}` };
@@ -186,7 +189,7 @@ function evalLookup(
   const amount = sale.revenue * row.rate * splitFactor;
   return {
     amount,
-    detail: `Table "${table.name}" \u2192 ${(row.rate * 100).toFixed(2)}%`,
+    detail: `Table "${table.name}" → ${(row.rate * 100).toFixed(2)}%`,
   };
 }
 
@@ -199,6 +202,7 @@ function evalBundleBonus(
     return { amount: 0, detail: 'No categories configured' };
   }
 
+  // Count units per required category
   const categoryCounts: Record<string, number> = {};
   for (const cat of rule.requiredCategories) {
     categoryCounts[cat] = 0;
@@ -247,6 +251,7 @@ export function calculateThreshold(
   const nextTier = tierIndex + 1 < tiers.length ? tiers[tierIndex + 1] : null;
   const amountToNextTier = nextTier ? Math.max(0, nextTier.min - currentTotal) : null;
 
+  // Potential commission at next tier = sale revenue × next tier rate
   const potentialAtNextTier = nextTier ? sale.revenue * nextTier.rate : null;
 
   return {

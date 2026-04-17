@@ -44,7 +44,7 @@ export interface MultiplierRule {
   appliesTo: string[] | 'all';  // component IDs or all
 }
 
-/** Formula not yet defined — shows component label with $0 / TBD */
+/** Formula not yet defined — shows component label with $0 / pending */
 export interface PlaceholderRule {
   type: 'placeholder';
   description?: string;          // "Awaiting formula from client"
