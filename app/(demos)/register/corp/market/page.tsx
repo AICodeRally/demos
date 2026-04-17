@@ -5,7 +5,7 @@ import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { Globe, TrendingUp, CheckCircle } from 'lucide-react';
 
 const MARKET_SHARE = [
-  { name: 'RestWell Corp.', pct: 28, color: '#64748B' },
+  { name: 'RestWell Corp.', pct: 28, color: '#334155' },
   { name: 'Summit Sleep', pct: 18, color: '#1E3A5F' },
   { name: 'DreamHaven Group', pct: 15, color: '#8B5CF6' },
   { name: 'NightOwl Select', pct: 12, color: '#06B6D4' },
@@ -60,7 +60,7 @@ export default function MarketPosition() {
               }}
             >
               {s.pct >= 12 && (
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{s.pct}%</span>
+                <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{s.pct}%</span>
               )}
               {s.name === 'Summit Sleep' && (
                 <div style={{
@@ -81,8 +81,8 @@ export default function MarketPosition() {
           {MARKET_SHARE.map((s) => (
             <div key={s.name} className="flex items-center gap-2">
               <span style={{ width: 10, height: 10, borderRadius: '50%', background: s.color, display: 'inline-block', boxShadow: s.name === 'Summit Sleep' ? `0 0 6px ${s.color}60` : 'none' }} />
-              <span style={{ fontSize: '0.8rem', color: 'var(--register-text)', fontWeight: s.name === 'Summit Sleep' ? 700 : 400 }}>{s.name}</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text-muted)' }}>{s.pct}%</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--register-text)', fontWeight: s.name === 'Summit Sleep' ? 700 : 400 }}>{s.name}</span>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text-muted)' }}>{s.pct}%</span>
             </div>
           ))}
         </div>

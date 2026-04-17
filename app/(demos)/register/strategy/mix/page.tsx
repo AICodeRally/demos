@@ -180,10 +180,10 @@ export default function ProductMix() {
                 }} />
                 {/* Target label */}
                 <div style={{
-                  position: 'absolute', top: -16,
+                  position: 'absolute', top: -18,
                   left: `${a.target}%`,
                   transform: 'translateX(-50%)',
-                  fontSize: '0.55rem',
+                  fontSize: '0.72rem',
                   color: 'var(--register-text-dim)',
                   fontWeight: 600,
                   opacity: mounted ? 1 : 0,
@@ -193,7 +193,7 @@ export default function ProductMix() {
                 </div>
               </div>
               {/* Gap indicator */}
-              <div style={{ marginTop: 4, fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
+              <div style={{ marginTop: 6, fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>
                 <span style={{ color: '#F59E0B', fontWeight: 600 }}>+{a.target - a.current}pp</span> to target
               </div>
             </div>
@@ -262,7 +262,7 @@ export default function ProductMix() {
             textAlign: 'center',
           }}>
             <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#F59E0B' }}>+11pp</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>Gap to close</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>Gap to close</div>
           </div>
         </div>
       </div>

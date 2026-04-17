@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
-import { Target, ArrowUp } from 'lucide-react';
+import { Target } from 'lucide-react';
 
 /* ── Animated count-up hook ─────────────────────────────── */
 function useCountUp(target: number, duration = 1400, decimals = 0) {
@@ -210,7 +210,7 @@ export default function StoreTargets() {
                 {v.variance}
               </div>
               <span style={{
-                fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px', borderRadius: 4,
+                fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: 4,
                 background: `${v.statusColor}18`, color: v.statusColor,
                 textTransform: 'uppercase', whiteSpace: 'nowrap',
               }}>

@@ -75,7 +75,7 @@ export default function StorePortfolio() {
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--register-text)' }}>
                 {r.revenue}
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2 }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', marginTop: 2 }}>
                 {r.stores} stores
               </div>
               {/* Percentage bar */}
@@ -89,7 +89,7 @@ export default function StorePortfolio() {
                   transitionDelay: `${0.3 + i * 0.1}s`,
                 }} />
               </div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 600, color: r.color, marginTop: 4 }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 600, color: r.color, marginTop: 4 }}>
                 {r.pctTotal}% of total
               </div>
             </div>
@@ -131,11 +131,11 @@ export default function StorePortfolio() {
               </div>
               <div className="flex items-center gap-6">
                 <div>
-                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--register-text-dim)', letterSpacing: '0.04em' }}>ASP</span>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--register-text)', marginLeft: 6 }}>{f.asp}</span>
+                  <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--register-text-dim)', letterSpacing: '0.04em' }}>ASP</span>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)', marginLeft: 6 }}>{f.asp}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--register-text-dim)', letterSpacing: '0.04em' }}>Attach</span>
+                  <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--register-text-dim)', letterSpacing: '0.04em' }}>Attach</span>
                   <div style={{ width: 60, height: 6, borderRadius: 3, background: `${f.color}20`, overflow: 'hidden', marginLeft: 4 }}>
                     <div style={{
                       height: '100%',
@@ -146,7 +146,7 @@ export default function StorePortfolio() {
                       transitionDelay: `${0.6 + i * 0.1}s`,
                     }} />
                   </div>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: f.color, marginLeft: 4 }}>{f.attachRate}%</span>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: f.color, marginLeft: 4 }}>{f.attachRate}%</span>
                 </div>
               </div>
             </div>
@@ -188,20 +188,20 @@ export default function StorePortfolio() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span style={{
-                      width: 22, height: 22, borderRadius: '50%',
+                      width: 24, height: 24, borderRadius: '50%',
                       background: 'rgba(16, 185, 129, 0.12)',
                       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.7rem', fontWeight: 800, color: '#10B981',
+                      fontSize: '0.82rem', fontWeight: 800, color: '#10B981',
                     }}>
                       {s.rank}
                     </span>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{s.name}</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>{s.name}</span>
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2, marginLeft: 30 }}>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', marginTop: 2, marginLeft: 32 }}>
                     Rev: {s.revenue} &middot; ASP: {s.asp}
                   </div>
                 </div>
-                <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: 6, background: 'rgba(16, 185, 129, 0.12)', color: '#10B981', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: 6, background: 'rgba(16, 185, 129, 0.12)', color: '#10B981', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                   {s.badge}
                 </span>
               </div>
@@ -241,20 +241,20 @@ export default function StorePortfolio() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span style={{
-                      width: 22, height: 22, borderRadius: '50%',
+                      width: 28, height: 24, borderRadius: 12,
                       background: 'rgba(239, 68, 68, 0.12)',
                       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.65rem', fontWeight: 800, color: '#EF4444',
+                      fontSize: '0.78rem', fontWeight: 800, color: '#EF4444',
                     }}>
                       {s.rank}
                     </span>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{s.name}</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>{s.name}</span>
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', marginTop: 2, marginLeft: 30 }}>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', marginTop: 2, marginLeft: 36 }}>
                     Rev: {s.revenue} &middot; ASP: {s.asp}
                   </div>
                 </div>
-                <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: 6, background: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: 6, background: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                   {s.badge}
                 </span>
               </div>

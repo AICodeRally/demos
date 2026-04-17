@@ -53,7 +53,7 @@ export default function DistrictPlanning() {
               <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>{d.name}</div>
               <span
                 style={{
-                  fontSize: '0.6rem',
+                  fontSize: '0.72rem',
                   fontWeight: 700,
                   padding: '2px 6px',
                   borderRadius: 4,
@@ -66,8 +66,8 @@ export default function DistrictPlanning() {
               </span>
             </div>
             <div className="flex items-center gap-1" style={{ marginBottom: 8 }}>
-              <Users size={11} color="var(--register-text-dim)" />
-              <span style={{ fontSize: '0.7rem', color: 'var(--register-text-muted)' }}>DM: {d.dm}</span>
+              <Users size={12} color="var(--register-text-dim)" />
+              <span style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)' }}>DM: {d.dm}</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {[
@@ -75,7 +75,7 @@ export default function DistrictPlanning() {
                 ['Revenue', d.revenue],
                 ['Headcount', String(d.headcount)],
               ].map(([label, val]) => (
-                <div key={label} className="flex justify-between" style={{ fontSize: '0.75rem' }}>
+                <div key={label} className="flex justify-between" style={{ fontSize: '0.82rem' }}>
                   <span style={{ color: 'var(--register-text-dim)' }}>{label}</span>
                   <span style={{ fontWeight: 600, color: 'var(--register-text)' }}>{val}</span>
                 </div>
@@ -83,7 +83,7 @@ export default function DistrictPlanning() {
             </div>
             {/* Attach rate mini bar */}
             <div style={{ marginTop: 8 }}>
-              <div className="flex justify-between" style={{ fontSize: '0.65rem', marginBottom: 3 }}>
+              <div className="flex justify-between" style={{ fontSize: '0.82rem', marginBottom: 3 }}>
                 <span style={{ color: 'var(--register-text-dim)' }}>Attach</span>
                 <span style={{ fontWeight: 700, color: '#06B6D4' }}>{d.attachRate}%</span>
               </div>
@@ -161,7 +161,7 @@ export default function DistrictPlanning() {
                         transitionDelay: `${0.6 + i * 0.05}s`,
                       }} />
                     </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)', width: 50, textAlign: 'right' }}>{d.revPerStore}</span>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)', width: 58, textAlign: 'right' }}>{d.revPerStore}</span>
                   </div>
                 </div>
                 <div>
@@ -176,7 +176,7 @@ export default function DistrictPlanning() {
                         transitionDelay: `${0.6 + i * 0.05}s`,
                       }} />
                     </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)', width: 44, textAlign: 'right' }}>{d.revPerRep}</span>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)', width: 52, textAlign: 'right' }}>{d.revPerRep}</span>
                   </div>
                 </div>
                 <div>
@@ -191,7 +191,7 @@ export default function DistrictPlanning() {
                         transitionDelay: `${0.6 + i * 0.05}s`,
                       }} />
                     </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--register-text)', width: 32, textAlign: 'right' }}>{d.attachRate}%</span>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--register-text)', width: 38, textAlign: 'right' }}>{d.attachRate}%</span>
                   </div>
                 </div>
               </div>
