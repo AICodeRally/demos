@@ -134,7 +134,7 @@ function computeSummaryMetrics(
         value = sale.margin;
         break;
       case 'gross_margin_percent':
-        value = sale.marginPercent * 100;
+        value = sale.marginPercent * 100; // display as %, e.g. 42.5
         break;
       case 'total_commission':
         value = totalCommission;

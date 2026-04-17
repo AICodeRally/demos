@@ -1,0 +1,524 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════
+   SWIC Glass Design System
+   Glassmorphism + gradients — Apple/Stripe energy
+   ══════════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties ──────────────────────────────── */
+:root {
+  /* Glass layers */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.14);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --glass-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.1);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(20px);
+  --glass-blur-strong: blur(32px);
+
+  /* Page background */
+  --page-bg: #f0f2f5;
+  --page-text: #0f172a;
+  --page-muted: #64748b;
+
+  /* Surfaces */
+  --surface-bg: rgba(255, 255, 255, 0.6);
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-focus: rgba(99, 102, 241, 0.3);
+}
+
+.dark {
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --glass-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glass-blur: blur(20px);
+  --glass-blur-strong: blur(32px);
+
+  --page-bg: #080a12;
+  --page-text: #e8eaf0;
+  --page-muted: #7c8298;
+
+  --surface-bg: rgba(255, 255, 255, 0.04);
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus: rgba(99, 102, 241, 0.4);
+}
+
+/* ── Base Layer ──────────────────────────────────────────── */
+@layer base {
+  body {
+    background-color: var(--page-bg);
+    color: var(--page-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--glass-border-hover); }
+}
+
+/* ── Glass Components ────────────────────────────────────── */
+@layer components {
+  /* Base glass card */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-inner);
+  }
+
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur-strong);
+    -webkit-backdrop-filter: var(--glass-blur-strong);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow-lg), var(--glass-inner);
+  }
+
+  /* Glass card with hover lift */
+  .glass-hover {
+    @apply glass transition-all duration-300;
+  }
+  .glass-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glass-shadow-lg), var(--glass-inner);
+    border-color: var(--glass-border-hover);
+  }
+
+  /* Glass input */
+  .glass-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    color: var(--page-text);
+    transition: all 0.2s;
+  }
+  .glass-input:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--input-focus);
+  }
+
+  /* Glass pill (category filters, badges) */
+  .glass-pill {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    transition: all 0.2s;
+  }
+  .glass-pill:hover {
+    border-color: var(--glass-border-hover);
+  }
+
+  /* Glass navbar */
+  .glass-nav {
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur-strong);
+    -webkit-backdrop-filter: var(--glass-blur-strong);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+  }
+  .dark .glass-nav {
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ── Gradient Mesh Backgrounds ───────────────────────────── */
+
+/* Light mode mesh */
+.mesh-bg-light {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.9) 0%, transparent 80%),
+    var(--page-bg);
+}
+
+/* Dark mode mesh */
+.mesh-bg-dark {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 30%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+    var(--page-bg);
+}
+
+/* Client-brand mesh overlay — set via inline CSS variables */
+.mesh-brand {
+  position: relative;
+}
+.mesh-brand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 85% 15%,
+      var(--brand-glow, rgba(99, 102, 241, 0.08)) 0%,
+      transparent 50%
+    );
+  z-index: 0;
+}
+
+/* ── Animations & Keyframes ──────────────────────────────── */
+
+/* Commission number pulse */
+@keyframes commission-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.animate-commission-pulse {
+  animation: commission-pulse 0.4s ease-in-out;
+}
+
+/* Glow pulse — used behind total commission */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Subtle float — used for empty states */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Fade-in slide up */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+/* Status indicator pulse */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-status-pulse {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* Shimmer for loading / placeholder states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 33%, rgba(255,255,255,0.08) 50%, transparent 66%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ── Gradient Text ───────────────────────────────────────── */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Category Colors ─────────────────────────────────────── */
+.cat-dot-mattress { background-color: #3b82f6; }
+.cat-dot-adjustable { background-color: #8b5cf6; }
+.cat-dot-bedding { background-color: #14b8a6; }
+.cat-dot-accessories { background-color: #f59e0b; }
+.cat-dot-tvs { background-color: #3b82f6; }
+.cat-dot-computers { background-color: #8b5cf6; }
+.cat-dot-audio { background-color: #14b8a6; }
+.cat-dot-smart-home { background-color: #06b6d4; }
+.cat-dot-warranty { background-color: #22c55e; }
+
+/* ── Utility ─────────────────────────────────────────────── */
+.transition-default {
+  transition: all 0.2s ease;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── PROOFLINE Theme ─────────────────────────────────────── */
+
+/* Light mode proofline colors — cocktail lounge: bright, crisp, upscale */
+:root {
+  --pl-text: #0f0f1a;
+  --pl-text-muted: #4a4a6a;
+  --pl-text-secondary: #2d2d4a;
+  --pl-surface: rgba(255, 255, 255, 0.6);
+  --pl-surface-border: rgba(0, 0, 0, 0.08);
+  --pl-surface-hover: rgba(255, 255, 255, 0.8);
+  --pl-bar-bg: rgba(255, 253, 248, 0.96);
+  --pl-bar-border: rgba(198, 160, 82, 0.4);
+  --pl-header-bg: rgba(255, 253, 248, 0.95);
+  --pl-content-bg: #fffcf5;
+  --pl-page-bg: #f5f0e4;
+  --pl-gold: #a07818;
+  --pl-gold-bg: rgba(180, 140, 40, 0.12);
+  --pl-gold-border: rgba(180, 140, 40, 0.35);
+  --pl-card-bg: rgba(255, 255, 255, 0.85);
+  --pl-card-border: rgba(0, 0, 0, 0.1);
+  --pl-accepted-bg: rgba(22, 163, 74, 0.1);
+  --pl-accepted-border: rgba(22, 163, 74, 0.3);
+  --pl-competitive-bg: rgba(220, 38, 38, 0.08);
+  --pl-competitive-border: rgba(220, 38, 38, 0.18);
+  --pl-competitive-text: #b91c1c;
+  --pl-zone-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode proofline colors — cocktail lounge: warm glow, high contrast */
+.dark {
+  --pl-text: #f8f6f1;
+  --pl-text-muted: #c4c0d4;
+  --pl-text-secondary: #e0dce8;
+  --pl-surface: rgba(255, 255, 255, 0.06);
+  --pl-surface-border: rgba(255, 255, 255, 0.1);
+  --pl-surface-hover: rgba(255, 255, 255, 0.08);
+  --pl-bar-bg: rgba(12, 10, 22, 0.96);
+  --pl-bar-border: rgba(212, 175, 85, 0.3);
+  --pl-header-bg: rgba(12, 10, 22, 0.92);
+  --pl-content-bg: #0e0c1a;
+  --pl-page-bg: #08060f;
+  --pl-gold: #d4af55;
+  --pl-gold-bg: rgba(212, 175, 85, 0.12);
+  --pl-gold-border: rgba(212, 175, 85, 0.35);
+  --pl-card-bg: rgba(255, 255, 255, 0.05);
+  --pl-card-border: rgba(255, 255, 255, 0.12);
+  --pl-accepted-bg: rgba(34, 197, 94, 0.12);
+  --pl-accepted-border: rgba(34, 197, 94, 0.4);
+  --pl-competitive-bg: rgba(248, 113, 113, 0.08);
+  --pl-competitive-border: rgba(248, 113, 113, 0.2);
+  --pl-competitive-text: #fca5a5;
+  --pl-zone-border: rgba(255, 255, 255, 0.1);
+}
+
+.proofline-gold { color: var(--pl-gold); }
+.proofline-bg-gold { background-color: var(--pl-gold); }
+
+/* Route map animated dashed line */
+@keyframes dash-trace {
+  to { stroke-dashoffset: 0; }
+}
+.animate-dash-trace {
+  animation: dash-trace 2s ease-in-out forwards;
+}
+
+/* Stop marker pulse */
+@keyframes stop-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(198, 160, 82, 0.4); }
+  50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(198, 160, 82, 0); }
+}
+.animate-stop-pulse {
+  animation: stop-pulse 2s ease-in-out infinite;
+}
+
+/* Commission count-up flash */
+@keyframes commission-flash {
+  0% { background-color: rgba(198, 160, 82, 0.3); }
+  100% { background-color: transparent; }
+}
+.animate-commission-flash {
+  animation: commission-flash 0.6s ease-out;
+}
+
+/* Tier progress shimmer */
+@keyframes tier-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-tier-shimmer {
+  background: linear-gradient(90deg, #C6A052 33%, #e0c87a 50%, #C6A052 66%);
+  background-size: 200% 100%;
+  animation: tier-shimmer 2s infinite;
+}
+
+/* Confetti sparkle on add-to-sale */
+@keyframes sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+.animate-sparkle {
+  animation: sparkle 0.4s ease-out forwards;
+}
+
+/* Tablet bezel inner shadow */
+.tablet-bezel-shadow {
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Scroll snap for stop list */
+.snap-y-mandatory {
+  scroll-snap-type: y mandatory;
+}
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Beverage category colors */
+.cat-dot-spirits { background-color: #C6A052; }
+.cat-dot-beer { background-color: #f59e0b; }
+.cat-dot-craft { background-color: #22c55e; }
+.cat-dot-mixer { background-color: #06b6d4; }
+
+/* ── Touch & Tablet Styles ──────────────────────────────── */
+
+/* Kill hover states on touch devices */
+@media (hover: none) {
+  .glass-hover:hover {
+    transform: none;
+    box-shadow: var(--glass-shadow), var(--glass-inner);
+    border-color: var(--glass-border);
+  }
+}
+
+/* Active tap feedback */
+.tap-active {
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+.tap-active:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+/* Swipe transition for stop detail */
+.slide-enter {
+  animation: slide-in-right 0.3s ease-out;
+}
+.slide-exit-left {
+  animation: slide-out-left 0.3s ease-out;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slide-out-left {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-30px); opacity: 0; }
+}
+
+/* Swipe-to-accept card animation */
+@keyframes swipe-accept {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100px); opacity: 0; }
+}
+.animate-swipe-accept {
+  animation: swipe-accept 0.3s ease-out forwards;
+}
+
+/* Contain overscroll within panels */
+.overscroll-contain {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Pane collapse/expand transition */
+.pane-transition {
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+/* Leaflet map tooltip for route stops */
+.route-stop-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.route-stop-tooltip {
+  background: rgba(10, 15, 30, 0.9) !important;
+  color: #C6A052 !important;
+  border: 1px solid rgba(198, 160, 82, 0.4) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+.route-stop-tooltip::before {
+  border-right-color: rgba(198, 160, 82, 0.4) !important;
+}
+/* Light mode tooltip */
+:root .route-stop-tooltip {
+  background: rgba(255, 252, 245, 0.95) !important;
+  color: #8a6e1e !important;
+  border-color: rgba(198, 160, 82, 0.3) !important;
+}
+
+/* ── Print Styles ──────────────────────────────────────── */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide everything except the commission preview pane */
+  .glass-nav,
+  .lg\:col-span-3,
+  .lg\:col-span-4,
+  .mesh-brand::before {
+    display: none !important;
+  }
+
+  /* Make print area full-width */
+  .print-area {
+    grid-column: 1 / -1 !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Remove glass blur (not printable) */
+  .glass, .glass-strong, .glass-pill, .glass-hover {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #fff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Make text black */
+  * {
+    color: #000 !important;
+  }
+
+  /* Keep accent colors for commission amounts */
+  .font-mono.font-bold,
+  .font-mono.font-black {
+    color: inherit !important;
+  }
+
+  /* Clean page margins */
+  @page {
+    margin: 1cm;
+  }
+}
