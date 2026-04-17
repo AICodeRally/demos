@@ -20,7 +20,7 @@ import { getInsight } from '@/data/register/ai-insights';
 import type { SaleItem } from '@/lib/swic-engine/types';
 import type { D365TransactionEvent } from '@/data/register/d365-schemas';
 
-type PosTab = 'lines' | 'rewards' | 'motion' | 'coaching' | 'd365';
+type PosTab = 'pos' | 'motion' | 'coaching' | 'data';
 
 const REP = POS_REPS[0]; // Sarah Johnson
 const PERIOD = SAMPLE_PERIODS['rep-sarah'];
@@ -172,7 +172,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
 export default function POSTerminal() {
   const { theme } = useRegisterTheme();
   const [cartItems, setCartItems] = useState<SaleItem[]>([]);
-  const [activeTab, setActiveTab] = useState<PosTab>('lines');
+  const [activeTab, setActiveTab] = useState<PosTab>('pos');
   const [d365Events, setD365Events] = useState<D365TransactionEvent[]>([]);
   const [showCloseSale, setShowCloseSale] = useState(false);
   const [toasts, setToasts] = useState<{ id: string; message: string }[]>([]);
@@ -258,12 +258,12 @@ export default function POSTerminal() {
     setD365Events((prev) => [event, ...prev]);
     setCartItems([]);
     setShowCloseSale(false);
-    setActiveTab('d365');
+    setActiveTab('data');
   }, []);
 
   const handleNewSale = useCallback(() => {
     setCartItems([]);
-    setActiveTab('lines');
+    setActiveTab('pos');
   }, []);
 
   // Commission breakdown string
@@ -272,11 +272,10 @@ export default function POSTerminal() {
     : 'Add items to see';
 
   const TABS: { id: PosTab; label: string; badge?: number }[] = [
-    { id: 'lines', label: 'Lines' },
-    { id: 'rewards', label: 'Rewards' },
+    { id: 'pos', label: 'POS' },
     { id: 'motion', label: 'Motion' },
     { id: 'coaching', label: 'Coaching', badge: coachingUnread },
-    { id: 'd365', label: `D365 Log (${d365Events.length})` },
+    { id: 'data', label: `Data (${d365Events.length})` },
   ];
 
   // AI upsell card for the sale ticket
@@ -384,7 +383,7 @@ export default function POSTerminal() {
 
               {/* Tab Content */}
               <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                {activeTab === 'lines' && (
+                {activeTab === 'pos' && (
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 10, overflow: 'hidden' }}>
                     {/* AI Insight at top if cart has items */}
                     {cartItems.length > 0 && insight && (
@@ -404,11 +403,11 @@ export default function POSTerminal() {
                         <BundleBuilder items={cartItems} />
                       </div>
                     )}
+                    {/* Rewards panel stacked below cart */}
+                    <div style={{ marginTop: 8, flex: 1, minHeight: 0, overflow: 'auto' }}>
+                      <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
+                    </div>
                   </div>
-                )}
-
-                {activeTab === 'rewards' && (
-                  <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
                 )}
 
                 {activeTab === 'motion' && (
@@ -466,7 +465,7 @@ export default function POSTerminal() {
                   </div>
                 )}
 
-                {activeTab === 'd365' && (
+                {activeTab === 'data' && (
                   <div style={{ padding: 10, flex: 1, overflow: 'auto' }}>
                     <D365EventLog events={d365Events} />
                   </div>

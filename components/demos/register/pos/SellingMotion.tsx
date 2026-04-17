@@ -28,6 +28,7 @@ export function SellingMotion() {
   const [metric, setMetric] = useState<MotionMetric>('closeRate');
   const [hoveredZone, setHoveredZone] = useState<ZoneId | null>(null);
   const [focusInsight, setFocusInsight] = useState<string | null>(null);
+  const [subView, setSubView] = useState<'shift' | 'insights' | 'play'>('insights');
 
   const zoneData = ZONE_METRICS[lens][metric];
   const metricMeta = METRIC_META[metric];
@@ -125,10 +126,18 @@ export function SellingMotion() {
         </div>
       </div>
 
-      {/* ── Scroll area: floorplan + insights + play-by-play ── */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* ── Main body: 2-column layout ──────────────────────── */}
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'row', gap: 12,
+        padding: 12, overflow: 'hidden', minHeight: 0,
+      }}>
 
-        {/* Floorplan card */}
+        {/* LEFT: Floorplan (always visible) */}
+        <div style={{
+          width: '56%', minWidth: 340,
+          display: 'flex', flexDirection: 'column', overflowY: 'auto',
+          flexShrink: 0,
+        }}>
         <div style={{
           background: 'var(--register-bg-elevated)',
           border: '1px solid var(--register-border)',
@@ -182,8 +191,64 @@ export function SellingMotion() {
             <Stat label="Current zone" value={FLOOR_ZONES.find(z => z.id === currentZone)?.shortLabel ?? '—'} accent={lensMeta.accent} />
           </div>
         </div>
+        </div>
+        {/* END LEFT column */}
+
+        {/* RIGHT: sub-tab + selected view */}
+        <div style={{
+          flex: 1, minWidth: 0,
+          display: 'flex', flexDirection: 'column', gap: 10,
+          overflow: 'hidden',
+        }}>
+          {/* Sub-tab bar */}
+          <div style={{
+            display: 'flex', gap: 4, padding: 4, borderRadius: 10,
+            background: 'var(--register-bg-surface)',
+            border: '1px solid var(--register-border)',
+            flexShrink: 0,
+          }}>
+            {([
+              { id: 'shift',    label: 'Shift Recs',       icon: Crosshair,  count: SHIFT_RECS.length },
+              { id: 'insights', label: 'The Tape',         icon: Flame,      count: MOTION_INSIGHTS.length },
+              { id: 'play',     label: 'Play-by-Play',     icon: Activity,   count: TODAY_PLAY_BY_PLAY.length },
+            ] as const).map((t) => {
+              const isActive = subView === t.id;
+              const Icon = t.icon;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setSubView(t.id)}
+                  style={{
+                    flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    padding: '8px 10px', borderRadius: 7, border: 'none',
+                    background: isActive ? 'var(--register-bg-elevated)' : 'transparent',
+                    boxShadow: isActive ? '0 1px 3px rgba(15,23,42,0.08)' : 'none',
+                    color: isActive ? 'var(--register-text)' : 'var(--register-text-dim)',
+                    fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
+                    transition: 'background 120ms ease',
+                  }}
+                >
+                  <Icon size={13} />
+                  {t.label}
+                  <span style={{
+                    fontSize: '0.68rem', fontWeight: 700,
+                    padding: '1px 6px', borderRadius: 999,
+                    background: isActive ? 'var(--register-primary)' : 'var(--register-border)',
+                    color: isActive ? '#FFFFFF' : 'var(--register-text-dim)',
+                    fontVariantNumeric: 'tabular-nums',
+                  }}>
+                    {t.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Sub-view content area */}
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
 
         {/* Shift recommendations — baseball "defensive shift" */}
+        {subView === 'shift' && (
         <div style={{
           background: 'var(--register-bg-elevated)',
           border: '1px solid var(--register-border)',
@@ -241,8 +306,10 @@ export function SellingMotion() {
             ))}
           </div>
         </div>
+        )}
 
         {/* Baseball insights */}
+        {subView === 'insights' && (
         <div style={{
           background: 'var(--register-bg-elevated)',
           border: '1px solid var(--register-border)',
@@ -318,8 +385,10 @@ export function SellingMotion() {
             })}
           </div>
         </div>
+        )}
 
         {/* Play-by-play */}
+        {subView === 'play' && (
         <div style={{
           background: 'var(--register-bg-elevated)',
           border: '1px solid var(--register-border)',
@@ -382,6 +451,12 @@ export function SellingMotion() {
             })}
           </div>
         </div>
+        )}
+
+          </div>
+          {/* END right column content */}
+        </div>
+        {/* END right column */}
       </div>
     </div>
   );
