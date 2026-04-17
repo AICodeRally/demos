@@ -637,7 +637,7 @@ export default function POSTerminal() {
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'row', padding: 10, gap: 10, overflow: 'hidden', minHeight: 0 }}>
                     {/* Sales column — cart + upsell + bundle + commission */}
                     <div style={{
-                      flex: '1 1 58%', minWidth: 0,
+                      flex: '1 1 70%', minWidth: 0,
                       display: 'flex', flexDirection: 'column', overflowY: 'auto',
                     }}>
                       {/* Mini section header */}
@@ -669,7 +669,7 @@ export default function POSTerminal() {
 
                     {/* Rewards column — full commission/tier breakdown */}
                     <div style={{
-                      flex: '1 1 42%', minWidth: 240,
+                      flex: '0 1 30%', minWidth: 200, maxWidth: 280,
                       display: 'flex', flexDirection: 'column',
                       borderLeft: '1px solid var(--register-border)',
                       paddingLeft: 10,
