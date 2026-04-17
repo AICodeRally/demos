@@ -1,7 +1,7 @@
 // summit/sparcc/modules/swic/src/lib/broadcast.ts
 import type { ClosedSale } from '@/lib/swic/data/d365-schemas';
 
-const CHANNEL_NAME = 'swic-mattress-firm';
+const CHANNEL_NAME = 'swic-tablet';
 
 export type BroadcastMessage =
   | { type: 'sale:closed'; data: ClosedSale }

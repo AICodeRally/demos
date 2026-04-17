@@ -30,7 +30,7 @@ const STEPS = [
 ];
 
 const INDUSTRIES = [
-  { name: 'Summit Sleep Co.', industry: 'Retail / Furniture', color: '#ef4444', id: 'mattress-firm' },
+  { name: 'Summit Sleep Co.', industry: 'Retail / Furniture', color: '#ef4444', id: 'tablet' },
   { name: 'Acme Electronics', industry: 'Consumer Electronics', color: '#f59e0b', id: 'acme-electronics' },
   { name: 'Premier Motors', industry: 'Auto Dealership', color: '#d4a017', id: 'premier-motors' },
   { name: 'Summit Shield', industry: 'Insurance Agency', color: '#10b981', id: 'summit-shield' },

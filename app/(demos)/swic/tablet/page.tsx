@@ -4,19 +4,19 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { calculate } from '@/lib/swic/engine/calculator';
 import type { SaleItem, CalculationResult } from '@/lib/swic/engine/types';
 import {
-  MATTRESS_FIRM_CONFIG,
+  TABLET_CONFIG,
   CATALOG_ITEMS,
   REPS,
   SAMPLE_PERIODS,
   STORE_CONTEXT,
-} from '@/lib/swic/data/mattress-firm';
+} from '@/lib/swic/data/tablet';
 import type { D365TransactionEvent } from '@/lib/swic/data/d365-schemas';
-import { detectBundles, MATTRESS_FIRM_BUNDLES } from '@/components/swic/mattress-firm/BundleBuilder';
-import { ShowroomCatalog } from '@/components/swic/mattress-firm/ShowroomCatalog';
-import { SaleTicket } from '@/components/swic/mattress-firm/SaleTicket';
+import { detectBundles, TABLET_BUNDLES } from '@/components/swic/tablet/BundleBuilder';
+import { ShowroomCatalog } from '@/components/swic/tablet/ShowroomCatalog';
+import { SaleTicket } from '@/components/swic/tablet/SaleTicket';
 import { CommissionPreview } from '@/components/swic/CommissionPreview';
-import { CloseSaleFlow } from '@/components/swic/mattress-firm/CloseSaleFlow';
-import { D365EventLog } from '@/components/swic/mattress-firm/D365EventLog';
+import { CloseSaleFlow } from '@/components/swic/tablet/CloseSaleFlow';
+import { D365EventLog } from '@/components/swic/tablet/D365EventLog';
 import { Sun, Moon, Users, Wifi, RotateCcw, PauseCircle, ShoppingCart } from 'lucide-react';
 
 // ── Page ──────────────────────────────────────────────────────
@@ -33,11 +33,11 @@ export default function SummitSleepCoPOSPage() {
   const rep = REPS[selectedRepIdx];
   const period = SAMPLE_PERIODS[rep.id];
   const result: CalculationResult | null = useMemo(
-    () => (saleItems.length > 0 ? calculate(MATTRESS_FIRM_CONFIG, saleItems, period) : null),
+    () => (saleItems.length > 0 ? calculate(TABLET_CONFIG, saleItems, period) : null),
     [saleItems, period],
   );
   const bundles = useMemo(
-    () => detectBundles(saleItems, MATTRESS_FIRM_BUNDLES),
+    () => detectBundles(saleItems, TABLET_BUNDLES),
     [saleItems],
   );
 
@@ -93,7 +93,7 @@ export default function SummitSleepCoPOSPage() {
   }, []);
 
   // ── Accent color ──────────────────────────────────────────
-  const accent = MATTRESS_FIRM_CONFIG.theme?.accent ?? '#d42b2b';
+  const accent = TABLET_CONFIG.theme?.accent ?? '#d42b2b';
 
   // ── Render ────────────────────────────────────────────────
   return (
@@ -208,7 +208,7 @@ export default function SummitSleepCoPOSPage() {
 
             {/* Commission Preview */}
             <CommissionPreview
-              config={MATTRESS_FIRM_CONFIG}
+              config={TABLET_CONFIG}
               result={result}
               repName={rep.name}
               glass

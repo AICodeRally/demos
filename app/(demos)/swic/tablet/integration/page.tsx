@@ -1,4 +1,4 @@
-import { IntegrationSpec } from '@/components/swic/mattress-firm/IntegrationSpec';
+import { IntegrationSpec } from '@/components/swic/tablet/IntegrationSpec';
 
 export default function IntegrationPage() {
   return <IntegrationSpec />;

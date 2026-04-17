@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import { Tablet, LayoutDashboard, FileCode2, ChevronLeft } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { href: '/mattress-firm', label: 'Tablet POS', icon: Tablet },
-  { href: '/mattress-firm/manager', label: 'Manager', icon: LayoutDashboard },
-  { href: '/mattress-firm/integration', label: 'Integration', icon: FileCode2 },
+  { href: '/swic/tablet', label: 'Tablet POS', icon: Tablet },
+  { href: '/swic/tablet/manager', label: 'Manager', icon: LayoutDashboard },
+  { href: '/swic/tablet/integration', label: 'Integration', icon: FileCode2 },
 ] as const;
 
 export function DemoNav() {

@@ -27,7 +27,7 @@ const RULE_ICONS: Record<string, { icon: typeof DollarSign; color: string }> = {
 function ClientLogo({ config, glass }: { config: ClientConfig; glass?: boolean }) {
   const theme = config.theme;
   const accent = theme?.accent ?? '#6366f1';
-  if (config.logo === 'mattress-firm') {
+  if (config.logo === 'tablet') {
     return (
       <div className="text-3xl font-black tracking-tight mb-1">
         <span style={{ color: accent }}>SUMMIT</span>

@@ -21,7 +21,7 @@ interface CommissionHistoryProps {
 // Generate demo historical data based on clientId for consistency
 function generateHistory(clientId: string): PeriodSummary[] {
   const seeds: Record<string, number[]> = {
-    'mattress-firm': [4280, 5120, 3890, 6340, 5680, 4920],
+    'tablet': [4280, 5120, 3890, 6340, 5680, 4920],
     'acme-electronics': [2150, 2890, 1980, 3420, 2760, 3100],
     'premier-motors': [8900, 12400, 7600, 15200, 11800, 9400],
     'summit-shield': [3200, 2800, 4100, 3600, 2950, 3800],

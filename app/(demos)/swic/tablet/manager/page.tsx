@@ -16,21 +16,21 @@ import {
   CATALOG_ITEMS,
   REPS,
   SAMPLE_PERIODS,
-  MATTRESS_FIRM_CONFIG,
-} from '@/lib/swic/data/mattress-firm';
+  TABLET_CONFIG,
+} from '@/lib/swic/data/tablet';
 import { onBroadcast, broadcastShiftReset } from '@/lib/swic/util/broadcast';
 import { generateTransactionEvent } from '@/lib/swic/adapters/d365';
 import { calculate } from '@/lib/swic/engine/calculator';
 import type { SaleItem } from '@/lib/swic/engine/types';
-import { ManagerFeed } from '@/components/swic/mattress-firm/ManagerFeed';
-import { Leaderboard } from '@/components/swic/mattress-firm/Leaderboard';
-import { TeamMetrics } from '@/components/swic/mattress-firm/TeamMetrics';
-import { ShiftSummary } from '@/components/swic/mattress-firm/ShiftSummary';
-import { TierDistribution } from '@/components/swic/mattress-firm/TierDistribution';
-import { CommissionBudget } from '@/components/swic/mattress-firm/CommissionBudget';
+import { ManagerFeed } from '@/components/swic/tablet/ManagerFeed';
+import { Leaderboard } from '@/components/swic/tablet/Leaderboard';
+import { TeamMetrics } from '@/components/swic/tablet/TeamMetrics';
+import { ShiftSummary } from '@/components/swic/tablet/ShiftSummary';
+import { TierDistribution } from '@/components/swic/tablet/TierDistribution';
+import { CommissionBudget } from '@/components/swic/tablet/CommissionBudget';
 
 /* ══════════════════════════════════════════════════════════
-   Manager Dashboard — /mattress-firm/manager
+   Manager Dashboard — /swic/tablet/manager
    ══════════════════════════════════════════════════════════ */
 
 export default function ManagerDashboardPage() {
@@ -98,7 +98,7 @@ export default function ManagerDashboardPage() {
       event.timeWhenTransClosed = timeStr;
 
       // Calculate commission
-      const result = calculate(MATTRESS_FIRM_CONFIG, items, period);
+      const result = calculate(TABLET_CONFIG, items, period);
 
       seeded.push({
         event,
@@ -141,7 +141,7 @@ export default function ManagerDashboardPage() {
   }, []);
 
   // ── Accent color ─────────────────────────────────────────
-  const accent = MATTRESS_FIRM_CONFIG.theme?.accent ?? '#d42b2b';
+  const accent = TABLET_CONFIG.theme?.accent ?? '#d42b2b';
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',

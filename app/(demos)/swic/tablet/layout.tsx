@@ -1,4 +1,4 @@
-import { DemoNav } from '@/components/swic/mattress-firm/DemoNav';
+import { DemoNav } from '@/components/swic/tablet/DemoNav';
 
 export default function SummitSleepCoLayout({ children }: { children: React.ReactNode }) {
   return (

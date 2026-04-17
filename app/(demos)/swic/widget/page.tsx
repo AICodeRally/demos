@@ -18,11 +18,11 @@ export default function WidgetPage() {
 
 function WidgetContent() {
   const searchParams = useSearchParams();
-  const clientParam = searchParams.get('client') ?? 'mattress-firm';
+  const clientParam = searchParams.get('client') ?? 'tablet';
   const repParam = searchParams.get('rep');
   const themeParam = searchParams.get('theme') ?? 'dark';
 
-  const bundle = CLIENT_REGISTRY[clientParam] ?? CLIENT_REGISTRY['mattress-firm'];
+  const bundle = CLIENT_REGISTRY[clientParam] ?? CLIENT_REGISTRY['tablet'];
 
   const [saleItems, setSaleItems] = useState<SaleItem[]>([]);
   const [config, setConfig] = useState<ClientConfig>(bundle.config);

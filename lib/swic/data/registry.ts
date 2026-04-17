@@ -1,6 +1,6 @@
 import type { ClientConfig, SaleItem, PeriodContext } from '@/lib/swic/engine/types';
 
-import { MATTRESS_FIRM_CONFIG, CATALOG_ITEMS as MF_CATALOG, REPS as MF_REPS, SAMPLE_PERIODS as MF_PERIODS } from './mattress-firm';
+import { TABLET_CONFIG, CATALOG_ITEMS as TABLET_CATALOG, REPS as TABLET_REPS, SAMPLE_PERIODS as TABLET_PERIODS } from './tablet';
 import { ACME_CONFIG, ACME_CATALOG, ACME_REPS, ACME_PERIODS } from './acme-electronics';
 import { PREMIER_MOTORS_CONFIG, PREMIER_CATALOG, PREMIER_REPS, PREMIER_PERIODS } from './premier-motors';
 import { SUMMIT_SHIELD_CONFIG, SUMMIT_CATALOG, SUMMIT_REPS, SUMMIT_PERIODS } from './summit-shield';
@@ -20,11 +20,11 @@ export interface ClientBundle {
 /* ── Registry ───────────────────────────────────────────── */
 
 export const CLIENT_REGISTRY: Record<string, ClientBundle> = {
-  'mattress-firm': {
-    config: MATTRESS_FIRM_CONFIG,
-    catalog: MF_CATALOG,
-    reps: MF_REPS,
-    periods: MF_PERIODS,
+  'tablet': {
+    config: TABLET_CONFIG,
+    catalog: TABLET_CATALOG,
+    reps: TABLET_REPS,
+    periods: TABLET_PERIODS,
   },
   'acme-electronics': {
     config: ACME_CONFIG,

@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { BarChart3 } from 'lucide-react';
 import type { ManagerComponentProps } from './ManagerFeed';
-import { SAMPLE_PERIODS, MATTRESS_FIRM_CONFIG } from '@/lib/swic/data/mattress-firm';
+import { SAMPLE_PERIODS, TABLET_CONFIG } from '@/lib/swic/data/tablet';
 
 interface TierBucket {
   label: string;
@@ -15,13 +15,13 @@ interface TierBucket {
  * TierDistribution — horizontal bar chart showing how many reps
  * are at each commission tier based on their YTD revenue.
  *
- * Uses tier definitions from MATTRESS_FIRM_CONFIG (the base-comm tiered rule)
+ * Uses tier definitions from TABLET_CONFIG (the base-comm tiered rule)
  * and YTD revenue from SAMPLE_PERIODS to classify each unique rep.
  */
 export function TierDistribution({ sales }: ManagerComponentProps) {
   const buckets: TierBucket[] = useMemo(() => {
     // Get the tiered rule from the config
-    const baseComp = MATTRESS_FIRM_CONFIG.components.find((c) => c.id === 'base-comm');
+    const baseComp = TABLET_CONFIG.components.find((c) => c.id === 'base-comm');
     if (!baseComp || baseComp.rule.type !== 'tiered') return [];
 
     const tiers = baseComp.rule.tiers;

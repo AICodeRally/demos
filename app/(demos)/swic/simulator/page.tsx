@@ -14,9 +14,9 @@ import { ForecastStrip } from '@/components/swic/ForecastStrip';
 import { WhatIfPanel } from '@/components/swic/WhatIfPanel';
 import { PipelineSimulator } from '@/components/swic/PipelineSimulator';
 import { Users, Users2, RotateCcw, Sun, Moon, Database, Loader2, Wifi, WifiOff, Printer, History } from 'lucide-react';
-import { D365EventLog } from '@/components/swic/mattress-firm/D365EventLog';
+import { D365EventLog } from '@/components/swic/tablet/D365EventLog';
 import { generateTransactionEvent } from '@/lib/swic/adapters/d365';
-import { STORE_CONTEXT } from '@/lib/swic/data/mattress-firm';
+import { STORE_CONTEXT } from '@/lib/swic/data/tablet';
 import type { D365TransactionEvent } from '@/lib/swic/data/d365-schemas';
 
 type DataSource = 'mock' | 'd365' | 'poc1' | 'poc2';
@@ -202,7 +202,7 @@ function SimulatorContent() {
   }, [result?.totalCommission]);
 
   // Generate D365 preview events when items change in D365 mode
-  const isD365SummitSleepCo = dataSource === 'd365' && clientId === 'mattress-firm';
+  const isD365SummitSleepCo = dataSource === 'd365' && clientId === 'tablet';
   useEffect(() => {
     if (!isD365SummitSleepCo || saleItems.length === 0) return;
     const previewEvent = generateTransactionEvent(
@@ -455,7 +455,7 @@ function SimulatorContent() {
                 D365 Commerce Mode
               </span>
             )}
-            {dataSource === 'd365' && clientId !== 'mattress-firm' && (
+            {dataSource === 'd365' && clientId !== 'tablet' && (
               <span
                 className="glass-pill px-2.5 py-0.5 rounded-full text-[10px]"
                 style={{ color: 'var(--page-muted)' }}

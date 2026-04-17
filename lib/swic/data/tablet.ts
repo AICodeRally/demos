@@ -13,10 +13,10 @@ import type { D365StoreContext } from './d365-schemas';
    changes needed.
    ══════════════════════════════════════════════════════════ */
 
-export const MATTRESS_FIRM_CONFIG: ClientConfig = {
-  id: 'mattress-firm',
+export const TABLET_CONFIG: ClientConfig = {
+  id: 'tablet',
   name: 'Summit Sleep Co.',
-  logo: 'mattress-firm', // component key — rendered by LogoRenderer
+  logo: 'tablet', // component key — rendered by LogoRenderer
 
   theme: {
     primary: '#1a1b4b',     // dark navy from their UI

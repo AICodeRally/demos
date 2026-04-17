@@ -17,7 +17,7 @@ export interface DetectedBundle {
 
 // ── Default Bundle Catalog ─────────────────────────────────
 
-export const MATTRESS_FIRM_BUNDLES: BundleDefinition[] = [
+export const TABLET_BUNDLES: BundleDefinition[] = [
   {
     id: 'sleep-system',
     label: 'Sleep System Bundle',
