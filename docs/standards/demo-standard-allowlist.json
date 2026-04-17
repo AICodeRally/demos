@@ -55,6 +55,18 @@
     {
       "path": "data/prizym-governance/documents/catalog.ts",
       "contains": "SPIF placeholders, quarterly quotas"
+    },
+    {
+      "path": "app/(demos)/swic/simulator/page.tsx",
+      "contains": "rule.type !== 'placeholder'"
+    },
+    {
+      "path": "app/(demos)/swic/summit-sleep/page.tsx",
+      "contains": "Hold (placeholder)"
+    },
+    {
+      "path": "app/(demos)/swic/tablet/page.tsx",
+      "contains": "Hold (placeholder)"
     }
   ]
 }
