@@ -634,28 +634,58 @@ export default function POSTerminal() {
               {/* Tab Content */}
               <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {activeTab === 'pos' && (
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 10, overflow: 'hidden' }}>
-                    {/* AI Insight at top if cart has items */}
-                    {cartItems.length > 0 && insight && (
-                      <div style={{ marginBottom: 8 }}>
-                        <AIInsightCard compact>{insight.text}</AIInsightCard>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'row', padding: 10, gap: 10, overflow: 'hidden', minHeight: 0 }}>
+                    {/* Sales column — cart + upsell + bundle + commission */}
+                    <div style={{
+                      flex: '1 1 58%', minWidth: 0,
+                      display: 'flex', flexDirection: 'column', overflowY: 'auto',
+                    }}>
+                      {/* Mini section header */}
+                      <div style={{
+                        display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6,
+                        fontSize: '0.7rem', fontWeight: 800, color: 'var(--register-text-dim)',
+                        textTransform: 'uppercase', letterSpacing: '0.08em',
+                      }}>
+                        <ShoppingCart size={11} />
+                        Sale
                       </div>
-                    )}
-                    <SaleTicket
-                      items={cartItems}
-                      onRemoveItem={removeItem}
-                      onUpdateQuantity={updateQty}
-                      aiUpsellSlot={aiUpsell}
-                    />
-                    {/* Bundle badge */}
-                    {cartItems.length > 0 && (
-                      <div style={{ marginTop: 6 }}>
-                        <BundleBuilder items={cartItems} />
+                      {cartItems.length > 0 && insight && (
+                        <div style={{ marginBottom: 8 }}>
+                          <AIInsightCard compact>{insight.text}</AIInsightCard>
+                        </div>
+                      )}
+                      <SaleTicket
+                        items={cartItems}
+                        onRemoveItem={removeItem}
+                        onUpdateQuantity={updateQty}
+                        aiUpsellSlot={aiUpsell}
+                      />
+                      {cartItems.length > 0 && (
+                        <div style={{ marginTop: 6 }}>
+                          <BundleBuilder items={cartItems} />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Rewards column — full commission/tier breakdown */}
+                    <div style={{
+                      flex: '1 1 42%', minWidth: 240,
+                      display: 'flex', flexDirection: 'column',
+                      borderLeft: '1px solid var(--register-border)',
+                      paddingLeft: 10,
+                      overflow: 'hidden',
+                    }}>
+                      <div style={{
+                        display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6,
+                        fontSize: '0.7rem', fontWeight: 800, color: 'var(--register-text-dim)',
+                        textTransform: 'uppercase', letterSpacing: '0.08em',
+                      }}>
+                        <Sparkles size={11} />
+                        Rewards
                       </div>
-                    )}
-                    {/* Rewards panel stacked below cart */}
-                    <div style={{ marginTop: 8, flex: 1, minHeight: 0, overflow: 'auto' }}>
-                      <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
+                      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+                        <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
+                      </div>
                     </div>
                   </div>
                 )}
