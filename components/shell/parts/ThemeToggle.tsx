@@ -10,11 +10,6 @@ export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    const legacy = localStorage.getItem('routeiq-theme');
-    if (legacy) {
-      localStorage.setItem(STORAGE_KEY, legacy);
-      localStorage.removeItem('routeiq-theme');
-    }
     const stored = localStorage.getItem(STORAGE_KEY);
     const dark = stored ? stored === 'dark' : true;
     setIsDark(dark);

@@ -36,11 +36,10 @@ const INDUSTRIES = [
   { name: 'Summit Shield', industry: 'Insurance Agency', color: '#10b981', id: 'summit-shield' },
   { name: 'CloudStack AI', industry: 'SaaS / Tech Sales', color: '#06b6d4', id: 'cloudstack-ai' },
   { name: 'MedVance', industry: 'Pharma / Med Device', color: '#14b8a6', id: 'medvance' },
-  { name: 'Royal Spirits', industry: 'Beverage Distribution', color: '#C6A052', id: 'royal-spirits' },
 ];
 
 const EMBED_CODE = `<iframe
-  src="https://demo.swic-summit.aicoderally.com/widget?client=royal-spirits&theme=dark"
+  src="https://demo.swic-summit.aicoderally.com/widget?client=tablet&theme=dark"
   width="400"
   height="600"
   style="border: none; border-radius: 16px;"
@@ -146,13 +145,13 @@ export default function LandingPage() {
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-2xl font-black text-center mb-3 tracking-tight">Built for Every Industry</h2>
         <p className="text-sm text-center mb-10" style={{ color: 'var(--page-muted)' }}>
-          7 demo clients. 5 rule types. One config-driven engine.
+          6 demo clients. 5 rule types. One config-driven engine.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {INDUSTRIES.map((ind) => (
             <Link
               key={ind.id}
-              href={ind.id === 'royal-spirits' ? '/routeiq-route' : `/simulator?client=${ind.id}`}
+              href={`/simulator?client=${ind.id}`}
               className="glass-hover rounded-xl p-4 text-center transition-all duration-300 group"
               style={{ borderTop: `2px solid ${ind.color}30` }}
             >
@@ -164,44 +163,9 @@ export default function LandingPage() {
               </div>
               <h4 className="text-xs font-bold mb-0.5 truncate">{ind.name}</h4>
               <p className="text-[10px]" style={{ color: 'var(--page-muted)' }}>{ind.industry}</p>
-              {ind.id === 'royal-spirits' && (
-                <span className="inline-block mt-1.5 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-full" style={{ background: '#C6A05220', color: '#C6A052' }}>
-                  ROUTE
-                </span>
-              )}
             </Link>
           ))}
         </div>
-      </section>
-
-      {/* ROUTEIQ Route Demo CTA */}
-      <section className="max-w-4xl mx-auto px-6 pb-8">
-        <Link
-          href="/swic/routeiq-route"
-          className="block group relative rounded-2xl p-6 transition-all duration-300 hover:scale-[1.01]"
-          style={{
-            background: 'var(--glass-bg, rgba(255,255,255,0.03))',
-            border: '1px solid var(--glass-border, rgba(255,255,255,0.08))',
-            borderLeft: '3px solid #C6A052',
-            boxShadow: '0 4px 24px rgba(198, 160, 82, 0.08)',
-          }}
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-xs font-bold tracking-wider uppercase px-2 py-0.5 rounded-full" style={{ background: '#C6A05220', color: '#C6A052' }}>New</span>
-            <span className="text-sm" style={{ color: 'var(--page-muted)' }}>ROUTEIQ Route Commission</span>
-          </div>
-          <h3 className="text-lg font-bold mb-1">Royal Spirits — Route DAL-03</h3>
-          <p className="text-sm" style={{ color: 'var(--page-muted)' }}>
-            Tablet route demo: 8-stop Dallas delivery route with AI upsell suggestions and real-time commission what-if calculations.
-          </p>
-          <div className="flex gap-4 mt-3 text-xs" style={{ color: 'var(--page-muted)' }}>
-            <span>iPad Frame</span>
-            <span>Route Map</span>
-            <span>AI Insights</span>
-            <span>Commission Bar</span>
-          </div>
-          <ArrowRight className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#C6A052' }} />
-        </Link>
       </section>
 
       {/* Features */}
@@ -295,7 +259,7 @@ export default function LandingPage() {
               }}
             >
               <iframe
-                src="/widget?client=royal-spirits&theme=dark"
+                src="/widget?client=tablet&theme=dark"
                 width="100%"
                 height="100%"
                 style={{ border: 'none' }}

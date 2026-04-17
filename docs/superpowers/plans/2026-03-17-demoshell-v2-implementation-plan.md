@@ -65,7 +65,7 @@ data/
 
 styles/ext/                    # Renamed extension token files (post-codemod)
 ├── routeiq.css
-├── routeiq-route.css
+├── route.css
 ├── meridian.css
 └── phoenix-intel.css
 ```
@@ -2093,7 +2093,7 @@ Key transformations per demo type:
 - New: `import { DemoShell } from '@/components/shell'`
 - Keep CSS var imports (extension tokens)
 
-**routeiq-route special case:**
+**route special case:**
 - No shell → create a minimal `demo.config.ts` with just `meta` for registry inclusion
 - No layout change
 
@@ -2117,7 +2117,7 @@ The meta data for existing demos is extracted from the `productDemos` array in `
 | phoenix-intel | Nonprofit Consultancy | Advancement intelligence platform for nonprofit fundraising consultants | #3b6bf5 |
 | routeiq | Beverage Distribution | Revenue operating system for beverage distributors — territory, comp, route ops | #C6A052 |
 | routeiq-royal | Beverage Distribution | Revenue operating system for beverage distributors | #C6A052 |
-| routeiq-route | Beverage Distribution | Route operations standalone | #C6A052 |
+| route | Beverage Distribution | Route operations standalone | #C6A052 |
 | quota | Prizym RevOps | Quota planning and attainment for the modern CRO | #f59e0b |
 | register | Retail Operations | Retail revenue intelligence from floor to boardroom — comp, scheduling, analytics | #64748B |
 | steeple | Church Management | Full-spectrum church management and ministry platform | #8b5cf6 |
@@ -2172,7 +2172,7 @@ git commit -m "feat(shell): migrate all 13 demos to DemoShell v2 config format"
 
 **Files:**
 - Move: `styles/routeiq-vars.css` → `styles/ext/routeiq.css`
-- Move: `styles/routeiq-route-vars.css` → `styles/ext/routeiq-route.css`
+- Move: `styles/route-vars.css` → `styles/ext/route.css`
 - Move: `styles/meridian-vars.css` → `styles/ext/meridian.css`
 - Move: `styles/phoenix-intel-vars.css` → `styles/ext/phoenix-intel.css`
 - Update: all layout.tsx files that import these CSS files
@@ -2185,7 +2185,7 @@ git commit -m "feat(shell): migrate all 13 demos to DemoShell v2 config format"
 cd /Users/toddlebaron/Development/aicr-demos
 mkdir -p styles/ext
 mv styles/routeiq-vars.css styles/ext/routeiq.css
-mv styles/routeiq-route-vars.css styles/ext/routeiq-route.css
+mv styles/route-vars.css styles/ext/route.css
 mv styles/meridian-vars.css styles/ext/meridian.css
 mv styles/phoenix-intel-vars.css styles/ext/phoenix-intel.css
 ```
@@ -2196,7 +2196,7 @@ For each demo that imports a CSS vars file, update the import path:
 - `@/styles/routeiq-vars.css` → `@/styles/ext/routeiq.css`
 - `@/styles/meridian-vars.css` → `@/styles/ext/meridian.css`
 - `@/styles/phoenix-intel-vars.css` → `@/styles/ext/phoenix-intel.css`
-- `@/styles/routeiq-route-vars.css` → `@/styles/ext/routeiq-route.css`
+- `@/styles/route-vars.css` → `@/styles/ext/route.css`
 
 Search all layout.tsx files for these imports and update them.
 

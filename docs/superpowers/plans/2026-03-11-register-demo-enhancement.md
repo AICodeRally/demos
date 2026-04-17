@@ -2158,7 +2158,7 @@ git commit -m "feat(swic): add summit-sleep POS data — product catalog, bundle
 
 - [ ] **Step 1: Create the main register-pos page**
 
-Follow the routeiq-route pattern: `TabletFrame` wrapper for desktop, full-screen for PWA/iPad. Horizontal split layout (55% sale builder, 45% commission panel).
+Follow the route pattern: `TabletFrame` wrapper for desktop, full-screen for PWA/iPad. Horizontal split layout (55% sale builder, 45% commission panel).
 
 The page should:
 1. Read `?scenario=casey` (or raj/james) query param to pre-load coaching scenario

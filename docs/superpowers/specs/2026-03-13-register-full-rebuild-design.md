@@ -262,7 +262,7 @@ All AI-generated content uses a consistent visual pattern to distinguish it from
 
 | Component | File | Notes |
 |-----------|------|-------|
-| `TabletFrame` | `components/demos/routeiq-route/TabletFrame.tsx` | Shared from ROUTEIQ, no changes |
+| `TabletFrame` | `components/demos/route/TabletFrame.tsx` | Shared from ROUTEIQ, no changes |
 | `StatCard` | `components/demos/register/index.tsx` | Existing, no changes |
 
 ### 5.4 Data Files

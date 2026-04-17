@@ -32,13 +32,13 @@ The repo contains 13 demo directories. The codemod must handle each:
 | phoenix-intel | DemoShell | Yes | Migrate to sidebar |
 | routeiq | DemoShell | Yes | Migrate to sidebar |
 | routeiq-royal | DemoShell | Yes | Migrate to sidebar (fork of routeiq with different nav hrefs) |
-| routeiq-route | None (standalone) | No | Skip — standalone page, no shell wrapper. Add `meta` export for registry. |
+| route | None (standalone) | No | Skip — standalone page, no shell wrapper. Add `meta` export for registry. |
 | quota | SpmShell | Yes | Migrate to topnav |
 | register | DemoShell | Yes | Migrate to sidebar |
 | steeple | DemoShell | Yes | Migrate to sidebar |
 | wellspring | DemoShell | Yes | Migrate to sidebar |
 
-`routeiq-route` is a standalone single-page demo with no shell. The codemod skips it but the registry script includes it (needs a `meta` export added manually or via the codemod creating a minimal `demo.config.ts`).
+`route` is a standalone single-page demo with no shell. The codemod skips it but the registry script includes it (needs a `meta` export added manually or via the codemod creating a minimal `demo.config.ts`).
 
 ## Architecture
 
@@ -416,7 +416,7 @@ Component tokens → semantic tokens → palette. Changing a palette value casca
 
 ### Demo Extension Tokens
 
-Per-demo CSS var files (`routeiq-vars.css`, `routeiq-route-vars.css`, `meridian-vars.css`, `phoenix-intel-vars.css`) define demo-specific tokens used by page components (chart colors, map backgrounds, animation values, etc.). These are **outside** the shell's token system scope.
+Per-demo CSS var files (`routeiq-vars.css`, `route-vars.css`, `meridian-vars.css`, `phoenix-intel-vars.css`) define demo-specific tokens used by page components (chart colors, map backgrounds, animation values, etc.). These are **outside** the shell's token system scope.
 
 **Strategy:** Keep per-demo CSS var files as "extension tokens." They are:
 - Imported in the demo's `layout.tsx` (not in the shell)
@@ -536,7 +536,7 @@ One-shot script for all existing demos. Run once, verify, delete old code.
 5. **Keep** per-demo CSS var imports (`routeiq-vars.css`, `meridian-vars.css`, etc.) — these are extension tokens, not shell tokens
 
 **Special cases:**
-- `routeiq-route`: No shell, no config. Create a minimal `demo.config.ts` with `meta` fields for registry inclusion. No layout change.
+- `route`: No shell, no config. Create a minimal `demo.config.ts` with `meta` fields for registry inclusion. No layout change.
 - `routeiq-royal`: Treat as a standard sidebar demo (it's a fork of routeiq with different nav hrefs).
 
 **Global:**
@@ -550,7 +550,7 @@ One-shot script for all existing demos. Run once, verify, delete old code.
 - Delete `components/demo-shell/`
 - Delete `components/spm-shell/`
 - `styles/routeiq-vars.css` is **kept** (renamed to `styles/ext/routeiq.css` for clarity) — it's used by demo page components
-- `styles/routeiq-route-vars.css` is **kept** (renamed to `styles/ext/routeiq-route.css`) — standalone page extension tokens
+- `styles/route-vars.css` is **kept** (renamed to `styles/ext/route.css`) — standalone page extension tokens
 
 ## Legacy Cleanup
 

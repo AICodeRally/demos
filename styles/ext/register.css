@@ -103,7 +103,7 @@
   0% { transform: scale(1); opacity: 0.6; }
   100% { transform: scale(1.8); opacity: 0; }
 }
-.routeiq-map-tooltip {
+.route-map-tooltip {
   background: var(--pl-card) !important;
   border: 1px solid var(--pl-border) !important;
   color: var(--pl-text) !important;
@@ -111,4 +111,4 @@
   padding: 6px 10px !important;
   box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
 }
-.routeiq-map-tooltip::before { border-top-color: var(--pl-border) !important; }
+.route-map-tooltip::before { border-top-color: var(--pl-border) !important; }

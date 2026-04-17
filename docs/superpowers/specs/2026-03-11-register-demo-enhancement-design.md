@@ -101,7 +101,7 @@ New route in the SWIC module at `summit/sparcc/modules/swic/src/app/register-pos
 
 ### Layout
 
-Single-screen horizontal split (modeled on `/routeiq-route` tablet pattern):
+Single-screen horizontal split (modeled on `/route` tablet pattern):
 
 | Left Panel (55%) | Right Panel (45%) |
 |---|---|

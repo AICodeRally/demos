@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AICR SPM Wiki — Knowledge Graph</title>
+  <meta name="description" content="Every node is a compiled wiki page. Every edge is a wikilink. Click, filter, explore." />
+  <script src="/vis-network.min.js"></script>
+  <style>
+    /* ── Tokens (cool brand, tinted neutrals) ──────────── */
+    :root {
+      --bg:              #F4F6FA;
+      --surface:         #FAFBFD;
+      --surface-2:       #EDF0F7;
+      --surface-hover:   #E3E9F4;
+      --border:          #DDE3EE;
+      --border-strong:   #BCC6DA;
+      --text:            #0F1520;
+      --text-2:          #2B3648;
+      --text-muted:      #4A5769;
+      --text-subtle:     #7A8BA0;
+      --brand:           #2563EB;
+      --brand-2:         #1D4ED8;
+      --brand-subtle:    #EEF3FF;
+      --brand-tint-bg:   #F7F9FF;
+      --shadow-sm:       0 1px 2px rgba(30,50,100,0.06), 0 0 0 1px rgba(30,50,100,0.04);
+      --shadow-md:       0 6px 18px rgba(30,50,100,0.08), 0 1px 3px rgba(30,50,100,0.05);
+      --shadow-lg:       0 14px 44px rgba(30,50,100,0.10), 0 2px 8px rgba(30,50,100,0.05);
+      --radius:          10px;
+      --radius-sm:       7px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      font-size: 16px;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "cv11", "ss01", "ss03";
+    }
+
+    /* ── Header ───────────────────────────────────────── */
+    header {
+      height: 68px;
+      padding: 0 28px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 0 rgba(30,50,100,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      position: relative;
+      z-index: 10;
+    }
+    header .brand {
+      display: flex; align-items: center; gap: 14px;
+    }
+    header .brand .mark {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--brand), #60A5FA);
+      box-shadow: 0 2px 8px rgba(37,99,235,0.35), 0 0 0 1px rgba(37,99,235,0.15);
+      display: grid; place-items: center;
+      color: #fff; font-weight: 800; font-size: 14px; letter-spacing: -0.02em;
+    }
+    header .title {
+      font-size: 17px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.015em; line-height: 1.2;
+    }
+    header .title small {
+      display: block; font-size: 13px; font-weight: 500;
+      color: var(--text-muted); margin-top: 3px; letter-spacing: 0;
+    }
+    header .stats {
+      display: flex; gap: 26px; font-size: 13px; color: var(--text-muted);
+      font-weight: 500; letter-spacing: 0.01em;
+    }
+    header .stats span { display: inline-flex; align-items: baseline; gap: 6px; }
+    header .stats b {
+      color: var(--text); font-weight: 800; font-size: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+    header a.back {
+      font-size: 13px; color: var(--brand); text-decoration: none;
+      font-weight: 600; letter-spacing: 0.01em;
+      padding: 8px 14px; border-radius: var(--radius-sm);
+      transition: background 120ms ease;
+    }
+    header a.back:hover { background: var(--brand-subtle); }
+
+    /* ── Layout ───────────────────────────────────────── */
+    main {
+      display: grid;
+      grid-template-columns: 300px 1fr 360px;
+      height: calc(100vh - 68px);
+      min-height: 0;
+    }
+    main > * { min-height: 0; height: 100%; }
+
+    .panel {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 20px 18px 24px;
+      overflow-y: auto;
+    }
+    .panel.right {
+      border-right: 0;
+      border-left: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    /* Custom scrollbar */
+    .panel::-webkit-scrollbar { width: 10px; }
+    .panel::-webkit-scrollbar-track { background: transparent; }
+    .panel::-webkit-scrollbar-thumb {
+      background: var(--border); border-radius: 10px; border: 2px solid var(--surface);
+    }
+    .panel::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+    .panel h3 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-subtle); margin-bottom: 10px;
+    }
+    .panel h3:not(:first-child) { margin-top: 22px; }
+
+    /* ── Inputs ───────────────────────────────────────── */
+    .panel input[type="search"],
+    .panel select {
+      width: 100%; padding: 10px 12px; font-size: 14px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--brand-tint-bg); color: var(--text);
+      font-family: inherit; font-weight: 500;
+      transition: all 120ms ease;
+    }
+    .panel input[type="search"]::placeholder { color: var(--text-subtle); }
+    .panel input[type="search"]:focus,
+    .panel select:focus {
+      outline: none; border-color: var(--brand);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .panel select {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%234A5769' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+    }
+
+    /* ── Category checkboxes ───────────────────────────── */
+    .cat-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 10px; border-radius: var(--radius-sm);
+      cursor: pointer; user-select: none;
+      transition: background 120ms ease;
+    }
+    .cat-row:hover { background: var(--surface-hover); }
+    .cat-row input {
+      width: 15px; height: 15px; accent-color: var(--brand); cursor: pointer;
+    }
+    .cat-row .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.6), 0 1px 2px rgba(15,21,32,0.15);
+    }
+    .cat-row .label {
+      flex: 1; font-size: 14px; color: var(--text); font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .cat-row .count {
+      font-size: 12px; color: var(--text-muted);
+      background: var(--surface-2);
+      padding: 2px 8px; border-radius: 10px;
+      font-weight: 700; font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Sliders ──────────────────────────────────────── */
+    .slider-group { display: grid; gap: 14px; }
+    .slider-row { font-size: 13px; color: var(--text-muted); }
+    .slider-row .top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .slider-row .top .lbl {
+      font-weight: 600; color: var(--text-2); font-size: 13px;
+      letter-spacing: -0.005em;
+    }
+    .slider-row .top .val {
+      font-variant-numeric: tabular-nums; font-weight: 800;
+      color: var(--brand); font-size: 13px;
+    }
+    .slider-row input[type="range"] {
+      width: 100%; accent-color: var(--brand); cursor: pointer;
+    }
+
+    /* ── Toggles ──────────────────────────────────────── */
+    .toggle {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 10px; border-radius: var(--radius-sm);
+      cursor: pointer; user-select: none;
+      font-size: 14px; color: var(--text); font-weight: 600;
+      letter-spacing: -0.005em;
+      transition: background 120ms ease;
+    }
+    .toggle:hover { background: var(--surface-hover); }
+    .toggle input {
+      width: 15px; height: 15px; accent-color: var(--brand); cursor: pointer;
+    }
+
+    /* ── Buttons ──────────────────────────────────────── */
+    .btn-row { display: flex; gap: 8px; margin-top: 12px; }
+    .btn {
+      flex: 1; padding: 9px 12px; font-size: 13px; font-weight: 700;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface); color: var(--text);
+      cursor: pointer; font-family: inherit;
+      letter-spacing: 0.01em;
+      transition: all 120ms ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn.primary {
+      background: var(--brand); color: #fff; border-color: var(--brand);
+      box-shadow: 0 1px 3px rgba(37,99,235,0.35), 0 0 0 1px rgba(37,99,235,0.15);
+    }
+    .btn.primary:hover {
+      background: var(--brand-2); border-color: var(--brand-2);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.35), 0 0 0 1px rgba(37,99,235,0.2);
+    }
+
+    /* ── Graph canvas ─────────────────────────────────── */
+    #graph {
+      background:
+        radial-gradient(ellipse 1000px 700px at 50% 40%, rgba(37,99,235,0.05) 0%, transparent 70%),
+        var(--bg);
+      position: relative; width: 100%; height: 100%; min-height: 0;
+    }
+    #graph .legend {
+      position: absolute; bottom: 18px; left: 18px;
+      background: rgba(250,251,253,0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px; font-size: 13px; color: var(--text-muted);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    #graph .legend b {
+      color: var(--text); font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    #graph .shortcut-hint {
+      position: absolute; bottom: 18px; right: 18px;
+      font-size: 12px; color: var(--text-muted);
+      background: rgba(250,251,253,0.92);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      padding: 7px 12px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex; gap: 10px; align-items: center;
+      font-weight: 500;
+    }
+    #graph .shortcut-hint kbd {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1px 6px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 11px; font-weight: 600; color: var(--text-2);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    /* ── Right panel: detail + hubs ───────────────────── */
+    .detail h2 {
+      font-size: 20px; font-weight: 800; color: var(--text);
+      margin-bottom: 8px; line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .detail .tag {
+      display: inline-block; font-size: 11px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 5px; margin-bottom: 16px;
+    }
+    .detail p.summary {
+      font-size: 14px; color: var(--text-2); line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .detail .meta {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 20px; padding: 8px 10px;
+      background: var(--surface-2); border-radius: var(--radius-sm);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      letter-spacing: 0.01em;
+    }
+    .detail .links h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-subtle);
+      margin-bottom: 8px; margin-top: 14px;
+    }
+    .detail .links ul { list-style: none; margin-bottom: 10px; }
+    .detail .links li {
+      padding: 7px 10px; border-radius: var(--radius-sm);
+      cursor: pointer; font-size: 13px; color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 500;
+      transition: background 100ms ease;
+    }
+    .detail .links li:hover { background: var(--surface-hover); }
+    .detail .links li .dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.6);
+    }
+    .detail .back-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--brand);
+      cursor: pointer; margin-bottom: 14px; font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .detail .back-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Hubs list */
+    .hubs-intro h3 {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-subtle); margin-bottom: 6px;
+    }
+    .hubs-intro p {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 14px;
+      line-height: 1.55;
+    }
+    .hubs { list-style: none; }
+    .hubs li {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      cursor: pointer; font-size: 13px; color: var(--text);
+      font-weight: 500;
+      transition: background 100ms ease;
+    }
+    .hubs li:hover { background: var(--surface-hover); }
+    .hubs .rank {
+      font-size: 11px; color: var(--text-subtle); font-weight: 800;
+      min-width: 20px; text-align: right; font-variant-numeric: tabular-nums;
+    }
+    .hubs .dot {
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.6), 0 1px 2px rgba(15,21,32,0.1);
+    }
+    .hubs .label { flex: 1; font-weight: 600; letter-spacing: -0.005em; }
+    .hubs .degree {
+      font-size: 11px; font-weight: 800; color: var(--brand);
+      background: var(--brand-subtle);
+      padding: 2px 9px; border-radius: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tip {
+      font-size: 12px; color: var(--text-muted); margin-top: 18px;
+      padding: 12px 14px;
+      background: var(--brand-tint-bg);
+      border: 1px solid rgba(37,99,235,0.08);
+      border-radius: var(--radius-sm);
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="mark">W</div>
+      <div class="title">
+        AICR SPM Wiki — Knowledge Graph
+        <small>Every node a compiled page. Every edge a wikilink.</small>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <a class="back" href="/kpmg">← Back to demos</a>
+  </header>
+  <main>
+    <aside class="panel left">
+      <h3>Search</h3>
+      <input id="search" type="search" placeholder="Find a node…  (press /)" autocomplete="off" />
+
+      <h3>Categories</h3>
+      <div id="categories"></div>
+
+      <h3>Min Connections</h3>
+      <div class="slider-row">
+        <div class="top"><span class="lbl">Hide nodes with &lt; N links</span><span class="val" id="minDegreeVal">0</span></div>
+        <input id="minDegree" type="range" min="0" max="20" value="0" step="1" />
+      </div>
+
+      <h3>Node Shape</h3>
+      <select id="shape">
+        <option value="dot" selected>Dot</option>
+        <option value="diamond">Diamond</option>
+        <option value="hexagon">Hexagon</option>
+        <option value="square">Square</option>
+        <option value="triangle">Triangle</option>
+        <option value="star">Star</option>
+      </select>
+
+      <h3>Physics</h3>
+      <div class="slider-group">
+        <div class="slider-row">
+          <div class="top"><span class="lbl">Repulsion</span><span class="val" id="gravityVal">-40</span></div>
+          <input id="gravity" type="range" min="-200" max="-5" value="-40" step="5" />
+        </div>
+        <div class="slider-row">
+          <div class="top"><span class="lbl">Spring length</span><span class="val" id="springVal">110</span></div>
+          <input id="spring" type="range" min="40" max="300" value="110" step="5" />
+        </div>
+        <div class="slider-row">
+          <div class="top"><span class="lbl">Settle speed</span><span class="val" id="dampVal">0.50</span></div>
+          <input id="damp" type="range" min="0.1" max="1" value="0.5" step="0.05" />
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="btnFreeze">Freeze</button>
+        <button class="btn primary" id="btnRelayout">Relayout</button>
+      </div>
+
+      <h3>Display</h3>
+      <label class="toggle">
+        <input id="labels" type="checkbox" checked />
+        Show labels
+      </label>
+      <label class="toggle">
+        <input id="dimOthers" type="checkbox" checked />
+        Dim non-connected on hover
+      </label>
+    </aside>
+
+    <section id="graph">
+      <div class="legend">
+        <b id="visibleNodes">0</b> nodes · <b id="visibleEdges">0</b> edges visible
+      </div>
+      <div class="shortcut-hint">
+        <span><kbd>/</kbd> search</span>
+        <span><kbd>esc</kbd> clear</span>
+        <span><kbd>dbl</kbd> fit</span>
+        <span><kbd>scroll</kbd> zoom</span>
+      </div>
+    </section>
+
+    <aside class="panel right">
+      <div id="detail"></div>
+    </aside>
+  </main>
+
+<script>
+(async function () {
+  function h(tag, props, ...children) {
+    const el = document.createElement(tag);
+    if (props) {
+      for (const [k, v] of Object.entries(props)) {
+        if (v == null || v === false) continue;
+        if (k === "class") el.className = v;
+        else if (k === "text") el.textContent = v;
+        else if (k === "style") Object.assign(el.style, v);
+        else if (k.startsWith("data-")) el.setAttribute(k, v);
+        else if (k === "onclick") el.addEventListener("click", v);
+        else el[k] = v;
+      }
+    }
+    children.flat().forEach(c => {
+      if (c == null || c === false) return;
+      el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    });
+    return el;
+  }
+  function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+  const res = await fetch("/wiki-graph-data.json");
+  const data = await res.json();
+
+  const nodesById = Object.fromEntries(data.nodes.map(n => [n.id, n]));
+
+  // Adjacency for hover highlighting
+  const neighbors = new Map(data.nodes.map(n => [n.id, new Set()]));
+  data.edges.forEach(e => {
+    neighbors.get(e.from)?.add(e.to);
+    neighbors.get(e.to)?.add(e.from);
+  });
+
+  const vNodes = new vis.DataSet(data.nodes.map(n => ({
+    id: n.id,
+    label: n.label,
+    color: { background: n.color, border: n.color, highlight: { background: n.color, border: "#0F1520" } },
+    font: { size: 12, color: "#0F1520", face: 'Inter, "SF Pro Text", system-ui', bold: false, strokeWidth: 3, strokeColor: "rgba(244,246,250,0.9)" },
+    size: 10 + Math.min(n.degree, 30) * 0.8,
+    shape: "dot",
+    borderWidth: 1,
+    category: n.category,
+    degree: n.degree,
+    baseColor: n.color,
+  })));
+  const vEdges = new vis.DataSet(data.edges.map((e, i) => ({
+    id: "e" + i, from: e.from, to: e.to,
+    color: { color: "rgba(188,198,218,0.55)", highlight: "#2563EB" },
+    width: 0.8, smooth: false,
+    arrows: { to: { enabled: true, scaleFactor: 0.32 } },
+  })));
+
+  const physics = {
+    enabled: true,
+    solver: "forceAtlas2Based",
+    forceAtlas2Based: {
+      gravitationalConstant: -40, centralGravity: 0.005,
+      springLength: 110, springConstant: 0.08, damping: 0.5,
+    },
+    stabilization: { iterations: 200, updateInterval: 25 },
+    maxVelocity: 50,
+  };
+
+  const network = new vis.Network(document.getElementById("graph"), { nodes: vNodes, edges: vEdges }, {
+    layout: { improvedLayout: false },
+    physics,
+    interaction: { hover: true, tooltipDelay: 200, zoomView: true, dragView: true, multiselect: false },
+    nodes: { shape: "dot" },
+  });
+
+  // ── Stats ─────────────────────────────────────────
+  const stats = document.getElementById("stats");
+  clear(stats);
+  stats.appendChild(h("span", null, h("b", { text: String(data.totals.nodes) }), " nodes"));
+  stats.appendChild(h("span", null, h("b", { text: String(data.totals.edges) }), " edges"));
+  stats.appendChild(h("span", null, h("b", { text: String(data.categories.length) }), " categories"));
+
+  // ── Categories ────────────────────────────────────
+  const catBox = document.getElementById("categories");
+  const activeCats = new Set(data.categories.map(c => c.id));
+  data.categories.forEach(c => {
+    const input = h("input", { type: "checkbox", checked: true, "data-cat": c.id });
+    const row = h(
+      "label", { class: "cat-row" },
+      input,
+      h("span", { class: "dot", style: { background: c.color } }),
+      h("span", { class: "label", text: c.label }),
+      h("span", { class: "count", text: String(c.count) }),
+    );
+    catBox.appendChild(row);
+  });
+
+  function applyFilters() {
+    const q = document.getElementById("search").value.trim().toLowerCase();
+    const minDeg = Number(document.getElementById("minDegree").value);
+    const visibleIds = new Set();
+    data.nodes.forEach(n => {
+      if (!activeCats.has(n.category)) return;
+      if (n.degree < minDeg) return;
+      if (q && !n.label.toLowerCase().includes(q) && !n.id.toLowerCase().includes(q)) return;
+      visibleIds.add(n.id);
+    });
+    vNodes.forEach(n => vNodes.update({ id: n.id, hidden: !visibleIds.has(n.id) }));
+    let visEdge = 0;
+    vEdges.forEach(e => {
+      const show = visibleIds.has(e.from) && visibleIds.has(e.to);
+      vEdges.update({ id: e.id, hidden: !show });
+      if (show) visEdge++;
+    });
+    document.getElementById("visibleNodes").textContent = String(visibleIds.size);
+    document.getElementById("visibleEdges").textContent = String(visEdge);
+  }
+  applyFilters();
+
+  // ── Controls ─────────────────────────────────────
+  catBox.addEventListener("change", (e) => {
+    const cat = e.target.dataset.cat;
+    if (e.target.checked) activeCats.add(cat); else activeCats.delete(cat);
+    applyFilters();
+  });
+  document.getElementById("search").addEventListener("input", applyFilters);
+  document.getElementById("minDegree").addEventListener("input", (e) => {
+    document.getElementById("minDegreeVal").textContent = e.target.value;
+    applyFilters();
+  });
+  document.getElementById("labels").addEventListener("change", (e) => {
+    const size = e.target.checked ? 12 : 0;
+    vNodes.forEach(n => vNodes.update({ id: n.id, font: { size, color: "#0F1520", face: 'Inter, "SF Pro Text", system-ui', strokeWidth: 3, strokeColor: "rgba(244,246,250,0.9)" } }));
+  });
+  document.getElementById("shape").addEventListener("change", (e) => {
+    const shape = e.target.value;
+    vNodes.forEach(n => vNodes.update({ id: n.id, shape }));
+  });
+  function updatePhysics() {
+    physics.forceAtlas2Based.gravitationalConstant = Number(document.getElementById("gravity").value);
+    physics.forceAtlas2Based.springLength = Number(document.getElementById("spring").value);
+    physics.forceAtlas2Based.damping = Number(document.getElementById("damp").value);
+    network.setOptions({ physics });
+  }
+  ["gravity", "spring", "damp"].forEach(id => {
+    document.getElementById(id).addEventListener("input", (e) => {
+      const formatted = id === "damp" ? Number(e.target.value).toFixed(2) : e.target.value;
+      document.getElementById(id + "Val").textContent = formatted;
+      updatePhysics();
+    });
+  });
+  let frozen = false;
+  document.getElementById("btnFreeze").addEventListener("click", () => {
+    frozen = !frozen;
+    network.setOptions({ physics: { ...physics, enabled: !frozen } });
+    document.getElementById("btnFreeze").textContent = frozen ? "Unfreeze" : "Freeze";
+  });
+  document.getElementById("btnRelayout").addEventListener("click", () => {
+    frozen = false;
+    document.getElementById("btnFreeze").textContent = "Freeze";
+    network.setOptions({ physics: { ...physics, enabled: true } });
+    network.stabilize(200);
+  });
+
+  // ── Hover highlighting ──────────────────────────
+  const dimNonConnected = { value: true };
+  document.getElementById("dimOthers").addEventListener("change", (e) => {
+    dimNonConnected.value = e.target.checked;
+    resetColors();
+  });
+  function applyHighlight(rootId) {
+    if (!dimNonConnected.value) return;
+    const keep = new Set([rootId, ...(neighbors.get(rootId) ?? [])]);
+    vNodes.forEach(n => {
+      if (keep.has(n.id)) {
+        vNodes.update({ id: n.id, color: { background: n.baseColor, border: n.baseColor }, opacity: 1 });
+      } else {
+        vNodes.update({ id: n.id, color: { background: "#DDE3EE", border: "#BCC6DA" }, opacity: 0.22 });
+      }
+    });
+    vEdges.forEach(e => {
+      const on = e.from === rootId || e.to === rootId;
+      vEdges.update({ id: e.id, color: { color: on ? "#2563EB" : "rgba(188,198,218,0.25)" }, width: on ? 1.8 : 0.5 });
+    });
+  }
+  function resetColors() {
+    vNodes.forEach(n => {
+      vNodes.update({ id: n.id, color: { background: n.baseColor, border: n.baseColor }, opacity: 1 });
+    });
+    vEdges.forEach(e => {
+      vEdges.update({ id: e.id, color: { color: "rgba(188,198,218,0.55)" }, width: 0.8 });
+    });
+  }
+  network.on("hoverNode", (p) => applyHighlight(p.node));
+  network.on("blurNode", resetColors);
+
+  // ── Right-panel: Top Hubs + Detail ─────────────
+  function renderTopHubs() {
+    const detail = document.getElementById("detail");
+    clear(detail);
+
+    const top = [...data.nodes].sort((a, b) => b.degree - a.degree).slice(0, 25);
+    const intro = h("div", { class: "hubs-intro" });
+    intro.appendChild(h("h3", { text: "Top Hubs" }));
+    intro.appendChild(h("p", { text: "The 25 most-connected pages — the load-bearing walls of the wiki. Click to explore." }));
+    detail.appendChild(intro);
+
+    const ul = h("ul", { class: "hubs" });
+    top.forEach((n, i) => {
+      const li = h(
+        "li", { onclick: () => focusNode(n.id) },
+        h("span", { class: "rank", text: String(i + 1) }),
+        h("span", { class: "dot", style: { background: n.color } }),
+        h("span", { class: "label", text: n.label }),
+        h("span", { class: "degree", text: String(n.degree) }),
+      );
+      ul.appendChild(li);
+    });
+    detail.appendChild(ul);
+
+    detail.appendChild(h("div", {
+      class: "tip",
+      text: "Tip: Select any node in the graph to see its full summary and every page it links to. Press / to search.",
+    }));
+  }
+
+  function focusNode(id) {
+    network.selectNodes([id]);
+    network.focus(id, { scale: 1.3, animation: { duration: 400, easingFunction: "easeInOutQuad" } });
+    renderDetail(id);
+    applyHighlight(id);
+  }
+
+  function buildLinkList(title, arr) {
+    if (!arr.length) return null;
+    const wrap = document.createDocumentFragment();
+    wrap.appendChild(h("h4", { text: title }));
+    const ul = h("ul");
+    arr.slice(0, 60).forEach(n => {
+      const li = h(
+        "li", { "data-id": n.id, onclick: () => focusNode(n.id) },
+        h("span", { class: "dot", style: { background: n.color } }),
+        n.label,
+      );
+      ul.appendChild(li);
+    });
+    if (arr.length > 60) {
+      ul.appendChild(h("li", { style: { color: "var(--text-muted)" }, text: `+ ${arr.length - 60} more` }));
+    }
+    wrap.appendChild(ul);
+    return wrap;
+  }
+
+  function renderDetail(nodeId) {
+    const n = nodesById[nodeId];
+    if (!n) return;
+    const outgoing = data.edges.filter(e => e.from === nodeId).map(e => nodesById[e.to]).filter(Boolean);
+    const incoming = data.edges.filter(e => e.to === nodeId).map(e => nodesById[e.from]).filter(Boolean);
+
+    const detail = document.getElementById("detail");
+    clear(detail);
+    const wrap = h("div", { class: "detail" });
+    wrap.appendChild(h("span", { class: "back-link", text: "← Back to top hubs", onclick: () => { resetColors(); network.unselectAll(); renderTopHubs(); } }));
+    wrap.appendChild(h("h2", { text: n.label }));
+    wrap.appendChild(h("span", { class: "tag", style: { background: n.color + "22", color: n.color }, text: n.category }));
+    wrap.appendChild(h("p", { class: "summary", text: n.summary || "No summary available." }));
+    wrap.appendChild(h("div", { class: "meta", text: `${n.path} · ${n.degree} connection${n.degree === 1 ? "" : "s"}` }));
+
+    const links = h("div", { class: "links" });
+    const out = buildLinkList("Links out →", outgoing);
+    const inb = buildLinkList("← Linked from", incoming);
+    if (out) links.appendChild(out);
+    if (inb) links.appendChild(inb);
+    wrap.appendChild(links);
+    detail.appendChild(wrap);
+  }
+
+  network.on("selectNode", (p) => {
+    const id = p.nodes[0];
+    renderDetail(id);
+    applyHighlight(id);
+  });
+  network.on("deselectNode", () => { resetColors(); renderTopHubs(); });
+  network.on("doubleClick", () => network.fit({ animation: { duration: 500, easingFunction: "easeInOutQuad" } }));
+
+  // ── Keyboard shortcuts ─────────────────────────
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+      e.preventDefault();
+      document.getElementById("search").focus();
+    } else if (e.key === "Escape") {
+      const s = document.getElementById("search");
+      if (s.value) { s.value = ""; applyFilters(); }
+      network.unselectAll();
+      resetColors();
+      renderTopHubs();
+    }
+  });
+
+  renderTopHubs();
+})();
+</script>
+</body>
+</html>

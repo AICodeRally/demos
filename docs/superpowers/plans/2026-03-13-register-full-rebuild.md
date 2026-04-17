@@ -767,7 +767,7 @@ This is the centerpiece page. It wraps the POS UI in `TabletFrame` and wires all
 - [ ] **Step 1: Rewrite POS Terminal page**
 
 The page is `'use client'` and:
-1. Imports `TabletFrame` from `@/components/demos/routeiq-route/TabletFrame` — **MUST be wrapped in TabletFrame**
+1. Imports `TabletFrame` from `@/components/demos/route/TabletFrame` — **MUST be wrapped in TabletFrame**
 2. Uses `useRegisterTheme()` for dark/light
 3. Manages state: `cartItems`, `activeTab` (Lines/Payments/Rewards), `showRewards`, `d365Events`, `closeSaleOpen`
 4. Layout: Top bar (Summit Sleep | Store | Terminal | D365 Connected) → Split panel (ShowroomCatalog 40% | SaleTicket+tabs 60%) → Bottom bar (New Sale / Hold / Close Sale)

@@ -18,11 +18,11 @@ This mismatch will slow generation quality and increase manual cleanup when crea
 - Demo apps under `app/(demos)`:
   - 12 demo roots detected
   - 11 include `demo.config.ts`
-  - 1 (`routeiq-route`) is intentionally standalone and does not use shell config
+  - 1 (`route`) is intentionally standalone and does not use shell config
 - Shell systems currently in use:
   - `DemoShell`: most demos
   - `SpmShell`: `quota`
-  - standalone custom layout: `routeiq-route`
+  - standalone custom layout: `route`
 - Page volume varies significantly by demo (1 to 35 pages).
 
 ## Findings
@@ -48,7 +48,7 @@ Evidence:
 - `components/demo-shell/*`
 - `components/spm-shell/*`
 - `app/(demos)/quota/layout.tsx` (`SpmShell`)
-- `app/(demos)/routeiq-route/layout.tsx` (custom, no shell)
+- `app/(demos)/route/layout.tsx` (custom, no shell)
 
 Impact:
 - New scaffold generation has no authoritative rule for selecting shell type.

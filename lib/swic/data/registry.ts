@@ -6,7 +6,6 @@ import { PREMIER_MOTORS_CONFIG, PREMIER_CATALOG, PREMIER_REPS, PREMIER_PERIODS }
 import { SUMMIT_SHIELD_CONFIG, SUMMIT_CATALOG, SUMMIT_REPS, SUMMIT_PERIODS } from './summit-shield';
 import { CLOUDSTACK_CONFIG, CLOUDSTACK_CATALOG, CLOUDSTACK_REPS, CLOUDSTACK_PERIODS } from './cloudstack-ai';
 import { MEDVANCE_CONFIG, MEDVANCE_CATALOG, MEDVANCE_REPS, MEDVANCE_PERIODS } from './medvance';
-import { ROYAL_CONFIG, ROYAL_CATALOG, ROYAL_REPS, ROYAL_PERIODS } from './royal-spirits';
 
 /* ── Client Bundle ──────────────────────────────────────── */
 
@@ -55,12 +54,6 @@ export const CLIENT_REGISTRY: Record<string, ClientBundle> = {
     catalog: MEDVANCE_CATALOG,
     reps: MEDVANCE_REPS,
     periods: MEDVANCE_PERIODS,
-  },
-  'royal-spirits': {
-    config: ROYAL_CONFIG,
-    catalog: ROYAL_CATALOG,
-    reps: ROYAL_REPS,
-    periods: ROYAL_PERIODS,
   },
 };
 
