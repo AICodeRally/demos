@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import { Database, Cpu, BarChart3, CheckCircle, Clock, Zap, RefreshCw, Send, AlertTriangle, TrendingUp } from 'lucide-react';
 
 /* ── Pipeline Stage Data ─────────────────────────────────── */
@@ -176,35 +177,46 @@ function FlowingDots({ colorRight, colorLeft }: { colorRight: string; colorLeft:
 /* ── Main Page ───────────────────────────────────────────── */
 
 export default function D365IntegrationPage() {
+  const { provider: icm } = useIcm();
+  const substIcm = useMemo(() => (s: string) => s.replace(/Varicent/g, icm.name), [icm]);
+  const stages = useMemo(() => STAGES.map((s) => ({
+    ...s, label: substIcm(s.label), subtitle: substIcm(s.subtitle),
+  })), [substIcm]);
+  const details = useMemo(() => DETAILS.map((d) => ({
+    ...d, title: substIcm(d.title), items: d.items.map(substIcm),
+  })), [substIcm]);
+  const eventsSource = useMemo(() => MOCK_EVENTS.map((e) => ({
+    ...e, type: substIcm(e.type), desc: substIcm(e.desc),
+  })), [substIcm]);
   const [events, setEvents] = useState<typeof MOCK_EVENTS>([]);
   const [eventIndex, setEventIndex] = useState(0);
 
   // Seed initial events then add one every 4 seconds
   useEffect(() => {
-    setEvents(MOCK_EVENTS.slice(0, 3));
+    setEvents(eventsSource.slice(0, 3));
     setEventIndex(3);
-  }, []);
+  }, [eventsSource]);
 
   useEffect(() => {
-    if (eventIndex >= MOCK_EVENTS.length && eventIndex >= 3) return;
+    if (eventIndex >= eventsSource.length && eventIndex >= 3) return;
     const timer = setInterval(() => {
       setEventIndex((prev) => {
         const next = prev + 1;
-        const idx = next % MOCK_EVENTS.length;
+        const idx = next % eventsSource.length;
         setEvents((curr) => {
-          const nextEvents = [MOCK_EVENTS[idx], ...curr];
+          const nextEvents = [eventsSource[idx], ...curr];
           return nextEvents.slice(0, 5);
         });
         return next;
       });
     }, 4000);
     return () => clearInterval(timer);
-  }, [eventIndex]);
+  }, [eventIndex, eventsSource]);
 
   return (
     <RegisterPage
       title="The Data Pipeline"
-      subtitle="D365 \u2192 REGISTER \u2192 Varicent"
+      subtitle={`D365 \u2192 REGISTER \u2192 ${icm.name}`}
       accentColor="#F59E0B"
     >
       <style>{KEYFRAMES}</style>
@@ -212,7 +224,7 @@ export default function D365IntegrationPage() {
       {/* ── Hero: Animated Pipeline Visualization ──────────── */}
       <section style={{ marginBottom: 40 }}>
         <div className="flex items-center justify-center gap-0" style={{ overflowX: 'auto', paddingBottom: 8 }}>
-          {STAGES.map((stage, i) => {
+          {stages.map((stage, i) => {
             const Icon = stage.icon;
             const isCenter = i === 1;
             return (
@@ -283,8 +295,8 @@ export default function D365IntegrationPage() {
                 </div>
 
                 {/* Flowing dots between stages */}
-                {i < STAGES.length - 1 && (
-                  <FlowingDots colorRight={STAGES[i + 1].color} colorLeft={stage.color} />
+                {i < stages.length - 1 && (
+                  <FlowingDots colorRight={stages[i + 1].color} colorLeft={stage.color} />
                 )}
               </div>
             );
@@ -302,7 +314,7 @@ export default function D365IntegrationPage() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {DETAILS.map((col, colIdx) => (
+          {details.map((col, colIdx) => (
             <div
               key={col.title}
               className="register-card"
@@ -459,7 +471,7 @@ export default function D365IntegrationPage() {
       <AIInsightCard>
         Pipeline processed 2,847 transactions this month with 99.7% uptime.
         3 transactions flagged for manual review (split credit edge cases).
-        Average D365-to-Varicent latency: 14 hours &mdash; recommend enabling real-time
+        Average D365-to-{icm.name} latency: 14 hours &mdash; recommend enabling real-time
         sync for Flagship stores.
       </AIInsightCard>
     </RegisterPage>

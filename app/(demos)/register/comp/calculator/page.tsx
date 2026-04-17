@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import { Award, Zap, Target, Plus, X, GitCompareArrows, ArrowLeft, Beaker } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { SAMPLE_PERIODS } from '@/data/register/summit-sleep';
@@ -171,6 +172,7 @@ function DesignerBreadcrumb() {
 /* ── Main Page ────────────────────────────────────────────── */
 
 export default function CalculatorPage() {
+  const { provider: icm } = useIcm();
   const caseyBase = SAMPLE_PERIODS['rep-casey'].revenue;
   const [revenueSlider, setRevenueSlider] = useState(caseyBase);
   const [liveEarnings, setLiveEarnings] = useState(3389.22);
@@ -573,7 +575,7 @@ export default function CalculatorPage() {
 
           <div className="flex justify-center gap-8">
             <div style={{ textAlign: 'center' }}>
-              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>vs Varicent</p>
+              <p className="register-meta-label" style={{ margin: '0 0 2px' }}>vs {icm.shortName}</p>
               <p className="text-lg font-extrabold tabular-nums" style={{ margin: 0, color: liveEarnings < 3847 ? '#F59E0B' : ACCENT }}>
                 {liveEarnings < 3847 ? '-' : '+'}{fmtFull(Math.abs(liveEarnings - 3847))}
               </p>

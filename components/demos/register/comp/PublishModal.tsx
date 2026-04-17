@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { X, Check, Loader2, Radio, Tablet, Monitor, Database, CheckCircle2, ArrowRight } from 'lucide-react';
 import { PUBLISH_TARGETS, DRAFT_DIFF, type PublishTargetId, type PublishTarget } from '@/data/register/comp-data';
+import { useIcm } from '@/components/demos/register/IcmContext';
 
 type Phase = 'confirm' | 'publishing' | 'done';
 type TargetState = 'idle' | 'connecting' | 'streaming' | 'done';
@@ -15,11 +16,28 @@ const TARGET_ICONS: Record<PublishTargetId, typeof Database> = {
 };
 
 export function PublishModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { provider } = useIcm();
   const [phase, setPhase] = useState<Phase>('confirm');
   const [states, setStates] = useState<Record<PublishTargetId, TargetState>>({
     varicent: 'idle', tablets: 'idle', register: 'idle',
   });
   const [log, setLog] = useState<string[]>([]);
+
+  /* Rewrite the first target (the ICM) based on selection. */
+  const targets: PublishTarget[] = useMemo(() => {
+    return PUBLISH_TARGETS.map((t) =>
+      t.id === 'varicent'
+        ? {
+            ...t,
+            name: provider.name,
+            role: `System of record — ${provider.positioning.toLowerCase()}`,
+            protocol: provider.protocol,
+            endpoint: `https://${provider.endpointHost}/v2/plans/{planId}/rules`,
+            avgLatencyMs: provider.avgLatencyMs,
+          }
+        : t,
+    );
+  }, [provider]);
 
   useEffect(() => {
     if (!open) {
@@ -43,7 +61,7 @@ export function PublishModal({ open, onClose }: { open: boolean; onClose: () => 
     await sleep(400);
     push(`Envelope signed with tenant key skm_prod_5a8e`);
 
-    const parallel = PUBLISH_TARGETS.map(async (t, i) => {
+    const parallel = targets.map(async (t, i) => {
       await sleep(120 + i * 80);
       setStates((s) => ({ ...s, [t.id]: 'connecting' }));
       push(`→ ${t.name} — opening ${t.protocol.toLowerCase()}…`);
@@ -97,7 +115,7 @@ export function PublishModal({ open, onClose }: { open: boolean; onClose: () => 
               Publish approved ruleset
             </div>
             <div style={{ fontSize: '0.88rem', color: 'var(--register-text-muted)', marginTop: 3 }}>
-              {DRAFT_DIFF.length} deltas → Varicent, {PUBLISH_TARGETS[1].recipients} tablets, {PUBLISH_TARGETS[2].recipients} consoles
+              {DRAFT_DIFF.length} deltas → {provider.name}, {targets[1].recipients} tablets, {targets[2].recipients} consoles
             </div>
           </div>
           <button
@@ -120,7 +138,7 @@ export function PublishModal({ open, onClose }: { open: boolean; onClose: () => 
         <div style={{ padding: '20px 22px', overflowY: 'auto', flex: 1 }}>
           {/* Target cards */}
           <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: 18 }}>
-            {PUBLISH_TARGETS.map((t) => (
+            {targets.map((t) => (
               <TargetCard key={t.id} target={t} state={states[t.id]} />
             ))}
           </div>
@@ -254,7 +272,7 @@ function ConfirmSummary() {
         <li><strong style={{ color: 'var(--register-danger)' }}>{removed} removed</strong> rules</li>
       </ul>
       <div style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)', marginTop: 10 }}>
-        Rules go live immediately on tablet calculators. Next Varicent payroll run picks up the updated ruleset.
+        Rules go live immediately on tablet calculators. Next payroll run on the ICM picks up the updated ruleset.
       </div>
     </div>
   );

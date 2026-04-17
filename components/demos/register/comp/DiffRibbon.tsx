@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Plus, Minus, RefreshCcw, GitBranch } from 'lucide-react';
 import { DRAFT_DIFF, APPROVAL_TRAIL, type RuleDelta } from '@/data/register/comp-data';
+import { useIcm } from '@/components/demos/register/IcmContext';
 
 export function DiffRibbon({ onPublish }: { onPublish?: () => void }) {
+  const { provider } = useIcm();
   const [expanded, setExpanded] = useState(false);
   const counts = DRAFT_DIFF.reduce(
     (acc, d) => { acc[d.kind]++; return acc; },
@@ -93,7 +95,7 @@ export function DiffRibbon({ onPublish }: { onPublish?: () => void }) {
             letterSpacing: '0.02em',
             boxShadow: readyToPublish ? '0 2px 8px rgba(5,150,105,0.24)' : 'none',
           }}
-          title={readyToPublish ? 'Fan out approved rules to Varicent, tablets, and REGISTER consoles' : `${pendingApprovals} approvals pending`}
+          title={readyToPublish ? `Fan out approved rules to ${provider.name}, tablets, and REGISTER consoles` : `${pendingApprovals} approvals pending`}
         >
           Publish
         </button>

@@ -2,8 +2,11 @@
 
 import { ArrowLeftRight, RefreshCw, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { VARICENT_SYNC } from '@/data/register/comp-data';
+import { useIcm } from '@/components/demos/register/IcmContext';
+import { IcmSelector } from '@/components/demos/register/IcmSelector';
 
 export function SyncBanner() {
+  const { provider } = useIcm();
   const s = VARICENT_SYNC;
   const drift = s.registerRuleCount - s.varicentRuleCount;
   const Icon = s.inSync ? CheckCircle2 : AlertCircle;
@@ -26,9 +29,9 @@ export function SyncBanner() {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <ArrowLeftRight size={18} style={{ color: 'var(--register-primary)' }} />
+        <ArrowLeftRight size={18} style={{ color: provider.color }} />
         <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--register-text)' }}>
-          Varicent
+          {provider.name}
         </span>
         <span style={{ fontSize: '0.82rem', color: 'var(--register-text-dim)' }}>⇄</span>
         <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--register-text)' }}>
@@ -48,7 +51,7 @@ export function SyncBanner() {
       </div>
 
       <div style={{ flex: 1, minWidth: 260, display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-        <Stat label="Varicent rules" value={String(s.varicentRuleCount)} />
+        <Stat label={`${provider.shortName} rules`} value={String(s.varicentRuleCount)} />
         <Stat label="REGISTER rules" value={String(s.registerRuleCount)} accent={drift !== 0 ? stateColor : undefined} />
         <Stat label="Last pull" value={formatShort(s.lastPullFromVaricent)} />
         <Stat label="Last push" value={formatShort(s.lastPushToVaricent)} />
@@ -63,6 +66,8 @@ export function SyncBanner() {
         </div>
       )}
 
+      <IcmSelector />
+
       <button
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
@@ -74,7 +79,7 @@ export function SyncBanner() {
         onClick={() => { /* noop demo */ }}
       >
         <RefreshCw size={13} />
-        Re-pull from Varicent
+        Re-pull from {provider.shortName}
       </button>
     </div>
   );
@@ -100,7 +105,6 @@ function Stat({ label, value, accent }: { label: string; value: string; accent?:
 }
 
 function formatShort(ts: string): string {
-  // "2026-03-11 2:30 PM" → "Mar 11 · 2:30 PM"
   const [date, ...rest] = ts.split(' ');
   const time = rest.join(' ');
   const [, m, d] = date.split('-');

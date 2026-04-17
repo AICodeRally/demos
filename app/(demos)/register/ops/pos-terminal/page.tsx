@@ -332,13 +332,19 @@ export default function POSTerminal() {
           <FloorPulseStrip />
 
           {/* ── Main Split ──────────────────────────── */}
+          {/* Motion + Coaching tabs go full-width — showroom is useless there */}
+          {(() => {
+            const fullWidthTab = activeTab === 'motion' || activeTab === 'coaching';
+            return (
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-            {/* Left: Showroom Catalog (40%) */}
-            <div style={{ width: '40%', borderRight: '1px solid var(--register-border)', display: 'flex', flexDirection: 'column' }}>
-              <ShowroomCatalog items={CATALOG_ITEMS} onAddItem={addItem} />
-            </div>
+            {/* Left: Showroom Catalog (40%) — hidden on full-width tabs */}
+            {!fullWidthTab && (
+              <div style={{ width: '40%', borderRight: '1px solid var(--register-border)', display: 'flex', flexDirection: 'column' }}>
+                <ShowroomCatalog items={CATALOG_ITEMS} onAddItem={addItem} />
+              </div>
+            )}
 
-            {/* Right: Tabs + Content (60%) */}
+            {/* Right: Tabs + Content (60% or 100%) */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
               {/* Tabs */}
               <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid var(--register-border)' }}>
@@ -544,6 +550,8 @@ export default function POSTerminal() {
               </div>
             </div>
           </div>
+            );
+          })()}
         </div>
       </TabletFrame>
     </div>

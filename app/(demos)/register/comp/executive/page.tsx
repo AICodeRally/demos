@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import {
   ORG_HIERARCHY,
   type OrgNode,
@@ -547,6 +548,7 @@ function SideBreakdownChart({
 
 export default function ExecutiveViewPage() {
   const router = useRouter();
+  const { provider: icm } = useIcm();
   const [cascade, setCascade] = useState<CascadeState>({ level: 'region' });
   const [mounted, setMounted] = useState(false);
 
@@ -712,7 +714,7 @@ export default function ExecutiveViewPage() {
           }}
         >
           <Radio size={14} color="var(--register-primary)" />
-          All rules fan out from REGISTER Plan Designer · Varicent + 214 tablets + 38 consoles in sync
+          All rules fan out from REGISTER Plan Designer · {icm.name} + 214 tablets + 38 consoles in sync
         </div>
       </div>
 
@@ -1006,7 +1008,7 @@ export default function ExecutiveViewPage() {
                       color: 'var(--register-text)',
                     }}
                   >
-                    {t.name}
+                    {t.id === 'varicent' ? icm.name : t.name}
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)' }}>
                     {detail}

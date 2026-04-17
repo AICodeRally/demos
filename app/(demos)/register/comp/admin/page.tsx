@@ -7,6 +7,7 @@ import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
 import { SyncBanner } from '@/components/demos/register/comp/SyncBanner';
 import { DiffRibbon } from '@/components/demos/register/comp/DiffRibbon';
 import { PublishModal } from '@/components/demos/register/comp/PublishModal';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import {
   ADMIN_PLANS, PUSH_HISTORY,
   type CompPlan, type CompTier, type PlanStatus,
@@ -450,6 +451,7 @@ export default function CompAdminPage() {
   const [pushComplete, setPushComplete] = useState(false);
   const [pulseGlow, setPulseGlow] = useState(true);
   const [publishOpen, setPublishOpen] = useState(false);
+  const { provider: icm } = useIcm();
 
   // Pulse the button glow
   useEffect(() => {
@@ -543,7 +545,7 @@ export default function CompAdminPage() {
       });
 
   return (
-    <RegisterPage title="Plan Designer" subtitle="Design comp rules, simulate impact — fan-out to Varicent, floor tablets, and REGISTER consoles" accentColor={ACCENT}>
+    <RegisterPage title="Plan Designer" subtitle="Design comp rules, simulate impact — fan-out to your ICM, floor tablets, and REGISTER consoles" accentColor={ACCENT}>
       <SyncBanner />
       <DiffRibbon onPublish={() => setPublishOpen(true)} />
       <PublishModal open={publishOpen} onClose={() => setPublishOpen(false)} />
@@ -1036,7 +1038,7 @@ export default function CompAdminPage() {
           <div className="register-card" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
               <Send size={15} color="#06B6D4" />
-              <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Push to Varicent</h3>
+              <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>Push to {icm.name}</h3>
             </div>
 
             {/* Push button — the crown jewel */}
@@ -1082,11 +1084,11 @@ export default function CompAdminPage() {
                       animation: 'spin 0.8s linear infinite',
                     }}
                   />
-                  Pushing to Varicent...
+                  Pushing to {icm.name}...
                 </span>
               ) : (
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                  <Send size={16} /> Push Changes to Varicent
+                  <Send size={16} /> Push Changes to {icm.name}
                 </span>
               )}
             </button>
@@ -1133,7 +1135,7 @@ export default function CompAdminPage() {
                 <PushEntry
                   timestamp="Just now"
                   who="You"
-                  what="Pushed threshold changes to Varicent"
+                  what={`Pushed threshold changes to ${icm.name}`}
                   status="pending"
                 />
               )}

@@ -121,7 +121,7 @@ const GOVERNANCE_LAYERS = [
 
 const IMPLEMENTATION = [
   { label: 'UAT & Testing', desc: 'Dedicated staging environment with isolated database branch per deployment. Full regression testing before go-live with automated quality gates.', color: '#8B5CF6' },
-  { label: 'Developer Training', desc: 'API documentation, integration guides, and sandbox environments. D365 connector reference implementations and Varicent sync playbooks.', color: '#06B6D4' },
+  { label: 'Developer Training', desc: 'API documentation, integration guides, and sandbox environments. D365 connector reference implementations and ICM sync playbooks (Varicent, CaptivateIQ, Xactly, Spiff, Performio, and more).', color: '#06B6D4' },
   { label: 'AI Committee Support', desc: 'Complete governance documentation for AI/data committees. Policy presets, audit trails, and cost controls designed for enterprise review and approval.', color: '#10B981' },
   { label: 'Change Management', desc: 'Phased rollout with pilot stores, approval workflows for plan changes, and rollback capabilities. Every change tracked in the evidence spine.', color: '#F59E0B' },
 ];

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import { CheckCircle, AlertTriangle, TrendingUp, Settings } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
@@ -119,6 +120,7 @@ function MiniSparkBar({ data, color }: { data: number[]; color: string }) {
 /* ── Main Page ───────────────────────────────────────────── */
 
 export default function CompPlanPage() {
+  const { provider: icm } = useIcm();
   const [glowPhase, setGlowPhase] = useState(0);
 
   useEffect(() => {
@@ -153,7 +155,7 @@ export default function CompPlanPage() {
 
   return (
     <RegisterPage title="Live Plan Performance" subtitle="FY26 Floor Sales Plan -- Real-Time Tier Intelligence" accentColor={ACCENT}>
-      {/* Varicent sync badge + Edit in Designer link */}
+      {/* ICM sync badge + Edit in Designer link */}
       <div className="flex items-center gap-3 mb-8" style={{ flexWrap: 'wrap' }}>
         <div
           className="flex items-center gap-2 px-3 py-1.5 rounded-full"
@@ -161,7 +163,7 @@ export default function CompPlanPage() {
         >
           <CheckCircle size={14} color="var(--register-success)" />
           <span style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>
-            Synced from Varicent
+            Synced from {icm.name}
           </span>
         </div>
         <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>

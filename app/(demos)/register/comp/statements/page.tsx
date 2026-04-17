@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
+import { useIcm } from '@/components/demos/register/IcmContext';
 import {
   ResponsiveContainer,
   BarChart,
@@ -120,6 +121,7 @@ function FadeUp({
 /* ── Page ───────────────────────────────────────────────────── */
 
 export default function StatementsPage() {
+  const { provider: icm } = useIcm();
   const [mounted, setMounted] = useState(false);
   const [periodIdx, setPeriodIdx] = useState(0); // 0 = March 1-15 (default), 1 = Feb 16-28
   const [sortKey, setSortKey] = useState<SortKey>('dateISO');
@@ -347,10 +349,10 @@ export default function StatementsPage() {
                   fontWeight: 600,
                   color: 'var(--register-text-dim)',
                 }}
-                title="Source: Varicent ICM"
+                title={`Source: ${icm.name} ICM`}
               >
                 <Info size={12} aria-hidden="true" />
-                Pulled from Varicent 2026-03-15 6:00 AM · next sync in 6h
+                Pulled from {icm.name} 2026-03-15 6:00 AM · next sync in 6h
               </div>
             </div>
 
@@ -891,7 +893,7 @@ export default function StatementsPage() {
               color: 'var(--register-text-dim)',
             }}
           >
-            Plan: <strong style={{ color: 'var(--register-text-muted)' }}>{statement.planName}</strong> · v3.2 · pulled from Varicent
+            Plan: <strong style={{ color: 'var(--register-text-muted)' }}>{statement.planName}</strong> · v3.2 · pulled from {icm.name}
           </p>
         </div>
       </FadeUp>
