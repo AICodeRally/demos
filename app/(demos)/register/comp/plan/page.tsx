@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { CheckCircle, AlertTriangle, TrendingUp } from 'lucide-react';
+import { CheckCircle, AlertTriangle, TrendingUp, Settings } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
 
@@ -152,20 +153,34 @@ export default function CompPlanPage() {
 
   return (
     <RegisterPage title="Live Plan Performance" subtitle="FY26 Floor Sales Plan -- Real-Time Tier Intelligence" accentColor={ACCENT}>
-      {/* Varicent sync badge */}
-      <div className="flex items-center gap-3 mb-8">
+      {/* Varicent sync badge + Edit in Designer link */}
+      <div className="flex items-center gap-3 mb-8" style={{ flexWrap: 'wrap' }}>
         <div
           className="flex items-center gap-2 px-3 py-1.5 rounded-full"
           style={{ background: 'var(--register-bg-surface)', border: '1px solid var(--register-border)' }}
         >
-          <CheckCircle size={14} color="var(--register-text-muted)" />
-          <span style={{ fontSize: '0.75rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>
+          <CheckCircle size={14} color="var(--register-success)" />
+          <span style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 600 }}>
             Synced from Varicent
           </span>
         </div>
-        <span style={{ fontSize: '0.7rem', color: 'var(--register-text-dim)' }}>
-          Last sync: 2h ago
+        <span style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)' }}>
+          Last sync: 2h ago &middot; v3.2 &middot; 24 rules
         </span>
+        <Link
+          href="/register/comp/admin"
+          style={{
+            marginLeft: 'auto',
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '7px 14px', borderRadius: 8,
+            background: 'color-mix(in srgb, var(--register-ai) 12%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--register-ai) 40%, transparent)',
+            color: 'var(--register-ai)',
+            fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none',
+          }}
+        >
+          <Settings size={13} /> Edit in Designer
+        </Link>
       </div>
 
       {/* ── Animated Tier Staircase ──────────────────────────── */}

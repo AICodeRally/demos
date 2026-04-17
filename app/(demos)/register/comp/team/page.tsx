@@ -1,449 +1,877 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  LabelList,
+  Cell,
+} from 'recharts';
+import {
+  ArrowUp,
+  ArrowDown,
+  ChevronRight,
+  Radio,
+  Info,
+  Store,
+  Zap,
+  Trophy,
+  Sparkles,
+} from 'lucide-react';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
-import { Users, Target, AlertTriangle, Zap, TrendingUp, TrendingDown, Award, ArrowUp } from 'lucide-react';
+import {
+  ORG_HIERARCHY,
+  COMP_TIERS,
+  KPI_MEASUREMENTS,
+  type OrgNode,
+} from '@/data/register/comp-data';
 
-const ACCENT = '#10B981';
+const STATEMENT_URL = '/register/comp/statements';
 
-/* ── Rep enrichment ─────────────────────────────────────── */
-
-interface RepData {
-  id: string;
-  name: string;
-  initials: string;
-  revenue: number;
-  target: number;
-  pct: number;
-  tier: string;
-  tierColor: string;
-  pace: 'on-track' | 'at-risk' | 'behind';
-  gapToNext: number;
-  nextTier: string;
-  commissionMTD: number;
-}
-
-function enrichReps(): RepData[] {
-  const tierDefs = [
-    { name: 'Bronze', min: 0, max: 24999, color: '#CD7F32', rate: 0.04 },
-    { name: 'Silver', min: 25000, max: 49999, color: '#C0C0C0', rate: 0.045 },
-    { name: 'Gold', min: 50000, max: 74999, color: '#FFD700', rate: 0.05 },
-    { name: 'Platinum', min: 75000, max: Infinity, color: '#E5E4E2', rate: 0.055 },
-  ];
-
-  return POS_REPS.map((rep) => {
-    const period = SAMPLE_PERIODS[rep.id];
-    const revenue = period.revenue;
-    const target = period.target ?? 75000;
-    const pct = Math.round((revenue / target) * 100);
-    const tier = tierDefs.find(t => revenue >= t.min && revenue <= t.max)!;
-    const tierIdx = tierDefs.indexOf(tier);
-    const nextTier = tierIdx < tierDefs.length - 1 ? tierDefs[tierIdx + 1] : null;
-    const gapToNext = nextTier ? nextTier.min - revenue : 0;
-    const commissionMTD = revenue * tier.rate;
-    const nameParts = rep.name.split(' ');
-    const initials = nameParts[0][0] + nameParts[1][0];
-
-    let pace: 'on-track' | 'at-risk' | 'behind';
-    if (pct >= 75) pace = 'on-track';
-    else if (pct >= 50) pace = 'at-risk';
-    else pace = 'behind';
-
-    return {
-      id: rep.id,
-      name: rep.name,
-      initials,
-      revenue,
-      target,
-      pct,
-      tier: tier.name,
-      tierColor: tier.color,
-      pace,
-      gapToNext,
-      nextTier: nextTier?.name ?? 'MAX',
-      commissionMTD: Math.round(commissionMTD),
-    };
-  }).sort((a, b) => b.revenue - a.revenue);
-}
-
-const REPS = enrichReps();
-
-/* ── SPIFF ROI data ─────────────────────────────────────── */
-
+/* ── SPIFF ROI data (polished) ─────────────────────────── */
 const SPIFF_DATA = [
-  { name: 'Adjustable Base SPIFF', roi: 4.1, triggered: 23, color: '#8B5CF6', spend: 575, revenue: 2358 },
-  { name: 'Premium Tier Bonus', roi: 2.8, triggered: 15, color: '#06B6D4', spend: 450, revenue: 1260 },
-  { name: 'Bundle Accelerator', roi: 3.7, triggered: 11, color: '#F59E0B', spend: 825, revenue: 3053 },
+  { name: 'Adjustable Base SPIFF', roi: 4.1, triggered: 23, spend: 575, revenue: 2358 },
+  { name: 'Premium Tier Bonus',    roi: 2.8, triggered: 15, spend: 450, revenue: 1260 },
+  { name: 'Bundle Accelerator',    roi: 3.7, triggered: 11, spend: 825, revenue: 3053 },
+  { name: 'Protector Attach',      roi: 3.2, triggered: 34, spend: 340, revenue: 1088 },
 ];
 
-/* ── Page ──────────────────────────────────────────────────── */
+/* ── Format performance summary ────────────────────────── */
+const FORMAT_CARDS = [
+  { id: 'flagship',     name: 'Flagship', storeCount: 8,  revenue: KPI_MEASUREMENTS.flagship[1].value,  quota: KPI_MEASUREMENTS.flagship[1].goal,   chartColor: 'var(--register-chart-1)' },
+  { id: 'standard',     name: 'Standard', storeCount: 32, revenue: KPI_MEASUREMENTS.standard[1].value,  quota: KPI_MEASUREMENTS.standard[1].goal,   chartColor: 'var(--register-chart-2)' },
+  { id: 'outlet',       name: 'Outlet',   storeCount: 14, revenue: KPI_MEASUREMENTS.outlet[1].value,    quota: KPI_MEASUREMENTS.outlet[1].goal,     chartColor: 'var(--register-chart-3)' },
+  { id: 'shop-in-shop', name: 'SiS',      storeCount: 6,  revenue: KPI_MEASUREMENTS['shop-in-shop'][1].value, quota: KPI_MEASUREMENTS['shop-in-shop'][1].goal, chartColor: 'var(--register-chart-4)' },
+];
 
-export default function TeamPerformancePage() {
-  const [mounted, setMounted] = useState(false);
-  const [barWidths, setBarWidths] = useState<number[]>(REPS.map(() => 0));
+/* ── Helpers ────────────────────────────────────────────── */
+function fmtCurrency(n: number, compact = false) {
+  if (compact && n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
+  return `$${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+}
+
+function fmtPct(n: number) {
+  return `${Math.round(n)}%`;
+}
+
+function initialsOf(name: string) {
+  const p = name.trim().split(/\s+/);
+  return (p[0][0] + (p[1]?.[0] ?? '')).toUpperCase();
+}
+
+function attainmentColor(pct: number) {
+  if (pct >= 90) return 'var(--register-success)';
+  if (pct >= 75) return 'var(--register-warning)';
+  return 'var(--register-danger)';
+}
+
+function tierForRevenue(revenue: number) {
+  return COMP_TIERS.find(t => revenue >= t.minRevenue && revenue <= t.maxRevenue) ?? COMP_TIERS[0];
+}
+
+/* ── Sort state ─────────────────────────────────────────── */
+type SortKey = 'rank' | 'name' | 'revenueMTD' | 'quotaMTD' | 'attainment' | 'deals' | 'commissionMTD';
+type SortDir = 'asc' | 'desc';
+
+interface LeaderboardRow extends OrgNode {
+  attainment: number;
+  deals: number;
+  tierName: string;
+  tierColor: string;
+}
+
+export default function ManagerTeamRollupPage() {
+  const [sortKey, setSortKey] = useState<SortKey>('revenueMTD');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [barsReady, setBarsReady] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => {
-      setBarWidths(REPS.map(r => r.pct));
-    }, 100);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setBarsReady(true), 120);
+    return () => clearTimeout(t);
   }, []);
 
-  const avgPace = Math.round(REPS.reduce((s, r) => s + r.pct, 0) / REPS.length);
-  const deadZoneReps = REPS.filter(r => r.pace === 'at-risk');
-  const avgSpiffROI = (SPIFF_DATA.reduce((s, sp) => s + sp.roi, 0) / SPIFF_DATA.length).toFixed(1);
+  /* ── Manager + team data ──────────────────────────────── */
+  const manager = useMemo(() => ORG_HIERARCHY.find(n => n.id === 'mgr-galleria')!, []);
 
-  const paceColor = (pace: string) => {
-    if (pace === 'on-track') return ACCENT;
-    if (pace === 'at-risk') return '#F59E0B';
-    return '#EF4444';
-  };
+  const teamRows: LeaderboardRow[] = useMemo(() => {
+    return ORG_HIERARCHY
+      .filter(n => n.parentId === 'mgr-galleria')
+      .map(rep => {
+        const attainment = (rep.revenueMTD / rep.quotaMTD) * 100;
+        const deals = Math.round(rep.revenueMTD / 1800);
+        const tier = tierForRevenue(rep.revenueMTD);
+        return {
+          ...rep,
+          attainment,
+          deals,
+          tierName: tier.tier,
+          tierColor: tier.color,
+        };
+      });
+  }, []);
+
+  const teamRevenue = teamRows.reduce((s, r) => s + r.revenueMTD, 0);
+  const teamCommission = teamRows.reduce((s, r) => s + r.commissionMTD, 0);
+  const quotaAttainment = (teamRevenue / manager.quotaMTD) * 100;
+
+  /* ── Sorted rows with ranks ───────────────────────────── */
+  const sortedRows = useMemo(() => {
+    const ranked = [...teamRows]
+      .sort((a, b) => b.revenueMTD - a.revenueMTD)
+      .map((r, i) => ({ ...r, rank: i + 1 }));
+
+    const sorted = [...ranked].sort((a, b) => {
+      let av: number | string, bv: number | string;
+      switch (sortKey) {
+        case 'rank':          av = a.rank;          bv = b.rank; break;
+        case 'name':          av = a.name;          bv = b.name; break;
+        case 'revenueMTD':    av = a.revenueMTD;    bv = b.revenueMTD; break;
+        case 'quotaMTD':      av = a.quotaMTD;      bv = b.quotaMTD; break;
+        case 'attainment':    av = a.attainment;    bv = b.attainment; break;
+        case 'deals':         av = a.deals;         bv = b.deals; break;
+        case 'commissionMTD': av = a.commissionMTD; bv = b.commissionMTD; break;
+      }
+      if (typeof av === 'string' && typeof bv === 'string') {
+        return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+      }
+      return sortDir === 'asc' ? Number(av) - Number(bv) : Number(bv) - Number(av);
+    });
+    return sorted;
+  }, [teamRows, sortKey, sortDir]);
+
+  function toggleSort(k: SortKey) {
+    if (sortKey === k) {
+      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(k);
+      setSortDir(k === 'name' ? 'asc' : 'desc');
+    }
+  }
+
+  /* ── Earnings chart data ──────────────────────────────── */
+  const chartColors = [
+    'var(--register-chart-1)',
+    'var(--register-chart-2)',
+    'var(--register-chart-3)',
+    'var(--register-chart-4)',
+    'var(--register-chart-5)',
+    'var(--register-chart-6)',
+  ];
+  const earningsChart = [...teamRows]
+    .sort((a, b) => b.commissionMTD - a.commissionMTD)
+    .map((r, i) => ({
+      name: r.name.split(' ')[0] + ' ' + r.name.split(' ')[1][0] + '.',
+      commission: r.commissionMTD,
+      fill: chartColors[i % chartColors.length],
+    }));
+
+  /* ── SPIFF ROI max for bar-fill scaling ───────────────── */
+  const spiffMaxROI = Math.max(...SPIFF_DATA.map(s => s.roi));
 
   return (
-    <RegisterPage title="Floor Intelligence Dashboard" subtitle="Flagship #12 -- March 2026" accentColor={ACCENT}>
+    <RegisterPage
+      title="Team Rollup — Galleria Flagship #12"
+      subtitle="Alex Rivera · Store Manager · March 2026"
+    >
+      {/* ── Breadcrumb + Rules-Pushed Pill ─────────────────── */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 12,
+          marginBottom: 22,
+        }}
+      >
+        <nav
+          aria-label="Breadcrumb"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontSize: '0.95rem',
+            fontWeight: 600,
+          }}
+        >
+          <span style={{ color: 'var(--register-text-muted)' }}>Pacific District</span>
+          <ChevronRight size={16} style={{ color: 'var(--register-text-dim)' }} />
+          <span style={{ color: 'var(--register-text)', fontWeight: 700 }}>
+            Galleria Flagship #12
+          </span>
+        </nav>
 
-      {/* ── Top Stat Cards ──────────────────────────────────── */}
-      <div className="register-kpi-strip" style={{ marginBottom: 28 }}>
-        {[
-          { label: 'Active Reps', value: '5', icon: Users, color: '#06B6D4', bg: 'rgba(6,182,212,0.1)' },
-          { label: 'Avg Pace-to-Target', value: `${avgPace}%`, icon: Target, color: ACCENT, bg: 'rgba(16,185,129,0.1)' },
-          { label: 'In Dead Zone', value: String(deadZoneReps.length), icon: AlertTriangle, color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
-          { label: 'SPIFF ROI', value: `${avgSpiffROI}x`, icon: Zap, color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)' },
-        ].map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={stat.label}
-              className="register-card"
-              style={{
-                padding: '18px 20px',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              <div style={{ position: 'absolute', top: 14, right: 16 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: stat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Icon size={18} color={stat.color} />
-                </div>
-              </div>
-              <p className="register-meta-label" style={{ color: 'var(--register-text-muted)', marginBottom: 6 }}>
-                {stat.label}
-              </p>
-              <p className="register-kpi-value" style={{ fontSize: '1.6rem', color: stat.color, margin: 0, lineHeight: 1 }}>
-                {stat.value}
-              </p>
-            </div>
-          );
-        })}
+        <div
+          role="status"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '6px 14px',
+            borderRadius: 999,
+            background: 'rgba(124, 58, 237, 0.10)',
+            border: '1px solid rgba(124, 58, 237, 0.30)',
+            color: 'var(--register-ai)',
+            fontSize: '0.82rem',
+            fontWeight: 600,
+          }}
+        >
+          <Radio size={14} />
+          <span>
+            Rules pushed from REGISTER Plan Designer at 2:30 PM · 214 tablets received
+          </span>
+        </div>
       </div>
 
-      {/* ── Rep Performance Cards ───────────────────────────── */}
-      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
-        <div style={{ padding: '20px 28px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Award size={16} color={ACCENT} />
-          <span className="register-section-header" style={{ marginBottom: 0 }}>Rep Performance</span>
-          <span
+      {/* ── Section 1: Manager KPI Tiles ───────────────────── */}
+      <div className="register-kpi-strip" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 24 }}>
+        {[
+          {
+            label: 'Team Revenue MTD',
+            value: fmtCurrency(teamRevenue),
+            color: 'var(--register-primary)',
+            sub: `${teamRows.length} reps · ${teamRows.reduce((s, r) => s + Math.round(r.revenueMTD / 1800), 0)} deals`,
+          },
+          {
+            label: 'Team Commission MTD',
+            value: fmtCurrency(teamCommission),
+            color: 'var(--register-success)',
+            sub: `${fmtPct((teamCommission / teamRevenue) * 100)} blended comp rate`,
+          },
+          {
+            label: 'Quota Attainment',
+            value: fmtPct(quotaAttainment),
+            color: attainmentColor(quotaAttainment),
+            sub: `${fmtCurrency(teamRevenue, true)} of ${fmtCurrency(manager.quotaMTD, true)}`,
+            progress: quotaAttainment,
+          },
+        ].map((tile, i) => (
+          <div
+            key={tile.label}
+            className="register-card reg-fade-up"
             style={{
-              fontSize: '0.62rem',
-              fontWeight: 600,
-              color: 'var(--register-text-muted)',
-              marginLeft: 'auto',
-              background: 'var(--register-bg-surface)',
-              padding: '3px 10px',
-              borderRadius: 12,
+              padding: '22px 24px',
+              animationDelay: `${60 * i}ms`,
             }}
           >
-            Target: $75K / month
+            <p
+              className="register-meta-label"
+              style={{
+                marginBottom: 8,
+                color: 'var(--register-text-dim)',
+              }}
+            >
+              {tile.label}
+            </p>
+            <p
+              className="register-kpi-value tabular"
+              style={{
+                color: tile.color,
+                margin: 0,
+                fontSize: '2.15rem',
+                lineHeight: 1.05,
+              }}
+            >
+              {tile.value}
+            </p>
+            <p
+              style={{
+                margin: '8px 0 0',
+                fontSize: '0.88rem',
+                color: 'var(--register-text-muted)',
+                fontWeight: 500,
+              }}
+            >
+              {tile.sub}
+            </p>
+            {tile.progress !== undefined && (
+              <div
+                style={{
+                  marginTop: 14,
+                  height: 8,
+                  borderRadius: 4,
+                  background: 'var(--register-bg-surface)',
+                  overflow: 'hidden',
+                  position: 'relative',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: barsReady ? `${Math.min(tile.progress, 100)}%` : '0%',
+                    background: tile.color,
+                    borderRadius: 4,
+                    transition: 'width 600ms cubic-bezier(0.22,1,0.36,1)',
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* ── Section 2: Leaderboard ─────────────────────────── */}
+      <section className="register-section reg-fade-up" style={{ padding: 0, overflow: 'hidden', animationDelay: '120ms' }}>
+        <div
+          style={{
+            padding: '20px 28px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            borderBottom: '1px solid var(--register-border)',
+          }}
+        >
+          <Trophy size={18} style={{ color: 'var(--register-primary)' }} />
+          <h2
+            className="register-section-header"
+            style={{ margin: 0, fontSize: '1.1rem' }}
+          >
+            Rep Leaderboard
+          </h2>
+          <span
+            style={{
+              marginLeft: 'auto',
+              fontSize: '0.82rem',
+              color: 'var(--register-text-muted)',
+              fontWeight: 500,
+            }}
+          >
+            {teamRows.length} reps · sorted by {sortKey === 'revenueMTD' ? 'revenue' : sortKey} {sortDir === 'desc' ? 'high → low' : 'low → high'}
           </span>
         </div>
 
-        <div style={{ padding: '0 28px 24px' }}>
-          {REPS.map((rep, i) => {
-            const PaceIcon = rep.pace === 'on-track' ? TrendingUp : rep.pace === 'at-risk' ? TrendingDown : TrendingDown;
-            return (
-              <div
-                key={rep.id}
+        <div style={{ overflowX: 'auto' }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '0.92rem',
+            }}
+          >
+            <thead>
+              <tr
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 16,
-                  padding: '16px 0',
-                  borderBottom: i < REPS.length - 1 ? '1px solid var(--register-border)' : 'none',
-                  transition: 'background 0.2s',
+                  background: 'var(--register-bg-surface)',
+                  textAlign: 'left',
                 }}
               >
-                {/* Avatar */}
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: '50%',
-                    background: `linear-gradient(135deg, ${paceColor(rep.pace)}22, ${paceColor(rep.pace)}44)`,
-                    border: `2px solid ${paceColor(rep.pace)}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
-                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: paceColor(rep.pace) }}>{rep.initials}</span>
-                </div>
-
-                {/* Name + tier */}
-                <div style={{ width: 130, flexShrink: 0 }}>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>{rep.name}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
-                    <span
+                {([
+                  { k: 'rank',          label: '#',         width: 48 },
+                  { k: 'name',          label: 'Rep',       width: 220 },
+                  { k: 'revenueMTD',    label: 'Revenue MTD', width: 130, right: true },
+                  { k: 'quotaMTD',      label: 'Quota',     width: 110, right: true },
+                  { k: 'attainment',    label: 'Attainment', width: 200, tooltip: 'Live from POS — updates every 15 min' },
+                  { k: 'deals',         label: 'Deals',     width: 80,  right: true },
+                  { k: 'commissionMTD', label: 'Commission', width: 120, right: true },
+                ] as { k: SortKey; label: string; width: number; right?: boolean; tooltip?: string }[]).map(col => {
+                  const active = sortKey === col.k;
+                  return (
+                    <th
+                      key={col.k}
+                      onClick={() => toggleSort(col.k)}
+                      title={col.tooltip}
                       style={{
-                        fontSize: '0.6rem',
+                        padding: '12px 14px',
+                        fontSize: '0.82rem',
                         fontWeight: 700,
-                        padding: '2px 8px',
-                        borderRadius: 10,
-                        background: `${rep.tierColor}22`,
-                        color: rep.tierColor,
-                        border: `1px solid ${rep.tierColor}44`,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        color: active ? 'var(--register-text)' : 'var(--register-text-muted)',
+                        textAlign: col.right ? 'right' : 'left',
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                        whiteSpace: 'nowrap',
+                        width: col.width,
+                        transition: 'color 60ms ease',
                       }}
                     >
-                      {rep.tier}
-                    </span>
-                    <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>
-                      ${(rep.commissionMTD).toLocaleString()} earned
-                    </span>
-                  </div>
-                </div>
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 4,
+                          justifyContent: col.right ? 'flex-end' : 'flex-start',
+                          width: '100%',
+                        }}
+                      >
+                        {col.label}
+                        {col.tooltip && (
+                          <Info
+                            size={12}
+                            style={{
+                              color: 'var(--register-text-dim)',
+                            }}
+                          />
+                        )}
+                        {active && (sortDir === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                      </span>
+                    </th>
+                  );
+                })}
+                <th
+                  style={{
+                    padding: '12px 14px',
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    color: 'var(--register-text-muted)',
+                    textAlign: 'right',
+                  }}
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedRows.map((row, i) => {
+                const isCasey = row.id === 'rep-casey';
+                const attColor = attainmentColor(row.attainment);
+                return (
+                  <tr
+                    key={row.id}
+                    className="reg-fade-up"
+                    style={{
+                      animationDelay: `${60 * (i + 2)}ms`,
+                      borderBottom: i < sortedRows.length - 1 ? '1px solid var(--register-border)' : 'none',
+                      transition: 'background 60ms ease',
+                      background: isCasey ? 'rgba(8, 145, 178, 0.05)' : 'transparent',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--register-bg-surface)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = isCasey ? 'rgba(8, 145, 178, 0.05)' : 'transparent')}
+                  >
+                    {/* Rank */}
+                    <td style={{ padding: '14px 14px', fontWeight: 700, color: 'var(--register-text)', fontSize: '0.92rem' }}>
+                      {row.rank}
+                    </td>
 
-                {/* Revenue bar */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
-                      ${(rep.revenue / 1000).toFixed(1)}K
-                    </span>
-                    <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>
-                      {rep.pct}% of $75K
-                    </span>
-                  </div>
-                  <div style={{ height: 12, borderRadius: 6, background: 'var(--register-bg-surface)', overflow: 'hidden', position: 'relative' }}>
-                    <div
-                      style={{
-                        height: '100%',
-                        borderRadius: 6,
-                        background: rep.pace === 'on-track'
-                          ? `linear-gradient(90deg, ${ACCENT}, #06B6D4)`
-                          : rep.pace === 'at-risk'
-                          ? `linear-gradient(90deg, #F59E0B, #FB923C)`
-                          : `linear-gradient(90deg, #EF4444, #F87171)`,
-                        width: `${barWidths[i]}%`,
-                        transition: 'width 1.2s cubic-bezier(0.4,0,0.2,1)',
-                        transitionDelay: `${i * 150}ms`,
-                        maxWidth: '100%',
-                      }}
-                    />
-                    {/* Target line at 100% */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: 0,
-                        top: -2,
-                        bottom: -2,
-                        width: 2,
-                        background: 'var(--register-text-muted)',
-                        opacity: 0.4,
-                      }}
-                    />
-                  </div>
-                </div>
+                    {/* Rep */}
+                    <td style={{ padding: '12px 14px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <div
+                          style={{
+                            width: 38,
+                            height: 38,
+                            borderRadius: '50%',
+                            background: `linear-gradient(135deg, ${row.tierColor}55, ${row.tierColor}30)`,
+                            border: `2px solid ${row.tierColor}`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            fontSize: '0.85rem',
+                            fontWeight: 800,
+                            color: 'var(--register-text)',
+                          }}
+                        >
+                          {initialsOf(row.name)}
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 700, color: 'var(--register-text)', fontSize: '0.95rem' }}>
+                            {row.name}
+                          </div>
+                          <div style={{ fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 500 }}>
+                            Floor Sales Rep
+                          </div>
+                        </div>
+                      </div>
+                    </td>
 
-                {/* Pace + Gap */}
-                <div style={{ width: 110, textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, marginBottom: 3 }}>
-                    <PaceIcon size={12} color={paceColor(rep.pace)} />
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: paceColor(rep.pace), textTransform: 'capitalize' }}>
-                      {rep.pace === 'on-track' ? 'On Track' : rep.pace === 'at-risk' ? 'At Risk' : 'Behind'}
-                    </span>
-                  </div>
-                  {rep.gapToNext > 0 && (
-                    <span style={{ fontSize: '0.62rem', color: 'var(--register-text-muted)' }}>
-                      ${(rep.gapToNext / 1000).toFixed(1)}K to {rep.nextTier}
-                    </span>
-                  )}
+                    {/* Revenue */}
+                    <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: 'var(--register-text)', fontSize: '0.95rem' }}>
+                      {fmtCurrency(row.revenueMTD)}
+                    </td>
+
+                    {/* Quota */}
+                    <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)', fontWeight: 500, fontSize: '0.92rem' }}>
+                      {fmtCurrency(row.quotaMTD)}
+                    </td>
+
+                    {/* Attainment with progress */}
+                    <td style={{ padding: '12px 14px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums' }}>
+                          <span style={{ color: attColor, fontWeight: 700 }}>{fmtPct(row.attainment)}</span>
+                          <span style={{ color: 'var(--register-text-muted)', fontWeight: 500 }}>of quota</span>
+                        </div>
+                        <div
+                          style={{
+                            height: 7,
+                            borderRadius: 4,
+                            background: 'var(--register-bg-surface)',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            border: '1px solid var(--register-border)',
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: 'absolute',
+                              inset: 0,
+                              width: barsReady ? `${Math.min(row.attainment, 115)}%` : '0%',
+                              maxWidth: '100%',
+                              background: attColor,
+                              borderRadius: 4,
+                              transition: 'width 600ms cubic-bezier(0.22,1,0.36,1)',
+                              transitionDelay: `${60 * i}ms`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Deals */}
+                    <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', fontWeight: 600, fontSize: '0.92rem' }}>
+                      {row.deals}
+                    </td>
+
+                    {/* Commission */}
+                    <td style={{ padding: '12px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700, color: 'var(--register-success)', fontSize: '0.95rem' }}>
+                      {fmtCurrency(row.commissionMTD)}
+                    </td>
+
+                    {/* Action */}
+                    <td style={{ padding: '12px 14px', textAlign: 'right' }}>
+                      <Link
+                        href={STATEMENT_URL}
+                        title={isCasey ? 'Open Casey\u2019s commission statement' : 'Sample statement for demo — opens Casey\u2019s statement'}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          padding: '7px 14px',
+                          borderRadius: 8,
+                          fontSize: '0.85rem',
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 60ms ease',
+                          background: isCasey ? 'var(--register-primary)' : 'var(--register-bg-surface)',
+                          color: isCasey ? '#FFFFFF' : 'var(--register-text)',
+                          border: isCasey ? '1px solid var(--register-primary)' : '1px solid var(--register-border)',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isCasey) {
+                            e.currentTarget.style.background = 'var(--register-primary)';
+                            e.currentTarget.style.color = '#FFFFFF';
+                            e.currentTarget.style.borderColor = 'var(--register-primary)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isCasey) {
+                            e.currentTarget.style.background = 'var(--register-bg-surface)';
+                            e.currentTarget.style.color = 'var(--register-text)';
+                            e.currentTarget.style.borderColor = 'var(--register-border)';
+                          }
+                        }}
+                      >
+                        View statement
+                        <ChevronRight size={14} />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* ── Section 3: Format Performance Comparison ───────── */}
+      <section className="register-section reg-fade-up" style={{ animationDelay: '180ms' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+          <Store size={18} style={{ color: 'var(--register-accent)' }} />
+          <h2 className="register-section-header" style={{ margin: 0, fontSize: '1.1rem' }}>
+            Format Performance — District View
+          </h2>
+          <span style={{ marginLeft: 'auto', fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 500 }}>
+            March 2026 MTD
+          </span>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 14,
+          }}
+        >
+          {FORMAT_CARDS.map((fmt, i) => {
+            const pct = (fmt.revenue / fmt.quota) * 100;
+            const color = attainmentColor(pct);
+            return (
+              <div
+                key={fmt.id}
+                className="register-card register-card-hover reg-fade-up"
+                title="District manager view →"
+                style={{
+                  padding: '18px 20px',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  animationDelay: `${60 * (i + 3)}ms`,
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 3,
+                    background: fmt.chartColor,
+                  }}
+                />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                  <span style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--register-text)' }}>
+                    {fmt.name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '0.78rem',
+                      fontWeight: 600,
+                      padding: '3px 10px',
+                      borderRadius: 999,
+                      background: 'var(--register-bg-surface)',
+                      color: 'var(--register-text-muted)',
+                    }}
+                  >
+                    {fmt.storeCount} stores
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 10 }}>
+                  <span
+                    className="tabular"
+                    style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 800,
+                      color: 'var(--register-text)',
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    {fmtCurrency(fmt.revenue, true)}
+                  </span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--register-text-muted)', fontWeight: 500 }}>
+                    / {fmtCurrency(fmt.quota, true)}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    height: 8,
+                    borderRadius: 4,
+                    background: 'var(--register-bg-surface)',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    marginBottom: 8,
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: barsReady ? `${Math.min(pct, 115)}%` : '0%',
+                      maxWidth: '100%',
+                      background: color,
+                      borderRadius: 4,
+                      transition: 'width 600ms cubic-bezier(0.22,1,0.36,1)',
+                      transitionDelay: `${60 * i + 200}ms`,
+                    }}
+                  />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                  <span style={{ color, fontWeight: 700 }}>{fmtPct(pct)}</span>
+                  <span style={{ color: 'var(--register-text-muted)', fontWeight: 500 }}>attainment</span>
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </section>
 
-      {/* ── Dead Zone Alert ─────────────────────────────────── */}
-      <div
-        className="register-section"
-        style={{
-          overflow: 'hidden',
-          padding: 0,
-          background: 'rgba(245,158,11,0.06)',
-          borderColor: 'rgba(245,158,11,0.25)',
-          position: 'relative',
-        }}
-      >
-        {/* Pulsing border glow */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            borderRadius: 16,
-            boxShadow: '0 0 20px rgba(245,158,11,0.08)',
-            animation: 'dead-zone-pulse 3s ease-in-out infinite',
-            pointerEvents: 'none',
-          }}
-        />
+      {/* ── Section 4: Team Earnings Chart ─────────────────── */}
+      <section className="register-section reg-fade-up" style={{ animationDelay: '240ms' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+          <Sparkles size={18} style={{ color: 'var(--register-success)' }} />
+          <h2 className="register-section-header" style={{ margin: 0, fontSize: '1.1rem' }}>
+            Team Earnings Distribution
+          </h2>
+          <span style={{ marginLeft: 'auto', fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 500 }}>
+            MTD commission · sorted high → low
+          </span>
+        </div>
 
-        <div style={{ padding: '22px 28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: 'rgba(245,158,11,0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+        <div style={{ width: '100%', height: 280 }}>
+          <ResponsiveContainer>
+            <BarChart
+              data={earningsChart}
+              layout="vertical"
+              margin={{ top: 12, right: 80, left: 12, bottom: 8 }}
             >
-              <AlertTriangle size={16} color="#F59E0B" />
-            </div>
-            <div>
-              <p style={{ fontSize: '0.85rem', fontWeight: 800, color: '#F59E0B', margin: 0 }}>Dead Zone Alert</p>
-              <p style={{ fontSize: '0.72rem', color: 'var(--register-text-muted)', margin: '2px 0 0' }}>
-                2 reps stuck between Bronze ($0-$50K) and Silver ($50K) thresholds
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 16 }}>
-            {[
-              { name: 'Marcus Chen', gap: '$2,000', action: '1 Sleep System Bundle would do it', revenue: '$48K', pct: 64 },
-              { name: 'Lisa Kim', gap: '$5,000', action: 'Needs 2-3 more premium sales', revenue: '$45K', pct: 60 },
-            ].map((rep) => (
-              <div
-                key={rep.name}
-                style={{
-                  borderRadius: 12,
-                  padding: '16px 18px',
-                  background: 'rgba(245,158,11,0.08)',
-                  border: '1px solid rgba(245,158,11,0.2)',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                  <p style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--register-text)', margin: 0 }}>{rep.name}</p>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#F59E0B' }}>{rep.revenue}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                  <ArrowUp size={12} color={ACCENT} />
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: ACCENT }}>
-                    {rep.gap} from Silver
-                  </span>
-                </div>
-                <p style={{ fontSize: '0.72rem', color: 'var(--register-text-muted)', margin: 0, fontStyle: 'italic' }}>
-                  {rep.action}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '10px 16px',
-              borderRadius: 10,
-              background: 'rgba(239,68,68,0.08)',
-              border: '1px solid rgba(239,68,68,0.15)',
-            }}
-          >
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#EF4444', animation: 'pulse-dot 2s ease-in-out infinite' }} />
-            <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#EF4444' }}>
-              Dead zone reps have 40% higher turnover risk
-            </span>
-          </div>
+              <XAxis
+                type="number"
+                tickFormatter={(v) => `$${(v / 1000).toFixed(1)}K`}
+                stroke="var(--register-chart-axis)"
+                tickLine={false}
+              />
+              <YAxis
+                type="category"
+                dataKey="name"
+                stroke="var(--register-chart-axis)"
+                tickLine={false}
+                width={100}
+                tick={{ fontSize: 14, fontWeight: 600 }}
+              />
+              <Tooltip
+                cursor={{ fill: 'var(--register-bg-surface)', opacity: 0.6 }}
+                formatter={(value) => [fmtCurrency(Number(value)), 'Commission']}
+              />
+              <Bar dataKey="commission" radius={[0, 6, 6, 0]} animationDuration={600}>
+                {earningsChart.map((entry) => (
+                  <Cell key={entry.name} fill={entry.fill} />
+                ))}
+                <LabelList
+                  dataKey="commission"
+                  position="right"
+                  formatter={(v) => fmtCurrency(Number(v))}
+                  style={{
+                    fill: 'var(--register-text)',
+                    fontWeight: 700,
+                    fontSize: 14,
+                    fontVariantNumeric: 'tabular-nums',
+                  }}
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-      </div>
+      </section>
 
-      {/* ── SPIFF ROI Tracker ───────────────────────────────── */}
-      <div className="register-section" style={{ overflow: 'hidden', padding: 0 }}>
-        <div style={{ padding: '20px 28px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Zap size={16} color="#8B5CF6" />
-          <span className="register-section-header" style={{ marginBottom: 0 }}>SPIFF ROI Tracker</span>
+      {/* ── Section 5: SPIFF ROI ─────────────────────────────── */}
+      <section className="register-section reg-fade-up" style={{ padding: 0, overflow: 'hidden', animationDelay: '300ms' }}>
+        <div style={{ padding: '20px 28px 14px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid var(--register-border)' }}>
+          <Zap size={18} style={{ color: 'var(--register-warning)' }} />
+          <h2 className="register-section-header" style={{ margin: 0, fontSize: '1.1rem' }}>
+            SPIFF ROI — rolling 30 day
+          </h2>
+          <span style={{ marginLeft: 'auto', fontSize: '0.82rem', color: 'var(--register-text-muted)', fontWeight: 500 }}>
+            Higher ROI = more revenue per incentive dollar
+          </span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '0 28px 24px' }}>
-          {SPIFF_DATA.map((spiff) => (
-            <div
-              key={spiff.name}
-              className="register-card"
-              style={{
-                padding: '18px 16px',
-                background: 'var(--register-bg-surface)',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Top accent line */}
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: spiff.color }} />
-
-              <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--register-text)', marginBottom: 12 }}>
-                {spiff.name}
-              </p>
-
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 12 }}>
-                <span className="register-kpi-value" style={{ fontSize: '1.8rem', fontWeight: 900, color: spiff.color, lineHeight: 1 }}>
-                  {spiff.roi}x
-                </span>
-                <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--register-text-muted)' }}>ROI</span>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Triggered</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)' }}>
-                  {spiff.triggered}x
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Spend</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#EF4444' }}>
-                  ${spiff.spend.toLocaleString()}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '0.65rem', color: 'var(--register-text-muted)' }}>Revenue</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ACCENT }}>
-                  ${spiff.revenue.toLocaleString()}
-                </span>
-              </div>
-            </div>
-          ))}
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.92rem' }}>
+            <thead>
+              <tr style={{ background: 'var(--register-bg-surface)', textAlign: 'left' }}>
+                {['SPIFF', 'Triggered', 'Spend', 'Revenue', 'ROI Multiplier'].map((h, i) => (
+                  <th
+                    key={h}
+                    style={{
+                      padding: '12px 16px',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.04em',
+                      textTransform: 'uppercase',
+                      color: 'var(--register-text-muted)',
+                      textAlign: i === 0 ? 'left' : 'right',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SPIFF_DATA.map((s, i) => {
+                const highRoi = s.roi > 3.5;
+                const fillPct = (s.roi / spiffMaxROI) * 100;
+                return (
+                  <tr
+                    key={s.name}
+                    className="reg-fade-up"
+                    style={{
+                      animationDelay: `${60 * (i + 4)}ms`,
+                      borderBottom: i < SPIFF_DATA.length - 1 ? '1px solid var(--register-border)' : 'none',
+                      background: highRoi ? 'rgba(5, 150, 105, 0.06)' : 'transparent',
+                      transition: 'background 60ms ease',
+                    }}
+                  >
+                    <td style={{ padding: '14px 16px', fontWeight: 700, color: 'var(--register-text)', fontSize: '0.95rem' }}>
+                      {s.name}
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text-muted)', fontWeight: 600 }}>
+                      {s.triggered}×
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-text)', fontWeight: 600 }}>
+                      {fmtCurrency(s.spend)}
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: 'var(--register-success)', fontWeight: 700 }}>
+                      {fmtCurrency(s.revenue)}
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'right', width: 220 }}>
+                      <div style={{ position: 'relative', height: 26, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <div
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'var(--register-bg-surface)',
+                            borderRadius: 6,
+                            border: '1px solid var(--register-border)',
+                          }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: barsReady ? `${fillPct}%` : '0%',
+                            background: highRoi
+                              ? 'linear-gradient(90deg, rgba(5,150,105,0.28), rgba(5,150,105,0.18))'
+                              : 'linear-gradient(90deg, rgba(30,64,175,0.22), rgba(30,64,175,0.12))',
+                            borderRadius: 6,
+                            transition: 'width 600ms cubic-bezier(0.22,1,0.36,1)',
+                            transitionDelay: `${60 * i}ms`,
+                          }}
+                        />
+                        <span
+                          style={{
+                            position: 'relative',
+                            zIndex: 1,
+                            padding: '0 12px',
+                            fontSize: '0.95rem',
+                            fontWeight: 800,
+                            fontVariantNumeric: 'tabular-nums',
+                            color: highRoi ? 'var(--register-success)' : 'var(--register-text)',
+                          }}
+                        >
+                          {s.roi.toFixed(1)}×
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      </div>
+      </section>
 
-      {/* ── AI Insight ──────────────────────────────────────── */}
-      <AIInsightCard>
-        23% of reps in dead zone between Bronze and Silver. Lower Tier 2 threshold from $25K to $22K -- estimated <strong>+$8K monthly payout</strong>, <strong>+$340K revenue</strong>. Adjustable Base SPIFF is the highest-ROI incentive at 4.1x -- consider extending through Q2.
+      {/* ── Section 6: AI Insight ──────────────────────────────── */}
+      <AIInsightCard label="Coaching Insight">
+        <strong>Casey Miller</strong> is 31% below quota but carries the highest deal-size
+        potential (Sleep System Bundles). Consider pairing her with{' '}
+        <strong>Sarah Lin</strong> on 3 bundle opportunities this week — projected uplift{' '}
+        <strong>+$4,200 revenue</strong>, closes Casey&rsquo;s gap by ~40%. Adjustable Base SPIFF at
+        4.1× ROI is the best lever you have right now.
       </AIInsightCard>
-
-      {/* ── Keyframe Animations ─────────────────────────────── */}
-      <style>{`
-        @keyframes dead-zone-pulse {
-          0%, 100% { box-shadow: 0 0 20px rgba(245,158,11,0.05); }
-          50% { box-shadow: 0 0 30px rgba(245,158,11,0.12); }
-        }
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.4; transform: scale(0.8); }
-        }
-      `}</style>
     </RegisterPage>
   );
 }

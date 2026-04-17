@@ -12,6 +12,7 @@ import { RewardsPanel } from '@/components/demos/register/pos/RewardsPanel';
 import { CloseSaleFlow } from '@/components/demos/register/pos/CloseSaleFlow';
 import { D365EventLog } from '@/components/demos/register/pos/D365EventLog';
 import { BundleBuilder } from '@/components/demos/register/pos/BundleBuilder';
+import { SellingMotion } from '@/components/demos/register/pos/SellingMotion';
 import { calculate } from '@/lib/swic-engine/calculator';
 import { onRegisterBroadcast, type BroadcastMessage } from '@/lib/register-broadcast';
 import { SUMMIT_SLEEP_CONFIG, CATALOG_ITEMS, STORE_CONTEXT, POS_REPS, SAMPLE_PERIODS } from '@/data/register/summit-sleep';
@@ -19,61 +20,124 @@ import { getInsight } from '@/data/register/ai-insights';
 import type { SaleItem } from '@/lib/swic-engine/types';
 import type { D365TransactionEvent } from '@/data/register/d365-schemas';
 
-type PosTab = 'lines' | 'rewards' | 'coaching' | 'd365';
+type PosTab = 'lines' | 'rewards' | 'motion' | 'coaching' | 'd365';
 
 const REP = POS_REPS[0]; // Sarah Johnson
 const PERIOD = SAMPLE_PERIODS['rep-sarah'];
 
-/* ── Simulated Recent Transactions Ticker ─────────────── */
+/* ── Live Floor Pulse Strip ─────────────────────────────
+   Continuous marquee mixing rep closes, tier-up milestones,
+   and personal progress callouts. Pause on hover. */
 
-const TICKER_ITEMS = [
-  { id: 'T-4471', time: '9:41a', item: 'King DreamCloud 14"', total: '$2,899', rep: 'Sarah K.' },
-  { id: 'T-4470', time: '9:28a', item: 'Queen Hybrid + Adj Base', total: '$3,450', rep: 'Marcus T.' },
-  { id: 'T-4469', time: '9:15a', item: 'Pillow 2-Pack + Protector', total: '$189', rep: 'Casey M.' },
-  { id: 'T-4468', time: '9:02a', item: 'Twin XL Student Bundle', total: '$1,299', rep: 'Sarah K.' },
-  { id: 'T-4467', time: '8:48a', item: 'King TempurPedic Adapt', total: '$3,999', rep: 'Marcus T.' },
-  { id: 'T-4466', time: '8:33a', item: 'Outlet Queen Firm', total: '$599', rep: 'Casey M.' },
+type PulseKind = 'sale' | 'tier' | 'goal' | 'spiff' | 'self';
+
+interface PulseEvent {
+  kind: PulseKind;
+  text: string;
+  meta?: string;
+}
+
+const PULSE_EVENTS: PulseEvent[] = [
+  { kind: 'self',  text: "You're $1,180 from Gold",                             meta: 'unlock 5.0% rate' },
+  { kind: 'sale',  text: 'Sarah K. — King DreamCloud 14"',                      meta: '+$2,899 · $116 comm' },
+  { kind: 'tier',  text: 'Marcus T. crossed Silver threshold',                  meta: '+0.5% rate retroactive' },
+  { kind: 'sale',  text: 'Casey M. — Queen Hybrid + Protector',                 meta: '+$2,648 · $133 comm' },
+  { kind: 'spiff', text: 'Adj Base SPIFF active — +$25/unit',                   meta: 'ends today 9 PM' },
+  { kind: 'sale',  text: 'Marcus T. — King TempurPedic Adapt',                  meta: '+$3,999 · $200 comm' },
+  { kind: 'goal',  text: 'Store 182% of daily target',                          meta: '$48.2K vs $26.5K plan' },
+  { kind: 'self',  text: 'Your attach rate 31% — above store avg',              meta: 'keep pushing protectors' },
+  { kind: 'sale',  text: 'Sarah K. — Twin XL Student Bundle',                   meta: '+$1,299 · $52 comm' },
+  { kind: 'tier',  text: 'Raj P. 2 sales from Platinum',                        meta: 'playoff push' },
+  { kind: 'spiff', text: 'Bundle Bonus +$75 — ErgoMotion + Protector',          meta: 'rule live from Designer 2:30 PM' },
 ];
 
-function TransactionTicker() {
-  const [visible, setVisible] = useState(0);
+const PULSE_STYLE: Record<PulseKind, { color: string; label: string }> = {
+  sale:  { color: 'var(--register-success)', label: 'SALE' },
+  tier:  { color: 'var(--register-warning)', label: 'TIER' },
+  goal:  { color: 'var(--register-ai)',      label: 'GOAL' },
+  spiff: { color: 'var(--register-accent)',  label: 'SPIFF' },
+  self:  { color: 'var(--register-primary)', label: 'YOU'  },
+};
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible((v) => (v + 1) % TICKER_ITEMS.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const tx = TICKER_ITEMS[visible];
-
+function FloorPulseStrip() {
+  // Duplicate items so the marquee can loop seamlessly
+  const loop = [...PULSE_EVENTS, ...PULSE_EVENTS];
   return (
     <div
       style={{
-        display: 'flex', alignItems: 'center', gap: 8,
-        padding: '4px 12px',
-        background: 'rgba(16, 185, 129, 0.08)',
-        borderBottom: '1px solid rgba(16, 185, 129, 0.15)',
-        fontSize: '0.72rem',
+        display: 'flex', alignItems: 'center',
+        padding: '5px 12px',
+        background: 'linear-gradient(90deg, color-mix(in srgb, var(--register-success) 10%, var(--register-bg-elevated)) 0%, var(--register-bg-elevated) 6%, var(--register-bg-elevated) 94%, color-mix(in srgb, var(--register-success) 10%, var(--register-bg-elevated)) 100%)',
+        borderBottom: '1px solid var(--register-border)',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      <span className="reg-live-dot" style={{ width: 5, height: 5, flexShrink: 0 }} />
-      <span style={{ fontWeight: 700, color: '#10B981', flexShrink: 0 }}>LAST SALE</span>
+      {/* Fixed label */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 6,
+        paddingRight: 12, borderRight: '1px solid var(--register-border)',
+        flexShrink: 0, zIndex: 2,
+        background: 'var(--register-bg-elevated)',
+      }}>
+        <span style={{
+          width: 6, height: 6, borderRadius: 999,
+          background: 'var(--register-success)',
+          animation: 'reg-pulse-dot 1.4s ease-in-out infinite',
+          boxShadow: '0 0 8px var(--register-success)',
+        }} />
+        <span style={{
+          fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.1em',
+          color: 'var(--register-success)', textTransform: 'uppercase',
+        }}>
+          Live Floor
+        </span>
+      </div>
+
+      {/* Marquee */}
       <div
-        key={tx.id}
+        className="reg-marquee"
         style={{
-          display: 'flex', gap: 8, alignItems: 'center',
-          animation: 'reg-slideIn 0.3s ease-out',
-          color: 'var(--register-text-muted)',
+          display: 'flex', alignItems: 'center', gap: 24,
+          marginLeft: 14,
+          animation: 'reg-marquee 80s linear infinite',
+          whiteSpace: 'nowrap',
+          flex: 1,
         }}
       >
-        <span style={{ fontWeight: 600, color: 'var(--register-accent)' }}>{tx.id}</span>
-        <span>{tx.item}</span>
-        <span style={{ fontWeight: 700, color: 'var(--register-text)' }}>{tx.total}</span>
-        <span style={{ opacity: 0.6 }}>{tx.rep}</span>
-        <span style={{ opacity: 0.4 }}>{tx.time}</span>
+        {loop.map((e, i) => {
+          const sty = PULSE_STYLE[e.kind];
+          return (
+            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.78rem' }}>
+              <span style={{
+                padding: '2px 6px', borderRadius: 4,
+                background: `color-mix(in srgb, ${sty.color} 14%, transparent)`,
+                color: sty.color,
+                fontSize: '0.64rem', fontWeight: 800, letterSpacing: '0.08em',
+              }}>
+                {sty.label}
+              </span>
+              <span style={{ color: 'var(--register-text)', fontWeight: 600 }}>{e.text}</span>
+              {e.meta && (
+                <span style={{ color: 'var(--register-text-dim)' }}>· {e.meta}</span>
+              )}
+              <span style={{ color: 'var(--register-border-strong)', marginLeft: 4 }}>|</span>
+            </span>
+          );
+        })}
       </div>
+
+      <style>{`
+        @keyframes reg-marquee {
+          from { transform: translateX(0) }
+          to   { transform: translateX(-50%) }
+        }
+        @keyframes reg-pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1) }
+          50%      { opacity: 0.6; transform: scale(1.3) }
+        }
+        .reg-marquee:hover { animation-play-state: paused }
+      `}</style>
     </div>
   );
 }
@@ -210,6 +274,7 @@ export default function POSTerminal() {
   const TABS: { id: PosTab; label: string; badge?: number }[] = [
     { id: 'lines', label: 'Lines' },
     { id: 'rewards', label: 'Rewards' },
+    { id: 'motion', label: 'Motion' },
     { id: 'coaching', label: 'Coaching', badge: coachingUnread },
     { id: 'd365', label: `D365 Log (${d365Events.length})` },
   ];
@@ -263,8 +328,8 @@ export default function POSTerminal() {
             </div>
           </div>
 
-          {/* ── Live Transaction Ticker ───────────── */}
-          <TransactionTicker />
+          {/* ── Live Floor Pulse Strip ───────────── */}
+          <FloorPulseStrip />
 
           {/* ── Main Split ──────────────────────────── */}
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
@@ -338,6 +403,10 @@ export default function POSTerminal() {
 
                 {activeTab === 'rewards' && (
                   <RewardsPanel items={cartItems} period={PERIOD} config={SUMMIT_SLEEP_CONFIG} />
+                )}
+
+                {activeTab === 'motion' && (
+                  <SellingMotion />
                 )}
 
                 {activeTab === 'coaching' && (

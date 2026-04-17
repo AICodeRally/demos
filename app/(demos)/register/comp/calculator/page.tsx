@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
-import { Award, Zap, Target, Plus, X, GitCompareArrows } from 'lucide-react';
+import { Award, Zap, Target, Plus, X, GitCompareArrows, ArrowLeft, Beaker } from 'lucide-react';
 import { COMP_TIERS } from '@/data/register/comp-data';
 import { SAMPLE_PERIODS } from '@/data/register/summit-sleep';
 
@@ -122,6 +124,50 @@ function AttainmentGauge({ revenue, maxRevenue }: { revenue: number; maxRevenue:
   );
 }
 
+/* ── Designer Deep-Link Breadcrumb ────────────────────────
+   Shown when user arrives via "Simulate in What-If →" from
+   Plan Designer. Surfaces which rule they're testing and a
+   back-link to the source. */
+
+function DesignerBreadcrumb() {
+  const params = useSearchParams();
+  const from = params.get('from');
+  const ruleId = params.get('rule');
+  if (from !== 'designer' || !ruleId) return null;
+
+  return (
+    <div
+      style={{
+        display: 'flex', alignItems: 'center', gap: 12,
+        padding: '10px 14px', marginBottom: 16,
+        background: 'color-mix(in srgb, var(--register-ai) 10%, transparent)',
+        border: '1px solid color-mix(in srgb, var(--register-ai) 35%, transparent)',
+        borderRadius: 10,
+        flexWrap: 'wrap',
+      }}
+    >
+      <Beaker size={16} style={{ color: 'var(--register-ai)' }} />
+      <span style={{ fontSize: '0.88rem', color: 'var(--register-text)' }}>
+        Simulating rule <strong style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontSize: '0.88rem' }}>{ruleId}</strong> from Plan Designer draft.
+      </span>
+      <Link
+        href="/register/comp/admin"
+        style={{
+          marginLeft: 'auto',
+          display: 'inline-flex', alignItems: 'center', gap: 5,
+          padding: '5px 10px', borderRadius: 6,
+          background: 'var(--register-bg-elevated)',
+          border: '1px solid var(--register-border-strong)',
+          color: 'var(--register-text)',
+          fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none',
+        }}
+      >
+        <ArrowLeft size={13} /> Back to Designer
+      </Link>
+    </div>
+  );
+}
+
 /* ── Main Page ────────────────────────────────────────────── */
 
 export default function CalculatorPage() {
@@ -183,6 +229,10 @@ export default function CalculatorPage() {
       `}</style>
 
       <RegisterPage title="Commission Calculator" subtitle="What-If Modeling + Live Floor Earnings" accentColor={ACCENT}>
+
+        <Suspense fallback={null}>
+          <DesignerBreadcrumb />
+        </Suspense>
 
         {/* ── What-If Controls ──────────────────────────────── */}
         <div

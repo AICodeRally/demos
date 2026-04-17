@@ -13,15 +13,15 @@ export default defineDemo({
     name: 'REGISTER',
     badge: 'Interactive Demo',
   },
-  darkMode: true,
+  darkMode: false,
   theme: 'register-slate',
   colors: {
-    primary: '#1E3A5F',
-    accent: '#06B6D4',
+    primary: '#1E40AF',
+    accent: '#0891B2',
   },
   nav: [
     {
-      section: 'Act 1 — Corporate Strategy',
+      section: 'Corporate Strategy',
       color: '#5B9BD5',
       items: [
         { label: 'Company Overview', href: '/register/corp/overview', icon: 'Building2' },
@@ -32,7 +32,7 @@ export default defineDemo({
       ],
     },
     {
-      section: 'Act 2 — Sales Strategy',
+      section: 'Sales Strategy',
       color: '#06B6D4',
       items: [
         { label: 'District Planning', href: '/register/strategy/districts', icon: 'MapPin' },
@@ -43,7 +43,7 @@ export default defineDemo({
       ],
     },
     {
-      section: 'Act 3 — Store Operations',
+      section: 'Store Operations',
       color: '#8B5CF6',
       items: [
         { label: 'Floor Dashboard', href: '/register/ops/floor', icon: 'LayoutGrid' },
@@ -53,19 +53,25 @@ export default defineDemo({
       ],
     },
     {
-      section: 'Act 4 — Sales Compensation',
-      color: '#10B981',
+      section: 'Comp Plan Design',
+      color: '#7C3AED',
       items: [
-        { label: 'Comp Plan', href: '/register/comp/plan', icon: 'FileText' },
-        { label: 'Calculator', href: '/register/comp/calculator', icon: 'Calculator' },
-        { label: 'Statements', href: '/register/comp/statements', icon: 'Receipt' },
-        { label: 'Team Performance', href: '/register/comp/team', icon: 'BarChart3' },
-        { label: 'Executive View', href: '/register/comp/executive', icon: 'TrendingUp' },
         { label: 'Plan Designer', href: '/register/comp/admin', icon: 'Settings' },
+        { label: 'What-If Calculator', href: '/register/comp/calculator', icon: 'Calculator' },
+        { label: 'Live Plan Performance', href: '/register/comp/plan', icon: 'Activity' },
       ],
     },
     {
-      section: 'Act 5 — Platform & Integration',
+      section: 'Comp Reports',
+      color: '#10B981',
+      items: [
+        { label: 'Rep Statements', href: '/register/comp/statements', icon: 'Receipt' },
+        { label: 'Team Rollup', href: '/register/comp/team', icon: 'Users' },
+        { label: 'Executive Dashboard', href: '/register/comp/executive', icon: 'TrendingUp' },
+      ],
+    },
+    {
+      section: 'Platform &amp; Integration',
       color: '#F59E0B',
       items: [
         { label: 'D365 Integration', href: '/register/platform/d365', icon: 'Link' },

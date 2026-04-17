@@ -1,11 +1,13 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Space_Grotesk } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-const spaceGrotesk = Space_Grotesk({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
 });
 
 type Theme = 'dark' | 'light';
@@ -31,40 +33,62 @@ export function useRegisterTheme() {
 }
 
 const LIGHT_TOKENS: Record<string, string> = {
-  '--register-bg': '#F5F5F5',
+  '--register-bg': '#F8FAFC',
   '--register-bg-elevated': '#FFFFFF',
   '--register-bg-surface': '#F1F5F9',
   '--register-border': '#CBD5E1',
+  '--register-border-strong': '#94A3B8',
   '--register-text': '#0F172A',
   '--register-text-muted': '#1F2937',
-  '--register-text-dim': '#374151',
-  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)',
-  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.08)',
+  '--register-text-dim': '#334155',
+  '--register-shadow-card': '0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04)',
+  '--register-shadow-card-hover': '0 8px 24px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.06)',
+  '--register-chart-grid': '#E2E8F0',
+  '--register-chart-axis': '#64748B',
+  '--register-chart-label': '#334155',
+  '--register-chart-tooltip-bg': '#FFFFFF',
+  '--register-chart-tooltip-border': '#CBD5E1',
 };
 
 const DARK_TOKENS: Record<string, string> = {
   '--register-bg': '#0B1220',
   '--register-bg-elevated': '#111B2E',
   '--register-bg-surface': '#18263B',
-  '--register-border': '#1E3A5F40',
-  '--register-text': '#E2E8F0',
-  '--register-text-muted': '#94A3B8',
-  '--register-text-dim': '#64748B',
-  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15)',
-  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.2)',
+  '--register-border': '#1E3A5F',
+  '--register-border-strong': '#334155',
+  '--register-text': '#FFFFFF',
+  '--register-text-muted': '#E2E8F0',
+  '--register-text-dim': '#CBD5E1',
+  '--register-shadow-card': '0 2px 8px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25)',
+  '--register-shadow-card-hover': '0 8px 24px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3)',
+  '--register-chart-grid': '#1E293B',
+  '--register-chart-axis': '#CBD5E1',
+  '--register-chart-label': '#E2E8F0',
+  '--register-chart-tooltip-bg': '#0F172A',
+  '--register-chart-tooltip-border': '#334155',
 };
 
 const SHARED_TOKENS: Record<string, string> = {
-  '--register-primary': '#1E3A5F',
-  '--register-accent': '#06B6D4',
-  '--register-ai': '#8B5CF6',
-  '--register-success': '#10B981',
-  '--register-warning': '#F59E0B',
-  '--register-danger': '#EF4444',
+  '--register-primary': '#1E40AF',
+  '--register-primary-strong': '#1E3A8A',
+  '--register-accent': '#0891B2',
+  '--register-ai': '#7C3AED',
+  '--register-success': '#059669',
+  '--register-warning': '#D97706',
+  '--register-danger': '#DC2626',
+  // High-contrast chart palette — distinguishable on both light/dark, projector-safe
+  '--register-chart-1': '#1E40AF',
+  '--register-chart-2': '#0891B2',
+  '--register-chart-3': '#059669',
+  '--register-chart-4': '#D97706',
+  '--register-chart-5': '#DC2626',
+  '--register-chart-6': '#7C3AED',
+  '--register-chart-7': '#DB2777',
+  '--register-chart-8': '#475569',
 };
 
 export function RegisterThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
   const [fontSize, setFontSize] = useState(18);
   const [mounted, setMounted] = useState(false);
 
@@ -133,7 +157,15 @@ export function RegisterThemeProvider({ children }: { children: React.ReactNode 
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, fontSize, increaseFontSize, decreaseFontSize }}>
-      <div className={`${spaceGrotesk.variable}`} style={{ fontFamily: 'var(--font-space-grotesk), system-ui, sans-serif' }}>
+      <div
+        className={`register-root ${inter.variable}`}
+        style={{
+          fontFamily: 'var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+          fontFeatureSettings: '"cv11", "ss01", "ss03"',
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
+        }}
+      >
         {children}
       </div>
     </ThemeContext.Provider>

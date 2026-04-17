@@ -28,6 +28,16 @@
   font-size: max(var(--demo-font-floor, 0.72rem), inherit);
 }
 
+/* Register-specific typography floor — raised for 60s-eyes presentation demos.
+   0.82rem = ~14.76px at 18px root. Meets 14px caption minimum. */
+.register-root .demo-shell p, .register-root .demo-shell span,
+.register-root .demo-shell td, .register-root .demo-shell th,
+.register-root .demo-shell li, .register-root .demo-shell label,
+.register-root .demo-shell div, .register-root .demo-shell a,
+.register-root .demo-shell button {
+  font-size: max(0.82rem, inherit);
+}
+
 /* Opt-out: POS terminal and other dense UIs set --demo-font-floor to 0 */
 .pos-terminal-frame p,
 .pos-terminal-frame span,
@@ -59,9 +69,10 @@
 }
 
 .register-subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--register-text-muted);
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
+  line-height: 1.4;
 }
 
 .register-card {
@@ -108,12 +119,36 @@
 }
 
 .register-meta-label {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--register-text-dim);
 }
+
+/* Chart hardening — ensures Recharts SVG axes/tooltips use the tokenized palette */
+.register-root .recharts-cartesian-grid line { stroke: var(--register-chart-grid); }
+.register-root .recharts-cartesian-axis-tick-value { fill: var(--register-chart-axis); font-size: 0.78rem; font-weight: 500; }
+.register-root .recharts-text { fill: var(--register-chart-label); }
+.register-root .recharts-legend-item-text { color: var(--register-chart-label) !important; font-size: 0.82rem !important; font-weight: 500; }
+.register-root .recharts-default-tooltip {
+  background: var(--register-chart-tooltip-bg) !important;
+  border: 1px solid var(--register-chart-tooltip-border) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--register-shadow-card-hover) !important;
+  color: var(--register-text) !important;
+  padding: 10px 14px !important;
+}
+.register-root .recharts-tooltip-label { color: var(--register-text) !important; font-weight: 700 !important; font-size: 0.9rem !important; }
+.register-root .recharts-tooltip-item { color: var(--register-text-muted) !important; font-size: 0.85rem !important; }
+
+/* Readable body paragraphs inside register cards */
+.register-root .demo-shell .register-card p,
+.register-root .demo-shell .register-section p { line-height: 1.55; }
+
+/* Number rendering — tabular figures globally on register */
+.register-root { font-feature-settings: 'cv11', 'ss01', 'tnum'; }
+.register-root [data-numeric], .register-kpi-value, .register-root .tabular { font-variant-numeric: tabular-nums; }
 
 .register-kpi-value {
   font-size: clamp(1.75rem, 1.5rem + 0.5vw, 2.25rem);

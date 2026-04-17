@@ -1,8 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Link from 'next/link';
 import { RegisterPage } from '@/components/demos/register/RegisterPage';
 import { AIInsightCard } from '@/components/demos/register/AIInsightCard';
+import { SyncBanner } from '@/components/demos/register/comp/SyncBanner';
+import { DiffRibbon } from '@/components/demos/register/comp/DiffRibbon';
+import { PublishModal } from '@/components/demos/register/comp/PublishModal';
 import {
   ADMIN_PLANS, PUSH_HISTORY,
   type CompPlan, type CompTier, type PlanStatus,
@@ -193,14 +197,33 @@ function RuleDetailPanel({ comp }: { comp: typeof SUMMIT_SLEEP_CONFIG.components
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
         <Icon size={16} color={ruleCfg.color} />
-        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--register-text)' }}>{comp.label}</span>
-        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', marginLeft: 'auto' }}>ID: {comp.id}</span>
+        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--register-text)' }}>{comp.label}</span>
+        <span style={{ fontSize: '0.78rem', color: 'var(--register-text-dim)', marginLeft: 'auto', fontVariantNumeric: 'tabular-nums' }}>ID: {comp.id}</span>
       </div>
 
       {/* Description */}
-      <p style={{ fontSize: '0.8rem', color: 'var(--register-text-dim)', margin: '0 0 12px', lineHeight: 1.4, fontStyle: 'italic' }}>
+      <p style={{ fontSize: '0.88rem', color: 'var(--register-text-dim)', margin: '0 0 10px', lineHeight: 1.5, fontStyle: 'italic' }}>
         {ruleCfg.description}
       </p>
+
+      {/* Simulate in What-If — deep-link */}
+      <Link
+        href={`/register/comp/calculator?rule=${encodeURIComponent(comp.id)}&from=designer`}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          padding: '6px 12px', marginBottom: 14, borderRadius: 8,
+          background: `color-mix(in srgb, ${ruleCfg.color} 12%, transparent)`,
+          border: `1px solid ${ruleCfg.color}55`,
+          color: ruleCfg.color,
+          fontSize: '0.82rem', fontWeight: 700,
+          textDecoration: 'none',
+          transition: 'background 120ms ease, transform 120ms ease',
+        }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateX(2px)'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateX(0)'; }}
+      >
+        Simulate in What-If →
+      </Link>
 
       {/* Rule-specific config fields */}
       {comp.rule.type === 'tiered' && (() => {
@@ -426,6 +449,7 @@ export default function CompAdminPage() {
   const [pushAnimating, setPushAnimating] = useState(false);
   const [pushComplete, setPushComplete] = useState(false);
   const [pulseGlow, setPulseGlow] = useState(true);
+  const [publishOpen, setPublishOpen] = useState(false);
 
   // Pulse the button glow
   useEffect(() => {
@@ -519,7 +543,11 @@ export default function CompAdminPage() {
       });
 
   return (
-    <RegisterPage title="Plan Designer" subtitle="Design comp rules, simulate impact, push to Varicent" accentColor={ACCENT}>
+    <RegisterPage title="Plan Designer" subtitle="Design comp rules, simulate impact — fan-out to Varicent, floor tablets, and REGISTER consoles" accentColor={ACCENT}>
+      <SyncBanner />
+      <DiffRibbon onPublish={() => setPublishOpen(true)} />
+      <PublishModal open={publishOpen} onClose={() => setPublishOpen(false)} />
+
       <div className="flex flex-col lg:flex-row" style={{ gap: 24 }}>
 
         {/* ══════════════════════════════════════════════

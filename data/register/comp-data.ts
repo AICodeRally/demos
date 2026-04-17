@@ -338,3 +338,222 @@ export const PUSH_HISTORY: PushLogEntry[] = [
   { id: 'push-2', timestamp: '2026-03-05 11:00 AM', pushedBy: 'Dana K.', planId: 'plan-sis', changeType: 'full_plan', summary: 'Published Shop-in-Shop v1.4 for partner review' },
   { id: 'push-1', timestamp: '2026-03-01 8:00 AM', pushedBy: 'Mark R.', planId: 'plan-flagship', changeType: 'full_plan', summary: 'Activated FY26 Q1 Flagship plan v3.2' },
 ];
+
+/* ── Publish Fan-Out Targets ───────────────────────────────
+   REGISTER Plan Designer pushes approved rules to three
+   downstream systems simultaneously. Each target has its own
+   ETA, protocol, and health state. */
+
+export type PublishTargetId = 'varicent' | 'tablets' | 'register';
+
+export interface PublishTarget {
+  id: PublishTargetId;
+  name: string;
+  role: string;
+  protocol: string;
+  endpoint: string;
+  avgLatencyMs: number;
+  health: 'healthy' | 'degraded' | 'down';
+  lastSync: string;
+  recipients: number;
+  recipientLabel: string;
+}
+
+export const PUBLISH_TARGETS: PublishTarget[] = [
+  {
+    id: 'varicent',
+    name: 'Varicent',
+    role: 'System of record — payroll & audit',
+    protocol: 'REST + Signed Webhook',
+    endpoint: 'https://api.varicent.com/v2/plans/{planId}/rules',
+    avgLatencyMs: 1200,
+    health: 'healthy',
+    lastSync: '2026-03-11 2:30 PM',
+    recipients: 1,
+    recipientLabel: 'Production tenant',
+  },
+  {
+    id: 'tablets',
+    name: 'Floor Tablets',
+    role: 'Live what-if for reps on the floor',
+    protocol: 'WebSocket broadcast',
+    endpoint: 'wss://edge.summitsleep.com/register/rules',
+    avgLatencyMs: 340,
+    health: 'healthy',
+    lastSync: '2026-03-11 2:30 PM',
+    recipients: 214,
+    recipientLabel: 'Active tablets across 200 stores',
+  },
+  {
+    id: 'register',
+    name: 'REGISTER Consoles',
+    role: 'Manager & exec dashboards',
+    protocol: 'In-process cache invalidation',
+    endpoint: 'register.summitsleep.com',
+    avgLatencyMs: 120,
+    health: 'healthy',
+    lastSync: '2026-03-11 2:30 PM',
+    recipients: 38,
+    recipientLabel: 'Manager/district/exec users',
+  },
+];
+
+/* ── Varicent Sync Status ──────────────────────────────────
+   Shows whether REGISTER draft is in sync with Varicent source of truth. */
+
+export interface SyncStatus {
+  lastPullFromVaricent: string;
+  lastPushToVaricent: string;
+  varicentRuleCount: number;
+  registerRuleCount: number;
+  inSync: boolean;
+  driftReason: string | null;
+}
+
+export const VARICENT_SYNC: SyncStatus = {
+  lastPullFromVaricent: '2026-03-11 8:00 AM',
+  lastPushToVaricent: '2026-03-11 2:30 PM',
+  varicentRuleCount: 24,
+  registerRuleCount: 27,
+  inSync: false,
+  driftReason: '3 draft rules pending approval in REGISTER',
+};
+
+/* ── Draft vs Live Plan Diff ───────────────────────────────
+   Summary shown on Plan Designer when a draft diverges from
+   the currently-published ruleset. */
+
+export interface RuleDelta {
+  id: string;
+  kind: 'added' | 'modified' | 'removed';
+  component: string;
+  group: 'commission' | 'spiff' | 'bonus' | 'accelerator' | 'tier';
+  before: string | null;
+  after: string | null;
+  authoredBy: string;
+  authoredAt: string;
+}
+
+export const DRAFT_DIFF: RuleDelta[] = [
+  {
+    id: 'd-1', kind: 'modified', component: 'Silver Tier Rate', group: 'tier',
+    before: '4.5%', after: '4.75%', authoredBy: 'Dana K.', authoredAt: '2026-03-11 10:14 AM',
+  },
+  {
+    id: 'd-2', kind: 'added', component: 'Memorial Day Weekend SPIFF', group: 'spiff',
+    before: null, after: '$10/unit + 2x team pool', authoredBy: 'Mark R.', authoredAt: '2026-03-10 3:40 PM',
+  },
+  {
+    id: 'd-3', kind: 'added', component: 'Financing Attach Accelerator', group: 'accelerator',
+    before: null, after: '+10% when financing penetration > 65%', authoredBy: 'Dana K.', authoredAt: '2026-03-10 1:05 PM',
+  },
+  {
+    id: 'd-4', kind: 'modified', component: 'Protector Attach SPIFF', group: 'spiff',
+    before: '$8/unit', after: '$10/unit', authoredBy: 'Dana K.', authoredAt: '2026-03-09 4:22 PM',
+  },
+  {
+    id: 'd-5', kind: 'removed', component: 'Q1 Clearance Double-Comm', group: 'bonus',
+    before: '2x commission on outlet inventory', after: null, authoredBy: 'Mark R.', authoredAt: '2026-03-09 11:00 AM',
+  },
+];
+
+/* ── Approval Trail ────────────────────────────────────────
+   Each draft rule requires stakeholder sign-off before publish. */
+
+export type ApprovalState = 'pending' | 'approved' | 'rejected';
+
+export interface ApprovalEntry {
+  id: string;
+  ruleId: string;
+  approver: string;
+  role: string;
+  state: ApprovalState;
+  note: string | null;
+  decidedAt: string | null;
+}
+
+export const APPROVAL_TRAIL: ApprovalEntry[] = [
+  { id: 'a-1', ruleId: 'd-1', approver: 'Linda Park', role: 'VP Sales',     state: 'approved', note: 'Budget impact within envelope (+$18K MTD).', decidedAt: '2026-03-11 11:02 AM' },
+  { id: 'a-2', ruleId: 'd-1', approver: 'Raj Menon',  role: 'CFO',          state: 'approved', note: 'Finance OK — comp ratio stays under 8.5%.', decidedAt: '2026-03-11 12:18 PM' },
+  { id: 'a-3', ruleId: 'd-2', approver: 'Linda Park', role: 'VP Sales',     state: 'approved', note: 'Aligns with Memorial Day campaign.', decidedAt: '2026-03-10 4:05 PM' },
+  { id: 'a-4', ruleId: 'd-2', approver: 'Raj Menon',  role: 'CFO',          state: 'pending',  note: null, decidedAt: null },
+  { id: 'a-5', ruleId: 'd-3', approver: 'Linda Park', role: 'VP Sales',     state: 'pending',  note: null, decidedAt: null },
+  { id: 'a-6', ruleId: 'd-3', approver: 'Raj Menon',  role: 'CFO',          state: 'pending',  note: null, decidedAt: null },
+  { id: 'a-7', ruleId: 'd-4', approver: 'Linda Park', role: 'VP Sales',     state: 'approved', note: 'Pilot showed +3% attach in Flagship test stores.', decidedAt: '2026-03-10 9:40 AM' },
+  { id: 'a-8', ruleId: 'd-4', approver: 'Raj Menon',  role: 'CFO',          state: 'approved', note: null, decidedAt: '2026-03-10 10:15 AM' },
+  { id: 'a-9', ruleId: 'd-5', approver: 'Linda Park', role: 'VP Sales',     state: 'approved', note: 'Q1 promotion ended — removing per plan.', decidedAt: '2026-03-09 12:00 PM' },
+];
+
+/* ── Rep → Manager → District → Region → Exec Hierarchy ──── */
+
+export interface OrgNode {
+  id: string;
+  name: string;
+  role: 'rep' | 'manager' | 'district' | 'region' | 'exec';
+  store?: string;
+  parentId: string | null;
+  revenueMTD: number;
+  quotaMTD: number;
+  commissionMTD: number;
+  headcount: number;
+}
+
+export const ORG_HIERARCHY: OrgNode[] = [
+  // Exec
+  { id: 'exec-1', name: 'Linda Park', role: 'exec', parentId: null, revenueMTD: 8_420_000, quotaMTD: 8_750_000, commissionMTD: 682_000, headcount: 850 },
+  // Regions
+  { id: 'region-west',    name: 'West Region',    role: 'region', parentId: 'exec-1', revenueMTD: 2_940_000, quotaMTD: 3_050_000, commissionMTD: 238_000, headcount: 284 },
+  { id: 'region-central', name: 'Central Region', role: 'region', parentId: 'exec-1', revenueMTD: 2_510_000, quotaMTD: 2_620_000, commissionMTD: 203_000, headcount: 248 },
+  { id: 'region-east',    name: 'East Region',    role: 'region', parentId: 'exec-1', revenueMTD: 2_970_000, quotaMTD: 3_080_000, commissionMTD: 241_000, headcount: 318 },
+  // Districts (West)
+  { id: 'district-pac',   name: 'Pacific District', role: 'district', parentId: 'region-west',    revenueMTD: 1_480_000, quotaMTD: 1_520_000, commissionMTD: 120_000, headcount: 142 },
+  { id: 'district-mw',    name: 'Mountain West',    role: 'district', parentId: 'region-west',    revenueMTD: 1_460_000, quotaMTD: 1_530_000, commissionMTD: 118_000, headcount: 142 },
+  { id: 'district-tx',    name: 'Texas District',   role: 'district', parentId: 'region-central', revenueMTD: 1_320_000, quotaMTD: 1_360_000, commissionMTD: 107_000, headcount: 128 },
+  { id: 'district-mw-c',  name: 'Midwest Central',  role: 'district', parentId: 'region-central', revenueMTD: 1_190_000, quotaMTD: 1_260_000, commissionMTD:  96_000, headcount: 120 },
+  { id: 'district-se',    name: 'Southeast',        role: 'district', parentId: 'region-east',    revenueMTD: 1_540_000, quotaMTD: 1_580_000, commissionMTD: 125_000, headcount: 162 },
+  { id: 'district-ne',    name: 'Northeast',        role: 'district', parentId: 'region-east',    revenueMTD: 1_430_000, quotaMTD: 1_500_000, commissionMTD: 116_000, headcount: 156 },
+  // Managers (Pacific District sample)
+  { id: 'mgr-galleria',   name: 'Alex Rivera',     role: 'manager', store: 'Flagship #12 — Galleria',       parentId: 'district-pac', revenueMTD: 268_000, quotaMTD: 280_000, commissionMTD: 21_500, headcount: 18 },
+  { id: 'mgr-soma',       name: 'Priya Shah',      role: 'manager', store: 'Flagship #08 — SoMa',           parentId: 'district-pac', revenueMTD: 252_000, quotaMTD: 265_000, commissionMTD: 20_400, headcount: 16 },
+  { id: 'mgr-bayshore',   name: 'Jordan Cole',     role: 'manager', store: 'Standard #47 — Bay Shore',      parentId: 'district-pac', revenueMTD: 148_000, quotaMTD: 160_000, commissionMTD: 11_800, headcount: 9 },
+  { id: 'mgr-outlet-liv', name: 'Devon Reyes',     role: 'manager', store: 'Outlet #22 — Livermore',        parentId: 'district-pac', revenueMTD:  98_000, quotaMTD:  95_000, commissionMTD:  7_500, headcount: 8 },
+  // Reps (Galleria — Alex Rivera's team)
+  { id: 'rep-sarah',   name: 'Sarah Lin',     role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 42_100, quotaMTD: 38_000, commissionMTD: 1_900, headcount: 1 },
+  { id: 'rep-raj',     name: 'Raj Patel',     role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 39_450, quotaMTD: 38_000, commissionMTD: 1_775, headcount: 1 },
+  { id: 'rep-mike',    name: 'Mike Tran',     role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 32_700, quotaMTD: 38_000, commissionMTD: 1_308, headcount: 1 },
+  { id: 'rep-casey',   name: 'Casey Miller',  role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 26_400, quotaMTD: 38_000, commissionMTD: 1_188, headcount: 1 },
+  { id: 'rep-james',   name: 'James Wu',      role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 24_750, quotaMTD: 38_000, commissionMTD:   990, headcount: 1 },
+  { id: 'rep-anna',    name: 'Anna Kim',      role: 'rep', store: 'Galleria', parentId: 'mgr-galleria', revenueMTD: 23_600, quotaMTD: 38_000, commissionMTD:   944, headcount: 1 },
+];
+
+/* ── Rep Deal Stream — used by statement drill-down ──────── */
+
+export interface RepDeal {
+  id: string;
+  dateISO: string;
+  time: string;
+  customer: string;
+  items: string[];
+  basis: number;
+  tier: string;
+  tierRate: number;
+  baseCommission: number;
+  spiffBonus: number;
+  bundleBonus: number;
+  attachAccelerator: number;
+  totalCommission: number;
+  protectorAttached: boolean;
+  financingUsed: boolean;
+}
+
+export const REP_DEALS_CASEY: RepDeal[] = [
+  { id: 'D-5041', dateISO: '2026-03-11', time: '2:47 PM', customer: 'Kim Family', items: ['CloudRest Hybrid Queen', 'Allergen Protector'], basis: 2648, tier: 'Silver', tierRate: 0.045, baseCommission: 119.16, spiffBonus: 10, bundleBonus: 0, attachAccelerator: 0, totalCommission: 129.16, protectorAttached: true, financingUsed: false },
+  { id: 'D-5042', dateISO: '2026-03-11', time: '1:22 PM', customer: 'Reynolds', items: ['ErgoMotion Adj Base Pro'], basis: 1999, tier: 'Silver', tierRate: 0.045, baseCommission: 89.96, spiffBonus: 25, bundleBonus: 0, attachAccelerator: 0, totalCommission: 114.96, protectorAttached: false, financingUsed: true },
+  { id: 'D-5043', dateISO: '2026-03-11', time: '12:05 PM', customer: 'Okafor', items: ['Harmony Memory Foam King', 'Cotton Sheets', 'Premium Pillows'], basis: 3097, tier: 'Silver', tierRate: 0.045, baseCommission: 139.37, spiffBonus: 0, bundleBonus: 50, attachAccelerator: 0, totalCommission: 189.37, protectorAttached: false, financingUsed: true },
+  { id: 'D-5044', dateISO: '2026-03-10', time: '11:38 AM', customer: 'Patel',    items: ['DreamLift Firm Queen'], basis: 1499, tier: 'Silver', tierRate: 0.045, baseCommission: 67.46, spiffBonus: 0, bundleBonus: 0, attachAccelerator: 0, totalCommission: 67.46, protectorAttached: false, financingUsed: false },
+  { id: 'D-5045', dateISO: '2026-03-10', time: '10:15 AM', customer: 'Nguyen',   items: ['Essential Comfort Queen', 'Standard Protector'], basis: 1148, tier: 'Silver', tierRate: 0.045, baseCommission: 51.66, spiffBonus: 10, bundleBonus: 0, attachAccelerator: 0, totalCommission: 61.66, protectorAttached: true, financingUsed: false },
+  { id: 'D-5046', dateISO: '2026-03-09', time: '9:52 AM',  customer: 'Harper',   items: ['Sleep System Bundle — King Hybrid', 'Adjustable Base'], basis: 4998, tier: 'Silver', tierRate: 0.045, baseCommission: 224.91, spiffBonus: 25, bundleBonus: 75, attachAccelerator: 0, totalCommission: 324.91, protectorAttached: false, financingUsed: true },
+  { id: 'D-5047', dateISO: '2026-03-09', time: '3:15 PM',  customer: 'Choi',     items: ['CloudRest Hybrid King', 'Adj Base', 'Protector'], basis: 5147, tier: 'Silver', tierRate: 0.045, baseCommission: 231.62, spiffBonus: 35, bundleBonus: 50, attachAccelerator: 17.50, totalCommission: 334.12, protectorAttached: true, financingUsed: true },
+  { id: 'D-5048', dateISO: '2026-03-08', time: '1:40 PM',  customer: 'Torres',   items: ['Platform Bed Frame', 'Sheet Set'], basis: 498, tier: 'Bronze', tierRate: 0.04, baseCommission: 19.92, spiffBonus: 0, bundleBonus: 0, attachAccelerator: 0, totalCommission: 19.92, protectorAttached: false, financingUsed: false },
+  { id: 'D-5049', dateISO: '2026-03-08', time: '11:20 AM', customer: 'Williams', items: ['Harmony Memory Foam Queen'], basis: 2299, tier: 'Silver', tierRate: 0.045, baseCommission: 103.46, spiffBonus: 0, bundleBonus: 0, attachAccelerator: 0, totalCommission: 103.46, protectorAttached: false, financingUsed: false },
+];
